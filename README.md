@@ -1,7 +1,7 @@
 # Just Natural Expansion 0.0.1 
 ### A Cookie Clicker Mod
 
-**The Just Natural Expansion Mod** enhances the Cookie Clicker endgame without disrupting core gameplay, staying true to the spirit of the vanilla experience. It introduces over **450 achievements**, **250 upgrades**, new goals, news stories, and deeply rooted hidden story elements, all specifically designed for late-game progression, so early or mid-game players may not immediately notice changes. 
+**The Just Natural Expansion Mod** enhances the Cookie Clicker endgame without disrupting core gameplay, staying true to the spirit of the vanilla experience. It introduces over **450 achievements**, **250 upgrades**, new goals, new stories, and deeply rooted hidden elements, all specifically designed for late-game progression, so early or mid-game players may not immediately notice changes. 
 
 By default, the mod adds no upgrades and marks new achievements as shadow, allowing leaderboard and competition focused players to pursue extra challenges without affecting their current gameplay. 
 
@@ -14,7 +14,7 @@ Many achievements are tracked across multiple ascensions or involve progress tha
 #### Special Thanks
 Extra gooey gratitude to the mysterious hero who uploaded the custom Cookie Clicker icons I stumbled upon on [Imgur](https://imgur.com/3jNJJNw). If you ever reveal yourself, I will shower you with credit (and maybe a few billion cookies). Those icons patched up some stubborn gaps that were giving me dough-induced headaches.
 
-Big, chocolate-covered thanks to the amazing folks in the Cookie Clicker Discord, whose late-game wisdom and strategic tips helped shape this mod into the crunchy masterpiece it is today.
+Big, chocolate-covered thanks to the amazing folks in the [Cookie Clicker Discord](https://discord.com/invite/cookie), whose late-game wisdom and strategic tips helped shape this mod into the crunchy masterpiece it is today.
 
 #### Why This Mod Exists
 
@@ -469,294 +469,254 @@ The mobile version of Cookie Clicker does not support mods at this time.
 - **Improved Lavender chocolate butter biscuit**: 10% cookie production increase (requires at least 950 of every building type)
 - **Improved Synthetic chocolate green honey butter biscuit**: 10% cookie production increase (requires at least 1,000 of every building type)
 
-###Building Upgrades
+### Building Upgrades
 
-#### Building Cost Reduction Upgrades (114 Upgrades)
-*Note: These upgrades provide cumulative 5% cost reductions for their respective buildings. Each upgrade applies a 5% discount to the remaining cost, so owning all 6 upgrades for a building provides approximately a 26.5% total discount.*
+### Building Upgrades (Efficiency + Cost Reductions) (209 Upgrades)
+Note: For each building, upgrades alternate by threshold: cost reductions at 750/850/950/1050/1150/1250 and efficiency at 800/900/1000/1100/1200.
 
-##### Grandma Cost Reductions
+##### Grandma
 - **Increased Social Security Checks**: Grandmas cost **5%** less (requires 750 grandmas)
+- **Advanced knitting techniques**: Grandmas are **8%** more efficient (requires 800 grandmas)
 - **Off-Brand Eyeglasses**: Grandmas cost **5%** less (requires 850 grandmas)
+- **Bingo night optimization**: Grandmas are **8%** more efficient (requires 900 grandmas)
 - **Plastic Walkers**: Grandmas cost **5%** less (requires 950 grandmas)
+- **Tea time efficiency**: Grandmas are **8%** more efficient (requires 1000 grandmas)
 - **Bulk Discount Hearing Aids**: Grandmas cost **5%** less (requires 1050 grandmas)
+- **Gossip-powered baking**: Grandmas are **8%** more efficient (requires 1100 grandmas)
 - **Generic Arthritis Medication**: Grandmas cost **5%** less (requires 1150 grandmas)
+- **Senior discount mastery**: Grandmas are **8%** more efficient (requires 1200 grandmas)
 - **Wholesale Denture Adhesive**: Grandmas cost **5%** less (requires 1250 grandmas)
 
-##### Farm Cost Reductions
+##### Farm
 - **Biodiesel fueled tractors**: Farms cost **5%** less (requires 750 farms)
+- **Hydroponic cookie cultivation**: Farms are **8%** more efficient (requires 800 farms)
 - **Free manure from clone factories**: Farms cost **5%** less (requires 850 farms)
+- **Vertical farming revolution**: Farms are **8%** more efficient (requires 900 farms)
 - **Solar-powered irrigation systems**: Farms cost **5%** less (requires 950 farms)
+- **Quantum crop rotation**: Farms are **8%** more efficient (requires 1000 farms)
 - **Bulk seed purchases**: Farms cost **5%** less (requires 1050 farms)
+- **Sentient soil enhancement**: Farms are **8%** more efficient (requires 1100 farms)
 - **Robot farm hands**: Farms cost **5%** less (requires 1150 farms)
+- **Temporal harvest acceleration**: Farms are **8%** more efficient (requires 1200 farms)
 - **Vertical farming subsidies**: Farms cost **5%** less (requires 1250 farms)
 
-##### Mine Cost Reductions
+##### Mine
 - **Clearance shaft kits**: Mines cost **5%** less (requires 750 mines)
+- **Quantum tunneling excavation**: Mines are **8%** more efficient (requires 800 mines)
 - **Punch-card TNT club**: Mines cost **5%** less (requires 850 mines)
+- **Neutron star compression**: Mines are **8%** more efficient (requires 900 mines)
 - **Hand-me-down hardhats**: Mines cost **5%** less (requires 950 mines)
+- **Dimensional rift mining**: Mines are **8%** more efficient (requires 1000 mines)
 - **Lease-back drill rigs**: Mines cost **5%** less (requires 1050 mines)
+- **Singularity core extraction**: Mines are **8%** more efficient (requires 1100 mines)
 - **Ore cartel coupons**: Mines cost **5%** less (requires 1150 mines)
+- **Temporal paradox drilling**: Mines are **8%** more efficient (requires 1200 mines)
 - **Cave-in insurance kickbacks**: Mines cost **5%** less (requires 1250 mines)
 
-##### Factory Cost Reductions
+##### Factory
 - **Flat-pack factory frames**: Factories cost **5%** less (requires 750 factories)
+- **Quantum assembly optimization**: Factories are **8%** more efficient (requires 800 factories)
 - **BOGO rivet bins**: Factories cost **5%** less (requires 850 factories)
+- **Temporal manufacturing loops**: Factories are **8%** more efficient (requires 900 factories)
 - **Off-brand gear grease**: Factories cost **5%** less (requires 950 factories)
+- **Dimensional cookie synthesis**: Factories are **8%** more efficient (requires 1000 factories)
 - **Misprint warning labels**: Factories cost **5%** less (requires 1050 factories)
+- **Singularity production cores**: Factories are **8%** more efficient (requires 1100 factories)
 - **Pallet-jack rebates**: Factories cost **5%** less (requires 1150 factories)
+- **Reality-warping assembly**: Factories are **8%** more efficient (requires 1200 factories)
 - **Prefab cookie modules**: Factories cost **5%** less (requires 1250 factories)
 
-##### Bank Cost Reductions
+##### Bank
 - **Piggy buyback bonanza**: Banks cost **5%** less (requires 750 banks)
+- **Quantum banking protocols**: Banks are **8%** more efficient (requires 800 banks)
 - **Vault door floor-models**: Banks cost **5%** less (requires 850 banks)
+- **Temporal interest compounding**: Banks are **8%** more efficient (requires 900 banks)
 - **Pen-on-a-chain procurement**: Banks cost **5%** less (requires 950 banks)
+- **Dimensional currency exchange**: Banks are **8%** more efficient (requires 1000 banks)
 - **Complimentary complimentary mints**: Banks cost **5%** less (requires 1050 banks)
+- **Singularity financial algorithms**: Banks are **8%** more efficient (requires 1100 banks)
 - **Fee waiver wavers**: Banks cost **5%** less (requires 1150 banks)
+- **Reality-warping economics**: Banks are **8%** more efficient (requires 1200 banks)
 - **Dough Jones clearance**: Banks cost **5%** less (requires 1250 banks)
 
-##### Temple Cost Reductions
+##### Temple
 - **Tithe punch cards**: Temples cost **5%** less (requires 750 temples)
+- **Quantum divine intervention**: Temples are **8%** more efficient (requires 800 temples)
 - **Relic replica racks**: Temples cost **5%** less (requires 850 temples)
+- **Temporal prayer loops**: Temples are **8%** more efficient (requires 900 temples)
 - **Incense refill program**: Temples cost **5%** less (requires 950 temples)
+- **Dimensional deity summoning**: Temples are **8%** more efficient (requires 1000 temples)
 - **Chant-o-matic hymn reels**: Temples cost **5%** less (requires 1050 temples)
+- **Singularity divine consciousness**: Temples are **8%** more efficient (requires 1100 temples)
 - **Pew-per-view sponsorships**: Temples cost **5%** less (requires 1150 temples)
+- **Reality-warping divinity**: Temples are **8%** more efficient (requires 1200 temples)
 - **Sacred site tax amnesty**: Temples cost **5%** less (requires 1250 temples)
 
-##### Wizard Tower Cost Reductions
+##### Wizard Tower
 - **Wand warranty returns**: Wizard towers cost **5%** less (requires 750 wizard towers)
+- **Arcane resonance**: Wizard towers are **8%** more efficient (requires 800 wizard towers)
 - **Grimoire remainder sale**: Wizard towers cost **5%** less (requires 850 wizard towers)
+- **Spell weaving**: Wizard towers are **8%** more efficient (requires 900 wizard towers)
 - **Robes with “character”**: Wizard towers cost **5%** less (requires 950 wizard towers)
+- **Mystical attunement**: Wizard towers are **8%** more efficient (requires 1000 wizard towers)
 - **Familiar foster program**: Wizard towers cost **5%** less (requires 1050 wizard towers)
+- **Ethereal manifestation**: Wizard towers are **8%** more efficient (requires 1100 wizard towers)
 - **Council scroll stipends**: Wizard towers cost **5%** less (requires 1150 wizard towers)
+- **Transcendent thaumaturgy**: Wizard towers are **8%** more efficient (requires 1200 wizard towers)
 - **Broom-sharing scheme**: Wizard towers cost **5%** less (requires 1250 wizard towers)
 
-##### Shipment Cost Reductions
+##### Shipment
 - **Retired cargo pods**: Shipments cost **5%** less (requires 750 shipments)
+- **Hypervelocity transport**: Shipments are **8%** more efficient (requires 800 shipments)
 - **Container co-op cards**: Shipments cost **5%** less (requires 850 shipments)
+- **Spatial compression**: Shipments are **8%** more efficient (requires 900 shipments)
 - **Reusable launch crates**: Shipments cost **5%** less (requires 950 shipments)
+- **Dimensional routing**: Shipments are **8%** more efficient (requires 1000 shipments)
 - **Autodocker apprentices**: Shipments cost **5%** less (requires 1050 shipments)
+- **Quantum teleportation**: Shipments are **8%** more efficient (requires 1100 shipments)
 - **Route rebate vouchers**: Shipments cost **5%** less (requires 1150 shipments)
+- **Causality manipulation**: Shipments are **8%** more efficient (requires 1200 shipments)
 - **Free-trade cookie ports**: Shipments cost **5%** less (requires 1250 shipments)
 
-##### Alchemy Lab Cost Reductions
+##### Alchemy Lab
 - **Beaker buybacks**: Alchemy labs cost **5%** less (requires 750 alchemy labs)
+- **Essence distillation**: Alchemy labs are **8%** more efficient (requires 800 alchemy labs)
 - **Philosopher’s pebbles**: Alchemy labs cost **5%** less (requires 850 alchemy labs)
+- **Molecular gastronomy**: Alchemy labs are **8%** more efficient (requires 900 alchemy labs)
 - **Cool-running crucibles**: Alchemy labs cost **5%** less (requires 950 alchemy labs)
+- **Flavor alchemy**: Alchemy labs are **8%** more efficient (requires 1000 alchemy labs)
 - **Batch homunculi permits**: Alchemy labs cost **5%** less (requires 1050 alchemy labs)
+- **Culinary transmutation**: Alchemy labs are **8%** more efficient (requires 1100 alchemy labs)
 - **Guild reagent rates**: Alchemy labs cost **5%** less (requires 1150 alchemy labs)
+- **Gastronomic enlightenment**: Alchemy labs are **8%** more efficient (requires 1200 alchemy labs)
 - **“Mostly lead” gold grants**: Alchemy labs cost **5%** less (requires 1250 alchemy labs)
 
-##### Portal Cost Reductions
+##### Portal
 - **Pre-owned ring frames**: Portals cost **5%** less (requires 750 portals)
+- **Dimensional gateways**: Portals are **8%** more efficient (requires 800 portals)
 - **Anchor warehouse club**: Portals cost **5%** less (requires 850 portals)
+- **Reality bridges**: Portals are **8%** more efficient (requires 900 portals)
 - **Passive rift baffles**: Portals cost **5%** less (requires 950 portals)
+- **Spatial conduits**: Portals are **8%** more efficient (requires 1000 portals)
 - **Volunteer gatekeepers**: Portals cost **5%** less (requires 1050 portals)
+- **Interdimensional highways**: Portals are **8%** more efficient (requires 1100 portals)
 - **Interrealm stipend scrolls**: Portals cost **5%** less (requires 1150 portals)
+- **Cosmic gateways**: Portals are **8%** more efficient (requires 1200 portals)
 - **Multiversal enterprise zone**: Portals cost **5%** less (requires 1250 portals)
 
-##### Time Machine Cost Reductions
+##### Time Machine
 - **Pre-loved hourglasses**: Time machines cost **5%** less (requires 750 time machines)
+- **Temporal engineering**: Time machines are **8%** more efficient (requires 800 time machines)
 - **Depreciated timeline scraps**: Time machines cost **5%** less (requires 850 time machines)
+- **Chronological optimization**: Time machines are **8%** more efficient (requires 900 time machines)
 - **Off-season flux valves**: Time machines cost **5%** less (requires 950 time machines)
+- **Historical preservation**: Time machines are **8%** more efficient (requires 1000 time machines)
 - **Weekend paradox passes**: Time machines cost **5%** less (requires 1050 time machines)
+- **Temporal synchronization**: Time machines are **8%** more efficient (requires 1100 time machines)
 - **Department of When grants**: Time machines cost **5%** less (requires 1150 time machines)
+- **Chronological mastery**: Time machines are **8%** more efficient (requires 1200 time machines)
 - **Antique warranty loopholes**: Time machines cost **5%** less (requires 1250 time machines)
 
-##### Antimatter Condenser Cost Reductions
+##### Antimatter Condenser
 - **Certified negamatter cans**: Antimatter condensers cost **5%** less (requires 750 antimatter condensers)
+- **Particle synthesis**: Antimatter condensers are **8%** more efficient (requires 800 antimatter condensers)
 - **Matter swap rebates**: Antimatter condensers cost **5%** less (requires 850 antimatter condensers)
+- **Matter transmutation**: Antimatter condensers are **8%** more efficient (requires 900 antimatter condensers)
 - **Low-idle annihilators**: Antimatter condensers cost **5%** less (requires 950 antimatter condensers)
+- **Quantum baking**: Antimatter condensers are **8%** more efficient (requires 1000 antimatter condensers)
 - **Grad-lab particle labor**: Antimatter condensers cost **5%** less (requires 1050 antimatter condensers)
+- **Particle optimization**: Antimatter condensers are **8%** more efficient (requires 1100 antimatter condensers)
 - **Institute endowment match**: Antimatter condensers cost **5%** less (requires 1150 antimatter condensers)
+- **Matter manipulation**: Antimatter condensers are **8%** more efficient (requires 1200 antimatter condensers)
 - **Void-zone incentives**: Antimatter condensers cost **5%** less (requires 1250 antimatter condensers)
 
-##### Prism Cost Reductions
+##### Prism
 - **Lens co-op exchange**: Prisms cost **5%** less (requires 750 prisms)
+- **Light crystallization**: Prisms are **8%** more efficient (requires 800 prisms)
 - **Spectral seconds**: Prisms cost **5%** less (requires 850 prisms)
+- **Spectral baking**: Prisms are **8%** more efficient (requires 900 prisms)
 - **Sleep-mode rainbows**: Prisms cost **5%** less (requires 950 prisms)
+- **Optical alchemy**: Prisms are **8%** more efficient (requires 1000 prisms)
 - **Apprentice refractioneers**: Prisms cost **5%** less (requires 1050 prisms)
+- **Luminous confectionery**: Prisms are **8%** more efficient (requires 1100 prisms)
 - **Arts-of-Optics grants**: Prisms cost **5%** less (requires 1150 prisms)
+- **Radiant gastronomy**: Prisms are **8%** more efficient (requires 1200 prisms)
 - **Rainbow renewal credits**: Prisms cost **5%** less (requires 1250 prisms)
 
-##### Chancemaker Cost Reductions
+##### Chancemaker
 - **Misprinted fortunes**: Chancemakers cost **5%** less (requires 750 chancemakers)
+- **Probability manipulation**: Chancemakers are **8%** more efficient (requires 800 chancemakers)
 - **Reroll refund policy**: Chancemakers cost **5%** less (requires 850 chancemakers)
+- **Fortune optimization**: Chancemakers are **8%** more efficient (requires 900 chancemakers)
 - **Economy-grade omens**: Chancemakers cost **5%** less (requires 950 chancemakers)
+- **Serendipity engineering**: Chancemakers are **8%** more efficient (requires 1000 chancemakers)
 - **Volunteer augury nights**: Chancemakers cost **5%** less (requires 1050 chancemakers)
+- **Random enhancement**: Chancemakers are **8%** more efficient (requires 1100 chancemakers)
 - **Lottery board matching**: Chancemakers cost **5%** less (requires 1150 chancemakers)
+- **Luck amplification**: Chancemakers are **8%** more efficient (requires 1200 chancemakers)
 - **Lucky district waivers**: Chancemakers cost **5%** less (requires 1250 chancemakers)
 
-##### Fractal Engine Cost Reductions
+##### Fractal Engine
 - **Iteration liquidation**: Fractal engines cost **5%** less (requires 750 fractal engines)
+- **Infinite recursion**: Fractal engines are **8%** more efficient (requires 800 fractal engines)
 - **Self-similar spare parts**: Fractal engines cost **5%** less (requires 850 fractal engines)
+- **Self-similar baking**: Fractal engines are **8%** more efficient (requires 900 fractal engines)
 - **Recursion rebates**: Fractal engines cost **5%** less (requires 950 fractal engines)
+- **Fractal optimization**: Fractal engines are **8%** more efficient (requires 1000 fractal engines)
 - **Autogenerator residencies**: Fractal engines cost **5%** less (requires 1050 fractal engines)
+- **Recursive enhancement**: Fractal engines are **8%** more efficient (requires 1100 fractal engines)
 - **Grant-funded proofs**: Fractal engines cost **5%** less (requires 1150 fractal engines)
+- **Fractal gastronomy**: Fractal engines are **8%** more efficient (requires 1200 fractal engines)
 - **Infinite-lot variances**: Fractal engines cost **5%** less (requires 1250 fractal engines)
 
-##### Javascript Console Cost Reductions
+##### Javascript Console
 - **Refurb dev boards**: Javascript consoles cost **5%** less (requires 750 javascript consoles)
+- **Code optimization**: Javascript consoles are **8%** more efficient (requires 800 javascript consoles)
 - **Compiler credit program**: Javascript consoles cost **5%** less (requires 850 javascript consoles)
+- **Programmatic baking**: Javascript consoles are **8%** more efficient (requires 900 javascript consoles)
 - **Idle-friendly runtimes**: Javascript consoles cost **5%** less (requires 950 javascript consoles)
+- **Algorithmic enhancement**: Javascript consoles are **8%** more efficient (requires 1000 javascript consoles)
 - **Peer-review co-ops**: Javascript consoles cost **5%** less (requires 1050 javascript consoles)
+- **Computational gastronomy**: Javascript consoles are **8%** more efficient (requires 1100 javascript consoles)
 - **Open-source grants**: Javascript consoles cost **5%** less (requires 1150 javascript consoles)
+- **Digital confectionery**: Javascript consoles are **8%** more efficient (requires 1200 javascript consoles)
 - **Cloud credit vouchers**: Javascript consoles cost **5%** less (requires 1250 javascript consoles)
 
-##### Idleverse Cost Reductions
+##### Idleverse
 - **Interdimensional tax breaks**: Idleverses cost **5%** less (requires 750 idleverses)
+- **Reality real estate**: Idleverses are **8%** more efficient (requires 800 idleverses)
 - **Reality consolidation discounts**: Idleverses cost **5%** less (requires 850 idleverses)
+- **Dimensional franchising**: Idleverses are **8%** more efficient (requires 900 idleverses)
 - **Cosmic bulk purchasing**: Idleverses cost **5%** less (requires 950 idleverses)
+- **Cosmic supply chains**: Idleverses are **8%** more efficient (requires 1000 idleverses)
 - **Multiverse supplier networks**: Idleverses cost **5%** less (requires 1050 idleverses)
+- **Reality marketplaces**: Idleverses are **8%** more efficient (requires 1100 idleverses)
 - **Dimensional economies of scale**: Idleverses cost **5%** less (requires 1150 idleverses)
+- **Multiverse headquarters**: Idleverses are **8%** more efficient (requires 1200 idleverses)
 - **Reality monopoly pricing**: Idleverses cost **5%** less (requires 1250 idleverses)
 
-##### Cortex Baker Cost Reductions
+##### Cortex Baker
 - **Neural bulk purchasing**: Cortex bakers cost **5%** less (requires 750 cortex bakers)
+- **Neural plasticity**: Cortex bakers are **8%** more efficient (requires 800 cortex bakers)
 - **Synaptic wholesale networks**: Cortex bakers cost **5%** less (requires 850 cortex bakers)
+- **Synaptic pruning**: Cortex bakers are **8%** more efficient (requires 900 cortex bakers)
 - **Cerebral mass production**: Cortex bakers cost **5%** less (requires 950 cortex bakers)
+- **Cognitive load balancing**: Cortex bakers are **8%** more efficient (requires 1000 cortex bakers)
 - **Mind monopoly pricing**: Cortex bakers cost **5%** less (requires 1050 cortex bakers)
+- **Metacognitive awareness**: Cortex bakers are **8%** more efficient (requires 1100 cortex bakers)
 - **Neural economies of scale**: Cortex bakers cost **5%** less (requires 1150 cortex bakers)
+- **Neural synchronization**: Cortex bakers are **8%** more efficient (requires 1200 cortex bakers)
 - **Synaptic supply dominance**: Cortex bakers cost **5%** less (requires 1250 cortex bakers)
 
-##### You Cost Reductions
+##### You
 - **Clone factory economies**: You cost **5%** less (requires 750 You)
-- **Replica production lines**: You cost **5%** less (requires 850 You)
-- **Mirror manufacturing mastery**: You cost **5%** less (requires 950 You)
-- **Twin tycoon pricing**: You cost **5%** less (requires 1050 You)
-- **Doppelganger discount networks**: You cost **5%** less (requires 1150 You)
-- **Clone supply dominance**: You cost **5%** less (requires 1250 You)
-
-### Building Efficiency Upgrades (95 Upgrades)
-
-##### Grandma Upgrades
-- **Advanced knitting techniques**: Grandmas are **8%** more efficient (requires 800 grandmas)
-- **Bingo night optimization**: Grandmas are **8%** more efficient (requires 900 grandmas)
-- **Tea time efficiency**: Grandmas are **8%** more efficient (requires 1000 grandmas)
-- **Gossip-powered baking**: Grandmas are **8%** more efficient (requires 1100 grandmas)
-- **Senior discount mastery**: Grandmas are **8%** more efficient (requires 1200 grandmas)
-
-##### Farm Upgrades
-- **Hydroponic cookie cultivation**: Farms are **8%** more efficient (requires 800 farms)
-- **Vertical farming revolution**: Farms are **8%** more efficient (requires 900 farms)
-- **Quantum crop rotation**: Farms are **8%** more efficient (requires 1000 farms)
-- **Sentient soil enhancement**: Farms are **8%** more efficient (requires 1100 farms)
-- **Temporal harvest acceleration**: Farms are **8%** more efficient (requires 1200 farms)
-
-##### Mine Upgrades
-- **Quantum tunneling excavation**: Mines are **8%** more efficient (requires 800 mines)
-- **Neutron star compression**: Mines are **8%** more efficient (requires 900 mines)
-- **Dimensional rift mining**: Mines are **8%** more efficient (requires 1000 mines)
-- **Singularity core extraction**: Mines are **8%** more efficient (requires 1100 mines)
-- **Temporal paradox drilling**: Mines are **8%** more efficient (requires 1200 mines)
-
-##### Factory Upgrades
-- **Quantum assembly optimization**: Factories are **8%** more efficient (requires 800 factories)
-- **Temporal manufacturing loops**: Factories are **8%** more efficient (requires 900 factories)
-- **Dimensional cookie synthesis**: Factories are **8%** more efficient (requires 1000 factories)
-- **Singularity production cores**: Factories are **8%** more efficient (requires 1100 factories)
-- **Reality-warping assembly**: Factories are **8%** more efficient (requires 1200 factories)
-
-##### Bank Upgrades
-- **Quantum banking protocols**: Banks are **8%** more efficient (requires 800 banks)
-- **Temporal interest compounding**: Banks are **8%** more efficient (requires 900 banks)
-- **Dimensional currency exchange**: Banks are **8%** more efficient (requires 1000 banks)
-- **Singularity financial algorithms**: Banks are **8%** more efficient (requires 1100 banks)
-- **Reality-warping economics**: Banks are **8%** more efficient (requires 1200 banks)
-
-##### Temple Upgrades
-- **Quantum divine intervention**: Temples are **8%** more efficient (requires 800 temples)
-- **Temporal prayer loops**: Temples are **8%** more efficient (requires 900 temples)
-- **Dimensional deity summoning**: Temples are **8%** more efficient (requires 1000 temples)
-- **Singularity divine consciousness**: Temples are **8%** more efficient (requires 1100 temples)
-- **Reality-warping divinity**: Temples are **8%** more efficient (requires 1200 temples)
-
-##### Wizard Tower Upgrades
-- **Arcane resonance**: Wizard towers are **8%** more efficient (requires 800 wizard towers)
-- **Spell weaving**: Wizard towers are **8%** more efficient (requires 900 wizard towers)
-- **Mystical attunement**: Wizard towers are **8%** more efficient (requires 1000 wizard towers)
-- **Ethereal manifestation**: Wizard towers are **8%** more efficient (requires 1100 wizard towers)
-- **Transcendent thaumaturgy**: Wizard towers are **8%** more efficient (requires 1200 wizard towers)
-
-##### Shipment Upgrades
-- **Hypervelocity transport**: Shipments are **8%** more efficient (requires 800 shipments)
-- **Spatial compression**: Shipments are **8%** more efficient (requires 900 shipments)
-- **Dimensional routing**: Shipments are **8%** more efficient (requires 1000 shipments)
-- **Quantum teleportation**: Shipments are **8%** more efficient (requires 1100 shipments)
-- **Causality manipulation**: Shipments are **8%** more efficient (requires 1200 shipments)
-
-##### Alchemy Lab Upgrades
-- **Essence distillation**: Alchemy labs are **8%** more efficient (requires 800 alchemy labs)
-- **Molecular gastronomy**: Alchemy labs are **8%** more efficient (requires 900 alchemy labs)
-- **Flavor alchemy**: Alchemy labs are **8%** more efficient (requires 1000 alchemy labs)
-- **Culinary transmutation**: Alchemy labs are **8%** more efficient (requires 1100 alchemy labs)
-- **Gastronomic enlightenment**: Alchemy labs are **8%** more efficient (requires 1200 alchemy labs)
-
-##### Portal Upgrades
-- **Dimensional gateways**: Portals are **8%** more efficient (requires 800 portals)
-- **Reality bridges**: Portals are **8%** more efficient (requires 900 portals)
-- **Spatial conduits**: Portals are **8%** more efficient (requires 1000 portals)
-- **Interdimensional highways**: Portals are **8%** more efficient (requires 1100 portals)
-- **Cosmic gateways**: Portals are **8%** more efficient (requires 1200 portals)
-
-##### Time Machine Upgrades
-- **Temporal engineering**: Time machines are **8%** more efficient (requires 800 time machines)
-- **Chronological optimization**: Time machines are **8%** more efficient (requires 900 time machines)
-- **Historical preservation**: Time machines are **8%** more efficient (requires 1000 time machines)
-- **Temporal synchronization**: Time machines are **8%** more efficient (requires 1100 time machines)
-- **Chronological mastery**: Time machines are **8%** more efficient (requires 1200 time machines)
-
-##### Antimatter Condenser Upgrades
-- **Particle synthesis**: Antimatter condensers are **8%** more efficient (requires 800 antimatter condensers)
-- **Matter transmutation**: Antimatter condensers are **8%** more efficient (requires 900 antimatter condensers)
-- **Quantum baking**: Antimatter condensers are **8%** more efficient (requires 1000 antimatter condensers)
-- **Particle optimization**: Antimatter condensers are **8%** more efficient (requires 1100 antimatter condensers)
-- **Matter manipulation**: Antimatter condensers are **8%** more efficient (requires 1200 antimatter condensers)
-
-##### Prism Upgrades
-- **Light crystallization**: Prisms are **8%** more efficient (requires 800 prisms)
-- **Spectral baking**: Prisms are **8%** more efficient (requires 900 prisms)
-- **Optical alchemy**: Prisms are **8%** more efficient (requires 1000 prisms)
-- **Luminous confectionery**: Prisms are **8%** more efficient (requires 1100 prisms)
-- **Radiant gastronomy**: Prisms are **8%** more efficient (requires 1200 prisms)
-
-##### Chancemaker Upgrades
-- **Probability manipulation**: Chancemakers are **8%** more efficient (requires 800 chancemakers)
-- **Fortune optimization**: Chancemakers are **8%** more efficient (requires 900 chancemakers)
-- **Serendipity engineering**: Chancemakers are **8%** more efficient (requires 1000 chancemakers)
-- **Random enhancement**: Chancemakers are **8%** more efficient (requires 1100 chancemakers)
-- **Luck amplification**: Chancemakers are **8%** more efficient (requires 1200 chancemakers)
-
-##### Fractal Engine Upgrades
-- **Infinite recursion**: Fractal engines are **8%** more efficient (requires 800 fractal engines)
-- **Self-similar baking**: Fractal engines are **8%** more efficient (requires 900 fractal engines)
-- **Fractal optimization**: Fractal engines are **8%** more efficient (requires 1000 fractal engines)
-- **Recursive enhancement**: Fractal engines are **8%** more efficient (requires 1100 fractal engines)
-- **Fractal gastronomy**: Fractal engines are **8%** more efficient (requires 1200 fractal engines)
-
-##### Javascript Console Upgrades
-- **Code optimization**: Javascript consoles are **8%** more efficient (requires 800 javascript consoles)
-- **Programmatic baking**: Javascript consoles are **8%** more efficient (requires 900 javascript consoles)
-- **Algorithmic enhancement**: Javascript consoles are **8%** more efficient (requires 1000 javascript consoles)
-- **Computational gastronomy**: Javascript consoles are **8%** more efficient (requires 1100 javascript consoles)
-- **Digital confectionery**: Javascript consoles are **8%** more efficient (requires 1200 javascript consoles)
-
-##### Idleverse Upgrades
-- **Reality real estate**: Idleverses are **8%** more efficient (requires 800 idleverses)
-- **Dimensional franchising**: Idleverses are **8%** more efficient (requires 900 idleverses)
-- **Cosmic supply chains**: Idleverses are **8%** more efficient (requires 1000 idleverses)
-- **Reality marketplaces**: Idleverses are **8%** more efficient (requires 1100 idleverses)
-- **Multiverse headquarters**: Idleverses are **8%** more efficient (requires 1200 idleverses)
-
-##### Cortex Baker Upgrades
-- **Neural plasticity**: Cortex bakers are **8%** more efficient (requires 800 cortex bakers)
-- **Synaptic pruning**: Cortex bakers are **8%** more efficient (requires 900 cortex bakers)
-- **Cognitive load balancing**: Cortex bakers are **8%** more efficient (requires 1000 cortex bakers)
-- **Metacognitive awareness**: Cortex bakers are **8%** more efficient (requires 1100 cortex bakers)
-- **Neural synchronization**: Cortex bakers are **8%** more efficient (requires 1200 cortex bakers)
-
-##### You Upgrades
 - **Mitotic mastery**: You are **8%** more efficient (requires 800 You)
+- **Replica production lines**: You cost **5%** less (requires 850 You)
 - **Epigenetic programming**: You are **8%** more efficient (requires 900 You)
+- **Mirror manufacturing mastery**: You cost **5%** less (requires 950 You)
 - **Cellular differentiation**: You are **8%** more efficient (requires 1000 You)
+- **Twin tycoon pricing**: You cost **5%** less (requires 1050 You)
 - **Telomere regeneration**: You are **8%** more efficient (requires 1100 You)
+- **Doppelganger discount networks**: You cost **5%** less (requires 1150 You)
 - **Quantum entanglement**: You are **8%** more efficient (requires 1200 You)
+- **Clone supply dominance**: You cost **5%** less (requires 1250 You)
