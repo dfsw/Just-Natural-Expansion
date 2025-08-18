@@ -469,10 +469,8 @@ The mobile version of Cookie Clicker does not support mods at this time.
 - **Improved Lavender chocolate butter biscuit**: 10% cookie production increase (requires at least 950 of every building type)
 - **Improved Synthetic chocolate green honey butter biscuit**: 10% cookie production increase (requires at least 1,000 of every building type)
 
-### Building Upgrades
-
 ### Building Upgrades (Efficiency + Cost Reductions) (209 Upgrades)
-Note: For each building, upgrades alternate by threshold: cost reductions at 750/850/950/1050/1150/1250 and efficiency at 800/900/1000/1100/1200.
+*Note: These upgrades provide cumulative 5% cost reductions for their respective buildings. Each upgrade applies a 5% discount to the remaining cost, so owning all 6 upgrades for a building provides approximately a 26.5% total discount.*
 
 ##### Grandma
 - **Increased Social Security Checks**: Grandmas cost **5%** less (requires 750 grandmas)
