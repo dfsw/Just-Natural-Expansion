@@ -42,25 +42,35 @@ Installing mods and add-ons for Cookie Clicker can feel intimidating if you’ve
 
 #### Web (Preferred)
 
-##### [CookieClickerModManager](https://github.com/klattmose/CookieClickerModManager)
-https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/JustNaturalExpansion.js
+##### [CookieClickerModManager](https://github.com/klattmose/CookieClickerModManager) - Recommended
+`https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/JustNaturalExpansion.js`
 
 ##### [Bookmarklet](https://www.freecodecamp.org/news/what-are-bookmarklets/)
-javascript:(function(){Game.LoadMod('https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/JustNaturalExpansion.js
-')})()
+```javascript
+javascript:(function(){Game.LoadMod('https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/JustNaturalExpansion.js');})();
+```
 
-##### Direct Link (Copy and Paste Code into Console)
-https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/JustNaturalExpansion.js
+##### Direct Console Loading
+```javascript
+Game.LoadMod('https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/JustNaturalExpansion.js');
+```
 
 #### Steam
 Steam has not yet been tested, apparently I need to make some changes to the mod to get it working there and I just havent gotten around to it yet, sorry. 
 
 #### Console (untested)
-Game.LoadMod('https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/JustNaturalExpansion.js
-')
+```javascript
+Game.LoadMod('https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/JustNaturalExpansion.js');
+```
 
 #### Mobile
-The mobile version of Cookie Clicker does not support mods at this time. 
+The mobile version of Cookie Clicker does not support mods at this time.
+
+#### Compatibility Notes
+- **CCSE Compatible**: Works with Cookie Clicker Script Extender
+- **CCMM Compatible**: Works with Cookie Clicker Mod Manager
+- **Load Order**: For best compatibility, load CCSE first, then this mod
+- **Browser Support**: Works in all modern browsers 
 
 
 # New Achievements
