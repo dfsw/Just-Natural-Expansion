@@ -9,7 +9,7 @@
     var debugMode = false;
     var isLoadingModData = true;
     var runtimeSessionId = Math.floor(Math.random()*1e9) + '-' + Date.now();
-    
+        
     /*There seems to be a bug with the vanilla game involving local caching and mod saved data, this was an overly complex work around
     I doubt anyone is playing like I am testing with frequent save swaps and resets, but better to try and be safe. 
     Compute a base save hash that uniquely identifies the current vanilla save*/
@@ -84,6 +84,37 @@
     var pendingSaveTimer = null; // Throttle saves
     var saveCooldownMs = 1000; // Minimum delay between saves
     var toggleSaveData = {}; // Store upgrade states during toggle operations
+    
+    // Event System for Mod Integration
+    // Creates a basic event system if Cookie Clicker doesn't provide one
+    function ensureEventSystem() {
+        if (typeof Game === 'undefined') return false;
+        
+        // Create event system if it doesn't exist
+        if (!Game.emit) {
+            Game.emit = function(event, data) {
+                if (this._listeners && this._listeners[event]) {
+                    for (var i = 0; i < this._listeners[event].length; i++) {
+                        try {
+                            this._listeners[event][i](data);
+                        } catch (e) {
+                            console.warn('Just Natural Expansion: Event handler error:', e);
+                        }
+                    }
+                }
+            };
+        }
+        
+        if (!Game.on) {
+            Game.on = function(event, callback) {
+                if (!this._listeners) this._listeners = {};
+                if (!this._listeners[event]) this._listeners[event] = [];
+                this._listeners[event].push(callback);
+            };
+        }
+        
+        return true;
+    }
     
     // Centralized save scheduler to avoid spamming saves
     function requestModSave(immediate) {
@@ -452,39 +483,36 @@
     function updateMenuButtons() {
         let buttons = document.querySelectorAll('#just-natural-expansion-settings .option');
         buttons.forEach(button => {
-            let onclick = button.getAttribute('onclick');
-            if (onclick) {
-                let settingName = '';
-                if (onclick.includes('shadowAchievements')) settingName = 'shadowAchievements';
-                else if (onclick.includes('enableCookieUpgrades')) settingName = 'enableCookieUpgrades';
-                else if (onclick.includes('enableBuildingUpgrades')) settingName = 'enableBuildingUpgrades';
-                else if (onclick.includes('enableKittenUpgrades')) settingName = 'enableKittenUpgrades';
+            let settingName = '';
+            if (button.id === 'toggle-shadow-achievements') settingName = 'shadowAchievements';
+            else if (button.id === 'toggle-cookie-upgrades') settingName = 'enableCookieUpgrades';
+            else if (button.id === 'toggle-building-upgrades') settingName = 'enableBuildingUpgrades';
+            else if (button.id === 'toggle-kitten-upgrades') settingName = 'enableKittenUpgrades';
+            
+            if (settingName) {
+                let buttonText = '';
+                let isEnabled = false;
                 
-                if (settingName) {
-                    let buttonText = '';
-                    let isEnabled = false;
-                    
-                    switch(settingName) {
-                        case 'shadowAchievements':
-                            isEnabled = shadowAchievementMode;
-                            buttonText = `Shadow Achievements<br><b style="font-size:12px;">${isEnabled ? 'ON' : 'OFF'}</b>`;
-                            break;
-                        case 'enableCookieUpgrades':
-                            isEnabled = enableCookieUpgrades;
-                            buttonText = `Cookie Upgrades<br><b style="font-size:12px;">${isEnabled ? 'ON' : 'OFF'}</b>`;
-                            break;
-                        case 'enableBuildingUpgrades':
-                            isEnabled = enableBuildingUpgrades;
-                            buttonText = `Building Upgrades<br><b style="font-size:12px;">${isEnabled ? 'ON' : 'OFF'}</b>`;
-                            break;
-                        case 'enableKittenUpgrades':
-                            isEnabled = enableKittenUpgrades;
-                            buttonText = `Kitten Upgrades<br><b style="font-size:12px;">${isEnabled ? 'ON' : 'OFF'}</b>`;
-                            break;
-                    }
-                    button.innerHTML = buttonText;
-                    button.style.color = isEnabled ? 'lime' : 'red';
+                switch(settingName) {
+                    case 'shadowAchievements':
+                        isEnabled = shadowAchievementMode;
+                        buttonText = `Shadow Achievements<br><b style="font-size:12px;">${isEnabled ? 'ON' : 'OFF'}</b>`;
+                        break;
+                    case 'enableCookieUpgrades':
+                        isEnabled = enableCookieUpgrades;
+                        buttonText = `Cookie Upgrades<br><b style="font-size:12px;">${isEnabled ? 'ON' : 'OFF'}</b>`;
+                        break;
+                    case 'enableBuildingUpgrades':
+                        isEnabled = enableBuildingUpgrades;
+                        buttonText = `Building Upgrades<br><b style="font-size:12px;">${isEnabled ? 'ON' : 'OFF'}</b>`;
+                        break;
+                    case 'enableKittenUpgrades':
+                        isEnabled = enableKittenUpgrades;
+                        buttonText = `Kitten Upgrades<br><b style="font-size:12px;">${isEnabled ? 'ON' : 'OFF'}</b>`;
+                        break;
                 }
+                button.innerHTML = buttonText;
+                button.style.color = isEnabled ? 'lime' : 'red';
             }
         });
     }
@@ -532,19 +560,19 @@
         if (settingName === 'shadowAchievements') {
             if (newState) {
                 message = 'Enable shadow achievements?<br><small>All mod achievements will be moved to the shadow pool and will no longer grant milk or affect gameplay.</small>';
-                callback = 'JustNaturalExpansionMod.applyShadowAchievementChange(true);';
+                callback = 'applyShadowAchievementChange(true);';
             } else {
                 message = 'Disable shadow achievements?<br><small>All mod achievements will be moved to the normal pool and will grant milk and affect gameplay. This will award the "Beyond the Leaderboard" shadow achievement to indicate you have left competition mode.</small>';
-                callback = 'JustNaturalExpansionMod.applyShadowAchievementChange(false);';
+                callback = 'applyShadowAchievementChange(false);';
             }
         } else if (settingName === 'enableCookieUpgrades' || settingName === 'enableBuildingUpgrades' || settingName === 'enableKittenUpgrades') {
             let upgradeType = settingName.replace('enable', '').replace('Upgrades', '');
             if (newState) {
                 message = 'Enable ' + upgradeType + ' upgrades?<br><small>These upgrades will be added to the game and may affect your CPS and gameplay. This will award the "Beyond the Leaderboard" shadow achievement to indicate you have left competition mode.</small>';
-                callback = 'JustNaturalExpansionMod.applyUpgradeChange("' + settingName + '", true);';
+                callback = 'applyUpgradeChange("' + settingName + '", true);';
             } else {
                 message = 'Disable ' + upgradeType + ' upgrades?<br><small>These upgrades will be removed from the game. Their purchase state will be remembered and will restore when turned back on.</small>';
-                callback = 'JustNaturalExpansionMod.applyUpgradeChange("' + settingName + '", false);';
+                callback = 'applyUpgradeChange("' + settingName + '", false);';
             }
         }
         
@@ -850,29 +878,25 @@
                                 Players seeking bigger numbers and a richer late-game can enable Cookie, Kitten, and Building upgrades, and convert shadow achievements into regular ones, earning additional milk for their accomplishments. All new achievements are designed to be attainable, though some require significant effort. Thank you for playing—and if you enjoy the mod, please spread the word!
                             </div>
                             <div class="listing">
-                                <a class="option" style="text-decoration:none;color:${shadowAchievementMode ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;" 
-                                   onclick="JustNaturalExpansionMod.toggleSetting('shadowAchievements');">
+                                <a class="option" id="toggle-shadow-achievements" style="text-decoration:none;color:${shadowAchievementMode ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
                                     Shadow Achievements<br><b style="font-size:12px;">${shadowAchievementMode ? 'ON' : 'OFF'}</b>
                                 </a>
                                 <label>(Shadow achievements do not grant milk or affect gameplay, suitable for competition play.)</label>
                             </div>
                             <div class="listing">
-                                <a class="option" style="text-decoration:none;color:${enableCookieUpgrades ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;" 
-                                   onclick="JustNaturalExpansionMod.toggleSetting('enableCookieUpgrades');">
+                                <a class="option" id="toggle-cookie-upgrades" style="text-decoration:none;color:${enableCookieUpgrades ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
                                     Cookie Upgrades<br><b style="font-size:12px;">${enableCookieUpgrades ? 'ON' : 'OFF'}</b>
                                 </a>
                                 <label>(Cookie upgrades add cookies which increase CPS when purchased.)</label>
                             </div>
                             <div class="listing">
-                                <a class="option" style="text-decoration:none;color:${enableBuildingUpgrades ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;" 
-                                   onclick="JustNaturalExpansionMod.toggleSetting('enableBuildingUpgrades');">
+                                <a class="option" id="toggle-building-upgrades" style="text-decoration:none;color:${enableBuildingUpgrades ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
                                     Building Upgrades<br><b style="font-size:12px;">${enableBuildingUpgrades ? 'ON' : 'OFF'}</b>
                                 </a>
                                 <label>(Building upgrades add multipliers that affect specific buildings CPS.)</label>
                             </div>
                             <div class="listing">
-                                <a class="option" style="text-decoration:none;color:${enableKittenUpgrades ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;" 
-                                   onclick="JustNaturalExpansionMod.toggleSetting('enableKittenUpgrades');">
+                                <a class="option" id="toggle-kitten-upgrades" style="text-decoration:none;color:${enableKittenUpgrades ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
                                     Kitten Upgrades<br><b style="font-size:12px;">${enableKittenUpgrades ? 'ON' : 'OFF'}</b>
                                 </a>
                                 <label>(Kittens can be purchased after earning enough milk, they provide an overall boost to CPS.)</label>
@@ -892,8 +916,41 @@
                         menuContainer.appendChild(settingsDiv);
                     }
                     
-                    // Update buttons to reflect current settings
+                    // Add event listeners to the toggle buttons
                     setTimeout(() => {
+                        // Shadow achievements toggle
+                        let shadowToggle = settingsDiv.querySelector('#toggle-shadow-achievements');
+                        if (shadowToggle) {
+                            shadowToggle.addEventListener('click', function() {
+                                toggleSetting('shadowAchievements');
+                            });
+                        }
+                        
+                        // Cookie upgrades toggle
+                        let cookieToggle = settingsDiv.querySelector('#toggle-cookie-upgrades');
+                        if (cookieToggle) {
+                            cookieToggle.addEventListener('click', function() {
+                                toggleSetting('enableCookieUpgrades');
+                            });
+                        }
+                        
+                        // Building upgrades toggle
+                        let buildingToggle = settingsDiv.querySelector('#toggle-building-upgrades');
+                        if (buildingToggle) {
+                            buildingToggle.addEventListener('click', function() {
+                                toggleSetting('enableBuildingUpgrades');
+                            });
+                        }
+                        
+                        // Kitten upgrades toggle
+                        let kittenToggle = settingsDiv.querySelector('#toggle-kitten-upgrades');
+                        if (kittenToggle) {
+                            kittenToggle.addEventListener('click', function() {
+                                toggleSetting('enableKittenUpgrades');
+                            });
+                        }
+                        
+                        // Update buttons to reflect current settings
                         updateMenuButtons();
                     }, 10);
                 }
@@ -7973,32 +8030,80 @@
         } catch (e) {
             console.error('Error creating kitten upgrade:', upgradeInfo.name, e);
         }
+        
+        // Emit event for any integrations
+        if (typeof Game !== 'undefined' && Game.emit) {
+            Game.emit('upgradeCreated', { upgrade: Game.Upgrades[upgradeInfo.name], type: 'kitten' });
+        }
     }
-
-
-
-    // Create cookie upgrade (refactored)
-    function createCookieUpgrade(upgradeInfo) {
-        // Validate that this is actually a cookie upgrade
-        if (!upgradeInfo || upgradeInfo.pool !== 'cookie') {
-            console.error('Non-cookie upgrade misrouted to createCookieUpgrade:', upgradeInfo ? upgradeInfo.name : 'undefined', upgradeInfo ? upgradeInfo.pool : 'undefined');
-            return;
+    
+    // Helper function to configure upgrades after creation (extracted from original logic)
+    function configureUpgradeAfterCreation(upgrade, upgradeInfo) {
+        // Set default canBuy function (will be overridden for upgrades with requirements)
+        upgrade.canBuy = function() {
+            // Check discounted price (uses getPrice when available, same as building upgrades)
+            var actualPrice = this.getPrice ? this.getPrice() : this.price;
+            return this.unlocked && !this.bought && Game.cookies >= actualPrice;
+        };
+        
+        // Set descriptions
+        upgrade.desc = upgradeInfo.desc;
+        upgrade.ddesc = upgradeInfo.ddesc;
+        
+        // Set order property if provided (similar to achievements)
+        if (upgradeInfo.order !== undefined) {
+            upgrade.order = upgradeInfo.order;
         }
         
-        if (!validateUpgradeData(upgradeInfo, ['power'], 'cookie')) {
-            return;
-        }
-        
-        try {
-            // Create cookie upgrades using the proper Cookie Clicker method
-            // NOTE: Don't pass require to Game.NewUpgradeCookie - we'll handle it ourselves
-            Game.NewUpgradeCookie({
-                name: upgradeInfo.name,
-                icon: upgradeInfo.icon,
-                power: upgradeInfo.power,
-                price: upgradeInfo.price
-                // require: upgradeInfo.require || ''  // REMOVED - we handle requirements ourselves
-            });
+        // Handle requirements entirely through our custom logic
+        if (upgradeInfo.require) {
+            // Set the require property for display purposes
+            upgrade.require = upgradeInfo.require;
+            
+            // CRITICAL: Force the upgrade to be locked initially
+            upgrade.unlocked = 0;
+            
+            // Create the unlockCondition function that will control when it unlocks
+            upgrade.unlockCondition = function() {
+                var result = false;
+                
+                // Check if it's an upgrade requirement first (more specific)
+                if (Game.Upgrades[upgradeInfo.require]) {
+                    // It's an upgrade requirement - check if owned
+                    result = Game.Has(upgradeInfo.require);
+                } else if (Game.Achievements[upgradeInfo.require]) {
+                    // It's an achievement requirement - check if won
+                    result = Game.Achievements[upgradeInfo.require].won;
+                } else {
+                    // Check if it's a custom requirement type that needs our requirement function
+                    if (typeof createRequirementFunction === 'function') {
+                        // Check if game is ready before evaluating custom requirements
+                        if (!Game.ready || !Game.Objects || Object.keys(Game.Objects).length === 0) {
+                            return false;
+                        }
+                        
+                        // Create a temporary requirement function to test this requirement
+                        var tempRequirement = createRequirementFunction(upgradeInfo.require);
+                        if (tempRequirement) {
+                            result = tempRequirement();
+                        } else {
+                            // Fallback - assume it's an upgrade and check if owned
+                            result = Game.Has(upgradeInfo.require);
+                        }
+                    } else {
+                        // Fallback - assume it's an upgrade and check if owned
+                        result = Game.Has(upgradeInfo.require);
+                    }
+                }
+                
+                return result;
+            };
+            
+            // Start cookie upgrades as locked - our checkAndUnlockOrderUpgrades function will manage unlock state
+            upgrade.unlocked = 0;
+            
+            // CRITICAL: Also override the canBuy function to ensure it respects the requirement
+            // This provides an additional layer of protection
             
             // Get the created upgrade object
             var upgrade = Game.Upgrades[upgradeInfo.name];
@@ -8009,7 +8114,7 @@
             
             // Set default canBuy function (will be overridden for upgrades with requirements)
             upgrade.canBuy = function() {
-                // Check if we have enough money
+                // Check discounted price (uses getPrice when available, same as building upgrades)
                 var actualPrice = this.getPrice ? this.getPrice() : this.price;
                 return this.unlocked && !this.bought && Game.cookies >= actualPrice;
             };
@@ -8062,6 +8167,165 @@
                             // Fallback - assume it's an upgrade and check if owned
                             result = Game.Has(upgradeInfo.require);
                         }
+                    }
+                    
+                    return result;
+                };
+                
+                // Start cookie upgrades as locked - our checkAndUnlockOrderUpgrades function will manage unlock state
+                upgrade.unlocked = 0;
+                
+                // CRITICAL: Also override the canBuy function to ensure it respects the requirement
+                // This provides an additional layer of protection
+                upgrade.canBuy = function() {
+                    // ALWAYS check the requirement first - if not met, can't buy
+                    if (this.unlockCondition && !this.unlockCondition()) {
+                        return false; // Can't buy if requirement not met
+                    }
+                    
+                    // Only if requirement is met, check other conditions
+                    var actualPrice = this.getPrice ? this.getPrice() : this.price;
+                    var canBuyResult = !this.bought && Game.cookies >= actualPrice;
+                    
+                    return canBuyResult;
+                };
+            }
+            
+            // Apply appropriate formatting based on requirement
+            if (upgradeInfo.require === 'Box of improved cookies') {
+                // Check if the required upgrade exists before accessing its properties
+                if (Game.Upgrades['Box of improved cookies']) {
+                    var requireText = '<div style="font-size:80%;text-align:center;">From ' + tinyIcon([34, 4]) + ' Box of improved cookies</div>';
+                    var modSourceText = '<div style="font-size:80%;text-align:center;margin-top:2px;">Part of <span style="margin: 0 4px;">' + tinyIcon(modIcon) + '</span> ' + modName + '</div>';
+                    var combinedText = requireText + '<div style="height:2px;"></div>' + modSourceText + '<div class="line"></div>';
+                    
+                    upgrade.ddesc = combinedText + upgradeInfo.ddesc;
+                    upgrade.desc = combinedText + upgradeInfo.desc;
+                } else {
+                    // Fallback if the required upgrade doesn't exist yet
+                    console.warn('Required upgrade "Box of improved cookies" not found for:', upgradeInfo.name);
+                    addSourceText(upgrade);
+                }
+            } else {
+                addSourceText(upgrade);
+            }
+        }
+    }
+    
+    // Create cookie upgrade (refactored)
+    function createCookieUpgrade(upgradeInfo) {
+        // Validate that this is actually a cookie upgrade
+        if (!upgradeInfo || upgradeInfo.pool !== 'cookie') {
+            console.error('Non-cookie upgrade misrouted to createCookieUpgrade:', upgradeInfo ? upgradeInfo.name : 'undefined', upgradeInfo ? upgradeInfo.pool : 'undefined');
+            return;
+        }
+        
+        if (!validateUpgradeData(upgradeInfo, ['power'], 'cookie')) {
+            return;
+        }
+        
+        try {
+            var upgrade;
+            
+            // Try to use the proper Cookie Clicker method first, but detect if CCSE has broken it
+            if (typeof Game.NewUpgradeCookie === 'function') {
+                try {
+                    // Create cookie upgrades using the proper Cookie Clicker method
+                    // NOTE: Don't pass require to Game.NewUpgradeCookie - we'll handle it ourselves
+                    Game.NewUpgradeCookie({
+                        name: upgradeInfo.name,
+                        icon: upgradeInfo.icon,
+                        power: upgradeInfo.power,
+                        price: upgradeInfo.price
+                        // require: upgradeInfo.require || ''  // REMOVED - we handle requirements ourselves
+                    });
+                    
+                    // Get the created upgrade object
+                    upgrade = Game.Upgrades[upgradeInfo.name];
+                    if (!upgrade) {
+                        throw new Error('NewUpgradeCookie failed to create upgrade');
+                    }
+                } catch (error) {
+                    // CCSE has broken NewUpgradeCookie - fall back to generic method
+                    console.log('CCSE has broken Game.NewUpgradeCookie, using fallback method for:', upgradeInfo.name);
+                    
+                    // Use fallback method
+                    var ddescText = upgradeInfo.ddesc || upgradeInfo.desc || '';
+                    new Game.Upgrade(upgradeInfo.name, ddescText, upgradeInfo.price, upgradeInfo.icon);
+                    
+                    upgrade = Game.last;
+                    if (!upgrade || upgrade.name !== upgradeInfo.name) {
+                        throw new Error('Failed to create cookie upgrade with fallback method: ' + upgradeInfo.name);
+                    }
+                    
+                    // Set cookie-specific properties for fallback method
+                    upgrade.power = upgradeInfo.power || 0;
+                    upgrade.pool = 'cookie';
+                    
+                    // Ensure the upgrade is registered
+                    if (!Game.Upgrades[upgradeInfo.name]) {
+                        Game.Upgrades[upgradeInfo.name] = upgrade;
+                    }
+                }
+            } else {
+                // Fallback: use the generic Game.Upgrade constructor if NewUpgradeCookie is not available
+                console.log('Game.NewUpgradeCookie not available, using fallback method for:', upgradeInfo.name);
+                var ddescText = upgradeInfo.ddesc || upgradeInfo.desc || '';
+                new Game.Upgrade(upgradeInfo.name, ddescText, upgradeInfo.price, upgradeInfo.icon);
+                
+                upgrade = Game.last;
+                if (!upgrade || upgrade.name !== upgradeInfo.name) {
+                    throw new Error('Failed to create cookie upgrade with fallback method: ' + upgradeInfo.name);
+                }
+                
+                // Set cookie-specific properties for fallback method
+                upgrade.power = upgradeInfo.power || 0;
+                upgrade.pool = 'cookie';
+                
+                // Ensure the upgrade is registered
+                if (!Game.Upgrades[upgradeInfo.name]) {
+                    Game.Upgrades[upgradeInfo.name] = upgrade;
+                }
+            }
+            
+            // Set default canBuy function (will be overridden for upgrades with requirements)
+            upgrade.canBuy = function() {
+                // Check if we have enough money
+                var actualPrice = this.getPrice ? this.getPrice() : this.price;
+                return this.unlocked && !this.bought && Game.cookies >= actualPrice;
+            };
+            
+            // Set descriptions
+            upgrade.desc = upgradeInfo.desc;
+            upgrade.ddesc = upgradeInfo.ddesc;
+            
+            // Set order property if provided (similar to achievements)
+            if (upgradeInfo.order !== undefined) {
+                upgrade.order = upgradeInfo.order;
+            }
+            
+            // Handle requirements entirely through our custom logic
+            if (upgradeInfo.require) {
+                // Set the require property for display purposes
+                upgrade.require = upgradeInfo.require;
+                
+                // CRITICAL: Force the upgrade to be locked initially
+                upgrade.unlocked = 0;
+                
+                // Create the unlockCondition function that will control when it unlocks
+                upgrade.unlockCondition = function() {
+                    var result = false;
+                    
+                    // Check if it's an upgrade requirement first (more specific)
+                    if (Game.Upgrades[upgradeInfo.require]) {
+                        // It's an upgrade requirement - check if owned
+                        result = Game.Has(upgradeInfo.require);
+                    } else if (Game.Achievements[upgradeInfo.require]) {
+                        // It's an achievement requirement - check if won
+                        result = Game.Achievements[upgradeInfo.require].won;
+                    } else {
+                        // Fallback - assume it's an upgrade and check if owned
+                        result = Game.Has(upgradeInfo.require);
                     }
                     
                     return result;
@@ -8160,6 +8424,11 @@
             
         } catch (e) {
             console.error('Error creating building upgrade:', upgradeInfo.name, e);
+        }
+        
+        // Emit event for any integrations
+        if (typeof Game !== 'undefined' && Game.emit) {
+            Game.emit('upgradeCreated', { upgrade: Game.Upgrades[upgradeInfo.name], type: 'building' });
         }
     }
     
@@ -8300,7 +8569,7 @@
                             
                             // Then check if we have enough money
                             var actualPrice = this.getPrice ? this.getPrice() : this.price;
-                            return this.unlocked && !this.bought && Game.cookies >= actualPrice;
+                            return !this.bought && Game.cookies >= actualPrice;
                         };
                     }
                     
@@ -8311,17 +8580,12 @@
                     if (upgrade.unlockCondition) {
                         shouldUnlock = upgrade.unlockCondition();
                         
-                        // Only unlock if the condition is met and it's not already unlocked
-                        if (shouldUnlock && !upgrade.unlocked) {
-                            // Don't call Game.Unlock() - let our custom unlocked property handle it
-                            // Game.Unlock(upgradeInfo.name);
+                        // Update the unlock status based on the condition
+                        if (shouldUnlock && upgrade.unlocked != 1) {
+                            upgrade.unlocked = 1;
+                        } else if (!shouldUnlock && upgrade.unlocked == 1) {
+                            upgrade.unlocked = 0;
                         }
-                    }
-                    
-                    // Only unlock if there's a specific unlock condition AND it's met
-                    if (upgradeInfo.require && shouldUnlock && !upgrade.unlocked) {
-                        // Don't call Game.Unlock() - let our custom unlocked property handle it
-                        // Game.Unlock(upgradeInfo.name);
                     }
                     
                     // Check if unlock status changed (the custom getter will handle the actual unlock logic)
@@ -8359,6 +8623,73 @@
             }
         });
     } 
+    
+    // Safety function to ensure upgrade properties are save-compatible
+    function sanitizeUpgradeForSave(upgrade) {
+        if (!upgrade) return null;
+        
+        // Ensure all text properties are strings to prevent beautification errors
+        return {
+            name: String(upgrade.name || ''),
+            desc: String(upgrade.desc || ''),
+            ddesc: String(upgrade.ddesc || ''),
+            nameIn: String(upgrade.nameIn || upgrade.name || ''),
+            descIn: String(upgrade.descIn || upgrade.desc || ''),
+            ddescIn: String(upgrade.ddescIn || upgrade.ddesc || ''),
+            pool: String(upgrade.pool || 'cookie'),
+            id: String(upgrade.id || upgrade.name || ''),
+            order: Number(upgrade.order || 0),
+            power: Number(upgrade.power || 0),
+            price: Number(upgrade.price || 0),
+            bought: Number(upgrade.bought || 0),
+            unlocked: Number(upgrade.unlocked || 0),
+            vanilla: Number(upgrade.vanilla || 0)
+        };
+    }
+    
+    // Safety function to ensure upgrades are properly restored with all required properties
+    function ensureUpgradeProperties(upgradeName) {
+        if (!Game.Upgrades[upgradeName]) return;
+        
+        var upgrade = Game.Upgrades[upgradeName];
+        
+        // Ensure all required properties exist and are properly typed
+        if (typeof upgrade.name !== 'string') upgrade.name = String(upgrade.name || '');
+        if (typeof upgrade.desc !== 'string') upgrade.desc = String(upgrade.desc || '');
+        if (typeof upgrade.ddesc !== 'string') upgrade.ddesc = String(upgrade.ddesc || '');
+        if (typeof upgrade.nameIn !== 'string') upgrade.nameIn = String(upgrade.nameIn || upgrade.name || '');
+        if (typeof upgrade.descIn !== 'string') upgrade.descIn = String(upgrade.descIn || upgrade.desc || '');
+        if (typeof upgrade.ddescIn !== 'string') upgrade.ddescIn = String(upgrade.ddescIn || upgrade.ddesc || '');
+        if (typeof upgrade.pool !== 'string') upgrade.pool = String(upgrade.pool || 'cookie');
+        if (typeof upgrade.id !== 'string') upgrade.id = String(upgrade.id || upgrade.name || '');
+        if (typeof upgrade.order !== 'number') upgrade.order = Number(upgrade.order || 0);
+        if (typeof upgrade.power !== 'number') upgrade.power = Number(upgrade.power || 0);
+        if (typeof upgrade.price !== 'number') upgrade.price = Number(upgrade.price || 0);
+        if (typeof upgrade.bought !== 'number') upgrade.bought = Number(upgrade.bought || 0);
+        if (typeof upgrade.unlocked !== 'number') upgrade.unlocked = Number(upgrade.unlocked || 0);
+        if (typeof upgrade.vanilla !== 'number') upgrade.vanilla = Number(upgrade.vanilla || 0);
+        
+        // Ensure icon is properly formatted
+        if (!Array.isArray(upgrade.icon)) upgrade.icon = [0, 0];
+        
+        // Handle cookie-specific properties
+        if (upgrade.pool === 'cookie') {
+            upgrade.shortTooltip = function() { return this.desc || ''; };
+            
+            // CCSE cookie upgrade tooltip system
+            upgrade.getCookieTooltip = function() { 
+                var base = this.ddesc || this.desc || '';
+                if (this.power && this.power > 0) {
+                    base += ' <span class="upgrade-effect">(+' + this.power + '%)</span>';
+                }
+                return base;
+            };
+            
+            // Ensure cookie upgrades have all expected tooltip methods
+            upgrade.getTooltip = upgrade.getCookieTooltip;
+            upgrade.tooltipFunc = upgrade.getCookieTooltip;
+        }
+    }
     
     // Save function for upgrades (simple approach from upgrades.js)
     function saveUpgradesData() {
@@ -8789,6 +9120,11 @@
         setTimeout(function() {
             modInitialized = true;
             
+            // Emit mod initialization event for any integrations
+            if (typeof Game !== 'undefined' && Game.emit) {
+                Game.emit('modInitialized', { modName: modName, modVersion: modVersion });
+            }
+            
 
             
             // Apply any deferred save data now that initialization is complete
@@ -8862,6 +9198,7 @@
     
     // Register the mod using the proper Cookie Clicker Modding API (like upgrades.js)
     // Log when Cookie Clicker interacts with our mod's save system
+    console.log('Just Natural Expansion: About to register mod with Cookie Clicker...');
     debugLog('Registering mod with Cookie Clicker save system...');
     
     Game.registerMod('JustNaturalExpansionMod', {
@@ -8870,17 +9207,38 @@
         
         // init() is called when the mod is first loaded
         init: function() {
+            console.log('Just Natural Expansion: Mod init() called');
+            
+            // Proceed with normal initialization
+            this.initializeModAfterCCSE();
+        },
+        
+        // Initialize mod after CCSE compatibility is handled
+        initializeModAfterCCSE: function() {
+            console.log('Just Natural Expansion: initializeModAfterCCSE() called');
+            
+
+            
             // Show mod loaded notification
             new Game.Note(modName + ' v' + modVersion + ' Mod Loaded!', 'Use the options menu to configure settings for ' + modName + '.', modIcon, 999);
+            console.log('Just Natural Expansion: Mod notification shown');
+            
             // Start initialization but defer choice check until save data loads
             // If there's no save data, load() won't be called, so we need to trigger the check
             setTimeout(function() {
+                console.log('Just Natural Expansion: Calling checkAndShowInitialChoice()...');
                 checkAndShowInitialChoice();
             }, 100); // Small delay to let load() run if it's going to
             
             // Initial check for all upgrades after achievements are loaded
             var self = this; // Capture 'this' reference
             setTimeout(function() {
+                // Ensure all upgrades have proper properties to prevent save/load errors
+                var modUpgradeNames = getModUpgradeNames ? getModUpgradeNames() : [];
+                modUpgradeNames.forEach(function(name) {
+                    ensureUpgradeProperties(name);
+                });
+                
                 self.checkAndUnlockAllUpgrades();
             }, 1000);
             
@@ -8923,7 +9281,7 @@
                 };
             }
         },
-        
+  
         // save() is called automatically by the game when saving
         save: function() {
             debugLog('mod.saveSystem.save: ===== BEGIN SAVE FUNCTION =====');
@@ -9003,6 +9361,11 @@
             var saveString = JSON.stringify(combinedData);
             debugLog('mod.saveSystem.save: end len=', saveString.length);
             
+            // Emit save event for any integrations
+            if (typeof Game !== 'undefined' && Game.emit) {
+                Game.emit('save', { modName: modName, modVersion: modVersion });
+            }
+            
             return saveString;
         },
         
@@ -9012,6 +9375,11 @@
             isLoadingModData = true;
             
             debugLog('mod.saveSystem.load: begin len=', str ? str.length : 0);
+            
+            // Emit load event for any integrations
+            if (typeof Game !== 'undefined' && Game.emit) {
+                Game.emit('load', { modName: modName, modVersion: modVersion });
+            }
             
             // ALWAYS reset garden sacrifice timer on any load operation to prevent save scumming
             lifetimeData.lastGardenSacrificeTime = 0;
@@ -10253,4 +10621,11 @@
         applyBuildingDiscount('You', youDiscountUpgrades);
     }, 3000);
 
+    //=====================================================================================
+    // CCSE BRIDGE INTEGRATION
+    // Core mod functionality above is completely independent of CCSE
+    // The bridge will be loaded dynamically when needed
+    
+    // Ensure event system is available for any integrations
+    ensureEventSystem();
 })();
