@@ -14,7 +14,9 @@ Many achievements are tracked across multiple ascensions or involve progress tha
 #### Special Thanks
 Extra gooey gratitude to the mysterious hero who uploaded the custom Cookie Clicker icons I stumbled upon on [Imgur](https://imgur.com/3jNJJNw). If you ever reveal yourself, I will shower you with credit (and maybe a few billion cookies). Those icons patched up some stubborn gaps that were giving me dough-induced headaches.
 
-Big, chocolate-covered thanks to the amazing folks in the [Cookie Clicker Discord](https://discord.com/invite/cookie), whose late-game wisdom and strategic tips helped shape this mod into the crunchy masterpiece it is today.
+Big, chocolate-covered thanks to the amazing folks in the [Cookie Clicker Discord](https://discord.com/invite/cookie), whose late-game wisdom and strategic tips helped shape this mod into the crunchy masterpiece it is today. 
+
+Thank you to the beta testers who were willing to help me balance and test, I have no struck a balance between people saying these achivements are too hard and these achievements are too easy, which I suspect is the sweet middle ground. 
 
 #### Why This Mod Exists
 
@@ -28,17 +30,32 @@ I hope this mod hits that mark and gives you years more clicking, planning, and 
 
 ## Installation Directions
 
-This mod has not been released yet, please keep an eye on this area for release information. 
+Installing mods and add-ons for Cookie Clicker can feel intimidating if you’ve never done it before. To get some background, check out this [guide from the wiki](https://cookieclicker.fandom.com/wiki/Add-Ons) Below, you’ll find specific instructions to help you get everything set up.
 
 #### Web (Preferred)
 
+##### [CookieClickerModManager](https://github.com/klattmose/CookieClickerModManager)
+https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/JustNaturalExpansion.js
+
+##### [Bookmarklet](https://www.freecodecamp.org/news/what-are-bookmarklets/)
+javascript:(function(){Game.LoadMod('https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/JustNaturalExpansion.js
+')})()
+
+##### Direct Link (Copy and Paste Code into Console)
+https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/JustNaturalExpansion.js
+
 #### Steam
+Steam has not yet been tested, apparently I need to make some changes to the mod to get it working there and I just havent gotten around to it yet, sorry. 
+
+#### Console (untested)
+Game.LoadMod('https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/JustNaturalExpansion.js
+')
 
 #### Mobile
 The mobile version of Cookie Clicker does not support mods at this time. 
 
 
-## New Achievements
+# New Achievements
 
 ### Challenge Achievements (19 achievements)
 *Note: Yes, these challenges are all doable, and no, none of them are absurdly impossible (No [ECM Style](https://lookas123.github.io/ECM/) Here). But don’t expect a free ride. These achievements will not hold your hand, and they will not go easy on you. Think of them less as a grind and more as puzzles that demand clever planning, precise timing, and maybe a lucky cookie or a well-placed upgrade. This is late-game content meant to extend your playtime, not something to finish in a single week.*
@@ -49,7 +66,7 @@ The mobile version of Cookie Clicker does not support mods at this time.
 - **The Final Countdown**: Own exactly 20 Cursors, 19 Grandmas, 18 Farms, yada yada yada, down to 1 You. No selling or sacrificing any buildings. Must be earned in Born Again mode
 - **Really more of a dog person**: Bake **1 billion cookies per second** without buying any kitten upgrades in Born Again mode
 - **Gilded Restraint**: Bake **1 quadrillion cookies** without ever clicking a golden cookie, must be done in Born Again mode
-- **Back to Basic Bakers**: Reach **1 billion cookies per second** using only Cursors and Grandmas (no other buildings, no selling), must be done in Born Again mode
+- **Back to Basic Bakers**: Reach **1 billion cookies per second** using only Cursors and Grandmas (no other buildings), must be done in Born Again mode
 - **Modest Portfolio**: Reach **1 quadrillion cookies** without ever owning more than 5 of any building type (no selling), must be done in Born Again mode
 - **Difficult Decisions**: Bake **1 billion cookies** without ever having more than **25 combined upgrades or buildings** at any given time, must be done in Born Again mode
 - **Laid in Plain Sight**: Bake **10 cookies per second** without purchasing any buildings, must be done in Born Again mode
@@ -59,9 +76,9 @@ The mobile version of Cookie Clicker does not support mods at this time.
 - **Holiday Hoover**: Collect all seasonal drops within **60 minutes** of an Ascension start
 - **Merry Mayhem**: Collect all seasonal drops within **40 minutes** of an Ascension start
 - **Second Life, First Click**: Click a golden cookie within **120 seconds** of ascending
-- **We dont need no heavenly chips**: Own at least **500 of every building type**, without ever selling or sacrificing any buildings, and without owning the 'Heavenly chip secret' upgrade
+- **We dont need no heavenly chips**: Own at least **500 of every building type**, without owning the 'Heavenly chip secret' upgrade
 - **Precision Nerd**: Have exactly **1,234,567,890 cookies** in your bank and hold it for **60 seconds**
-- **Treading water**: Have a CPS of 0 while owning more than 1000 buildings with no active buffs
+- **Treading water**: Have a CPS of 0 while owning more than 1000 buildings with no active buffs or debuffs
 - **Bouncing the last cheque**: Reach less than 10 cookies in your bank after having at least 1 million cookies
 - **Massive Inheritance**: Have a bank of at least **1 Novemdecillion cookies** within 10 minutes of ascending
 - **The Final Challenger**: Win **10** of the Just Natural Expansion **Challenge Achievements** 
@@ -69,11 +86,11 @@ The mobile version of Cookie Clicker does not support mods at this time.
 ### Minigame Achievements (29 achievements)
 
 #### Stock Market
-- **Solid Assets**: Have **$25 million** in stock market profits across all ascensions
-- **Firm Assets**: Have **$100 million** in stock market profits across all ascensions
-- **Stable Assets**: Have **$250 million** in stock market profits across all ascensions
-- **Secure Assets**: Have **$500 million** in stock market profits across all ascensions
-- **Prime Assets**: Have **$1 billion** in stock market profits across all ascensions
+- **Doughfolio Debut**: Have **$25 million** in stock market profits across all ascensions
+- **Crumb Fund Manager**: Have **$100 million** in stock market profits across all ascensions
+- **Biscuit Market Baron**: Have **$250 million** in stock market profits across all ascensions
+- **Fortune Cookie Tycoon**: Have **$500 million** in stock market profits across all ascensions
+- **Dough Jones Legend**: Have **$1 billion** in stock market profits across all ascensions
 - **The Dough Jones Plunge**: Have **$1 million** in stock market losses in one ascension
 - **Broiler room**: Hire at least **100** stockbrokers in the Stock Market
 
@@ -81,24 +98,24 @@ The mobile version of Cookie Clicker does not support mods at this time.
 - **Seedless to eternity**: Convert a complete seed log into sugar lumps by sacrificing your garden to the sugar hornets **5 times**
 - **Seedless to infinity**: Convert a complete seed log into sugar lumps by sacrificing your garden to the sugar hornets **10 times**
 - **Seedless to beyond**: Convert a complete seed log into sugar lumps by sacrificing your garden to the sugar hornets **25 times**
-- **Greener, aching thumb**: Harvest **2,000 mature garden plants**
-- **Greenest, aching thumb**: Harvest **3,000 mature garden plants**
-- **Photosynthetic prodigy**: Harvest **5,000 mature garden plants**
-- **Garden master**: Harvest **7,500 mature garden plants**
-- **Plant whisperer**: Harvest **10,000 mature garden plants**
+- **Greener, aching thumb**: Harvest **2,000 mature garden plants** across all ascensions
+- **Greenest, aching thumb**: Harvest **3,000 mature garden plants** across all ascensions
+- **Photosynthetic prodigy**: Harvest **5,000 mature garden plants** across all ascensions
+- **Garden master**: Harvest **7,500 mature garden plants** across all ascensions
+- **Plant whisperer**: Harvest **10,000 mature garden plants** across all ascensions
 - **Botanical Perfection**: Have one of every type of plant in the mature stage at once
 - **Duketater Salad**: Harvest **12 mature Duketaters** simultaneously
 - **Fifty Shades of Clay**: Change the soil type of your Garden **100 times** in one ascension
 - See also **I feel the need for seed**
 
 #### Grimoire
-- **Archwizard**: Cast **1,999 spells**
-- **Spellmaster**: Cast **2,999 spells**
-- **Cookieomancer**: Cast **3,999 spells**
-- **Spell lord**: Cast **4,999 spells**
-- **Magic emperor**: Cast **9,999 spells**
-- **Hogwarts Graduate**: Have **3 positive spell effects** active at once
-- **Hogwarts Dropout**: Have **3 negative spell effects** active at once
+- **Archwizard**: Cast **1,999 spells** across all ascensions
+- **Spellmaster**: Cast **2,999 spells** across all ascensions
+- **Cookieomancer**: Cast **3,999 spells** across all ascensions
+- **Spell lord**: Cast **4,999 spells** across all ascensions
+- **Magic emperor**: Cast **9,999 spells** across all ascensions
+- **Hogwarts Graduate**: Have **3 positive Grimoire spell effects** active at once
+- **Hogwarts Dropout**: Have **3 negative Grimoire spell effects** active at once
 - **Spell Slinger**: Cast **10 spells** within a 10-second window
 - **Sweet Sorcery**: Get the **Free Sugar Lump** outcome from a magically spawned golden cookie
 
@@ -108,10 +125,10 @@ The mobile version of Cookie Clicker does not support mods at this time.
 
 ### Seasonal Achievements (9 achievements)
 - **Calendar Abuser**: Switch seasons **50 times** in one ascension
-- **Reindeer destroyer**: Pop **500 reindeer**
-- **Reindeer obliterator**: Pop **1,000 reindeer**
-- **Reindeer extinction event**: Pop **2,000 reindeer**
-- **Reindeer apocalypse**: Pop **5,000 reindeer**
+- **Reindeer destroyer**: Pop **500 reindeer** across all ascensions
+- **Reindeer obliterator**: Pop **1,000 reindeer** across all ascensions
+- **Reindeer extinction event**: Pop **2,000 reindeer** across all ascensions
+- **Reindeer apocalypse**: Pop **5,000 reindeer** across all ascensions
 - **Cupid's Reindeer**: Pop a reindeer during **Valentine's Day season**
 - **Business Reindeer**: Pop a reindeer during **Business Day season**
 - **Bundeer**: Pop a reindeer during **Easter season**
@@ -124,7 +141,7 @@ The mobile version of Cookie Clicker does not support mods at this time.
 - **Beyond Prestige**: Own all **129 original heavenly upgrades**
 - **Kitten jamboree**: Own all **18 original kittens**
 - **Kitten Fiesta**: Own all **18 original kittens** and all **11 expansion kittens** at once
-- **Bearer of the Cookie Sigil**: Fully initiate into the Great Orders of the Cookie Age. Provides **25% faster research** and **10% more random drops**
+- **Bearer of the Cookie Sigil**: Fully initiate into the Great Orders of the Cookie Age. Provides **25% faster research** and **10% more random drops** (See Upgrades Section for More Info)
 - **In the Shadows**: Unlock all vanilla shadow achievements, except that one.
 - See also **The Final Challenger**
 
@@ -145,15 +162,10 @@ The mobile version of Cookie Clicker does not support mods at this time.
 - **Speed of thought**: Bake **10 novemdecillion** per second
 - **Faster than speed of thought**: Bake **100 novemdecillion** per second
 
-### Click Achievements (14 achievements)
-- **Click of the Titans**: Generate **1 year of raw CPS** in a single cookie click
-- **Buff Finger**: Click the cookie **250,000 times**
-- **News ticker addict**: Click on the news ticker **1,000 times**
-- **Clicktopus**: Make **1 undecillion** from clicking
-- **Clicker supreme**: Make **1 tredecillion** from clicking
-- **Click master**: Make **1 quattuordecillion** from clicking
-- **Click legend**: Make **1 sexdecillion** from clicking
-- **Click deity**: Make **1 octodecillion** from clicking
+### Click Achievements (9 achievements)
+- **Click of the Titans**: Generate **1 year of raw CPS** in a single cookie click 
+- **Buff Finger**: Click the cookie **250,000 times** across all ascensions
+- **News ticker addict**: Click on the news ticker **1,000 times** in one ascension
 - **Click god**: Make **1 vigintillion** from clicking
 - **Click emperor**: Make **1 duovigintillion** from clicking
 - **Click overlord**: Make **1 quattuorvigintillion** from clicking
@@ -162,29 +174,29 @@ The mobile version of Cookie Clicker does not support mods at this time.
 - **Click deity supreme**: Make **1 trigintillion** from clicking
 
 ### Grandmapocalypse Achievements (15 achievements)
-- **Wrinkler annihilator**: Burst **666 wrinklers**
-- **Wrinkler eradicator**: Burst **2,666 wrinklers**
-- **Wrinkler extinction event**: Burst **6,666 wrinklers**
-- **Wrinkler apocalypse**: Burst **16,666 wrinklers**
-- **Wrinkler armageddon**: Burst **26,666 wrinklers**
-- **Rare specimen collector**: Burst **2 shiny wrinklers**
-- **Endangered species hunter**: Burst **5 shiny wrinklers**
-- **Extinction event architect**: Burst **10 shiny wrinklers**
+- **Wrinkler annihilator**: Burst **666 wrinklers** across all ascensions
+- **Wrinkler eradicator**: Burst **2,666 wrinklers** across all ascensions
+- **Wrinkler extinction event**: Burst **6,666 wrinklers** across all ascensions
+- **Wrinkler apocalypse**: Burst **16,666 wrinklers** across all ascensions
+- **Wrinkler armageddon**: Burst **26,666 wrinklers** across all ascensions
+- **Rare specimen collector**: Burst **2 shiny wrinklers** across all ascensions
+- **Endangered species hunter**: Burst **5 shiny wrinklers** across all ascensions
+- **Extinction event architect**: Burst **10 shiny wrinklers** across all ascensions
 - **Golden wrinkler**: Burst a wrinkler worth **6.66 years of CPS**
 - **Wrinkler Rush**: Pop a wrinkler within **15 minutes and 30 seconds** of ascending
-- **Wrinkler Windfall**: Double your bank with a single wrinkler pop
-- **Deep elder nap**: Quash the grandmatriarchs one way or another **666 times**
-- **Warm-Up Ritual**: Click **66 wrath cookies**
-- **Deal of the Slightly Damned**: Click **666 wrath cookies**
-- **Baker of the Beast**: Click **6,666 wrath cookies**
+- **Wrinkler Windfall**: Sextuple your bank with a single wrinkler pop
+- **Deep elder nap**: Quash the grandmatriarchs one way or another **666 times** across all ascensions
+- **Warm-Up Ritual**: Click **66 wrath cookies** across all ascensions
+- **Deal of the Slightly Damned**: Click **666 wrath cookies** across all ascensions
+- **Baker of the Beast**: Click **6,666 wrath cookies** across all ascensions
 
 ### Golden Cookie Achievements (6 achievements)
-- **Black cat's other paw**: Click **17,777 golden cookies**
-- **Black cat's third paw**: Click **37,777 golden cookies**
-- **Black cat's fourth paw**: Click **47,777 golden cookies**
-- **Black cat's fifth paw**: Click **57,777 golden cookies**
-- **Black cat's sixth paw**: Click **67,777 golden cookies**
-- **Black cat's seventh paw**: Click **77,777 golden cookies**
+- **Black cat's other paw**: Click **17,777 golden cookies** across all ascensions
+- **Black cat's third paw**: Click **37,777 golden cookies** across all ascensions
+- **Black cat's fourth paw**: Click **47,777 golden cookies** across all ascensions
+- **Black cat's fifth paw**: Click **57,777 golden cookies** across all ascensions
+- **Black cat's sixth paw**: Click **67,777 golden cookies** across all ascensions
+- **Black cat's seventh paw**: Click **77,777 golden cookies** across all ascensions
 - See also **Gilded Restraint** and **Second Life, First Click**
 
 ### Cookies Baked In Ascension Achievements (7 achievements)
@@ -221,9 +233,9 @@ The mobile version of Cookie Clicker does not support mods at this time.
 - **Building behemoth**: Own **15,000 buildings**
 - **Construction colossus**: Own **20,000 buildings**
 - **Architectural apex**: Own **25,000 buildings**
-- **Asset Liquidator**: Sell **10,000 buildings**
-- **Flip City**: Sell **25,000 buildings**
-- **Ghost Town Tycoon**: Sell **50,000 buildings**
+- **Asset Liquidator**: Sell **10,000 buildings** in one ascension
+- **Flip City**: Sell **25,000 buildings** in one ascension
+- **Ghost Town Tycoon**: Sell **50,000 buildings** in one ascension
 - **Have your sugar and eat it too**: Have every building reach **level 10**
 - See also **The Final Countdown**, **Back to Basic Bakers**, **Modest Portfolio**, **Difficult Decisions**, and **Treading water**
 
@@ -403,7 +415,7 @@ The mobile version of Cookie Clicker does not support mods at this time.
 - **Copy that and a half**: Reach **level 15** Yous
 - **Copy that twice**: Reach **level 20** Yous
 
-## New Upgrades
+# New Upgrades
 
 ### The Great Orders of the Cookie Age
 *Long before ovens were kindled and sugar knew its name, there arose six Orders, bakers, mystics, and crumb-guardians whose deeds shaped the fate of cookies forevermore. Each sworn to a creed, each guarding secrets older than the dough itself. - Transcribed by Crumblekeeper Thryce, 3rd Sifter of the Sacred Pantry*
@@ -411,7 +423,7 @@ The mobile version of Cookie Clicker does not support mods at this time.
 - **Order of the Golden Crumb**: Golden cookies appear **5%** more often. (requires Vanilla Star achievement)
 - **Order of the Impossible Batch**: Golden cookies appear **5%** more often. (requires The Final Challenger achievement)
 - **Order of the Shining Spoon**: Golden cookie effects last **5%** longer. (requires all Combo achievements)
-- **Order of the Cookie Eclipse**: Golden cookie effects last **5%** longer. (requires all Grandmapocalypse cookie achievements) 
+- **Order of the Cookie Eclipse**: Golden cookie effects last **5%** longer. (requires all Grandmapocalypse achievements) 
 - **Order of the Enchanted Whisk**: Frenzy, Click Frenzy, and Elder Frenzy buffs are **5%** more powerful. (requires all Grimoire achievements)
 - **Order of the Eternal Cookie**: Golden cookies appear **5%** more often and effects last **5%** longer.(requires all previous Great Orders of the Cookie Age upgrades) 
 
