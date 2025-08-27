@@ -1,5 +1,12 @@
-# Just Natural Expansion 0.0.1 
+# Just Natural Expansion 0.0.2
 ### A Cookie Clicker Mod
+
+## Table of Contents
+* [Installation Directions](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#installation-directions)
+* [Mod Compatibility](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#mod-compatibility)
+* [New Achievements](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#new-achievements)
+* [New Upgrades](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#new-upgrades)
+* [Changelog](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#changelog)
 
 **The Just Natural Expansion Mod** enhances the Cookie Clicker endgame without disrupting core gameplay, staying true to the spirit of the vanilla experience. It introduces over **450 achievements**, **250 upgrades**, new goals, new stories, and deeply rooted hidden elements, all specifically designed for late-game progression, so early or mid-game players may not immediately notice changes. 
 
@@ -79,13 +86,13 @@ The mobile version of Cookie Clicker does not support mods at this time.
 *Note: Yes, these challenges are all doable, and no, none of them are absurdly impossible (No [ECM Style](https://lookas123.github.io/ECM/) Here). But don’t expect a free ride. These achievements will not hold your hand, and they will not go easy on you. Think of them less as a grind and more as puzzles that demand clever planning, precise timing, and maybe a lucky cookie or a well-placed upgrade. This is late-game content meant to extend your playtime, not something to finish in a single week.*
 
 ##### Requires Born Again Mode
-- **Hardercorest**: Bake **10 billion cookies** with no cookie clicks and no upgrades bought in Born Again mode
-- **Hardercorest-er**: Bake **1 billion cookies** with no more than 15 clicks, no more than 15 buildings (no selling), and no more than 15 upgrades in Born Again mode
+- **Hardercorest**: Bake **3 billion cookies** with no cookie clicks and no upgrades bought in Born Again mode
+- **Hardercorest-er**: Bake **1 billion cookies** with no more than 20 clicks, no more than 20 buildings (no selling), and no more than 20 upgrades in Born Again mode
 - **The Final Countdown**: Own exactly 20 Cursors, 19 Grandmas, 18 Farms, yada yada yada, down to 1 You. No selling or sacrificing any buildings. Must be earned in Born Again mode
 - **Really more of a dog person**: Bake **1 billion cookies per second** without buying any kitten upgrades in Born Again mode
-- **Gilded Restraint**: Bake **1 quadrillion cookies** without ever clicking a golden cookie, must be done in Born Again mode
+- **Gilded Restraint**: Bake **1 trillion cookies** without ever clicking a golden cookie, must be done in Born Again mode
 - **Back to Basic Bakers**: Reach **1 billion cookies per second** using only Cursors and Grandmas (no other buildings), must be done in Born Again mode
-- **Modest Portfolio**: Reach **1 quadrillion cookies** without ever owning more than 5 of any building type (no selling), must be done in Born Again mode
+- **Modest Portfolio**: Reach **1 quadrillion cookies** without ever owning more than 10 of any building type (no selling), must be done in Born Again mode
 - **Difficult Decisions**: Bake **1 billion cookies** without ever having more than **25 combined upgrades or buildings** at any given time, must be done in Born Again mode
 - **Laid in Plain Sight**: Bake **10 cookies per second** without purchasing any buildings, must be done in Born Again mode
 
@@ -94,7 +101,7 @@ The mobile version of Cookie Clicker does not support mods at this time.
 - **Holiday Hoover**: Collect all seasonal drops within **60 minutes** of an Ascension start
 - **Merry Mayhem**: Collect all seasonal drops within **40 minutes** of an Ascension start
 - **Second Life, First Click**: Click a golden cookie within **120 seconds** of ascending
-- **We dont need no heavenly chips**: Own at least **500 of every building type**, without owning the 'Heavenly chip secret' upgrade
+- **We dont need no heavenly chips**: Own at least **333 of every building type**, without owning the 'Heavenly chip secret' upgrade
 - **Precision Nerd**: Have exactly **1,234,567,890 cookies** in your bank and hold it for **60 seconds**
 - **Treading water**: Have a CPS of 0 while owning more than 1000 buildings with no active buffs or debuffs
 - **Bouncing the last cheque**: Reach less than 10 cookies in your bank after having at least 1 million cookies
@@ -748,3 +755,14 @@ The mobile version of Cookie Clicker does not support mods at this time.
 - **Doppelganger discount networks**: You cost **5%** less (requires 1150 You)
 - **Quantum entanglement**: You are **8%** more efficient (requires 1200 You)
 - **Clone supply dominance**: You cost **5%** less (requires 1250 You)
+
+
+## Changelog 
+
+###Version 0.0.2
+* Improvements to the save/load system
+* Hard linking to the CCSE framework
+* Tweaking the requirements of some achievements 
+
+###Version 0.0.1
+* initial version
