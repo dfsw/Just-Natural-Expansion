@@ -42,16 +42,16 @@ Installing mods and add-ons for Cookie Clicker can feel intimidating if you’ve
 #### Web (Preferred)
 
 ##### [CookieClickerModManager](https://github.com/klattmose/CookieClickerModManager) - Recommended
-`https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/JustNaturalExpansion.js`
+`https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@latest/JustNaturalExpansion.js`
 
 ##### [Bookmarklet](https://www.freecodecamp.org/news/what-are-bookmarklets/)
 ```javascript
-javascript:(function(){Game.LoadMod('https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/JustNaturalExpansion.js');})();
+javascript:(function(){Game.LoadMod('https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@latest/JustNaturalExpansion.js');})();
 ```
 
 ##### Direct Console Loading
 ```javascript
-Game.LoadMod('https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/JustNaturalExpansion.js');
+Game.LoadMod('https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@latest/JustNaturalExpansion.js');
 ```
 
 #### Steam
@@ -59,7 +59,7 @@ Steam has not yet been tested, apparently I need to make some changes to the mod
 
 #### Console (untested)
 ```javascript
-Game.LoadMod('https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/JustNaturalExpansion.js');
+Game.LoadMod('https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@latest/JustNaturalExpansion.js');
 ```
 
 #### Mobile
