@@ -5,7 +5,7 @@
     'use strict';
     
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.0.1';
+    var modVersion = '0.0.2';
     var debugMode = false;
     var isLoadingModData = true;
     var runtimeSessionId = Math.floor(Math.random()*1e9) + '-' + Date.now();
@@ -82,7 +82,7 @@
     var deferredSaveData = null; // Store save data for deferred loading after initialization
     var toggleLock = false; // Prevent rapid toggle operations
     var pendingSaveTimer = null; // Throttle saves
-    var saveCooldownMs = 1000; // Minimum delay between saves
+    var saveCooldownMs = 3000; // Minimum delay between saves
     var toggleSaveData = {}; // Store upgrade states during toggle operations
     
     // Event System for Mod Integration
@@ -560,19 +560,19 @@
         if (settingName === 'shadowAchievements') {
             if (newState) {
                 message = 'Enable shadow achievements?<br><small>All mod achievements will be moved to the shadow pool and will no longer grant milk or affect gameplay.</small>';
-                callback = 'applyShadowAchievementChange(true);';
+                callback = function() { applyShadowAchievementChange(true); };
             } else {
                 message = 'Disable shadow achievements?<br><small>All mod achievements will be moved to the normal pool and will grant milk and affect gameplay. This will award the "Beyond the Leaderboard" shadow achievement to indicate you have left competition mode.</small>';
-                callback = 'applyShadowAchievementChange(false);';
+                callback = function() { applyShadowAchievementChange(false); };
             }
         } else if (settingName === 'enableCookieUpgrades' || settingName === 'enableBuildingUpgrades' || settingName === 'enableKittenUpgrades') {
             let upgradeType = settingName.replace('enable', '').replace('Upgrades', '');
             if (newState) {
                 message = 'Enable ' + upgradeType + ' upgrades?<br><small>These upgrades will be added to the game and may affect your CPS and gameplay. This will award the "Beyond the Leaderboard" shadow achievement to indicate you have left competition mode.</small>';
-                callback = 'applyUpgradeChange("' + settingName + '", true);';
+                callback = function() { applyUpgradeChange(settingName, true); };
             } else {
                 message = 'Disable ' + upgradeType + ' upgrades?<br><small>These upgrades will be removed from the game. Their purchase state will be remembered and will restore when turned back on.</small>';
-                callback = 'applyUpgradeChange("' + settingName + '", false);';
+                callback = function() { applyUpgradeChange(settingName, false); };
             }
         }
         
@@ -580,7 +580,7 @@
             // Check if "Beyond the leaderboard" has been won - if so, no need for warnings
             if (Game.Achievements['Beyond the Leaderboard'] && Game.Achievements['Beyond the Leaderboard'].won) {
                 // Achievement already won, apply immediately without warning
-                eval(callback);
+                callback();
             } else {
                 // Show warning prompt
             showSettingsChangePrompt(message, callback);
@@ -594,14 +594,14 @@
 
     
     // Function to apply shadow achievement changes
-    function applyShadowAchievementChange(enabled) {
+    window.applyShadowAchievementChange = function(enabled) {
         // Set lock to prevent rapid operations
         if (toggleLock) { return; }
         toggleLock = true;
         
         try {
         shadowAchievementMode = enabled;
-        modSettings.shadowAchievements = enabled;
+        modSettings.shadowAchievements = enabled;   
         
         // Update achievement pools
         updateAchievementPools();
@@ -657,7 +657,7 @@
     }
     
     // Function to apply upgrade changes
-    function applyUpgradeChange(settingName, enabled) {
+    window.applyUpgradeChange = function(settingName, enabled) {
         // Set lock to prevent rapid operations
         toggleLock = true;
         
@@ -995,7 +995,7 @@
                     );
                     lifetimeStatsHTML += formatLifetimeStat(
                         getLifetimeShinyWrinklers(), 
-                        'Shiny wrinklers bursted'
+                        'Shiny wrinklers burst'
                     );
                     lifetimeStatsHTML += formatLifetimeStat(
                         getLifetimeWrathCookies(), 
@@ -1008,7 +1008,7 @@
                     );
                     lifetimeStatsHTML += formatLifetimeStat(
                         getLifetimeWrinklers(), 
-                        'Wrinklers bursted',
+                        'Wrinklers burst',
                         true
                     );
                     lifetimeStatsHTML += formatLifetimeStat(
@@ -1905,12 +1905,6 @@
             totalTime += totalTimeMs;
         }
         
-        console.log('=========================================');
-        var totalHours = totalTime / (1000 * 60 * 60);
-        console.log(`Total gods tracked: ${totalGods}`);
-        console.log(`Total time across all gods: ${totalHours.toFixed(2)} hours`);
-        console.log(`Average time per god: ${totalGods > 0 ? (totalHours / totalGods).toFixed(2) : '0.00'} hours`);
-        
         // Show currently slotted gods if any
         if (modTracking.currentSlottedGods && Object.keys(modTracking.currentSlottedGods).length > 0) {
             console.log('=========================================');
@@ -2108,7 +2102,8 @@
             ach.order = order;
         }
         
-        // Always start as not won - let save/load system handle won status
+        // Check if this achievement was already won in a previous session
+        // Only set to 0 if we don't have save data indicating it was won
         ach.won = 0;
         ach.hide = 0;
         
@@ -2145,15 +2140,72 @@
         item.desc = sourceText + item.desc;
     }
     
+    // Function to validate achievement states and log any inconsistencies
+    function validateAchievementStates() {
+        if (!modAchievementNames) return;
+        
+        var validationIssues = [];
+        
+        modAchievementNames.forEach(achievementName => {
+            var achievement = Game.Achievements[achievementName];
+            if (achievement) {
+                // Check if achievement has inconsistent state
+                if (achievement.won && !achievement._restoredFromSave) {
+                    validationIssues.push(achievementName + ' is won but not marked as restored from save');
+                }
+                
+                // Check if achievement was restored but somehow lost its won state
+                if (achievement._restoredFromSave && !achievement.won) {
+                    validationIssues.push(achievementName + ' was restored from save but lost won state');
+                }
+            }
+        });
+        
+        if (validationIssues.length > 0) {
+            console.warn('Achievement validation issues detected:', validationIssues);
+        }
+    }
+    
+    // Function to repair achievement state inconsistencies
+    function repairAchievementStates() {
+        if (!modAchievementNames) return;
+        
+        var repairedCount = 0;
+        
+        modAchievementNames.forEach(achievementName => {
+            var achievement = Game.Achievements[achievementName];
+            if (achievement) {
+                // If achievement was restored from save but lost won state, restore it
+                if (achievement._restoredFromSave && !achievement.won) {
+                    achievement.won = 1;
+                    repairedCount++;
+                }
+                
+                // Also update the by-id version if it exists
+                if (Game.AchievementsById[achievementName]) {
+                    Game.AchievementsById[achievementName].won = achievement.won;
+                    Game.AchievementsById[achievementName]._restoredFromSave = achievement._restoredFromSave;
+                }
+            }
+        });
+        
+        if (repairedCount > 0) {
+            // Force a save after repairs
+            requestModSave(true);
+        }
+    }
+    
     // Helper function to mark achievement as won from save data (no notification)
     function markAchievementWonFromSave(achievementName) {
         if (Game.Achievements[achievementName]) {
             // Always set to won when loading from save, regardless of current state
             Game.Achievements[achievementName].won = 1;
+            Game.Achievements[achievementName]._restoredFromSave = true;
             
             // Also update the by-id version if it exists
             if (Game.AchievementsById[achievementName]) {
                 Game.AchievementsById[achievementName].won = 1;
+                Game.AchievementsById[achievementName]._restoredFromSave = true;
             }
             // No notification for achievements loaded from save
         }
@@ -2162,6 +2214,10 @@
     // Helper function to mark achievement as won when newly earned (with notification)
     function markAchievementWon(achievementName) {
         if (Game.Achievements[achievementName] && !Game.Achievements[achievementName].won) {
+            // Prevent overwriting achievements that were restored from save
+            if (Game.Achievements[achievementName]._restoredFromSave) {
+                return;
+            }
             // Only trigger notification if mod has initialized
             if (modInitialized) {
                 try {
@@ -2617,7 +2673,7 @@
         Game.Prompt('<id SettingsChange><h3>Mod Settings Change</h3><div class="block">' + 
                    tinyIcon(modIcon) + '<div class="line"></div>' + 
                    message + '</div>', 
-                   [['Yes', 'Game.ClosePrompt();' + callback, 'float:left'], 
+                   [['Yes', 'Game.ClosePrompt(); (' + callback.toString() + ')();', 'float:left'], 
                     ['No', 'Game.ClosePrompt();', 'float:right']]);
     }
     
@@ -3200,9 +3256,9 @@
                         // Check if player has baked enough cookies
                         if ((Game.cookiesEarned || 0) < threshold) return false;
                         
-                        // Check if any building has more than 5 of that type
+                        // Check if any building has more than 10 of that type
                         for (var buildingName in Game.Objects) {
-                            if ((Game.Objects[buildingName].amount || 0) > 5) {
+                            if ((Game.Objects[buildingName].amount || 0) > 10) {
                                 return false;
                             }
                         }
@@ -3627,15 +3683,15 @@
             },
                     hardercorest: {
             names: ["Hardercorest"],
-            thresholds: [1e10], // 10 billion cookies
-            descs: ["Bake <b>10 billion cookies</b> with no cookie clicks and no upgrades bought in Born Again mode.<q>Do you hate me or yourself after that one?</q>"],
+            thresholds: [3e9], // 3 billion cookies
+            descs: ["Bake <b>3 billion cookies</b> with no cookie clicks and no upgrades bought in Born Again mode.<q>Do you hate me or yourself after that one?</q>"],
             vanillaTarget: "Hardcore",
             customIcons: [[13, 6]]
         },
                     hardercorester: {
             names: ["Hardercorest-er"],
             thresholds: [1e9], // 1 billion cookies
-            descs: ["Bake <b>1 billion cookies</b> with no more than 15 clicks, no more than 15 buildings (no selling), and no more than 15 upgrades in Born Again mode.<q>Bet you thought that wouldn't be as bad as it was eh?</q>"],
+            descs: ["Bake <b>1 billion cookies</b> with no more than 20 clicks, no more than 20 buildings (no selling), and no more than 20 upgrades in Born Again mode.<q>Bet you thought that wouldn't be as bad as it was eh?</q>"],
             vanillaTarget: "Hardcore",
             customIcons: [[14, 6]]
         },
@@ -3717,8 +3773,8 @@
         },
         hardcoreNoHeavenly: {
             names: ["We don't need no heavenly chips"],
-            thresholds: [500], // 500 of every building
-            descs: ["Own at least <b>500 of every building type</b>, without owning the 'Heavenly chip secret' upgrade.<q>Well that was a little different wasn't it?</q>"],
+            thresholds: [333], // 333 of every building
+            descs: ["Own at least <b>333 of every building type</b>, without owning the 'Heavenly chip secret' upgrade.<q>Well that was a little different wasn't it?</q>"],
             vanillaTarget: "Hardcore",
             customIcons: [[12, 7]]
         },
@@ -3738,8 +3794,8 @@
         },
         hardcoreNoGoldenCookies: {
             names: ["Gilded Restraint"],
-            thresholds: [1e15], // 1 quadrillion cookies
-            descs: ["Bake <b>1 quadrillion cookies</b> without ever clicking a golden cookie, must be done in Born Again mode.<q>Patience is its own buff.</q>"],
+            thresholds: [1e12], // 1 trillion cookies
+            descs: ["Bake <b>1 trillion cookies</b> without ever clicking a golden cookie, must be done in Born Again mode.<q>Patience is its own buff.</q>"],
             vanillaTarget: "Hardcore",
             customIcons: [[23, 66, getSpriteSheet('custom')]]
         },
@@ -3753,7 +3809,7 @@
         hardcoreModestPortfolio: {
             names: ["Modest Portfolio"],
             thresholds: [1e15], // 1 quadrillion cookies
-            descs: ["Reach <b>1 quadrillion cookies</b> without ever owning more than 5 of any building type (no selling), must be done in Born Again mode.<q>Breadth over depth.</q>"],
+            descs: ["Reach <b>1 quadrillion cookies</b> without ever owning more than 10 of any building type (no selling), must be done in Born Again mode.<q>Breadth over depth.</q>"],
             vanillaTarget: "Hardcore",
             customIcons: [[23, 68, getSpriteSheet('custom')]]
         },
@@ -5812,7 +5868,7 @@
                 name: 'Kitten unpaid interns',
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
                 ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>They work for expurrience and exposure, sir.</q>',
-                price: 9e50, // 900 quindecillion
+                price: 9e53, // 900 quindecillion
                 icon: [17, 32, getSpriteSheet('custom')],
                 pool: 'kitten',
                 kitten: 100,
@@ -5824,7 +5880,7 @@
                 name: 'Kitten overpaid "temporary" contractors',
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
                 ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>They\'re definitely not purrmanent, we promise, sir.</q>',
-                price: 9e53, // 900 quattuordecillion
+                price: 9e56, // 900 quattuordecillion
                 icon: [17, 33, getSpriteSheet('custom')],
                 pool: 'kitten',
                 kitten: 101,
@@ -5836,7 +5892,7 @@
                 name: 'Kitten remote workers',
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
                 ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>Working from home since furever, sir.</q>',
-                price: 9e56, // 900 septendecillion
+                price: 9e59, // 900 septendecillion
                 icon: [17, 34, getSpriteSheet('custom')],
                 pool: 'kitten',
                 kitten: 102,
@@ -5848,7 +5904,7 @@
                 name: 'Kitten scrum masters',
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
                 ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>They facilitate the facilitation, sir.</q>',
-                price: 9e59, // 900 octodecillion
+                price: 9e62, // 900 octodecillion
                 icon: [17, 35, getSpriteSheet('custom')],
                 pool: 'kitten',
                 kitten: 103,
@@ -5860,7 +5916,7 @@
                 name: 'Kitten UX designers',
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
                 ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>Making everything more user-furry, one pixel at a time, sir.</q>',
-                price: 9e62, // 900 novemdecillion
+                price: 9e65, // 900 novemdecillion
                 icon: [17, 36, getSpriteSheet('custom')],
                 pool: 'kitten',
                 kitten: 104,
@@ -5872,7 +5928,7 @@
                 name: 'Kitten janitors',
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
                 ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>Keeping the office clean and organized, sir.</q>',
-                price: 9e65, // 900 vigintillion
+                price: 9e68, // 900 vigintillion
                 icon: [17, 37, getSpriteSheet('custom')],
                 pool: 'kitten',
                 kitten: 105,
@@ -5884,7 +5940,7 @@
                 name: 'Kitten coffee fetchers',
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
                 ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>Essential for maintaining purrductivity levels, sir.</q>',
-                price: 9e68, // 900 unvigintillion
+                price: 9e71, // 900 unvigintillion
                 icon: [17, 39, getSpriteSheet('custom')],
                 pool: 'kitten',
                 kitten: 106,
@@ -5896,7 +5952,7 @@
                 name: 'Kitten personal assistants',
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
                 ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>They know your schedule better than you do, sir.</q>',
-                price: 9e71, // 900 duovigintillion
+                price: 9e74, // 900 duovigintillion
                 icon: [17, 40, getSpriteSheet('custom')],
                 pool: 'kitten',
                 kitten: 107,
@@ -5908,7 +5964,7 @@
                 name: 'Kitten vice presidents',
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
                 ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>They have a corner office and everything, sir.</q>',
-                price: 9e74, // 900 trevigintillion
+                price: 9e77, // 900 trevigintillion
                 icon: [17, 47, getSpriteSheet('custom')],
                 pool: 'kitten',
                 kitten: 108,
@@ -5920,7 +5976,7 @@
                 name: 'Kitten board members',
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
                 ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>Making strategic decisions from the top floor, sir.</q>',
-                price: 9e77, // 900 quattuorvigintillion
+                price: 9e80, // 900 quattuorvigintillion
                 icon: [17, 42, getSpriteSheet('custom')],
                 pool: 'kitten',
                 kitten: 109,
@@ -5932,7 +5988,7 @@
                 name: 'Kitten founders',
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
                 ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>The original visionaries who started it all, sir.</q>',
-                price: 9e80, // 900 quinvigintillion
+                price: 9e83, // 900 quinvigintillion
                 icon: [17, 48, getSpriteSheet('custom')],
                 pool: 'kitten',
                 kitten: 110,
@@ -8864,9 +8920,8 @@
                         
                         if (savedWonState > 0) {
                             markAchievementWonFromSave(achievementName);
-                        } else {
-                            Game.Achievements[achievementName].won = 0;
                         }
+                        // Don't overwrite existing won state - only restore what we're certain about
                         // quiet per-achievement logs
                     }
                 });
@@ -8946,6 +9001,22 @@
                     console.log('Just Natural Expansion: Loaded modTracking data:', modTracking);
                 }
             }
+            
+            // Validate achievement states after restoration to ensure won achievements stay won
+            if (modAchievementNames) {
+                modAchievementNames.forEach(achievementName => {
+                    if (Game.Achievements[achievementName] && Game.Achievements[achievementName].won) {
+                        // Mark this achievement as restored from save to prevent overwrites
+                        Game.Achievements[achievementName]._restoredFromSave = true;
+                    }
+                });
+            }
+            
+            // Final validation: ensure no won achievements were accidentally reset
+            validateAchievementStates();
+            
+            // Repair any achievement state inconsistencies
+            repairAchievementStates();
             
             // Force recalculation to apply effects immediately after loading
             setTimeout(() => {
@@ -10062,7 +10133,7 @@
         
         // Check hardercorest achievement
         if ((Game.ascensionMode == 1 || Game.resets == 0)) {
-            if (Game.cookiesEarned >= 1e12 && Game.cookieClicks <= 0 && Game.UpgradesOwned <= 0) {
+            if (Game.cookiesEarned >= 3e9 && Game.cookieClicks <= 0 && Game.UpgradesOwned <= 0) {
                 var achievementName = 'Hardercorest';
                 if (Game.Achievements[achievementName] && !Game.Achievements[achievementName].won) {
                     markAchievementWon(achievementName);
@@ -10073,16 +10144,16 @@
         // Check hardercorest-er achievement
         if ((Game.ascensionMode == 1 || Game.resets == 0)) {
             if (Game.cookiesEarned >= 1e9) {
-                // Check if no more than 15 cookie clicks
-                if (Game.cookieClicks <= 15) {
-                    // Check if no more than 15 buildings owned
+                // Check if no more than 20 cookie clicks
+                if (Game.cookieClicks <= 20) {
+                    // Check if no more than 20 buildings owned
                     let totalBuildingsOwned = 0;
                     for (let buildingName in Game.Objects) {
                         totalBuildingsOwned += Game.Objects[buildingName].amount || 0;
                     }
-                    if (totalBuildingsOwned <= 15) {
-                        // Check if no more than 15 upgrades owned
-                        if (Game.UpgradesOwned <= 15) {
+                    if (totalBuildingsOwned <= 20) {
+                        // Check if no more than 20 upgrades owned
+                        if (Game.UpgradesOwned <= 20) {
                             // Check if no buildings have been sold
                             let totalBuildingsSold = 0;
                             for (let buildingName in Game.Objects) {
@@ -10117,17 +10188,17 @@
             }
             
             if (heavenlyChipsBuildingsSold <= 0) {
-                // Check if player has at least 500 of every building type
-                var allBuildingsHave500 = true;
+                // Check if player has at least 333 of every building type
+                var allBuildingsHave333 = true;
                 for (var buildingName in Game.Objects) {
                     var building = Game.Objects[buildingName];
-                    if (!building || building.amount < 500) {
-                        allBuildingsHave500 = false;
+                    if (!building || building.amount < 333) {
+                        allBuildingsHave333 = false;
                         break;
                     }
                 }
                 
-                if (allBuildingsHave500) {
+                if (allBuildingsHave333) {
                     var achievementName = 'We don\'t need no heavenly chips';
                     if (Game.Achievements[achievementName] && !Game.Achievements[achievementName].won) {
                         markAchievementWon(achievementName);
@@ -10628,4 +10699,11 @@
     
     // Ensure event system is available for any integrations
     ensureEventSystem();
+    
+    // Expose basic mod info for integrations
+    if (typeof Game !== 'undefined') {
+        if (!Game.JNE) Game.JNE = {};
+        Game.JNE.modName = modName;
+        Game.JNE.modVersion = modVersion;
+    }
 })();
