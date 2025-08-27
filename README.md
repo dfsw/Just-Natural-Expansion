@@ -18,14 +18,6 @@ Many achievements are tracked across multiple ascensions or involve progress tha
 
 **All new achievements are designed to be attainable, though some require significant effort, some even taking weeks of focused effort to earn. Thank you for playing! If you enjoy the mod, please spread the word!**
 
-#### Mod Compatibility
-
-Just Natural Expansion uses Cookie Clicker’s documented API layer to extend the core game. As a result, Just Natural Expansion should remain functional for years to come—even if I get hit by a bus. However this API is fairly limited, so many modders rely on [CCSE](https://klattmose.github.io/CookieClicker/CCSE-POCs/). 
-
-Unfortunately, CCSE uses code injection to make fundamental changes to the vanilla game’s source code, which breaks the built-in modding API in a handful of places. To address this, I’ve written a CCSE Bridge that allows CCSE mods and Just Natural Expansion to run together. The catch: **CCSE must be loaded before** Just Natural Expansion, so make sure JNE is last in your load order. Other modders are welcome to use my bridge code (located in the same repo) if they prefer a more vanilla mod approach. 
-
-I’ve tested compatibility with many popular [CCSE mods](https://klattmose.github.io/CookieClicker/). If you encounter specific incompatibilities, please let me know so I can look into possible workarounds.
-
 #### Special Thanks
 Extra gooey gratitude to the mysterious hero who uploaded the custom Cookie Clicker icons I stumbled upon on [Imgur](https://imgur.com/3jNJJNw). If you ever reveal yourself, I will shower you with credit (and maybe a few billion cookies). Those icons patched up some stubborn gaps that were giving me dough-induced headaches.
 
@@ -79,6 +71,13 @@ The mobile version of Cookie Clicker does not support mods at this time.
 - **Load Order**: For best compatibility, load CCSE first, then this mod
 - **Browser Support**: Works in all modern browsers 
 
+#### Mod Compatibility
+
+Just Natural Expansion uses Cookie Clicker’s documented API layer to extend the core game. As a result, Just Natural Expansion should remain functional for years to come—even if I get hit by a bus. However this API is fairly limited, so many modders rely on [CCSE](https://klattmose.github.io/CookieClicker/CCSE-POCs/). 
+
+Unfortunately, CCSE uses code injection to make fundamental changes to the vanilla game’s source code, which breaks the built-in modding API in a handful of places. To address this, I’ve written a CCSE Bridge that allows CCSE mods and Just Natural Expansion to run together. The catch: **CCSE must be loaded before** Just Natural Expansion, so make sure JNE is last in your load order. Other modders are welcome to use my bridge code (located in the same repo) if they prefer a more vanilla mod approach. 
+
+I’ve tested compatibility with many popular [CCSE mods](https://klattmose.github.io/CookieClicker/). If you encounter specific incompatibilities, please let me know so I can look into possible workarounds.
 
 # New Achievements
 
@@ -761,8 +760,8 @@ The mobile version of Cookie Clicker does not support mods at this time.
 
 ###Version 0.0.2
 * Improvements to the save/load system
-* Hard linking to the CCSE framework
-* Tweaking the requirements of some achievements 
+* Tweaking the requirements of some achievements, mostly in the challenges section
+* Fixed a bug that may have prevented option settings from working when CCSE was installed  
 
 ###Version 0.0.1
 * initial version
