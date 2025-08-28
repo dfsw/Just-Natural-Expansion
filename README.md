@@ -90,7 +90,7 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 - **The Final Countdown**: Own exactly 20 Cursors, 19 Grandmas, 18 Farms, yada yada yada, down to 1 You. No selling or sacrificing any buildings. Must be earned in Born Again mode
 - **Really more of a dog person**: Bake **1 billion cookies per second** without buying any kitten upgrades in Born Again mode
 - **Gilded Restraint**: Bake **1 trillion cookies** without ever clicking a golden cookie, must be done in Born Again mode
-- **Back to Basic Bakers**: Reach **1 billion cookies per second** using only Cursors and Grandmas (no other buildings), must be done in Born Again mode
+- **Back to Basic Bakers**: Reach **1 million cookies per second** using only Cursors and Grandmas (no other buildings), must be done in Born Again mode
 - **Modest Portfolio**: Reach **1 quadrillion cookies** without ever owning more than 10 of any building type (no selling), must be done in Born Again mode
 - **Difficult Decisions**: Bake **1 billion cookies** without ever having more than **25 combined upgrades or buildings** at any given time, must be done in Born Again mode
 - **Laid in Plain Sight**: Bake **10 cookies per second** without purchasing any buildings, must be done in Born Again mode
@@ -757,6 +757,10 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 
 
 ## Changelog 
+
+###Version 0.0.3
+* Back to Basic Bakers Achievement is now easier 
+* Fixed a bug that could mark achivements as won improperly when loading an older save
 
 ###Version 0.0.2
 * Improvements to the save/load system

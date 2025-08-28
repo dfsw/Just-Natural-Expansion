@@ -5,7 +5,7 @@
     'use strict';
     
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.0.2';
+    var modVersion = '0.0.3';
     var debugMode = false;
     var isLoadingModData = true;
     var runtimeSessionId = Math.floor(Math.random()*1e9) + '-' + Date.now();
@@ -3235,7 +3235,7 @@
                         if (!(Game.ascensionMode == 1 || Game.resets == 0)) return false;
                         
                         // Check if player has enough cookies per second
-                        if ((Game.cookiesPsRaw || 0) < threshold) return false;
+                        if ((Game.cookiesPs || 0) < threshold) return false;
                         
                         // Check if any buildings other than Cursors and Grandmas have ever been bought
                         for (var buildingName in Game.Objects) {
@@ -3801,8 +3801,8 @@
         },
         hardcoreCursorsAndGrandmas: {
             names: ["Back to Basic Bakers"],
-            thresholds: [1e9], // 1 billion cookies per second
-            descs: ["Reach <b>1 billion cookies per second</b> using only Cursors and Grandmas (no other buildings), must be done in Born Again mode.<q>Turns out Grandma really is the backbone of the empire.</q>"],
+            thresholds: [1e6], // 1 million cookies per second
+            descs: ["Reach <b>1 million cookies per second</b> using only Cursors and Grandmas (no other buildings), must be done in Born Again mode.<q>Turns out Grandma really is the backbone of the empire.</q>"],
             vanillaTarget: "Hardcore",
             customIcons: [[23, 69, getSpriteSheet('custom')]]
         },
@@ -8911,9 +8911,21 @@
                 });
             }
             
-            // Load achievements data
+            // Load achievements data - save file is the ultimate source of truth
             if (modData.achievements) {
                 debugLog('applyDeferredSaveData: achievements=', Object.keys(modData.achievements||{}).length);
+                
+                // First, reset ALL mod achievements to unwon state
+                if (modAchievementNames) {
+                    modAchievementNames.forEach(achievementName => {
+                        if (Game.Achievements[achievementName]) {
+                            Game.Achievements[achievementName].won = 0;
+                            Game.Achievements[achievementName]._restoredFromSave = false;
+                        }
+                    });
+                }
+                
+                // Then restore the achievements that were won in the save file
                 Object.keys(modData.achievements).forEach(achievementName => {
                     if (Game.Achievements[achievementName]) {
                         var savedWonState = modData.achievements[achievementName].won || 0;
@@ -8921,8 +8933,6 @@
                         if (savedWonState > 0) {
                             markAchievementWonFromSave(achievementName);
                         }
-                        // Don't overwrite existing won state - only restore what we're certain about
-                        // quiet per-achievement logs
                     }
                 });
             }
@@ -9000,6 +9010,14 @@
                 if (debugMode) {
                     console.log('Just Natural Expansion: Loaded modTracking data:', modTracking);
                 }
+            }
+            
+            // Reset session-specific achievement flags on load to prevent improper unlocking
+            modTracking.bankSextupledByWrinkler = false;
+            
+            // Reset session-specific tracking that could cause improper wrinkler achievement unlocking
+            if (sessionDeltas) {
+                sessionDeltas.wrinklersPopped = 0;
             }
             
             // Validate achievement states after restoration to ensure won achievements stay won
