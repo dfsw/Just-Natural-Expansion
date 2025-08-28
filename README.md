@@ -1,4 +1,4 @@
-# Just Natural Expansion 0.0.2
+# Just Natural Expansion 0.0.3
 ### A Cookie Clicker Mod
 
 ## Table of Contents
