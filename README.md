@@ -1,4 +1,4 @@
-# Just Natural Expansion 0.0.3
+# Just Natural Expansion 0.0.4
 ### A Cookie Clicker Mod
 
 ## Table of Contents
@@ -257,9 +257,9 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 - **Building behemoth**: Own **15,000 buildings**
 - **Construction colossus**: Own **20,000 buildings**
 - **Architectural apex**: Own **25,000 buildings**
-- **Asset Liquidator**: Sell **10,000 buildings** in one ascension
-- **Flip City**: Sell **25,000 buildings** in one ascension
-- **Ghost Town Tycoon**: Sell **50,000 buildings** in one ascension
+- **Asset Liquidator**: Sell **25,000 buildings** in one ascension
+- **Flip City**: Sell **50,000 buildings** in one ascension
+- **Ghost Town Tycoon**: Sell **100,000 buildings** in one ascension
 - **Have your sugar and eat it too**: Have every building reach **level 10**
 - See also **The Final Countdown**, **Back to Basic Bakers**, **Modest Portfolio**, **Difficult Decisions**, and **Treading water**
 
@@ -757,6 +757,14 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 
 
 ## Changelog 
+
+###Version 0.0.4
+* Fixed a bug that could cause God of All Gods to unlock if your Pantheon wasnt fully loaded yet.
+* Store lifetime stock market data even if the stock market mini game hasnt been unlocked yet
+* Wrath cookie storm drops no longer count towards total wrath cookie clicks
+* Rethinking and refactoring some logic around saving and loading data 
+* Tweaking some achivement requirements for balance 
+* Various small bug fixes throughout
 
 ###Version 0.0.3
 * Back to Basic Bakers Achievement is now easier 
