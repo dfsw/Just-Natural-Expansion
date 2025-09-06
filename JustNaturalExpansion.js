@@ -5,7 +5,7 @@
     'use strict';
     
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.0.4';
+    var modVersion = '0.0.5';
     var debugMode = false; 
     var runtimeSessionId = Math.floor(Math.random()*1e9) + '-' + Date.now();
     
@@ -743,16 +743,16 @@
                     }
                     
                     if (dataToUse) {
+                        var restoredCount = 0;
                         Object.keys(dataToUse).forEach(upgradeName => {
                             var savedBoughtState = dataToUse[upgradeName].bought || 0;
                             if (Game.Upgrades[upgradeName] && savedBoughtState > 0) {
                                 Game.Upgrades[upgradeName].bought = savedBoughtState;
+                                restoredCount++;
                             }
                         });
                         
                         // if (Game.CalculateGains) Game.CalculateGains(); // commented to reduce redundant recalc; rely on flags
-                    } else {
-                        
                     }
                 }, 50);
                 
@@ -2417,7 +2417,7 @@
     }
     
             // Function to dynamically add upgrades to the game
-        function addUpgradesToGame() {
+function addUpgradesToGame() {
             if (!upgradeData || typeof upgradeData !== 'object') {
                 console.error('Invalid upgradeData structure:', upgradeData);
                 return;
@@ -2673,6 +2673,7 @@
                 for (var i = 0; i < upgradeData.kitten.length; i++) {
                     var upgradeInfo = upgradeData.kitten[i];
                     
+                    
                     // Extract threshold from unlock condition
                     var threshold = 0;
                     if (upgradeInfo.unlockCondition) {
@@ -2729,9 +2730,12 @@
             
             // INITIAL LOAD: Set correct bought states from save data
             if (modSaveData && modSaveData.upgrades) {
+                
+                var restoredCount = 0;
                 Object.keys(modSaveData.upgrades).forEach(upgradeName => {
                     if (Game.Upgrades[upgradeName] && modSaveData.upgrades[upgradeName].bought > 0) {
                         Game.Upgrades[upgradeName].bought = modSaveData.upgrades[upgradeName].bought;
+                        restoredCount++;
                         debugLog('addUpgradesToGame: restored bought state for', upgradeName);
                     }
                 });
@@ -9083,12 +9087,11 @@
         // Create upgrade definitions only once
         createUpgrades();
         
-        // Check for upgrades that are already unlocked on mod load
-                                // Create upgrades respecting current toggle flags (do NOT create disabled categories)
+        // Create upgrades respecting current toggle flags (do NOT create disabled categories)
         addUpgradesToGame();
         
         
-                // Initialize tracking variables and lifetime data from save data or defaults
+        // Initialize tracking variables and lifetime data from save data or defaults
         if (modSaveData) {
             debugLog('continueModInitialization: initializing from save data');
             
@@ -9277,12 +9280,7 @@
             new Game.Notify(modName + ' v' + modVersion + ' Mod Loaded!', 'Use the options menu to configure settings for ' + modName + '.', modIcon);
             console.log('Just Natural Expansion: Mod notification shown');
             
-            // Start initialization but defer choice check until save data loads
-            // If there's no save data, load() won't be called, so we need to trigger the check
-            setTimeout(function() {
-                console.log('Just Natural Expansion: Calling checkAndShowInitialChoice()...');
-                checkAndShowInitialChoice();
-            }, 100); // Small delay to let load() run if it's going to
+            // Initialization is handled directly in the load() function
             
             // Initial check for all upgrades after achievements are loaded
             var self = this; // Capture 'this' reference
@@ -9506,7 +9504,6 @@
                     }
                     
                     // Reset ALL mod upgrades to unpurchased and locked state first
-                    console.log('JNE DEBUG: About to reset all mod upgrades...');
                     var modUpgradeNames = getModUpgradeNames();
                     if (modUpgradeNames) {
                         debugLog('INIT DEBUG: Resetting mod upgrades, count =', modUpgradeNames.length);
@@ -9583,25 +9580,21 @@
                     
                     // Restore settings from save data BEFORE recreating upgrades
                     if (modData.settings) {
-                        console.log('JNE DEBUG: Restoring settings from save data before recreation');
                         if (modData.settings.enableCookieUpgrades !== undefined) {
                             enableCookieUpgrades = modData.settings.enableCookieUpgrades;
-                            console.log('JNE DEBUG: enableCookieUpgrades =', enableCookieUpgrades);
                         }
                         if (modData.settings.enableBuildingUpgrades !== undefined) {
                             enableBuildingUpgrades = modData.settings.enableBuildingUpgrades;
-                            console.log('JNE DEBUG: enableBuildingUpgrades =', enableBuildingUpgrades);
                         }
                         if (modData.settings.enableKittenUpgrades !== undefined) {
                             enableKittenUpgrades = modData.settings.enableKittenUpgrades;
-                            console.log('JNE DEBUG: enableKittenUpgrades =', enableKittenUpgrades);
                         }
-                    } else {
-                        console.log('JNE DEBUG: No settings found in save data, using defaults');
                     }
                     
-                    // Note: Upgrade recreation is handled by addUpgradesToGame() in continueModInitialization()
-                    // This ensures settings are restored first, then upgrades are created with correct settings
+                    // Upgrade recreation is handled by addUpgradesToGame() in continueModInitialization()
+                    
+                    // Trigger initialization immediately after load
+                    continueModInitialization();
                     
                     debugLog('mod.saveSystem.load: modSaveData.achievements exists:', !!modSaveData.achievements);
                     if (modSaveData.achievements) {

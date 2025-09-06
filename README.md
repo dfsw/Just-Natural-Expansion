@@ -444,11 +444,11 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 ### The Great Orders of the Cookie Age
 *Long before ovens were kindled and sugar knew its name, there arose six Orders, bakers, mystics, and crumb-guardians whose deeds shaped the fate of cookies forevermore. Each sworn to a creed, each guarding secrets older than the dough itself. - Transcribed by Crumblekeeper Thryce, 3rd Sifter of the Sacred Pantry*
 
-- **Order of the Golden Crumb**: Golden cookies appear **5%** more often. (requires Vanilla Star achievement)
-- **Order of the Impossible Batch**: Golden cookies appear **5%** more often. (requires The Final Challenger achievement)
-- **Order of the Shining Spoon**: Golden cookie effects last **5%** longer. (requires all Combo achievements)
-- **Order of the Cookie Eclipse**: Golden cookie effects last **5%** longer. (requires all Grandmapocalypse achievements) 
-- **Order of the Enchanted Whisk**: Frenzy, Click Frenzy, and Elder Frenzy buffs are **5%** more powerful. (requires all Grimoire achievements)
+- **Order of the Golden Crumb**: Golden cookies appear **5%** more often. (requires [Vanilla Star achievement](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#completionist-achievements-7-achievements))
+- **Order of the Impossible Batch**: Golden cookies appear **5%** more often. (requires The [Final Challenger achievement](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#challenge-achievements-19-achievements))
+- **Order of the Shining Spoon**: Golden cookie effects last **5%** longer. (requires all [Combo achievements](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#combo-achievements-7-achievements))
+- **Order of the Cookie Eclipse**: Golden cookie effects last **5%** longer. (requires all [Grandmapocalypse achievements](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#grandmapocalypse-achievements-15-achievements)) 
+- **Order of the Enchanted Whisk**: Frenzy, Click Frenzy, and Elder Frenzy buffs are **5%** more powerful. (requires all [Grimoire achievements](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#grimoire))
 - **Order of the Eternal Cookie**: Golden cookies appear **5%** more often and effects last **5%** longer.(requires all previous Great Orders of the Cookie Age upgrades) 
 
 ### Kitten Upgrades (11 New Kitten Upgrades)
@@ -758,7 +758,10 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 
 ## Changelog 
 
-###Version 0.0.4
+### Version 0.0.5
+* More saving/loading fixes but I think everything is finally bullet proof, I probably made that way harder than it needed to be. 
+
+### Version 0.0.4
 * Fixed a bug that could cause God of All Gods to unlock if your Pantheon wasnt fully loaded yet.
 * Store lifetime stock market data even if the stock market mini game hasnt been unlocked yet
 * Wrath cookie storm drops no longer count towards total wrath cookie clicks
@@ -766,14 +769,14 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 * Tweaking some achivement requirements for balance 
 * Various small bug fixes throughout
 
-###Version 0.0.3
+### Version 0.0.3
 * Back to Basic Bakers Achievement is now easier 
 * Fixed a bug that could mark achivements as won improperly when loading an older save
 
-###Version 0.0.2
+### Version 0.0.2
 * Improvements to the save/load system
 * Tweaking the requirements of some achievements, mostly in the challenges section
 * Fixed a bug that may have prevented option settings from working when CCSE was installed  
 
-###Version 0.0.1
+### Version 0.0.1
 * initial version
