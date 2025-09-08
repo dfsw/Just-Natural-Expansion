@@ -5,7 +5,7 @@
     'use strict';
     
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.0.5';
+    var modVersion = '0.0.6';
     var debugMode = false; 
     var runtimeSessionId = Math.floor(Math.random()*1e9) + '-' + Date.now();
     
@@ -45,11 +45,11 @@
         gardenSacrifices: 0
     };
     
-    // Granular control toggles
+    // Granular control toggles - defaults will be overridden by save data if available
     var shadowAchievementMode = true;
-    var enableCookieUpgrades = false;
-    var enableBuildingUpgrades = false;
-    var enableKittenUpgrades = true;
+    var enableCookieUpgrades = false;  // Default to disabled for first-run experience
+    var enableBuildingUpgrades = false;  // Default to disabled for first-run experience
+    var enableKittenUpgrades = false;  // Default to disabled for first-run experience
     
     var modIcon = [15, 7]; // Static mod icon from main sprite sheet
     var boxIcon = [34, 4]; // Static Box of improved cookies icon from main sprite sheet
@@ -59,7 +59,7 @@
     var toggleLock = false; // Prevent rapid toggle operations
     var pendingSaveTimer = null; // Throttle saves
     var saveCooldownMs = 3000; // Minimum delay between saves
-    var toggleSaveData = {}; // Store upgrade states during toggle operations
+    // Toggle save data removed - we only use modSaveData as source of truth
     
     // Event System for Mod Integration
     // Creates a basic event system if Cookie Clicker doesn't provide one
@@ -570,7 +570,9 @@
     // Toggle setting function
     function toggleSetting(settingName) {
         // Prevent rapid clicking
-        if (toggleLock) { return; }
+        if (toggleLock) { 
+            return; 
+        }
         
         // Map setting names to actual variables
         let targetVariable = null;
@@ -711,6 +713,12 @@
         // Set lock to prevent rapid operations
         toggleLock = true;
         
+        // Track CPS before changes for kitten upgrades
+        var cpsBefore = 0;
+        if (settingName === 'enableKittenUpgrades') {
+            cpsBefore = Game.cookiesPs || 0;
+        }
+        
         try {
         // Update the variable
         if (settingName === 'enableCookieUpgrades') {
@@ -725,109 +733,49 @@
         modSettings[settingName] = enabled;
         
         // Apply changes to the game
-        if (enabled) {
-                // Add upgrades back to the game
-            addUpgradesToGame();
-                
-                // Restore bought states from toggle save data after upgrades are recreated
-                setTimeout(() => {
-                    var dataToUse = null;
-                    
-                    // Priority 1: Use toggle save data (for runtime toggles)
-                    if (toggleSaveData[settingName] && Object.keys(toggleSaveData[settingName]).length > 0) {
-                        dataToUse = toggleSaveData[settingName];
-                    }
-                    // Priority 2: Use save data (for initial load)
-                    else if (modSaveData && modSaveData.upgrades) {
-                        dataToUse = modSaveData.upgrades;
-                    }
-                    
-                    if (dataToUse) {
-                        var restoredCount = 0;
-                        Object.keys(dataToUse).forEach(upgradeName => {
-                            var savedBoughtState = dataToUse[upgradeName].bought || 0;
-                            if (Game.Upgrades[upgradeName] && savedBoughtState > 0) {
-                                Game.Upgrades[upgradeName].bought = savedBoughtState;
-                                restoredCount++;
-                            }
-                        });
-                        
-                        // if (Game.CalculateGains) Game.CalculateGains(); // commented to reduce redundant recalc; rely on flags
-                    }
-                }, 50);
-                
-        } else {
-            // Remove only our mod's upgrades of the specific type that was disabled
-            var upgradeNamesToRemove = [];
-            
-            if (settingName === 'enableCookieUpgrades') {
-                upgradeNamesToRemove = cookieUpgradeNames;
-            } else if (settingName === 'enableBuildingUpgrades') {
-                upgradeNamesToRemove = buildingUpgradeNames;
-            } else if (settingName === 'enableKittenUpgrades') {
-                upgradeNamesToRemove = kittenUpgradeNames;
-            }
-            
-                // SAVE CURRENT STATES before removing upgrades
-                if (!toggleSaveData[settingName]) {
-                    toggleSaveData[settingName] = {};
-                }
-                
-                for (var i = 0; i < upgradeNamesToRemove.length; i++) {
-                    var upgradeName = upgradeNamesToRemove[i];
-                    if (Game.Upgrades[upgradeName]) {
-                        var currentBought = Game.Upgrades[upgradeName].bought || 0;
-                        toggleSaveData[settingName][upgradeName] = { bought: currentBought };
-                        
-
-                    }
-                }
-                
-                // Remove the upgrades (and clear any in-memory record from UpgradesByPool clones)
-            for (var i = 0; i < upgradeNamesToRemove.length; i++) {
-                var upgradeName = upgradeNamesToRemove[i];
-                if (Game.Upgrades[upgradeName]) {
-                    // Remove from the main upgrades object
-                    delete Game.Upgrades[upgradeName];
-                    
-                    // Also remove from upgrade pools if they exist
-                    if (Game.UpgradesByPool) {
-                        for (var poolName in Game.UpgradesByPool) {
-                            var pool = Game.UpgradesByPool[poolName];
-                            if (pool && Array.isArray(pool)) {
-                                for (var j = pool.length - 1; j >= 0; j--) {
-                                    if (pool[j] && pool[j].name === upgradeName) {
-                                        pool.splice(j, 1);
-                                    }
-                                }
-                            }
-                        }
-                    }
-                        // Remove from Game.UpgradesById as well if present
-                        if (Game.UpgradesById) {
-                            for (var k = Game.UpgradesById.length - 1; k >= 0; k--) {
-                                if (Game.UpgradesById[k] && Game.UpgradesById[k].name === upgradeName) {
-                                    Game.UpgradesById.splice(k, 1);
-                            }
-                        }
-                    }
-                }
-            }
-            
-            // Force store refresh using the game's own mechanisms (needed for toggle UX)
-            Game.storeToRefresh = 1;
-            Game.upgradesToRebuild = 1;
-            
-            // Force menu update
-            if (Game.UpdateMenu) { Game.UpdateMenu(); }
-                // Debug status for specific upgrade after removal
-            
+        // First save current upgrade states to preserve any purchases made since last save
+        var modUpgradeNames = getModUpgradeNames();
+        if (!modSaveData) {
+            modSaveData = { upgrades: {} };
         }
+        if (!modSaveData.upgrades) {
+            modSaveData.upgrades = {};
+        }
+        
+        // Save current states of all mod upgrades before toggling
+        for (var i = 0; i < modUpgradeNames.length; i++) {
+            var upgradeName = modUpgradeNames[i];
+            if (Game.Upgrades[upgradeName]) {
+                var currentBought = Game.Upgrades[upgradeName].bought || 0;
+                modSaveData.upgrades[upgradeName] = { bought: currentBought };
+            }
+        }
+        
+        // Now recreate upgrades from the updated save data
+        recreateUpgradesFromSaveOnly();
         
         // Force recalculation to apply/remove effects immediately
         setTimeout(() => {
             if (Game.CalculateGains) { Game.CalculateGains(); }
             if (Game.recalculateGains) { Game.recalculateGains = 1; }
+            
+            // Track CPS after changes for kitten upgrades
+            if (settingName === 'enableKittenUpgrades') {
+                var cpsAfter = Game.cookiesPs || 0;
+                
+                // Check kitten upgrades in Game.Upgrades
+                var kittenUpgradesInGame = 0;
+                var kittenUpgradesBought = 0;
+                for (var i = 0; i < kittenUpgradeNames.length; i++) {
+                    var upgradeName = kittenUpgradeNames[i];
+                    if (Game.Upgrades[upgradeName]) {
+                        kittenUpgradesInGame++;
+                        if (Game.Upgrades[upgradeName].bought) {
+                            kittenUpgradesBought++;
+                        }
+                    }
+                }
+            }
         }, 100);
         
         // Check if we should mark "Beyond the Leaderboard" as won based on new settings
@@ -2006,10 +1954,10 @@
         'Piggy buyback bonanza', 'Vault door floor-models', 'Pen-on-a-chain procurement', 'Complimentary complimentary mints', 
         'Fee waiver wavers', 'Dough Jones clearance', 'Tithe punch cards', 'Relic replica racks', 'Incense refill program', 
         'Chant-o-matic hymn reels', 'Pew-per-view sponsorships', 'Sacred site tax amnesty', 'Wand warranty returns', 'Grimoire remainder sale', 
-        'Robes with “character”', 'Familiar foster program', 'Council scroll stipends', 'Broom-sharing scheme', 
+        'Robes with "character"', 'Familiar foster program', 'Council scroll stipends', 'Broom-sharing scheme', 
         'Retired cargo pods', 'Container co-op cards', 'Reusable launch crates', 'Autodocker apprentices', 
         'Route rebate vouchers', 'Free-trade cookie ports', 'Beaker buybacks', 'Philosopher\'s pebbles', 
-        'Cool-running crucibles', 'Batch homunculi permits', 'Guild reagent rates', '“Mostly lead” gold grants', 
+        'Cool-running crucibles', 'Batch homunculi permits', 'Guild reagent rates', '"Mostly lead" gold grants', 
         'Pre-owned ring frames', 'Anchor warehouse club', 'Passive rift baffles', 'Volunteer gatekeepers', 
         'Interrealm stipend scrolls', 'Multiversal enterprise zone', 'Pre-loved hourglasses', 'Depreciated timeline scraps', 
         'Off-season flux valves', 'Weekend paradox passes', 'Department of When grants', 'Antique warranty loopholes', 
@@ -2416,32 +2364,18 @@
         }
     }
     
-            // Function to dynamically add upgrades to the game
-function addUpgradesToGame() {
+    // Function to dynamically add upgrades to the game
+    function addUpgradesToGame() {
             if (!upgradeData || typeof upgradeData !== 'object') {
                 console.error('Invalid upgradeData structure:', upgradeData);
                 return;
             }
             
-            try {
-                // PRESERVE existing bought states before recreation
-                var existingBoughtStates = {};
-                var modUpgradeNames = getModUpgradeNames();
-                modUpgradeNames.forEach(name => {
-                    if (Game.Upgrades[name] && Game.Upgrades[name].bought > 0) {
-                        existingBoughtStates[name] = Game.Upgrades[name].bought;
-                        
-                    }
-                });
-                
-                // Create essential generics only if cookie upgrades are enabled; other categories respect toggles
-                
-                // Create essential generic upgrades FIRST (including "Box of improved cookies" that cookie upgrades depend on)
-                if (enableCookieUpgrades && upgradeData.generic && Array.isArray(upgradeData.generic)) {
-                    for (var i = 0; i < upgradeData.generic.length; i++) {
-                        var upgradeInfo = upgradeData.generic[i];
-                        
-                        // Create essential upgrades immediately (like "Box of improved cookies")
+        // ===== SECTION 1: ESSENTIAL GENERIC UPGRADES =====
+        // Create essential upgrades that other upgrades depend on
+            if (enableCookieUpgrades && upgradeData.generic && Array.isArray(upgradeData.generic)) {
+                for (var i = 0; i < upgradeData.generic.length; i++) {
+                    var upgradeInfo = upgradeData.generic[i];
                         if (upgradeInfo.name === 'Box of improved cookies' || 
                             upgradeInfo.name === 'Order of the Golden Crumb' ||
                             upgradeInfo.name === 'Order of the Impossible Batch' ||
@@ -2449,28 +2383,32 @@ function addUpgradesToGame() {
                             upgradeInfo.name === 'Order of the Cookie Eclipse' ||
                             upgradeInfo.name === 'Order of the Enchanted Whisk' ||
                             upgradeInfo.name === 'Order of the Eternal Cookie') {
-                        createGenericUpgrade(upgradeInfo);
+                            try {
+                                createGenericUpgrade(upgradeInfo);
+                            } catch (e) {
+                        console.error('Failed to create essential upgrade:', upgradeInfo.name, e);
+                            }
+                            }
                         }
                     }
-                }
                 
+        // ===== SECTION 2: BUILDING DISCOUNT UPGRADES =====
                 // Create building discount upgrades from generic section
                 if (enableBuildingUpgrades && upgradeData.generic && Array.isArray(upgradeData.generic)) {
-                    debugLog('addUpgradesToGame: Creating building discount upgrades from generic section');
                     for (var i = 0; i < upgradeData.generic.length; i++) {
                         var upgradeInfo = upgradeData.generic[i];
-                        // Check if this is a building discount upgrade (has unlockCondition with building amount check)
-                        if (upgradeInfo.unlockCondition && upgradeInfo.unlockCondition.toString().includes('Game.Objects[') && 
-                            upgradeInfo.unlockCondition.toString().includes('amount >= ')) {
-                            if (upgradeInfo.name === 'Increased Social Security Checks') {
-                                debugLog('addUpgradesToGame: Found Increased Social Security Checks in generic section, creating...');
-                            }
+                        if (upgradeInfo.type === 'discount') {
+                    try {
                             createGenericUpgrade(upgradeInfo);
+                    } catch (e) {
+                        console.error('Failed to create discount upgrade:', upgradeInfo.name, e);
                         }
                     }
                 }
+            }
             
-                // CRITICAL: Ensure "Box of improved cookies" is fully registered before creating cookie upgrades
+        // ===== SECTION 3: BOX OF IMPROVED COOKIES SETUP =====
+            // CRITICAL: Ensure "Box of improved cookies" is fully registered before creating cookie upgrades
                 if (enableCookieUpgrades && Game.Upgrades['Box of improved cookies']) {
                     // Force the upgrade to be fully available in the game's systems
                     Game.Upgrades['Box of improved cookies'].isUnlocked = function() { return this.unlockCondition ? this.unlockCondition() : true; };
@@ -2489,71 +2427,33 @@ function addUpgradesToGame() {
                     }
                 }
             
+        // ===== SECTION 4: COOKIE UPGRADES =====
             // Create cookie upgrades only if enabled AND Box upgrade exists
             if (enableCookieUpgrades && Game.Upgrades['Box of improved cookies'] && upgradeData.cookie && Array.isArray(upgradeData.cookie)) {
-                debugLog('addUpgradesToGame: Creating cookie upgrades, count =', upgradeData.cookie.length);
                 for (var i = 0; i < upgradeData.cookie.length; i++) {
                     var upgradeInfo = upgradeData.cookie[i];
-                    if (upgradeInfo.name && upgradeInfo.name.includes('Improved')) {
-                        debugLog('addUpgradesToGame: Processing cookie upgrade', upgradeInfo.name, 'icon =', upgradeInfo.icon, 'price =', upgradeInfo.price);
+                    try {
+                        createCookieUpgrade(upgradeInfo);
+                    } catch (e) {
+                    console.error('Failed to create cookie upgrade:', upgradeInfo.name, e);
                     }
-                    createCookieUpgrade(upgradeInfo);
                 }
             }
             
-            // Create building upgrades with order assignment only if enabled
+        // ===== SECTION 5: BUILDING UPGRADES =====
+        // Create building upgrades with proper order assignment
             if (enableBuildingUpgrades) {
+            
             // Building order starting values
             var buildingOrderStarts = {
-                'Cursor': 151,
-                'Grandma': 201,
-                'Farm': 301,
-                'Mine': 401,
-                'Factory': 501,
-                'Bank': 526,
-                'Temple': 551,
-                'Wizard tower': 576,
-                'Shipment': 601,
-                'Alchemy lab': 701,
-                'Portal': 801,
-                'Time machine': 901,
-                'Antimatter condenser': 1001,
-                'Prism': 1101,
-                'Chancemaker': 1201,
-                'Fractal engine': 1301,
-                'Javascript console': 1401,
-                'Idleverse': 1501,
-                'Cortex baker': 1601,
-                'You': 1701
+                'Cursor': 151, 'Grandma': 201, 'Farm': 301, 'Mine': 401, 'Factory': 501,
+                'Bank': 526, 'Temple': 551, 'Wizard tower': 576, 'Shipment': 601,
+                'Alchemy lab': 701, 'Portal': 801, 'Time machine': 901, 'Antimatter condenser': 1001,
+                'Prism': 1101, 'Chancemaker': 1201, 'Fractal engine': 1301, 'Javascript console': 1401,
+                'Idleverse': 1501, 'Cortex baker': 1601, 'You': 1701
             };
             
-            // Helper function to determine if an upgrade is building-related
-            function isBuildingRelatedUpgrade(upgradeInfo) {
-                if (upgradeInfo.building) {
-                    return upgradeInfo.building; // return the building name
-                }
-                
-                // Check if it's a cost reduction upgrade for a building
-                if (upgradeInfo.desc && upgradeInfo.unlockCondition) {
-                    // Handle standard plural form: "Grandmas cost", "Cortex bakers cost", etc.
-                    var descMatch = upgradeInfo.desc.match(/^([^s]+)s cost/);
-                    // Special-case singular building name "You": "You cost"
-                    if (!descMatch && /^You cost/.test(upgradeInfo.desc)) {
-                        descMatch = ['You cost', 'You'];
-                    }
-                    if (descMatch) {
-                        var buildingName = descMatch[1];
-                        var unlockStr = upgradeInfo.unlockCondition.toString();
-                        if (unlockStr.includes("Game.Objects['" + buildingName + "']")) {
-                            return buildingName;
-                        }
-                    }
-                }
-                
-                return null;
-            }
-            
-            // Group ALL building-related upgrades by building and extract threshold for sorting
+            // Group building upgrades by building type
             var buildingGroups = {};
             
             // Process building upgrades
@@ -2566,7 +2466,7 @@ function addUpgradesToGame() {
                         buildingGroups[buildingName] = [];
                     }
                     
-                    // Extract threshold from unlock condition
+                    // Extract threshold for sorting
                     var threshold = 0;
                     if (upgradeInfo.unlockCondition) {
                         var unlockStr = upgradeInfo.unlockCondition.toString();
@@ -2578,8 +2478,7 @@ function addUpgradesToGame() {
                     
                     buildingGroups[buildingName].push({
                         upgrade: upgradeInfo,
-                        threshold: threshold,
-                        type: 'building'
+                        threshold: threshold
                     });
                 }
             }
@@ -2588,7 +2487,6 @@ function addUpgradesToGame() {
             if (upgradeData.generic && Array.isArray(upgradeData.generic)) {
                 for (var i = 0; i < upgradeData.generic.length; i++) {
                     var upgradeInfo = upgradeData.generic[i];
-                    var buildingName = isBuildingRelatedUpgrade(upgradeInfo);
                     
                     // Skip essential upgrades that were already created
                     if (upgradeInfo.name === 'Box of improved cookies' || 
@@ -2601,12 +2499,13 @@ function addUpgradesToGame() {
                         continue;
                     }
                     
-                    if (buildingName) {
+                    if (upgradeInfo.building) {
+                        var buildingName = upgradeInfo.building;
                         if (!buildingGroups[buildingName]) {
                             buildingGroups[buildingName] = [];
                         }
                         
-                        // Extract threshold from unlock condition
+                        // Extract threshold for sorting
                         var threshold = 0;
                         if (upgradeInfo.unlockCondition) {
                             var unlockStr = upgradeInfo.unlockCondition.toString();
@@ -2618,14 +2517,13 @@ function addUpgradesToGame() {
                         
                         buildingGroups[buildingName].push({
                             upgrade: upgradeInfo,
-                            threshold: threshold,
-                            type: 'generic'
+                            threshold: threshold
                         });
                     }
                 }
             }
             
-            // Sort each building group by threshold and assign orders
+            // Create building upgrades with proper order assignment
             for (var buildingName in buildingGroups) {
                 if (buildingGroups.hasOwnProperty(buildingName)) {
                     var group = buildingGroups[buildingName];
@@ -2636,16 +2534,16 @@ function addUpgradesToGame() {
                     });
                     
                     // Assign order values
-                    var baseOrder = buildingOrderStarts[buildingName] || 2000; // fallback for unknown buildings
+                    var baseOrder = buildingOrderStarts[buildingName] || 2000;
                     for (var j = 0; j < group.length; j++) {
                         var upgradeInfo = group[j].upgrade;
                         
                         // Skip Order of the X upgrades (preserve their existing order)
                         if (upgradeInfo.name && upgradeInfo.name.indexOf('Order of the') === 0) {
-                            if (group[j].type === 'building') {
-                    createBuildingUpgrade(upgradeInfo);
-                            } else {
-                                createGenericUpgrade(upgradeInfo);
+                            try {
+                                    createGenericUpgrade(upgradeInfo);
+                            } catch (e) {
+                                console.error('Failed to create Order upgrade:', upgradeInfo.name, e);
                             }
                             continue;
                         }
@@ -2653,26 +2551,24 @@ function addUpgradesToGame() {
                         // Assign order: baseOrder + (j + 1) * 0.0001
                         upgradeInfo.order = baseOrder + ((j + 1) * 0.0001);
                         
-                        // Create the upgrade using the appropriate function
-                        if (group[j].type === 'building') {
-                            createBuildingUpgrade(upgradeInfo);
-                        } else {
-                            createGenericUpgrade(upgradeInfo);
+                        try {
+                                createBuildingUpgrade(upgradeInfo);
+                        } catch (e) {
+                            console.error('Failed to create building upgrade:', upgradeInfo.name, e);
                         }
                     }
                 }
             }
-            } // end if enableBuildingUpgrades
-            
-
-            
-            // Create kitten upgrades with order assignment only if enabled
+        }
+        
+        // ===== SECTION 6: KITTEN UPGRADES =====
+        // Create kitten upgrades with proper order assignment
             if (enableKittenUpgrades && upgradeData.kitten && Array.isArray(upgradeData.kitten)) {
-                // Sort kitten upgrades by their achievement threshold (lower thresholds first)
+            
+            // Sort kitten upgrades by their achievement threshold
                 var sortedKittenUpgrades = [];
                 for (var i = 0; i < upgradeData.kitten.length; i++) {
                     var upgradeInfo = upgradeData.kitten[i];
-                    
                     
                     // Extract threshold from unlock condition
                     var threshold = 0;
@@ -2695,59 +2591,173 @@ function addUpgradesToGame() {
                     return a.threshold - b.threshold;
                 });
                 
-                // Assign order values starting at 20001.00001
+            // Create kitten upgrades with proper order assignment
                 for (var j = 0; j < sortedKittenUpgrades.length; j++) {
                     var upgradeInfo = sortedKittenUpgrades[j].upgrade;
                     
                     // Assign order: 20001 + (j + 1) * 0.00001
                     upgradeInfo.order = 20001 + ((j + 1) * 0.00001);
                     
-                    createKittenUpgrade(upgradeInfo);
+                    try {
+                        createKittenUpgrade(upgradeInfo);
+                    } catch (e) {
+                    console.error('Failed to create kitten upgrade:', upgradeInfo.name, e);
                 }
-
             }
-            
-            
-            
-            // Force recalculation to apply effects immediately
-            setTimeout(() => {
-                // if (Game.CalculateGains) { Game.CalculateGains(); } // commented; rely on core loop
-                // if (Game.recalculateGains) { Game.recalculateGains = 1; }
+        }
+        
+        // ===== SECTION 7: REMOVED - RESTORATION NOW HAPPENS DURING CREATION =====
+        // The bought state is now restored during upgrade creation in each create*Upgrade function
+        // This is more reliable and cleaner than trying to restore after creation
+        
+        
+        // ===== SECTION 8: SAVE DATA INITIALIZATION =====
+            // CRITICAL: Initialize missing upgrades in save data
+            // This ensures that ALL upgrades are properly tracked in the save system, even when disabled
+            if (modSaveData && modSaveData.upgrades) {
+                var modUpgradeNames = getModUpgradeNames();
+                var initializedCount = 0;
                 
-                // Force store refresh using the game's own mechanisms
+                modUpgradeNames.forEach(upgradeName => {
+                    if (Game.Upgrades[upgradeName] && !modSaveData.upgrades[upgradeName]) {
+                        modSaveData.upgrades[upgradeName] = { bought: 0 };
+                        initializedCount++;
+                    }
+                });
+        }
+        
+        // ===== SECTION 9: REMOVED - RESTORATION NOW HAPPENS DURING CREATION =====
+        // The bought state is now restored during upgrade creation in each create*Upgrade function
+        // This is more reliable and cleaner than trying to restore after creation
+        
+        
+        // ===== SECTION 10: FINAL SETUP =====
+        // Force store refresh
+            setTimeout(() => {
                 Game.storeToRefresh = 1;
                 Game.upgradesToRebuild = 1;
                 if (Game.UpdateMenu) { Game.UpdateMenu(); }
             }, 100);
             
-            // RESTORE preserved bought states after recreation
-            Object.keys(existingBoughtStates).forEach(name => {
-                if (Game.Upgrades[name]) {
-                    Game.Upgrades[name].bought = existingBoughtStates[name];
+    } // End of addUpgradesToGame function
 
+
+    // This function saves current states before deletion - use only for mod initialization
+    function recreateAllUpgradesFromSaveData() {
+        // Step 1: Save current states of ALL mod upgrades before deletion
+        var modUpgradeNames = getModUpgradeNames();
+        if (!modSaveData) {
+            modSaveData = { upgrades: {} };
+        }
+        if (!modSaveData.upgrades) {
+            modSaveData.upgrades = {};
+        }
+        
+        // Save current states of all mod upgrades before removing them
+        for (var i = 0; i < modUpgradeNames.length; i++) {
+            var upgradeName = modUpgradeNames[i];
+            if (Game.Upgrades[upgradeName]) {
+                var currentBought = Game.Upgrades[upgradeName].bought || 0;
+                modSaveData.upgrades[upgradeName] = { bought: currentBought };
+            }
+        }
+        
+        // Step 2: Delete ALL mod upgrades from the game
+        for (var i = 0; i < modUpgradeNames.length; i++) {
+            var upgradeName = modUpgradeNames[i];
+            if (Game.Upgrades[upgradeName]) {
+                delete Game.Upgrades[upgradeName];
+            }
+        }
+        
+        // Step 3: Recreate all upgrades from scratch
+        createUpgrades();
+        addUpgradesToGame();
+        
+        // Step 4: Apply save data states (this is the ONLY source of truth)
+        if (modSaveData && modSaveData.upgrades) {
+            for (var upgradeName in modSaveData.upgrades) {
+                if (Game.Upgrades[upgradeName]) {
+                    Game.Upgrades[upgradeName].bought = modSaveData.upgrades[upgradeName].bought || 0;
                 }
-            });
-            
-            // INITIAL LOAD: Set correct bought states from save data
-            if (modSaveData && modSaveData.upgrades) {
+            }
+        }
+    }
+
+    // Function for operations that don't save current states - only loads from save
+    // Used for toggle operations and save loading
+    function recreateUpgradesFromSaveOnly() {
+        // Step 1: Delete ALL mod upgrades from the game
+        var modUpgradeNames = getModUpgradeNames();
+        for (var i = 0; i < modUpgradeNames.length; i++) {
+            var upgradeName = modUpgradeNames[i];
+            if (Game.Upgrades[upgradeName]) {
+                delete Game.Upgrades[upgradeName];
+            }
+        }
+        
+        // Step 2: Recreate all upgrades from scratch
+        createUpgrades();
+        addUpgradesToGame();
+        
+        // Step 3: Apply save data states (this is the ONLY source of truth)
+        if (modSaveData && modSaveData.upgrades) {
+            for (var upgradeName in modSaveData.upgrades) {
+                if (Game.Upgrades[upgradeName]) {
+                    Game.Upgrades[upgradeName].bought = modSaveData.upgrades[upgradeName].bought || 0;
+                }
+            }
+        }
+    }
+
+    // Independent function to create kitten upgrades
+    function createKittenUpgradesIndependently() {
+        // Create kitten upgrades with order assignment only if enabled
+        if (enableKittenUpgrades && upgradeData.kitten && Array.isArray(upgradeData.kitten)) {
+            // Sort kitten upgrades by their achievement threshold (lower thresholds first)
+            var sortedKittenUpgrades = [];
+            for (var i = 0; i < upgradeData.kitten.length; i++) {
+                var upgradeInfo = upgradeData.kitten[i];
                 
-                var restoredCount = 0;
-                Object.keys(modSaveData.upgrades).forEach(upgradeName => {
-                    if (Game.Upgrades[upgradeName] && modSaveData.upgrades[upgradeName].bought > 0) {
-                        Game.Upgrades[upgradeName].bought = modSaveData.upgrades[upgradeName].bought;
-                        restoredCount++;
-                        debugLog('addUpgradesToGame: restored bought state for', upgradeName);
+                
+                // Extract threshold from unlock condition
+                var threshold = 0;
+                if (upgradeInfo.unlockCondition) {
+                    var unlockStr = upgradeInfo.unlockCondition.toString();
+                    var thresholdMatch = unlockStr.match(/>= (\d+)/);
+                    if (thresholdMatch) {
+                        threshold = parseInt(thresholdMatch[1]);
                     }
+                }
+                
+                sortedKittenUpgrades.push({
+                    upgrade: upgradeInfo,
+                    threshold: threshold
                 });
             }
             
-        } catch (e) {
-            console.error('Error in addUpgradesToGame:', e);
+            // Sort by threshold (lower thresholds first)
+            sortedKittenUpgrades.sort(function(a, b) {
+                return a.threshold - b.threshold;
+            });
+            
+            // Create kitten upgrades with proper order assignment
+            var kittenCreated = 0;
+            var kittenFailed = 0;
+            for (var i = 0; i < sortedKittenUpgrades.length; i++) {
+                var upgradeInfo = sortedKittenUpgrades[i].upgrade;
+                
+                try {
+                    // Create the upgrade with proper order
+                    createKittenUpgrade(upgradeInfo);
+                    kittenCreated++;
+                } catch (e) {
+                    kittenFailed++;
+                }
+            }
         }
     }
-    
-    
-    
+
     // Function to move achievements between shadow and normal pools
     function updateAchievementPools() {
         // Loop through all our mod achievements
@@ -4373,6 +4383,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Increased Social Security Checks',
+                type: 'discount',
+                building: 'Grandma',
                 desc: 'Grandmas cost <b>5%</b> less.',
                 ddesc: 'Grandmas cost <b>5%</b> less.<q>With better retirement benefits, your grandmas can afford to work for less. They\'re just happy to be baking cookies and staying active.</q>',
                 price: 5e19, // 50 quintillion
@@ -4387,6 +4399,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Off-Brand Eyeglasses',
+                type: 'discount',
+                building: 'Grandma',
                 desc: 'Grandmas cost <b>5%</b> less.',
                 ddesc: 'Grandmas cost <b>5%</b> less.<q>Generic reading glasses are just as good as the expensive ones, and they make your grandmas look more distinguished while they bake.</q>',
                 price: 5e22, // 50 sextillion
@@ -4401,6 +4415,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Plastic Walkers',
+                type: 'discount',
+                building: 'Grandma',
                 desc: 'Grandmas cost <b>5%</b> less.',
                 ddesc: 'Grandmas cost <b>5%</b> less.<q>Lightweight, durable, and much cheaper than the fancy ones. Your grandmas can now move around the kitchen more efficiently while saving money.</q>',
                 price: 5e25, // 50 septillion
@@ -4415,6 +4431,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Bulk Discount Hearing Aids',
+                type: 'discount',
+                building: 'Grandma',
                 desc: 'Grandmas cost <b>5%</b> less.',
                 ddesc: 'Grandmas cost <b>5%</b> less.<q>Buying hearing aids in bulk saves money, and your grandmas can now hear cookie timers perfectly. What\'s that? They said the cookies are ready!</q>',
                 price: 5e28, // 50 octillion
@@ -4429,6 +4447,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Generic Arthritis Medication',
+                type: 'discount',
+                building: 'Grandma',
                 desc: 'Grandmas cost <b>5%</b> less.',
                 ddesc: 'Grandmas cost <b>5%</b> less.<q>The store brand works just as well as the name brand, and your grandmas can now knead dough without any complaints. Well, fewer complaints.</q>',
                 price: 5e31, // 50 nonillion
@@ -4443,6 +4463,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Wholesale Denture Adhesive',
+                type: 'discount',
+                building: 'Grandma',
                 desc: 'Grandmas cost <b>5%</b> less.',
                 ddesc: 'Grandmas cost <b>5%</b> less.<q>Buying denture adhesive in industrial quantities means your grandmas can smile confidently while tasting their cookie creations. The savings are toothsome!</q>',
                 price: 5e34, // 50 decillion
@@ -4457,6 +4479,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Biodiesel fueled tractors',
+                type: 'discount',
+                building: 'Farm',
                 desc: 'Farms cost <b>5%</b> less.',
                 ddesc: 'Farms cost <b>5%</b> less.<q>Your farms have discovered that running tractors on recycled cooking oil from cookie production is both eco-friendly and surprisingly cost-effective. The tractors smell like fresh cookies now!</q>',
                 price: 5e22, // 50 sextillion
@@ -4471,6 +4495,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Free manure from clone factories',
+                type: 'discount',
+                building: 'Farm',
                 desc: 'Farms cost <b>5%</b> less.',
                 ddesc: 'Farms cost <b>5%</b> less.<q>The clone factories produce so much waste that your farms get all the fertilizer they need for free. The cookies grown with this manure taste surprisingly good.</q>',
                 price: 5e25, // 50 septillion
@@ -4485,6 +4511,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Solar-powered irrigation systems',
+                type: 'discount',
+                building: 'Farm',
                 desc: 'Farms cost <b>5%</b> less.',
                 ddesc: 'Farms cost <b>5%</b> less.<q>Your farms now use solar panels to power their irrigation systems. The cookies grow faster when they\'re watered with sunlight-filtered water, and the energy bills are practically zero.</q>',
                 price: 5e28, // 50 octillion
@@ -4499,6 +4527,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Bulk seed purchases',
+                type: 'discount',
+                building: 'Farm',
                 desc: 'Farms cost <b>5%</b> less.',
                 ddesc: 'Farms cost <b>5%</b> less.<q>Buying cookie seeds in industrial quantities has dramatically reduced costs. Your farms now have enough seeds to plant cookie forests, and the bulk discount is delicious.</q>',
                 price: 5e31, // 50 nonillion
@@ -4513,6 +4543,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Robot farm hands',
+                type: 'discount',
+                building: 'Farm',
                 desc: 'Farms cost <b>5%</b> less.',
                 ddesc: 'Farms cost <b>5%</b> less.<q>Your farms now employ robotic workers who never tire and work for free. They\'re programmed to be gentle with the cookie plants and surprisingly good at telling cookie jokes.</q>',
                 price: 5e34, // 50 decillion
@@ -4527,6 +4559,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Vertical farming subsidies',
+                type: 'discount',
+                building: 'Farm',
                 desc: 'Farms cost <b>5%</b> less.',
                 ddesc: 'Farms cost <b>5%</b> less.<q>The government is so impressed with your cookie farming innovation that they\'re providing subsidies for vertical farming. Your cookie towers are now taxpayer-funded!</q>',
                 price: 5e37, // 50 undecillion
@@ -4541,6 +4575,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Clearance shaft kits',
+                type: 'discount',
+                building: 'Mine',
                 desc: 'Mines cost <b>5%</b> less.',
                 ddesc: 'Mines cost <b>5%</b> less.<q>Flat‑pack mining in a box! Comes with complimentary dust, three bent bolts, and a manual that just says “dig.”</q>',
                 price: 5e25, // 50 septillion
@@ -4555,6 +4591,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Punch-card TNT club',
+                type: 'discount',
+                building: 'Mine',
                 desc: 'Mines cost <b>5%</b> less.',
                 ddesc: 'Mines cost <b>5%</b> less.<q>Every tenth kaboom is free. Please remember to validate your detonation.</q>',
                 price: 5e28, // 50 octillion
@@ -4569,6 +4607,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Hand-me-down hardhats',
+                type: 'discount',
+                building: 'Mine',
                 desc: 'Mines cost <b>5%</b> less.',
                 ddesc: 'Mines cost <b>5%</b> less.<q>Pre-scuffed for authenticity. Comes with vintage stickers and suspiciously fresh chin straps.</q>',
                 price: 5e31, // 50 nonillion
@@ -4583,6 +4623,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Lease-back drill rigs',
+                type: 'discount',
+                building: 'Mine',
                 desc: 'Mines cost <b>5%</b> less.',
                 ddesc: 'Mines cost <b>5%</b> less.<q>You rent them your rigs; they rent them back to you cheaper. Don’t think about it too hard—just keep drilling.</q>',
                 price: 5e34, // 50 decillion
@@ -4597,6 +4639,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Ore cartel coupons',
+                type: 'discount',
+                building: 'Mine',
                 desc: 'Mines cost <b>5%</b> less.',
                 ddesc: 'Mines cost <b>5%</b> less.<q>Clip these to save big on ironies, aluminums, and suspiciously inexpensive unobtainium.</q>',
                 price: 5e37, // 50 undecillion
@@ -4611,6 +4655,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Cave-in insurance kickbacks',
+                type: 'discount',
+                building: 'Mine',
                 desc: 'Mines cost <b>5%</b> less.',
                 ddesc: 'Mines cost <b>5%</b> less.<q>Policy fine print: “cave-ins not included.” The cashback is, though!</q>',
                 price: 5e40, // 50 duodecillion
@@ -4625,6 +4671,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Flat-pack factory frames',
+                type: 'discount',
+                building: 'Factory',
                 desc: 'Factories cost <b>5%</b> less.',
                 ddesc: 'Factories cost <b>5%</b> less.<q>Arrives in 47 boxes, 2 mystery bolts, and one tiny allen key. Assembly required; dignity sold separately.</q>',
                 price: 5e28, // 50 octillion
@@ -4639,6 +4687,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'BOGO rivet bins',
+                type: 'discount',
+                building: 'Factory',
                 desc: 'Factories cost <b>5%</b> less.',
                 ddesc: 'Factories cost <b>5%</b> less.<q>Buy one rivet, get one lodged in the break room floor for free. Savings that really fasten your margins.</q>',
                 price: 5e31, // 50 nonillion
@@ -4653,6 +4703,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Off-brand gear grease',
+                type: 'discount',
+                building: 'Factory',
                 desc: 'Factories cost <b>5%</b> less.',
                 ddesc: 'Factories cost <b>5%</b> less.<q>It says "lubricishion" on the drum but the conveyor squeaks stopped and the budget squeals with joy.</q>',
                 price: 5e34, // 50 decillion
@@ -4667,6 +4719,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Misprint warning labels',
+                type: 'discount',
+                building: 'Factory',
                 desc: 'Factories cost <b>5%</b> less.',
                 ddesc: 'Factories cost <b>5%</b> less.<q>"DO NOT NOT TOUCH" and "CAUTION: SPICY ELECTRICITY" — flawed labels at flawless prices.</q>',
                 price: 5e37, // 50 undecillion
@@ -4681,6 +4735,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Pallet-jack rebates',
+                type: 'discount',
+                building: 'Factory',
                 desc: 'Factories cost <b>5%</b> less.',
                 ddesc: 'Factories cost <b>5%</b> less.<q>Return three worn wheels and a heartfelt shrug to receive instant savings on moving heavy expectations.</q>',
                 price: 5e40, // 50 duodecillion
@@ -4695,6 +4751,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Prefab cookie modules',
+                type: 'discount',
+                building: 'Factory',
                 desc: 'Factories cost <b>5%</b> less.',
                 ddesc: 'Factories cost <b>5%</b> less.<q>Snap together a fully functional bakery block before lunch. Some assembly lines may snap back.</q>',
                 price: 5e43, // 50 tredecillion
@@ -4709,6 +4767,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Piggy buyback bonanza',
+                type: 'discount',
+                building: 'Bank',
                 desc: 'Banks cost <b>5%</b> less.',
                 ddesc: 'Banks cost <b>5%</b> less.<q>We buy your old piggy banks for scrap, you get bulk rates on brand-new savings. Oink if you love rebates.</q>',
                 price: 5e31, // 50 nonillion
@@ -4723,6 +4783,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Vault door floor-models',
+                type: 'discount',
+                building: 'Bank',
                 desc: 'Banks cost <b>5%</b> less.',
                 ddesc: 'Banks cost <b>5%</b> less.<q>Slightly scuffed, mostly secure, and drastically discounted. May include complimentary salesperson fingerprints.</q>',
                 price: 5e34, // 50 decillion
@@ -4737,6 +4799,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Pen-on-a-chain procurement',
+                type: 'discount',
+                building: 'Bank',
                 desc: 'Banks cost <b>5%</b> less.',
                 ddesc: 'Banks cost <b>5%</b> less.<q>We negotiated a lifetime supply of those pens everyone “borrows”. Budgets balanced; chains tested for tensile sass.</q>',
                 price: 5e37, // 50 undecillion
@@ -4751,6 +4815,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Complimentary complimentary mints',
+                type: 'discount',
+                building: 'Bank',
                 desc: 'Banks cost <b>5%</b> less.',
                 ddesc: 'Banks cost <b>5%</b> less.<q>They’re free. The mints are free. The sign telling you they’re complimentary is also complimentary.</q>',
                 price: 5e40, // 50 duodecillion
@@ -4765,6 +4831,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Fee waiver wavers',
+                type: 'discount',
+                building: 'Bank',
                 desc: 'Banks cost <b>5%</b> less.',
                 ddesc: 'Banks cost <b>5%</b> less.<q>Wave the fee, waive the fee—our interns practiced both until the numbers surrendered.</q>',
                 price: 5e43, // 50 tredecillion
@@ -4779,6 +4847,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Dough Jones clearance',
+                type: 'discount',
+                building: 'Bank',
                 desc: 'Banks cost <b>5%</b> less.',
                 ddesc: 'Banks cost <b>5%</b> less.<q>The market dipped; we scooped vault carpeting and gold-plated clipboards by the pallet. Buy low, bank lower.</q>',
                 price: 5e46, // 50 quattuordecillion
@@ -4793,6 +4863,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Tithe punch cards',
+                type: 'discount',
+                building: 'Temple',
                 desc: 'Temples cost <b>5%</b> less.',
                 ddesc: 'Temples cost <b>5%</b> less.<q>Pray ten times, the eleventh comes with a coupon. Blessings accrue interest; salvation may vary.</q>',
                 price: 5e34, // 50 decillion
@@ -4807,6 +4879,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Relic replica racks',
+                type: 'discount',
+                building: 'Temple',
                 desc: 'Temples cost <b>5%</b> less.',
                 ddesc: 'Temples cost <b>5%</b> less.<q>Authentically inauthentic! Perfect for display, fundraising, and keeping the real relics safe in a sock drawer.</q>',
                 price: 5e37, // 50 undecillion
@@ -4821,6 +4895,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Incense refill program',
+                type: 'discount',
+                building: 'Temple',
                 desc: 'Temples cost <b>5%</b> less.',
                 ddesc: 'Temples cost <b>5%</b> less.<q>Bring back your incense stubs for a discount on fresh sticks. Smells like savings (and nutmeg).</q>',
                 price: 5e40, // 50 duodecillion
@@ -4835,6 +4911,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Chant-o-matic hymn reels',
+                type: 'discount',
+                building: 'Temple',
                 desc: 'Temples cost <b>5%</b> less.',
                 ddesc: 'Temples cost <b>5%</b> less.<q>Wind them up for a full liturgical set in C Major. Now with extended Amen remix.</q>',
                 price: 5e43, // 50 tredecillion
@@ -4849,6 +4927,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Pew-per-view sponsorships',
+                type: 'discount',
+                building: 'Temple',
                 desc: 'Temples cost <b>5%</b> less.',
                 ddesc: 'Temples cost <b>5%</b> less.<q>Local businesses sponsor your pews. Sit in Savings Row, brought to you by Discount Chalice Emporium.</q>',
                 price: 5e46, // 50 quattuordecillion
@@ -4863,6 +4943,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Sacred site tax amnesty',
+                type: 'discount',
+                building: 'Temple',
                 desc: 'Temples cost <b>5%</b> less.',
                 ddesc: 'Temples cost <b>5%</b> less.<q>Pilgrims rejoice; accountants rejoice harder. Certain restrictions (and miracles) apply.</q>',
                 price: 5e49, // 50 quindecillion
@@ -4877,6 +4959,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Wand warranty returns',
+                type: 'discount',
+                building: 'Wizard tower',
                 desc: 'Wizard towers cost <b>5%</b> less.',
                 ddesc: 'Wizard towers cost <b>5%</b> less.<q>Returned within 30 days of transmogrification. Minor scorch marks add character.</q>',
                 price: 5e37, // 50 undecillion
@@ -4891,6 +4975,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Grimoire remainder sale',
+                type: 'discount',
+                building: 'Wizard tower',
                 desc: 'Wizard towers cost <b>5%</b> less.',
                 ddesc: 'Wizard towers cost <b>5%</b> less.<q>Spellbooks with the last page missing. The twist ending is cheaper anyway.</q>',
                 price: 5e40, // 50 duodecillion
@@ -4904,7 +4990,9 @@ function addUpgradesToGame() {
                     return 1;
                 },},
             {
-                name: 'Robes with “character”',
+                name: 'Robes with "character"',
+                type: 'discount',
+                building: 'Wizard tower',
                 desc: 'Wizard towers cost <b>5%</b> less.',
                 ddesc: 'Wizard towers cost <b>5%</b> less.<q>Vintage, moth-kissed, and pockets full of mysterious lint. Very arcane, very affordable.</q>',
                 price: 5e43, // 50 tredecillion
@@ -4919,6 +5007,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Familiar foster program',
+                type: 'discount',
+                building: 'Wizard tower',
                 desc: 'Wizard towers cost <b>5%</b> less.',
                 ddesc: 'Wizard towers cost <b>5%</b> less.<q>Give a stray imp a home and it will fetch reagents, guard cauldrons, and occasionally judge your hat.</q>',
                 price: 5e46, // 50 quattuordecillion
@@ -4933,6 +5023,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Council scroll stipends',
+                type: 'discount',
+                building: 'Wizard tower',
                 desc: 'Wizard towers cost <b>5%</b> less.',
                 ddesc: 'Wizard towers cost <b>5%</b> less.<q>Stipends for parchment, ink, and the occasional sworn oath. Please initial with runes.</q>',
                 price: 5e49, // 50 quindecillion
@@ -4947,6 +5039,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Broom-sharing scheme',
+                type: 'discount',
+                building: 'Wizard tower',
                 desc: 'Wizard towers cost <b>5%</b> less.',
                 ddesc: 'Wizard towers cost <b>5%</b> less.<q>One broom, many roommates. Please schedule your midnight flights responsibly.</q>',
                 price: 5e52, // 50 sexdecillion
@@ -4961,6 +5055,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Retired cargo pods',
+                type: 'discount',
+                building: 'Shipment',
                 desc: 'Shipments cost <b>5%</b> less.',
                 ddesc: 'Shipments cost <b>5%</b> less.<q>Previously orbited. Lightly meteor-kissed. Still airtight (mostly).</q>',
                 price: 5e40, // 50 duodecillion
@@ -4975,6 +5071,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Container co-op cards',
+                type: 'discount',
+                building: 'Shipment',
                 desc: 'Shipments cost <b>5%</b> less.',
                 ddesc: 'Shipments cost <b>5%</b> less.<q>Members share containers, points, and an inexplicable fondness for pallet forts.</q>',
                 price: 5e43, // 50 tredecillion
@@ -4989,6 +5087,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Reusable launch crates',
+                type: 'discount',
+                building: 'Shipment',
                 desc: 'Shipments cost <b>5%</b> less.',
                 ddesc: 'Shipments cost <b>5%</b> less.<q>Return for deposit and a complimentary dent count. Blast off again and again.</q>',
                 price: 5e46, // 50 quattuordecillion
@@ -5003,6 +5103,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Autodocker apprentices',
+                type: 'discount',
+                building: 'Shipment',
                 desc: 'Shipments cost <b>5%</b> less.',
                 ddesc: 'Shipments cost <b>5%</b> less.<q>They learn by bumping every harbor gently, then sending a heartfelt apology ping.</q>',
                 price: 5e49, // 50 quindecillion
@@ -5017,6 +5119,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Route rebate vouchers',
+                type: 'discount',
+                building: 'Shipment',
                 desc: 'Shipments cost <b>5%</b> less.',
                 ddesc: 'Shipments cost <b>5%</b> less.<q>Redeem along preferred lanes for discounts and occasional scenic detours.</q>',
                 price: 5e52, // 50 sexdecillion
@@ -5031,6 +5135,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Free-trade cookie ports',
+                type: 'discount',
+                building: 'Shipment',
                 desc: 'Shipments cost <b>5%</b> less.',
                 ddesc: 'Shipments cost <b>5%</b> less.<q>Tariffs take a coffee break, cranes work overtime. Paperwork now served with biscotti.</q>',
                 price: 5e55, // 50 septendecillion
@@ -5045,6 +5151,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Beaker buybacks',
+                type: 'discount',
+                building: 'Alchemy lab',
                 desc: 'Alchemy labs cost <b>5%</b> less.',
                 ddesc: 'Alchemy labs cost <b>5%</b> less.<q>Trade in cracked glassware for shiny almost‑new beakers. Some have personality bubbles.</q>',
                 price: 5e43, // 50 tredecillion
@@ -5059,6 +5167,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Philosopher\'s pebbles',
+                type: 'discount',
+                building: 'Alchemy lab',
                 desc: 'Alchemy labs cost <b>5%</b> less.',
                 ddesc: 'Alchemy labs cost <b>5%</b> less.<q>Bulk-bought bits of the legendary rock. Not quite stones—more like budget-friendly pebbles with surprisingly similar savings.</q>',
                 price: 5e46, // 50 quattuordecillion
@@ -5073,6 +5183,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Cool-running crucibles',
+                type: 'discount',
+                building: 'Alchemy lab',
                 desc: 'Alchemy labs cost <b>5%</b> less.',
                 ddesc: 'Alchemy labs cost <b>5%</b> less.<q>They simmer at savings and rarely explode out of spite. Rarely.</q>',
                 price: 5e49, // 50 quindecillion
@@ -5087,6 +5199,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Batch homunculi permits',
+                type: 'discount',
+                building: 'Alchemy lab',
                 desc: 'Alchemy labs cost <b>5%</b> less.',
                 ddesc: 'Alchemy labs cost <b>5%</b> less.<q>Legal recognition for small goo people doing big batch work. Includes tiny hairnets.</q>',
                 price: 5e52, // 50 sexdecillion
@@ -5101,6 +5215,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Guild reagent rates',
+                type: 'discount',
+                building: 'Alchemy lab',
                 desc: 'Alchemy labs cost <b>5%</b> less.',
                 ddesc: 'Alchemy labs cost <b>5%</b> less.<q>Member pricing on phoenix down, dragonfruit essence, and ethically sourced eldritch goo.</q>',
                 price: 5e55, // 50 septendecillion
@@ -5114,7 +5230,9 @@ function addUpgradesToGame() {
                     return 1;
                 },},
             {
-                name: '“Mostly lead” gold grants',
+                name: '"Mostly lead" gold grants',
+                type: 'discount',
+                building: 'Alchemy lab',
                 desc: 'Alchemy labs cost <b>5%</b> less.',
                 ddesc: 'Alchemy labs cost <b>5%</b> less.<q>Funding for ambitious projects that turn profits into more profits, occasionally metal into other metal.</q>',
                 price: 5e58, // 50 octodecillion
@@ -5129,6 +5247,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Pre-owned ring frames',
+                type: 'discount',
+                building: 'Portal',
                 desc: 'Portals cost <b>5%</b> less.',
                 ddesc: 'Portals cost <b>5%</b> less.<q>Lightly used by previous dimensions. May creak audibly when reality bends.</q>',
                 price: 5e46, // 50 quattuordecillion
@@ -5143,6 +5263,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Anchor warehouse club',
+                type: 'discount',
+                building: 'Portal',
                 desc: 'Portals cost <b>5%</b> less.',
                 ddesc: 'Portals cost <b>5%</b> less.<q>Wholesale anchors! Keep your gateways grounded, your prices too.</q>',
                 price: 5e49, // 50 quindecillion
@@ -5157,6 +5279,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Passive rift baffles',
+                type: 'discount',
+                building: 'Portal',
                 desc: 'Portals cost <b>5%</b> less.',
                 ddesc: 'Portals cost <b>5%</b> less.<q>Simple fins that hush the howling void and cut the utility bill in half.</q>',
                 price: 5e52, // 50 sexdecillion
@@ -5171,6 +5295,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Volunteer gatekeepers',
+                type: 'discount',
+                building: 'Portal',
                 desc: 'Portals cost <b>5%</b> less.',
                 ddesc: 'Portals cost <b>5%</b> less.<q>Enthusiasts with clipboards who shout "Mind the tear!" and hand out cookies.</q>',
                 price: 5e55, // 50 septendecillion
@@ -5185,6 +5311,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Interrealm stipend scrolls',
+                type: 'discount',
+                building: 'Portal',
                 desc: 'Portals cost <b>5%</b> less.',
                 ddesc: 'Portals cost <b>5%</b> less.<q>Official parchments granting snack stipends to keep doors open and demons docile.</q>',
                 price: 5e58, // 50 octodecillion
@@ -5199,6 +5327,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Multiversal enterprise zone',
+                type: 'discount',
+                building: 'Portal',
                 desc: 'Portals cost <b>5%</b> less.',
                 ddesc: 'Portals cost <b>5%</b> less.<q>Business-friendly realities with tax holidays, physics optional, pastries encouraged.</q>',
                 price: 5e61, // 50 novemdecillion
@@ -5213,6 +5343,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Pre-loved hourglasses',
+                type: 'discount',
+                building: 'Time machine',
                 desc: 'Time machines cost <b>5%</b> less.',
                 ddesc: 'Time machines cost <b>5%</b> less.<q>They’ve seen some things. Sand flows fine; occasional deja vu included.</q>',
                 price: 5e49, // 50 quindecillion
@@ -5227,6 +5359,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Depreciated timeline scraps',
+                type: 'discount',
+                building: 'Time machine',
                 desc: 'Time machines cost <b>5%</b> less.',
                 ddesc: 'Time machines cost <b>5%</b> less.<q>Leftover future-past parts at clearance prices. Warranty voids itself retroactively.</q>',
                 price: 5e52, // 50 sexdecillion
@@ -5241,6 +5375,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Off-season flux valves',
+                type: 'discount',
+                building: 'Time machine',
                 desc: 'Time machines cost <b>5%</b> less.',
                 ddesc: 'Time machines cost <b>5%</b> less.<q>Winter flux on summer sale; flows like syrup on a cold morning.</q>',
                 price: 5e55, // 50 septendecillion
@@ -5255,6 +5391,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Weekend paradox passes',
+                type: 'discount',
+                building: 'Time machine',
                 desc: 'Time machines cost <b>5%</b> less.',
                 ddesc: 'Time machines cost <b>5%</b> less.<q>Unlimited round-trips between Friday and Monday. Terms loop perpetually.</q>',
                 price: 5e58, // 50 octodecillion
@@ -5269,6 +5407,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Department of When grants',
+                type: 'discount',
+                building: 'Time machine',
                 desc: 'Time machines cost <b>5%</b> less.',
                 ddesc: 'Time machines cost <b>5%</b> less.<q>Official funding to keep the clock from quitting and causality from filing complaints.</q>',
                 price: 5e61, // 50 novemdecillion
@@ -5283,6 +5423,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Antique warranty loopholes',
+                type: 'discount',
+                building: 'Time machine',
                 desc: 'Time machines cost <b>5%</b> less.',
                 ddesc: 'Time machines cost <b>5%</b> less.<q>Warranties that expire yesterday can’t be voided today. That’s just science.</q>',
                 price: 5e64, // 50 vigintillion
@@ -5297,6 +5439,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Certified negamatter cans',
+                type: 'discount',
+                building: 'Antimatter condenser',
                 desc: 'Antimatter condensers cost <b>5%</b> less.',
                 ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>Pre-certified, lightly cursed containment vessels. Store your nothing where it belongs.</q>',
                 price: 5e52, // 50 sexdecillion
@@ -5311,6 +5455,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Matter swap rebates',
+                type: 'discount',
+                building: 'Antimatter condenser',
                 desc: 'Antimatter condensers cost <b>5%</b> less.',
                 ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>Trade in your old matter for upgraded matter. Some terms may invert unexpectedly.</q>',
                 price: 5e55, // 50 septendecillion
@@ -5325,6 +5471,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Low-idle annihilators',
+                type: 'discount',
+                building: 'Antimatter condenser',
                 desc: 'Antimatter condensers cost <b>5%</b> less.',
                 ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>They hum quietly and only obliterate the bare minimum of existence during lunch.</q>',
                 price: 5e58, // 50 octodecillion
@@ -5339,6 +5487,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Grad-lab particle labor',
+                type: 'discount',
+                building: 'Antimatter condenser',
                 desc: 'Antimatter condensers cost <b>5%</b> less.',
                 ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>Enthusiastic assistants accelerate savings (and particles) for the promise of “experience”.</q>',
                 price: 5e61, // 50 novemdecillion
@@ -5353,6 +5503,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Institute endowment match',
+                type: 'discount',
+                building: 'Antimatter condenser',
                 desc: 'Antimatter condensers cost <b>5%</b> less.',
                 ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>Philanthropy meets physics: every cookie you invest is matched by a very generous boson.</q>',
                 price: 5e64, // 50 vigintillion
@@ -5367,6 +5519,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Void-zone incentives',
+                type: 'discount',
+                building: 'Antimatter condenser',
                 desc: 'Antimatter condensers cost <b>5%</b> less.',
                 ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>Tax breaks for building where reality is thinnest. Perfect for negative overhead.</q>',
                 price: 5e67, // 50 unvigintillion
@@ -5381,6 +5535,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Lens co-op exchange',
+                type: 'discount',
+                building: 'Prism',
                 desc: 'Prisms cost <b>5%</b> less.',
                 ddesc: 'Prisms cost <b>5%</b> less.<q>Swap scratches for savings. Community-sourced optics with community-sourced fingerprints.</q>',
                 price: 5e55, // 50 septendecillion
@@ -5395,6 +5551,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Spectral seconds',
+                type: 'discount',
+                building: 'Prism',
                 desc: 'Prisms cost <b>5%</b> less.',
                 ddesc: 'Prisms cost <b>5%</b> less.<q>Factory blemishes. Perfect rainbows, slightly embarrassed casings.</q>',
                 price: 5e58, // 50 octodecillion
@@ -5409,6 +5567,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Sleep-mode rainbows',
+                type: 'discount',
+                building: 'Prism',
                 desc: 'Prisms cost <b>5%</b> less.',
                 ddesc: 'Prisms cost <b>5%</b> less.<q>They dim themselves when you look away. Shy, efficient, dazzling when ready.</q>',
                 price: 5e61, // 50 novemdecillion
@@ -5423,6 +5583,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Apprentice refractioneers',
+                type: 'discount',
+                building: 'Prism',
                 desc: 'Prisms cost <b>5%</b> less.',
                 ddesc: 'Prisms cost <b>5%</b> less.<q>Trainees with straightedges and boundless optimism. Do not stare directly at their enthusiasm.</q>',
                 price: 5e64, // 50 vigintillion
@@ -5437,6 +5599,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Arts-of-Optics grants',
+                type: 'discount',
+                building: 'Prism',
                 desc: 'Prisms cost <b>5%</b> less.',
                 ddesc: 'Prisms cost <b>5%</b> less.<q>Funding for cultural light projects: installations, refractions, and occasional tasteful lens flares.</q>',
                 price: 5e67, // 50 unvigintillion
@@ -5451,6 +5615,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Rainbow renewal credits',
+                type: 'discount',
+                building: 'Prism',
                 desc: 'Prisms cost <b>5%</b> less.',
                 ddesc: 'Prisms cost <b>5%</b> less.<q>Tax incentives for neighborhoods with excellent chroma. Bring your own pot of gold.</q>',
                 price: 5e70, // 50 duovigintillion
@@ -5465,6 +5631,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Misprinted fortunes',
+                type: 'discount',
+                building: 'Chancemaker',
                 desc: 'Chancemakers cost <b>5%</b> less.',
                 ddesc: 'Chancemakers cost <b>5%</b> less.<q>Fortunes with typos sell for cheap; destiny still reads between the lines.</q>',
                 price: 5e58, // 50 octodecillion
@@ -5479,6 +5647,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Reroll refund policy',
+                type: 'discount',
+                building: 'Chancemaker',
                 desc: 'Chancemakers cost <b>5%</b> less.',
                 ddesc: 'Chancemakers cost <b>5%</b> less.<q>If at first you don’t crit, try again—now with store credit.</q>',
                 price: 5e61, // 50 novemdecillion
@@ -5493,6 +5663,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Economy-grade omens',
+                type: 'discount',
+                building: 'Chancemaker',
                 desc: 'Chancemakers cost <b>5%</b> less.',
                 ddesc: 'Chancemakers cost <b>5%</b> less.<q>Fits most prophecies. Some assembly (and belief) required.</q>',
                 price: 5e64, // 50 vigintillion
@@ -5507,6 +5679,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Volunteer augury nights',
+                type: 'discount',
+                building: 'Chancemaker',
                 desc: 'Chancemakers cost <b>5%</b> less.',
                 ddesc: 'Chancemakers cost <b>5%</b> less.<q>Community diviners bring your costs down and your eyebrows up.</q>',
                 price: 5e67, // 50 unvigintillion
@@ -5521,6 +5695,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Lottery board matching',
+                type: 'discount',
+                building: 'Chancemaker',
                 desc: 'Chancemakers cost <b>5%</b> less.',
                 ddesc: 'Chancemakers cost <b>5%</b> less.<q>Public funding for private jackpots. Everybody wins (statistically speaking).</q>',
                 price: 5e70, // 50 duovigintillion
@@ -5535,6 +5711,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Lucky district waivers',
+                type: 'discount',
+                building: 'Chancemaker',
                 desc: 'Chancemakers cost <b>5%</b> less.',
                 ddesc: 'Chancemakers cost <b>5%</b> less.<q>Zones where chance is zoned in your favor. Paperwork pre-blessed.</q>',
                 price: 5e73, // 50 trevigintillion
@@ -5549,6 +5727,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Iteration liquidation',
+                type: 'discount',
+                building: 'Fractal engine',
                 desc: 'Fractal engines cost <b>5%</b> less.',
                 ddesc: 'Fractal engines cost <b>5%</b> less.<q>We sold the old parts again and again and again. Recursively affordable.</q>',
                 price: 5e61, // 50 novemdecillion
@@ -5563,6 +5743,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Self-similar spare parts',
+                type: 'discount',
+                building: 'Fractal engine',
                 desc: 'Fractal engines cost <b>5%</b> less.',
                 ddesc: 'Fractal engines cost <b>5%</b> less.<q>Each part contains smaller parts that also contain… discounts.</q>',
                 price: 5e64, // 50 vigintillion
@@ -5577,6 +5759,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Recursion rebates',
+                type: 'discount',
+                building: 'Fractal engine',
                 desc: 'Fractal engines cost <b>5%</b> less.',
                 ddesc: 'Fractal engines cost <b>5%</b> less.<q>Get cash back on purchases that refer to themselves. Terms repeat.</q>',
                 price: 5e67, // 50 unvigintillion
@@ -5591,6 +5775,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Autogenerator residencies',
+                type: 'discount',
+                building: 'Fractal engine',
                 desc: 'Fractal engines cost <b>5%</b> less.',
                 ddesc: 'Fractal engines cost <b>5%</b> less.<q>Invite artists-in-algorithm to iterate patterns and budgets into pleasing shapes.</q>',
                 price: 5e70, // 50 duovigintillion
@@ -5605,6 +5791,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Grant-funded proofs',
+                type: 'discount',
+                building: 'Fractal engine',
                 desc: 'Fractal engines cost <b>5%</b> less.',
                 ddesc: 'Fractal engines cost <b>5%</b> less.<q>We proved it costs less, QED (Quite Economically Done).</q>',
                 price: 5e73, // 50 trevigintillion
@@ -5619,6 +5807,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Infinite-lot variances',
+                type: 'discount',
+                building: 'Fractal engine',
                 desc: 'Fractal engines cost <b>5%</b> less.',
                 ddesc: 'Fractal engines cost <b>5%</b> less.<q>Zoning approvals for parcels that subdivide forever. Plenty of room for savings.</q>',
                 price: 5e76, // 50 quattuorvigintillion
@@ -5633,6 +5823,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Refurb dev boards',
+                type: 'discount',
+                building: 'Javascript console',
                 desc: 'Javascript consoles cost <b>5%</b> less.',
                 ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Pre-loved PCBs with fresh solder and faint coffee notes. Still compiles.</q>',
                 price: 5e64, // 50 vigintillion
@@ -5647,6 +5839,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Compiler credit program',
+                type: 'discount',
+                building: 'Javascript console',
                 desc: 'Javascript consoles cost <b>5%</b> less.',
                 ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Compile now, pay later. Terms readable only after transpilation.</q>',
                 price: 5e67, // 50 unvigintillion
@@ -5661,6 +5855,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Idle-friendly runtimes',
+                type: 'discount',
+                building: 'Javascript console',
                 desc: 'Javascript consoles cost <b>5%</b> less.',
                 ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Optimized for waiting around productively. Uses fewer cycles, fewer snacks.</q>',
                 price: 5e70, // 50 duovigintillion
@@ -5675,6 +5871,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Peer-review co-ops',
+                type: 'discount',
+                building: 'Javascript console',
                 desc: 'Javascript consoles cost <b>5%</b> less.',
                 ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Throw code, catch feedback, share snacks. Merge with confidence (and crumbs).</q>',
                 price: 5e73, // 50 trevigintillion
@@ -5689,6 +5887,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Open-source grants',
+                type: 'discount',
+                building: 'Javascript console',
                 desc: 'Javascript consoles cost <b>5%</b> less.',
                 ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Foundation funds for critical libraries like dough.js and crumb-utils.</q>',
                 price: 5e76, // 50 quattuorvigintillion
@@ -5703,6 +5903,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Cloud credit vouchers',
+                type: 'discount',
+                building: 'Javascript console',
                 desc: 'Javascript consoles cost <b>5%</b> less.',
                 ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Spin up instances for less. Free tier includes occasional cumulonimbus.</q>',
                 price: 5e79, // 50 quinvigintillion
@@ -5717,6 +5919,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Interdimensional tax breaks',
+                type: 'discount',
+                building: 'Idleverse',
                 desc: 'Idleverses cost <b>5%</b> less.',
                 ddesc: 'Idleverses cost <b>5%</b> less.<q>Your idleverses qualify for special tax incentives across multiple dimensions. The paperwork is filed in parallel universes, but the savings are very real.</q>',
                 price: 6e66, // 6 unvigintillion (matches 8% efficiency upgrade price)
@@ -5731,6 +5935,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Reality consolidation discounts',
+                type: 'discount',
+                building: 'Idleverse',
                 desc: 'Idleverses cost <b>5%</b> less.',
                 ddesc: 'Idleverses cost <b>5%</b> less.<q>By consolidating multiple idleverses under unified management, you\'ve negotiated bulk pricing that applies across all dimensions. The savings scale with your multiverse presence.</q>',
                 price: 6e69, // 6 duovigintillion (matches 8% efficiency upgrade price)
@@ -5745,6 +5951,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Cosmic bulk purchasing',
+                type: 'discount',
+                building: 'Idleverse',
                 desc: 'Idleverses cost <b>5%</b> less.',
                 ddesc: 'Idleverses cost <b>5%</b> less.<q>Your massive scale across the multiverse allows you to purchase idleverse components in quantities that would bankrupt entire galaxies. The suppliers are happy to offer volume discounts.</q>',
                 price: 6e72, // 6 trevigintillion (matches 8% efficiency upgrade price)
@@ -5759,6 +5967,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Multiverse supplier networks',
+                type: 'discount',
+                building: 'Idleverse',
                 desc: 'Idleverses cost <b>5%</b> less.',
                 ddesc: 'Idleverses cost <b>5%</b> less.<q>You\'ve established exclusive supplier relationships across multiple realities. These vendors compete for your business, driving down prices while maintaining quality across all dimensions.</q>',
                 price: 6e75, // 6 quattuorvigintillion (matches 8% efficiency upgrade price)
@@ -5773,6 +5983,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Dimensional economies of scale',
+                type: 'discount',
+                building: 'Idleverse',
                 desc: 'Idleverses cost <b>5%</b> less.',
                 ddesc: 'Idleverses cost <b>5%</b> less.<q>Your idleverse operations have reached such massive scale that you can leverage economies across the entire multiverse. Each new idleverse makes all the others cheaper to build.</q>',
                 price: 6e78, // 6 quinvigintillion (matches 8% efficiency upgrade price)
@@ -5787,6 +5999,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Reality monopoly pricing',
+                type: 'discount',
+                building: 'Idleverse',
                 desc: 'Idleverses cost <b>5%</b> less.',
                 ddesc: 'Idleverses cost <b>5%</b> less.<q>You\'ve achieved such dominance across the multiverse that suppliers are willing to offer preferential pricing just to maintain their relationship with the largest cookie empire in existence.</q>',
                 price: 6e81, // 6 sexvigintillion (matches 8% efficiency upgrade price)
@@ -5801,6 +6015,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Neural bulk purchasing',
+                type: 'discount',
+                building: 'Cortex baker',
                 desc: 'Cortex bakers cost <b>5%</b> less.',
                 ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex bakers have negotiated bulk discounts on neural tissue and synaptic materials. Buying brain matter in industrial quantities significantly reduces the per-unit cost of each new baker.</q>',
                 price: 9.5e68, // 950 unvigintillion (matches 8% efficiency upgrade price)
@@ -5815,6 +6031,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Synaptic wholesale networks',
+                type: 'discount',
+                building: 'Cortex baker',
                 desc: 'Cortex bakers cost <b>5%</b> less.',
                 ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex bakers have established direct relationships with neural tissue suppliers, bypassing middlemen and securing wholesale pricing on synaptic components. The savings are mind-boggling.</q>',
                 price: 9.5e71, // 950 duovigintillion (matches 8% efficiency upgrade price)
@@ -5829,6 +6047,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Cerebral mass production',
+                type: 'discount',
+                building: 'Cortex baker',
                 desc: 'Cortex bakers cost <b>5%</b> less.',
                 ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex bakers have mastered the art of mass-producing brain tissue, creating economies of scale that make each additional baker significantly cheaper. It\'s like a neural assembly line.</q>',
                 price: 9.5e74, // 95 vigintillion (matches 8% efficiency upgrade price)
@@ -5843,6 +6063,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Mind monopoly pricing',
+                type: 'discount',
+                building: 'Cortex baker',
                 desc: 'Cortex bakers cost <b>5%</b> less.',
                 ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex bakers have achieved such dominance in the neural market that suppliers offer preferential pricing just to maintain their relationship with the largest brain-based cookie empire in existence.</q>',
                 price: 9.5e77, // 950 quattuorvigintillion (matches 8% efficiency upgrade price)
@@ -5857,6 +6079,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Neural economies of scale',
+                type: 'discount',
+                building: 'Cortex baker',
                 desc: 'Cortex bakers cost <b>5%</b> less.',
                 ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex baker operations have reached such massive scale that you can leverage neural economies across the entire network. Each new baker makes all the others cheaper to build through shared infrastructure.</q>',
                 price: 9.5e80, // 950 quinvigintillion (matches 8% efficiency upgrade price)
@@ -5871,6 +6095,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Synaptic supply dominance',
+                type: 'discount',
+                building: 'Cortex baker',
                 desc: 'Cortex bakers cost <b>5%</b> less.',
                 ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex bakers have cornered the market on synaptic materials, controlling the entire supply chain from neural tissue farms to advanced cognitive enhancement facilities. Suppliers compete for your business.</q>',
                 price: 9.5e83, // 950 sexvigintillion (matches 8% efficiency upgrade price)
@@ -5885,6 +6111,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Clone factory economies',
+                type: 'discount',
+                building: 'You',
                 desc: 'You cost <b>5%</b> less.',
                 ddesc: 'You cost <b>5%</b> less.<q>Your clone factory has achieved economies of scale, making each additional clone significantly cheaper to produce. The infrastructure costs are spread across more units, and suppliers offer bulk discounts on cloning materials.</q>',
                 price: 2.7e70, // 27 duovigintillion (matches 8% efficiency upgrade price)
@@ -5899,6 +6127,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Replica production lines',
+                type: 'discount',
+                building: 'You',
                 desc: 'You cost <b>5%</b> less.',
                 ddesc: 'You cost <b>5%</b> less.<q>Your clone production has been streamlined into efficient assembly lines, reducing waste and optimizing resource usage. Each clone is now produced with surgical precision at a fraction of the original cost.</q>',
                 price: 2.7e73, // 27 vigintillion (matches 8% efficiency upgrade price)
@@ -5913,6 +6143,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Mirror manufacturing mastery',
+                type: 'discount',
+                building: 'You',
                 desc: 'You cost <b>5%</b> less.',
                 ddesc: 'You cost <b>5%</b> less.<q>Your clone manufacturing process has reached industrial perfection, with automated quality control and bulk material sourcing. The cost per clone has plummeted as you\'ve mastered the art of mass self-replication.</q>',
                 price: 2.7e76, // 27 quattuorvigintillion (matches 8% efficiency upgrade price)
@@ -5927,6 +6159,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Twin tycoon pricing',
+                type: 'discount',
+                building: 'You',
                 desc: 'You cost <b>5%</b> less.',
                 ddesc: 'You cost <b>5%</b> less.<q>Your clone empire has achieved such dominance that suppliers compete for your business, offering preferential pricing on all cloning materials. Being the largest self-replicating entity has its financial advantages.</q>',
                 price: 2.7e79, // 27 quinvigintillion (matches 8% efficiency upgrade price)
@@ -5941,6 +6175,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Doppelganger discount networks',
+                type: 'discount',
+                building: 'You',
                 desc: 'You cost <b>5%</b> less.',
                 ddesc: 'You cost <b>5%</b> less.<q>Your clone network has established direct relationships with material suppliers, bypassing middlemen and securing wholesale pricing. The savings from cutting out intermediaries are substantial.</q>',
                 price: 2.7e82, // 27 sexvigintillion (matches 8% efficiency upgrade price)
@@ -5955,6 +6191,8 @@ function addUpgradesToGame() {
                 },},
             {
                 name: 'Clone supply dominance',
+                type: 'discount',
+                building: 'You',
                 desc: 'You cost <b>5%</b> less.',
                 ddesc: 'You cost <b>5%</b> less.<q>Your clone operations have cornered the market on self-replication materials, controlling the entire supply chain from basic cloning components to advanced genetic enhancement facilities. Suppliers compete for your business.</q>',
                 price: 2.7e85, // 27 septenvigintillion (matches 8% efficiency upgrade price)
@@ -7922,13 +8160,11 @@ function addUpgradesToGame() {
     function validateUpgradeData(upgradeInfo, requiredFields, upgradeType) {
         // Basic validation
         if (!upgradeInfo || !upgradeInfo.name || typeof upgradeInfo.price !== 'number' || !upgradeInfo.icon) {
-            console.error('Invalid ' + upgradeType + ' upgrade data:', upgradeInfo);
             return false;
         }
         
         // Price validation
         if (!isFinite(upgradeInfo.price) || upgradeInfo.price < 0) {
-            console.error('Invalid price for ' + upgradeType + ' upgrade:', upgradeInfo.name, upgradeInfo.price);
             return false;
         }
         
@@ -7936,7 +8172,6 @@ function addUpgradesToGame() {
         for (var i = 0; i < requiredFields.length; i++) {
             var field = requiredFields[i];
             if (typeof upgradeInfo[field] !== 'number' || !isFinite(upgradeInfo[field]) || upgradeInfo[field] < 0) {
-                console.error('Invalid ' + field + ' for ' + upgradeType + ' upgrade:', upgradeInfo.name, upgradeInfo[field]);
                 return false;
             }
         }
@@ -7965,6 +8200,11 @@ function addUpgradesToGame() {
                         upgrade[prop] = customProperties[prop];
                     }
                 }
+            }
+            
+            // Set effect function if provided in upgradeInfo
+            if (upgradeInfo.effect && typeof upgradeInfo.effect === 'function') {
+                upgrade.effect = upgradeInfo.effect;
             }
             
             // Add required functions if they don't exist
@@ -8334,12 +8574,6 @@ function addUpgradesToGame() {
             return;
         }
         
-        // DEBUG: Track cookie upgrade creation
-        if (upgradeInfo.name && upgradeInfo.name.includes('Improved')) {
-            debugLog('COOKIE UPGRADE DEBUG: Creating', upgradeInfo.name);
-            debugLog('COOKIE UPGRADE DEBUG: upgradeInfo =', upgradeInfo);
-            debugLog('COOKIE UPGRADE DEBUG: icon =', upgradeInfo.icon, 'price =', upgradeInfo.price);
-        }
         
         try {
             var upgrade;
@@ -8351,10 +8585,6 @@ function addUpgradesToGame() {
                 throw new Error('Failed to create cookie upgrade: ' + upgradeInfo.name);
             }
             
-            // DEBUG: Check what the upgrade looks like after creation
-            if (upgradeInfo.name && upgradeInfo.name.includes('Improved')) {
-                debugLog('COOKIE UPGRADE DEBUG: After creation - name =', upgrade.name, 'icon =', upgrade.icon, 'price =', upgrade.price);
-            }
             
             // Set additional properties that Game.NewUpgradeCookie would have set
             upgrade.power = upgradeInfo.power || 0;
@@ -8366,10 +8596,6 @@ function addUpgradesToGame() {
             if (!upgradeInfo.isBoxUpgrade) {
                 configureUpgradeAfterCreation(upgrade, upgradeInfo);
                 
-                // DEBUG: Check what the upgrade looks like after configuration
-                if (upgradeInfo.name && upgradeInfo.name.includes('Improved')) {
-                    debugLog('COOKIE UPGRADE DEBUG: After configuration - name =', upgrade.name, 'icon =', upgrade.icon, 'price =', upgrade.price);
-                }
             } else {
                 // For Box upgrades, set the isBoxUpgrade property and apply source text
                 upgrade.isBoxUpgrade = true;
@@ -8391,7 +8617,7 @@ function addUpgradesToGame() {
                 var modSourceText = '<div style="font-size:80%;text-align:center;margin-top:2px;">Part of <span style="margin: 0 4px;">' + tinyIcon(modIcon) + '</span> ' + modName + '</div>';
                 var combinedText = requireText + '<div style="height:2px;"></div>' + modSourceText + '<div class="line"></div>';
                 upgrade.ddesc = combinedText + upgradeInfo.ddesc;
-                upgrade.desc = combinedText + upgradeInfo.desc;
+                upgrade.desc = combinedText + upgradeInfo.ddesc;
             }
             
         } catch (e) {
@@ -8405,16 +8631,15 @@ function addUpgradesToGame() {
             return;
         }
         
-        // DEBUG: Track "Increased Social Security Checks" creation
-        if (upgradeInfo.name === 'Increased Social Security Checks') {
-            debugLog('UPGRADE CREATE DEBUG: Creating', upgradeInfo.name);
-            debugLog('UPGRADE CREATE DEBUG: upgradeInfo =', upgradeInfo);
-            debugLog('UPGRADE CREATE DEBUG: Grandma amount before creation =', Game.Objects['Grandma'] ? Game.Objects['Grandma'].amount : 'undefined');
-        }
         
         try {
             // Create upgrade using Game.Upgrade constructor
-            new Game.Upgrade(upgradeInfo.name, upgradeInfo.ddesc, upgradeInfo.price, upgradeInfo.icon);
+            var upgrade = new Game.Upgrade(upgradeInfo.name, upgradeInfo.ddesc, upgradeInfo.price, upgradeInfo.icon);
+            if (!upgrade) {
+                return;
+            }
+            
+            
             
             // Set additional properties
             Game.last.pool = upgradeInfo.pool;
@@ -8453,19 +8678,6 @@ function addUpgradesToGame() {
                 Game.last.price = upgradeInfo.price;
             }
             
-            // DEBUG: Track final state after creation
-            if (upgradeInfo.name === 'Increased Social Security Checks') {
-                debugLog('UPGRADE CREATE DEBUG: Game.last after creation =', {
-                    name: Game.last.name,
-                    bought: Game.last.bought,
-                    unlocked: Game.last.unlocked,
-                    pool: Game.last.pool,
-                    price: Game.last.price,
-                    order: Game.last.order
-                });
-                debugLog('UPGRADE CREATE DEBUG: Grandma amount after creation =', Game.Objects['Grandma'] ? Game.Objects['Grandma'].amount : 'undefined');
-                debugLog('UPGRADE CREATE DEBUG: unlockCondition result =', Game.last.unlockCondition ? Game.last.unlockCondition() : 'no unlockCondition');
-            }
             
             
         } catch (e) {
@@ -8759,19 +8971,53 @@ function addUpgradesToGame() {
         // Always include states even if upgrades are currently removed (use persisted snapshot)
         var modUpgradeNames = getModUpgradeNames();
         
-        // Debug: Check if kitten upgrades exist in game during save
-        var kittenUpgradesInGame = kittenUpgradeNames.filter(name => Game.Upgrades[name]);
-        var kittenUpgradesBought = kittenUpgradesInGame.filter(name => Game.Upgrades[name] && Game.Upgrades[name].bought > 0);
-        // Minimal kitten summary to keep console clean
-        debugLog('saveUpgradesData: kitten summary', kittenUpgradesBought.length, '/', kittenUpgradeNames.length);
+        // Check upgrade counts during save
+        var upgradesInGame = modUpgradeNames.filter(name => Game.Upgrades[name]);
+        var upgradesBought = upgradesInGame.filter(name => Game.Upgrades[name] && Game.Upgrades[name].bought > 0);
+        
+        // Debug: Compare created upgrades vs hardcoded arrays
+        var createdUpgrades = [];
+        if (upgradeData && typeof upgradeData === 'object') {
+            if (upgradeData.generic && Array.isArray(upgradeData.generic)) {
+                upgradeData.generic.forEach(function(upgrade) {
+                    if (upgrade && upgrade.name) createdUpgrades.push(upgrade.name);
+                });
+            }
+            if (upgradeData.cookie && Array.isArray(upgradeData.cookie)) {
+                upgradeData.cookie.forEach(function(upgrade) {
+                    if (upgrade && upgrade.name) createdUpgrades.push(upgrade.name);
+                });
+            }
+            if (upgradeData.building && Array.isArray(upgradeData.building)) {
+                upgradeData.building.forEach(function(upgrade) {
+                    if (upgrade && upgrade.name) createdUpgrades.push(upgrade.name);
+                });
+            }
+            if (upgradeData.kitten && Array.isArray(upgradeData.kitten)) {
+                upgradeData.kitten.forEach(function(upgrade) {
+                    if (upgrade && upgrade.name) createdUpgrades.push(upgrade.name);
+                });
+            }
+        }
+        
+        var hardcodedUpgrades = cookieUpgradeNames.concat(buildingUpgradeNames).concat(kittenUpgradeNames);
+        
+        // Find missing upgrades
+        var missingFromHardcoded = createdUpgrades.filter(name => !hardcodedUpgrades.includes(name));
+        var extraInHardcoded = hardcodedUpgrades.filter(name => !createdUpgrades.includes(name));
         
         modUpgradeNames.forEach(name => {
-                        if (Game.Upgrades[name]) {
-                            var boughtState = Game.Upgrades[name].bought || 0;
-                modData.upgrades[name] = { bought: boughtState };
-                // keep console clean for individual upgrades
-                        }
-                    });
+            // Always save ALL upgrades, even if they're currently disabled
+            // This ensures that disabled upgrades remember their purchase state
+            var boughtState = 0;
+            if (Game.Upgrades[name]) {
+                boughtState = Game.Upgrades[name].bought || 0;
+            } else if (modSaveData && modSaveData.upgrades && modSaveData.upgrades[name]) {
+                // If upgrade is not in Game.Upgrades (disabled), use saved state
+                boughtState = modSaveData.upgrades[name].bought || 0;
+            }
+            modData.upgrades[name] = { bought: boughtState };
+        });
         
         // Convert to JSON string for saving
         // The game will automatically handle encoding/decoding this string
@@ -8853,122 +9099,7 @@ function addUpgradesToGame() {
     }
     window.checkStatsMenuValues = checkStatsMenuValues;
     
-    
 
-    // Function to recreate all mod upgrades from scratch during save loading
-    function recreateAllModUpgrades() {
-        try {
-            debugLog('RECREATE DEBUG: Starting recreateAllModUpgrades');
-            debugLog('RECREATE DEBUG: Increased Social Security Checks exists before removal =', Game.Upgrades['Increased Social Security Checks'] ? 'YES' : 'NO');
-            
-            // Remove all existing mod upgrades first
-            var modUpgradeNames = getModUpgradeNames();
-            if (modUpgradeNames) {
-                modUpgradeNames.forEach(upgradeName => {
-                    if (Game.Upgrades[upgradeName]) {
-                        // Remove from upgrade pools
-                        if (Game.UpgradesByPool) {
-                            Object.keys(Game.UpgradesByPool).forEach(poolName => {
-                                var pool = Game.UpgradesByPool[poolName];
-                                if (pool && Array.isArray(pool)) {
-                                    var index = pool.indexOf(Game.Upgrades[upgradeName]);
-                                    if (index !== -1) {
-                                        pool.splice(index, 1);
-                                    }
-                                }
-                            });
-                        }
-                        
-                        // Remove from main upgrades object
-                        delete Game.Upgrades[upgradeName];
-                    }
-                });
-            }
-            
-            // Recreate all upgrades using the same logic as addUpgradesToGame
-            if (upgradeData && typeof upgradeData === 'object') {
-                // Create essential generic upgrades first
-                if (enableCookieUpgrades && upgradeData.generic && Array.isArray(upgradeData.generic)) {
-                    debugLog('RECREATE DEBUG: Creating generic upgrades, count =', upgradeData.generic.length);
-                    for (var i = 0; i < upgradeData.generic.length; i++) {
-                        var upgradeInfo = upgradeData.generic[i];
-                        if (upgradeInfo.name === 'Box of improved cookies' || 
-                            upgradeInfo.name === 'Order of the Golden Crumb' ||
-                            upgradeInfo.name === 'Order of the Impossible Batch' ||
-                            upgradeInfo.name === 'Order of the Shining Spoon' ||
-                            upgradeInfo.name === 'Order of the Cookie Eclipse' ||
-                            upgradeInfo.name === 'Order of the Enchanted Whisk' ||
-                            upgradeInfo.name === 'Order of the Eternal Cookie') {
-                            createGenericUpgrade(upgradeInfo);
-                        }
-                    }
-                }
-                
-                // Create building discount upgrades from generic section
-                if (enableBuildingUpgrades && upgradeData.generic && Array.isArray(upgradeData.generic)) {
-                    debugLog('RECREATE DEBUG: Creating building discount upgrades from generic section');
-                    for (var i = 0; i < upgradeData.generic.length; i++) {
-                        var upgradeInfo = upgradeData.generic[i];
-                        // Check if this is a building discount upgrade (has unlockCondition with building amount check)
-                        if (upgradeInfo.unlockCondition && upgradeInfo.unlockCondition.toString().includes('Game.Objects[') && 
-                            upgradeInfo.unlockCondition.toString().includes('amount >= ')) {
-                            if (upgradeInfo.name === 'Increased Social Security Checks') {
-                                debugLog('RECREATE DEBUG: Found Increased Social Security Checks in generic section, creating...');
-                            }
-                            createGenericUpgrade(upgradeInfo);
-                        }
-                    }
-                }
-                
-                // Create cookie upgrades
-                if (enableCookieUpgrades && Game.Upgrades['Box of improved cookies'] && upgradeData.cookie && Array.isArray(upgradeData.cookie)) {
-                    for (var i = 0; i < upgradeData.cookie.length; i++) {
-                        var upgradeInfo = upgradeData.cookie[i];
-                        createCookieUpgrade(upgradeInfo);
-                        
-                    }
-                }
-                
-                // Create building upgrades
-                if (enableBuildingUpgrades && upgradeData.building && Array.isArray(upgradeData.building)) {
-                    debugLog('RECREATE DEBUG: Creating building upgrades, count =', upgradeData.building.length);
-                    for (var i = 0; i < upgradeData.building.length; i++) {
-                        var upgradeInfo = upgradeData.building[i];
-                        if (upgradeInfo.name === 'Increased Social Security Checks') {
-                            debugLog('RECREATE DEBUG: Found Increased Social Security Checks in building upgrades, creating...');
-                        }
-                        createBuildingUpgrade(upgradeInfo);
-                    }
-                } else {
-                    debugLog('RECREATE DEBUG: Building upgrades not created - enableBuildingUpgrades =', enableBuildingUpgrades, 'upgradeData.building exists =', !!upgradeData.building, 'isArray =', Array.isArray(upgradeData.building));
-                }
-                
-                // Create kitten upgrades
-                if (enableKittenUpgrades && upgradeData.kitten && Array.isArray(upgradeData.kitten)) {
-                    for (var i = 0; i < upgradeData.kitten.length; i++) {
-                        var upgradeInfo = upgradeData.kitten[i];
-                        createKittenUpgrade(upgradeInfo);
-                    }
-                }
-            }
-            
-            debugLog('RECREATE DEBUG: Finished recreating upgrades');
-            debugLog('RECREATE DEBUG: enableBuildingUpgrades =', enableBuildingUpgrades);
-            debugLog('RECREATE DEBUG: Increased Social Security Checks exists after recreation =', Game.Upgrades['Increased Social Security Checks'] ? 'YES' : 'NO');
-            if (Game.Upgrades['Increased Social Security Checks']) {
-                debugLog('RECREATE DEBUG: Increased Social Security Checks state after recreation =', {
-                    bought: Game.Upgrades['Increased Social Security Checks'].bought,
-                    unlocked: Game.Upgrades['Increased Social Security Checks'].unlocked,
-                    pool: Game.Upgrades['Increased Social Security Checks'].pool
-                });
-            }
-            
-        } catch (e) {
-            console.error('Error recreating mod upgrades:', e);
-        }
-    }
-
-        
     // Function to show the initial leaderboard/non-leaderboard choice prompt
     function showInitialChoicePrompt() {
         if (Game.Prompt) {
@@ -9052,6 +9183,7 @@ function addUpgradesToGame() {
         continueModInitialization();
     };
     
+    
     // Function to check if initial choice prompt should be shown (called after save data loads)
     function checkAndShowInitialChoice() {
         if (debugMode) {
@@ -9068,8 +9200,52 @@ function addUpgradesToGame() {
         }
     }
     
-    // Function to continue mod initialization after user choice
+    // Function to load settings from save data or use defaults
+    function loadSettingsFromSaveData() {
+        if (modSaveData && modSaveData.settings) {
+            // Load settings from save data
+            if (modSaveData.settings.enableCookieUpgrades !== undefined) {
+                enableCookieUpgrades = modSaveData.settings.enableCookieUpgrades;
+                modSettings.enableCookieUpgrades = modSaveData.settings.enableCookieUpgrades;
+            }
+            if (modSaveData.settings.enableBuildingUpgrades !== undefined) {
+                enableBuildingUpgrades = modSaveData.settings.enableBuildingUpgrades;
+                modSettings.enableBuildingUpgrades = modSaveData.settings.enableBuildingUpgrades;
+            }
+            if (modSaveData.settings.enableKittenUpgrades !== undefined) {
+                enableKittenUpgrades = modSaveData.settings.enableKittenUpgrades;
+                modSettings.enableKittenUpgrades = modSaveData.settings.enableKittenUpgrades;
+            }
+            if (modSaveData.settings.shadowAchievements !== undefined) {
+                shadowAchievementMode = modSaveData.settings.shadowAchievements;
+                modSettings.shadowAchievements = modSaveData.settings.shadowAchievements;
+            }
+        } else {
+            // No save data - keep defaults (all disabled) for first-run experience
+            // The first-run prompt will set the correct values after user choice
+            modSettings.enableCookieUpgrades = enableCookieUpgrades;
+            modSettings.enableBuildingUpgrades = enableBuildingUpgrades;
+            modSettings.enableKittenUpgrades = enableKittenUpgrades;
+            modSettings.shadowAchievements = shadowAchievementMode;
+        }
+    }
+
+    // Function to continue mod initialization after user choice (for save loading only)
     function continueModInitialization() {
+        // This function is now only called during save loading, not during mod initialization
+        // The mod initialization is handled by initializeModWithSaveData() in the init() function
+        
+        // For mod installation (no save data), initialize with empty state
+        // For save loading (with save data), use the save data
+        if (!modSaveData) {
+            modSaveData = { upgrades: {} };
+        } else if (!modSaveData.upgrades) {
+            modSaveData.upgrades = {};
+        }
+        
+        // Load settings from save data FIRST, before any upgrade creation
+        loadSettingsFromSaveData();
+        
         // Sync mod settings to ensure they're applied BEFORE creating upgrades
         if (modSettings.shadowAchievements !== undefined) {
             shadowAchievementMode = modSettings.shadowAchievements;
@@ -9084,11 +9260,8 @@ function addUpgradesToGame() {
             enableKittenUpgrades = modSettings.enableKittenUpgrades;
         }
 
-        // Create upgrade definitions only once
-        createUpgrades();
-        
-        // Create upgrades respecting current toggle flags (do NOT create disabled categories)
-        addUpgradesToGame();
+        // NOTE: Upgrade creation is now handled by initializeModWithSaveData()
+        // This function only handles tracking data restoration
         
         
         // Initialize tracking variables and lifetime data from save data or defaults
@@ -9188,20 +9361,7 @@ function addUpgradesToGame() {
 
             
             // Save data already applied before achievement creation
-            
-            // Sync mod settings to ensure they're properly applied
-            if (modSettings.shadowAchievements !== undefined) {
-                shadowAchievementMode = modSettings.shadowAchievements;
-            }
-            if (modSettings.enableCookieUpgrades !== undefined) {
-                enableCookieUpgrades = modSettings.enableCookieUpgrades;
-            }
-            if (modSettings.enableBuildingUpgrades !== undefined) {
-                enableBuildingUpgrades = modSettings.enableBuildingUpgrades;
-            }
-            if (modSettings.enableKittenUpgrades !== undefined) {
-                enableKittenUpgrades = modSettings.enableKittenUpgrades;
-            }
+            // Settings are now loaded in loadSettingsFromSaveData() before upgrade creation
             
             // Update menu buttons to reflect loaded settings
             updateMenuButtons();
@@ -9266,8 +9426,100 @@ function addUpgradesToGame() {
         init: function() {
             console.log('Just Natural Expansion: Mod init() called');
             
+            // Read save data during initialization
+            this.readSaveDataOnInit();
+            
+            // Initialize the mod with the loaded save data
+            this.initializeModWithSaveData();
+            
             // Proceed with normal initialization
             this.initializeModAfterCCSE();
+        },
+        
+        // Read save data during mod initialization
+        readSaveDataOnInit: function() {
+            try {
+                // Check if there's existing mod save data in the game
+                if (Game.modSaveData && Game.modSaveData['JustNaturalExpansionMod']) {
+                    var existingSaveData = Game.modSaveData['JustNaturalExpansionMod'];
+                    
+                    // Parse the save data if it's a string
+                    if (typeof existingSaveData === 'string') {
+                        modSaveData = JSON.parse(existingSaveData);
+                    } else {
+                        modSaveData = existingSaveData;
+                    }
+                } else {
+                    modSaveData = { upgrades: {} };
+                }
+            } catch (e) {
+                console.error('[JNE Error] Failed to read save data during init:', e);
+                modSaveData = { upgrades: {} };
+            }
+        },
+        
+        // Initialize mod with save data
+        initializeModWithSaveData: function() {
+            // Load settings from save data FIRST, before any upgrade creation
+            loadSettingsFromSaveData();
+            
+            // Sync mod settings to ensure they're applied BEFORE creating upgrades
+            if (modSettings.shadowAchievements !== undefined) {
+                shadowAchievementMode = modSettings.shadowAchievements;
+            }
+            if (modSettings.enableCookieUpgrades !== undefined) {
+                enableCookieUpgrades = modSettings.enableCookieUpgrades;
+            }
+            if (modSettings.enableBuildingUpgrades !== undefined) {
+                enableBuildingUpgrades = modSettings.enableBuildingUpgrades;
+            }
+            if (modSettings.enableKittenUpgrades !== undefined) {
+                enableKittenUpgrades = modSettings.enableKittenUpgrades;
+            }
+
+            // SIMPLE RULE: Delete everything and recreate from save data only
+            recreateAllUpgradesFromSaveData();
+            
+            // Initialize tracking variables and lifetime data from save data or defaults
+            if (modSaveData) {
+                try {
+                    // Restore tracking variables from save data
+                    if (modSaveData.modTracking) {
+                        modTracking.shinyWrinklersPopped = modSaveData.modTracking.shinyWrinklersPopped || 0;
+                        modTracking.templeSwapsTotal = modSaveData.modTracking.templeSwapsTotal || 0;
+                        modTracking.soilChangesTotal = modSaveData.modTracking.soilChangesTotal || 0;
+                        modTracking.lastSeasonalReindeerCheck = modSaveData.modTracking.lastSeasonalReindeerCheck || 0;
+                        modTracking.godUsageTime = modSaveData.modTracking.godUsageTime || {};
+                        modTracking.currentSlottedGods = modSaveData.modTracking.currentSlottedGods || {};
+                        // Clamp seasonal reindeer baseline to current value to avoid missing first pop
+                        modTracking.lastSeasonalReindeerCheck = Math.min(modTracking.lastSeasonalReindeerCheck || 0, Game.reindeerClicked || 0);
+                    }
+                    
+                    // Restore lifetime data from save data
+                    if (modSaveData.lifetime) {
+                        lifetimeData.reindeerClicked = modSaveData.lifetime.reindeerClicked || 0;
+                        lifetimeData.stockMarketAssets = modSaveData.lifetime.stockMarketAssets || 0;
+                        lifetimeData.shinyWrinklersPopped = modSaveData.lifetime.shinyWrinklersPopped || 0;
+                        lifetimeData.wrathCookiesClicked = modSaveData.lifetime.wrathCookiesClicked || 0;
+                        lifetimeData.totalGardenSacrifices = modSaveData.lifetime.totalGardenSacrifices || 0;
+                        lifetimeData.totalCookieClicks = modSaveData.lifetime.totalCookieClicks || 0;
+                        lifetimeData.wrinklersPopped = modSaveData.lifetime.wrinklersPopped || 0;
+                        lifetimeData.elderCovenantToggles = modSaveData.lifetime.elderCovenantToggles || 0;
+                        lifetimeData.pledges = modSaveData.lifetime.pledges || 0;
+                        lifetimeData.gardenSacrifices = modSaveData.lifetime.gardenSacrifices || 0;
+                        lifetimeData.totalSpellsCast = modSaveData.lifetime.totalSpellsCast || 0;
+                        lifetimeData.godUsageTime = modSaveData.lifetime.godUsageTime || {};
+                    }
+                } catch (e) {
+                    console.error('Just Natural Expansion: Error restoring tracking data:', e);
+                }
+            }
+            
+            // Initialize achievements
+            initAchievements();
+            
+            // Mark as initialized
+            modInitialized = true;
         },
         
         // Initialize mod after CCSE compatibility is handled
@@ -9503,25 +9755,8 @@ function addUpgradesToGame() {
                         });
                     }
                     
-                    // Reset ALL mod upgrades to unpurchased and locked state first
-                    var modUpgradeNames = getModUpgradeNames();
-                    if (modUpgradeNames) {
-                        debugLog('INIT DEBUG: Resetting mod upgrades, count =', modUpgradeNames.length);
-                        debugLog('INIT DEBUG: Increased Social Security Checks exists before reset =', Game.Upgrades['Increased Social Security Checks'] ? 'YES' : 'NO');
-                        
-                        modUpgradeNames.forEach(upgradeName => {
-                            if (Game.Upgrades[upgradeName]) {
-                                // DEBUG: Track "Increased Social Security Checks" reset
-                                if (upgradeName === 'Increased Social Security Checks') {
-                                    debugLog('INIT DEBUG: Resetting', upgradeName, 'bought from', Game.Upgrades[upgradeName].bought, 'to 0');
-                                }
-                                Game.Upgrades[upgradeName].bought = 0;
-                                Game.Upgrades[upgradeName].unlocked = 0;
-                            } else if (upgradeName === 'Increased Social Security Checks') {
-                                debugLog('INIT DEBUG: WARNING -', upgradeName, 'does not exist during reset!');
-                            }
-                        });
-                    }
+                    // REMOVED: No longer reset upgrades here - restoration happens during creation
+                    // This prevents the issue where upgrades are reset before they're created
                     
                     // Reset lifetime data to default state first
                     lifetimeData = {
@@ -9578,23 +9813,16 @@ function addUpgradesToGame() {
                     modSaveData = modData;
                     debugLog('mod.saveSystem.load: stored save data for initialization');
                     
-                    // Restore settings from save data BEFORE recreating upgrades
-                    if (modData.settings) {
-                        if (modData.settings.enableCookieUpgrades !== undefined) {
-                            enableCookieUpgrades = modData.settings.enableCookieUpgrades;
-                        }
-                        if (modData.settings.enableBuildingUpgrades !== undefined) {
-                            enableBuildingUpgrades = modData.settings.enableBuildingUpgrades;
-                        }
-                        if (modData.settings.enableKittenUpgrades !== undefined) {
-                            enableKittenUpgrades = modData.settings.enableKittenUpgrades;
-                        }
-                    }
                     
-                    // Upgrade recreation is handled by addUpgradesToGame() in continueModInitialization()
+                    // Settings will be loaded in continueModInitialization() via loadSettingsFromSaveData()
                     
-                    // Trigger initialization immediately after load
+                    // SIMPLE RULE: Delete everything and recreate from save data only
+                    recreateUpgradesFromSaveOnly();
+                    
+                    // Trigger initialization with a small delay to ensure save data is stable
+                    setTimeout(() => {
                     continueModInitialization();
+                    }, 100);
                     
                     debugLog('mod.saveSystem.load: modSaveData.achievements exists:', !!modSaveData.achievements);
                     if (modSaveData.achievements) {

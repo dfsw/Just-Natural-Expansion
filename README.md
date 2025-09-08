@@ -758,6 +758,9 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 
 ## Changelog 
 
+### Version 0.0.6
+* Just more work on building a robust saving/loading system. Clearly my last version was a bit optimistic about being bullet proof. 
+
 ### Version 0.0.5
 * More saving/loading fixes but I think everything is finally bullet proof, I probably made that way harder than it needed to be. 
 
