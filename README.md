@@ -495,7 +495,6 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 - **Improved Empire biscuits**: 2% cookie production increase
 - **Improved Madeleines**: 2% cookie production increase
 - **Improved Palmiers**: 2% cookie production increase
-- **Improved Palets**: 2% cookie production increase
 
 ### Building Count Reward Cookies
 - **Improved Milk chocolate butter biscuit**: 10% cookie production increase (requires at least 750 of every building type)
@@ -757,6 +756,9 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 
 
 ## Changelog 
+
+### Version 0.0.7
+* Price updates for improved cookies to be more balanced and fair. 
 
 ### Version 0.0.6
 * Just more work on building a robust saving/loading system. Clearly my last version was a bit optimistic about being bullet proof. 

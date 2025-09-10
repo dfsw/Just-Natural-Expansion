@@ -5,7 +5,7 @@
     'use strict';
     
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.0.6';
+    var modVersion = '0.0.7';
     var debugMode = false; 
     var runtimeSessionId = Math.floor(Math.random()*1e9) + '-' + Date.now();
     
@@ -1919,7 +1919,7 @@
         'Improved Milk chocolate cookies', 'Improved Double-chip cookies', 'Improved White chocolate macadamia nut cookies', 
         'Improved All-chocolate cookies', 'Improved Dark chocolate-coated cookies', 'Improved White chocolate-coated cookies', 
         'Improved Eclipse cookies', 'Improved Zebra cookies', 'Improved Snickerdoodles', 'Improved Stroopwafels', 
-        'Improved Macaroons', 'Improved Empire biscuits', 'Improved Madeleines', 'Improved Palmiers', 'Improved Palets'
+        'Improved Macaroons', 'Improved Empire biscuits', 'Improved Madeleines', 'Improved Palmiers'
     ];
     
     var buildingUpgradeNames = [
@@ -7774,7 +7774,7 @@
                 name: 'Improved Plain cookies',
                 desc: 'Cookie production multiplier <b>+2%</b>.',
                 ddesc: 'Cookie production multiplier <b>+2%</b>.<q>Advanced data modeling has revealed that fresher butter leads to superior cookie texture and flavor.</q>',
-                price: 1e66, // 100 unvigintillion
+                price: 5.0e68, // 500 unvigintillion
                 icon: [2, 3],
                 pool: 'cookie',
                 power: 2,
@@ -7785,7 +7785,7 @@
                 name: 'Improved Sugar cookies',
                 desc: 'Cookie production multiplier <b>+2%</b>.',
                 ddesc: 'Cookie production multiplier <b>+2%</b>.<q>Artificial intelligence has optimized the sugar-to-flour ratio through extensive testing.</q>',
-                price: 5e66, // 500 unvigintillion
+                price: 1.0e69, // 1 duovigintillion
                 icon: [7, 3],
                 pool: 'cookie',
                 power: 2,
@@ -7796,7 +7796,7 @@
                 name: 'Improved Oatmeal raisin cookies',
                 desc: 'Cookie production multiplier <b>+2%</b>.',
                 ddesc: 'Cookie production multiplier <b>+2%</b>.<q>Spiritual meditation has led to the discovery of the optimal raisin variety for maximum flavor burst.</q>',
-                price: 2e67, // 20 unvigintillion
+                price: 2.0e69, // 2 duovigintillion
                 icon: [0, 3],
                 pool: 'cookie',
                 power: 2,
@@ -7807,7 +7807,7 @@
                 name: 'Improved Peanut butter cookies',
                 desc: 'Cookie production multiplier <b>+2%</b>.',
                 ddesc: 'Cookie production multiplier <b>+2%</b>.<q>Quantum computing has enabled the development of a new peanut butter processing method for maximum creaminess.</q>',
-                price: 1e68, // 100 unvigintillion
+                price: 4.0e69, // 4 duovigintillion
                 icon: [1, 3],
                 pool: 'cookie',
                 power: 2,
@@ -7818,7 +7818,7 @@
                 name: 'Improved Coconut cookies',
                 desc: 'Cookie production multiplier <b>+2%</b>.',
                 ddesc: 'Cookie production multiplier <b>+2%</b>.<q>Machine learning algorithms have discovered the perfect coconut grating technique for optimal texture.</q>',
-                price: 5e68, // 500 unvigintillion
+                price: 8.0e69, // 8 duovigintillion
                 icon: [3, 3],
                 pool: 'cookie',
                 power: 2,
@@ -7830,7 +7830,7 @@
                 name: 'Improved Macadamia nut cookies',
                 desc: 'Cookie production multiplier <b>+2%</b>.',
                 ddesc: 'Cookie production multiplier <b>+2%</b>.<q>Genetic analysis has identified the specific Hawaiian macadamia variety with the richest flavor profile.</q>',
-                price: 3e69, // 3 duovigintillion
+                price: 1.6e70, // 16 duovigintillion
                 icon: [5, 3],
                 pool: 'cookie',
                 power: 2,
@@ -7842,7 +7842,7 @@
                 name: 'Improved Almond cookies',
                 desc: 'Cookie production multiplier <b>+2%</b>.',
                 ddesc: 'Cookie production multiplier <b>+2%</b>.<q>Spectroscopic analysis has shown that California almonds provide the perfect crunch-to-flavor ratio.</q>',
-                price: 1.5e70, // 15 duovigintillion
+                price: 3.2e70, // 32 duovigintillion
                 icon: [21, 27],
                 pool: 'cookie',
                 power: 2,
@@ -7853,7 +7853,7 @@
                 name: 'Improved Hazelnut cookies',
                 desc: 'Cookie production multiplier <b>+2%</b>.',
                 ddesc: 'Cookie production multiplier <b>+2%</b>.<q>Chromatography has revealed that Turkish hazelnuts contain the highest concentration of flavor compounds.</q>',
-                price: 8e70, // 80 duovigintillion
+                price: 6.5e70, // 65 duovigintillion
                 icon: [22, 27],
                 pool: 'cookie',
                 power: 2,
@@ -7865,7 +7865,7 @@
                 name: 'Improved Walnut cookies',
                 desc: 'Cookie production multiplier <b>+2%</b>.',
                 ddesc: 'Cookie production multiplier <b>+2%</b>.<q>Neural networks have determined that English walnuts provide the optimal balance of crunch and flavor.</q>',
-                price: 4e71, // 400 duovigintillion
+                price: 1.3e71, // 130 duovigintillion
                 icon: [23, 27],
                 pool: 'cookie',
                 power: 2,
@@ -7877,7 +7877,7 @@
                 name: 'Improved Cashew cookies',
                 desc: 'Cookie production multiplier <b>+2%</b>.',
                 ddesc: 'Cookie production multiplier <b>+2%</b>.<q>Mass spectrometry has discovered that Brazilian cashews contain unique compounds that enhance buttery smoothness.</q>',
-                price: 2e72, // 2 trevigintillion
+                price: 2.6e71, // 260 duovigintillion
                 icon: [32, 7],
                 pool: 'cookie',
                 power: 2,
@@ -7889,7 +7889,7 @@
                 name: 'Improved White chocolate cookies',
                 desc: 'Cookie production multiplier <b>+2%</b>.',
                 ddesc: 'Cookie production multiplier <b>+2%</b>.<q>Thermal analysis has revealed that Belgian white chocolate contains the perfect cocoa butter ratio for creaminess.</q>',
-                price: 1e73, // 10 trevigintillion
+                price: 5.2e71, // 520 duovigintillion
                 icon: [4, 3],
                 pool: 'cookie',
                 power: 2,
@@ -7900,7 +7900,7 @@
                 name: 'Improved Milk chocolate cookies',
                 desc: 'Cookie production multiplier <b>+2%</b>.',
                 ddesc: 'Cookie production multiplier <b>+2%</b>.<q>Molecular dynamics simulations have developed a Swiss chocolate blend that melts at the perfect temperature.</q>',
-                price: 5e73, // 50 trevigintillion
+                price: 1.0e72, // 100 trevigintillion
                 icon: [33, 7],
                 pool: 'cookie',
                 power: 2,
@@ -7911,7 +7911,7 @@
                 name: 'Improved Double-chip cookies',
                 desc: 'Cookie production multiplier <b>+2%</b>.',
                 ddesc: 'Cookie production multiplier <b>+2%</b>.<q>Statistical modeling has proven that doubling the chocolate chip density maximizes chocolatey goodness.</q>',
-                price: 2.5e74, // 250 trevigintillion
+                price: 2.0e72, // 200 trevigintillion
                 icon: [6, 3],
                 pool: 'cookie',
                 power: 2,
@@ -7922,7 +7922,7 @@
                 name: 'Improved White chocolate macadamia nut cookies',
                 desc: 'Cookie production multiplier <b>+2%</b>.',
                 ddesc: 'Cookie production multiplier <b>+2%</b>.<q>Computational chemistry has discovered the perfect ratio of white chocolate to macadamia for maximum flavor synergy.</q>',
-                price: 1e75, // 1 quattuorvigintillion
+                price: 4.0e72, // 400 trevigintillion
                 icon: [8, 3],
                 pool: 'cookie',
                 power: 2,
@@ -7934,7 +7934,7 @@
                 name: 'Improved All-chocolate cookies',
                 desc: 'Cookie production multiplier <b>+2%</b>.',
                 ddesc: 'Cookie production multiplier <b>+2%</b>.<q>Biotechnology has developed a revolutionary chocolate dough formula that\'s entirely edible.</q>',
-                price: 5e75, // 5 quattuorvigintillion
+                price: 8.0e72, // 800 trevigintillion
                 icon: [9, 3],
                 pool: 'cookie',
                 power: 2,
@@ -7946,7 +7946,7 @@
                 name: 'Improved Dark chocolate-coated cookies',
                 desc: 'Cookie production multiplier <b>+2%</b>.',
                 ddesc: 'Cookie production multiplier <b>+2%</b>.<q>Flavor profiling has identified the optimal 70% cocoa concentration for sophisticated palates.</q>',
-                price: 3e76, // 30 quattuorvigintillion
+                price: 1.6e73, // 16 trevigintillion
                 icon: [10, 3],
                 pool: 'cookie',
                 power: 2,
@@ -7958,7 +7958,7 @@
                 name: 'Improved White chocolate-coated cookies',
                 desc: 'Cookie production multiplier <b>+2%</b>.',
                 ddesc: 'Cookie production multiplier <b>+2%</b>.<q>Differential scanning calorimetry has revealed the perfect melting temperature for velvety white chocolate coating.</q>',
-                price: 1.5e77, // 150 quattuorvigintillion
+                price: 3.2e73, // 32 trevigintillion
                 icon: [11, 3],
                 pool: 'cookie',
                 power: 2,
@@ -7970,7 +7970,7 @@
                 name: 'Improved Eclipse cookies',
                 desc: 'Cookie production multiplier <b>+2%</b>.',
                 ddesc: 'Cookie production multiplier <b>+2%</b>.<q>Fluid dynamics modeling has developed a precise chocolate swirling technique that creates mesmerizing eclipse patterns.</q>',
-                price: 7.5e77, // 750 quattuorvigintillion
+                price: 6.5e73, // 65 trevigintillion
                 icon: [0, 4],
                 pool: 'cookie',
                 power: 2,
@@ -7982,7 +7982,7 @@
                 name: 'Improved Zebra cookies',
                 desc: 'Cookie production multiplier <b>+2%</b>.',
                 ddesc: 'Cookie production multiplier <b>+2%</b>.<q>Computer vision has perfected the layering technique for perfectly striped vanilla and chocolate dough.</q>',
-                price: 4e78, // 4 quinvigintillion
+                price: 1.3e74, // 130 trevigintillion
                 icon: [1, 4],
                 pool: 'cookie',
                 power: 2,
@@ -7994,7 +7994,7 @@
                 name: 'Improved Snickerdoodles',
                 desc: 'Cookie production multiplier <b>+2%</b>.',
                 ddesc: 'Cookie production multiplier <b>+2%</b>.<q>Sensor fusion has discovered the optimal cinnamon-to-cream-of-tartar ratio for that signature tangy taste.</q>',
-                price: 2e79, // 20 quinvigintillion
+                price: 2.6e74, // 260 trevigintillion
                 icon: [2, 4],
                 pool: 'cookie',
                 power: 2,
@@ -8006,7 +8006,7 @@
                 name: 'Improved Stroopwafels',
                 desc: 'Cookie production multiplier <b>+2%</b>.',
                 ddesc: 'Cookie production multiplier <b>+2%</b>.<q>Reverse engineering has recreated authentic Dutch caramel syrup for perfect consistency.</q>',
-                price: 1e80, // 100 quinvigintillion
+                price: 5.2e74, // 520 trevigintillion
                 icon: [3, 4],
                 pool: 'cookie',
                 power: 2,
@@ -8018,7 +8018,7 @@
                 name: 'Improved Macaroons',
                 desc: 'Cookie production multiplier <b>+2%</b>.',
                 ddesc: 'Cookie production multiplier <b>+2%</b>.<q>Nanotechnology has developed the perfect French almond flour and aged egg white formula.</q>',
-                price: 5e80, // 500 quinvigintillion
+                price: 1.0e75, // 1 quattuorvigintillion
                 icon: [4, 4],
                 pool: 'cookie',
                 power: 2,
@@ -8030,7 +8030,7 @@
                 name: 'Improved Empire biscuits',
                 desc: 'Cookie production multiplier <b>+2%</b>.',
                 ddesc: 'Cookie production multiplier <b>+2%</b>.<q>3D printing technology has perfected the Scottish shortbread recipe with royal icing precision.</q>',
-                price: 2.5e81, // 2.5 sexvigintillion
+                price: 2.0e75, // 2 quattuorvigintillion
                 icon: [5, 4],
                 pool: 'cookie',
                 power: 2,
@@ -8042,7 +8042,7 @@
                 name: 'Improved Madeleines',
                 desc: 'Cookie production multiplier <b>+2%</b>.',
                 ddesc: 'Cookie production multiplier <b>+2%</b>.<q>Gas chromatography has discovered the optimal lemon zest concentration for classic French shell-shaped cakes.</q>',
-                price: 1e82, // 10 sexvigintillion
+                price: 4.0e75, // 4 quattuorvigintillion
                 icon: [12, 3],
                 pool: 'cookie',
                 power: 2,
@@ -8054,25 +8054,13 @@
                 name: 'Improved Palmiers',
                 desc: 'Cookie production multiplier <b>+2%</b>.',
                 ddesc: 'Cookie production multiplier <b>+2%</b>.<q>Robotics has developed a precise puff pastry folding technique for perfect palm leaf shapes.</q>',
-                price: 6e82, // 60 sexvigintillion
+                price: 1e76, // 10 quattuorvigintillion
                 icon: [13, 3],
                 pool: 'cookie',
                 power: 2,
                 require: 'Box of improved cookies',
                 isBoxUpgrade: true,
         
-            },
-            {
-                name: 'Improved Palets',
-                desc: 'Cookie production multiplier <b>+2%</b>.',
-                ddesc: 'Cookie production multiplier <b>+2%</b>.<q>Laser spectroscopy has perfected the Brittany-style shortbread technique for the ideal golden edge.</q>',
-                price: 1.5e83, // 150 sexvigintillion
-                icon: [12, 4],
-                pool: 'cookie',
-                power: 2,
-                require: 'Box of improved cookies',
-                isBoxUpgrade: true,
-     
             },
             {
                 name: 'Improved Milk chocolate butter biscuit',
@@ -8601,16 +8589,18 @@
                 upgrade.isBoxUpgrade = true;
                 
                 // Create custom unlockCondition that checks if Box upgrade is actually OWNED (not just unlocked)
-                // AND that the price requirement is met
                 upgrade.unlockCondition = function() {
                     var boxUpgrade = Game.Upgrades['Box of improved cookies'];
                     if (!boxUpgrade || boxUpgrade.bought <= 0) {
                         return false; // Box upgrade must be bought
                     }
-                    
-                    // Also check the price requirement (cookies baked)
+
+                    // Get the actual purchase price (accounts for discounts and modifiers)
+                    var actualPrice = this.getPrice ? this.getPrice() : this.price;
+
+                    // Check the price requirement (cookies baked) - unlock at 1/2 the actual purchase price
                     var cookiesBaked = Game.cookiesEarned || 0;
-                    return cookiesBaked >= upgradeInfo.price;
+                    return cookiesBaked >= (actualPrice / 2);
                 };
                 
                 var requireText = '<div style="font-size:80%;text-align:center;">From ' + tinyIcon(boxIcon) + ' Box of improved cookies</div>';
