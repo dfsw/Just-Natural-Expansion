@@ -5,7 +5,7 @@
     'use strict';
     
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.0.7';
+    var modVersion = '0.0.8';
     var debugMode = false; 
     var runtimeSessionId = Math.floor(Math.random()*1e9) + '-' + Date.now();
     
@@ -1478,21 +1478,37 @@
             
             // Check Frenzy Marathon achievement (frenzy buff with 10+ minute total duration)
             if (Game.Achievements['Frenzy Marathon'] && !Game.Achievements['Frenzy Marathon'].won) {
-                // Look for an active Frenzy buff
+                // Check if Frenzy is currently active
+                var frenzyActive = false;
                 for (var buffName in Game.buffs) {
                     var buff = Game.buffs[buffName];
                     if (buff && buff.name === 'Frenzy' && buff.time > 0) {
-                        // Use the actual game FPS to calculate real values on the fly
-                        var gameFps = Game.FPS || Game.fps || 30;
-                        var requiredDurationSeconds = 600; // 10 minutes
-                        var requiredDurationFrames = requiredDurationSeconds * gameFps;
-                        
-                        // Check if the buff's maxTime meets the 10-minute requirement
-                        // maxTime represents the total duration when the buff was created/stacked
-                        if (buff.maxTime >= requiredDurationFrames) {
-                            markAchievementWon('Frenzy Marathon');
-                            break;
-                        }
+                        frenzyActive = true;
+                        break;
+                    }
+                }
+                
+                // Initialize tracking variable if not exists
+                if (typeof modTracking.frenzyStartTime === 'undefined') {
+                    modTracking.frenzyStartTime = null;
+                }
+                
+                // Handle Frenzy state transitions
+                if (frenzyActive && modTracking.frenzyStartTime === null) {
+                    // Frenzy just became active - start tracking
+                    modTracking.frenzyStartTime = Date.now();
+                } else if (!frenzyActive && modTracking.frenzyStartTime !== null) {
+                    // Frenzy just became inactive - stop tracking
+                    modTracking.frenzyStartTime = null;
+                }
+                
+                // Check if we've been in Frenzy for 10+ minutes
+                if (modTracking.frenzyStartTime !== null) {
+                    var elapsedTime = Date.now() - modTracking.frenzyStartTime;
+                    var requiredDurationMs = 600000; // 10 minutes in milliseconds
+                    
+                    if (elapsedTime >= requiredDurationMs) {
+                        markAchievementWon('Frenzy Marathon');
                     }
                 }
             }
@@ -9225,6 +9241,8 @@
         // This function is now only called during save loading, not during mod initialization
         // The mod initialization is handled by initializeModWithSaveData() in the init() function
         
+        debugLog('continueModInitialization: starting');
+        
         // For mod installation (no save data), initialize with empty state
         // For save loading (with save data), use the save data
         if (!modSaveData) {
@@ -9423,7 +9441,14 @@
             this.initializeModWithSaveData();
             
             // Proceed with normal initialization
-            this.initializeModAfterCCSE();
+            this.initializeMod();
+            
+            // Check if we need to show the first run prompt
+            // This runs after all initialization to ensure proper state
+            var self = this;
+            setTimeout(function() {
+                checkAndShowInitialChoice();
+            }, 500);
         },
         
         // Read save data during mod initialization
@@ -9512,12 +9537,9 @@
             modInitialized = true;
         },
         
-        // Initialize mod after CCSE compatibility is handled
-        initializeModAfterCCSE: function() {
-            console.log('Just Natural Expansion: initializeModAfterCCSE() called');
-            
-
-            
+        // Initialize mod
+        initializeMod: function() {
+            console.log('Just Natural Expansion: initializeMod() called');
             // Show mod loaded notification
             new Game.Notify(modName + ' v' + modVersion + ' Mod Loaded!', 'Use the options menu to configure settings for ' + modName + '.', modIcon);
             console.log('Just Natural Expansion: Mod notification shown');
@@ -9700,6 +9722,7 @@
                 try {
                     if (!str || str.trim() === '' || str === '{}') {
                         debugLog('mod.saveSystem.load: empty/minimal, skipping');
+                        checkAndShowInitialChoice();
                         return;
                     }
                     

@@ -23,7 +23,7 @@ Extra gooey gratitude to the mysterious hero who uploaded the custom Cookie Clic
 
 Big, chocolate-covered thanks to the amazing folks in the [Cookie Clicker Discord](https://discord.com/invite/cookie), whose late-game wisdom and strategic tips helped shape this mod into the crunchy masterpiece it is today. 
 
-Thank you to the beta testers who were willing to help me balance and test, I have no struck a balance between people saying these achivements are too hard and these achievements are too easy, which I suspect is the sweet middle ground. 
+Thank you to the beta testers who were willing to help me balance and test, I have now struck a balance between people saying these achivements are too hard and these achievements are too easy, which I suspect is the sweet middle ground. 
 
 #### Why This Mod Exists
 
@@ -756,6 +756,10 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 
 
 ## Changelog 
+
+### Version 0.0.8
+* Fix for Frenzy Marathon achievement that could cause it not to trigger when chaining low time remaining frenzy buffs together. 
+* Fixed some bugs with first run experience when not running against any other CCSE Mods installed. 
 
 ### Version 0.0.7
 * Price updates for improved cookies to be more balanced and fair. 
