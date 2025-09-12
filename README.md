@@ -757,6 +757,9 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 
 ## Changelog 
 
+### Version 0.0.9
+* Flavor text now with more punctuation. 
+
 ### Version 0.0.8
 * Fix for Frenzy Marathon achievement that could cause it not to trigger when chaining low time remaining frenzy buffs together. 
 * Fixed some bugs with first run experience when not running against any other CCSE Mods installed. 

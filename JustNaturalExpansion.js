@@ -5,7 +5,7 @@
     'use strict';
     
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.0.8';
+    var modVersion = '0.0.9';
     var debugMode = false; 
     var runtimeSessionId = Math.floor(Math.random()*1e9) + '-' + Date.now();
     
@@ -3733,7 +3733,7 @@
             templeSwaps: {
                 names: ["Faithless Loyalty", "God of All Gods"],
             thresholds: [100, 86400], // 100 temple swaps, 24 hours (86400 seconds) per god
-            descs: ["Swap gods in the Pantheon <b>100 times</b> in one ascension.<q>You know you cant just pick a religion to suit your mood for the day right?</q>", "Use each pantheon god for at least <b>24 hours</b> total across all ascensions.<q>Variety is the spice of divine life</q>"],
+            descs: ["Swap gods in the Pantheon <b>100 times</b> in one ascension.<q>You know you cant just pick a religion to suit your mood for the day right?</q>", "Use each pantheon god for at least <b>24 hours</b> total across all ascensions.<q>Variety is the spice of divine life.</q>"],
             vanillaTarget: "A wizard is you",
             customIcons: [[21, 18], [22, 18]]
         },
@@ -3791,7 +3791,7 @@
             kittensOwned: {
                 names: ["Kitten jamboree", "Kitten Fiesta"],
                 thresholds: [18, 29],
-                descs: ["Own all <b>18 kittens</b> original kittens.", "Own all <b>18 original kittens</b> and all <b>11 expansion kittens</b> at once.<q>Okay thats really just too many cats</q>"],
+                descs: ["Own all <b>18 kittens</b> original kittens.", "Own all <b>18 original kittens</b> and all <b>11 expansion kittens</b> at once.<q>Okay thats really just too many cats.</q>"],
                 vanillaTarget: "Jellicles",
                 customIcons: [[18, 14], [18, 13]]
             },
@@ -3882,7 +3882,7 @@
         botanicalPerfection: {
             names: ["Botanical Perfection", "Duketater Salad"],
             thresholds: [34, 12], // All 34 plant types, 12 duketaters
-            descs: ["Have one of every type of plant in the mature stage at once.<q>I have become the plants now, I am the master of the garden, bow before my hoe.</q>", "Harvest <b>12 mature Duketaters</b> simultaneously.<q>Timing your salad is everything otherwise the mayo goes bad and you kill all your friends</q>"],
+            descs: ["Have one of every type of plant in the mature stage at once.<q>I have become the plants now, I am the master of the garden, bow before my hoe.</q>", "Harvest <b>12 mature Duketaters</b> simultaneously.<q>Timing your salad is everything otherwise the mayo goes bad and you kill all your friends.</q>"],
             vanillaTarget: "Keeper of the conservatory",
             customIcons: [[27, 15], [0, 19, getSpriteSheet('gardenPlants')]]
         },
@@ -3897,7 +3897,7 @@
         tickerClicks: {
             names: ["News ticker addict"],
             thresholds: [1000], // 1000 ticker clicks
-            descs: ["Click on the news ticker <b>1,000 times</b> in one ascension.<q>Hey dummy you are clicking on the wrong thing</q>"],
+            descs: ["Click on the news ticker <b>1,000 times</b> in one ascension.<q>Hey dummy you are clicking on the wrong thing.</q>"],
             vanillaTarget: "Stifling the press"
         },
         wrathCookies: {
@@ -3937,7 +3937,7 @@
         hardcoreFinalCountdown: {
             names: ["The Final Countdown"],
             thresholds: [1], // Just a placeholder, we'll check exact counts in the requirement function
-            descs: ["Own exactly 20 Cursors, 19 Grandmas, 18 Farms, yada yada yada, down to 1 You. No selling or sacrificing any buildings. Must be earned in Born Again mode.<q>Is that song stuck in your head now, its pretty catchy</q>"],
+            descs: ["Own exactly 20 Cursors, 19 Grandmas, 18 Farms, yada yada yada, down to 1 You. No selling or sacrificing any buildings. Must be earned in Born Again mode.<q>Is that song stuck in your head now, its pretty catchy.</q>"],
             vanillaTarget: "Hardcore",
             customIcons: [[13, 7]]
         },
@@ -3993,14 +3993,14 @@
         hardcoreTreadingWater: {
             names: ["Treading water"],
             thresholds: [0], // Dummy threshold, actual logic handled in requirement function
-            descs: ["Have a CPS of 0 while owning more than 1000 buildings with no active buffs or debuffs.<q>Sometimes it really feels like your just not being very productive here</q>"],
+            descs: ["Have a CPS of 0 while owning more than 1000 buildings with no active buffs or debuffs.<q>Sometimes it really feels like your just not being very productive here.</q>"],
             vanillaTarget: "Hardcore",
             customIcons: [[49, 10, getSpriteSheet('custom')]]
         },
         hardcoreBouncingLastCheque: {
             names: ["Bouncing the last cheque"],
             thresholds: [0], // Dummy threshold, actual logic handled in requirement function
-            descs: ["Reach less than 10 cookies in your bank after having at least 1 million cookies.<q>The very last cheque I write in my life I want to bounce</q>"],
+            descs: ["Reach less than 10 cookies in your bank after having at least 1 million cookies.<q>The very last cheque I write in my life I want to bounce.</q>"],
             vanillaTarget: "Hardcore",
             customIcons: [[49, 25, getSpriteSheet('custom')]]
         },
@@ -4038,14 +4038,14 @@
         pledges: {
             names: ["Deep elder nap"],
             thresholds: [666], // 666 pledges
-            descs: ["Quash the grandmatriarchs one way or another <b>666 times</b> across all ascensions.<q>Those grandmatriarchs are really out, I can hear them snoring from the next town over</q>"],
+            descs: ["Quash the grandmatriarchs one way or another <b>666 times</b> across all ascensions.<q>Those grandmatriarchs are really out, I can hear them snoring from the next town over.</q>"],
             vanillaTarget: "Elder slumber",
             customIcons: [[2, 9]]
         },
         buffs: {
             names: ["Trifecta Combo", "Combo Initiate", "Combo God", "Combo Hacker", "Frenzy frenzy", "Double Dragon Clicker", "Frenzy Marathon", "Hogwarts Graduate", "Hogwarts Dropout", "Spell Slinger"],
             thresholds: [3, 6, 9, 12, 0, 0, 0, 0, 0, 0], // 3, 6, 9, 12 buffs active, frenzy frenzy, double dragon, frenzy marathon, wizard achievements, and spell slinger (handled separately)
-            descs: ["Have <b>3 buffs</b> active at once.<q>Hey that was pretty neat!</q>", "Have <b>6 buffs</b> active at once.<q>Okay that was downright impressive clicking</q>", "Have <b>9 buffs</b> active at once.<q>I can't even follow what you did there but it looked really cool</q>", "Have <b>12 buffs</b> active at once.<q>I don't believe you, but for like real congrats if you did that.</q>", "Have all three frenzy buffs active at once.<q>Like pizza pizza but with more wrath.</q>", "Have a dragon flight and a click frenzy active at the same time.<q>Double the dragons, double the clicking!</q>", "Have a frenzy buff with a total duration of at least 10 minutes.<q>Who needs coffee when you have this much energy?</q>", "Have <b>3 positive Grimoire spell effects</b> active at once.<q>Merlin would be proud of your spellcraft!</q>", "Have <b>3 negative Grimoire spell effects</b> active at once.<q>The Sorting Hat made a terrible mistake!</q>", "Cast <b>10 spells</b> within a 10-second window.<q>Speed casting at its finest!</q>"],
+            descs: ["Have <b>3 buffs</b> active at once.<q>Hey that was pretty neat!</q>", "Have <b>6 buffs</b> active at once.<q>Okay that was downright impressive clicking.</q>", "Have <b>9 buffs</b> active at once.<q>I can't even follow what you did there but it looked really cool.</q>", "Have <b>12 buffs</b> active at once.<q>I don't believe you, but for like real congrats if you did that.</q>", "Have all three frenzy buffs active at once.<q>Like pizza pizza but with more wrath.</q>", "Have a dragon flight and a click frenzy active at the same time.<q>Double the dragons, double the clicking!</q>", "Have a frenzy buff with a total duration of at least 10 minutes.<q>Who needs coffee when you have this much energy?</q>", "Have <b>3 positive Grimoire spell effects</b> active at once.<q>Merlin would be proud of your spellcraft!</q>", "Have <b>3 negative Grimoire spell effects</b> active at once.<q>The Sorting Hat made a terrible mistake!</q>", "Cast <b>10 spells</b> within a 10-second window.<q>Speed casting at its finest!</q>"],
             vanillaTarget: "Here be dragon",
             customIcons: [[25, 36], [26, 11], [22, 11], [23, 11], [39, 36, getSpriteSheet('custom')], [30, 12], [22, 13], [30, 20], [31, 20], [32, 4]]
         },
@@ -4259,7 +4259,7 @@
             {
                 name: 'Box of improved cookies',
                 desc: 'Contains an assortment of scientifically improved cookies.',
-                ddesc: 'Contains an assortment of scientifically improved cookies.<q>A giftbox of cookies made just for you from the hard working researchers at Just Natural Expansion</q>',
+                ddesc: 'Contains an assortment of scientifically improved cookies.<q>A giftbox of cookies made just for you from the hard working researchers at Just Natural Expansion.</q>',
                 price: 2.5e67, // 25 unvigintillion
                 icon: [34, 4],
                 pool: '',
@@ -10349,7 +10349,7 @@
         // Create "In the Shadows" achievement - requires all vanilla shadow achievements except "Cheated cookies taste awful"
         createAchievement(
             'In the Shadows',
-            'Unlock all vanilla shadow achievements, except that one.<q>You know the one I meant</q>',
+            'Unlock all vanilla shadow achievements, except that one.<q>You know the one I meant.</q>',
             [17, 5], // Custom icon
             400000.2, // Order as requested
             function() {
