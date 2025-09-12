@@ -55,9 +55,9 @@ Game.LoadMod('https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@latest/Jus
 ```
 
 #### Steam
-Steam has not yet been tested, apparently I need to make some changes to the mod to get it working there and I just havent gotten around to it yet, sorry. 
+Can be found by searching for "Just Natural Expansion" in the Steam Workshop for Cookie Clicker
 
-#### Console (untested)
+#### Console (untested - but should work in theory)
 ```javascript
 Game.LoadMod('https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@latest/JustNaturalExpansion.js');
 ```
@@ -759,6 +759,7 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 
 ### Version 0.0.9
 * Flavor text now with more punctuation. 
+* Regression in minigame achievement check fixed
 
 ### Version 0.0.8
 * Fix for Frenzy Marathon achievement that could cause it not to trigger when chaining low time remaining frenzy buffs together. 
