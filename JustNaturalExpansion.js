@@ -3239,7 +3239,6 @@
                             // Check if all gods have been used for at least 24 hours
                             var allGodsUsed = true;
                             var requiredTime = 86400 * 1000; // 24 hours in milliseconds (since our tracking uses milliseconds)
-                            
                             // Get the complete list of all available gods from the pantheon
                             var allAvailableGods = [];
                             if (Game.Objects['Temple'] && Game.Objects['Temple'].minigame && Game.Objects['Temple'].minigame.godsById) {
@@ -3264,7 +3263,9 @@
                                 }
                             }
                             
-                            return allGodsUsed;
+                            // Only return true if we have gods available AND all were used enough
+                            // This prevents false positive when pantheon is not loaded
+                            return allGodsUsed && allAvailableGods.length >= 10;
                         }
                         return false;
                     case 'soilChanges':
@@ -10702,38 +10703,6 @@
             }
         }
         
-        // Check God of All Gods achievement (24 hours per god)
-        if (Game.Objects['Temple'] && Game.Objects['Temple'].minigame && Game.Objects['Temple'].minigame.godsById) {
-            var pantheon = Game.Objects['Temple'].minigame;
-            
-            // Safety check: ensure there are actually gods available
-            if (pantheon.godsById && pantheon.godsById.length > 0) {
-                var allGodsUsed = true;
-                var validGodsFound = 0; // Count valid gods to ensure pantheon is fully loaded
-                var requiredTime = 86400 * 1000; // 24 hours in milliseconds
-                
-                for (var i = 0; i < pantheon.godsById.length; i++) {
-                    var god = pantheon.godsById[i];
-                    if (god && god.name) {
-                        validGodsFound++; // Count each valid god
-                        var godTime = modTracking.godUsageTime[god.name] || 0;
-                        if (godTime < requiredTime) {
-                            allGodsUsed = false;
-                            break;
-                        }
-                    }
-                }
-                
-                // Only award if we found enough valid gods AND all were used enough
-                // This prevents false positive when pantheon is partially loaded on first install
-                if (allGodsUsed && validGodsFound >= 10) {
-                    var achievementName = 'God of All Gods';
-                    if (Game.Achievements[achievementName] && !Game.Achievements[achievementName].won) {
-                        markAchievementWon(achievementName);
-                    }
-                }
-            }
-        }
         
         // Check soil changes achievement
         var soilChanges = modTracking.soilChangesTotal || 0;
