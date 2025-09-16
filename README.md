@@ -760,7 +760,7 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 
 ## Changelog 
 
-### Version 0.0.9
+### Version 0.0.10
 * Added more bake X cookies per second achievements 
 * Big graphics update also prestaging the graphics for next major revision
 
