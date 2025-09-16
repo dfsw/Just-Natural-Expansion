@@ -178,13 +178,16 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 - **Double Dragon Clicker**: Have a dragon flight and a click frenzy active at the same time
 - **Frenzy Marathon**: Have a frenzy buff with a total duration of at least **10 minutes**
 
-### CPS Achievements (6 achievements)
+### CPS Achievements (9 achievements)
 - **Beyond the speed of dough**: Bake **1 octodecillion** per second
 - **Speed of sound**: Bake **10 octodecillion** per second
 - **Speed of light**: Bake **100 octodecillion** per second
 - **Faster than light**: Bake **1 novemdecillion** per second
 - **Speed of thought**: Bake **10 novemdecillion** per second
 - **Faster than speed of thought**: Bake **100 novemdecillion** per second
+- **Plaid**: Bake **1 vigintillion** per second
+- **Somehow faster than plaid**: Bake **10 vigintillion** per second
+- **Transcending the very concept of speed itself**: Bake **100 vigintillion** per second
 
 ### Click Achievements (9 achievements)
 - **Click of the Titans**: Generate **1 year of raw CPS** in a single cookie click 
@@ -756,6 +759,10 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 
 
 ## Changelog 
+
+### Version 0.0.9
+* Added more bake X cookies per second achievements 
+* Big graphics update also prestaging the graphics for next major revision
 
 ### Version 0.0.9
 * Flavor text now with more punctuation. 

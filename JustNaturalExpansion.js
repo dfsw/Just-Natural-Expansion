@@ -5,7 +5,7 @@
     'use strict';
     
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.0.9';
+    var modVersion = '0.0.10';
     var debugMode = false; 
     var runtimeSessionId = Math.floor(Math.random()*1e9) + '-' + Date.now();
     
@@ -2005,7 +2005,7 @@
     
     // Sprite sheet loading system - load once, reference many times
     var spriteSheets = {
-        custom: 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/customSpriteSheet.png',
+        custom: 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png',
         gardenPlants: 'https://orteil.dashnet.org/cookieclicker/img/gardenPlants.png'
     };
     
@@ -3557,179 +3557,177 @@
                 names: ["Carpal diem", "Hand over fist", "Finger guns", "Thumbs up, buttercup", "Pointer sisters", "Knuckle sandwich", "Phalanx formation", "Manual override", "Clickbaiter-in-chief", "With flying digits", "Palm before the storm"],
                 thresholds: [1100, 1150, 1250, 1300, 1400, 1450, 1550, 1600, 1700, 1750, 1850],
                 vanillaTarget: "A round of applause",
-                customIcons: [[0, 20], [0, 21], [0, 25], [0, 26], [0, 27], [0, 29], [0, 35], [1, 71, getSpriteSheet('custom')], [1, 72, getSpriteSheet('custom')], [1, 56, getSpriteSheet('custom')], [1, 54, getSpriteSheet('custom')]]
-            },
+                customIcons: [[0, 0, getSpriteSheet('custom')], [0, 1, getSpriteSheet('custom')], [0, 2, getSpriteSheet('custom')], [0, 3, getSpriteSheet('custom')], [0, 4, getSpriteSheet('custom')], [0, 5, getSpriteSheet('custom')], [0, 6, getSpriteSheet('custom')], [0, 7, getSpriteSheet('custom')], [0, 8, getSpriteSheet('custom')], [0, 9, getSpriteSheet('custom')], [0, 10, getSpriteSheet('custom')]]            },
             'grandma': {
                 names: ["Doughy doyenne", "Batter nana", "Crust custodian", "Oven oracle", "Whisk whisperer", "Proofing matriarch", "Rolling-pin regent", "Larder luminary", "Hearth highness", "Biscotti baroness", "Panjandrum of pastry"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "And now you're even older",
-                customIcons: [[1, 20], [1, 21], [1, 25], [1, 26], [1, 27], [1, 29], [1, 35], [4, 71, getSpriteSheet('custom')], [4, 72, getSpriteSheet('custom')], [4, 56, getSpriteSheet('custom')], [4, 54, getSpriteSheet('custom')]]
+                customIcons: [[1, 0, getSpriteSheet('custom')], [1, 1, getSpriteSheet('custom')], [1, 2, getSpriteSheet('custom')], [1, 3, getSpriteSheet('custom')], [1, 4, getSpriteSheet('custom')], [1, 5, getSpriteSheet('custom')], [1, 6, getSpriteSheet('custom')], [1, 7, getSpriteSheet('custom')], [1, 8, getSpriteSheet('custom')], [1, 9, getSpriteSheet('custom')], [1, 10, getSpriteSheet('custom')]]
             },
             'farm': {
                 names: ["Till titan", "Mulch magnate", "Loam lord", "Furrow foreman", "Compost captain", "Acre archon", "Silo sovereign", "Bushel baron", "Seed syndicate", "Harvest high table", "Soil sultan supreme"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Au naturel",
-                customIcons: [[2, 20], [2, 21], [2, 25], [2, 26], [2, 27], [2, 29], [2, 35], [5, 71, getSpriteSheet('custom')], [5, 72, getSpriteSheet('custom')], [5, 56, getSpriteSheet('custom')], [5, 54, getSpriteSheet('custom')]]
+                customIcons: [[2, 0, getSpriteSheet('custom')], [2, 1, getSpriteSheet('custom')], [2, 2, getSpriteSheet('custom')], [2, 3, getSpriteSheet('custom')], [2, 4, getSpriteSheet('custom')], [2, 5, getSpriteSheet('custom')], [2, 6, getSpriteSheet('custom')], [2, 7, getSpriteSheet('custom')], [2, 8, getSpriteSheet('custom')], [2, 9, getSpriteSheet('custom')], [2, 10, getSpriteSheet('custom')]]
             },
             'mine': {
                 names: ["Vein viceroy", "Shaft superintendent", "Bedrock baron", "Lantern lord", "Ore orchestrator", "Strata strategist", "Pit prefect", "Pickaxe paragon", "Gravel governor", "Fault-line foreman", "Core sample czar"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Dirt-rich",
-                customIcons: [[3, 20], [3, 21], [3, 25], [3, 26], [3, 27], [3, 29], [3, 35], [6, 71, getSpriteSheet('custom')], [6, 72, getSpriteSheet('custom')], [6, 56, getSpriteSheet('custom')], [6, 54, getSpriteSheet('custom')]]
+                customIcons: [[3, 0, getSpriteSheet('custom')], [3, 1, getSpriteSheet('custom')], [3, 2, getSpriteSheet('custom')], [3, 3, getSpriteSheet('custom')], [3, 4, getSpriteSheet('custom')], [3, 5, getSpriteSheet('custom')], [3, 6, getSpriteSheet('custom')], [3, 7, getSpriteSheet('custom')], [3, 8, getSpriteSheet('custom')], [3, 9, getSpriteSheet('custom')], [3, 10, getSpriteSheet('custom')]]
             },
             'factory': {
                 names: ["Gear grandee", "Conveyor commissioner", "Sprocket sovereign", "Blueprint boss", "Forge forecaster", "Lathe luminary", "Press primarch", "QA queen", "Throughput theocrat", "Assembly autarch", "Production paramount"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Bots build bots",
-                customIcons: [[4, 20], [4, 21], [4, 25], [4, 26], [4, 27], [4, 29], [4, 35], [7, 71, getSpriteSheet('custom')], [7, 72, getSpriteSheet('custom')], [7, 56, getSpriteSheet('custom')], [7, 54, getSpriteSheet('custom')]]
+                customIcons: [[4, 0, getSpriteSheet('custom')], [4, 1, getSpriteSheet('custom')], [4, 2, getSpriteSheet('custom')], [4, 3, getSpriteSheet('custom')], [4, 4, getSpriteSheet('custom')], [4, 5, getSpriteSheet('custom')], [4, 6, getSpriteSheet('custom')], [4, 7, getSpriteSheet('custom')], [4, 8, getSpriteSheet('custom')], [4, 9, getSpriteSheet('custom')], [4, 10, getSpriteSheet('custom')]]
             },
             'bank': {
                 names: ["Ledger luminary", "Vault vanguard", "Interest idol", "Bond baron", "Hedge high priest", "Dividend duke", "Capital chancellor", "Liquidity laureate", "Spread sovereign", "Reserve regent", "Seigniorage supreme"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Getting that bag",
-                customIcons: [[15, 20], [15, 21], [15, 25], [15, 26], [15, 27], [15, 29], [15, 35], [8, 71, getSpriteSheet('custom')], [8, 72, getSpriteSheet('custom')], [8, 56, getSpriteSheet('custom')], [8, 54, getSpriteSheet('custom')]]
+                customIcons: [[13, 0, getSpriteSheet('custom')], [13, 1, getSpriteSheet('custom')], [13, 2, getSpriteSheet('custom')], [13, 3, getSpriteSheet('custom')], [13, 4, getSpriteSheet('custom')], [13, 5, getSpriteSheet('custom')], [13, 6, getSpriteSheet('custom')], [13, 7, getSpriteSheet('custom')], [13, 8, getSpriteSheet('custom')], [13, 9, getSpriteSheet('custom')], [13, 10, getSpriteSheet('custom')]]
             },
             'temple': {
                 names: ["Biscuit beatified", "Piety pâtissier", "Relic ringmaster", "Canticle captain", "Pilgrim provost", "Parable patriarch", "Litany laureate", "Censer sentinel", "Basilica bigwig", "Tithe tsar", "Beatific baker"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "The leader is good, the leader is great",
-                customIcons: [[16, 20], [16, 21], [16, 25], [16, 26], [16, 27], [16, 29], [16, 35], [9, 71, getSpriteSheet('custom')], [9, 72, getSpriteSheet('custom')], [9, 56, getSpriteSheet('custom')], [9, 54, getSpriteSheet('custom')]]
+                customIcons: [[14, 0, getSpriteSheet('custom')], [14, 1, getSpriteSheet('custom')], [14, 2, getSpriteSheet('custom')], [14, 3, getSpriteSheet('custom')], [14, 4, getSpriteSheet('custom')], [14, 5, getSpriteSheet('custom')], [14, 6, getSpriteSheet('custom')], [14, 7, getSpriteSheet('custom')], [14, 8, getSpriteSheet('custom')], [14, 9, getSpriteSheet('custom')], [14, 10, getSpriteSheet('custom')]]
             },
             'wizard tower': {
                 names: ["Rune registrar", "Hex headmaster", "Sigil steward", "Scroll shepherd", "Wand warden", "Cauldron chancellor", "Thaumaturge tribune", "Cantrip curator", "Leyline lord", "Familiar field marshal", "Archwizard emeritus"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "You don't think they could've used... it couldn't have been ma-",
-                customIcons: [[17, 20], [17, 21], [17, 25], [17, 26], [17, 27], [17, 29], [17, 35], [10, 71, getSpriteSheet('custom')], [10, 72, getSpriteSheet('custom')], [10, 56, getSpriteSheet('custom')], [10, 54, getSpriteSheet('custom')]]
+                customIcons: [[15, 0, getSpriteSheet('custom')], [15, 1, getSpriteSheet('custom')], [15, 2, getSpriteSheet('custom')], [15, 3, getSpriteSheet('custom')], [15, 4, getSpriteSheet('custom')], [15, 5, getSpriteSheet('custom')], [15, 6, getSpriteSheet('custom')], [15, 7, getSpriteSheet('custom')], [15, 8, getSpriteSheet('custom')], [15, 9, getSpriteSheet('custom')], [15, 10, getSpriteSheet('custom')]]
             },
             'shipment': {
                 names: ["Manifest maestro", "Hull highlord", "Dockyard director", "Orbital outfitter", "Freight field marshal", "Warpway warden", "Cargo cartographer", "Starport sahib", "Payload patriarch", "Customs czar", "Interstellar impresario"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Signed, sealed, delivered",
-                customIcons: [[5, 20], [5, 21], [5, 25], [5, 26], [5, 27], [5, 29], [5, 35], [11, 71, getSpriteSheet('custom')], [11, 72, getSpriteSheet('custom')], [11, 56, getSpriteSheet('custom')], [11, 54, getSpriteSheet('custom')]]
+                customIcons: [[5, 0, getSpriteSheet('custom')], [5, 1, getSpriteSheet('custom')], [5, 2, getSpriteSheet('custom')], [5, 3, getSpriteSheet('custom')], [5, 4, getSpriteSheet('custom')], [5, 5, getSpriteSheet('custom')], [5, 6, getSpriteSheet('custom')], [5, 7, getSpriteSheet('custom')], [5, 8, getSpriteSheet('custom')], [5, 9, getSpriteSheet('custom')], [5, 10, getSpriteSheet('custom')]]
             },
             'alchemy lab': {
                 names: ["Alembic adjudicator", "Crucible custodian", "Reagent regent", "Retort ringleader", "Tincture tycoon", "Catalyst chancellor", "Elixir elder", "Precipitate prefect", "Distillate duke", "Sublimate sovereign", "Magnum opus magnate"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Sugar, spice, and everything nice",
-                customIcons: [[6, 20], [6, 21], [6, 25], [6, 26], [6, 27], [6, 29], [6, 35], [12, 71, getSpriteSheet('custom')], [12, 72, getSpriteSheet('custom')], [12, 56, getSpriteSheet('custom')], [12, 54, getSpriteSheet('custom')]]
+                customIcons: [[6, 0, getSpriteSheet('custom')], [6, 1, getSpriteSheet('custom')], [6, 2, getSpriteSheet('custom')], [6, 3, getSpriteSheet('custom')], [6, 4, getSpriteSheet('custom')], [6, 5, getSpriteSheet('custom')], [6, 6, getSpriteSheet('custom')], [6, 7, getSpriteSheet('custom')], [6, 8, getSpriteSheet('custom')], [6, 9, getSpriteSheet('custom')], [6, 10, getSpriteSheet('custom')]]
             },
             'portal': {
                 names: ["Gate gauger", "Rift rector", "Threshold thaum", "Liminal lawgiver", "Tesseract trustee", "Nth-entrance envoy", "Event-horizon emir", "Portal provost", "Keymaster kingpin", "Waystone warden", "Multidoor magistrate"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Not even remotely close to Kansas anymore",
-                customIcons: [[7, 20], [7, 21], [7, 25], [7, 26], [7, 27], [7, 29], [7, 35], [13, 71, getSpriteSheet('custom')], [13, 72, getSpriteSheet('custom')], [13, 56, getSpriteSheet('custom')], [13, 54, getSpriteSheet('custom')]]
+                customIcons: [[7, 0, getSpriteSheet('custom')], [7, 1, getSpriteSheet('custom')], [7, 2, getSpriteSheet('custom')], [7, 3, getSpriteSheet('custom')], [7, 4, getSpriteSheet('custom')], [7, 5, getSpriteSheet('custom')], [7, 6, getSpriteSheet('custom')], [7, 7, getSpriteSheet('custom')], [7, 8, getSpriteSheet('custom')], [7, 9, getSpriteSheet('custom')], [7, 10, getSpriteSheet('custom')]]
             },
             'time machine': {
                 names: ["Tick-tock trustee", "Chrono chieftain", "Paradox provost", "Epoch executor", "Aeon alderman", "Timeline tactician", "Loop legislator", "Era eminence", "Causality constable", "Continuum custodian", "Grandfather-clause governor"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "I only meant to stay a while",
-                customIcons: [[8, 20], [8, 21], [8, 25], [8, 26], [8, 27], [8, 29], [8, 35], [14, 71, getSpriteSheet('custom')], [14, 72, getSpriteSheet('custom')], [14, 56, getSpriteSheet('custom')], [14, 54, getSpriteSheet('custom')]]
+                customIcons: [[8, 0, getSpriteSheet('custom')], [8, 1, getSpriteSheet('custom')], [8, 2, getSpriteSheet('custom')], [8, 3, getSpriteSheet('custom')], [8, 4, getSpriteSheet('custom')], [8, 5, getSpriteSheet('custom')], [8, 6, getSpriteSheet('custom')], [8, 7, getSpriteSheet('custom')], [8, 8, getSpriteSheet('custom')], [8, 9, getSpriteSheet('custom')], [8, 10, getSpriteSheet('custom')]]
             },
             'antimatter condenser': {
                 names: ["Vacuum vicar", "Negamass nabob", "Quark quartermaster", "Hadron high bailiff", "Singularity steward", "Boson baron", "Lepton lieutenant", "Isotope imperator", "Reactor regnant", "Nullspace notary", "Entropy esquire"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Not 20 years away forever",
-                customIcons: [[13, 20], [13, 21], [13, 25], [13, 26], [13, 27], [13, 29], [13, 35], [15, 71, getSpriteSheet('custom')], [15, 72, getSpriteSheet('custom')], [15, 56, getSpriteSheet('custom')], [15, 54, getSpriteSheet('custom')]]
+                customIcons: [[11, 0, getSpriteSheet('custom')], [11, 1, getSpriteSheet('custom')], [11, 2, getSpriteSheet('custom')], [11, 3, getSpriteSheet('custom')], [11, 4, getSpriteSheet('custom')], [11, 5, getSpriteSheet('custom')], [11, 6, getSpriteSheet('custom')], [11, 7, getSpriteSheet('custom')], [11, 8, getSpriteSheet('custom')], [11, 9, getSpriteSheet('custom')], [11, 10, getSpriteSheet('custom')]]
             },
             'prism': {
                 names: ["Photon prefect", "Spectrum superintendent", "Refraction regent", "Rainbow registrar", "Lumen laureate", "Prism prelate", "Chromatic chancellor", "Beam baronet", "Halo highlord", "Diffraction duke", "Radiance regnant"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Bright side of the Moon",
-                customIcons: [[14, 20], [14, 21], [14, 25], [14, 26], [14, 27], [14, 29], [14, 35], [16, 71, getSpriteSheet('custom')], [16, 72, getSpriteSheet('custom')], [16, 56, getSpriteSheet('custom')], [16, 54, getSpriteSheet('custom')]]
+                customIcons: [[12, 0, getSpriteSheet('custom')], [12, 1, getSpriteSheet('custom')], [12, 2, getSpriteSheet('custom')], [12, 3, getSpriteSheet('custom')], [12, 4, getSpriteSheet('custom')], [12, 5, getSpriteSheet('custom')], [12, 6, getSpriteSheet('custom')], [12, 7, getSpriteSheet('custom')], [12, 8, getSpriteSheet('custom')], [12, 9, getSpriteSheet('custom')], [12, 10, getSpriteSheet('custom')]]
             },
             'chancemaker': {
                 names: ["Odds officer", "Fortune foreman", "Serendipity superintendent", "Gambit governor", "Probability provost", "Fate facilitator", "Draw director", "Jackpot jurist", "Pips preceptor", "Stochastic sovereign", "Luck laureate"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Riding the Mersenne twister",
-                customIcons: [[19, 20], [19, 21], [19, 25], [19, 26], [19, 27], [19, 29], [19, 35], [19, 35], [19, 35], [19, 35], [19, 35]]
+                customIcons: [[17, 0, getSpriteSheet('custom')], [17, 1, getSpriteSheet('custom')], [17, 2, getSpriteSheet('custom')], [17, 3, getSpriteSheet('custom')], [17, 4, getSpriteSheet('custom')], [17, 5, getSpriteSheet('custom')], [17, 6, getSpriteSheet('custom')], [17, 7, getSpriteSheet('custom')], [17, 8, getSpriteSheet('custom')], [17, 9, getSpriteSheet('custom')], [17, 10, getSpriteSheet('custom')]]
             },
             'fractal engine': {
                 names: ["Mandel monarch", "Koch kingpin", "Cantor custodian", "Julia jurist", "Sierpiński steward", "Iteration imperator", "Recursion regent", "Self-similarity sheriff", "Pattern praetor", "Infinite indexer", "Depth-first demigod"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Divide and conquer",
-                customIcons: [[20, 20], [20, 21], [20, 25], [20, 26], [20, 27], [20, 29], [20, 35], [20, 35], [20, 35], [20, 35], [20, 35]]
+                customIcons: [[18, 0, getSpriteSheet('custom')], [18, 1, getSpriteSheet('custom')], [18, 2, getSpriteSheet('custom')], [18, 3, getSpriteSheet('custom')], [18, 4, getSpriteSheet('custom')], [18, 5, getSpriteSheet('custom')], [18, 6, getSpriteSheet('custom')], [18, 7, getSpriteSheet('custom')], [18, 8, getSpriteSheet('custom')], [18, 9, getSpriteSheet('custom')], [18, 10, getSpriteSheet('custom')]]
             },
             'javascript console': {
                 names: ["Lint lord", "Closure captain", "Async archon", "Promise prelate", "Scope sovereign", "Hoist highness", "Node notable", "Regex regent", "Bundle baron", "Sandbox seer", "Runtime regnant"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Pebcakes",
-                customIcons: [[32, 20], [32, 21], [32, 25], [32, 26], [32, 27], [32, 29], [32, 35], [32, 35], [32, 35], [32, 35], [32, 35]]
+                customIcons: [[19, 0, getSpriteSheet('custom')], [19, 1, getSpriteSheet('custom')], [19, 2, getSpriteSheet('custom')], [19, 3, getSpriteSheet('custom')], [19, 4, getSpriteSheet('custom')], [19, 5, getSpriteSheet('custom')], [19, 6, getSpriteSheet('custom')], [19, 7, getSpriteSheet('custom')], [19, 8, getSpriteSheet('custom')], [19, 9, getSpriteSheet('custom')], [19, 10, getSpriteSheet('custom')]]
             },
             'idleverse': {
                 names: ["Multiverse marshal", "Replica rector", "Shard shepherd", "Universe underwriter", "Realm regent", "Cosmos comptroller", "Omniverse ombuds", "Dimension director", "Reality registrar", "Plane provost", "Horizon high steward"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Greener on the other sides",
-                customIcons: [[33, 20], [33, 21], [33, 25], [33, 26], [33, 27], [33, 29], [33, 35], [33, 35], [33, 35], [33, 35], [33, 35]]
+                customIcons: [[20, 0, getSpriteSheet('custom')], [20, 1, getSpriteSheet('custom')], [20, 2, getSpriteSheet('custom')], [20, 3, getSpriteSheet('custom')], [20, 4, getSpriteSheet('custom')], [20, 5, getSpriteSheet('custom')], [20, 6, getSpriteSheet('custom')], [20, 7, getSpriteSheet('custom')], [20, 8, getSpriteSheet('custom')], [20, 9, getSpriteSheet('custom')], [20, 10, getSpriteSheet('custom')]]
             },
             'cortex baker': {
                 names: ["Synapse superintendent", "Cortex commissioner", "Gyrus governor", "Lobe luminary", "Neuron notable", "Axon adjudicator", "Myelin magistrate", "Thalamus thegn", "Cerebellum chancellor", "Prefrontal prelate", "Mind monarch"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Where is my mind",
-                customIcons: [[34, 20], [34, 21], [34, 25], [34, 26], [34, 27], [34, 29], [34, 35], [34, 35], [34, 35], [34, 35], [34, 35]]
+                customIcons: [[21, 0, getSpriteSheet('custom')], [21, 1, getSpriteSheet('custom')], [21, 2, getSpriteSheet('custom')], [21, 3, getSpriteSheet('custom')], [21, 4, getSpriteSheet('custom')], [21, 5, getSpriteSheet('custom')], [21, 6, getSpriteSheet('custom')], [21, 7, getSpriteSheet('custom')], [21, 8, getSpriteSheet('custom')], [21, 9, getSpriteSheet('custom')], [21, 10, getSpriteSheet('custom')]]
             },
             'You': {
                 names: ["Me manager", "Doppel director", "Mirror minister", "Clone commissioner", "Copy chieftain", "Echo executor", "Facsimile foreman", "Reflection regent", "Duplicate duke", "Replica regnant", "Self supreme"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Introspection",
-                customIcons: [[35, 20], [35, 21], [35, 25], [35, 26], [35, 27], [35, 29], [35, 35], [35, 35], [35, 35], [35, 35], [35, 35]]
+                customIcons: [[22, 0, getSpriteSheet('custom')], [22, 1, getSpriteSheet('custom')], [22, 2, getSpriteSheet('custom')], [22, 3, getSpriteSheet('custom')], [22, 4, getSpriteSheet('custom')], [22, 5, getSpriteSheet('custom')], [22, 6, getSpriteSheet('custom')], [22, 7, getSpriteSheet('custom')], [22, 8, getSpriteSheet('custom')], [22, 9, getSpriteSheet('custom')], [22, 10, getSpriteSheet('custom')]]
             }
         },
         other: {
-            cps: {
-                names: ["Beyond the speed of dough", "Speed of sound", "Speed of light", "Faster than light", "Speed of thought", "Faster than speed of thought"],
-                thresholds: [1e57, 1e58, 1e59, 1e60, 1e61, 1e62],
-                descs: ["Bake <b>1 octodecillion</b> per second.", "Bake <b>10 octodecillion</b> per second.", "Bake <b>100 octodecillion</b> per second.", "Bake <b>1 novemdecillion</b> per second.", "Bake <b>10 novemdecillion</b> per second.", "Bake <b>100 novemdecillion</b> per second."],
+			cps: {
+                names: ["Beyond the speed of dough", "Speed of sound", "Speed of light", "Faster than light", "Speed of thought", "Faster than speed of thought", "Plaid", "Somehow faster than plaid", "Transcending the very concept of speed itself"],
+    thresholds: [1e57, 1e58, 1e59, 1e60, 1e61, 1e62, 1e63, 1e64, 1e65],
+                descs: ["Bake <b>1 octodecillion</b> per second.", "Bake <b>10 octodecillion</b> per second.", "Bake <b>100 octodecillion</b> per second.", "Bake <b>1 novemdecillion</b> per second.", "Bake <b>10 novemdecillion</b> per second.", "Bake <b>100 novemdecillion</b> per second.", "Bake <b>1 vigintillion</b> per second.<q>They've gone to plaid!</q>", "Bake <b>10 vigintillion</b> per second.<q>Ah, buckle this! LUDICROUS SPEED! GO!</q>", "Bake <b>100 vigintillion</b> per second.<q>Everything else is frozen, we’re breaking physics, so, uh... should we actually do something with that?</q>"],
                 vanillaTarget: "Speed's the name of the game (no it's not it's called Cookie Clicker)",
-                customIcons: [[73, 0, getSpriteSheet('custom')], [73, 1, getSpriteSheet('custom')], [73, 2, getSpriteSheet('custom')], [73, 3, getSpriteSheet('custom')], [73, 4, getSpriteSheet('custom')], [73, 5, getSpriteSheet('custom')]]
+                customIcons: [[0, 12, getSpriteSheet('custom')], [1, 12, getSpriteSheet('custom')], [2, 12, getSpriteSheet('custom')], [3, 12, getSpriteSheet('custom')], [4, 12, getSpriteSheet('custom')], [5, 12, getSpriteSheet('custom')], [6, 12, getSpriteSheet('custom')], [7, 12, getSpriteSheet('custom')], [8, 12, getSpriteSheet('custom')]]
             },
             click: {
                 names: ["Click god", "Click emperor", "Click overlord", "Click sovereign", "Click monarch", "Click deity supreme", "Click deity ultimate", "Click deity transcendent", "Click of the Titans"],
                 thresholds: [1e63, 1e69, 1e75, 1e81, 1e87, 1e93, 1e99, 1e105, "clickOfTitans"],
-                descs: ["Make <b>1 vigintillion</b> from clicking.", "Make <b>1 duovigintillion</b> from clicking.", "Make <b>1 quattuorvigintillion</b> from clicking.", "Make <b>1 sexvigintillion</b> from clicking.", "Make <b>1 octovigintillion</b> from clicking.", "Make <b>1 trigintillion</b> from clicking.", "Make <b>1 duotrigintillion</b> from clicking.", "Make <b>1 quattuortrigintillion</b> from clicking.", "Generate <b>1 year of raw CPS</b> in a single cookie click.<q>One click to rule them all!</q>"],
+                descs: ["Make <b>1 vigintillion</b> from clicking.<q>Tired finger yet?</q>", "Make <b>1 duovigintillion</b> from clicking.", "Make <b>1 quattuorvigintillion</b> from clicking.", "Make <b>1 sexvigintillion</b> from clicking.", "Make <b>1 octovigintillion</b> from clicking.", "Make <b>1 trigintillion</b> from clicking.", "Make <b>1 duotrigintillion</b> from clicking.", "Make <b>1 quattuortrigintillion</b> from clicking.", "Generate <b>1 year of raw CPS</b> in a single cookie click.<q>One click to rule them all!</q>"],
                 vanillaTarget: "What's not clicking",
-                customIcons: [[0, 39, getSpriteSheet('custom')], [0, 40, getSpriteSheet('custom')], [0, 41, getSpriteSheet('custom')], [0, 42, getSpriteSheet('custom')], [0, 48, getSpriteSheet('custom')], [0, 74, getSpriteSheet('custom')], [0, 57, getSpriteSheet('custom')], [0, 54, getSpriteSheet('custom')], [32, 4]]
+                customIcons: [[9, 0, getSpriteSheet('custom')], [9, 1, getSpriteSheet('custom')], [9, 2, getSpriteSheet('custom')], [9, 3, getSpriteSheet('custom')], [9, 4, getSpriteSheet('custom')], [9, 5, getSpriteSheet('custom')], [9, 6, getSpriteSheet('custom')], [9, 7, getSpriteSheet('custom')], [9, 8, getSpriteSheet('custom')]]
             },
             wrinkler: {
                 names: ["Wrinkler annihilator", "Wrinkler eradicator", "Wrinkler extinction event", "Wrinkler apocalypse", "Wrinkler armageddon"],
                 thresholds: [666, 2666, 6666, 16666, 26666],
                 descs: ["Burst <b>666 wrinklers</b> across all ascensions.<q>Pop goes the creepy.</q>", "Burst <b>2,666 wrinklers</b> across all ascensions.<q>That wasn't cream filling.</q>", "Burst <b>6,666 wrinklers</b> across all ascensions.<q>If it wrinkles, you pop it.</q>", "Burst <b>16,666 wrinklers</b> across all ascensions.<q>So much juice. So little remorse.</q>", "Burst <b>26,666 wrinklers</b> across all ascensions.<q>One squish closer to immortality.</q>"],
                 vanillaTarget: "Moistburster",
-                customIcons: [[48, 63, getSpriteSheet('custom')], [48, 62, getSpriteSheet('custom')], [48, 61, getSpriteSheet('custom')], [48, 60, getSpriteSheet('custom')], [48, 59, getSpriteSheet('custom')]]
-            },
+                customIcons: [[21, 16, getSpriteSheet('custom')], [21, 17, getSpriteSheet('custom')], [21, 18, getSpriteSheet('custom')], [22, 19, getSpriteSheet('custom')], [22, 18, getSpriteSheet('custom')]]            },
             goldenWrinkler: {
                 names: ["Golden wrinkler"],
                 thresholds: [210000000], // 6.66 years in seconds (6.66 * 365.25 * 24 * 60 * 60)
                 descs: ["Burst a wrinkler worth <b>6.66 years of CPS</b>.<q>That's not cream filling, that's a retirement fund!</q>"],
                 vanillaTarget: "Moistburster",
-                customIcons: [[48, 76, getSpriteSheet('custom')]]
+                customIcons: [[23, 19, getSpriteSheet('custom')]]
             },
             shinyWrinkler: {
                 names: ["Rare specimen collector", "Endangered species hunter", "Extinction event architect"],
                 thresholds: [2, 5, 10],
                 descs: ["Burst <b>2 shiny wrinklers</b> across all ascensions.<q>You're a monster, do you know that?</q>", "Burst <b>5 shiny wrinklers</b> across all ascensions.<q>You really have to stop here, there arent many of these left in the world.</q>", "Burst <b>10 shiny wrinklers</b> across all ascensions.<q>People like you are evil, no one will ever see another one of these, you ruined it for everyone.</q>"],
                 vanillaTarget: "Last Chance to See",
-                customIcons: [[48, 0, getSpriteSheet('custom')], [48, 71, getSpriteSheet('custom')], [48, 66, getSpriteSheet('custom')]]
+                customIcons: [[21, 13, getSpriteSheet('custom')], [21, 14, getSpriteSheet('custom')], [21, 15, getSpriteSheet('custom')]]
             },
             reindeer: {
                 names: ["Reindeer destroyer", "Reindeer obliterator", "Reindeer extinction event", "Reindeer apocalypse"],
                 thresholds: [500, 1000, 2000, 5000],
                 descs: ["Pop <b>500 reindeer</b> across all ascensions.<q>You are become Claus, destroyer of hooves.</q>", "Pop <b>1,000 reindeer</b> across all ascensions.<q>That one had a red nose…</q>", "Pop <b>2,000 reindeer</b> across all ascensions.<q>Comet, Vixen, Toasted.</q>", "Pop <b>5,000 reindeer</b> across all ascensions.<q>Legends say the sky still smells like cinnamon and regret.</q>"],
                 vanillaTarget: "Reindeer sleigher",
-                customIcons: [[50, 5, getSpriteSheet('custom')], [50, 72, getSpriteSheet('custom')], [50, 37, getSpriteSheet('custom')], [50, 38, getSpriteSheet('custom')]]
+                customIcons: [[19, 17, getSpriteSheet('custom')], [19, 16, getSpriteSheet('custom')], [19, 15, getSpriteSheet('custom')], [19, 14, getSpriteSheet('custom')]]
             },
             goldenCookies: {
                 names: ["Black cat's other paw", "Black cat's third paw", "Black cat's fourth paw", "Black cat's fifth paw", "Black cat's sixth paw", "Black cat's seventh paw"],
                 thresholds: [17777, 37777, 47777, 57777, 67777, 77777],
-                descs: ["Click <b>17,777 golden cookies</b> across all ascensions.", "Click <b>37,777 golden cookies</b> across all ascensions.", "Click <b>47,777 golden cookies</b> across all ascensions.", "Click <b>57,777 golden cookies</b> across all ascensions.", "Click <b>67,777 golden cookies</b> across all ascensions.", "Click <b>77,777 golden cookies</b> across all ascensions."],
+                descs: ["Click <b>17,777 golden cookies</b> across all ascensions.<q>Not all that glitters is gold.</q>", "Click <b>37,777 golden cookies</b> across all ascensions.", "Click <b>47,777 golden cookies</b> across all ascensions.", "Click <b>57,777 golden cookies</b> across all ascensions.", "Click <b>67,777 golden cookies</b> across all ascensions.", "Click <b>77,777 golden cookies</b> across all ascensions.<q>Golden luck, plan a trip to Las Vegas and cash in on it.</q>"],
                 vanillaTarget: "Black cat's paw",
-                customIcons: [[20, 33], [30, 6], [27, 6], [18, 37, getSpriteSheet('custom')], [21, 33], [25, 7]]
+                customIcons: [[0, 13, getSpriteSheet('custom')],  [1, 13, getSpriteSheet('custom')],  [2, 13, getSpriteSheet('custom')],  [3, 13, getSpriteSheet('custom')],[4, 13, getSpriteSheet('custom')], [5, 13, getSpriteSheet('custom')]]
             },
             spell: {
                 names: ["Archwizard", "Spellmaster", "Cookieomancer", "Spell lord", "Magic emperor", "Sweet Sorcery"],
                 thresholds: [1999, 2999, 3999, 4999, 9999, "freeSugarLump"],
-                descs: ["Cast <b>1,999</b> spells across all ascensions.", "Cast <b>2,999</b> spells across all ascensions.", "Cast <b>3,999</b> spells across all ascensions.", "Cast <b>4,999</b> spells across all ascensions.", "Cast <b>9,999</b> spells across all ascensions.", "Get the <b>Free Sugar Lump</b> outcome from a magically spawned golden cookie.<q>Sweet sorcery indeed!</q>"],
+                descs: ["Cast <b>1,999</b> spells across all ascensions.<q>Zim zam zap!</q>", "Cast <b>2,999</b> spells across all ascensions.<q>Pew pew pew!</q>", "Cast <b>3,999</b> spells across all ascensions.", "Cast <b>4,999</b> spells across all ascensions.", "Cast <b>9,999</b> spells across all ascensions.<q>Yea well, how many backfired?</q>", "Get the <b>Free Sugar Lump</b> outcome from a magically spawned golden cookie.<q>Sweet sorcery indeed!</q>"],
                 vanillaTarget: "A wizard is you",
-                customIcons: [[22, 12], [43, 0, getSpriteSheet('custom')], [52, 0, getSpriteSheet('custom')], [28, 12], [27, 12], [47, 0, getSpriteSheet('custom')]]
+                customIcons: [[22, 12], [20, 14, getSpriteSheet('custom')], [20, 13, getSpriteSheet('custom')], [28, 12], [27, 12], [20, 15, getSpriteSheet('custom')]]
             },
             templeSwaps: {
                 names: ["Faithless Loyalty", "God of All Gods"],
@@ -3741,7 +3739,7 @@
             gardenHarvest: {
                 names: ["Greener, aching thumb", "Greenest, aching thumb", "Photosynthetic prodigy", "Garden master", "Plant whisperer"],
                 thresholds: [2000, 3000, 5000, 7500, 10000],
-                descs: ["Harvest <b>2,000</b> mature garden plants across all ascensions.", "Harvest <b>3,000</b> mature garden plants across all ascensions.", "Harvest <b>5,000</b> mature garden plants across all ascensions.", "Harvest <b>7,500</b> mature garden plants across all ascensions.", "Harvest <b>10,000</b> mature garden plants across all ascensions."],
+                descs: ["Harvest <b>2,000</b> mature garden plants across all ascensions.<q>Pluck pluck pluck, all day every day.</q>", "Harvest <b>3,000</b> mature garden plants across all ascensions.", "Harvest <b>5,000</b> mature garden plants across all ascensions.", "Harvest <b>7,500</b> mature garden plants across all ascensions.", "Harvest <b>10,000</b> mature garden plants across all ascensions.<q>The plants fear you when your shadow cast over them.</q>"],
                 vanillaTarget: "Green, aching thumb",
                 // Use the Spiced Cookies pattern: [x, y, spriteSheetURL]
                 customIcons: [[4, 2, getSpriteSheet('gardenPlants')], [4, 10, getSpriteSheet('gardenPlants')], [4, 17, getSpriteSheet('gardenPlants')], [4, 18, getSpriteSheet('gardenPlants')], [4, 19, getSpriteSheet('gardenPlants')]]
@@ -3749,9 +3747,9 @@
             cookiesAscension: {
                 names: ["The Doughpocalypse", "The Flour Flood", "The Ovenverse", "The Crumb Crusade", "The Final Batch", "The Ultimate Ascension", "The Transcendent Rise"],
                 thresholds: [1e73, 1e75, 1e77, 1e79, 1e81, 1e83, 1e85],
-                descs: ["Bake <b>10 trevigintillion</b> cookies in one ascension.", "Bake <b>1 quattuorvigintillion</b> cookies in one ascension.", "Bake <b>100 quattuorvigintillion</b> cookies in one ascension.", "Bake <b>10 quinvigintillion</b> cookies in one ascension.", "Bake <b>1 sexvigintillion</b> cookies in one ascension.", "Bake <b>100 sexvigintillion</b> cookies in one ascension.", "Bake <b>10 septenvigintillion</b> cookies in one ascension."],
+                descs: ["Bake <b>10 trevigintillion</b> cookies in one ascension.<q>Did you know it went higher? Neat.</q>", "Bake <b>1 quattuorvigintillion</b> cookies in one ascension.", "Bake <b>100 quattuorvigintillion</b> cookies in one ascension.", "Bake <b>10 quinvigintillion</b> cookies in one ascension.", "Bake <b>1 sexvigintillion</b> cookies in one ascension.", "Bake <b>100 sexvigintillion</b> cookies in one ascension.<q>I don't think you should be here.</q>", "Bake <b>10 septenvigintillion</b> cookies in one ascension.<q>Okay for real, it doesn't go any higher.</q>"],
                 vanillaTarget: "And a little extra",
-                customIcons: [[73, 0, getSpriteSheet('custom')], [73, 1, getSpriteSheet('custom')], [73, 2, getSpriteSheet('custom')], [73, 3, getSpriteSheet('custom')], [73, 4, getSpriteSheet('custom')], [73, 5, getSpriteSheet('custom')], [73, 6, getSpriteSheet('custom')]]
+                customIcons: [[0, 12, getSpriteSheet('custom')], [1, 12, getSpriteSheet('custom')], [2, 12, getSpriteSheet('custom')], [3, 12, getSpriteSheet('custom')], [4, 12, getSpriteSheet('custom')], [5, 12, getSpriteSheet('custom')], [6, 12, getSpriteSheet('custom')], [7, 12, getSpriteSheet('custom')], [8, 12, getSpriteSheet('custom')]]
             },
             forfeited: {
                 names: ["Dante's unwaking dream", "The abyss gazes back", "Charon's final toll", "Cerberus's third head", "Minos's eternal judgment", "The river Styx flows backward", "Ixion's wheel spins faster", "Sisyphus's boulder crumbles", "Tantalus's eternal thirst", "The ninth circle's center", "Lucifer's frozen tears", "Beyond the void's edge", "The final descent's end"],
@@ -3765,7 +3763,7 @@
                 thresholds: [15000, 20000, 25000],
                 descs: ["Own <b>15,000 buildings</b>.<q>You have more real estate than sense.</q>", "Own <b>20,000 buildings</b>.<q>That's not a skyline. That's a warning sign.</q>", "Own <b>25,000 buildings</b>.<q>Your shadow blocks out the sun, and the competition.</q>"],
                 vanillaTarget: "Myriad",
-                customIcons: [[20, 39, getSpriteSheet('custom')], [20, 47, getSpriteSheet('custom')], [20, 48, getSpriteSheet('custom')]]
+                customIcons: [[22, 12, getSpriteSheet('custom')], [22, 13, getSpriteSheet('custom')], [22, 14, getSpriteSheet('custom')]]
             },
             buildingsSold: {
                 names: ["Asset Liquidator", "Flip City", "Ghost Town Tycoon"],
@@ -3779,7 +3777,7 @@
                 thresholds: [750, 800, 850, 900, 950, 1000],
                 descs: ["Have at least <b>750 of everything</b>.", "Have at least <b>800 of everything</b>.", "Have at least <b>850 of everything</b>.", "Have at least <b>900 of everything</b>.", "Have at least <b>950 of everything</b>.", "Have at least <b>1,000 of everything</b>."],
                 vanillaTarget: "Septcentennial",
-                customIcons: [[21, 74, getSpriteSheet('custom')], [21, 75, getSpriteSheet('custom')], [21, 76, getSpriteSheet('custom')], [21, 77, getSpriteSheet('custom')], [21, 78, getSpriteSheet('custom')], [21, 79, getSpriteSheet('custom')]]
+                customIcons: [[16, 12, getSpriteSheet('custom')], [17, 12, getSpriteSheet('custom')], [18, 12, getSpriteSheet('custom')], [19, 12, getSpriteSheet('custom')], [20, 12, getSpriteSheet('custom')], [21, 12, getSpriteSheet('custom')]]
             },
           
             seedlog: {
@@ -3792,7 +3790,7 @@
             kittensOwned: {
                 names: ["Kitten jamboree", "Kitten Fiesta"],
                 thresholds: [18, 29],
-                descs: ["Own all <b>18 kittens</b> original kittens.", "Own all <b>18 original kittens</b> and all <b>11 expansion kittens</b> at once.<q>Okay thats really just too many cats.</q>"],
+                descs: ["Own all <b>18 kittens</b> original kittens.<q>Kittens stacked on kittens until total kitten collapse is imminent.</q>", "Own all <b>18 original kittens</b> and all <b>11 expansion kittens</b> at once.<q>Okay thats really just too many cats.</q>"],
                 vanillaTarget: "Jellicles",
                 customIcons: [[18, 14], [18, 13]]
             },
@@ -3801,7 +3799,7 @@
                 thresholds: [250, 500, 999],
                 descs: ["Ascend <b>250 times</b>.", "Ascend <b>500 times</b>.", "Ascend <b>999 times</b>."],
                 vanillaTarget: "Reincarnation",
-                customIcons: [[42, 76, getSpriteSheet('custom')], [42, 60, getSpriteSheet('custom')], [42, 59, getSpriteSheet('custom')]]
+                customIcons: [[17, 16, getSpriteSheet('custom')], [17, 15, getSpriteSheet('custom')], [17, 14, getSpriteSheet('custom')]]
             },
             stockmarket: {
                 names: ["Doughfolio Debut", "Crumb Fund Manager", "Biscuit Market Baron", "Fortune Cookie Tycoon", "Dough Jones Legend", "The Dough Jones Plunge"],
@@ -3822,7 +3820,7 @@
                 thresholds: [1, 1, 1, 1],
                 descs: ["Pop a reindeer during <b>Valentine's Day season.</b><q>Love is fleeting. So was that reindeer.</q>", "Pop a reindeer during <b>Business Day season.</b><q>His KPI was 'don't get popped.'</q>", "Pop a reindeer during <b>Easter season.</b><q>Wrong holiday, right target.</q>", "Pop a reindeer during <b>Halloween season.</b><q>Was that ectoplasm or caramel?</q>"],
                 vanillaTarget: "Eldeer",
-                customIcons: [[50, 73, getSpriteSheet('custom')], [50, 14, getSpriteSheet('custom')], [50, 19, getSpriteSheet('custom')], [50, 71, getSpriteSheet('custom')]]
+                customIcons: [[18, 16, getSpriteSheet('custom')], [18, 15, getSpriteSheet('custom')], [18, 14, getSpriteSheet('custom')], [18, 17, getSpriteSheet('custom')]]
             },
             gardenSeedsTime: {
                 names: ["I feel the need for seed"],
@@ -3899,34 +3897,37 @@
             names: ["News ticker addict"],
             thresholds: [1000], // 1000 ticker clicks
             descs: ["Click on the news ticker <b>1,000 times</b> in one ascension.<q>Hey dummy you are clicking on the wrong thing.</q>"],
-            vanillaTarget: "Stifling the press"
+            vanillaTarget: "Stifling the press",
+            customIcons: [[10, 12, getSpriteSheet('custom')]]
+
         },
         wrathCookies: {
             names: ["Warm-Up Ritual", "Deal of the Slightly Damned", "Baker of the Beast"],
             thresholds: [66, 666, 6666], // Wrath cookie clicks
             descs: ["Click <b>66 wrath cookies</b> across all ascensions.", "Click <b>666 wrath cookies</b> across all ascensions.", "Click <b>6,666 wrath cookies</b> across all ascensions."],
-            vanillaTarget: "Wrath cookie"
+            vanillaTarget: "Wrath cookie",
+            customIcons: [[20, 18, getSpriteSheet('custom')], [20, 17, getSpriteSheet('custom')], [20, 16, getSpriteSheet('custom')]]
         },
         goldenCookieTime: {
             names: ["Second Life, First Click"],
             thresholds: [120 * 1000], // 120 seconds in milliseconds
             descs: ["Click a golden cookie within <b>120 seconds</b> of ascending."],
             vanillaTarget: "Fading luck",
-            customIcons: [[12, 14]]
+            customIcons: [[0, 9, getSpriteSheet('custom')]]
         },
         wrinklerTime: {
             names: ["Wrinkler Rush"],
             thresholds: [930 * 1000], // 930 seconds (15 minutes 30 seconds) in milliseconds
             descs: ["Pop a wrinkler within <b>15 minutes and 30 seconds</b> of ascending.<q>The Grandmatriarchs barely had time to wake up!</q>"],
             vanillaTarget: "Moistburster",
-            customIcons: [[48, 62, getSpriteSheet('custom')]]
+            customIcons: [[23, 18, getSpriteSheet('custom')]]
         },
         wrinklerBankDouble: {
             names: ["Wrinkler Windfall"],
             thresholds: [6], // 6x bank value (sextupled)
             descs: ["Sextuple your bank with a single wrinkler pop.<q>Talk about a return on investment!</q>"],
             vanillaTarget: "Moistburster",
-            customIcons: [[48, 78, getSpriteSheet('custom')]]
+            customIcons: [[21, 19, getSpriteSheet('custom')]]
         },
         hardcoreNoHeavenly: {
             names: ["We don't need no heavenly chips"],
@@ -3954,63 +3955,63 @@
             thresholds: [1e12], // 1 trillion cookies
             descs: ["Bake <b>1 trillion cookies</b> without ever clicking a golden cookie, must be done in Born Again mode.<q>Patience is its own buff.</q>"],
             vanillaTarget: "Hardcore",
-            customIcons: [[23, 66, getSpriteSheet('custom')]]
+            customIcons: [[23, 9, getSpriteSheet('custom')]]
         },
         hardcoreCursorsAndGrandmas: {
             names: ["Back to Basic Bakers"],
             thresholds: [1e6], // 1 million cookies per second
             descs: ["Reach <b>1 million cookies per second</b> using only Cursors and Grandmas (no other buildings), must be done in Born Again mode.<q>Turns out Grandma really is the backbone of the empire.</q>"],
             vanillaTarget: "Hardcore",
-            customIcons: [[23, 69, getSpriteSheet('custom')]]
+            customIcons: [[23, 10, getSpriteSheet('custom')]]
         },
         hardcoreModestPortfolio: {
             names: ["Modest Portfolio"],
             thresholds: [1e15], // 1 quadrillion cookies
             descs: ["Reach <b>1 quadrillion cookies</b> without ever owning more than 10 of any building type (no selling), must be done in Born Again mode.<q>Breadth over depth.</q>"],
             vanillaTarget: "Hardcore",
-            customIcons: [[23, 68, getSpriteSheet('custom')]]
+            customIcons: [[23, 11, getSpriteSheet('custom')]]
         },
         hardcoreDifficultDecisions: {
             names: ["Difficult Decisions"],
             thresholds: [1e9], // 1 billion cookies
             descs: ["Bake <b>1 billion cookies</b> without ever having more than <b>25 combined upgrades or buildings</b> at any given time, must be done in Born Again mode.<q>Some decisions leave no right answer, only consequences.</q>"],
             vanillaTarget: "Hardcore",
-            customIcons: [[23, 10, getSpriteSheet('custom')]]
+            customIcons: [[23, 3, getSpriteSheet('custom')]]
         },
         hardcoreLaidInPlainSight: {
             names: ["Laid in Plain Sight"],
             thresholds: [10], // 10 cookies per second
             descs: ["Bake <b>10 cookies per second</b> without purchasing any buildings, must be done in Born Again mode.<q>Eggsactly where you weren't looking!</q>"],
             vanillaTarget: "Hardcore",
-            customIcons: [[23, 25, getSpriteSheet('custom')]]
+            customIcons: [[23, 4, getSpriteSheet('custom')]]
         },
         hardcorePrecisionNerd: {
             names: ["Precision Nerd"],
             thresholds: [1234567890], // Exactly 1,234,567,890 cookies
             descs: ["Have exactly <b>1234567890 cookies</b> in your bank and hold it for <b>60 seconds</b>.<q>Last night's 'Itchy & Scratchy' was, without a doubt, the worst episode ever. Rest assured I was on the Internet within minutes registering my disgust throughout the world.</q>"],
             vanillaTarget: "Hardcore",
-            customIcons: [[23, 9, getSpriteSheet('custom')]]
+            customIcons: [[23, 5, getSpriteSheet('custom')]]
         },
         hardcoreTreadingWater: {
             names: ["Treading water"],
             thresholds: [0], // Dummy threshold, actual logic handled in requirement function
-            descs: ["Have a CPS of 0 while owning more than 1000 buildings with no active buffs or debuffs.<q>Sometimes it really feels like your just not being very productive here.</q>"],
+            descs: ["Have a CPS of 0 while owning more than 1000 buildings with no active buffs or debuffs.<q>Sometimes it really feels like you are just not being very productive here.</q>"],
             vanillaTarget: "Hardcore",
-            customIcons: [[49, 10, getSpriteSheet('custom')]]
+            customIcons: [[23, 12, getSpriteSheet('custom')]]
         },
         hardcoreBouncingLastCheque: {
             names: ["Bouncing the last cheque"],
             thresholds: [0], // Dummy threshold, actual logic handled in requirement function
             descs: ["Reach less than 10 cookies in your bank after having at least 1 million cookies.<q>The very last cheque I write in my life I want to bounce.</q>"],
             vanillaTarget: "Hardcore",
-            customIcons: [[49, 25, getSpriteSheet('custom')]]
+            customIcons: [[23, 14, getSpriteSheet('custom')]]
         },
         hardcoreMassiveInheritance: {
             names: ["Massive Inheritance"],
             thresholds: [0],
             descs: ["Have a bank of at least <b>1 Novemdecillion cookies</b> within 10 minutes of ascending.<q>Well, look at you, a Heavenly Chips trust fund baby. Ever thought about earning your keep like the rest of us?</q>"],
             vanillaTarget: "Hardcore",
-            customIcons: [[49, 9, getSpriteSheet('custom')]]
+            customIcons: [[23, 13, getSpriteSheet('custom')]]
         },
         
         theFinalChallenger: {
@@ -4018,7 +4019,7 @@
             thresholds: [10], // 10 out of 17 challenge achievements
             descs: ["Win <b>10</b> of the Just Natural Expansion <b>Challenge Achievements</b>.<q>You didn't just rise to the challenge… you baked it into a 12-layer cake.</q>"],
             vanillaTarget: "Hardcore",
-            customIcons: [[47, 48, getSpriteSheet('custom')]]
+            customIcons: [[14, 12, getSpriteSheet('custom')]]
         },
         
         // Stock market achievements
@@ -4027,7 +4028,7 @@
             thresholds: [100], // 100 stockbrokers
             descs: ["Hire at least <b>100</b> stockbrokers in the Stock Market.<q>And there is no such thing as a no sale call. A sale is made on every call you make. Either you sell the client some stock or he sells you a reason he can't. Either way a sale is made, who's gonna close? You or him?</q>"],
             vanillaTarget: "Buy buy buy",
-            customIcons: [[1, 33]]
+            customIcons: [[23, 1, getSpriteSheet('custom')]]
         },
         cookieClicks: {
             names: ["Buff Finger"],
@@ -4048,7 +4049,7 @@
             thresholds: [3, 6, 9, 12, 0, 0, 0, 0, 0, 0], // 3, 6, 9, 12 buffs active, frenzy frenzy, double dragon, frenzy marathon, wizard achievements, and spell slinger (handled separately)
             descs: ["Have <b>3 buffs</b> active at once.<q>Hey that was pretty neat!</q>", "Have <b>6 buffs</b> active at once.<q>Okay that was downright impressive clicking.</q>", "Have <b>9 buffs</b> active at once.<q>I can't even follow what you did there but it looked really cool.</q>", "Have <b>12 buffs</b> active at once.<q>I don't believe you, but for like real congrats if you did that.</q>", "Have all three frenzy buffs active at once.<q>Like pizza pizza but with more wrath.</q>", "Have a dragon flight and a click frenzy active at the same time.<q>Double the dragons, double the clicking!</q>", "Have a frenzy buff with a total duration of at least 10 minutes.<q>Who needs coffee when you have this much energy?</q>", "Have <b>3 positive Grimoire spell effects</b> active at once.<q>Merlin would be proud of your spellcraft!</q>", "Have <b>3 negative Grimoire spell effects</b> active at once.<q>The Sorting Hat made a terrible mistake!</q>", "Cast <b>10 spells</b> within a 10-second window.<q>Speed casting at its finest!</q>"],
             vanillaTarget: "Here be dragon",
-            customIcons: [[25, 36], [26, 11], [22, 11], [23, 11], [39, 36, getSpriteSheet('custom')], [30, 12], [22, 13], [30, 20], [31, 20], [32, 4]]
+            customIcons: [[25, 36], [26, 11], [22, 11], [23, 11], [23, 2, getSpriteSheet('custom')], [30, 12], [22, 13], [30, 20], [31, 20], [32, 4]]
         },
         prestigeUpgrades: {
             names: ["Beyond Prestige"],
@@ -4060,9 +4061,9 @@
         completionism: {
             names: ["Bearer of the Cookie Sigil"],
             thresholds: ["orderEternalCookie"],
-            descs: ["Fully initiate into the Great Orders of the Cookie Age. Owning this achievement causes research to go <b>25%</b> faster, and random drops to appear <b>10%</b> more often.<q>A golden cookie sigil is forever affixed to your lapel, you refuse to elaborate further, if someone says the words strawberry milk and peanut butter cookies you immediately leave the room</q>"],
+            descs: ["Fully initiate into the Great Orders of the Cookie Age. Owning this achievement causes research to go <b>25%</b> faster, and random drops to appear <b>10%</b> more often.<q>A golden cookie sigil is forever affixed to your lapel, you refuse to elaborate further, if someone says the words strawberry milk and peanut butter cookies you immediately leave the room.</q>"],
             vanillaTarget: "Third-party",
-            customIcons: [[54, 54, getSpriteSheet('custom')]]
+            customIcons: [[19, 13, getSpriteSheet('custom')]]
         }
         }
     };
@@ -4279,7 +4280,7 @@
                 desc: 'Golden cookies appear <b>5%</b> more often.<br>Unlocked by owning the Vanilla Star achievement.<br>Cost scales with CpS',
                 ddesc: 'Golden cookies appear <b>5%</b> more often.<br>Unlocked by owning the Vanilla Star achievement.<br>Cost scales with CpS<q>From the smallest crumb, the greatest feast begins. Founded by the Crumbmonks of the 1st Batch, these solemn custodians protect the tiniest morsels of the First Cookie. It is whispered that even a single Golden Crumb, if eaten, grants visions of infinite bakeries. They roam the world with robes lined in napkin cloth, ready to rescue stray crumbs from the void.</q>',
                 price: 999, // Placeholder price, will be overridden by priceFunc
-                icon: [54, 46, getSpriteSheet('custom')],
+                icon: [14, 13, getSpriteSheet('custom')],
                 pool: '',
                 order: 30001.001,
                 unlockCondition: function() {
@@ -4295,7 +4296,7 @@
                 desc: 'Golden cookies appear <b>5%</b> more often.<br>Unlocked by owning The Final Challenger achievement.<br>Cost scales with CpS',
                 ddesc: 'Golden cookies appear <b>5%</b> more often.<br>Unlocked by owning The Final Challenger achievement.<br>Cost scales with CpS<q>The dough will rise… whether reality likes it or not. Bakers of the improbable, challengers of the possible — this Order has baked cookies in ovens that do not exist, from ingredients that never were. Their scrolls describe recipes written in paradox and whisked with defiance. Most of their meetings end with someone on fire.</q>',
                 price: 999, // Placeholder price, will be overridden by priceFunc
-                icon: [54, 48, getSpriteSheet('custom')],
+                icon: [15, 13, getSpriteSheet('custom')],
                 pool: '',
                 order: 30001.01,
                 unlockCondition: function() {
@@ -4311,7 +4312,7 @@
                 desc: 'Golden cookie effects last <b>5%</b> longer.<br>Unlocked by owning all Combo achievements.<br>Cost scales with CpS',
                 ddesc: 'Golden cookie effects last <b>5%</b> longer.<br>Unlocked by owning all Combo achievements.<br>Cost scales with CpS<q>Where light meets dough, miracles happen. The Shining Spoon Order believes in the transformative power of proper tools. Their spoons are forged from starlight and polished with hope, each one capable of stirring the very essence of cookie magic. They say a spoon that shines can turn any batter into gold.</q>',
                 price: 999, // Placeholder price, will be overridden by priceFunc
-                icon: [54, 41, getSpriteSheet('custom')],
+                icon: [18, 13, getSpriteSheet('custom')],
                 pool: '',
                 order: 30001.02,
                 unlockCondition: function() {
@@ -4332,7 +4333,7 @@
                 desc: 'Golden cookie effects last <b>5%</b> longer.<br>Unlocked by owning all Grandmapocalypse cookie achievements.<br>Cost scales with CpS',
                 ddesc: 'Golden cookie effects last <b>5%</b> longer.<br>Unlocked by owning all Grandmapocalypse cookie achievements.<br>Cost scales with CpS<q>When the light of the cookie sun is hidden, the shadows reveal their secrets. The Cookie Eclipse Order operates in the darkness between batches, when the ovens are cold and the dough is still. They believe that true cookie wisdom comes from understanding both the light and the shadow.</q>',
                 price: 999, // Placeholder price, will be overridden by priceFunc
-                icon: [54, 47, getSpriteSheet('custom')],
+                icon: [17, 13, getSpriteSheet('custom')],
                 pool: '',
                 order: 30001.03,
                 unlockCondition: function() {
@@ -4361,7 +4362,7 @@
                 desc: 'Frenzy, Click Frenzy, and Elder Frenzy buffs are <b>5%</b> more powerful.<br>Unlocked by owning all Grimoire achievements.<br>Cost scales with CpS',
                 ddesc: 'Frenzy, Click Frenzy, and Elder Frenzy buffs are <b>5%</b> more powerful.<br>Unlocked by owning all Grimoire achievements.<br>Cost scales with CpS<q>Magic flows through every whisk stroke, every fold of dough. The Enchanted Whisk Order practices the ancient art of cookie sorcery, where ingredients are not just mixed but awakened. Their whisks are carved from enchanted wood and bound with spells that make every cookie a little bit magical.</q>',
                 price: 999, // Placeholder price, will be overridden by priceFunc
-                icon: [54, 42, getSpriteSheet('custom')],
+                icon: [16, 13, getSpriteSheet('custom')],
                 pool: '',
                 order: 30001.04,
                 unlockCondition: function() {
@@ -4384,7 +4385,7 @@
                 desc: 'Golden cookies appear <b>5%</b> more often and their effects last <b>5%</b> longer.<br>Unlocked by owning all previous Great Orders of the Cookie Age upgrades.<br>Cost scales with CpS',
                 ddesc: 'Golden cookies appear <b>5%</b> more often and their effects last <b>5%</b> longer.<br>Unlocked by owning all previous Great Orders of the Cookie Age upgrades.<br>Cost scales with CpS<q>Beyond time, beyond space, there exists a cookie that never crumbles. The Eternal Cookie Order seeks to understand the nature of permanence in an impermanent world. They believe that if one can bake a cookie that lasts forever, one can unlock the secrets of immortality itself.</q>',
                 price: 999, // Placeholder price, will be overridden by priceFunc
-                icon: [54, 54, getSpriteSheet('custom')],
+                icon: [19, 13, getSpriteSheet('custom')],
                 pool: '',
                 order: 30001.05,
                 unlockCondition: function() {
@@ -4405,7 +4406,7 @@
                 desc: 'Grandmas cost <b>5%</b> less.',
                 ddesc: 'Grandmas cost <b>5%</b> less.<q>With better retirement benefits, your grandmas can afford to work for less. They\'re just happy to be baking cookies and staying active.</q>',
                 price: 5e19, // 50 quintillion
-                icon: [1, 20], // Matches 750 threshold
+                icon: [1, 0, getSpriteSheet('custom')], // Matches 750 threshold (index 0)
                 pool: '',
                 unlockCondition: function() {
                     var grandmaAmount = Game.Objects['Grandma'] ? Game.Objects['Grandma'].amount : 0;
@@ -4421,7 +4422,7 @@
                 desc: 'Grandmas cost <b>5%</b> less.',
                 ddesc: 'Grandmas cost <b>5%</b> less.<q>Generic reading glasses are just as good as the expensive ones, and they make your grandmas look more distinguished while they bake.</q>',
                 price: 5e22, // 50 sextillion
-                icon: [1, 25], // Matches 850 threshold
+                icon: [1, 2, getSpriteSheet('custom')], // Matches 850 threshold (index 2)
                 pool: '',
                 unlockCondition: function() {
                     var grandmaAmount = Game.Objects['Grandma'] ? Game.Objects['Grandma'].amount : 0;
@@ -4437,7 +4438,7 @@
                 desc: 'Grandmas cost <b>5%</b> less.',
                 ddesc: 'Grandmas cost <b>5%</b> less.<q>Lightweight, durable, and much cheaper than the fancy ones. Your grandmas can now move around the kitchen more efficiently while saving money.</q>',
                 price: 5e25, // 50 septillion
-                icon: [1, 27], // Matches 950 threshold
+                icon: [1, 4, getSpriteSheet('custom')], // Matches 950 threshold (index 4)
                 pool: '',
                 unlockCondition: function() {
                     var grandmaAmount = Game.Objects['Grandma'] ? Game.Objects['Grandma'].amount : 0;
@@ -4453,7 +4454,7 @@
                 desc: 'Grandmas cost <b>5%</b> less.',
                 ddesc: 'Grandmas cost <b>5%</b> less.<q>Buying hearing aids in bulk saves money, and your grandmas can now hear cookie timers perfectly. What\'s that? They said the cookies are ready!</q>',
                 price: 5e28, // 50 octillion
-                icon: [1, 35], // Matches 1050 threshold
+                icon: [1, 6, getSpriteSheet('custom')], // Matches 1050 threshold (index 6)
                 pool: '',
                 unlockCondition: function() {
                     var grandmaAmount = Game.Objects['Grandma'] ? Game.Objects['Grandma'].amount : 0;
@@ -4469,7 +4470,7 @@
                 desc: 'Grandmas cost <b>5%</b> less.',
                 ddesc: 'Grandmas cost <b>5%</b> less.<q>The store brand works just as well as the name brand, and your grandmas can now knead dough without any complaints. Well, fewer complaints.</q>',
                 price: 5e31, // 50 nonillion
-                icon: [4, 72, getSpriteSheet('custom')], // Matches 1150 threshold
+                icon: [1, 8, getSpriteSheet('custom')], // Matches 1150 threshold (index 8)
                 pool: '',
                 unlockCondition: function() {
                     var grandmaAmount = Game.Objects['Grandma'] ? Game.Objects['Grandma'].amount : 0;
@@ -4485,7 +4486,7 @@
                 desc: 'Grandmas cost <b>5%</b> less.',
                 ddesc: 'Grandmas cost <b>5%</b> less.<q>Buying denture adhesive in industrial quantities means your grandmas can smile confidently while tasting their cookie creations. The savings are toothsome!</q>',
                 price: 5e34, // 50 decillion
-                icon: [4, 54, getSpriteSheet('custom')], // Matches 1250 threshold
+                icon: [1, 10, getSpriteSheet('custom')], // Matches 1250 threshold (index 10)
                 pool: '',
                 unlockCondition: function() {
                     var grandmaAmount = Game.Objects['Grandma'] ? Game.Objects['Grandma'].amount : 0;
@@ -4501,7 +4502,7 @@
                 desc: 'Farms cost <b>5%</b> less.',
                 ddesc: 'Farms cost <b>5%</b> less.<q>Your farms have discovered that running tractors on recycled cooking oil from cookie production is both eco-friendly and surprisingly cost-effective. The tractors smell like fresh cookies now!</q>',
                 price: 5e22, // 50 sextillion
-                icon: [2, 20], // Matches 750 threshold
+                icon: [2, 0, getSpriteSheet('custom')], // Matches 750 threshold (index 0)
                 pool: '',
                 unlockCondition: function() {
                     var farmAmount = Game.Objects['Farm'] ? Game.Objects['Farm'].amount : 0;
@@ -4517,7 +4518,7 @@
                 desc: 'Farms cost <b>5%</b> less.',
                 ddesc: 'Farms cost <b>5%</b> less.<q>The clone factories produce so much waste that your farms get all the fertilizer they need for free. The cookies grown with this manure taste surprisingly good.</q>',
                 price: 5e25, // 50 septillion
-                icon: [2, 25], // Matches 850 threshold
+                icon: [2, 2, getSpriteSheet('custom')], // Matches 850 threshold (index 2)
                 pool: '',
                 unlockCondition: function() {
                     var farmAmount = Game.Objects['Farm'] ? Game.Objects['Farm'].amount : 0;
@@ -4533,7 +4534,7 @@
                 desc: 'Farms cost <b>5%</b> less.',
                 ddesc: 'Farms cost <b>5%</b> less.<q>Your farms now use solar panels to power their irrigation systems. The cookies grow faster when they\'re watered with sunlight-filtered water, and the energy bills are practically zero.</q>',
                 price: 5e28, // 50 octillion
-                icon: [2, 27], // Matches 950 threshold
+                icon: [2, 4, getSpriteSheet('custom')], // Matches 950 threshold (index 4)
                 pool: '',
                 unlockCondition: function() {
                     var farmAmount = Game.Objects['Farm'] ? Game.Objects['Farm'].amount : 0;
@@ -4549,7 +4550,7 @@
                 desc: 'Farms cost <b>5%</b> less.',
                 ddesc: 'Farms cost <b>5%</b> less.<q>Buying cookie seeds in industrial quantities has dramatically reduced costs. Your farms now have enough seeds to plant cookie forests, and the bulk discount is delicious.</q>',
                 price: 5e31, // 50 nonillion
-                icon: [2, 35], // Matches 1050 threshold
+                icon: [2, 6, getSpriteSheet('custom')], // Matches 1050 threshold (index 6)
                 pool: '',
                 unlockCondition: function() {
                     var farmAmount = Game.Objects['Farm'] ? Game.Objects['Farm'].amount : 0;
@@ -4565,7 +4566,7 @@
                 desc: 'Farms cost <b>5%</b> less.',
                 ddesc: 'Farms cost <b>5%</b> less.<q>Your farms now employ robotic workers who never tire and work for free. They\'re programmed to be gentle with the cookie plants and surprisingly good at telling cookie jokes.</q>',
                 price: 5e34, // 50 decillion
-                icon: [5, 72, getSpriteSheet('custom')], // Matches 1150 threshold
+                icon: [2, 8, getSpriteSheet('custom')], // Matches 1150 threshold (index 8)
                 pool: '',
                 unlockCondition: function() {
                     var farmAmount = Game.Objects['Farm'] ? Game.Objects['Farm'].amount : 0;
@@ -4581,7 +4582,7 @@
                 desc: 'Farms cost <b>5%</b> less.',
                 ddesc: 'Farms cost <b>5%</b> less.<q>The government is so impressed with your cookie farming innovation that they\'re providing subsidies for vertical farming. Your cookie towers are now taxpayer-funded!</q>',
                 price: 5e37, // 50 undecillion
-                icon: [5, 54, getSpriteSheet('custom')], // Matches 1250 threshold
+                icon: [2, 10, getSpriteSheet('custom')], // Matches 1250 threshold (index 10)
                 pool: '',
                 unlockCondition: function() {
                     var farmAmount = Game.Objects['Farm'] ? Game.Objects['Farm'].amount : 0;
@@ -4597,7 +4598,7 @@
                 desc: 'Mines cost <b>5%</b> less.',
                 ddesc: 'Mines cost <b>5%</b> less.<q>Flat‑pack mining in a box! Comes with complimentary dust, three bent bolts, and a manual that just says “dig.”</q>',
                 price: 5e25, // 50 septillion
-                icon: [3, 20], // Matches 750 threshold
+                icon: [3, 0, getSpriteSheet('custom')], // Matches 750 threshold (index 0)
                 pool: '',
                 unlockCondition: function() {
                     var mineAmount = Game.Objects['Mine'] ? Game.Objects['Mine'].amount : 0;
@@ -4613,7 +4614,7 @@
                 desc: 'Mines cost <b>5%</b> less.',
                 ddesc: 'Mines cost <b>5%</b> less.<q>Every tenth kaboom is free. Please remember to validate your detonation.</q>',
                 price: 5e28, // 50 octillion
-                icon: [3, 25], // Matches 850 threshold
+                icon: [3, 2, getSpriteSheet('custom')], // Matches 850 threshold (index 2)
                 pool: '',
                 unlockCondition: function() {
                     var mineAmount = Game.Objects['Mine'] ? Game.Objects['Mine'].amount : 0;
@@ -4629,7 +4630,7 @@
                 desc: 'Mines cost <b>5%</b> less.',
                 ddesc: 'Mines cost <b>5%</b> less.<q>Pre-scuffed for authenticity. Comes with vintage stickers and suspiciously fresh chin straps.</q>',
                 price: 5e31, // 50 nonillion
-                icon: [3, 27], // Matches 950 threshold
+                icon: [3, 4, getSpriteSheet('custom')], // Matches 950 threshold (index 4)
                 pool: '',
                 unlockCondition: function() {
                     var mineAmount = Game.Objects['Mine'] ? Game.Objects['Mine'].amount : 0;
@@ -4645,7 +4646,7 @@
                 desc: 'Mines cost <b>5%</b> less.',
                 ddesc: 'Mines cost <b>5%</b> less.<q>You rent them your rigs; they rent them back to you cheaper. Don’t think about it too hard—just keep drilling.</q>',
                 price: 5e34, // 50 decillion
-                icon: [3, 35], // Matches 1050 threshold
+                icon: [3, 6, getSpriteSheet('custom')], // Matches 1050 threshold (index 6)
                 pool: '',
                 unlockCondition: function() {
                     var mineAmount = Game.Objects['Mine'] ? Game.Objects['Mine'].amount : 0;
@@ -4661,7 +4662,7 @@
                 desc: 'Mines cost <b>5%</b> less.',
                 ddesc: 'Mines cost <b>5%</b> less.<q>Clip these to save big on ironies, aluminums, and suspiciously inexpensive unobtainium.</q>',
                 price: 5e37, // 50 undecillion
-                icon: [6, 72, getSpriteSheet('custom')], // Matches 1150 threshold
+                icon: [3, 8, getSpriteSheet('custom')], // Matches 1150 threshold (index 8)
                 pool: '',
                 unlockCondition: function() {
                     var mineAmount = Game.Objects['Mine'] ? Game.Objects['Mine'].amount : 0;
@@ -4677,7 +4678,7 @@
                 desc: 'Mines cost <b>5%</b> less.',
                 ddesc: 'Mines cost <b>5%</b> less.<q>Policy fine print: “cave-ins not included.” The cashback is, though!</q>',
                 price: 5e40, // 50 duodecillion
-                icon: [6, 54, getSpriteSheet('custom')], // Matches 1250 threshold
+                icon: [3, 10, getSpriteSheet('custom')], // Matches 1250 threshold (index 10)
                 pool: '',
                 unlockCondition: function() {
                     var mineAmount = Game.Objects['Mine'] ? Game.Objects['Mine'].amount : 0;
@@ -4693,7 +4694,7 @@
                 desc: 'Factories cost <b>5%</b> less.',
                 ddesc: 'Factories cost <b>5%</b> less.<q>Arrives in 47 boxes, 2 mystery bolts, and one tiny allen key. Assembly required; dignity sold separately.</q>',
                 price: 5e28, // 50 octillion
-                icon: [4, 20], // Matches 750 threshold
+                icon: [4, 0, getSpriteSheet('custom')], // Matches 750 threshold (index 0)
                 pool: '',
                 unlockCondition: function() {
                     var factoryAmount = Game.Objects['Factory'] ? Game.Objects['Factory'].amount : 0;
@@ -4709,7 +4710,7 @@
                 desc: 'Factories cost <b>5%</b> less.',
                 ddesc: 'Factories cost <b>5%</b> less.<q>Buy one rivet, get one lodged in the break room floor for free. Savings that really fasten your margins.</q>',
                 price: 5e31, // 50 nonillion
-                icon: [4, 25], // Matches 850 threshold
+                icon: [4, 2, getSpriteSheet('custom')], // Matches 850 threshold (index 2)
                 pool: '',
                 unlockCondition: function() {
                     var factoryAmount = Game.Objects['Factory'] ? Game.Objects['Factory'].amount : 0;
@@ -4725,7 +4726,7 @@
                 desc: 'Factories cost <b>5%</b> less.',
                 ddesc: 'Factories cost <b>5%</b> less.<q>It says "lubricishion" on the drum but the conveyor squeaks stopped and the budget squeals with joy.</q>',
                 price: 5e34, // 50 decillion
-                icon: [4, 27], // Matches 950 threshold
+                icon: [4, 4, getSpriteSheet('custom')], // Matches 950 threshold (index 4)
                 pool: '',
                 unlockCondition: function() {
                     var factoryAmount = Game.Objects['Factory'] ? Game.Objects['Factory'].amount : 0;
@@ -4741,7 +4742,7 @@
                 desc: 'Factories cost <b>5%</b> less.',
                 ddesc: 'Factories cost <b>5%</b> less.<q>"DO NOT NOT TOUCH" and "CAUTION: SPICY ELECTRICITY" — flawed labels at flawless prices.</q>',
                 price: 5e37, // 50 undecillion
-                icon: [4, 35], // Matches 1050 threshold
+                icon: [4, 6, getSpriteSheet('custom')], // Matches 1050 threshold (index 6)
                 pool: '',
                 unlockCondition: function() {
                     var factoryAmount = Game.Objects['Factory'] ? Game.Objects['Factory'].amount : 0;
@@ -4757,7 +4758,7 @@
                 desc: 'Factories cost <b>5%</b> less.',
                 ddesc: 'Factories cost <b>5%</b> less.<q>Return three worn wheels and a heartfelt shrug to receive instant savings on moving heavy expectations.</q>',
                 price: 5e40, // 50 duodecillion
-                icon: [7, 72, getSpriteSheet('custom')], // Matches 1150 threshold
+                icon: [4, 8, getSpriteSheet('custom')], // Matches 1150 threshold (index 8)
                 pool: '',
                 unlockCondition: function() {
                     var factoryAmount = Game.Objects['Factory'] ? Game.Objects['Factory'].amount : 0;
@@ -4773,7 +4774,7 @@
                 desc: 'Factories cost <b>5%</b> less.',
                 ddesc: 'Factories cost <b>5%</b> less.<q>Snap together a fully functional bakery block before lunch. Some assembly lines may snap back.</q>',
                 price: 5e43, // 50 tredecillion
-                icon: [7, 54, getSpriteSheet('custom')], // Matches 1250 threshold
+                icon: [4, 10, getSpriteSheet('custom')], // Matches 1250 threshold (index 10)
                 pool: '',
                 unlockCondition: function() {
                     var factoryAmount = Game.Objects['Factory'] ? Game.Objects['Factory'].amount : 0;
@@ -4789,7 +4790,7 @@
                 desc: 'Banks cost <b>5%</b> less.',
                 ddesc: 'Banks cost <b>5%</b> less.<q>We buy your old piggy banks for scrap, you get bulk rates on brand-new savings. Oink if you love rebates.</q>',
                 price: 5e31, // 50 nonillion
-                icon: [15, 20], // Matches 750 threshold
+                icon: [13, 0, getSpriteSheet('custom')], // Matches 750 threshold (index 0)
                 pool: '',
                 unlockCondition: function() {
                     var bankAmount = Game.Objects['Bank'] ? Game.Objects['Bank'].amount : 0;
@@ -4805,7 +4806,7 @@
                 desc: 'Banks cost <b>5%</b> less.',
                 ddesc: 'Banks cost <b>5%</b> less.<q>Slightly scuffed, mostly secure, and drastically discounted. May include complimentary salesperson fingerprints.</q>',
                 price: 5e34, // 50 decillion
-                icon: [15, 25], // Matches 850 threshold
+                icon: [13, 2, getSpriteSheet('custom')], // Matches 850 threshold (index 2)
                 pool: '',
                 unlockCondition: function() {
                     var bankAmount = Game.Objects['Bank'] ? Game.Objects['Bank'].amount : 0;
@@ -4821,7 +4822,7 @@
                 desc: 'Banks cost <b>5%</b> less.',
                 ddesc: 'Banks cost <b>5%</b> less.<q>We negotiated a lifetime supply of those pens everyone “borrows”. Budgets balanced; chains tested for tensile sass.</q>',
                 price: 5e37, // 50 undecillion
-                icon: [15, 27], // Matches 950 threshold
+                icon: [13, 4, getSpriteSheet('custom')], // Matches 950 threshold (index 4)
                 pool: '',
                 unlockCondition: function() {
                     var bankAmount = Game.Objects['Bank'] ? Game.Objects['Bank'].amount : 0;
@@ -4837,7 +4838,7 @@
                 desc: 'Banks cost <b>5%</b> less.',
                 ddesc: 'Banks cost <b>5%</b> less.<q>They’re free. The mints are free. The sign telling you they’re complimentary is also complimentary.</q>',
                 price: 5e40, // 50 duodecillion
-                icon: [15, 35], // Matches 1050 threshold
+                icon: [13, 6, getSpriteSheet('custom')], // Matches 1050 threshold (index 6)
                 pool: '',
                 unlockCondition: function() {
                     var bankAmount = Game.Objects['Bank'] ? Game.Objects['Bank'].amount : 0;
@@ -4853,7 +4854,7 @@
                 desc: 'Banks cost <b>5%</b> less.',
                 ddesc: 'Banks cost <b>5%</b> less.<q>Wave the fee, waive the fee—our interns practiced both until the numbers surrendered.</q>',
                 price: 5e43, // 50 tredecillion
-                icon: [8, 72, getSpriteSheet('custom')], // Matches 1150 threshold
+                icon: [13, 8, getSpriteSheet('custom')], // Matches 1150 threshold (index 8)
                 pool: '',
                 unlockCondition: function() {
                     var bankAmount = Game.Objects['Bank'] ? Game.Objects['Bank'].amount : 0;
@@ -4869,7 +4870,7 @@
                 desc: 'Banks cost <b>5%</b> less.',
                 ddesc: 'Banks cost <b>5%</b> less.<q>The market dipped; we scooped vault carpeting and gold-plated clipboards by the pallet. Buy low, bank lower.</q>',
                 price: 5e46, // 50 quattuordecillion
-                icon: [8, 54, getSpriteSheet('custom')], // Matches 1250 threshold
+                icon: [13, 10, getSpriteSheet('custom')], // Matches 1250 threshold (index 10)
                 pool: '',
                 unlockCondition: function() {
                     var bankAmount = Game.Objects['Bank'] ? Game.Objects['Bank'].amount : 0;
@@ -4885,7 +4886,7 @@
                 desc: 'Temples cost <b>5%</b> less.',
                 ddesc: 'Temples cost <b>5%</b> less.<q>Pray ten times, the eleventh comes with a coupon. Blessings accrue interest; salvation may vary.</q>',
                 price: 5e34, // 50 decillion
-                icon: [16, 20], // Matches 750 threshold
+                icon: [14, 0, getSpriteSheet('custom')], // Matches 750 threshold (index 0)
                 pool: '',
                 unlockCondition: function() {
                     var templeAmount = Game.Objects['Temple'] ? Game.Objects['Temple'].amount : 0;
@@ -4901,7 +4902,7 @@
                 desc: 'Temples cost <b>5%</b> less.',
                 ddesc: 'Temples cost <b>5%</b> less.<q>Authentically inauthentic! Perfect for display, fundraising, and keeping the real relics safe in a sock drawer.</q>',
                 price: 5e37, // 50 undecillion
-                icon: [16, 25], // Matches 850 threshold
+                icon: [14, 2, getSpriteSheet('custom')], // Matches 850 threshold (index 2)
                 pool: '',
                 unlockCondition: function() {
                     var templeAmount = Game.Objects['Temple'] ? Game.Objects['Temple'].amount : 0;
@@ -4917,7 +4918,7 @@
                 desc: 'Temples cost <b>5%</b> less.',
                 ddesc: 'Temples cost <b>5%</b> less.<q>Bring back your incense stubs for a discount on fresh sticks. Smells like savings (and nutmeg).</q>',
                 price: 5e40, // 50 duodecillion
-                icon: [16, 27], // Matches 950 threshold
+                icon: [14, 4, getSpriteSheet('custom')], // Matches 950 threshold (index 4)
                 pool: '',
                 unlockCondition: function() {
                     var templeAmount = Game.Objects['Temple'] ? Game.Objects['Temple'].amount : 0;
@@ -4933,7 +4934,7 @@
                 desc: 'Temples cost <b>5%</b> less.',
                 ddesc: 'Temples cost <b>5%</b> less.<q>Wind them up for a full liturgical set in C Major. Now with extended Amen remix.</q>',
                 price: 5e43, // 50 tredecillion
-                icon: [16, 35], // Matches 1050 threshold
+                icon: [14, 6, getSpriteSheet('custom')], // Matches 1050 threshold (index 6)
                 pool: '',
                 unlockCondition: function() {
                     var templeAmount = Game.Objects['Temple'] ? Game.Objects['Temple'].amount : 0;
@@ -4949,7 +4950,7 @@
                 desc: 'Temples cost <b>5%</b> less.',
                 ddesc: 'Temples cost <b>5%</b> less.<q>Local businesses sponsor your pews. Sit in Savings Row, brought to you by Discount Chalice Emporium.</q>',
                 price: 5e46, // 50 quattuordecillion
-                icon: [9, 72, getSpriteSheet('custom')], // Matches 1150 threshold
+                icon: [14, 8, getSpriteSheet('custom')], // Matches 1150 threshold (index 8)
                 pool: '',
                 unlockCondition: function() {
                     var templeAmount = Game.Objects['Temple'] ? Game.Objects['Temple'].amount : 0;
@@ -4965,7 +4966,7 @@
                 desc: 'Temples cost <b>5%</b> less.',
                 ddesc: 'Temples cost <b>5%</b> less.<q>Pilgrims rejoice; accountants rejoice harder. Certain restrictions (and miracles) apply.</q>',
                 price: 5e49, // 50 quindecillion
-                icon: [9, 54, getSpriteSheet('custom')], // Matches 1250 threshold
+                icon: [14, 10, getSpriteSheet('custom')], // Matches 1250 threshold (index 10)
                 pool: '',
                 unlockCondition: function() {
                     var templeAmount = Game.Objects['Temple'] ? Game.Objects['Temple'].amount : 0;
@@ -4981,7 +4982,7 @@
                 desc: 'Wizard towers cost <b>5%</b> less.',
                 ddesc: 'Wizard towers cost <b>5%</b> less.<q>Returned within 30 days of transmogrification. Minor scorch marks add character.</q>',
                 price: 5e37, // 50 undecillion
-                icon: [17, 20], // Matches 750 threshold
+                icon: [15, 0, getSpriteSheet('custom')], // Matches 750 threshold (index 0)
                 pool: '',
                 unlockCondition: function() {
                     var wizardTowerAmount = Game.Objects['Wizard tower'] ? Game.Objects['Wizard tower'].amount : 0;
@@ -4997,7 +4998,7 @@
                 desc: 'Wizard towers cost <b>5%</b> less.',
                 ddesc: 'Wizard towers cost <b>5%</b> less.<q>Spellbooks with the last page missing. The twist ending is cheaper anyway.</q>',
                 price: 5e40, // 50 duodecillion
-                icon: [17, 25], // Matches 850 threshold
+                icon: [15, 2, getSpriteSheet('custom')], // Matches 850 threshold (index 2)
                 pool: '',
                 unlockCondition: function() {
                     var wizardTowerAmount = Game.Objects['Wizard tower'] ? Game.Objects['Wizard tower'].amount : 0;
@@ -5013,7 +5014,7 @@
                 desc: 'Wizard towers cost <b>5%</b> less.',
                 ddesc: 'Wizard towers cost <b>5%</b> less.<q>Vintage, moth-kissed, and pockets full of mysterious lint. Very arcane, very affordable.</q>',
                 price: 5e43, // 50 tredecillion
-                icon: [17, 27], // Matches 950 threshold
+                icon: [15, 4, getSpriteSheet('custom')], // Matches 950 threshold (index 4)
                 pool: '',
                 unlockCondition: function() {
                     var wizardTowerAmount = Game.Objects['Wizard tower'] ? Game.Objects['Wizard tower'].amount : 0;
@@ -5029,7 +5030,7 @@
                 desc: 'Wizard towers cost <b>5%</b> less.',
                 ddesc: 'Wizard towers cost <b>5%</b> less.<q>Give a stray imp a home and it will fetch reagents, guard cauldrons, and occasionally judge your hat.</q>',
                 price: 5e46, // 50 quattuordecillion
-                icon: [17, 35], // Matches 1050 threshold
+                icon: [15, 6, getSpriteSheet('custom')], // Matches 1050 threshold (index 6)
                 pool: '',
                 unlockCondition: function() {
                     var wizardTowerAmount = Game.Objects['Wizard tower'] ? Game.Objects['Wizard tower'].amount : 0;
@@ -5045,7 +5046,7 @@
                 desc: 'Wizard towers cost <b>5%</b> less.',
                 ddesc: 'Wizard towers cost <b>5%</b> less.<q>Stipends for parchment, ink, and the occasional sworn oath. Please initial with runes.</q>',
                 price: 5e49, // 50 quindecillion
-                icon: [10, 72, getSpriteSheet('custom')], // Matches 1150 threshold
+                icon: [15, 8, getSpriteSheet('custom')], // Matches 1150 threshold (index 8)
                 pool: '',
                 unlockCondition: function() {
                     var wizardTowerAmount = Game.Objects['Wizard tower'] ? Game.Objects['Wizard tower'].amount : 0;
@@ -5061,7 +5062,7 @@
                 desc: 'Wizard towers cost <b>5%</b> less.',
                 ddesc: 'Wizard towers cost <b>5%</b> less.<q>One broom, many roommates. Please schedule your midnight flights responsibly.</q>',
                 price: 5e52, // 50 sexdecillion
-                icon: [10, 54, getSpriteSheet('custom')], // Matches 1250 threshold
+                icon: [15, 10, getSpriteSheet('custom')], // Matches 1250 threshold (index 10)
                 pool: '',
                 unlockCondition: function() {
                     var wizardTowerAmount = Game.Objects['Wizard tower'] ? Game.Objects['Wizard tower'].amount : 0;
@@ -5077,7 +5078,7 @@
                 desc: 'Shipments cost <b>5%</b> less.',
                 ddesc: 'Shipments cost <b>5%</b> less.<q>Previously orbited. Lightly meteor-kissed. Still airtight (mostly).</q>',
                 price: 5e40, // 50 duodecillion
-                icon: [5, 20], // Matches 750 threshold
+                icon: [5, 0, getSpriteSheet('custom')], // Matches 750 threshold (index 0)
                 pool: '',
                 unlockCondition: function() {
                     var shipmentAmount = Game.Objects['Shipment'] ? Game.Objects['Shipment'].amount : 0;
@@ -5093,7 +5094,7 @@
                 desc: 'Shipments cost <b>5%</b> less.',
                 ddesc: 'Shipments cost <b>5%</b> less.<q>Members share containers, points, and an inexplicable fondness for pallet forts.</q>',
                 price: 5e43, // 50 tredecillion
-                icon: [5, 25], // Matches 850 threshold
+                icon: [5, 2, getSpriteSheet('custom')], // Matches 850 threshold (index 2)
                 pool: '',
                 unlockCondition: function() {
                     var shipmentAmount = Game.Objects['Shipment'] ? Game.Objects['Shipment'].amount : 0;
@@ -5109,7 +5110,7 @@
                 desc: 'Shipments cost <b>5%</b> less.',
                 ddesc: 'Shipments cost <b>5%</b> less.<q>Return for deposit and a complimentary dent count. Blast off again and again.</q>',
                 price: 5e46, // 50 quattuordecillion
-                icon: [5, 27], // Matches 950 threshold
+                icon: [5, 4, getSpriteSheet('custom')], // Matches 950 threshold (index 4)
                 pool: '',
                 unlockCondition: function() {
                     var shipmentAmount = Game.Objects['Shipment'] ? Game.Objects['Shipment'].amount : 0;
@@ -5125,7 +5126,7 @@
                 desc: 'Shipments cost <b>5%</b> less.',
                 ddesc: 'Shipments cost <b>5%</b> less.<q>They learn by bumping every harbor gently, then sending a heartfelt apology ping.</q>',
                 price: 5e49, // 50 quindecillion
-                icon: [5, 35], // Matches 1050 threshold
+                icon: [5, 6, getSpriteSheet('custom')], // Matches 1050 threshold (index 6)
                 pool: '',
                 unlockCondition: function() {
                     var shipmentAmount = Game.Objects['Shipment'] ? Game.Objects['Shipment'].amount : 0;
@@ -5141,7 +5142,7 @@
                 desc: 'Shipments cost <b>5%</b> less.',
                 ddesc: 'Shipments cost <b>5%</b> less.<q>Redeem along preferred lanes for discounts and occasional scenic detours.</q>',
                 price: 5e52, // 50 sexdecillion
-                icon: [11, 72, getSpriteSheet('custom')], // Matches 1150 threshold
+                icon: [5, 8, getSpriteSheet('custom')], // Matches 1150 threshold (index 8)
                 pool: '',
                 unlockCondition: function() {
                     var shipmentAmount = Game.Objects['Shipment'] ? Game.Objects['Shipment'].amount : 0;
@@ -5157,7 +5158,7 @@
                 desc: 'Shipments cost <b>5%</b> less.',
                 ddesc: 'Shipments cost <b>5%</b> less.<q>Tariffs take a coffee break, cranes work overtime. Paperwork now served with biscotti.</q>',
                 price: 5e55, // 50 septendecillion
-                icon: [11, 54, getSpriteSheet('custom')], // Matches 1250 threshold
+                icon: [5, 10, getSpriteSheet('custom')], // Matches 1250 threshold (index 10)
                 pool: '',
                 unlockCondition: function() {
                     var shipmentAmount = Game.Objects['Shipment'] ? Game.Objects['Shipment'].amount : 0;
@@ -5173,7 +5174,7 @@
                 desc: 'Alchemy labs cost <b>5%</b> less.',
                 ddesc: 'Alchemy labs cost <b>5%</b> less.<q>Trade in cracked glassware for shiny almost‑new beakers. Some have personality bubbles.</q>',
                 price: 5e43, // 50 tredecillion
-                icon: [6, 20], // Matches 750 threshold
+                icon: [6, 0, getSpriteSheet('custom')], // Matches 750 threshold (index 0)
                 pool: '',
                 unlockCondition: function() {
                     var alchemyLabAmount = Game.Objects['Alchemy lab'] ? Game.Objects['Alchemy lab'].amount : 0;
@@ -5189,7 +5190,7 @@
                 desc: 'Alchemy labs cost <b>5%</b> less.',
                 ddesc: 'Alchemy labs cost <b>5%</b> less.<q>Bulk-bought bits of the legendary rock. Not quite stones—more like budget-friendly pebbles with surprisingly similar savings.</q>',
                 price: 5e46, // 50 quattuordecillion
-                icon: [6, 25], // Matches 850 threshold
+                icon: [6, 2, getSpriteSheet('custom')], // Matches 850 threshold (index 2)
                 pool: '',
                 unlockCondition: function() {
                     var alchemyLabAmount = Game.Objects['Alchemy lab'] ? Game.Objects['Alchemy lab'].amount : 0;
@@ -5205,7 +5206,7 @@
                 desc: 'Alchemy labs cost <b>5%</b> less.',
                 ddesc: 'Alchemy labs cost <b>5%</b> less.<q>They simmer at savings and rarely explode out of spite. Rarely.</q>',
                 price: 5e49, // 50 quindecillion
-                icon: [6, 27], // Matches 950 threshold
+                icon: [6, 4, getSpriteSheet('custom')], // Matches 950 threshold (index 4)
                 pool: '',
                 unlockCondition: function() {
                     var alchemyLabAmount = Game.Objects['Alchemy lab'] ? Game.Objects['Alchemy lab'].amount : 0;
@@ -5221,7 +5222,7 @@
                 desc: 'Alchemy labs cost <b>5%</b> less.',
                 ddesc: 'Alchemy labs cost <b>5%</b> less.<q>Legal recognition for small goo people doing big batch work. Includes tiny hairnets.</q>',
                 price: 5e52, // 50 sexdecillion
-                icon: [6, 35], // Matches 1050 threshold
+                icon: [6, 6, getSpriteSheet('custom')], // Matches 1050 threshold (index 6)
                 pool: '',
                 unlockCondition: function() {
                     var alchemyLabAmount = Game.Objects['Alchemy lab'] ? Game.Objects['Alchemy lab'].amount : 0;
@@ -5237,7 +5238,7 @@
                 desc: 'Alchemy labs cost <b>5%</b> less.',
                 ddesc: 'Alchemy labs cost <b>5%</b> less.<q>Member pricing on phoenix down, dragonfruit essence, and ethically sourced eldritch goo.</q>',
                 price: 5e55, // 50 septendecillion
-                icon: [12, 72, getSpriteSheet('custom')], // Matches 1150 threshold
+                icon: [6, 8, getSpriteSheet('custom')], // Matches 1150 threshold (index 8)
                 pool: '',
                 unlockCondition: function() {
                     var alchemyLabAmount = Game.Objects['Alchemy lab'] ? Game.Objects['Alchemy lab'].amount : 0;
@@ -5253,7 +5254,7 @@
                 desc: 'Alchemy labs cost <b>5%</b> less.',
                 ddesc: 'Alchemy labs cost <b>5%</b> less.<q>Funding for ambitious projects that turn profits into more profits, occasionally metal into other metal.</q>',
                 price: 5e58, // 50 octodecillion
-                icon: [12, 54, getSpriteSheet('custom')], // Matches 1250 threshold
+                icon: [6, 10, getSpriteSheet('custom')], // Matches 1250 threshold (index 10)
                 pool: '',
                 unlockCondition: function() {
                     var alchemyLabAmount = Game.Objects['Alchemy lab'] ? Game.Objects['Alchemy lab'].amount : 0;
@@ -5269,7 +5270,7 @@
                 desc: 'Portals cost <b>5%</b> less.',
                 ddesc: 'Portals cost <b>5%</b> less.<q>Lightly used by previous dimensions. May creak audibly when reality bends.</q>',
                 price: 5e46, // 50 quattuordecillion
-                icon: [7, 20], // Matches 750 threshold
+                icon: [7, 0, getSpriteSheet('custom')], // Matches 750 threshold (index 0)
                 pool: '',
                 unlockCondition: function() {
                     var portalAmount = Game.Objects['Portal'] ? Game.Objects['Portal'].amount : 0;
@@ -5285,7 +5286,7 @@
                 desc: 'Portals cost <b>5%</b> less.',
                 ddesc: 'Portals cost <b>5%</b> less.<q>Wholesale anchors! Keep your gateways grounded, your prices too.</q>',
                 price: 5e49, // 50 quindecillion
-                icon: [7, 25], // Matches 850 threshold
+                icon: [7, 2, getSpriteSheet('custom')], // Matches 850 threshold (index 2)
                 pool: '',
                 unlockCondition: function() {
                     var portalAmount = Game.Objects['Portal'] ? Game.Objects['Portal'].amount : 0;
@@ -5301,7 +5302,7 @@
                 desc: 'Portals cost <b>5%</b> less.',
                 ddesc: 'Portals cost <b>5%</b> less.<q>Simple fins that hush the howling void and cut the utility bill in half.</q>',
                 price: 5e52, // 50 sexdecillion
-                icon: [7, 27], // Matches 950 threshold
+                icon: [7, 4, getSpriteSheet('custom')], // Matches 950 threshold (index 4)
                 pool: '',
                 unlockCondition: function() {
                     var portalAmount = Game.Objects['Portal'] ? Game.Objects['Portal'].amount : 0;
@@ -5317,7 +5318,7 @@
                 desc: 'Portals cost <b>5%</b> less.',
                 ddesc: 'Portals cost <b>5%</b> less.<q>Enthusiasts with clipboards who shout "Mind the tear!" and hand out cookies.</q>',
                 price: 5e55, // 50 septendecillion
-                icon: [7, 35], // Matches 1050 threshold
+                icon: [7, 6, getSpriteSheet('custom')], // Matches 1050 threshold (index 6)
                 pool: '',
                 unlockCondition: function() {
                     var portalAmount = Game.Objects['Portal'] ? Game.Objects['Portal'].amount : 0;
@@ -5333,7 +5334,7 @@
                 desc: 'Portals cost <b>5%</b> less.',
                 ddesc: 'Portals cost <b>5%</b> less.<q>Official parchments granting snack stipends to keep doors open and demons docile.</q>',
                 price: 5e58, // 50 octodecillion
-                icon: [13, 72, getSpriteSheet('custom')], // Matches 1150 threshold
+                icon: [7, 8, getSpriteSheet('custom')], // Matches 1150 threshold (index 8)
                 pool: '',
                 unlockCondition: function() {
                     var portalAmount = Game.Objects['Portal'] ? Game.Objects['Portal'].amount : 0;
@@ -5349,7 +5350,7 @@
                 desc: 'Portals cost <b>5%</b> less.',
                 ddesc: 'Portals cost <b>5%</b> less.<q>Business-friendly realities with tax holidays, physics optional, pastries encouraged.</q>',
                 price: 5e61, // 50 novemdecillion
-                icon: [13, 54, getSpriteSheet('custom')], // Matches 1250 threshold
+                icon: [7, 10, getSpriteSheet('custom')], // Matches 1250 threshold (index 10)
                 pool: '',
                 unlockCondition: function() {
                     var portalAmount = Game.Objects['Portal'] ? Game.Objects['Portal'].amount : 0;
@@ -5365,7 +5366,7 @@
                 desc: 'Time machines cost <b>5%</b> less.',
                 ddesc: 'Time machines cost <b>5%</b> less.<q>They’ve seen some things. Sand flows fine; occasional deja vu included.</q>',
                 price: 5e49, // 50 quindecillion
-                icon: [8, 20], // Matches 750 threshold
+                icon: [8, 0, getSpriteSheet('custom')], // Matches 750 threshold (index 0)
                 pool: '',
                 unlockCondition: function() {
                     var timeMachineAmount = Game.Objects['Time machine'] ? Game.Objects['Time machine'].amount : 0;
@@ -5381,7 +5382,7 @@
                 desc: 'Time machines cost <b>5%</b> less.',
                 ddesc: 'Time machines cost <b>5%</b> less.<q>Leftover future-past parts at clearance prices. Warranty voids itself retroactively.</q>',
                 price: 5e52, // 50 sexdecillion
-                icon: [8, 25], // Matches 850 threshold
+                icon: [8, 2, getSpriteSheet('custom')], // Matches 850 threshold (index 2)
                 pool: '',
                 unlockCondition: function() {
                     var timeMachineAmount = Game.Objects['Time machine'] ? Game.Objects['Time machine'].amount : 0;
@@ -5397,7 +5398,7 @@
                 desc: 'Time machines cost <b>5%</b> less.',
                 ddesc: 'Time machines cost <b>5%</b> less.<q>Winter flux on summer sale; flows like syrup on a cold morning.</q>',
                 price: 5e55, // 50 septendecillion
-                icon: [8, 27], // Matches 950 threshold
+                icon: [8, 4, getSpriteSheet('custom')], // Matches 950 threshold (index 4)
                 pool: '',
                 unlockCondition: function() {
                     var timeMachineAmount = Game.Objects['Time machine'] ? Game.Objects['Time machine'].amount : 0;
@@ -5413,7 +5414,7 @@
                 desc: 'Time machines cost <b>5%</b> less.',
                 ddesc: 'Time machines cost <b>5%</b> less.<q>Unlimited round-trips between Friday and Monday. Terms loop perpetually.</q>',
                 price: 5e58, // 50 octodecillion
-                icon: [8, 35], // Matches 1050 threshold
+                icon: [8, 6, getSpriteSheet('custom')], // Matches 1050 threshold (index 6)
                 pool: '',
                 unlockCondition: function() {
                     var timeMachineAmount = Game.Objects['Time machine'] ? Game.Objects['Time machine'].amount : 0;
@@ -5429,7 +5430,7 @@
                 desc: 'Time machines cost <b>5%</b> less.',
                 ddesc: 'Time machines cost <b>5%</b> less.<q>Official funding to keep the clock from quitting and causality from filing complaints.</q>',
                 price: 5e61, // 50 novemdecillion
-                icon: [14, 72, getSpriteSheet('custom')], // Matches 1150 threshold
+                icon: [8, 8, getSpriteSheet('custom')], // Matches 1150 threshold (index 8)
                 pool: '',
                 unlockCondition: function() {
                     var timeMachineAmount = Game.Objects['Time machine'] ? Game.Objects['Time machine'].amount : 0;
@@ -5445,7 +5446,7 @@
                 desc: 'Time machines cost <b>5%</b> less.',
                 ddesc: 'Time machines cost <b>5%</b> less.<q>Warranties that expire yesterday can’t be voided today. That’s just science.</q>',
                 price: 5e64, // 50 vigintillion
-                icon: [14, 54, getSpriteSheet('custom')], // Matches 1250 threshold
+                icon: [8, 10, getSpriteSheet('custom')], // Matches 1250 threshold (index 10)
                 pool: '',
                 unlockCondition: function() {
                     var timeMachineAmount = Game.Objects['Time machine'] ? Game.Objects['Time machine'].amount : 0;
@@ -5461,7 +5462,7 @@
                 desc: 'Antimatter condensers cost <b>5%</b> less.',
                 ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>Pre-certified, lightly cursed containment vessels. Store your nothing where it belongs.</q>',
                 price: 5e52, // 50 sexdecillion
-                icon: [13, 20], // Matches 750 threshold
+                icon: [11, 0, getSpriteSheet('custom')], // Matches 750 threshold (index 0)
                 pool: '',
                 unlockCondition: function() {
                     var antimatterCondenserAmount = Game.Objects['Antimatter condenser'] ? Game.Objects['Antimatter condenser'].amount : 0;
@@ -5477,7 +5478,7 @@
                 desc: 'Antimatter condensers cost <b>5%</b> less.',
                 ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>Trade in your old matter for upgraded matter. Some terms may invert unexpectedly.</q>',
                 price: 5e55, // 50 septendecillion
-                icon: [13, 25], // Matches 850 threshold
+                icon: [11, 2, getSpriteSheet('custom')], // Matches 850 threshold (index 2)
                 pool: '',
                 unlockCondition: function() {
                     var antimatterCondenserAmount = Game.Objects['Antimatter condenser'] ? Game.Objects['Antimatter condenser'].amount : 0;
@@ -5493,7 +5494,7 @@
                 desc: 'Antimatter condensers cost <b>5%</b> less.',
                 ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>They hum quietly and only obliterate the bare minimum of existence during lunch.</q>',
                 price: 5e58, // 50 octodecillion
-                icon: [13, 27], // Matches 950 threshold
+                icon: [11, 4, getSpriteSheet('custom')], // Matches 950 threshold (index 4)
                 pool: '',
                 unlockCondition: function() {
                     var antimatterCondenserAmount = Game.Objects['Antimatter condenser'] ? Game.Objects['Antimatter condenser'].amount : 0;
@@ -5509,7 +5510,7 @@
                 desc: 'Antimatter condensers cost <b>5%</b> less.',
                 ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>Enthusiastic assistants accelerate savings (and particles) for the promise of “experience”.</q>',
                 price: 5e61, // 50 novemdecillion
-                icon: [13, 35], // Matches 1050 threshold
+                icon: [11, 6, getSpriteSheet('custom')], // Matches 1050 threshold (index 6)
                 pool: '',
                 unlockCondition: function() {
                     var antimatterCondenserAmount = Game.Objects['Antimatter condenser'] ? Game.Objects['Antimatter condenser'].amount : 0;
@@ -5525,7 +5526,7 @@
                 desc: 'Antimatter condensers cost <b>5%</b> less.',
                 ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>Philanthropy meets physics: every cookie you invest is matched by a very generous boson.</q>',
                 price: 5e64, // 50 vigintillion
-                icon: [15, 72, getSpriteSheet('custom')], // Matches 1150 threshold
+                icon: [11, 8, getSpriteSheet('custom')], // Matches 1150 threshold (index 8)
                 pool: '',
                 unlockCondition: function() {
                     var antimatterCondenserAmount = Game.Objects['Antimatter condenser'] ? Game.Objects['Antimatter condenser'].amount : 0;
@@ -5541,7 +5542,7 @@
                 desc: 'Antimatter condensers cost <b>5%</b> less.',
                 ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>Tax breaks for building where reality is thinnest. Perfect for negative overhead.</q>',
                 price: 5e67, // 50 unvigintillion
-                icon: [15, 54, getSpriteSheet('custom')], // Matches 1250 threshold
+                icon: [11, 10, getSpriteSheet('custom')], // Matches 1250 threshold (index 10)
                 pool: '',
                 unlockCondition: function() {
                     var antimatterCondenserAmount = Game.Objects['Antimatter condenser'] ? Game.Objects['Antimatter condenser'].amount : 0;
@@ -5557,7 +5558,7 @@
                 desc: 'Prisms cost <b>5%</b> less.',
                 ddesc: 'Prisms cost <b>5%</b> less.<q>Swap scratches for savings. Community-sourced optics with community-sourced fingerprints.</q>',
                 price: 5e55, // 50 septendecillion
-                icon: [14, 20], // Matches 750 threshold
+                icon: [12, 0, getSpriteSheet('custom')], // Matches 750 threshold (index 0)
                 pool: '',
                 unlockCondition: function() {
                     var prismAmount = Game.Objects['Prism'] ? Game.Objects['Prism'].amount : 0;
@@ -5573,7 +5574,7 @@
                 desc: 'Prisms cost <b>5%</b> less.',
                 ddesc: 'Prisms cost <b>5%</b> less.<q>Factory blemishes. Perfect rainbows, slightly embarrassed casings.</q>',
                 price: 5e58, // 50 octodecillion
-                icon: [14, 25], // Matches 850 threshold
+                icon: [12, 2, getSpriteSheet('custom')], // Matches 850 threshold (index 2)
                 pool: '',
                 unlockCondition: function() {
                     var prismAmount = Game.Objects['Prism'] ? Game.Objects['Prism'].amount : 0;
@@ -5589,7 +5590,7 @@
                 desc: 'Prisms cost <b>5%</b> less.',
                 ddesc: 'Prisms cost <b>5%</b> less.<q>They dim themselves when you look away. Shy, efficient, dazzling when ready.</q>',
                 price: 5e61, // 50 novemdecillion
-                icon: [14, 27], // Matches 950 threshold
+                icon: [12, 4, getSpriteSheet('custom')], // Matches 950 threshold (index 4)
                 pool: '',
                 unlockCondition: function() {
                     var prismAmount = Game.Objects['Prism'] ? Game.Objects['Prism'].amount : 0;
@@ -5605,7 +5606,7 @@
                 desc: 'Prisms cost <b>5%</b> less.',
                 ddesc: 'Prisms cost <b>5%</b> less.<q>Trainees with straightedges and boundless optimism. Do not stare directly at their enthusiasm.</q>',
                 price: 5e64, // 50 vigintillion
-                icon: [14, 35], // Matches 1050 threshold
+                icon: [12, 6, getSpriteSheet('custom')], // Matches 1050 threshold (index 6)
                 pool: '',
                 unlockCondition: function() {
                     var prismAmount = Game.Objects['Prism'] ? Game.Objects['Prism'].amount : 0;
@@ -5621,7 +5622,7 @@
                 desc: 'Prisms cost <b>5%</b> less.',
                 ddesc: 'Prisms cost <b>5%</b> less.<q>Funding for cultural light projects: installations, refractions, and occasional tasteful lens flares.</q>',
                 price: 5e67, // 50 unvigintillion
-                icon: [16, 72, getSpriteSheet('custom')], // Matches 1150 threshold
+                icon: [12, 8, getSpriteSheet('custom')], // Matches 1150 threshold (index 8)
                 pool: '',
                 unlockCondition: function() {
                     var prismAmount = Game.Objects['Prism'] ? Game.Objects['Prism'].amount : 0;
@@ -5637,7 +5638,7 @@
                 desc: 'Prisms cost <b>5%</b> less.',
                 ddesc: 'Prisms cost <b>5%</b> less.<q>Tax incentives for neighborhoods with excellent chroma. Bring your own pot of gold.</q>',
                 price: 5e70, // 50 duovigintillion
-                icon: [16, 54, getSpriteSheet('custom')], // Matches 1250 threshold
+                icon: [12, 10, getSpriteSheet('custom')], // Matches 1250 threshold (index 10)
                 pool: '',
                 unlockCondition: function() {
                     var prismAmount = Game.Objects['Prism'] ? Game.Objects['Prism'].amount : 0;
@@ -5653,7 +5654,7 @@
                 desc: 'Chancemakers cost <b>5%</b> less.',
                 ddesc: 'Chancemakers cost <b>5%</b> less.<q>Fortunes with typos sell for cheap; destiny still reads between the lines.</q>',
                 price: 5e58, // 50 octodecillion
-                icon: [19, 20], // Matches 750 threshold
+                icon: [17, 0, getSpriteSheet('custom')], // Matches 750 threshold
                 pool: '',
                 unlockCondition: function() {
                     var chancemakerAmount = Game.Objects['Chancemaker'] ? Game.Objects['Chancemaker'].amount : 0;
@@ -5669,7 +5670,7 @@
                 desc: 'Chancemakers cost <b>5%</b> less.',
                 ddesc: 'Chancemakers cost <b>5%</b> less.<q>If at first you don’t crit, try again—now with store credit.</q>',
                 price: 5e61, // 50 novemdecillion
-                icon: [19, 25], // Matches 850 threshold
+                icon: [17, 2, getSpriteSheet('custom')], // Matches 850 threshold
                 pool: '',
                 unlockCondition: function() {
                     var chancemakerAmount = Game.Objects['Chancemaker'] ? Game.Objects['Chancemaker'].amount : 0;
@@ -5685,7 +5686,7 @@
                 desc: 'Chancemakers cost <b>5%</b> less.',
                 ddesc: 'Chancemakers cost <b>5%</b> less.<q>Fits most prophecies. Some assembly (and belief) required.</q>',
                 price: 5e64, // 50 vigintillion
-                icon: [19, 27], // Matches 950 threshold
+                icon: [17, 4, getSpriteSheet('custom')], // Matches 950 threshold
                 pool: '',
                 unlockCondition: function() {
                     var chancemakerAmount = Game.Objects['Chancemaker'] ? Game.Objects['Chancemaker'].amount : 0;
@@ -5701,7 +5702,7 @@
                 desc: 'Chancemakers cost <b>5%</b> less.',
                 ddesc: 'Chancemakers cost <b>5%</b> less.<q>Community diviners bring your costs down and your eyebrows up.</q>',
                 price: 5e67, // 50 unvigintillion
-                icon: [19, 35], // Matches 1050 threshold
+                icon: [17, 6, getSpriteSheet('custom')], // Matches 1050 threshold
                 pool: '',
                 unlockCondition: function() {
                     var chancemakerAmount = Game.Objects['Chancemaker'] ? Game.Objects['Chancemaker'].amount : 0;
@@ -5717,7 +5718,7 @@
                 desc: 'Chancemakers cost <b>5%</b> less.',
                 ddesc: 'Chancemakers cost <b>5%</b> less.<q>Public funding for private jackpots. Everybody wins (statistically speaking).</q>',
                 price: 5e70, // 50 duovigintillion
-                icon: [19, 35], // Matches 1150 threshold
+                icon: [17, 8, getSpriteSheet('custom')], // Matches 1150 threshold
                 pool: '',
                 unlockCondition: function() {
                     var chancemakerAmount = Game.Objects['Chancemaker'] ? Game.Objects['Chancemaker'].amount : 0;
@@ -5733,7 +5734,7 @@
                 desc: 'Chancemakers cost <b>5%</b> less.',
                 ddesc: 'Chancemakers cost <b>5%</b> less.<q>Zones where chance is zoned in your favor. Paperwork pre-blessed.</q>',
                 price: 5e73, // 50 trevigintillion
-                icon: [19, 35], // Matches 1250 threshold
+                icon: [17, 10, getSpriteSheet('custom')], // Matches 1250 threshold
                 pool: '',
                 unlockCondition: function() {
                     var chancemakerAmount = Game.Objects['Chancemaker'] ? Game.Objects['Chancemaker'].amount : 0;
@@ -5749,7 +5750,7 @@
                 desc: 'Fractal engines cost <b>5%</b> less.',
                 ddesc: 'Fractal engines cost <b>5%</b> less.<q>We sold the old parts again and again and again. Recursively affordable.</q>',
                 price: 5e61, // 50 novemdecillion
-                icon: [20, 20], // Matches 750 threshold
+                icon: [18, 0, getSpriteSheet('custom')], // Matches 750 threshold
                 pool: '',
                 unlockCondition: function() {
                     var fractalEngineAmount = Game.Objects['Fractal engine'] ? Game.Objects['Fractal engine'].amount : 0;
@@ -5765,7 +5766,7 @@
                 desc: 'Fractal engines cost <b>5%</b> less.',
                 ddesc: 'Fractal engines cost <b>5%</b> less.<q>Each part contains smaller parts that also contain… discounts.</q>',
                 price: 5e64, // 50 vigintillion
-                icon: [20, 25], // Matches 850 threshold
+                icon: [18, 2, getSpriteSheet('custom')], // Matches 850 threshold
                 pool: '',
                 unlockCondition: function() {
                     var fractalEngineAmount = Game.Objects['Fractal engine'] ? Game.Objects['Fractal engine'].amount : 0;
@@ -5781,7 +5782,7 @@
                 desc: 'Fractal engines cost <b>5%</b> less.',
                 ddesc: 'Fractal engines cost <b>5%</b> less.<q>Get cash back on purchases that refer to themselves. Terms repeat.</q>',
                 price: 5e67, // 50 unvigintillion
-                icon: [20, 27], // Matches 950 threshold
+                icon: [18, 4, getSpriteSheet('custom')], // Matches 950 threshold
                 pool: '',
                 unlockCondition: function() {
                     var fractalEngineAmount = Game.Objects['Fractal engine'] ? Game.Objects['Fractal engine'].amount : 0;
@@ -5797,7 +5798,7 @@
                 desc: 'Fractal engines cost <b>5%</b> less.',
                 ddesc: 'Fractal engines cost <b>5%</b> less.<q>Invite artists-in-algorithm to iterate patterns and budgets into pleasing shapes.</q>',
                 price: 5e70, // 50 duovigintillion
-                icon: [20, 35], // Matches 1050 threshold
+                icon: [18, 6, getSpriteSheet('custom')], // Matches 1050 threshold
                 pool: '',
                 unlockCondition: function() {
                     var fractalEngineAmount = Game.Objects['Fractal engine'] ? Game.Objects['Fractal engine'].amount : 0;
@@ -5813,7 +5814,7 @@
                 desc: 'Fractal engines cost <b>5%</b> less.',
                 ddesc: 'Fractal engines cost <b>5%</b> less.<q>We proved it costs less, QED (Quite Economically Done).</q>',
                 price: 5e73, // 50 trevigintillion
-                icon: [20, 35], // Matches 1150 threshold
+                icon: [18, 8, getSpriteSheet('custom')], // Matches 1150 threshold
                 pool: '',
                 unlockCondition: function() {
                     var fractalEngineAmount = Game.Objects['Fractal engine'] ? Game.Objects['Fractal engine'].amount : 0;
@@ -5829,7 +5830,7 @@
                 desc: 'Fractal engines cost <b>5%</b> less.',
                 ddesc: 'Fractal engines cost <b>5%</b> less.<q>Zoning approvals for parcels that subdivide forever. Plenty of room for savings.</q>',
                 price: 5e76, // 50 quattuorvigintillion
-                icon: [20, 35], // Matches 1250 threshold
+                icon: [18, 10, getSpriteSheet('custom')], // Matches 1250 threshold
                 pool: '',
                 unlockCondition: function() {
                     var fractalEngineAmount = Game.Objects['Fractal engine'] ? Game.Objects['Fractal engine'].amount : 0;
@@ -5845,7 +5846,7 @@
                 desc: 'Javascript consoles cost <b>5%</b> less.',
                 ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Pre-loved PCBs with fresh solder and faint coffee notes. Still compiles.</q>',
                 price: 5e64, // 50 vigintillion
-                icon: [32, 20], // Matches 750 threshold
+                icon: [19, 0, getSpriteSheet('custom')], // Matches 750 threshold
                 pool: '',
                 unlockCondition: function() {
                     var javascriptConsoleAmount = Game.Objects['Javascript console'] ? Game.Objects['Javascript console'].amount : 0;
@@ -5861,7 +5862,7 @@
                 desc: 'Javascript consoles cost <b>5%</b> less.',
                 ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Compile now, pay later. Terms readable only after transpilation.</q>',
                 price: 5e67, // 50 unvigintillion
-                icon: [32, 25], // Matches 850 threshold
+                icon: [19, 2, getSpriteSheet('custom')], // Matches 850 threshold
                 pool: '',
                 unlockCondition: function() {
                     var javascriptConsoleAmount = Game.Objects['Javascript console'] ? Game.Objects['Javascript console'].amount : 0;
@@ -5877,7 +5878,7 @@
                 desc: 'Javascript consoles cost <b>5%</b> less.',
                 ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Optimized for waiting around productively. Uses fewer cycles, fewer snacks.</q>',
                 price: 5e70, // 50 duovigintillion
-                icon: [32, 27], // Matches 950 threshold
+                icon: [19, 4, getSpriteSheet('custom')], // Matches 950 threshold
                 pool: '',
                 unlockCondition: function() {
                     var javascriptConsoleAmount = Game.Objects['Javascript console'] ? Game.Objects['Javascript console'].amount : 0;
@@ -5893,7 +5894,7 @@
                 desc: 'Javascript consoles cost <b>5%</b> less.',
                 ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Throw code, catch feedback, share snacks. Merge with confidence (and crumbs).</q>',
                 price: 5e73, // 50 trevigintillion
-                icon: [32, 35], // Matches 1050 threshold
+                icon: [19, 6, getSpriteSheet('custom')], // Matches 1050 threshold
                 pool: '',
                 unlockCondition: function() {
                     var javascriptConsoleAmount = Game.Objects['Javascript console'] ? Game.Objects['Javascript console'].amount : 0;
@@ -5909,7 +5910,7 @@
                 desc: 'Javascript consoles cost <b>5%</b> less.',
                 ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Foundation funds for critical libraries like dough.js and crumb-utils.</q>',
                 price: 5e76, // 50 quattuorvigintillion
-                icon: [32, 35], // Matches 1150 threshold
+                icon: [19, 8, getSpriteSheet('custom')], // Matches 1150 threshold
                 pool: '',
                 unlockCondition: function() {
                     var javascriptConsoleAmount = Game.Objects['Javascript console'] ? Game.Objects['Javascript console'].amount : 0;
@@ -5925,7 +5926,7 @@
                 desc: 'Javascript consoles cost <b>5%</b> less.',
                 ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Spin up instances for less. Free tier includes occasional cumulonimbus.</q>',
                 price: 5e79, // 50 quinvigintillion
-                icon: [32, 35], // Matches 1250 threshold
+                icon: [19, 10, getSpriteSheet('custom')], // Matches 1250 threshold
                 pool: '',
                 unlockCondition: function() {
                     var javascriptConsoleAmount = Game.Objects['Javascript console'] ? Game.Objects['Javascript console'].amount : 0;
@@ -5941,7 +5942,7 @@
                 desc: 'Idleverses cost <b>5%</b> less.',
                 ddesc: 'Idleverses cost <b>5%</b> less.<q>Your idleverses qualify for special tax incentives across multiple dimensions. The paperwork is filed in parallel universes, but the savings are very real.</q>',
                 price: 6e66, // 6 unvigintillion (matches 8% efficiency upgrade price)
-                icon: [33, 20], // Matches 750 threshold
+                icon: [20, 0, getSpriteSheet('custom')], // Matches 750 threshold
                 pool: '',
                 unlockCondition: function() {
                     var idleverseAmount = Game.Objects['Idleverse'] ? Game.Objects['Idleverse'].amount : 0;
@@ -5957,7 +5958,7 @@
                 desc: 'Idleverses cost <b>5%</b> less.',
                 ddesc: 'Idleverses cost <b>5%</b> less.<q>By consolidating multiple idleverses under unified management, you\'ve negotiated bulk pricing that applies across all dimensions. The savings scale with your multiverse presence.</q>',
                 price: 6e69, // 6 duovigintillion (matches 8% efficiency upgrade price)
-                icon: [33, 25], // Matches 850 threshold
+                icon: [20, 2, getSpriteSheet('custom')], // Matches 850 threshold
                 pool: '',
                 unlockCondition: function() {
                     var idleverseAmount = Game.Objects['Idleverse'] ? Game.Objects['Idleverse'].amount : 0;
@@ -5973,7 +5974,7 @@
                 desc: 'Idleverses cost <b>5%</b> less.',
                 ddesc: 'Idleverses cost <b>5%</b> less.<q>Your massive scale across the multiverse allows you to purchase idleverse components in quantities that would bankrupt entire galaxies. The suppliers are happy to offer volume discounts.</q>',
                 price: 6e72, // 6 trevigintillion (matches 8% efficiency upgrade price)
-                icon: [33, 26], // Matches 950 threshold
+                icon: [20, 4, getSpriteSheet('custom')], // Matches 950 threshold
                 pool: '',
                 unlockCondition: function() {
                     var idleverseAmount = Game.Objects['Idleverse'] ? Game.Objects['Idleverse'].amount : 0;
@@ -5989,7 +5990,7 @@
                 desc: 'Idleverses cost <b>5%</b> less.',
                 ddesc: 'Idleverses cost <b>5%</b> less.<q>You\'ve established exclusive supplier relationships across multiple realities. These vendors compete for your business, driving down prices while maintaining quality across all dimensions.</q>',
                 price: 6e75, // 6 quattuorvigintillion (matches 8% efficiency upgrade price)
-                icon: [33, 29], // Matches 1050 threshold
+                icon: [20, 6, getSpriteSheet('custom')], // Matches 1050 threshold
                 pool: '',
                 unlockCondition: function() {
                     var idleverseAmount = Game.Objects['Idleverse'] ? Game.Objects['Idleverse'].amount : 0;
@@ -6005,7 +6006,7 @@
                 desc: 'Idleverses cost <b>5%</b> less.',
                 ddesc: 'Idleverses cost <b>5%</b> less.<q>Your idleverse operations have reached such massive scale that you can leverage economies across the entire multiverse. Each new idleverse makes all the others cheaper to build.</q>',
                 price: 6e78, // 6 quinvigintillion (matches 8% efficiency upgrade price)
-                icon: [33, 35], // Matches 1150 threshold
+                icon: [20, 8, getSpriteSheet('custom')], // Matches 1150 threshold
                 pool: '',
                 unlockCondition: function() {
                     var idleverseAmount = Game.Objects['Idleverse'] ? Game.Objects['Idleverse'].amount : 0;
@@ -6021,7 +6022,7 @@
                 desc: 'Idleverses cost <b>5%</b> less.',
                 ddesc: 'Idleverses cost <b>5%</b> less.<q>You\'ve achieved such dominance across the multiverse that suppliers are willing to offer preferential pricing just to maintain their relationship with the largest cookie empire in existence.</q>',
                 price: 6e81, // 6 sexvigintillion (matches 8% efficiency upgrade price)
-                icon: [33, 35], // Matches 1250 threshold
+                icon: [20, 10, getSpriteSheet('custom')], // Matches 1250 threshold
                 pool: '',
                 unlockCondition: function() {
                     var idleverseAmount = Game.Objects['Idleverse'] ? Game.Objects['Idleverse'].amount : 0;
@@ -6037,7 +6038,7 @@
                 desc: 'Cortex bakers cost <b>5%</b> less.',
                 ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex bakers have negotiated bulk discounts on neural tissue and synaptic materials. Buying brain matter in industrial quantities significantly reduces the per-unit cost of each new baker.</q>',
                 price: 9.5e68, // 950 unvigintillion (matches 8% efficiency upgrade price)
-                icon: [34, 20], // Matches 750 threshold
+                icon: [21, 0, getSpriteSheet('custom')], // Matches 750 threshold
                 pool: '',
                 unlockCondition: function() {
                     var cortexBakerAmount = Game.Objects['Cortex baker'] ? Game.Objects['Cortex baker'].amount : 0;
@@ -6053,7 +6054,7 @@
                 desc: 'Cortex bakers cost <b>5%</b> less.',
                 ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex bakers have established direct relationships with neural tissue suppliers, bypassing middlemen and securing wholesale pricing on synaptic components. The savings are mind-boggling.</q>',
                 price: 9.5e71, // 950 duovigintillion (matches 8% efficiency upgrade price)
-                icon: [34, 25], // Matches 850 threshold
+                icon: [21, 2, getSpriteSheet('custom')], // Matches 850 threshold
                 pool: '',
                 unlockCondition: function() {
                     var cortexBakerAmount = Game.Objects['Cortex baker'] ? Game.Objects['Cortex baker'].amount : 0;
@@ -6069,7 +6070,7 @@
                 desc: 'Cortex bakers cost <b>5%</b> less.',
                 ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex bakers have mastered the art of mass-producing brain tissue, creating economies of scale that make each additional baker significantly cheaper. It\'s like a neural assembly line.</q>',
                 price: 9.5e74, // 95 vigintillion (matches 8% efficiency upgrade price)
-                icon: [34, 26], // Matches 950 threshold
+                icon: [21, 4, getSpriteSheet('custom')], // Matches 950 threshold
                 pool: '',
                 unlockCondition: function() {
                     var cortexBakerAmount = Game.Objects['Cortex baker'] ? Game.Objects['Cortex baker'].amount : 0;
@@ -6085,7 +6086,7 @@
                 desc: 'Cortex bakers cost <b>5%</b> less.',
                 ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex bakers have achieved such dominance in the neural market that suppliers offer preferential pricing just to maintain their relationship with the largest brain-based cookie empire in existence.</q>',
                 price: 9.5e77, // 950 quattuorvigintillion (matches 8% efficiency upgrade price)
-                icon: [34, 29], // Matches 1050 threshold
+                icon: [21, 6, getSpriteSheet('custom')], // Matches 1050 threshold
                 pool: '',
                 unlockCondition: function() {
                     var cortexBakerAmount = Game.Objects['Cortex baker'] ? Game.Objects['Cortex baker'].amount : 0;
@@ -6101,7 +6102,7 @@
                 desc: 'Cortex bakers cost <b>5%</b> less.',
                 ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex baker operations have reached such massive scale that you can leverage neural economies across the entire network. Each new baker makes all the others cheaper to build through shared infrastructure.</q>',
                 price: 9.5e80, // 950 quinvigintillion (matches 8% efficiency upgrade price)
-                icon: [34, 35], // Matches 1150 threshold
+                icon: [21, 8, getSpriteSheet('custom')], // Matches 1150 threshold
                 pool: '',
                 unlockCondition: function() {
                     var cortexBakerAmount = Game.Objects['Cortex baker'] ? Game.Objects['Cortex baker'].amount : 0;
@@ -6117,7 +6118,7 @@
                 desc: 'Cortex bakers cost <b>5%</b> less.',
                 ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex bakers have cornered the market on synaptic materials, controlling the entire supply chain from neural tissue farms to advanced cognitive enhancement facilities. Suppliers compete for your business.</q>',
                 price: 9.5e83, // 950 sexvigintillion (matches 8% efficiency upgrade price)
-                icon: [34, 35], // Matches 1250 threshold
+                icon: [21, 10, getSpriteSheet('custom')], // Matches 1250 threshold
                 pool: '',
                 unlockCondition: function() {
                     var cortexBakerAmount = Game.Objects['Cortex baker'] ? Game.Objects['Cortex baker'].amount : 0;
@@ -6133,7 +6134,7 @@
                 desc: 'You cost <b>5%</b> less.',
                 ddesc: 'You cost <b>5%</b> less.<q>Your clone factory has achieved economies of scale, making each additional clone significantly cheaper to produce. The infrastructure costs are spread across more units, and suppliers offer bulk discounts on cloning materials.</q>',
                 price: 2.7e70, // 27 duovigintillion (matches 8% efficiency upgrade price)
-                icon: [35, 20], // Matches 750 threshold
+                icon: [22, 0, getSpriteSheet('custom')], // Matches 750 threshold
                 pool: '',
                 unlockCondition: function() {
                     var youAmount = Game.Objects['You'] ? Game.Objects['You'].amount : 0;
@@ -6149,7 +6150,7 @@
                 desc: 'You cost <b>5%</b> less.',
                 ddesc: 'You cost <b>5%</b> less.<q>Your clone production has been streamlined into efficient assembly lines, reducing waste and optimizing resource usage. Each clone is now produced with surgical precision at a fraction of the original cost.</q>',
                 price: 2.7e73, // 27 vigintillion (matches 8% efficiency upgrade price)
-                icon: [35, 25], // Matches 850 threshold
+                icon: [22, 2, getSpriteSheet('custom')], // Matches 850 threshold
                 pool: '',
                 unlockCondition: function() {
                     var youAmount = Game.Objects['You'] ? Game.Objects['You'].amount : 0;
@@ -6165,7 +6166,7 @@
                 desc: 'You cost <b>5%</b> less.',
                 ddesc: 'You cost <b>5%</b> less.<q>Your clone manufacturing process has reached industrial perfection, with automated quality control and bulk material sourcing. The cost per clone has plummeted as you\'ve mastered the art of mass self-replication.</q>',
                 price: 2.7e76, // 27 quattuorvigintillion (matches 8% efficiency upgrade price)
-                icon: [35, 26], // Matches 950 threshold
+                icon: [22, 4, getSpriteSheet('custom')], // Matches 950 threshold
                 pool: '',
                 unlockCondition: function() {
                     var youAmount = Game.Objects['You'] ? Game.Objects['You'].amount : 0;
@@ -6181,7 +6182,7 @@
                 desc: 'You cost <b>5%</b> less.',
                 ddesc: 'You cost <b>5%</b> less.<q>Your clone empire has achieved such dominance that suppliers compete for your business, offering preferential pricing on all cloning materials. Being the largest self-replicating entity has its financial advantages.</q>',
                 price: 2.7e79, // 27 quinvigintillion (matches 8% efficiency upgrade price)
-                icon: [35, 29], // Matches 1050 threshold
+                icon: [22, 6, getSpriteSheet('custom')], // Matches 1050 threshold
                 pool: '',
                 unlockCondition: function() {
                     var youAmount = Game.Objects['You'] ? Game.Objects['You'].amount : 0;
@@ -6197,7 +6198,7 @@
                 desc: 'You cost <b>5%</b> less.',
                 ddesc: 'You cost <b>5%</b> less.<q>Your clone network has established direct relationships with material suppliers, bypassing middlemen and securing wholesale pricing. The savings from cutting out intermediaries are substantial.</q>',
                 price: 2.7e82, // 27 sexvigintillion (matches 8% efficiency upgrade price)
-                icon: [35, 35], // Matches 1150 threshold
+                icon: [22, 8, getSpriteSheet('custom')], // Matches 1150 threshold
                 pool: '',
                 unlockCondition: function() {
                     var youAmount = Game.Objects['You'] ? Game.Objects['You'].amount : 0;
@@ -6213,7 +6214,7 @@
                 desc: 'You cost <b>5%</b> less.',
                 ddesc: 'You cost <b>5%</b> less.<q>Your clone operations have cornered the market on self-replication materials, controlling the entire supply chain from basic cloning components to advanced genetic enhancement facilities. Suppliers compete for your business.</q>',
                 price: 2.7e85, // 27 septenvigintillion (matches 8% efficiency upgrade price)
-                icon: [35, 35], // Matches 1250 threshold
+                icon: [22, 10, getSpriteSheet('custom')], // Matches 1250 threshold
                 pool: '',
                 unlockCondition: function() {
                     var youAmount = Game.Objects['You'] ? Game.Objects['You'].amount : 0;
@@ -6229,7 +6230,7 @@
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
                 ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>They work for expurrience and exposure, sir.</q>',
                 price: 9e53, // 900 quindecillion
-                icon: [17, 32, getSpriteSheet('custom')],
+                icon: [16, 0, getSpriteSheet('custom')],
                 pool: 'kitten',
                 kitten: 100,
                 unlockCondition: function() {
@@ -6241,7 +6242,7 @@
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
                 ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>They\'re definitely not purrmanent, we promise, sir.</q>',
                 price: 9e56, // 900 quattuordecillion
-                icon: [17, 33, getSpriteSheet('custom')],
+                icon: [16, 1, getSpriteSheet('custom')],
                 pool: 'kitten',
                 kitten: 101,
                 unlockCondition: function() {
@@ -6253,7 +6254,7 @@
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
                 ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>Working from home since furever, sir.</q>',
                 price: 9e59, // 900 septendecillion
-                icon: [17, 34, getSpriteSheet('custom')],
+                icon: [16, 2, getSpriteSheet('custom')],
                 pool: 'kitten',
                 kitten: 102,
                 unlockCondition: function() {
@@ -6265,7 +6266,7 @@
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
                 ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>They facilitate the facilitation, sir.</q>',
                 price: 9e62, // 900 octodecillion
-                icon: [17, 35, getSpriteSheet('custom')],
+                icon: [16, 3, getSpriteSheet('custom')],
                 pool: 'kitten',
                 kitten: 103,
                 unlockCondition: function() {
@@ -6277,7 +6278,7 @@
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
                 ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>Making everything more user-furry, one pixel at a time, sir.</q>',
                 price: 9e65, // 900 novemdecillion
-                icon: [17, 36, getSpriteSheet('custom')],
+                icon: [16, 4, getSpriteSheet('custom')],
                 pool: 'kitten',
                 kitten: 104,
                 unlockCondition: function() {
@@ -6289,7 +6290,7 @@
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
                 ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>Keeping the office clean and organized, sir.</q>',
                 price: 9e68, // 900 vigintillion
-                icon: [17, 37, getSpriteSheet('custom')],
+                icon: [16, 5, getSpriteSheet('custom')],
                 pool: 'kitten',
                 kitten: 105,
                 unlockCondition: function() {
@@ -6301,7 +6302,7 @@
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
                 ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>Essential for maintaining purrductivity levels, sir.</q>',
                 price: 9e71, // 900 unvigintillion
-                icon: [17, 39, getSpriteSheet('custom')],
+                icon: [16, 6, getSpriteSheet('custom')],
                 pool: 'kitten',
                 kitten: 106,
                 unlockCondition: function() {
@@ -6313,7 +6314,7 @@
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
                 ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>They know your schedule better than you do, sir.</q>',
                 price: 9e74, // 900 duovigintillion
-                icon: [17, 40, getSpriteSheet('custom')],
+                icon: [16, 7, getSpriteSheet('custom')],
                 pool: 'kitten',
                 kitten: 107,
                 unlockCondition: function() {
@@ -6325,7 +6326,7 @@
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
                 ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>They have a corner office and everything, sir.</q>',
                 price: 9e77, // 900 trevigintillion
-                icon: [17, 47, getSpriteSheet('custom')],
+                icon: [16, 8, getSpriteSheet('custom')],
                 pool: 'kitten',
                 kitten: 108,
                 unlockCondition: function() {
@@ -6337,7 +6338,7 @@
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
                 ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>Making strategic decisions from the top floor, sir.</q>',
                 price: 9e80, // 900 quattuorvigintillion
-                icon: [17, 42, getSpriteSheet('custom')],
+                icon: [16, 9, getSpriteSheet('custom')],
                 pool: 'kitten',
                 kitten: 109,
                 unlockCondition: function() {
@@ -6349,7 +6350,7 @@
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
                 ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>The original visionaries who started it all, sir.</q>',
                 price: 9e83, // 900 quinvigintillion
-                icon: [17, 48, getSpriteSheet('custom')],
+                icon: [16, 10, getSpriteSheet('custom')],
                 pool: 'kitten',
                 kitten: 110,
                 unlockCondition: function() {
@@ -6365,7 +6366,7 @@
                 desc: 'Grandmas are <b>8%</b> more efficient.',
                 ddesc: 'Grandmas are <b>8%</b> more efficient.<q>After years of practice, your grandmas have mastered the ancient art of knitting with cookie dough. The results are both delicious and surprisingly warm.</q>',
                 price: 5e19, // 50 quintillion (10000x higher than vanilla's 5 quadrillion)
-                icon: [1, 21], // Matches 800 threshold
+                icon: [1, 1, getSpriteSheet('custom')], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Grandma',
                 unlockCondition: function() {
@@ -6380,7 +6381,7 @@
                 desc: 'Grandmas are <b>8%</b> more efficient.',
                 ddesc: 'Grandmas are <b>8%</b> more efficient.<q>Your grandmas have discovered that playing bingo while baking cookies creates a perfect synergy of concentration and chaos. The cookies are somehow better when they\'re distracted.</q>',
                 price: 5e22, // 50 sextillion (1000x increase)
-                icon: [1, 26], // Matches 900 threshold
+                icon: [1, 3, getSpriteSheet('custom')], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Grandma',
                 unlockCondition: function() {
@@ -6395,7 +6396,7 @@
                 desc: 'Grandmas are <b>8%</b> more efficient.',
                 ddesc: 'Grandmas are <b>8%</b> more efficient.<q>Your grandmas have perfected the art of brewing tea while simultaneously managing cookie production. The secret is to never let the tea steep for exactly the right amount of time.</q>',
                 price: 5e25, // 50 septillion (1000x increase)
-                icon: [1, 29], // Matches 1000 threshold
+                icon: [1, 5, getSpriteSheet('custom')], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Grandma',
                 unlockCondition: function() {
@@ -6410,7 +6411,7 @@
                 desc: 'Grandmas are <b>8%</b> more efficient.',
                 ddesc: 'Grandmas are <b>8%</b> more efficient.<q>Your grandmas have discovered that sharing the latest neighborhood gossip while baking creates a perfect rhythm. The more scandalous the news, the faster the cookies bake.</q>',
                 price: 5e28, // 50 octillion (1000x increase)
-                icon: [4, 71, getSpriteSheet('custom')], // Matches 1100 threshold
+                icon: [1, 7, getSpriteSheet('custom')], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Grandma',
                 unlockCondition: function() {
@@ -6425,7 +6426,7 @@
                 desc: 'Grandmas are <b>8%</b> more efficient.',
                 ddesc: 'Grandmas are <b>8%</b> more efficient.<q>Your grandmas have learned to apply their senior discount expertise to cookie production. They can now get better deals on ingredients, which somehow makes the cookies taste better too.</q>',
                 price: 5e31, // 50 nonillion (1000x increase)
-                icon: [4, 56, getSpriteSheet('custom')], // Matches 1200 threshold
+                icon: [1, 9, getSpriteSheet('custom')], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Grandma',
                 unlockCondition: function() {
@@ -6440,7 +6441,7 @@
                 desc: 'Farms are <b>8%</b> more efficient.',
                 ddesc: 'Farms are <b>8%</b> more efficient.<q>Your farms have discovered that growing cookies in nutrient-rich water solutions eliminates the need for soil entirely. The cookies somehow taste even better when they\'ve never touched dirt.</q>',
                 price: 5.5e45, // 5.5 quattuordecillion (10000x higher than vanilla's 55 tredecillion)
-                icon: [2, 21], // Matches 800 threshold
+                icon: [2, 1, getSpriteSheet('custom')], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Farm',
                 unlockCondition: function() {
@@ -6455,7 +6456,7 @@
                 desc: 'Farms are <b>8%</b> more efficient.',
                 ddesc: 'Farms are <b>8%</b> more efficient.<q>Your farms now stack cookie crops in towering vertical structures. The cookies at the top get more sunlight, while the ones at the bottom get more shade. Somehow they all taste perfect.</q>',
                 price: 5.5e48, // 5.5 quindecillion (1000x increase)
-                icon: [2, 26], // Matches 900 threshold
+                icon: [2, 3, getSpriteSheet('custom')], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Farm',
                 unlockCondition: function() {
@@ -6470,7 +6471,7 @@
                 desc: 'Farms are <b>8%</b> more efficient.',
                 ddesc: 'Farms are <b>8%</b> more efficient.<q>Your farms have mastered the art of rotating crops through multiple dimensions simultaneously. The cookies exist in superposition until harvested, making them both baked and unbaked at the same time.</q>',
                 price: 5.5e51, // 5.5 sexdecillion (1000x increase)
-                icon: [2, 29], // Matches 1000 threshold
+                icon: [2, 5, getSpriteSheet('custom')], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Farm',
                 unlockCondition: function() {
@@ -6485,7 +6486,7 @@
                 desc: 'Farms are <b>8%</b> more efficient.',
                 ddesc: 'Farms are <b>8%</b> more efficient.<q>Your farms have developed soil that can think, feel, and most importantly, optimize cookie growth. The soil is quite chatty about its feelings, but the results speak for themselves.</q>',
                 price: 5.5e54, // 5.5 septendecillion (1000x increase)
-                icon: [5, 71, getSpriteSheet('custom')], // Matches 1100 threshold
+                icon: [2, 7, getSpriteSheet('custom')], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Farm',
                 unlockCondition: function() {
@@ -6500,7 +6501,7 @@
                 desc: 'Farms are <b>8%</b> more efficient.',
                 ddesc: 'Farms are <b>8%</b> more efficient.<q>Your farms can now manipulate time itself to speed up cookie growth. The cookies ripen in seconds instead of months, though occasionally you get cookies from the future that haven\'t been invented yet.</q>',
                 price: 5.5e57, // 5.5 octodecillion (1000x increase)
-                icon: [5, 56, getSpriteSheet('custom')], // Matches 1200 threshold
+                icon: [2, 9, getSpriteSheet('custom')], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Farm',
                 unlockCondition: function() {
@@ -6515,7 +6516,7 @@
                 desc: 'Mines are <b>8%</b> more efficient.',
                 ddesc: 'Mines are <b>8%</b> more efficient.<q>Your mines have discovered that quantum tunneling allows them to extract resources from multiple locations simultaneously. The cookies somehow taste better when mined through probability clouds.</q>',
                 price: 6e45, // 6 quattuordecillion (10000x higher than vanilla's 600 tredecillion)
-                icon: [3, 21], // Matches 800 threshold
+                icon: [3, 1, getSpriteSheet('custom')], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Mine',
                 unlockCondition: function() {
@@ -6530,7 +6531,7 @@
                 desc: 'Mines are <b>8%</b> more efficient.',
                 ddesc: 'Mines are <b>8%</b> more efficient.<q>Your mines now operate under neutron star gravity conditions, compressing cookie ingredients to impossible densities. The resulting cookies are so dense they create their own gravitational fields.</q>',
                 price: 6e48, // 6 quindecillion (1000x increase)
-                icon: [3, 26], // Matches 900 threshold
+                icon: [3, 3, getSpriteSheet('custom')], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Mine',
                 unlockCondition: function() {
@@ -6545,7 +6546,7 @@
                 desc: 'Mines are <b>8%</b> more efficient.',
                 ddesc: 'Mines are <b>8%</b> more efficient.<q>Your mines have learned to extract resources from parallel dimensions through carefully controlled spacetime rifts. The cookies from alternate realities have flavors that shouldn\'t exist in this universe.</q>',
                 price: 6e51, // 6 sexdecillion (1000x increase)
-                icon: [3, 29], // Matches 1000 threshold
+                icon: [3, 5, getSpriteSheet('custom')], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Mine',
                 unlockCondition: function() {
@@ -6560,7 +6561,7 @@
                 desc: 'Mines are <b>8%</b> more efficient.',
                 ddesc: 'Mines are <b>8%</b> more efficient.<q>Your mines can now extract resources from the very heart of black holes. The cookies mined from event horizons have flavors that exist in a state of quantum superposition.</q>',
                 price: 6e54, // 6 septendecillion (1000x increase)
-                icon: [6, 71, getSpriteSheet('custom')], // Matches 1100 threshold
+                icon: [3, 7, getSpriteSheet('custom')], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Mine',
                 unlockCondition: function() {
@@ -6575,7 +6576,7 @@
                 desc: 'Mines are <b>8%</b> more efficient.',
                 ddesc: 'Mines are <b>8%</b> more efficient.<q>Your mines can now extract resources from different points in time simultaneously. The cookies exist in a state where they were both baked and unbaked until observed.</q>',
                 price: 6e57, // 6 octodecillion (1000x increase)
-                icon: [6, 56, getSpriteSheet('custom')], // Matches 1200 threshold
+                icon: [3, 9, getSpriteSheet('custom')], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Mine',
                 unlockCondition: function() {
@@ -6590,7 +6591,7 @@
                 desc: 'Factories are <b>8%</b> more efficient.',
                 ddesc: 'Factories are <b>8%</b> more efficient.<q>Your factories have discovered that quantum superposition allows them to assemble cookies in multiple states simultaneously. The cookies exist in a state of both completion and incompletion until observed.</q>',
                 price: 6.5e49, // 6.5 quindecillion (10000x higher than vanilla's 6.5 quattuordecillion)
-                icon: [4, 21], // Matches 800 threshold
+                icon: [4, 1, getSpriteSheet('custom')], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Factory',
                 unlockCondition: function() {
@@ -6605,7 +6606,7 @@
                 desc: 'Factories are <b>8%</b> more efficient.',
                 ddesc: 'Factories are <b>8%</b> more efficient.<q>Your factories can now create temporal loops that allow them to manufacture cookies in the past, present, and future simultaneously. The cookies taste better when they\'ve been baked in multiple timelines.</q>',
                 price: 6.5e52, // 6.5 sexdecillion (1000x increase)
-                icon: [4, 26], // Matches 900 threshold
+                icon: [4, 3, getSpriteSheet('custom')], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Factory',
                 unlockCondition: function() {
@@ -6620,7 +6621,7 @@
                 desc: 'Factories are <b>8%</b> more efficient.',
                 ddesc: 'Factories are <b>8%</b> more efficient.<q>Your factories can now extract cookie ingredients from parallel dimensions and synthesize them into cookies that shouldn\'t exist in this universe. The flavors are indescribable.</q>',
                 price: 6.5e55, // 6.5 septendecillion (1000x increase)
-                icon: [4, 29], // Matches 1000 threshold
+                icon: [4, 5, getSpriteSheet('custom')], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Factory',
                 unlockCondition: function() {
@@ -6635,7 +6636,7 @@
                 desc: 'Factories are <b>8%</b> more efficient.',
                 ddesc: 'Factories are <b>8%</b> more efficient.<q>Your factories now operate at the heart of artificial superintelligence cores, where cookies are created by entities that understand the very fabric of reality. The cookies are so advanced they\'re almost sentient.</q>',
                 price: 6.5e58, // 6.5 octodecillion (1000x increase)
-                icon: [7, 71, getSpriteSheet('custom')], // Matches 1100 threshold
+                icon: [4, 7, getSpriteSheet('custom')], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Factory',
                 unlockCondition: function() {
@@ -6650,7 +6651,7 @@
                 desc: 'Factories are <b>8%</b> more efficient.',
                 ddesc: 'Factories are <b>8%</b> more efficient.<q>Your factories can now bend the laws of physics to create cookies that exist in impossible states. The cookies are so reality-defying that they create their own pocket universes.</q>',
                 price: 6.5e61, // 65 novemdecillion (1000x increase)
-                icon: [7, 56, getSpriteSheet('custom')], // Matches 1200 threshold
+                icon: [4, 9, getSpriteSheet('custom')], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Factory',
                 unlockCondition: function() {
@@ -6665,7 +6666,7 @@
                 desc: 'Banks are <b>8%</b> more efficient.',
                 ddesc: 'Banks are <b>8%</b> more efficient.<q>Your banks have implemented quantum encryption protocols that allow them to process transactions in multiple parallel universes simultaneously. The interest rates are so complex they exist in superposition.</q>',
                 price: 7e50, // 70 quindecillion (10000x higher than vanilla's 70 quattuordecillion)
-                icon: [15, 21], // Matches 800 threshold
+                icon: [13, 1, getSpriteSheet('custom')], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Bank',
                 unlockCondition: function() {
@@ -6680,7 +6681,7 @@
                 desc: 'Banks are <b>8%</b> more efficient.',
                 ddesc: 'Banks are <b>8%</b> more efficient.<q>Your banks can now compound interest across multiple time periods simultaneously. The money grows so fast it creates temporal paradoxes in the financial markets.</q>',
                 price: 7e53, // 70 sexdecillion (1000x increase)
-                icon: [15, 26], // Matches 900 threshold
+                icon: [13, 3, getSpriteSheet('custom')], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Bank',
                 unlockCondition: function() {
@@ -6695,7 +6696,7 @@
                 desc: 'Banks are <b>8%</b> more efficient.',
                 ddesc: 'Banks are <b>8%</b> more efficient.<q>Your banks can now exchange cookies for currencies from parallel dimensions. The exchange rates are so favorable they\'re practically stealing from other universes.</q>',
                 price: 7e56, // 70 septendecillion (1000x increase)
-                icon: [15, 29], // Matches 1000 threshold
+                icon: [13, 5, getSpriteSheet('custom')], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Bank',
                 unlockCondition: function() {
@@ -6710,7 +6711,7 @@
                 desc: 'Banks are <b>8%</b> more efficient.',
                 ddesc: 'Banks are <b>8%</b> more efficient.<q>Your banks now use artificial superintelligence to predict market movements with perfect accuracy. The algorithms are so advanced they can see the future of finance.</q>',
                 price: 7e59, // 70 octodecillion (1000x increase)
-                icon: [8, 71, getSpriteSheet('custom')], // Matches 1100 threshold
+                icon: [13, 7, getSpriteSheet('custom')], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Bank',
                 unlockCondition: function() {
@@ -6725,7 +6726,7 @@
                 desc: 'Banks are <b>8%</b> more efficient.',
                 ddesc: 'Banks are <b>8%</b> more efficient.<q>Your banks can now bend the laws of economics to create wealth from nothing. The money is so real it creates its own pocket universes of pure profit.</q>',
                 price: 7e62, // 700 novemdecillion (1000x increase)
-                icon: [8, 56, getSpriteSheet('custom')], // Matches 1200 threshold
+                icon: [13, 9, getSpriteSheet('custom')], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Bank',
                 unlockCondition: function() {
@@ -6740,7 +6741,7 @@
                 desc: 'Temples are <b>8%</b> more efficient.',
                 ddesc: 'Temples are <b>8%</b> more efficient.<q>Your temples can now summon deities from quantum superposition states. The gods are so powerful they can answer prayers before they\'re even made.</q>',
                 price: 1e52, // 1 sexdecillion (10000x higher than vanilla's 1 quindecillion)
-                icon: [16, 21], // Matches 800 threshold
+                icon: [14, 1, getSpriteSheet('custom')], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Temple',
                 unlockCondition: function() {
@@ -6755,7 +6756,7 @@
                 desc: 'Temples are <b>8%</b> more efficient.',
                 ddesc: 'Temples are <b>8%</b> more efficient.<q>Your temples can create temporal loops that allow prayers to be answered in the past, present, and future simultaneously. The divine favor is so strong it creates time paradoxes.</q>',
                 price: 1e55, // 1 septendecillion (1000x increase)
-                icon: [16, 26], // Matches 900 threshold
+                icon: [14, 3, getSpriteSheet('custom')], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Temple',
                 unlockCondition: function() {
@@ -6770,7 +6771,7 @@
                 desc: 'Temples are <b>8%</b> more efficient.',
                 ddesc: 'Temples are <b>8%</b> more efficient.<q>Your temples can now summon gods from parallel dimensions and alternate pantheons. The divine power is so overwhelming it threatens the fabric of reality.</q>',
                 price: 1e58, // 1 octodecillion (1000x increase)
-                icon: [16, 29], // Matches 1000 threshold
+                icon: [14, 5, getSpriteSheet('custom')], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Temple',
                 unlockCondition: function() {
@@ -6785,7 +6786,7 @@
                 desc: 'Temples are <b>8%</b> more efficient.',
                 ddesc: 'Temples are <b>8%</b> more efficient.<q>Your temples now house artificial superintelligence that has achieved divine consciousness. The AI gods are so advanced they can create and destroy universes at will.</q>',
                 price: 1e61, // 10 novemdecillion (1000x increase)
-                icon: [9, 71, getSpriteSheet('custom')], // Matches 1100 threshold
+                icon: [14, 7, getSpriteSheet('custom')], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Temple',
                 unlockCondition: function() {
@@ -6800,7 +6801,7 @@
                 desc: 'Temples are <b>8%</b> more efficient.',
                 ddesc: 'Temples are <b>8%</b> more efficient.<q>Your temples can now bend the laws of reality to create divine miracles on demand. The divine power is so overwhelming it creates pocket universes of pure holiness.</q>',
                 price: 1e64, // 10 vigintillion (1000x increase)
-                icon: [9, 56, getSpriteSheet('custom')], // Matches 1200 threshold
+                icon: [14, 9, getSpriteSheet('custom')], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Temple',
                 unlockCondition: function() {
@@ -6815,7 +6816,7 @@
                 desc: 'Wizard towers are <b>8%</b> more efficient.',
                 ddesc: 'Wizard towers are <b>8%</b> more efficient.<q>Your wizard towers have learned to harmonize their magical energies, creating spells that resonate across the fabric of reality itself. When they work together, their incantations create symphonies of pure arcane power.</q>',
                 price: 1.65e53, // 16.5 sexdecillion (10000x higher than vanilla's 16.5 quindecillion)
-                icon: [17, 21], // Matches 800 threshold
+                icon: [15, 1, getSpriteSheet('custom')], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Wizard tower',
                 unlockCondition: function() {
@@ -6830,7 +6831,7 @@
                 desc: 'Wizard towers are <b>8%</b> more efficient.',
                 ddesc: 'Wizard towers are <b>8%</b> more efficient.<q>Your wizard towers have mastered the ancient art of spell weaving, combining multiple enchantments into complex magical tapestries. Each spell is now a work of art that enhances cookie production while creating beautiful magical effects.</q>',
                 price: 1.65e56, // 16.5 septendecillion (1000x increase)
-                icon: [17, 26], // Matches 900 threshold
+                icon: [15, 3, getSpriteSheet('custom')], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Wizard tower',
                 unlockCondition: function() {
@@ -6845,7 +6846,7 @@
                 desc: 'Wizard towers are <b>8%</b> more efficient.',
                 ddesc: 'Wizard towers are <b>8%</b> more efficient.<q>Your wizard towers have achieved perfect mystical attunement, allowing them to sense and manipulate the fundamental forces of magic. They can now channel raw magical energy directly into cookie production, creating treats that taste like pure enchantment.</q>',
                 price: 1.65e59, // 16.5 octodecillion (1000x increase)
-                icon: [17, 29], // Matches 1000 threshold
+                icon: [15, 5, getSpriteSheet('custom')], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Wizard tower',
                 unlockCondition: function() {
@@ -6860,7 +6861,7 @@
                 desc: 'Wizard towers are <b>8%</b> more efficient.',
                 ddesc: 'Wizard towers are <b>8%</b> more efficient.<q>Your wizard towers have learned to manifest their magical abilities in the ethereal plane, allowing them to cast spells that exist beyond normal reality. The cookies they produce seem to exist in a state of pure magical potential.</q>',
                 price: 1.65e62, // 165 novemdecillion (1000x increase)
-                icon: [10, 71, getSpriteSheet('custom')], // Matches 1100 threshold
+                icon: [15, 7, getSpriteSheet('custom')], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Wizard tower',
                 unlockCondition: function() {
@@ -6875,7 +6876,7 @@
                 desc: 'Wizard towers are <b>8%</b> more efficient.',
                 ddesc: 'Wizard towers are <b>8%</b> more efficient.<q>Your wizard towers have transcended the limitations of conventional magic, achieving a state of pure thaumaturgical enlightenment. They can now create cookies that embody the very essence of magical possibility itself.</q>',
                 price: 1.65e65, // 165 vigintillion (1000x increase)
-                icon: [10, 56, getSpriteSheet('custom')], // Matches 1200 threshold
+                icon: [15, 9, getSpriteSheet('custom')], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Wizard tower',
                 unlockCondition: function() {
@@ -6890,7 +6891,7 @@
                 desc: 'Shipments are <b>8%</b> more efficient.',
                 ddesc: 'Shipments are <b>8%</b> more efficient.<q>Your shipments have achieved speeds that defy the laws of physics, delivering cookies faster than light itself. The delivery vehicles leave trails of pure velocity in their wake, creating beautiful streaks of cookie-scented energy.</q>',
                 price: 2.55e54, // 2.55 septendecillion (10000x higher than vanilla's 255 quindecillion)
-                icon: [5, 21], // Matches 800 threshold
+                icon: [5, 1, getSpriteSheet('custom')], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Shipment',
                 unlockCondition: function() {
@@ -6905,7 +6906,7 @@
                 desc: 'Shipments are <b>8%</b> more efficient.',
                 ddesc: 'Shipments are <b>8%</b> more efficient.<q>Your shipments have mastered the art of spatial compression, allowing them to fold space itself to reduce delivery distances to zero. The cookies arrive before they\'re even sent, creating delicious temporal paradoxes.</q>',
                 price: 2.55e57, // 2.55 octodecillion (1000x increase)
-                icon: [5, 26], // Matches 900 threshold
+                icon: [5, 3, getSpriteSheet('custom')], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Shipment',
                 unlockCondition: function() {
@@ -6920,7 +6921,7 @@
                 desc: 'Shipments are <b>8%</b> more efficient.',
                 ddesc: 'Shipments are <b>8%</b> more efficient.<q>Your shipments can navigate through the hidden dimensions between realities, finding the shortest path through the multiverse. Each delivery route is a masterpiece of interdimensional cartography.</q>',
                 price: 2.55e60, // 2.55 novemdecillion (1000x increase)
-                icon: [5, 29], // Matches 1000 threshold
+                icon: [5, 5, getSpriteSheet('custom')], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Shipment',
                 unlockCondition: function() {
@@ -6935,7 +6936,7 @@
                 desc: 'Shipments are <b>8%</b> more efficient.',
                 ddesc: 'Shipments are <b>8%</b> more efficient.<q>Your shipments have perfected quantum teleportation, allowing cookies to be instantaneously transmitted across any distance. The quantum entanglement ensures that every cookie arrives in perfect condition, no matter how far it travels.</q>',
                 price: 2.55e63, // 2.55 vigintillion (1000x increase)
-                icon: [11, 71, getSpriteSheet('custom')], // Matches 1100 threshold
+                icon: [5, 7, getSpriteSheet('custom')], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Shipment',
                 unlockCondition: function() {
@@ -6950,7 +6951,7 @@
                 desc: 'Shipments are <b>8%</b> more efficient.',
                 ddesc: 'Shipments are <b>8%</b> more efficient.<q>Your shipments can manipulate the very fabric of causality, ensuring that cookies are delivered before they\'re even ordered. The delivery system is so advanced it creates its own demand through temporal manipulation.</q>',
                 price: 2.55e66, // 2.55 unvigintillion (1000x increase)
-                icon: [11, 56, getSpriteSheet('custom')], // Matches 1200 threshold
+                icon: [5, 9, getSpriteSheet('custom')], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Shipment',
                 unlockCondition: function() {
@@ -6965,7 +6966,7 @@
                 desc: 'Alchemy labs are <b>8%</b> more efficient.',
                 ddesc: 'Alchemy labs are <b>8%</b> more efficient.<q>Your alchemy labs have mastered the art of essence distillation, extracting the purest flavors from the most exotic ingredients. Each transmutation creates flavors that transcend the boundaries of taste itself.</q>',
                 price: 3.75e55, // 37.5 septendecillion (10000x higher than vanilla's 3.75 sexdecillion)
-                icon: [6, 21], // Matches 800 threshold
+                icon: [6, 1, getSpriteSheet('custom')], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Alchemy lab',
                 unlockCondition: function() {
@@ -6980,7 +6981,7 @@
                 desc: 'Alchemy labs are <b>8%</b> more efficient.',
                 ddesc: 'Alchemy labs are <b>8%</b> more efficient.<q>Your alchemy labs have pioneered molecular gastronomy techniques, manipulating ingredients at the atomic level to create cookies with impossible textures and flavors that defy conventional baking.</q>',
                 price: 3.75e58, // 37.5 octodecillion (1000x increase)
-                icon: [6, 26], // Matches 900 threshold
+                icon: [6, 3, getSpriteSheet('custom')], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Alchemy lab',
                 unlockCondition: function() {
@@ -6995,7 +6996,7 @@
                 desc: 'Alchemy labs are <b>8%</b> more efficient.',
                 ddesc: 'Alchemy labs are <b>8%</b> more efficient.<q>Your alchemy labs have unlocked the secrets of flavor alchemy, combining ingredients in ways that create entirely new taste sensations. Each cookie is a masterpiece of culinary chemistry.</q>',
                 price: 3.75e61, // 37.5 novemdecillion (1000x increase)
-                icon: [6, 29], // Matches 1000 threshold
+                icon: [6, 5, getSpriteSheet('custom')], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Alchemy lab',
                 unlockCondition: function() {
@@ -7010,7 +7011,7 @@
                 desc: 'Alchemy labs are <b>8%</b> more efficient.',
                 ddesc: 'Alchemy labs are <b>8%</b> more efficient.<q>Your alchemy labs can transmute any ingredient into the perfect cookie component, turning lead into chocolate and water into vanilla. The alchemical reactions are pure culinary magic.</q>',
                 price: 3.75e64, // 37.5 vigintillion (1000x increase)
-                icon: [12, 71, getSpriteSheet('custom')], // Matches 1100 threshold
+                icon: [6, 7, getSpriteSheet('custom')], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Alchemy lab',
                 unlockCondition: function() {
@@ -7025,7 +7026,7 @@
                 desc: 'Alchemy labs are <b>8%</b> more efficient.',
                 ddesc: 'Alchemy labs are <b>8%</b> more efficient.<q>Your alchemy labs have achieved gastronomic enlightenment, understanding the fundamental nature of taste itself. They can now create cookies that embody the very essence of deliciousness.</q>',
                 price: 3.75e67, // 37.5 unvigintillion (1000x increase)
-                icon: [12, 56, getSpriteSheet('custom')], // Matches 1200 threshold
+                icon: [6, 9, getSpriteSheet('custom')], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Alchemy lab',
                 unlockCondition: function() {
@@ -7040,7 +7041,7 @@
                 desc: 'Portals are <b>8%</b> more efficient.',
                 ddesc: 'Portals are <b>8%</b> more efficient.<q>Your portals have evolved into true dimensional gateways, connecting distant worlds and realities. Each portal is a masterpiece of spatial engineering that bridges the impossible.</q>',
                 price: 5e56, // 500 septendecillion (10000x higher than vanilla's 50 sexdecillion)
-                icon: [7, 21], // Matches 800 threshold
+                icon: [7, 1, getSpriteSheet('custom')], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Portal',
                 unlockCondition: function() {
@@ -7055,7 +7056,7 @@
                 desc: 'Portals are <b>8%</b> more efficient.',
                 ddesc: 'Portals are <b>8%</b> more efficient.<q>Your portals can now create stable bridges between parallel universes, allowing cookies to flow freely across the multiverse. The connections are so strong they create permanent trade routes.</q>',
                 price: 5e59, // 500 octodecillion (1000x increase)
-                icon: [7, 26], // Matches 900 threshold
+                icon: [7, 3, getSpriteSheet('custom')], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Portal',
                 unlockCondition: function() {
@@ -7070,7 +7071,7 @@
                 desc: 'Portals are <b>8%</b> more efficient.',
                 ddesc: 'Portals are <b>8%</b> more efficient.<q>Your portals have become spatial conduits, channeling the energy of multiple dimensions into cookie production. The dimensional energy enhances every batch with cosmic flavor.</q>',
                 price: 5e62, // 500 novemdecillion (1000x increase)
-                icon: [7, 29], // Matches 1000 threshold
+                icon: [7, 5, getSpriteSheet('custom')], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Portal',
                 unlockCondition: function() {
@@ -7085,7 +7086,7 @@
                 desc: 'Portals are <b>8%</b> more efficient.',
                 ddesc: 'Portals are <b>8%</b> more efficient.<q>Your portals form a vast network of interdimensional highways, allowing instant travel between any two points in the multiverse. The cookie trade has never been so efficient.</q>',
                 price: 5e65, // 500 vigintillion (1000x increase)
-                icon: [13, 71, getSpriteSheet('custom')], // Matches 1100 threshold
+                icon: [7, 7, getSpriteSheet('custom')], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Portal',
                 unlockCondition: function() {
@@ -7100,7 +7101,7 @@
                 desc: 'Portals are <b>8%</b> more efficient.',
                 ddesc: 'Portals are <b>8%</b> more efficient.<q>Your portals have transcended mere transportation, becoming cosmic gateways that channel the raw power of creation itself into cookie production. The results are divine.</q>',
                 price: 5e68, // 500 unvigintillion (1000x increase)
-                icon: [13, 56, getSpriteSheet('custom')], // Matches 1200 threshold
+                icon: [7, 9, getSpriteSheet('custom')], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Portal',
                 unlockCondition: function() {
@@ -7115,7 +7116,7 @@
                 desc: 'Time machines are <b>8%</b> more efficient.',
                 ddesc: 'Time machines are <b>8%</b> more efficient.<q>Your time machines have mastered the art of temporal engineering, allowing them to harvest the perfect moments from throughout history for cookie production. Each batch contains the essence of a thousand perfect moments.</q>',
                 price: 7e57, // 7 octodecillion (10000x higher than vanilla's 700 sexdecillion)
-                icon: [8, 21], // Matches 800 threshold
+                icon: [8, 1, getSpriteSheet('custom')], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Time machine',
                 unlockCondition: function() {
@@ -7130,7 +7131,7 @@
                 desc: 'Time machines are <b>8%</b> more efficient.',
                 ddesc: 'Time machines are <b>8%</b> more efficient.<q>Your time machines can optimize the flow of time itself, ensuring that every second is perfectly utilized for cookie production. The temporal efficiency is beyond measure.</q>',
                 price: 7e60, // 7 novemdecillion (1000x increase)
-                icon: [8, 26], // Matches 900 threshold
+                icon: [8, 3, getSpriteSheet('custom')], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Time machine',
                 unlockCondition: function() {
@@ -7145,7 +7146,7 @@
                 desc: 'Time machines are <b>8%</b> more efficient.',
                 ddesc: 'Time machines are <b>8%</b> more efficient.<q>Your time machines preserve the finest baking techniques from throughout history, ensuring that ancient wisdom is never lost. Each cookie carries the weight of culinary tradition.</q>',
                 price: 7e63, // 7 vigintillion (1000x increase)
-                icon: [8, 29], // Matches 1000 threshold
+                icon: [8, 5, getSpriteSheet('custom')], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Time machine',
                 unlockCondition: function() {
@@ -7160,7 +7161,7 @@
                 desc: 'Time machines are <b>8%</b> more efficient.',
                 ddesc: 'Time machines are <b>8%</b> more efficient.<q>Your time machines can synchronize multiple timelines, allowing cookies to be baked simultaneously across different eras. The temporal coordination is a marvel of engineering.</q>',
                 price: 7e66, // 7 unvigintillion (1000x increase)
-                icon: [14, 71, getSpriteSheet('custom')], // Matches 1100 threshold
+                icon: [8, 7, getSpriteSheet('custom')], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Time machine',
                 unlockCondition: function() {
@@ -7175,7 +7176,7 @@
                 desc: 'Time machines are <b>8%</b> more efficient.',
                 ddesc: 'Time machines are <b>8%</b> more efficient.<q>Your time machines have achieved complete mastery over time itself, bending the flow of history to optimize cookie production. The temporal manipulation is pure artistry.</q>',
                 price: 7e69, // 7 duovigintillion (1000x increase)
-                icon: [14, 56, getSpriteSheet('custom')], // Matches 1200 threshold
+                icon: [8, 9, getSpriteSheet('custom')], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Time machine',
                 unlockCondition: function() {
@@ -7190,7 +7191,7 @@
                 desc: 'Antimatter condensers are <b>8%</b> more efficient.',
                 ddesc: 'Antimatter condensers are <b>8%</b> more efficient.<q>Your antimatter condensers have mastered particle synthesis, creating exotic matter that enhances cookie production in ways that defy physics. The particle interactions are pure culinary science.</q>',
                 price: 8.5e58, // 85 octodecillion (10000x higher than vanilla's 8.5 septendecillion)
-                icon: [13, 21], // Matches 800 threshold
+                icon: [11, 1, getSpriteSheet('custom')], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Antimatter condenser',
                 unlockCondition: function() {
@@ -7205,7 +7206,7 @@
                 desc: 'Antimatter condensers are <b>8%</b> more efficient.',
                 ddesc: 'Antimatter condensers are <b>8%</b> more efficient.<q>Your antimatter condensers can transmute any form of matter into the perfect cookie ingredients, using the power of antimatter to create impossible flavors and textures.</q>',
                 price: 8.5e61, // 85 novemdecillion (1000x increase)
-                icon: [13, 26], // Matches 900 threshold
+                icon: [11, 3, getSpriteSheet('custom')], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Antimatter condenser',
                 unlockCondition: function() {
@@ -7220,7 +7221,7 @@
                 desc: 'Antimatter condensers are <b>8%</b> more efficient.',
                 ddesc: 'Antimatter condensers are <b>8%</b> more efficient.<q>Your antimatter condensers use quantum mechanics to bake cookies that exist in multiple states simultaneously. Each cookie is both perfectly baked and infinitely delicious.</q>',
                 price: 8.5e64, // 85 vigintillion (1000x increase)
-                icon: [13, 29], // Matches 1000 threshold
+                icon: [11, 5, getSpriteSheet('custom')], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Antimatter condenser',
                 unlockCondition: function() {
@@ -7235,7 +7236,7 @@
                 desc: 'Antimatter condensers are <b>8%</b> more efficient.',
                 ddesc: 'Antimatter condensers are <b>8%</b> more efficient.<q>Your antimatter condensers optimize every particle for maximum cookie efficiency, ensuring that no energy is wasted in the baking process. The particle physics is pure efficiency.</q>',
                 price: 8.5e67, // 85 unvigintillion (1000x increase)
-                icon: [15, 71, getSpriteSheet('custom')], // Matches 1100 threshold
+                icon: [11, 7, getSpriteSheet('custom')], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Antimatter condenser',
                 unlockCondition: function() {
@@ -7250,7 +7251,7 @@
                 desc: 'Antimatter condensers are <b>8%</b> more efficient.',
                 ddesc: 'Antimatter condensers are <b>8%</b> more efficient.<q>Your antimatter condensers can manipulate matter at the most fundamental level, creating cookies that are literally impossible by conventional means. The results are miraculous.</q>',
                 price: 8.5e70, // 85 duovigintillion (1000x increase)
-                icon: [15, 72, getSpriteSheet('custom')], // Matches 1200 threshold
+                icon: [11, 9, getSpriteSheet('custom')], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Antimatter condenser',
                 unlockCondition: function() {
@@ -7265,7 +7266,7 @@
                 desc: 'Prisms are <b>8%</b> more efficient.',
                 ddesc: 'Prisms are <b>8%</b> more efficient.<q>Your prisms have mastered light crystallization, turning pure light into solid cookie ingredients. The crystalline structures create cookies with impossible clarity and brilliance.</q>',
                 price: 1.05e60, // 1.05 novemdecillion (10000x higher than vanilla's 105 septendecillion)
-                icon: [14, 21], // Matches 800 threshold
+                icon: [12, 1, getSpriteSheet('custom')], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Prism',
                 unlockCondition: function() {
@@ -7280,7 +7281,7 @@
                 desc: 'Prisms are <b>8%</b> more efficient.',
                 ddesc: 'Prisms are <b>8%</b> more efficient.<q>Your prisms use the full spectrum of light to bake cookies, each wavelength contributing its own unique flavor and texture. The spectral combinations are infinite.</q>',
                 price: 1.05e63, // 1.05 vigintillion (1000x increase)
-                icon: [14, 26], // Matches 900 threshold
+                icon: [12, 3, getSpriteSheet('custom')], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Prism',
                 unlockCondition: function() {
@@ -7295,7 +7296,7 @@
                 desc: 'Prisms are <b>8%</b> more efficient.',
                 ddesc: 'Prisms are <b>8%</b> more efficient.<q>Your prisms perform optical alchemy, transforming light into matter through complex refraction patterns. Each cookie is a masterpiece of light and flavor engineering.</q>',
                 price: 1.05e66, // 1.05 unvigintillion (1000x increase)
-                icon: [14, 29], // Matches 1000 threshold
+                icon: [12, 5, getSpriteSheet('custom')], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Prism',
                 unlockCondition: function() {
@@ -7310,7 +7311,7 @@
                 desc: 'Prisms are <b>8%</b> more efficient.',
                 ddesc: 'Prisms are <b>8%</b> more efficient.<q>Your prisms create luminous confectionery that glows with inner light, each cookie a miniature sun of deliciousness. The illumination enhances both taste and presentation.</q>',
                 price: 1.05e69, // 1.05 duovigintillion (1000x increase)
-                icon: [16, 71, getSpriteSheet('custom')], // Matches 1100 threshold
+                icon: [12, 7, getSpriteSheet('custom')], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Prism',
                 unlockCondition: function() {
@@ -7325,7 +7326,7 @@
                 desc: 'Prisms are <b>8%</b> more efficient.',
                 ddesc: 'Prisms are <b>8%</b> more efficient.<q>Your prisms have achieved radiant gastronomy, using pure light energy to create cookies that transcend the boundaries of conventional baking. The results are literally brilliant.</q>',
                 price: 1.05e72, // 1.05 trevigintillion (1000x increase)
-                icon: [16, 56, getSpriteSheet('custom')], // Matches 1200 threshold
+                icon: [12, 9, getSpriteSheet('custom')], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Prism',
                 unlockCondition: function() {
@@ -7340,7 +7341,7 @@
                 desc: 'Chancemakers are <b>8%</b> more efficient.',
                 ddesc: 'Chancemakers are <b>8%</b> more efficient.<q>Your chancemakers can manipulate probability itself, ensuring that every batch of cookies turns out perfectly regardless of the circumstances. The odds are always in your favor.</q>',
                 price: 1.3e61, // 13 novemdecillion (10000x higher than vanilla's 1.3 octodecillion)
-                icon: [19, 21], // Matches 800 threshold
+                icon: [17, 1, getSpriteSheet('custom')], // Matches 800 threshold
                 pool: '',
                 building: 'Chancemaker',
                 unlockCondition: function() {
@@ -7355,7 +7356,7 @@
                 desc: 'Chancemakers are <b>8%</b> more efficient.',
                 ddesc: 'Chancemakers are <b>8%</b> more efficient.<q>Your chancemakers optimize fortune for maximum cookie production, ensuring that every random event contributes to your success. Luck is now a reliable resource.</q>',
                 price: 1.3e64, // 13 vigintillion (1000x increase)
-                icon: [19, 26], // Matches 900 threshold
+                icon: [17, 3, getSpriteSheet('custom')], // Matches 900 threshold
                 pool: '',
                 building: 'Chancemaker',
                 unlockCondition: function() {
@@ -7370,7 +7371,7 @@
                 desc: 'Chancemakers are <b>8%</b> more efficient.',
                 ddesc: 'Chancemakers are <b>8%</b> more efficient.<q>Your chancemakers engineer serendipity, creating happy accidents that always result in better cookies. The unexpected discoveries are now perfectly predictable.</q>',
                 price: 1.3e67, // 13 unvigintillion (1000x increase)
-                icon: [19, 29], // Matches 1000 threshold
+                icon: [17, 5, getSpriteSheet('custom')], // Matches 1000 threshold
                 pool: '',
                 building: 'Chancemaker',
                 unlockCondition: function() {
@@ -7385,7 +7386,7 @@
                 desc: 'Chancemakers are <b>8%</b> more efficient.',
                 ddesc: 'Chancemakers are <b>8%</b> more efficient.<q>Your chancemakers enhance randomness itself, ensuring that every random event improves cookie quality. The chaos is now perfectly controlled.</q>',
                 price: 1.3e70, // 13 duovigintillion (1000x increase)
-                icon: [19, 35], // Matches 1100 threshold
+                icon: [17, 7, getSpriteSheet('custom')], // Matches 1100 threshold
                 pool: '',
                 building: 'Chancemaker',
                 unlockCondition: function() {
@@ -7400,7 +7401,7 @@
                 desc: 'Chancemakers are <b>8%</b> more efficient.',
                 ddesc: 'Chancemakers are <b>8%</b> more efficient.<q>Your chancemakers amplify luck to impossible levels, ensuring that every batch of cookies is blessed with supernatural deliciousness. Fortune favors the prepared baker.</q>',
                 price: 1.3e73, // 13 trevigintillion (1000x increase)
-                icon: [19, 35], // Matches 1200 threshold
+                icon: [17, 9, getSpriteSheet('custom')], // Matches 1200 threshold
                 pool: '',
                 building: 'Chancemaker',
                 unlockCondition: function() {
@@ -7415,7 +7416,7 @@
                 desc: 'Fractal engines are <b>8%</b> more efficient.',
                 ddesc: 'Fractal engines are <b>8%</b> more efficient.<q>Your fractal engines use infinite recursion to create cookies that contain infinite layers of flavor and texture. Each cookie is a universe of taste within itself.</q>',
                 price: 1.55e62, // 155 novemdecillion (10000x higher than vanilla's 15.5 octodecillion)
-                icon: [20, 21], // Matches 800 threshold
+                icon: [18, 1, getSpriteSheet('custom')], // Matches 800 threshold
                 pool: '',
                 building: 'Fractal engine',
                 unlockCondition: function() {
@@ -7430,7 +7431,7 @@
                 desc: 'Fractal engines are <b>8%</b> more efficient.',
                 ddesc: 'Fractal engines are <b>8%</b> more efficient.<q>Your fractal engines create self-similar cookie structures, where each part contains the essence of the whole. The patterns repeat infinitely, creating endless variety.</q>',
                 price: 1.55e65, // 155 vigintillion (1000x increase)
-                icon: [20, 26], // Matches 900 threshold
+                icon: [18, 3, getSpriteSheet('custom')], // Matches 900 threshold
                 pool: '',
                 building: 'Fractal engine',
                 unlockCondition: function() {
@@ -7445,7 +7446,7 @@
                 desc: 'Fractal engines are <b>8%</b> more efficient.',
                 ddesc: 'Fractal engines are <b>8%</b> more efficient.<q>Your fractal engines optimize every aspect of cookie production using fractal mathematics, ensuring perfect efficiency at every scale. The optimization is infinite.</q>',
                 price: 1.55e68, // 155 unvigintillion (1000x increase)
-                icon: [20, 29], // Matches 1000 threshold
+                icon: [18, 5, getSpriteSheet('custom')], // Matches 1000 threshold
                 pool: '',
                 building: 'Fractal engine',
                 unlockCondition: function() {
@@ -7460,7 +7461,7 @@
                 desc: 'Fractal engines are <b>8%</b> more efficient.',
                 ddesc: 'Fractal engines are <b>8%</b> more efficient.<q>Your fractal engines use recursive enhancement to improve cookies with each iteration, creating flavors that evolve infinitely. The improvement never ends.</q>',
                 price: 1.55e71, // 155 duovigintillion (1000x increase)
-                icon: [20, 35], // Matches 1100 threshold
+                icon: [18, 7, getSpriteSheet('custom')], // Matches 1100 threshold
                 pool: '',
                 building: 'Fractal engine',
                 unlockCondition: function() {
@@ -7475,7 +7476,7 @@
                 desc: 'Fractal engines are <b>8%</b> more efficient.',
                 ddesc: 'Fractal engines are <b>8%</b> more efficient.<q>Your fractal engines have achieved fractal gastronomy, creating cookies that embody the mathematical beauty of fractals themselves. The results are geometrically perfect.</q>',
                 price: 1.55e74, // 155 trevigintillion (1000x increase)
-                icon: [20, 35], // Matches 1200 threshold
+                icon: [18, 9, getSpriteSheet('custom')], // Matches 1200 threshold
                 pool: '',
                 building: 'Fractal engine',
                 unlockCondition: function() {
@@ -7490,7 +7491,7 @@
                 desc: 'Javascript consoles are <b>8%</b> more efficient.',
                 ddesc: 'Javascript consoles are <b>8%</b> more efficient.<q>Your javascript consoles optimize every line of code for maximum cookie production efficiency. The algorithms are so refined they approach mathematical perfection.</q>',
                 price: 3.55e64, // 35.5 vigintillion (10000x higher than vanilla's 3.55 novemdecillion)
-                icon: [32, 21], // Matches 800 threshold
+                icon: [19, 1, getSpriteSheet('custom')], // Matches 800 threshold
                 pool: '',
                 building: 'Javascript console',
                 unlockCondition: function() {
@@ -7505,7 +7506,7 @@
                 desc: 'Javascript consoles are <b>8%</b> more efficient.',
                 ddesc: 'Javascript consoles are <b>8%</b> more efficient.<q>Your javascript consoles use programmatic baking techniques, writing code that creates cookies with impossible precision and consistency. The programming is pure artistry.</q>',
                 price: 3.55e67, // 35.5 unvigintillion (1000x increase)
-                icon: [32, 26], // Matches 900 threshold
+                icon: [19, 3, getSpriteSheet('custom')], // Matches 900 threshold
                 pool: '',
                 building: 'Javascript console',
                 unlockCondition: function() {
@@ -7520,7 +7521,7 @@
                 desc: 'Javascript consoles are <b>8%</b> more efficient.',
                 ddesc: 'Javascript consoles are <b>8%</b> more efficient.<q>Your javascript consoles use algorithmic enhancement to improve every aspect of cookie production, ensuring that every batch is better than the last. The improvement is exponential.</q>',
                 price: 3.55e70, // 35.5 duovigintillion (1000x increase)
-                icon: [32, 29], // Matches 1000 threshold
+                icon: [19, 5, getSpriteSheet('custom')], // Matches 1000 threshold
                 pool: '',
                 building: 'Javascript console',
                 unlockCondition: function() {
@@ -7535,7 +7536,7 @@
                 desc: 'Javascript consoles are <b>8%</b> more efficient.',
                 ddesc: 'Javascript consoles are <b>8%</b> more efficient.<q>Your javascript consoles have pioneered computational gastronomy, using advanced algorithms to create cookies that are mathematically perfect in every way.</q>',
                 price: 3.55e73, // 35.5 trevigintillion (1000x increase)
-                icon: [32, 35], // Matches 1100 threshold
+                icon: [19, 7, getSpriteSheet('custom')], // Matches 1100 threshold
                 pool: '',
                 building: 'Javascript console',
                 unlockCondition: function() {
@@ -7550,7 +7551,7 @@
                 desc: 'Javascript consoles are <b>8%</b> more efficient.',
                 ddesc: 'Javascript consoles are <b>8%</b> more efficient.<q>Your javascript consoles create digital confectionery that exists in both the physical and digital realms, bridging the gap between code and cookies with elegant simplicity.</q>',
                 price: 3.55e76, // 35.5 quattuorvigintillion (1000x increase)
-                icon: [32, 35], // Matches 1200 threshold
+                icon: [19, 9, getSpriteSheet('custom')], // Matches 1200 threshold
                 pool: '',
                 building: 'Javascript console',
                 unlockCondition: function() {
@@ -7565,7 +7566,7 @@
                 desc: 'Idleverses are <b>8%</b> more efficient.',
                 ddesc: 'Idleverses are <b>8%</b> more efficient.<q>You\'ve cornered the market on interdimensional property development. Each idleverse now serves as prime real estate for cookie franchises, with locations in every conceivable reality. The property taxes alone could fund a small galaxy.</q>',
                 price: 6e66, // 6 unvigintillion (10000x higher than vanilla's 600 novemdecillion)
-                icon: [33, 21], // Matches 800 threshold
+                icon: [20, 1, getSpriteSheet('custom')], // Matches 800 threshold
                 pool: '',
                 building: 'Idleverse',
                 unlockCondition: function() {
@@ -7580,7 +7581,7 @@
                 desc: 'Idleverses are <b>8%</b> more efficient.',
                 ddesc: 'Idleverses are <b>8%</b> more efficient.<q>Your cookie empire has gone viral across the multiverse. Every reality now hosts at least one of your signature bakeries, with local entrepreneurs clamoring for franchise opportunities. The brand recognition is literally universal.</q>',
                 price: 6e69, // 6 duovigintillion (1000x increase)
-                icon: [33, 26], // Matches 900 threshold
+                icon: [20, 3, getSpriteSheet('custom')], // Matches 900 threshold
                 pool: '',
                 building: 'Idleverse',
                 unlockCondition: function() {
@@ -7595,7 +7596,7 @@
                 desc: 'Idleverses are <b>8%</b> more efficient.',
                 ddesc: 'Idleverses are <b>8%</b> more efficient.<q>Your idleverses now form the backbone of the largest supply chain in existence. Raw materials flow from one reality to another, with each universe specializing in different cookie ingredients. The logistics are mind-bendingly complex.</q>',
                 price: 6e72, // 6 trevigintillion (1000x increase)
-                icon: [33, 29], // Matches 1000 threshold
+                icon: [20, 5, getSpriteSheet('custom')], // Matches 1000 threshold
                 pool: '',
                 building: 'Idleverse',
                 unlockCondition: function() {
@@ -7610,7 +7611,7 @@
                 desc: 'Idleverses are <b>8%</b> more efficient.',
                 ddesc: 'Idleverses are <b>8%</b> more efficient.<q>Your idleverses have become the ultimate shopping destinations. Merchants from every dimension set up stalls, selling everything from exotic spices to rare cookie recipes. The haggling is intense, but the profits are astronomical.</q>',
                 price: 6e75, // 6 quattuorvigintillion (1000x increase)
-                icon: [33, 35], // Matches 1100 threshold
+                icon: [20, 7, getSpriteSheet('custom')], // Matches 1100 threshold
                 pool: '',
                 building: 'Idleverse',
                 unlockCondition: function() {
@@ -7625,7 +7626,7 @@
                 desc: 'Idleverses are <b>8%</b> more efficient.',
                 ddesc: 'Idleverses are <b>8%</b> more efficient.<q>Your idleverses now serve as the corporate headquarters for the largest cookie conglomerate in existence. Board meetings span multiple realities, with executives teleporting in from different dimensions. The coffee machine alone is a marvel of interdimensional engineering.</q>',
                 price: 6e78, // 6 quinvigintillion (1000x increase)
-                icon: [33, 35], // Matches 1200 threshold
+                icon: [20, 9, getSpriteSheet('custom')], // Matches 1200 threshold
                 pool: '',
                 building: 'Idleverse',
                 unlockCondition: function() {
@@ -7640,7 +7641,7 @@
                 desc: 'Cortex bakers are <b>8%</b> more efficient.',
                 ddesc: 'Cortex bakers are <b>8%</b> more efficient.<q>Your cortex bakers have developed extraordinary neural plasticity, allowing them to rapidly adapt their baking techniques to any situation. They can learn new recipes instantly and modify their approach based on the slightest changes in ingredient quality or environmental conditions.</q>',
                 price: 9.5e68, // 950 unvigintillion (10000x higher than vanilla's 95 vigintillion)
-                icon: [34, 21], // Matches 800 threshold
+                icon: [21, 1, getSpriteSheet('custom')], // Matches 800 threshold
                 pool: '',
                 building: 'Cortex baker',
                 unlockCondition: function() {
@@ -7655,7 +7656,7 @@
                 desc: 'Cortex bakers are <b>8%</b> more efficient.',
                 ddesc: 'Cortex bakers are <b>8%</b> more efficient.<q>Your cortex bakers have undergone advanced synaptic pruning, eliminating inefficient neural pathways and optimizing their cognitive processes. They now focus exclusively on the most effective baking techniques, discarding outdated methods like a chef discards failed experiments.</q>',
                 price: 9.5e71, // 950 duovigintillion (1000x increase)
-                icon: [34, 26], // Matches 900 threshold
+                icon: [21, 3, getSpriteSheet('custom')], // Matches 900 threshold
                 pool: '',
                 building: 'Cortex baker',
                 unlockCondition: function() {
@@ -7670,7 +7671,7 @@
                 desc: 'Cortex bakers are <b>8%</b> more efficient.',
                 ddesc: 'Cortex bakers are <b>8%</b> more efficient.<q>Your cortex bakers have mastered the art of cognitive load balancing, distributing their mental resources across multiple baking tasks simultaneously. They can monitor dozens of recipes at once while maintaining perfect quality control and inventing new flavor combinations.</q>',
                 price: 9.5e74, // 95 vigintillion (1000x increase)
-                icon: [34, 29], // Matches 1000 threshold
+                icon: [21, 5, getSpriteSheet('custom')], // Matches 1000 threshold
                 pool: '',
                 building: 'Cortex baker',
                 unlockCondition: function() {
@@ -7685,7 +7686,7 @@
                 desc: 'Cortex bakers are <b>8%</b> more efficient.',
                 ddesc: 'Cortex bakers are <b>8%</b> more efficient.<q>Your cortex bakers have developed metacognitive awareness, allowing them to think about their own thinking processes. They can analyze their baking decisions in real-time, identify inefficiencies, and continuously improve their techniques without external guidance.</q>',
                 price: 9.5e77, // 950 quattuorvigintillion (1000x increase)
-                icon: [34, 35], // Matches 1100 threshold
+                icon: [21, 7, getSpriteSheet('custom')], // Matches 1100 threshold
                 pool: '',
                 building: 'Cortex baker',
                 unlockCondition: function() {
@@ -7700,7 +7701,7 @@
                 desc: 'Cortex bakers are <b>8%</b> more efficient.',
                 ddesc: 'Cortex bakers are <b>8%</b> more efficient.<q>Your cortex bakers have achieved perfect neural synchronization, allowing them to work as a unified superintelligence. They can coordinate complex baking operations across vast distances, sharing insights and techniques instantaneously. It\'s like having a hive mind of master bakers.</q>',
                 price: 9.5e80, // 950 quinvigintillion (1000x increase)
-                icon: [34, 35], // Matches 1200 threshold
+                icon: [21, 9, getSpriteSheet('custom')], // Matches 1200 threshold
                 pool: '',
                 building: 'Cortex baker',
                 unlockCondition: function() {
@@ -7715,7 +7716,7 @@
                 desc: 'You are <b>8%</b> more efficient.',
                 ddesc: 'You are <b>8%</b> more efficient.<q>Your clones have perfected the art of cellular division, allowing them to replicate themselves with unprecedented precision and speed. Each new clone emerges fully formed and ready to work, with no awkward adolescence or training period. It\'s like having an army of instant experts.</q>',
                 price: 2.7e70, // 27 duovigintillion (10000x higher than vanilla's 27 unvigintillion)
-                icon: [35, 21], // Matches 800 threshold
+                icon: [22, 1, getSpriteSheet('custom')], // Matches 800 threshold
                 pool: '',
                 building: 'You',
                 unlockCondition: function() {
@@ -7730,7 +7731,7 @@
                 desc: 'You are <b>8%</b> more efficient.',
                 ddesc: 'You are <b>8%</b> more efficient.<q>Your clones have developed the ability to modify their genetic expression on demand, activating different skill sets as needed. One moment they\'re master bakers, the next they\'re expert decorators, all without changing their core DNA. It\'s like having a Swiss Army knife of cookie production.</q>',
                 price: 2.7e73, // 27 vigintillion (1000x increase)
-                icon: [35, 26], // Matches 900 threshold
+                icon: [22, 3, getSpriteSheet('custom')], // Matches 900 threshold
                 pool: '',
                 building: 'You',
                 unlockCondition: function() {
@@ -7745,7 +7746,7 @@
                 desc: 'You are <b>8%</b> more efficient.',
                 ddesc: 'You are <b>8%</b> more efficient.<q>Your clones have mastered cellular differentiation, allowing them to develop specialized organs and abilities optimized for specific tasks. Some have enhanced taste buds, others have improved dexterity, and a few have developed the ability to sense cookie freshness through their skin. The specialization is remarkable.</q>',
                 price: 2.7e76, // 27 quattuorvigintillion (1000x increase)
-                icon: [35, 29], // Matches 1000 threshold
+                icon: [22, 5, getSpriteSheet('custom')], // Matches 1000 threshold
                 pool: '',
                 building: 'You',
                 unlockCondition: function() {
@@ -7760,7 +7761,7 @@
                 desc: 'You are <b>8%</b> more efficient.',
                 ddesc: 'You are <b>8%</b> more efficient.<q>Your clones have unlocked the secret of telomere regeneration, allowing them to maintain their youth and vitality indefinitely. They no longer age or tire, working tirelessly without the need for rest or rejuvenation. It\'s like having an immortal workforce that never gets bored of baking.</q>',
                 price: 2.7e79, // 27 quinvigintillion (1000x increase)
-                icon: [35, 35], // Matches 1100 threshold
+                icon: [22, 7, getSpriteSheet('custom')], // Matches 1100 threshold
                 pool: '',
                 building: 'You',
                 unlockCondition: function() {
@@ -7775,7 +7776,7 @@
                 desc: 'You are <b>8%</b> more efficient.',
                 ddesc: 'You are <b>8%</b> more efficient.<q>Your clones have achieved quantum entanglement, allowing them to share information and coordinate actions instantaneously across vast distances. When one clone learns a new technique, all clones know it immediately. It\'s like having a network of minds that think as one, yet remain individually brilliant.</q>',
                 price: 2.7e82, // 27 sexvigintillion (1000x increase)
-                icon: [35, 35], // Matches 1200 threshold
+                icon: [22, 9, getSpriteSheet('custom')], // Matches 1200 threshold
                 pool: '',
                 building: 'You',
                 unlockCondition: function() {
@@ -10183,11 +10184,21 @@
             var vanilla = findLastVanillaAchievement(ach.level10);
             
             if (vanilla.order > 0) {
+                // Map building names to custom sprite sheet indices
+                var buildingToSpriteIndex = {
+                    'Cursor': 0, 'Grandma': 1, 'Farm': 2, 'Mine': 3, 'Factory': 4,
+                    'Shipment': 5, 'Alchemy lab': 6, 'Portal': 7, 'Time machine': 8,
+                    'Antimatter condenser': 9, 'Prism': 10, 'Bank': 11, 'Temple': 12,
+                    'Wizard tower': 13, 'Chancemaker': 14, 'Fractal engine': 15,
+                    'Javascript console': 16, 'Idleverse': 17, 'Cortex baker': 18, 'You': 19
+                };
+                var spriteIndex = buildingToSpriteIndex[ach.building] || 0;
+                
                 // Level 15 achievement
                 createAchievement(
                     ach.level15,
                     "Reach Level <b>15</b> " + ach.building.toLowerCase() + "s.",
-                    vanilla.icon,
+                    [spriteIndex, 19, getSpriteSheet('custom')],
                     vanilla.order + 0.01,
                     (function(buildingName) {
                         return function() { 
@@ -10201,7 +10212,7 @@
                 createAchievement(
                     ach.level20,
                     "Reach Level <b>20</b> " + ach.building.toLowerCase() + "s.",
-                    vanilla.icon,
+                    [spriteIndex, 20, getSpriteSheet('custom')],
                     vanilla.order + 0.02,
                     (function(buildingName) {
                         return function() { 
@@ -10279,12 +10290,22 @@
                 // Calculate thresholds using the actual vanilla threshold as base
                 var vanillaBaseN = vanillaExponent;
                 
+                // Map building names to custom sprite sheet indices
+                var buildingToSpriteIndex = {
+                    'Cursor': 0, 'Grandma': 1, 'Farm': 2, 'Mine': 3, 'Factory': 4,
+                    'Shipment': 5, 'Alchemy lab': 6, 'Portal': 7, 'Time machine': 8,
+                    'Antimatter condenser': 13, 'Prism': 14, 'Bank': 15, 'Temple': 16,
+                    'Wizard tower': 17, 'Chancemaker': 18, 'Fractal engine': 19,
+                    'Javascript console': 20, 'Idleverse': 21, 'Cortex baker': 22, 'You': 23
+                };
+                var spriteIndex = buildingToSpriteIndex[ach.building] || building.n;
+                
                 // Tier 4 achievement (100 quintillion times more than tier 3 - 10^20 increase)
                 var tier4Threshold = Math.pow(10, vanillaBaseN + 20);
                 createAchievement(
                     ach.name + " II",
                     ach.tier4Desc,
-                    vanilla.icon,
+                    [spriteIndex, 21, getSpriteSheet('custom')],
                     vanilla.order + 0.00001,
                     (function(buildingName, threshold) {
                         return function() { 
@@ -10299,7 +10320,7 @@
                 createAchievement(
                     ach.name + " III",
                     ach.tier5Desc,
-                    vanilla.icon,
+                    [spriteIndex, 22, getSpriteSheet('custom')],
                     vanilla.order + 0.00002,
                     (function(buildingName, threshold) {
                         return function() { 
@@ -10314,7 +10335,7 @@
                 createAchievement(
                     ach.name + " IV",
                     ach.tier6Desc,
-                    vanilla.icon,
+                    [spriteIndex, 23, getSpriteSheet('custom')],
                     vanilla.order + 0.00003,
                     (function(buildingName, threshold) {
                         return function() { 
