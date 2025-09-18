@@ -5,9 +5,10 @@
     'use strict';
     
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.0.10';
+    var modVersion = '0.0.11';
     var debugMode = false; 
     var runtimeSessionId = Math.floor(Math.random()*1e9) + '-' + Date.now();
+    
     
     function debugLog() {
         if (!debugMode) return;
@@ -92,6 +93,309 @@
         return true;
     }
     
+    // Achievement alias mapping for renamed achievements
+    var achievementAliases = {
+        "Black cat's other paw": "Find a penny, pick it up",
+        "Black cat's third paw": "Four-leaf overkill", 
+        "Black cat's fourth paw": "Rabbit's footnote",
+        "Black cat's fifth paw": "Knock on wood ",
+        "Black cat's sixth paw": "Jackpot jubilee",
+        "Click god": "Clickbait & Switch",
+        "Click emperor": "Click to the Future",
+        "Click overlord": "Clickety Clique",
+        "Click sovereign": "Clickonomicon",
+        "Click monarch": "Clicks and Stones",
+        "Click deity supreme": "Click It Till You Make It",
+        "Click deity ultimate": "One Does Not Simply Click Once",
+        "Click deity transcendent": "Lord of the Clicks",
+        // Grandma achievements
+        "Doughy doyenne": "All rise for Nana",
+        "Batter nana": "The crinkle collective",
+        "Crust custodian": "Okay elder",
+        "Oven oracle": "Wrinkle monarchy",
+        "Whisk whisperer": "The wrinkling hour",
+        "Proofing matriarch": "Matriarchal meltdown",
+        "Rolling-pin regent": "Cookies before crones",
+        "Larder luminary": "Dust to crust",
+        "Hearth highness": "Bingo bloodbath",
+        "Biscotti baroness": "Supreme doughmother",
+        "Panjandrum of pastry": "The last custodian",
+        // Farm achievements
+        "Till titan": "Little house on the dairy",
+        "Mulch magnate": "The plow thickens",
+        "Loam lord": "Cabbage patch dynasty",
+        "Furrow foreman": "Grazing amazement",
+        "Compost captain": "Field of creams",
+        "Acre archon": "Barn to be wild",
+        "Silo sovereign": "Crops and robbers",
+        "Bushel baron": "Shoveling it in",
+        "Soil sultan supreme": "Emperor of dirt",
+        // Mine achievements
+        "Vein viceroy": "Shafted",
+        "Shaft superintendent": "Shiny object syndrome",
+        "Bedrock baron": "Ore what?",
+        "Lantern lord": "Rubble without a cause",
+        "Ore orchestrator": "Tunnel visionaries",
+        "Strata strategist": "Stalag-might",
+        "Pit prefect": "Pyrite and prejudice",
+        "Pickaxe paragon": "Bedrock 'n roll",
+        "Gravel governor": "Mantle management",
+        "Fault-line foreman": "Hollow crown jewels",
+        "Core sample czar": "Emperor of ore",
+        // Factory achievements
+        "Gear grandee": "Assembly required",
+        "Conveyor commissioner": "Quality unassured",
+        "Sprocket sovereign": "Error 404-manpower not found",
+        "Blueprint boss": "Spare parts department",
+        "Forge forecaster": "Conveyor belters",
+        "Lathe luminary": "Planned obsolescence",
+        "Press primarch": "Punch-card prophets",
+        "QA queen": "Rust in peace",
+        "Throughput theocrat": "Algorithm and blues",
+        "Assembly autarch": "Profit motive engine",
+        "Production paramount": "Lord of the assembly",
+        // Bank achievements
+        "Ledger luminary": "Petty cash splash",
+        "Vault vanguard": "The Invisible Hand That Feeds",
+        "Interest idol": "Under-mattress banking",
+        "Bond baron": "Interest-ing times",
+        "Hedge high priest": "Fee-fi-fo-fund",
+        "Dividend duke": "Liquidity theater",
+        "Capital chancellor": "Risk appetite: unlimited",
+        "Liquidity laureate": "Quantitative cheesing",
+        "Spread sovereign": "Number go up economics",
+        "Reserve regent": "Sovereign cookie fund",
+        // Temple achievements
+        "Biscuit beatified": "Monk mode",
+        "Piety pâtissier": "Ritual and error",
+        "Relic ringmaster": "Chant and deliver",
+        "Canticle captain": "Incensed and consecrated",
+        "Pilgrim provost": "Shrine of the times",
+        "Parable patriarch": "Hallowed be thy grain",
+        "Litany laureate": "Relic and roll",
+        "Censer sentinel": "Pilgrimage of crumbs",
+        "Basilica bigwig": "The cookie pantheon",
+        "Tithe tsar": "Tithes and cookies",
+        "Beatific baker": "Om-nom-nipotent",
+        // Wizard tower achievements
+        "Rune registrar": "Is this your cardamom?",
+        "Hex headmaster": "Rabbit optional, hat mandatory",
+        "Sigil steward": "Wand and done",
+        "Scroll shepherd": "Critical spellcheck failed",
+        "Wand warden": "Tome Raider",
+        "Cauldron chancellor": "Prestidigitation station",
+        "Thaumaturge tribune": "Counterspell culture",
+        "Cantrip curator": "Glitter is a material component",
+        "Leyline lord": "Evocation nation",
+        "Familiar field marshal": "Sphere of influence",
+        "Archwizard emeritus": "The Last Archmage",
+        // Shipment achievements
+        "Manifest maestro": "Door-to-airlock",
+        "Hull highlord": "Contents may shift in zero-G",
+        "Dockyard director": "Fragile: vacuum inside",
+        "Orbital outfitter": "Cosmic courier service",
+        "Freight field marshal": "Porch pirates of Andromeda",
+        "Warpway warden": "Tracking number: ∞",
+        "Cargo cartographer": "Relativistic courier",
+        "Starport sahib": "Orbital rendezvous only",
+        "Payload patriarch": "Return to sender: event horizon",
+        "Customs czar": "Address: Unknown Quadrant",
+        "Interstellar impresario": "Postmaster Galactic",
+        // Alchemy lab achievements
+        "Alembic adjudicator": "Stir-crazy crucible",
+        "Crucible custodian": "Flask dance",
+        "Reagent regent": "Beaker than fiction",
+        "Retort ringleader": "Alloy-oop",
+        "Tincture tycoon": "Distill my beating heart",
+        "Catalyst chancellor": "Lead Zeppelin",
+        "Elixir elder": "Hg Wells",
+        "Precipitate prefect": "Fe-fi-fo-fum",
+        "Distillate duke": "Breaking bread with Walter White",
+        "Sublimate sovereign": "Prima materia manager",
+        "Magnum opus magnate": "The Philosopher's Scone",
+        // Portal achievements
+        "Gate gauger": "Open sesameseed",
+        "Rift rector": "Mind the rift",
+        "Threshold thaum": "Doorway to s'moreway",
+        "Liminal lawgiver": "Contents may phase in transit",
+        "Tesseract trustee": "Wormhole warranty voided",
+        "Nth-entrance envoy": "Glitch in the Crumbatrix",
+        "Event-horizon emir": "Second pantry to the right",
+        "Portal provost": "Liminal sprinkles",
+        "Keymaster kingpin": "Please do not feed the void",
+        "Waystone warden": "Echoes from the other oven",
+        "Multidoor magistrate": "Out past the exit sign",
+        // Time machine achievements
+        "Tick-tock trustee": "Yeasterday",
+        "Chrono chieftain": "Tick-tock, bake o'clock",
+        "Paradox provost": "Back to the batter",
+        "Epoch executor": "Déjà chewed",
+        "Aeon alderman": "Borrowed thyme",
+        "Timeline tactician": "Second breakfast paradox",
+        "Loop legislator": "Next week's news, fresh today",
+        "Era eminence": "Live, die, bake, repeat",
+        "Causality constable": "Entropy-proof frosting",
+        "Continuum custodian": "Past the last tick",
+        "Grandfather-clause governor": "Emperor of when",
+        // Antimatter condenser achievements
+        "Vacuum vicar": "Up and atom!",
+        "Negamass nabob": "Boson buddies",
+        "Quark quartermaster": "Schrödinger's snack",
+        "Hadron high bailiff": "Quantum foam party",
+        "Singularity steward": "Twenty years away (always)",
+        "Boson baron": "Higgs and kisses",
+        "Lepton lieutenant": "Zero-point frosting",
+        "Isotope imperator": "Some like it dark (matter)",
+        "Reactor regnant": "Vacuum energy bar",
+        "Nullspace notary": "Singularity of flavor",
+        "Entropy esquire": "Emperor of mass",
+        // Prism achievements
+        "Photon prefect": "Light reading",
+        "Spectrum superintendent": "Refraction action",
+        "Refraction regent": "Snacktrum of light",
+        "Rainbow registrar": "My cones and rods",
+        "Lumen laureate": "Prism break",
+        "Chromatic chancellor": "Glare force one",
+        "Beam baronet": "Hues Your Own Adventure",
+        "Halo highlord": "Devour the spectrum",
+        "Diffraction duke": "Crown of rainbows",
+        "Radiance regnant": "Radiant consummation",
+        // Chancemaker achievements
+        "Odds officer": "Beginner's lucked-in",
+        "Fortune foreman": "Risk it for the biscuit",
+        "Serendipity superintendent": "Roll, baby, roll",
+        "Gambit governor": "Luck be a ladyfinger",
+        "Probability provost": "RNG on the range",
+        "Fate facilitator": "Monte Carlo kitchen",
+        "Draw director": "Gambler's fallacy, baker's edition",
+        "Jackpot jurist": "Schrödinger's jackpot",
+        "Pips preceptor": "RNGesus take the wheel",
+        "Stochastic sovereign": "Hand of Fate: Full House",
+        "Luck laureate": "RNG seed of fortune",
+        // Fractal engine achievements
+        "Mandel monarch": "Copy-paste-ry",
+        "Koch kingpin": "Again, but smaller",
+        "Cantor custodian": "Edge-case frosting",
+        "Julia jurist": "Mandelbread set",
+        "Sierpiński steward": "Strange attractor, stranger baker",
+        "Iteration imperator": "Recursive taste test",
+        "Recursion regent": "Zoom & enhance & enhance",
+        "Self-similarity sheriff": "The limit does not exist",
+        "Pattern praetor": "Halting? Never heard of it",
+        "Infinite indexer": "The set contains you",
+        "Depth-first demigod": "Emperor of self-similarity",
+        // Javascript console achievements
+        "Lint lord": "F12, open sesame",
+        "Closure captain": "console.log('crumbs')",
+        "Async archon": "Semicolons optional, sprinkles mandatory",
+        "Promise prelate": "Undefined is not a function (nor a cookie)",
+        "Scope sovereign": "await fresh_from_oven()",
+        "Hoist highness": "Event loop-de-loop",
+        "Node notable": "Regexorcism",
+        "Regex regent": "Infinite scroll of dough",
+        "Bundle baron": "Unhandled promise confection",
+        "Sandbox seer": "Single-threaded, single-minded",
+        "Runtime regnant": "Emperor of Runtime",
+        // Idleverse achievements
+        "Multiverse marshal": "Pick-a-verse, any verse",
+        "Replica rector": "Open in new universe",
+        "Shard shepherd": "Meanwhile, in a parallel tab",
+        "Universe underwriter": "Idle hands, infinite plans",
+        "Realm regent": "Press any world to continue",
+        "Cosmos comptroller": "NPC in someone else's save",
+        "Omniverse ombuds": "Cookie of Theseus",
+        "Dimension director": "Crossover episode",
+        "Reality registrar": "Cosmic load balancer",
+        "Plane provost": "Prime instance",
+        "Horizon high steward": "The bakery at the end of everything",
+        // Cortex baker achievements
+        "Synapse superintendent": "Gray matter batter",
+        "Cortex commissioner": "Outside the cookie box",
+        "Gyrus governor": "Prefrontal glaze",
+        "Lobe luminary": "Snap, crackle, synapse",
+        "Neuron notable": "Temporal batch processing",
+        "Axon adjudicator": "Cogito, ergo crumb",
+        "Myelin magistrate": "Galaxy brain, local oven",
+        "Thalamus thegn": "The bicameral ovens",
+        "Cerebellum chancellor": "Theory of crumb",
+        "Prefrontal prelate": "Lobe service",
+        "Mind monarch": "Mind the monarch",
+        // You achievements
+        "Me manager": "Me, myself, and Icing",
+        "Doppel director": "Copy of a copy",
+        "Mirror minister": "Echo chamber",
+        "Clone commissioner": "Self checkout",
+        "Copy chieftain": "You v2.0",
+        "Echo executor": "You v2.0.1 emergency hot fix",
+        "Facsimile foreman": "Me, Inc.",
+        "Reflection regent": "Council of Me",
+        "Duplicate duke": "I, Legion",
+        "Replica regnant": "The one true you",
+        "Self supreme": "Sovereign of the self",
+        
+        // Production achievement aliases
+        "Click (starring Adam Sandler) II": "Click II: the sequel",
+        "Click (starring Adam Sandler) III": "Click III: we couldn't get Adam Sandler so it stars Jerry Seinfeld for some reason",
+        "Click (starring Adam Sandler) IV": "Click IV: 3% fresh on rotten tomatoes",
+        "Frantiquities II": "Scone with the wind",
+        "Frantiquities III": "The flour of youth",
+        "Frantiquities IV": "Bake-ageddon",
+        "Overgrowth II": "Rake in the greens",
+        "Overgrowth III": "The great threshering",
+        "Overgrowth IV": "Bushels of burden",
+        "Sedimentalism II": "Ore d'oeuvres",
+        "Sedimentalism III": "Seismic yield",
+        "Sedimentalism IV": "Billionaire's bedrock",
+        "Labor of love II": "Sweatshop symphony",
+        "Labor of love III": "Cookieconomics 101",
+        "Labor of love IV": "Mass production messiah",
+        "Reverse funnel system II": "Compound interest, compounded",
+        "Reverse funnel system III": "Arbitrage avalanche",
+        "Reverse funnel system IV": "Ponzi à la mode",
+        "Thus spoke you II": "Temple treasury overflow",
+        "Thus spoke you III": "Pantheon payout",
+        "Thus spoke you IV": "Sacred surplus",
+        "Manafest destiny II": "Rabbits per minute",
+        "Manafest destiny III": "Hocus bonus",
+        "Manafest destiny IV": "Magic dividends",
+        "Neither snow nor rain nor heat nor gloom of night II": "Cargo cult classic",
+        "Neither snow nor rain nor heat nor gloom of night III": "Universal basic shipping",
+        "Neither snow nor rain nor heat nor gloom of night IV": "Comet-to-consumer",
+        "I've got the Midas touch II": "Lead into bread",
+        "I've got the Midas touch III": "Philosopher's yield",
+        "I've got the Midas touch IV": "Auronomical returns",
+        "Which eternal lie II": "Spacetime surcharge",
+        "Which eternal lie III": "Interdimensional yield farming",
+        "Which eternal lie IV": "Event-horizon markup",
+        "Déjà vu II": "Future Profits, Past Tense",
+        "Déjà vu III": "Infinite Loop, Infinite Loot",
+        "Déjà vu IV": "Back Pay from the Big Bang",
+        "Powers of Ten II": "Pair production payout",
+        "Powers of Ten III": "Cross-section surplus",
+        "Powers of Ten IV": "Powers of crumbs",
+        "Now the dark days are gone II": "Photons pay dividends",
+        "Now the dark days are gone III": "Spectral surplus",
+        "Now the dark days are gone IV": "Dawn of plenty",
+        "Murphy's wild guess II": "Against all odds & ends",
+        "Murphy's wild guess III": "Monte Carlo windfall",
+        "Murphy's wild guess IV": "Fate-backed securities",
+        "We must go deeper II": "Infinite series surplus",
+        "We must go deeper III": "Geometric mean feast",
+        "We must go deeper IV": "Fractal jackpot",
+        "First-class citizen II": "Cookies per second()++",
+        "First-class citizen III": "Promise.all(paydays)",
+        "First-class citizen IV": "Async and ye shall receive",
+        "Earth-616 II": "Crossover dividends",
+        "Earth-616 III": "Many-Worlds ROI",
+        "Earth-616 IV": "Continuity bonus",
+        "Unthinkable II": "Brainstorm dividend",
+        "Unthinkable III": "Thought economy boom",
+        "Unthinkable IV": "Neural net worth",
+        "That's all you II": "Personal growth",
+        "That's all you III": "Economies of selves",
+        "That's all you IV": "Self-sustaining singularity"
+    };
+
     // Centralized save scheduler to avoid spamming saves
     function requestModSave(immediate) {
         try {
@@ -526,6 +830,34 @@
 
     // Exact building counts for "The Final Countdown" challenge (20 down to 1)
     var FINAL_COUNTDOWN_REQUIRED_COUNTS = {'Cursor': 20, 'Grandma': 19, 'Farm': 18, 'Mine': 17, 'Factory': 16, 'Bank': 15, 'Temple': 14, 'Wizard tower': 13, 'Shipment': 12, 'Alchemy lab': 11, 'Portal': 10, 'Time machine': 9, 'Antimatter condenser': 8, 'Prism': 7, 'Chancemaker': 6, 'Fractal engine': 5, 'Javascript console': 4, 'Idleverse': 3, 'Cortex baker': 2, 'You': 1};
+    
+    // Alternative building counts for "The Final Countdown" challenge (15 down to 0)
+    var FINAL_COUNTDOWN_REQUIRED_COUNTS_ALT = {'Cursor': 15, 'Grandma': 14, 'Farm': 13, 'Mine': 12, 'Factory': 11, 'Bank': 10, 'Temple': 9, 'Wizard tower': 8, 'Shipment': 7, 'Alchemy lab': 6, 'Portal': 5, 'Time machine': 4, 'Antimatter condenser': 3, 'Prism': 2, 'Chancemaker': 1, 'Fractal engine': 0, 'Javascript console': 0, 'Idleverse': 0, 'Cortex baker': 0, 'You': 0};
+    
+    // Helper function to check if either Final Countdown set is satisfied
+    function checkFinalCountdownAchievement() {
+        // Check first set (20 down to 1)
+        var allBuildingsCorrect = true;
+        for (var buildingName in FINAL_COUNTDOWN_REQUIRED_COUNTS) {
+            var building = Game.Objects[buildingName];
+            if (!building || building.amount !== FINAL_COUNTDOWN_REQUIRED_COUNTS[buildingName]) {
+                allBuildingsCorrect = false;
+                break;
+            }
+        }
+        if (allBuildingsCorrect) return true;
+        
+        // Check second set (15 down to 0)
+        allBuildingsCorrect = true;
+        for (var buildingName in FINAL_COUNTDOWN_REQUIRED_COUNTS_ALT) {
+            var building = Game.Objects[buildingName];
+            if (!building || building.amount !== FINAL_COUNTDOWN_REQUIRED_COUNTS_ALT[buildingName]) {
+                allBuildingsCorrect = false;
+                break;
+            }
+        }
+        return allBuildingsCorrect;
+    }
     
     // ===== MENU SYSTEM FUNCTIONS =====
     
@@ -2085,8 +2417,14 @@
             }
         }
         
+        // Check for flavor text and append it to the description
+        var finalDesc = desc;
+        if (achievementFlavorText && achievementFlavorText[name]) {
+            finalDesc = desc + '<br><q>' + achievementFlavorText[name] + '</q>';
+        }
+        
         // Create achievement using the vanilla pattern
-        var ach = new Game.Achievement(name, desc, finalIcon);
+        var ach = new Game.Achievement(name, finalDesc, finalIcon);
         
 
         
@@ -2095,12 +2433,12 @@
         ach.name = name;
         ach.dname = name;
         ach.shortName = name; // Required for Game.Win notification
-        ach.desc = desc;
-        ach.baseDesc = desc;
+        ach.desc = finalDesc;
+        ach.baseDesc = finalDesc;
         
         // Set basic properties
-        ach.ddesc = desc;
-        ach.desc = desc; // Ensure desc is set
+        ach.ddesc = finalDesc;
+        ach.desc = finalDesc; // Ensure desc is set
       
         // Set achievement pool based on shadow mode setting
         if (shadowAchievementMode) {
@@ -2141,6 +2479,7 @@
         // Add source text with mod icon and name
         var sourceText = '<div style="font-size:80%;text-align:center;">From <span style="margin: 0 4px;">' + tinyIcon(modIcon) + '</span> ' + modName + '</div><div class="line"></div>';
         ach.ddesc = sourceText + ach.ddesc;
+        ach.desc = sourceText + ach.desc;
         
         // Store requirement function for checking
         if (requirement) {
@@ -3333,18 +3672,8 @@
                         }
                         if (countdownBuildingsSold > 0) return false;
                         
-                        // Define the exact building counts required (20 down to 1)
-                        var requiredCounts = FINAL_COUNTDOWN_REQUIRED_COUNTS;
-                        
-                        // Check if each building has exactly the required amount
-                        for (var buildingName in requiredCounts) {
-                            var building = Game.Objects[buildingName];
-                            if (!building || building.amount !== requiredCounts[buildingName]) {
-                                return false;
-                            }
-                        }
-                        
-                        return true;
+                        // Check if either Final Countdown set is satisfied
+                        return checkFinalCountdownAchievement();
                     case 'hardcoreNoKittens':
                         // Check if in Born Again mode (challenge run or hasn't ascended yet)
                         if (!(Game.ascensionMode == 1 || Game.resets == 0)) return false;
@@ -3550,6 +3879,78 @@
         };
     }
     
+    // Flavor text data structure for achievements
+    var achievementFlavorText = {
+        // Building achievements
+        "Council of Me": "All in favor? Aye, aye, aye. Motion passes unanimously...again.",
+        "I, Legion": "We are many; bring plates. HR insists you can't unionize with yourself.",
+        "Galaxy brain, local oven": "Big ideas, small kitchen. The cosmos smells like sugar.",
+        "The bakery at the end of everything": "I was told it was suppose to be a restaurant, is it a bakery in a restaurant or something?",
+        "Crossover episode": "Previously, on every timeline. Guest stars: everyone who ever existed.",
+        "Meanwhile, in a parallel tab": "Other you forgot to savescrum. That's why this you is in charge.",
+        "console.log('crumbs')": "Output: irresistible.",
+        "The set contains you": "And you contain you too.",
+        "The limit does not exist": "Convergence tastes like triumph, and a little bit like cookies.",
+        "Hand of Fate: Full House": "All in, all yum. Destiny deals from the bottom of the tin.",
+        "Strange attractor, stranger baker": "Chaos, but tasty.",
+        "Gambler's fallacy, baker's edition": "This cookie is due. Mathematics disagrees; your streak doesn't.",
+        "RNG on the range": "Home, home on the variance. Where the odds and the bytecodes play.",
+        "Devour the spectrum": "Seven flavors, one bite. The aftertaste is sunrise.",
+        "Emperor of mass": "Heavier lies the crown.",
+        "Twenty years away (always)": "Sometimes it is fifteen years but those people are just crazy.",
+        "Next week's news, fresh today": "Spoiler: cookies trend up.",
+        "Déjà chewed": "Haven't we eaten this cookie already?",
+        "Out past the exit sign": "Even the arrows get lost. Your compass now points to 'hmm.'",
+        "Glitch in the Crumbatrix": "There is no spoon, only spatula. Déjà vu tastes like vanilla.",
+        "Contents may phase in transit": "Some assembly of atoms required. Warranty void if observed.",
+        "Postmaster Galactic": "Neither snow nor ion storms nor the heat death of the universe shall stay these couriers.",
+        "Return to sender: event horizon": "Once the price goes in, no refunds escape. That's just physics and policy.",
+        "Porch pirates of Andromeda": "They leave polite ransom notes in nebula ink. You leave decoy boxes full of kale.",
+        "Tracking number: ∞": "Estimated arrival: yes. Please allow several lifetimes for delivery.",
+        "Door-to-airlock": "Signature required: beep or boop.",
+        "Is this your cardamom?": "Ta-da: it was in your scone all along. The crowd gasps; the wizard bows.",
+        "Glitter is a material component": "Cast Clean-Up at level 9. Sparkle is forever; dignity is not.",
+        "Om-nom-nipotent": "All-powerful, all-devouring, lightly buttered. The universe is mercifully double chocolate.",
+        "Pilgrimage of crumbs": "The path is sticky but true. Pilgrims arrive lighter; leave heavier.",
+        "Monk mode": "Silent, except for the constant chewing. Enlightenment tastes like warm sugar.",
+        "Number go up economics": "Our favorite graph direction. If it doesn't go up just turn it upside down.",
+        "Planned obsolescence": "Make sure to deny doing it.",
+        "Stalag-might": "Rock-solid character growth. Drip by drip, your empire ossifies.",
+        "Little house on the dairy": "Where the butter churns and the plot thickens. Family drama, farm-fresh.",
+        "Field of creams": "If you churn it, they will come.",
+        "Okay elder": "Respect your elders.",
+        "The crinkle collective": "United they stand, divided they nap. Either way, production spikes.",
+        "Phalanx formation": "Ten tiny soldiers. The enemy is the latency itself.",
+        "Finger guns": "Pew-pew-click-click. Safety's off, cooldown's zero.",
+        "First Person Plural (Lv 20)": "We did it. We're very proud of us.",
+        "Keeper of the Uncountable (Lv 20)": "You file realities by vibe and it somehow works.",
+        "Minute handler (Lv 15)": "You juggle sixty little problems every hour. None hit the floor.",
+        "Quartermaster of Orbits (Lv 15)": "Every orbit is a delivery route if you squint.",
+        "Master of the Mint (Lv 20)": "The dies sing your name, and the coins chorus back.",
+        "Click II: the sequel": "Bigger budget, lazier plot: more clicks, less character development. Critics agree: it still slaps.",
+        "Click III: we couldn't get Adam Sandler so it stars Jerry Seinfeld for some reason": "What's the deal with cursors? They're always pointing!",
+        "Click IV: 3% fresh on rotten tomatoes": "So bad it loops around to cult classic.",
+        "Seismic yield": "Returns measured on the Richter scale. Aftershocks include spontaneous high-fives.",
+        "Cookieconomics 101": "Intro course: supply rises with temperature. Final exam is edible.",
+        "Compound interest, compounded": "Interest on interest until your spreadsheet looks like fan fiction. The good kind.",
+        "Ponzi à la mode": "Layered promises topped with denial and a cherry. Served cold; collapses when warm.",
+        "Temple treasury overflow": "When tithes exceed trusses, build a bigger plate. Miracles audited quarterly.",
+        "Magic dividends": "Don't show this to the auditors; line item reads 'Enchantment Revenue.' It balances itself. Literally.",
+        "Hocus bonus": "Management discovered magic works better than memos. Apply spell to receive perk.",
+        "Cargo cult classic": "Wave the sticks, chant the SKU, and somehow the crates arrive. Five stars, would invoke again.",
+        "Universal basic shipping": "A package for every citizen, and a new citizen for every package. Policy approved by the cosmos.",
+        "Interdimensional yield farming": "Seed in Alpha, harvest in Beta, sell in the universe with the best exchange rate. Mind the customs.",
+        "Future Profits, Past Tense": "We booked the gains before we made them. Time travel is the ultimate accrual.",
+        "Infinite Loop, Infinite Loot": "while(true){click++; profit++;} // HR says you can take a break, theoretically.",
+        "Back Pay from the Big Bang": "Retroactive compensation for 13.8 billion years of opportunity cost. Payroll needed a bigger field.",
+        "Fate-backed securities": "AAA-rated by the Fates themselves.",
+        "Infinite series surplus": "Each term is small; the sum is outrageous. Convergence has never tasted so decadent.",
+        "Crossover dividends": "Your other selves paid out because you remembered to in this timeline. That's synergy.",
+        "Many-Worlds ROI": "Every outcome wins somewhere; you're just skimming the multiversal mean.",
+        "Personal growth": "You leveled up and took yourself with you.",
+        "Economies of selves": "Clones cooperate, margins explode. HR insists you can't unionize with yourself."
+    };
+
     // Achievement data structure
     var achievementData = {
         buildings: {
@@ -3559,115 +3960,115 @@
                 vanillaTarget: "A round of applause",
                 customIcons: [[0, 0, getSpriteSheet('custom')], [0, 1, getSpriteSheet('custom')], [0, 2, getSpriteSheet('custom')], [0, 3, getSpriteSheet('custom')], [0, 4, getSpriteSheet('custom')], [0, 5, getSpriteSheet('custom')], [0, 6, getSpriteSheet('custom')], [0, 7, getSpriteSheet('custom')], [0, 8, getSpriteSheet('custom')], [0, 9, getSpriteSheet('custom')], [0, 10, getSpriteSheet('custom')]]            },
             'grandma': {
-                names: ["Doughy doyenne", "Batter nana", "Crust custodian", "Oven oracle", "Whisk whisperer", "Proofing matriarch", "Rolling-pin regent", "Larder luminary", "Hearth highness", "Biscotti baroness", "Panjandrum of pastry"],
+                names: ["All rise for Nana", "The crinkle collective", "Okay elder", "Wrinkle monarchy", "The wrinkling hour", "Matriarchal meltdown", "Cookies before crones", "Dust to crust", "Bingo bloodbath", "Supreme doughmother", "The last custodian"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "And now you're even older",
                 customIcons: [[1, 0, getSpriteSheet('custom')], [1, 1, getSpriteSheet('custom')], [1, 2, getSpriteSheet('custom')], [1, 3, getSpriteSheet('custom')], [1, 4, getSpriteSheet('custom')], [1, 5, getSpriteSheet('custom')], [1, 6, getSpriteSheet('custom')], [1, 7, getSpriteSheet('custom')], [1, 8, getSpriteSheet('custom')], [1, 9, getSpriteSheet('custom')], [1, 10, getSpriteSheet('custom')]]
             },
             'farm': {
-                names: ["Till titan", "Mulch magnate", "Loam lord", "Furrow foreman", "Compost captain", "Acre archon", "Silo sovereign", "Bushel baron", "Seed syndicate", "Harvest high table", "Soil sultan supreme"],
+                names: ["Little house on the dairy", "The plow thickens", "Cabbage patch dynasty", "Grazing amazement", "Field of creams", "Barn to be wild", "Crops and robbers", "Shoveling it in", "Seed syndicate", "Harvest high table", "Emperor of dirt"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Au naturel",
                 customIcons: [[2, 0, getSpriteSheet('custom')], [2, 1, getSpriteSheet('custom')], [2, 2, getSpriteSheet('custom')], [2, 3, getSpriteSheet('custom')], [2, 4, getSpriteSheet('custom')], [2, 5, getSpriteSheet('custom')], [2, 6, getSpriteSheet('custom')], [2, 7, getSpriteSheet('custom')], [2, 8, getSpriteSheet('custom')], [2, 9, getSpriteSheet('custom')], [2, 10, getSpriteSheet('custom')]]
             },
             'mine': {
-                names: ["Vein viceroy", "Shaft superintendent", "Bedrock baron", "Lantern lord", "Ore orchestrator", "Strata strategist", "Pit prefect", "Pickaxe paragon", "Gravel governor", "Fault-line foreman", "Core sample czar"],
+                names: ["Shafted", "Shiny object syndrome", "Ore what?", "Rubble without a cause", "Tunnel visionaries", "Stalag-might", "Pyrite and prejudice", "Bedrock 'n roll", "Mantle management", "Hollow crown jewels", "Emperor of ore"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Dirt-rich",
                 customIcons: [[3, 0, getSpriteSheet('custom')], [3, 1, getSpriteSheet('custom')], [3, 2, getSpriteSheet('custom')], [3, 3, getSpriteSheet('custom')], [3, 4, getSpriteSheet('custom')], [3, 5, getSpriteSheet('custom')], [3, 6, getSpriteSheet('custom')], [3, 7, getSpriteSheet('custom')], [3, 8, getSpriteSheet('custom')], [3, 9, getSpriteSheet('custom')], [3, 10, getSpriteSheet('custom')]]
             },
             'factory': {
-                names: ["Gear grandee", "Conveyor commissioner", "Sprocket sovereign", "Blueprint boss", "Forge forecaster", "Lathe luminary", "Press primarch", "QA queen", "Throughput theocrat", "Assembly autarch", "Production paramount"],
+                names: ["Assembly required", "Quality unassured", "Error 404-manpower not found", "Spare parts department", "Conveyor belters", "Planned obsolescence", "Punch-card prophets", "Rust in peace", "Algorithm and blues", "Profit motive engine", "Lord of the assembly"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Bots build bots",
                 customIcons: [[4, 0, getSpriteSheet('custom')], [4, 1, getSpriteSheet('custom')], [4, 2, getSpriteSheet('custom')], [4, 3, getSpriteSheet('custom')], [4, 4, getSpriteSheet('custom')], [4, 5, getSpriteSheet('custom')], [4, 6, getSpriteSheet('custom')], [4, 7, getSpriteSheet('custom')], [4, 8, getSpriteSheet('custom')], [4, 9, getSpriteSheet('custom')], [4, 10, getSpriteSheet('custom')]]
             },
             'bank': {
-                names: ["Ledger luminary", "Vault vanguard", "Interest idol", "Bond baron", "Hedge high priest", "Dividend duke", "Capital chancellor", "Liquidity laureate", "Spread sovereign", "Reserve regent", "Seigniorage supreme"],
+                names: ["Petty cash splash", "The Invisible Hand That Feeds", "Under-mattress banking", "Interest-ing times", "Fee-fi-fo-fund", "Liquidity theater", "Risk appetite: unlimited", "Quantitative cheesing", "Number go up economics", "Sovereign cookie fund", "Seigniorage supreme"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Getting that bag",
                 customIcons: [[13, 0, getSpriteSheet('custom')], [13, 1, getSpriteSheet('custom')], [13, 2, getSpriteSheet('custom')], [13, 3, getSpriteSheet('custom')], [13, 4, getSpriteSheet('custom')], [13, 5, getSpriteSheet('custom')], [13, 6, getSpriteSheet('custom')], [13, 7, getSpriteSheet('custom')], [13, 8, getSpriteSheet('custom')], [13, 9, getSpriteSheet('custom')], [13, 10, getSpriteSheet('custom')]]
             },
             'temple': {
-                names: ["Biscuit beatified", "Piety pâtissier", "Relic ringmaster", "Canticle captain", "Pilgrim provost", "Parable patriarch", "Litany laureate", "Censer sentinel", "Basilica bigwig", "Tithe tsar", "Beatific baker"],
+                names: ["Monk mode", "Ritual and error", "Chant and deliver", "Incensed and consecrated", "Shrine of the times", "Hallowed be thy grain", "Relic and roll", "Pilgrimage of crumbs", "The cookie pantheon", "Tithes and cookies", "Om-nom-nipotent"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "The leader is good, the leader is great",
                 customIcons: [[14, 0, getSpriteSheet('custom')], [14, 1, getSpriteSheet('custom')], [14, 2, getSpriteSheet('custom')], [14, 3, getSpriteSheet('custom')], [14, 4, getSpriteSheet('custom')], [14, 5, getSpriteSheet('custom')], [14, 6, getSpriteSheet('custom')], [14, 7, getSpriteSheet('custom')], [14, 8, getSpriteSheet('custom')], [14, 9, getSpriteSheet('custom')], [14, 10, getSpriteSheet('custom')]]
             },
             'wizard tower': {
-                names: ["Rune registrar", "Hex headmaster", "Sigil steward", "Scroll shepherd", "Wand warden", "Cauldron chancellor", "Thaumaturge tribune", "Cantrip curator", "Leyline lord", "Familiar field marshal", "Archwizard emeritus"],
+                names: ["Is this your cardamom?", "Rabbit optional, hat mandatory", "Wand and done", "Critical spellcheck failed", "Tome Raider", "Prestidigitation station", "Counterspell culture", "Glitter is a material component", "Evocation nation", "Sphere of influence", "The Last Archmage"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "You don't think they could've used... it couldn't have been ma-",
                 customIcons: [[15, 0, getSpriteSheet('custom')], [15, 1, getSpriteSheet('custom')], [15, 2, getSpriteSheet('custom')], [15, 3, getSpriteSheet('custom')], [15, 4, getSpriteSheet('custom')], [15, 5, getSpriteSheet('custom')], [15, 6, getSpriteSheet('custom')], [15, 7, getSpriteSheet('custom')], [15, 8, getSpriteSheet('custom')], [15, 9, getSpriteSheet('custom')], [15, 10, getSpriteSheet('custom')]]
             },
             'shipment': {
-                names: ["Manifest maestro", "Hull highlord", "Dockyard director", "Orbital outfitter", "Freight field marshal", "Warpway warden", "Cargo cartographer", "Starport sahib", "Payload patriarch", "Customs czar", "Interstellar impresario"],
+                names: ["Door-to-airlock", "Contents may shift in zero-G", "Fragile: vacuum inside", "Cosmic courier service", "Porch pirates of Andromeda", "Tracking number: ∞", "Relativistic courier", "Orbital rendezvous only", "Return to sender: event horizon", "Address: Unknown Quadrant", "Postmaster Galactic"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Signed, sealed, delivered",
                 customIcons: [[5, 0, getSpriteSheet('custom')], [5, 1, getSpriteSheet('custom')], [5, 2, getSpriteSheet('custom')], [5, 3, getSpriteSheet('custom')], [5, 4, getSpriteSheet('custom')], [5, 5, getSpriteSheet('custom')], [5, 6, getSpriteSheet('custom')], [5, 7, getSpriteSheet('custom')], [5, 8, getSpriteSheet('custom')], [5, 9, getSpriteSheet('custom')], [5, 10, getSpriteSheet('custom')]]
             },
             'alchemy lab': {
-                names: ["Alembic adjudicator", "Crucible custodian", "Reagent regent", "Retort ringleader", "Tincture tycoon", "Catalyst chancellor", "Elixir elder", "Precipitate prefect", "Distillate duke", "Sublimate sovereign", "Magnum opus magnate"],
+                names: ["Stir-crazy crucible", "Flask dance", "Beaker than fiction", "Alloy-oop", "Distill my beating heart", "Lead Zeppelin", "Hg Wells", "Fe-fi-fo-fum", "Breaking bread with Walter White", "Prima materia manager", "The Philosopher's Scone"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Sugar, spice, and everything nice",
                 customIcons: [[6, 0, getSpriteSheet('custom')], [6, 1, getSpriteSheet('custom')], [6, 2, getSpriteSheet('custom')], [6, 3, getSpriteSheet('custom')], [6, 4, getSpriteSheet('custom')], [6, 5, getSpriteSheet('custom')], [6, 6, getSpriteSheet('custom')], [6, 7, getSpriteSheet('custom')], [6, 8, getSpriteSheet('custom')], [6, 9, getSpriteSheet('custom')], [6, 10, getSpriteSheet('custom')]]
             },
             'portal': {
-                names: ["Gate gauger", "Rift rector", "Threshold thaum", "Liminal lawgiver", "Tesseract trustee", "Nth-entrance envoy", "Event-horizon emir", "Portal provost", "Keymaster kingpin", "Waystone warden", "Multidoor magistrate"],
+                names: ["Open sesameseed", "Mind the rift", "Doorway to s'moreway", "Contents may phase in transit", "Wormhole warranty voided", "Glitch in the Crumbatrix", "Second pantry to the right", "Liminal sprinkles", "Please do not feed the void", "Echoes from the other oven", "Out past the exit sign"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Not even remotely close to Kansas anymore",
                 customIcons: [[7, 0, getSpriteSheet('custom')], [7, 1, getSpriteSheet('custom')], [7, 2, getSpriteSheet('custom')], [7, 3, getSpriteSheet('custom')], [7, 4, getSpriteSheet('custom')], [7, 5, getSpriteSheet('custom')], [7, 6, getSpriteSheet('custom')], [7, 7, getSpriteSheet('custom')], [7, 8, getSpriteSheet('custom')], [7, 9, getSpriteSheet('custom')], [7, 10, getSpriteSheet('custom')]]
             },
             'time machine': {
-                names: ["Tick-tock trustee", "Chrono chieftain", "Paradox provost", "Epoch executor", "Aeon alderman", "Timeline tactician", "Loop legislator", "Era eminence", "Causality constable", "Continuum custodian", "Grandfather-clause governor"],
+                names: ["Yeasterday", "Tick-tock, bake o'clock", "Back to the batter", "Déjà chewed", "Borrowed thyme", "Second breakfast paradox", "Next week's news, fresh today", "Live, die, bake, repeat", "Entropy-proof frosting", "Past the last tick", "Emperor of when"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "I only meant to stay a while",
                 customIcons: [[8, 0, getSpriteSheet('custom')], [8, 1, getSpriteSheet('custom')], [8, 2, getSpriteSheet('custom')], [8, 3, getSpriteSheet('custom')], [8, 4, getSpriteSheet('custom')], [8, 5, getSpriteSheet('custom')], [8, 6, getSpriteSheet('custom')], [8, 7, getSpriteSheet('custom')], [8, 8, getSpriteSheet('custom')], [8, 9, getSpriteSheet('custom')], [8, 10, getSpriteSheet('custom')]]
             },
             'antimatter condenser': {
-                names: ["Vacuum vicar", "Negamass nabob", "Quark quartermaster", "Hadron high bailiff", "Singularity steward", "Boson baron", "Lepton lieutenant", "Isotope imperator", "Reactor regnant", "Nullspace notary", "Entropy esquire"],
+                names: ["Up and atom!", "Boson buddies", "Schrödinger's snack", "Quantum foam party", "Twenty years away (always)", "Higgs and kisses", "Zero-point frosting", "Some like it dark (matter)", "Vacuum energy bar", "Singularity of flavor", "Emperor of mass"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Not 20 years away forever",
                 customIcons: [[11, 0, getSpriteSheet('custom')], [11, 1, getSpriteSheet('custom')], [11, 2, getSpriteSheet('custom')], [11, 3, getSpriteSheet('custom')], [11, 4, getSpriteSheet('custom')], [11, 5, getSpriteSheet('custom')], [11, 6, getSpriteSheet('custom')], [11, 7, getSpriteSheet('custom')], [11, 8, getSpriteSheet('custom')], [11, 9, getSpriteSheet('custom')], [11, 10, getSpriteSheet('custom')]]
             },
             'prism': {
-                names: ["Photon prefect", "Spectrum superintendent", "Refraction regent", "Rainbow registrar", "Lumen laureate", "Prism prelate", "Chromatic chancellor", "Beam baronet", "Halo highlord", "Diffraction duke", "Radiance regnant"],
+                names: ["Light reading", "Refraction action", "Snacktrum of light", "My cones and rods", "Prism break", "Prism prelate", "Glare force one", "Hues Your Own Adventure", "Devour the spectrum", "Crown of rainbows", "Radiant consummation"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Bright side of the Moon",
                 customIcons: [[12, 0, getSpriteSheet('custom')], [12, 1, getSpriteSheet('custom')], [12, 2, getSpriteSheet('custom')], [12, 3, getSpriteSheet('custom')], [12, 4, getSpriteSheet('custom')], [12, 5, getSpriteSheet('custom')], [12, 6, getSpriteSheet('custom')], [12, 7, getSpriteSheet('custom')], [12, 8, getSpriteSheet('custom')], [12, 9, getSpriteSheet('custom')], [12, 10, getSpriteSheet('custom')]]
             },
             'chancemaker': {
-                names: ["Odds officer", "Fortune foreman", "Serendipity superintendent", "Gambit governor", "Probability provost", "Fate facilitator", "Draw director", "Jackpot jurist", "Pips preceptor", "Stochastic sovereign", "Luck laureate"],
+                names: ["Beginner's lucked-in", "Risk it for the biscuit", "Roll, baby, roll", "Luck be a ladyfinger", "RNG on the range", "Monte Carlo kitchen", "Gambler's fallacy, baker's edition", "Schrödinger's jackpot", "RNGesus take the wheel", "Hand of Fate: Full House", "RNG seed of fortune"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Riding the Mersenne twister",
                 customIcons: [[17, 0, getSpriteSheet('custom')], [17, 1, getSpriteSheet('custom')], [17, 2, getSpriteSheet('custom')], [17, 3, getSpriteSheet('custom')], [17, 4, getSpriteSheet('custom')], [17, 5, getSpriteSheet('custom')], [17, 6, getSpriteSheet('custom')], [17, 7, getSpriteSheet('custom')], [17, 8, getSpriteSheet('custom')], [17, 9, getSpriteSheet('custom')], [17, 10, getSpriteSheet('custom')]]
             },
             'fractal engine': {
-                names: ["Mandel monarch", "Koch kingpin", "Cantor custodian", "Julia jurist", "Sierpiński steward", "Iteration imperator", "Recursion regent", "Self-similarity sheriff", "Pattern praetor", "Infinite indexer", "Depth-first demigod"],
+                names: ["Copy-paste-ry", "Again, but smaller", "Edge-case frosting", "Mandelbread set", "Strange attractor, stranger baker", "Recursive taste test", "Zoom & enhance & enhance", "The limit does not exist", "Halting? Never heard of it", "The set contains you", "Emperor of self-similarity"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Divide and conquer",
                 customIcons: [[18, 0, getSpriteSheet('custom')], [18, 1, getSpriteSheet('custom')], [18, 2, getSpriteSheet('custom')], [18, 3, getSpriteSheet('custom')], [18, 4, getSpriteSheet('custom')], [18, 5, getSpriteSheet('custom')], [18, 6, getSpriteSheet('custom')], [18, 7, getSpriteSheet('custom')], [18, 8, getSpriteSheet('custom')], [18, 9, getSpriteSheet('custom')], [18, 10, getSpriteSheet('custom')]]
             },
             'javascript console': {
-                names: ["Lint lord", "Closure captain", "Async archon", "Promise prelate", "Scope sovereign", "Hoist highness", "Node notable", "Regex regent", "Bundle baron", "Sandbox seer", "Runtime regnant"],
+                names: ["F12, open sesame", "console.log('crumbs')", "Semicolons optional, sprinkles mandatory", "Undefined is not a function (nor a cookie)", "await fresh_from_oven()", "Event loop-de-loop", "Regexorcism", "Infinite scroll of dough", "Unhandled promise confection", "Single-threaded, single-minded", "Emperor of Runtime"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Pebcakes",
                 customIcons: [[19, 0, getSpriteSheet('custom')], [19, 1, getSpriteSheet('custom')], [19, 2, getSpriteSheet('custom')], [19, 3, getSpriteSheet('custom')], [19, 4, getSpriteSheet('custom')], [19, 5, getSpriteSheet('custom')], [19, 6, getSpriteSheet('custom')], [19, 7, getSpriteSheet('custom')], [19, 8, getSpriteSheet('custom')], [19, 9, getSpriteSheet('custom')], [19, 10, getSpriteSheet('custom')]]
             },
             'idleverse': {
-                names: ["Multiverse marshal", "Replica rector", "Shard shepherd", "Universe underwriter", "Realm regent", "Cosmos comptroller", "Omniverse ombuds", "Dimension director", "Reality registrar", "Plane provost", "Horizon high steward"],
+                names: ["Pick-a-verse, any verse", "Open in new universe", "Meanwhile, in a parallel tab", "Idle hands, infinite plans", "Press any world to continue", "NPC in someone else's save", "Cookie of Theseus", "Crossover episode", "Cosmic load balancer", "Prime instance", "The bakery at the end of everything"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Greener on the other sides",
                 customIcons: [[20, 0, getSpriteSheet('custom')], [20, 1, getSpriteSheet('custom')], [20, 2, getSpriteSheet('custom')], [20, 3, getSpriteSheet('custom')], [20, 4, getSpriteSheet('custom')], [20, 5, getSpriteSheet('custom')], [20, 6, getSpriteSheet('custom')], [20, 7, getSpriteSheet('custom')], [20, 8, getSpriteSheet('custom')], [20, 9, getSpriteSheet('custom')], [20, 10, getSpriteSheet('custom')]]
             },
             'cortex baker': {
-                names: ["Synapse superintendent", "Cortex commissioner", "Gyrus governor", "Lobe luminary", "Neuron notable", "Axon adjudicator", "Myelin magistrate", "Thalamus thegn", "Cerebellum chancellor", "Prefrontal prelate", "Mind monarch"],
+                names: ["Gray matter batter", "Outside the cookie box", "Prefrontal glaze", "Snap, crackle, synapse", "Temporal batch processing", "Cogito, ergo crumb", "Galaxy brain, local oven", "The bicameral ovens", "Theory of crumb", "Lobe service", "Mind the monarch"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Where is my mind",
                 customIcons: [[21, 0, getSpriteSheet('custom')], [21, 1, getSpriteSheet('custom')], [21, 2, getSpriteSheet('custom')], [21, 3, getSpriteSheet('custom')], [21, 4, getSpriteSheet('custom')], [21, 5, getSpriteSheet('custom')], [21, 6, getSpriteSheet('custom')], [21, 7, getSpriteSheet('custom')], [21, 8, getSpriteSheet('custom')], [21, 9, getSpriteSheet('custom')], [21, 10, getSpriteSheet('custom')]]
             },
             'You': {
-                names: ["Me manager", "Doppel director", "Mirror minister", "Clone commissioner", "Copy chieftain", "Echo executor", "Facsimile foreman", "Reflection regent", "Duplicate duke", "Replica regnant", "Self supreme"],
+                names: ["Me, myself, and Icing", "Copy of a copy", "Echo chamber", "Self checkout", "You v2.0", "You v2.0.1 emergency hot fix", "Me, Inc.", "Council of Me", "I, Legion", "The one true you", "Sovereign of the self"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
                 vanillaTarget: "Introspection",
                 customIcons: [[22, 0, getSpriteSheet('custom')], [22, 1, getSpriteSheet('custom')], [22, 2, getSpriteSheet('custom')], [22, 3, getSpriteSheet('custom')], [22, 4, getSpriteSheet('custom')], [22, 5, getSpriteSheet('custom')], [22, 6, getSpriteSheet('custom')], [22, 7, getSpriteSheet('custom')], [22, 8, getSpriteSheet('custom')], [22, 9, getSpriteSheet('custom')], [22, 10, getSpriteSheet('custom')]]
@@ -3682,7 +4083,7 @@
                 customIcons: [[0, 12, getSpriteSheet('custom')], [1, 12, getSpriteSheet('custom')], [2, 12, getSpriteSheet('custom')], [3, 12, getSpriteSheet('custom')], [4, 12, getSpriteSheet('custom')], [5, 12, getSpriteSheet('custom')], [6, 12, getSpriteSheet('custom')], [7, 12, getSpriteSheet('custom')], [8, 12, getSpriteSheet('custom')]]
             },
             click: {
-                names: ["Click god", "Click emperor", "Click overlord", "Click sovereign", "Click monarch", "Click deity supreme", "Click deity ultimate", "Click deity transcendent", "Click of the Titans"],
+                names: ["Clickbait & Switch", "Click to the Future", "Clickety Clique", "Clickonomicon", "Clicks and Stones", "Click It Till You Make It", "One Does Not Simply Click Once", "Lord of the Clicks", "Click of the Titans"],
                 thresholds: [1e63, 1e69, 1e75, 1e81, 1e87, 1e93, 1e99, 1e105, "clickOfTitans"],
                 descs: ["Make <b>1 vigintillion</b> from clicking.<q>Tired finger yet?</q>", "Make <b>1 duovigintillion</b> from clicking.", "Make <b>1 quattuorvigintillion</b> from clicking.", "Make <b>1 sexvigintillion</b> from clicking.", "Make <b>1 octovigintillion</b> from clicking.", "Make <b>1 trigintillion</b> from clicking.", "Make <b>1 duotrigintillion</b> from clicking.", "Make <b>1 quattuortrigintillion</b> from clicking.", "Generate <b>1 year of raw CPS</b> in a single cookie click.<q>One click to rule them all!</q>"],
                 vanillaTarget: "What's not clicking",
@@ -3716,9 +4117,9 @@
                 customIcons: [[19, 17, getSpriteSheet('custom')], [19, 16, getSpriteSheet('custom')], [19, 15, getSpriteSheet('custom')], [19, 14, getSpriteSheet('custom')]]
             },
             goldenCookies: {
-                names: ["Black cat's other paw", "Black cat's third paw", "Black cat's fourth paw", "Black cat's fifth paw", "Black cat's sixth paw", "Black cat's seventh paw"],
+                names: ["Find a penny, pick it up", "Four-leaf overkill", "Rabbit's footnote", "Knock on wood ", "Jackpot jubilee", "Black cat's seventh paw"],
                 thresholds: [17777, 37777, 47777, 57777, 67777, 77777],
-                descs: ["Click <b>17,777 golden cookies</b> across all ascensions.<q>Not all that glitters is gold.</q>", "Click <b>37,777 golden cookies</b> across all ascensions.", "Click <b>47,777 golden cookies</b> across all ascensions.", "Click <b>57,777 golden cookies</b> across all ascensions.", "Click <b>67,777 golden cookies</b> across all ascensions.", "Click <b>77,777 golden cookies</b> across all ascensions.<q>Golden luck, plan a trip to Las Vegas and cash in on it.</q>"],
+                descs: ["Click <b>17,777 golden cookies</b> across all ascensions.<q>A copper start for a golden habit. Heads you click, tails you click anyway.</q>", "Click <b>37,777 golden cookies</b> across all ascensions.<q>One clover is luck; an entire lawn is a logistics problem. You industrialized superstition.</q>", "Click <b>47,777 golden cookies</b> across all ascensions.<q>Citation needed: 'luck significantly increased.' Footnote: the hare disagrees; the stats don't.</q>", "Click <b>57,777 golden cookies</b> across all ascensions.<q>Knock knock. Who's there? Luck. Luck who? Luck you're not superstitious... or are you?</q>", "Click <b>67,777 golden cookies</b> across all ascensions.<q>House edge? You are the house. Confetti budget exceeded; no one complained.</q>", "Click <b>77,777 golden cookies</b> across all ascensions.<q>Golden luck, plan a trip to Las Vegas and cash in on it.</q>"],
                 vanillaTarget: "Black cat's paw",
                 customIcons: [[0, 13, getSpriteSheet('custom')],  [1, 13, getSpriteSheet('custom')],  [2, 13, getSpriteSheet('custom')],  [3, 13, getSpriteSheet('custom')],[4, 13, getSpriteSheet('custom')], [5, 13, getSpriteSheet('custom')]]
             },
@@ -3939,7 +4340,7 @@
         hardcoreFinalCountdown: {
             names: ["The Final Countdown"],
             thresholds: [1], // Just a placeholder, we'll check exact counts in the requirement function
-            descs: ["Own exactly 20 Cursors, 19 Grandmas, 18 Farms, yada yada yada, down to 1 You. No selling or sacrificing any buildings. Must be earned in Born Again mode.<q>Is that song stuck in your head now, its pretty catchy.</q>"],
+            descs: ["Own exactly 15 Cursors, 14 Grandmas, 13 Farms, yada yada yada, down to 1 Chancemaker. No selling or sacrificing any buildings. Must be earned in Born Again mode.<q>Is that song stuck in your head now, its pretty catchy.</q>"],
             vanillaTarget: "Hardcore",
             customIcons: [[13, 7]]
         },
@@ -9228,6 +9629,11 @@
                 shadowAchievementMode = modSaveData.settings.shadowAchievements;
                 modSettings.shadowAchievements = modSaveData.settings.shadowAchievements;
             }
+            
+            // Load hasMadeInitialChoice setting
+            if (modSaveData.settings.hasMadeInitialChoice !== undefined) {
+                modSettings.hasMadeInitialChoice = modSaveData.settings.hasMadeInitialChoice;
+            }
         } else {
             // No save data - keep defaults (all disabled) for first-run experience
             // The first-run prompt will set the correct values after user choice
@@ -9436,108 +9842,16 @@
         init: function() {
             console.log('Just Natural Expansion: Mod init() called');
             
-            // Read save data during initialization
-            this.readSaveDataOnInit();
+            // Initialize basic mod structures but don't process save data yet
+            // Save data processing will happen in load() function
             
-            // Initialize the mod with the loaded save data
-            this.initializeModWithSaveData();
+            // Initialize empty save data structure
+            modSaveData = { upgrades: {} };
             
-            // Proceed with normal initialization
+            // Basic mod initialization (UI, hooks, etc) but no save data dependent features
             this.initializeMod();
-            
-            // Check if we need to show the first run prompt
-            // This runs after all initialization to ensure proper state
-            var self = this;
-            setTimeout(function() {
-                checkAndShowInitialChoice();
-            }, 500);
         },
         
-        // Read save data during mod initialization
-        readSaveDataOnInit: function() {
-            try {
-                // Check if there's existing mod save data in the game
-                if (Game.modSaveData && Game.modSaveData['JustNaturalExpansionMod']) {
-                    var existingSaveData = Game.modSaveData['JustNaturalExpansionMod'];
-                    
-                    // Parse the save data if it's a string
-                    if (typeof existingSaveData === 'string') {
-                        modSaveData = JSON.parse(existingSaveData);
-                    } else {
-                        modSaveData = existingSaveData;
-                    }
-                } else {
-                    modSaveData = { upgrades: {} };
-                }
-            } catch (e) {
-                console.error('[JNE Error] Failed to read save data during init:', e);
-                modSaveData = { upgrades: {} };
-            }
-        },
-        
-        // Initialize mod with save data
-        initializeModWithSaveData: function() {
-            // Load settings from save data FIRST, before any upgrade creation
-            loadSettingsFromSaveData();
-            
-            // Sync mod settings to ensure they're applied BEFORE creating upgrades
-            if (modSettings.shadowAchievements !== undefined) {
-                shadowAchievementMode = modSettings.shadowAchievements;
-            }
-            if (modSettings.enableCookieUpgrades !== undefined) {
-                enableCookieUpgrades = modSettings.enableCookieUpgrades;
-            }
-            if (modSettings.enableBuildingUpgrades !== undefined) {
-                enableBuildingUpgrades = modSettings.enableBuildingUpgrades;
-            }
-            if (modSettings.enableKittenUpgrades !== undefined) {
-                enableKittenUpgrades = modSettings.enableKittenUpgrades;
-            }
-
-            // SIMPLE RULE: Delete everything and recreate from save data only
-            recreateAllUpgradesFromSaveData();
-            
-            // Initialize tracking variables and lifetime data from save data or defaults
-            if (modSaveData) {
-                try {
-                    // Restore tracking variables from save data
-                    if (modSaveData.modTracking) {
-                        modTracking.shinyWrinklersPopped = modSaveData.modTracking.shinyWrinklersPopped || 0;
-                        modTracking.templeSwapsTotal = modSaveData.modTracking.templeSwapsTotal || 0;
-                        modTracking.soilChangesTotal = modSaveData.modTracking.soilChangesTotal || 0;
-                        modTracking.lastSeasonalReindeerCheck = modSaveData.modTracking.lastSeasonalReindeerCheck || 0;
-                        modTracking.godUsageTime = modSaveData.modTracking.godUsageTime || {};
-                        modTracking.currentSlottedGods = modSaveData.modTracking.currentSlottedGods || {};
-                        // Clamp seasonal reindeer baseline to current value to avoid missing first pop
-                        modTracking.lastSeasonalReindeerCheck = Math.min(modTracking.lastSeasonalReindeerCheck || 0, Game.reindeerClicked || 0);
-                    }
-                    
-                    // Restore lifetime data from save data
-                    if (modSaveData.lifetime) {
-                        lifetimeData.reindeerClicked = modSaveData.lifetime.reindeerClicked || 0;
-                        lifetimeData.stockMarketAssets = modSaveData.lifetime.stockMarketAssets || 0;
-                        lifetimeData.shinyWrinklersPopped = modSaveData.lifetime.shinyWrinklersPopped || 0;
-                        lifetimeData.wrathCookiesClicked = modSaveData.lifetime.wrathCookiesClicked || 0;
-                        lifetimeData.totalGardenSacrifices = modSaveData.lifetime.totalGardenSacrifices || 0;
-                        lifetimeData.totalCookieClicks = modSaveData.lifetime.totalCookieClicks || 0;
-                        lifetimeData.wrinklersPopped = modSaveData.lifetime.wrinklersPopped || 0;
-                        lifetimeData.elderCovenantToggles = modSaveData.lifetime.elderCovenantToggles || 0;
-                        lifetimeData.pledges = modSaveData.lifetime.pledges || 0;
-                        lifetimeData.gardenSacrifices = modSaveData.lifetime.gardenSacrifices || 0;
-                        lifetimeData.totalSpellsCast = modSaveData.lifetime.totalSpellsCast || 0;
-                        lifetimeData.godUsageTime = modSaveData.lifetime.godUsageTime || {};
-                    }
-                } catch (e) {
-                    console.error('Just Natural Expansion: Error restoring tracking data:', e);
-                }
-            }
-            
-            // Initialize achievements
-            initAchievements();
-            
-            // Mark as initialized
-            modInitialized = true;
-        },
         
         // Initialize mod
         initializeMod: function() {
@@ -9710,10 +10024,6 @@
         load: function(str) {
             debugLog('mod.saveSystem.load: begin len=', str ? str.length : 0);
             
-            // CRITICAL: Clear any existing mod save data first to prevent cross-contamination
-            modSaveData = null;
-            debugLog('mod.saveSystem.load: cleared existing modSaveData to prevent cross-contamination');
-            
             // Emit load event for any integrations
             if (typeof Game !== 'undefined' && Game.emit) {
                 Game.emit('load', { modName: modName, modVersion: modVersion });
@@ -9723,15 +10033,19 @@
             if (!resetMode) {
                 try {
                     if (!str || str.trim() === '' || str === '{}') {
-                        debugLog('mod.saveSystem.load: empty/minimal, skipping');
-                        checkAndShowInitialChoice();
+                        debugLog('mod.saveSystem.load: empty/minimal, proceeding with first run');
+                        modSaveData = { upgrades: {} };
+                        continueModInitialization();
                         return;
                     }
                     
                     const modData = JSON.parse(str);
                     debugLog('mod.saveSystem.load: parsed keys=', Object.keys(modData||{}).join(','));
                     
-                    // DEBUG: Check if this save data matches the current game
+                    // Check if this save data matches the current game
+                    // Initialize save data restoration flag
+                    var shouldRestoreSaveData = true;
+                    
                     if (modData.gameSignature) {
                         var currentSignature = {
                             bakeryName: Game.bakeryName || '',
@@ -9742,13 +10056,30 @@
                         debugLog('mod.saveSystem.load: current game signature:', JSON.stringify(currentSignature));
                         debugLog('mod.saveSystem.load: save data signature:', JSON.stringify(saveSignature));
                         
-                        if (currentSignature.bakeryName !== saveSignature.bakeryName || 
-                            currentSignature.startDate !== saveSignature.startDate || 
-                            currentSignature.resets !== saveSignature.resets) {
-                            debugLog('mod.saveSystem.load: SIGNATURE MISMATCH - ignoring save data from different game');
-                            return;
+                        // Check for signature mismatch - be very lenient since bakery names can change
+                        
+                        // Start date can differ due to browser refreshes, game restarts, etc. - not a blocker
+                        if (currentSignature.startDate !== saveSignature.startDate) {
+                            debugLog('mod.saveSystem.load: start date differs (browser restart detected)');
+                        }
+                        
+                        if (currentSignature.resets > saveSignature.resets) {
+                            // Allow resets to increase (ascensions) but not decrease
+                            debugLog('mod.saveSystem.load: resets increased (ascension detected)');
+                        } else if (currentSignature.resets < saveSignature.resets) {
+                            shouldRestoreSaveData = false;
+                            debugLog('mod.saveSystem.load: resets decreased (impossible) - treating as different game');
+                        }
+                        
+                        // Only check bakery name as a warning, not a blocker
+                        if (currentSignature.bakeryName !== saveSignature.bakeryName) {
+                            debugLog('mod.saveSystem.load: bakery name differs (may have been changed)');
+                        }
+                        
+                        if (shouldRestoreSaveData) {
+                            debugLog('mod.saveSystem.load: signature compatible - will restore save data');
                         } else {
-                            debugLog('mod.saveSystem.load: signature matches - proceeding with load');
+                            debugLog('mod.saveSystem.load: SIGNATURE MISMATCH - will create mod content but ignore save state');
                         }
                     }
                     
@@ -9824,19 +10155,44 @@
                         return;
                     }
                     
-                    // Store save data for initialization
-                    modSaveData = modData;
+                    // Store save data for initialization (or empty data if signature mismatch)
+                    if (shouldRestoreSaveData) {
+                        modSaveData = modData;
+                    } else {
+                        modSaveData = { upgrades: {} };
+                    }
                     debugLog('mod.saveSystem.load: stored save data for initialization');
                     
                     
-                    // Settings will be loaded in continueModInitialization() via loadSettingsFromSaveData()
+                    // Load settings FIRST before recreating upgrades
+                    if (modData.settings) {
+                        Object.keys(modData.settings).forEach(key => {
+                            if (key in modSettings) {
+                                modSettings[key] = modData.settings[key];
+                            }
+                        });
+                        
+                        // Apply settings to the global variables immediately
+                        if (modSettings.enableCookieUpgrades !== undefined) {
+                            enableCookieUpgrades = modSettings.enableCookieUpgrades;
+                        }
+                        if (modSettings.enableBuildingUpgrades !== undefined) {
+                            enableBuildingUpgrades = modSettings.enableBuildingUpgrades;
+                        }
+                        if (modSettings.enableKittenUpgrades !== undefined) {
+                            enableKittenUpgrades = modSettings.enableKittenUpgrades;
+                        }
+                        if (modSettings.shadowAchievements !== undefined) {
+                            shadowAchievementMode = modSettings.shadowAchievements;
+                        }
+                    }
                     
                     // SIMPLE RULE: Delete everything and recreate from save data only
                     recreateUpgradesFromSaveOnly();
                     
                     // Trigger initialization with a small delay to ensure save data is stable
                     setTimeout(() => {
-                    continueModInitialization();
+                        continueModInitialization();
                     }, 100);
                     
                     debugLog('mod.saveSystem.load: modSaveData.achievements exists:', !!modSaveData.achievements);
@@ -9845,12 +10201,31 @@
                         
                         // RESTORE: Save data is the sole source of truth (reset already done above)
                         if (modAchievementNames) {
+                            var restoredCount = 0;
                             modAchievementNames.forEach(achievementName => {
                                 if (modSaveData.achievements[achievementName] && modSaveData.achievements[achievementName].won > 0) {
                                     markAchievementWonFromSave(achievementName);
+                                    restoredCount++;
                                 }
                             });
+                            debugLog('mod.saveSystem.load: restored', restoredCount, 'achievements from save data');
                         }
+                        
+                        // Check for aliased achievements (renamed achievements)
+                        var aliasedCount = 0;
+                        Object.keys(modSaveData.achievements).forEach(savedName => {
+                            if (modSaveData.achievements[savedName].won > 0) {
+                                // Check if this saved name has an alias
+                                if (achievementAliases[savedName]) {
+                                    var newName = achievementAliases[savedName];
+                                    if (Game.Achievements[newName]) {
+                                        markAchievementWonFromSave(newName);
+                                        aliasedCount++;
+                                    }
+                                }
+                            }
+                        });
+                        debugLog('mod.saveSystem.load: restored', aliasedCount, 'aliased achievements');
                     }
                     
                     // Note: Upgrade restoration is handled by addUpgradesToGame() which runs later
@@ -9868,23 +10243,16 @@
                         debugLog('mod.saveSystem.load: restored modTracking data from save');
                     }
                     
-                    // Load settings immediately
-                    if (modData.settings) {
-                        Object.keys(modData.settings).forEach(key => {
-                            if (key in modSettings) {
-                                modSettings[key] = modData.settings[key];
-                            }
-                        });
-                    }
+                    // Settings already loaded above before recreateUpgradesFromSaveOnly()
                     
                 } catch (error) {
-                    console.warn('Error loading mod save data:', error);
+                    console.error('[JNE Error] Error loading mod save data:', error);
                     debugLog('mod.saveSystem.load: error loading save data:', error);
                     // Fall back to defaults on error
-                    modSaveData = null;
+                    modSaveData = { upgrades: {} };
+                    continueModInitialization();
                 }
             }
-            
             
             debugLog('mod.saveSystem.load: end');
         },
@@ -10157,26 +10525,26 @@
 
         // Create level achievements for each building
         var levelAchievements = [
-            { building: 'Cursor', level10: 'Freaky jazz hands', level15: 'Spastic jazz hands', level20: 'Epileptic jazz hands' },
-            { building: 'Grandma', level10: 'Methuselah', level15: 'Noah', level20: 'Adam' },
-            { building: 'Farm', level10: 'Huge tracts of land', level15: 'Massive tracts of land', level20: 'Colossal tracts of land' },
-            { building: 'Mine', level10: 'D-d-d-d-deeper', level15: 'D-d-d-d-d-deeper', level20: 'D-d-d-d-d-d-deeper' },
-            { building: 'Factory', level10: 'Patently genius', level15: 'Patent pending', level20: 'Patent granted' },
-            { building: 'Bank', level10: 'A capital idea', level15: 'A capital notion', level20: 'A capital concept' },
-            { building: 'Temple', level10: 'It belongs in a bakery', level15: 'It belongs in a cathedral', level20: 'It belongs in a basilica' },
-            { building: 'Wizard tower', level10: 'Motormouth', level15: 'Chatterbox', level20: 'Blabbermouth' },
-            { building: 'Shipment', level10: 'Been there done that', level15: 'Been everywhere done everything', level20: 'Been everywhere done everything twice' },
-            { building: 'Alchemy lab', level10: 'Phlogisticated substances', level15: 'Phlogisticated compounds', level20: 'Phlogisticated elements' },
-            { building: 'Portal', level10: 'Bizarro world', level15: 'Bizarro universe', level20: 'Bizarro multiverse' },
-            { building: 'Time machine', level10: 'The long now', level15: 'The longer now', level20: 'The longest now' },
-            { building: 'Antimatter condenser', level10: 'Chubby hadrons', level15: 'Plump hadrons', level20: 'Obese hadrons' },
-            { building: 'Prism', level10: 'Palettable', level15: 'Palettastic', level20: 'Palettacular' },
-            { building: 'Chancemaker', level10: 'Let\'s leaf it at that', level15: 'Lucky stars', level20: 'Lucky numbers' },
-            { building: 'Fractal engine', level10: 'Sierpinski rhomboids', level15: 'Fractaliciousest', level20: 'Fractalicious' },
-            { building: 'Javascript console', level10: 'Alexandria', level15: 'Debuggerer', level20: 'Debuggerest' },
-            { building: 'Idleverse', level10: 'Strange topologies', level15: 'Idleverse implosion', level20: 'Idleverse explosion' },
-            { building: 'Cortex baker', level10: 'Gifted', level15: 'Brain feast', level20: 'Brain banquet' },
-            { building: 'You', level10: 'Self-improvement', level15: 'Copy that and a half', level20: 'Copy that twice' }
+            { building: 'Cursor', level10: 'Freaky jazz hands', level15: 'Rowdy shadow puppets', level20: 'Frantic finger guns' },
+            { building: 'Grandma', level10: 'Methuselah', level15: 'Loaf & behold', level20: 'Forbidden fruitcake' },
+            { building: 'Farm', level10: 'Huge tracts of land', level15: 'Huge-er tracts of land', level20: 'Hoedown showdown' },
+            { building: 'Mine', level10: 'D-d-d-d-deeper', level15: 'Cave-in king', level20: 'Digging destiny' },
+            { building: 'Factory', level10: 'Patently genius', level15: 'Boilerplate overlord', level20: 'Cookie standard time' },
+            { building: 'Bank', level10: 'A capital idea', level15: 'Credit conjurer', level20: 'Master of the Mint' },
+            { building: 'Temple', level10: 'It belongs in a bakery', level15: 'Acolyte ascendant', level20: 'Grand hierophant' },
+            { building: 'Wizard tower', level10: 'Motormouth', level15: 'Archmage of Meringue', level20: 'Chronomancer emeritus' },
+            { building: 'Shipment', level10: 'Been there done that', level15: 'Quartermaster of Orbits', level20: 'Docking director' },
+            { building: 'Alchemy lab', level10: 'Phlogisticated substances', level15: 'Retort wrangler', level20: 'Circle of Quintessence' },
+            { building: 'Portal', level10: 'Bizarro world', level15: 'Non-Euclidean doorman', level20: 'Warden of Elsewhere' },
+            { building: 'Time machine', level10: 'The long now', level15: 'Minute handler', level20: 'Chronarch supreme' },
+            { building: 'Antimatter condenser', level10: 'Chubby hadrons', level15: 'Quark wrangler', level20: 'Symmetry breaker' },
+            { building: 'Prism', level10: 'Palettable', level15: 'Master of refraction', level20: 'Keeper of the seven hues' },
+            { building: 'Chancemaker', level10: 'Let\'s leaf it at that', level15: 'Seedkeeper of Fortune', level20: 'Master of Maybe' },
+            { building: 'Fractal engine', level10: 'Sierpinski rhomboids', level15: 'Archfractal', level20: 'Lord of Infinite Detail' },
+            { building: 'Javascript console', level10: 'Alexandria', level15: 'Stack tracer', level20: 'Event-loop overlord' },
+            { building: 'Idleverse', level10: 'Strange topologies', level15: 'Canon custodian', level20: 'Keeper of the Uncountable' },
+            { building: 'Cortex baker', level10: 'Gifted', level15: 'Chief Thinker Officer', level20: 'Mind over batter' },
+            { building: 'You', level10: 'Self-improvement', level15: 'Identity custodian', level20: 'First Person Plural' }
         ];
         
         for (var i = 0; i < levelAchievements.length; i++) {
@@ -10226,26 +10594,26 @@
 
         // Create extended production achievements for each building (tier 4, 5, 6)
         var productionAchievements = [
-            { building: 'Cursor', name: 'Click (starring Adam Sandler)', tier4Desc: 'Make <b>1 septendecillion cookies</b> just from cursors.', tier5Desc: 'Make <b>1 quindecillion cookies</b> just from cursors.', tier6Desc: 'Make <b>1 sexdecillion cookies</b> just from cursors.', mult: 7, vanillaTarget: 'Click (starring Adam Sandler)' },
-            { building: 'Grandma', name: 'Frantiquities', tier4Desc: 'Make <b>1 septendecillion cookies</b> just from grandmas.', tier5Desc: 'Make <b>1 quindecillion cookies</b> just from grandmas.', tier6Desc: 'Make <b>1 sexdecillion cookies</b> just from grandmas.', mult: 6, vanillaTarget: 'Frantiquities' },
-            { building: 'Farm', name: 'Overgrowth', tier4Desc: 'Make <b>1 quattuordecillion cookies</b> just from farms.', tier5Desc: 'Make <b>1 quindecillion cookies</b> just from farms.', tier6Desc: 'Make <b>1 sexdecillion cookies</b> just from farms.', mult: 0, vanillaTarget: 'Overgrowth' },
-            { building: 'Mine', name: 'Sedimentalism', tier4Desc: 'Make <b>10 quattuordecillion cookies</b> just from mines.', tier5Desc: 'Make <b>10 quindecillion cookies</b> just from mines.', tier6Desc: 'Make <b>10 sexdecillion cookies</b> just from mines.', mult: 0, vanillaTarget: 'Sedimentalism' },
-            { building: 'Factory', name: 'Labor of love', tier4Desc: 'Make <b>100 quattuordecillion cookies</b> just from factories.', tier5Desc: 'Make <b>100 quindecillion cookies</b> just from factories.', tier6Desc: 'Make <b>100 sexdecillion cookies</b> just from factories.', mult: 0, vanillaTarget: 'Labor of love' },
-            { building: 'Bank', name: 'Reverse funnel system', tier4Desc: 'Make <b>1 quindecillion cookies</b> just from banks.', tier5Desc: 'Make <b>1 sexdecillion cookies</b> just from banks.', tier6Desc: 'Make <b>1 septendecillion cookies</b> just from banks.', mult: 0, vanillaTarget: 'Reverse funnel system' },
-            { building: 'Temple', name: 'Thus spoke you', tier4Desc: 'Make <b>10 quindecillion cookies</b> just from temples.', tier5Desc: 'Make <b>10 sexdecillion cookies</b> just from temples.', tier6Desc: 'Make <b>10 septendecillion cookies</b> just from temples.', mult: 0, vanillaTarget: 'Thus spoke you' },
-            { building: 'Wizard tower', name: 'Manafest destiny', tier4Desc: 'Make <b>100 quindecillion cookies</b> just from wizard towers.', tier5Desc: 'Make <b>100 sexdecillion cookies</b> just from wizard towers.', tier6Desc: 'Make <b>100 septendecillion cookies</b> just from wizard towers.', mult: 0, vanillaTarget: 'Manafest destiny' },
-            { building: 'Shipment', name: 'Neither snow nor rain nor heat nor gloom of night', tier4Desc: 'Make <b>1 sexdecillion cookies</b> just from shipments.', tier5Desc: 'Make <b>1 septendecillion cookies</b> just from shipments.', tier6Desc: 'Make <b>1 octodecillion cookies</b> just from shipments.', mult: 0, vanillaTarget: 'Neither snow nor rain nor heat nor gloom of night' },
-            { building: 'Alchemy lab', name: 'I\'ve got the Midas touch', tier4Desc: 'Make <b>10 sexdecillion cookies</b> just from alchemy labs.', tier5Desc: 'Make <b>10 septendecillion cookies</b> just from alchemy labs.', tier6Desc: 'Make <b>10 octodecillion cookies</b> just from alchemy labs.', mult: 0, vanillaTarget: 'I\'ve got the Midas touch' },
-            { building: 'Portal', name: 'Which eternal lie', tier4Desc: 'Make <b>100 sexdecillion cookies</b> just from portals.', tier5Desc: 'Make <b>100 septendecillion cookies</b> just from portals.', tier6Desc: 'Make <b>100 octodecillion cookies</b> just from portals.', mult: 0, vanillaTarget: 'Which eternal lie' },
-            { building: 'Time machine', name: 'D&eacute;j&agrave; vu', tier4Desc: 'Make <b>1 septendecillion cookies</b> just from time machines.', tier5Desc: 'Make <b>1 octodecillion cookies</b> just from time machines.', tier6Desc: 'Make <b>1 novemdecillion cookies</b> just from time machines.', mult: 0, vanillaTarget: 'D&eacute;j&agrave; vu' },
-            { building: 'Antimatter condenser', name: 'Powers of Ten', tier4Desc: 'Make <b>10 septendecillion cookies</b> just from antimatter condensers.', tier5Desc: 'Make <b>10 octodecillion cookies</b> just from antimatter condensers.', tier6Desc: 'Make <b>10 novemdecillion cookies</b> just from antimatter condensers.', mult: 0, vanillaTarget: 'Powers of Ten' },
-            { building: 'Prism', name: 'Now the dark days are gone', tier4Desc: 'Make <b>100 septendecillion cookies</b> just from prisms.', tier5Desc: 'Make <b>100 octodecillion cookies</b> just from prisms.', tier6Desc: 'Make <b>100 novemdecillion cookies</b> just from prisms.', mult: 0, vanillaTarget: 'Now the dark days are gone' },
-            { building: 'Chancemaker', name: 'Murphy\'s wild guess', tier4Desc: 'Make <b>1 octodecillion cookies</b> just from chancemakers.', tier5Desc: 'Make <b>1 novemdecillion cookies</b> just from chancemakers.', tier6Desc: 'Make <b>1 vigintillion cookies</b> just from chancemakers.', mult: 0, vanillaTarget: 'Murphy\'s wild guess' },
-            { building: 'Fractal engine', name: 'We must go deeper', tier4Desc: 'Make <b>10 octodecillion cookies</b> just from fractal engines.', tier5Desc: 'Make <b>10 novemdecillion cookies</b> just from fractal engines.', tier6Desc: 'Make <b>10 vigintillion cookies</b> just from fractal engines.', mult: 0, vanillaTarget: 'We must go deeper' },
-            { building: 'Javascript console', name: 'First-class citizen', tier4Desc: 'Make <b>100 octodecillion cookies</b> just from javascript consoles.', tier5Desc: 'Make <b>100 novemdecillion cookies</b> just from javascript consoles.', tier6Desc: 'Make <b>100 vigintillion cookies</b> just from javascript consoles.', mult: 0, vanillaTarget: 'First-class citizen' },
-            { building: 'Idleverse', name: 'Earth-616', tier4Desc: 'Make <b>1 novemdecillion cookies</b> just from idleverses.', tier5Desc: 'Make <b>100 vigintillion cookies</b> just from idleverses.', tier6Desc: 'Make <b>10 duovigintillion cookies</b> just from idleverses.', mult: 0, vanillaTarget: 'Earth-616' },
-            { building: 'Cortex baker', name: 'Unthinkable', tier4Desc: 'Make <b>10 novemdecillion cookies</b> just from cortex bakers.', tier5Desc: 'Make <b>10 vigintillion cookies</b> just from cortex bakers.', tier6Desc: 'Make <b>10 unvigintillion cookies</b> just from cortex bakers.', mult: 0, vanillaTarget: 'Unthinkable' },
-            { building: 'You', name: 'That\'s all you', tier4Desc: 'Make <b>100 novemdecillion cookies</b> just from You.', tier5Desc: 'Make <b>100 vigintillion cookies</b> just from You.', tier6Desc: 'Make <b>100 unvigintillion cookies</b> just from You.', mult: 0, vanillaTarget: 'That\'s all you' }
+            { building: 'Cursor', name: 'Click (starring Adam Sandler)', tier4Name: 'Click II: the sequel', tier5Name: 'Click III: we couldn\'t get Adam Sandler so it stars Jerry Seinfeld for some reason', tier6Name: 'Click IV: 3% fresh on rotten tomatoes', tier4Desc: 'Make <b>1 septendecillion cookies</b> just from cursors.', tier5Desc: 'Make <b>1 quindecillion cookies</b> just from cursors.', tier6Desc: 'Make <b>1 sexdecillion cookies</b> just from cursors.', mult: 7, vanillaTarget: 'Click (starring Adam Sandler)' },
+            { building: 'Grandma', name: 'Frantiquities', tier4Name: 'Scone with the wind', tier5Name: 'The flour of youth', tier6Name: 'Bake-ageddon', tier4Desc: 'Make <b>1 septendecillion cookies</b> just from grandmas.', tier5Desc: 'Make <b>1 quindecillion cookies</b> just from grandmas.', tier6Desc: 'Make <b>1 sexdecillion cookies</b> just from grandmas.', mult: 6, vanillaTarget: 'Frantiquities' },
+            { building: 'Farm', name: 'Overgrowth', tier4Name: 'Rake in the greens', tier5Name: 'The great threshering', tier6Name: 'Bushels of burden', tier4Desc: 'Make <b>1 quattuordecillion cookies</b> just from farms.', tier5Desc: 'Make <b>1 quindecillion cookies</b> just from farms.', tier6Desc: 'Make <b>1 sexdecillion cookies</b> just from farms.', mult: 0, vanillaTarget: 'Overgrowth' },
+            { building: 'Mine', name: 'Sedimentalism', tier4Name: 'Ore d\'oeuvres', tier5Name: 'Seismic yield', tier6Name: 'Billionaire\'s bedrock', tier4Desc: 'Make <b>10 quattuordecillion cookies</b> just from mines.', tier5Desc: 'Make <b>10 quindecillion cookies</b> just from mines.', tier6Desc: 'Make <b>10 sexdecillion cookies</b> just from mines.', mult: 0, vanillaTarget: 'Sedimentalism' },
+            { building: 'Factory', name: 'Labor of love', tier4Name: 'Sweatshop symphony', tier5Name: 'Cookieconomics 101', tier6Name: 'Mass production messiah', tier4Desc: 'Make <b>100 quattuordecillion cookies</b> just from factories.', tier5Desc: 'Make <b>100 quindecillion cookies</b> just from factories.', tier6Desc: 'Make <b>100 sexdecillion cookies</b> just from factories.', mult: 0, vanillaTarget: 'Labor of love' },
+            { building: 'Bank', name: 'Reverse funnel system', tier4Name: 'Compound interest, compounded', tier5Name: 'Arbitrage avalanche', tier6Name: 'Ponzi à la mode', tier4Desc: 'Make <b>1 quindecillion cookies</b> just from banks.', tier5Desc: 'Make <b>1 sexdecillion cookies</b> just from banks.', tier6Desc: 'Make <b>1 septendecillion cookies</b> just from banks.', mult: 0, vanillaTarget: 'Reverse funnel system' },
+            { building: 'Temple', name: 'Thus spoke you', tier4Name: 'Temple treasury overflow', tier5Name: 'Pantheon payout', tier6Name: 'Sacred surplus', tier4Desc: 'Make <b>10 quindecillion cookies</b> just from temples.', tier5Desc: 'Make <b>10 sexdecillion cookies</b> just from temples.', tier6Desc: 'Make <b>10 septendecillion cookies</b> just from temples.', mult: 0, vanillaTarget: 'Thus spoke you' },
+            { building: 'Wizard tower', name: 'Manafest destiny', tier4Name: 'Rabbits per minute', tier5Name: 'Hocus bonus', tier6Name: 'Magic dividends', tier4Desc: 'Make <b>100 quindecillion cookies</b> just from wizard towers.', tier5Desc: 'Make <b>100 sexdecillion cookies</b> just from wizard towers.', tier6Desc: 'Make <b>100 septendecillion cookies</b> just from wizard towers.', mult: 0, vanillaTarget: 'Manafest destiny' },
+            { building: 'Shipment', name: 'Neither snow nor rain nor heat nor gloom of night', tier4Name: 'Cargo cult classic', tier5Name: 'Universal basic shipping', tier6Name: 'Comet-to-consumer', tier4Desc: 'Make <b>1 sexdecillion cookies</b> just from shipments.', tier5Desc: 'Make <b>1 septendecillion cookies</b> just from shipments.', tier6Desc: 'Make <b>1 octodecillion cookies</b> just from shipments.', mult: 0, vanillaTarget: 'Neither snow nor rain nor heat nor gloom of night' },
+            { building: 'Alchemy lab', name: 'I\'ve got the Midas touch', tier4Name: 'Lead into bread', tier5Name: 'Philosopher\'s yield', tier6Name: 'Auronomical returns', tier4Desc: 'Make <b>10 sexdecillion cookies</b> just from alchemy labs.', tier5Desc: 'Make <b>10 septendecillion cookies</b> just from alchemy labs.', tier6Desc: 'Make <b>10 octodecillion cookies</b> just from alchemy labs.', mult: 0, vanillaTarget: 'I\'ve got the Midas touch' },
+            { building: 'Portal', name: 'Which eternal lie', tier4Name: 'Spacetime surcharge', tier5Name: 'Interdimensional yield farming', tier6Name: 'Event-horizon markup', tier4Desc: 'Make <b>100 sexdecillion cookies</b> just from portals.', tier5Desc: 'Make <b>100 septendecillion cookies</b> just from portals.', tier6Desc: 'Make <b>100 octodecillion cookies</b> just from portals.', mult: 0, vanillaTarget: 'Which eternal lie' },
+            { building: 'Time machine', name: 'D&eacute;j&agrave; vu', tier4Name: 'Future Profits, Past Tense', tier5Name: 'Infinite Loop, Infinite Loot', tier6Name: 'Back Pay from the Big Bang', tier4Desc: 'Make <b>1 septendecillion cookies</b> just from time machines.', tier5Desc: 'Make <b>1 octodecillion cookies</b> just from time machines.', tier6Desc: 'Make <b>1 novemdecillion cookies</b> just from time machines.', mult: 0, vanillaTarget: 'D&eacute;j&agrave; vu' },
+            { building: 'Antimatter condenser', name: 'Powers of Ten', tier4Name: 'Pair production payout', tier5Name: 'Cross-section surplus', tier6Name: 'Powers of crumbs', tier4Desc: 'Make <b>10 septendecillion cookies</b> just from antimatter condensers.', tier5Desc: 'Make <b>10 octodecillion cookies</b> just from antimatter condensers.', tier6Desc: 'Make <b>10 novemdecillion cookies</b> just from antimatter condensers.', mult: 0, vanillaTarget: 'Powers of Ten' },
+            { building: 'Prism', name: 'Now the dark days are gone', tier4Name: 'Photons pay dividends', tier5Name: 'Spectral surplus', tier6Name: 'Dawn of plenty', tier4Desc: 'Make <b>100 septendecillion cookies</b> just from prisms.', tier5Desc: 'Make <b>100 octodecillion cookies</b> just from prisms.', tier6Desc: 'Make <b>100 novemdecillion cookies</b> just from prisms.', mult: 0, vanillaTarget: 'Now the dark days are gone' },
+            { building: 'Chancemaker', name: 'Murphy\'s wild guess', tier4Name: 'Against all odds & ends', tier5Name: 'Monte Carlo windfall', tier6Name: 'Fate-backed securities', tier4Desc: 'Make <b>1 octodecillion cookies</b> just from chancemakers.', tier5Desc: 'Make <b>1 novemdecillion cookies</b> just from chancemakers.', tier6Desc: 'Make <b>1 vigintillion cookies</b> just from chancemakers.', mult: 0, vanillaTarget: 'Murphy\'s wild guess' },
+            { building: 'Fractal engine', name: 'We must go deeper', tier4Name: 'Infinite series surplus', tier5Name: 'Geometric mean feast', tier6Name: 'Fractal jackpot', tier4Desc: 'Make <b>10 octodecillion cookies</b> just from fractal engines.', tier5Desc: 'Make <b>10 novemdecillion cookies</b> just from fractal engines.', tier6Desc: 'Make <b>10 vigintillion cookies</b> just from fractal engines.', mult: 0, vanillaTarget: 'We must go deeper' },
+            { building: 'Javascript console', name: 'First-class citizen', tier4Name: 'Cookies per second()++', tier5Name: 'Promise.all(paydays)', tier6Name: 'Async and ye shall receive', tier4Desc: 'Make <b>100 octodecillion cookies</b> just from javascript consoles.', tier5Desc: 'Make <b>100 novemdecillion cookies</b> just from javascript consoles.', tier6Desc: 'Make <b>100 vigintillion cookies</b> just from javascript consoles.', mult: 0, vanillaTarget: 'First-class citizen' },
+            { building: 'Idleverse', name: 'Earth-616', tier4Name: 'Crossover dividends', tier5Name: 'Many-Worlds ROI', tier6Name: 'Continuity bonus', tier4Desc: 'Make <b>1 novemdecillion cookies</b> just from idleverses.', tier5Desc: 'Make <b>100 vigintillion cookies</b> just from idleverses.', tier6Desc: 'Make <b>10 duovigintillion cookies</b> just from idleverses.', mult: 0, vanillaTarget: 'Earth-616' },
+            { building: 'Cortex baker', name: 'Unthinkable', tier4Name: 'Brainstorm dividend', tier5Name: 'Thought economy boom', tier6Name: 'Neural net worth', tier4Desc: 'Make <b>10 novemdecillion cookies</b> just from cortex bakers.', tier5Desc: 'Make <b>10 vigintillion cookies</b> just from cortex bakers.', tier6Desc: 'Make <b>10 unvigintillion cookies</b> just from cortex bakers.', mult: 0, vanillaTarget: 'Unthinkable' },
+            { building: 'You', name: 'That\'s all you', tier4Name: 'Personal growth', tier5Name: 'Economies of selves', tier6Name: 'Self-sustaining singularity', tier4Desc: 'Make <b>100 novemdecillion cookies</b> just from You.', tier5Desc: 'Make <b>100 vigintillion cookies</b> just from You.', tier6Desc: 'Make <b>100 unvigintillion cookies</b> just from You.', mult: 0, vanillaTarget: 'That\'s all you' }
         ];
         
         for (var i = 0; i < productionAchievements.length; i++) {
@@ -10300,50 +10668,28 @@
                 };
                 var spriteIndex = buildingToSpriteIndex[ach.building] || building.n;
                 
-                // Tier 4 achievement (100 quintillion times more than tier 3 - 10^20 increase)
-                var tier4Threshold = Math.pow(10, vanillaBaseN + 20);
-                createAchievement(
-                    ach.name + " II",
-                    ach.tier4Desc,
-                    [spriteIndex, 21, getSpriteSheet('custom')],
-                    vanilla.order + 0.00001,
-                    (function(buildingName, threshold) {
-                        return function() { 
-                            return Game.Objects[buildingName] && 
-                                   Game.Objects[buildingName].totalCookies >= threshold; 
-                        };
-                    })(ach.building, tier4Threshold)
-                );
+                // Create production achievements for tiers 4, 5, and 6
+                var tiers = [
+                    { name: ach.tier4Name, desc: ach.tier4Desc, spriteY: 21, orderOffset: 0.00001, thresholdOffset: 20 },
+                    { name: ach.tier5Name, desc: ach.tier5Desc, spriteY: 22, orderOffset: 0.00002, thresholdOffset: 29 },
+                    { name: ach.tier6Name, desc: ach.tier6Desc, spriteY: 23, orderOffset: 0.00003, thresholdOffset: 32 }
+                ];
                 
-                // Tier 5 achievement (1000x more than tier 4 - 10^3 increase)
-                var tier5Threshold = Math.pow(10, vanillaBaseN + 29);
+                tiers.forEach(function(tier) {
+                    var threshold = Math.pow(10, vanillaBaseN + tier.thresholdOffset);
                 createAchievement(
-                    ach.name + " III",
-                    ach.tier5Desc,
-                    [spriteIndex, 22, getSpriteSheet('custom')],
-                    vanilla.order + 0.00002,
+                        tier.name,
+                        tier.desc,
+                        [spriteIndex, tier.spriteY, getSpriteSheet('custom')],
+                        vanilla.order + tier.orderOffset,
                     (function(buildingName, threshold) {
                         return function() { 
                             return Game.Objects[buildingName] && 
                                    Game.Objects[buildingName].totalCookies >= threshold; 
                         };
-                    })(ach.building, tier5Threshold)
-                );
-                
-                // Tier 6 achievement (1000x more than tier 5 - 10^3 increase)
-                var tier6Threshold = Math.pow(10, vanillaBaseN + 32);
-                createAchievement(
-                    ach.name + " IV",
-                    ach.tier6Desc,
-                    [spriteIndex, 23, getSpriteSheet('custom')],
-                    vanilla.order + 0.00003,
-                    (function(buildingName, threshold) {
-                        return function() { 
-                            return Game.Objects[buildingName] && 
-                                   Game.Objects[buildingName].totalCookies >= threshold; 
-                        };
-                    })(ach.building, tier6Threshold)
-                );
+                        })(ach.building, threshold)
+                    );
+                });
             }
         }
         
@@ -10578,20 +10924,8 @@
             }
             
             if (countdownCheckBuildingsSold <= 0) {
-                // Define the exact building counts required (20 down to 1)
-                var requiredCounts = FINAL_COUNTDOWN_REQUIRED_COUNTS;
-                
-                // Check if each building has exactly the required amount
-                var allBuildingsCorrect = true;
-                for (var buildingName in requiredCounts) {
-                    var building = Game.Objects[buildingName];
-                    if (!building || building.amount !== requiredCounts[buildingName]) {
-                        allBuildingsCorrect = false;
-                        break;
-                    }
-                }
-                
-                if (allBuildingsCorrect) {
+                // Check if either Final Countdown set is satisfied
+                if (checkFinalCountdownAchievement()) {
                     var achievementName = 'The Final Countdown';
                     if (Game.Achievements[achievementName] && !Game.Achievements[achievementName].won) {
                         markAchievementWon(achievementName);

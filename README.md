@@ -87,7 +87,7 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 ##### Requires Born Again Mode
 - **Hardercorest**: Bake **3 billion cookies** with no cookie clicks and no upgrades bought in Born Again mode
 - **Hardercorest-er**: Bake **1 billion cookies** with no more than 20 clicks, no more than 20 buildings (no selling), and no more than 20 upgrades in Born Again mode
-- **The Final Countdown**: Own exactly 20 Cursors, 19 Grandmas, 18 Farms, yada yada yada, down to 1 You. No selling or sacrificing any buildings. Must be earned in Born Again mode
+- **The Final Countdown**: Own exactly 15 Cursors, 14 Grandmas, 13 Farms, yada yada yada, down to 1 Chancemaker. No selling or sacrificing any buildings. Must be earned in Born Again mode. See [Changelog](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#version-0011) for Version 0.0.11 for more info. 
 - **Really more of a dog person**: Bake **1 billion cookies per second** without buying any kitten upgrades in Born Again mode
 - **Gilded Restraint**: Bake **1 trillion cookies** without ever clicking a golden cookie, must be done in Born Again mode
 - **Back to Basic Bakers**: Reach **1 million cookies per second** using only Cursors and Grandmas (no other buildings), must be done in Born Again mode
@@ -193,12 +193,12 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 - **Click of the Titans**: Generate **1 year of raw CPS** in a single cookie click 
 - **Buff Finger**: Click the cookie **250,000 times** across all ascensions
 - **News ticker addict**: Click on the news ticker **1,000 times** in one ascension
-- **Click god**: Make **1 vigintillion** from clicking
-- **Click emperor**: Make **1 duovigintillion** from clicking
-- **Click overlord**: Make **1 quattuorvigintillion** from clicking
-- **Click sovereign**: Make **1 sexvigintillion** from clicking
-- **Click monarch**: Make **1 octovigintillion** from clicking
-- **Click deity supreme**: Make **1 trigintillion** from clicking
+- **Clickbait & Switch**: Make **1 vigintillion** from clicking
+- **Click to the Future**: Make **1 duovigintillion** from clicking
+- **Clickety Clique**: Make **1 quattuorvigintillion** from clicking
+- **Clickonomicon**: Make **1 sexvigintillion** from clicking
+- **Clicks and Stones**: Make **1 octovigintillion** from clicking
+- **Click It Till You Make It**: Make **1 trigintillion** from clicking
 
 ### Grandmapocalypse Achievements (15 achievements)
 - **Wrinkler annihilator**: Burst **666 wrinklers** across all ascensions
@@ -218,11 +218,11 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 - **Baker of the Beast**: Click **6,666 wrath cookies** across all ascensions
 
 ### Golden Cookie Achievements (6 achievements)
-- **Black cat's other paw**: Click **17,777 golden cookies** across all ascensions
-- **Black cat's third paw**: Click **37,777 golden cookies** across all ascensions
-- **Black cat's fourth paw**: Click **47,777 golden cookies** across all ascensions
-- **Black cat's fifth paw**: Click **57,777 golden cookies** across all ascensions
-- **Black cat's sixth paw**: Click **67,777 golden cookies** across all ascensions
+- **Find a penny, pick it up**: Click **17,777 golden cookies** across all ascensions
+- **Four-leaf overkill**: Click **37,777 golden cookies** across all ascensions
+- **Rabbit's footnote**: Click **47,777 golden cookies** across all ascensions
+- **Knock on wood**: Click **57,777 golden cookies** across all ascensions
+- **Jackpot jubilee**: Click **67,777 golden cookies** across all ascensions
 - **Black cat's seventh paw**: Click **77,777 golden cookies** across all ascensions
 - See also **Gilded Restraint** and **Second Life, First Click**
 
@@ -277,170 +277,170 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 *Note: All achievements require owning the specified number of buildings.*
 
 - **Cursor**: Carpal diem (1,100 cursors), Hand over fist (1,150 cursors), Finger guns (1,250 cursors), Thumbs up, buttercup (1,300 cursors), Pointer sisters (1,400 cursors), Knuckle sandwich (1,450 cursors), Phalanx formation (1,550 cursors), Manual override (1,600 cursors), Clickbaiter-in-chief (1,700 cursors), With flying digits (1,750 cursors), Palm before the storm (1,850 cursors)
-- **Grandma**: Doughy doyenne (750 grandmas), Batter nana (800 grandmas), Crust custodian (850 grandmas), Oven oracle (900 grandmas), Whisk whisperer (950 grandmas), Proofing matriarch (1,000 grandmas), Rolling-pin regent (1,050 grandmas), Larder luminary (1,100 grandmas), Hearth highness (1,150 grandmas), Biscotti baroness (1,200 grandmas), Panjandrum of pastry (1,250 grandmas)
-- **Farm**: Till titan (750 farms), Mulch magnate (800 farms), Loam lord (850 farms), Furrow foreman (900 farms), Compost captain (950 farms), Acre archon (1,000 farms), Silo sovereign (1,050 farms), Bushel baron (1,100 farms), Seed syndicate (1,150 farms), Harvest high table (1,200 farms), Soil sultan supreme (1,250 farms)
-- **Mine**: Vein viceroy (750 mines), Shaft superintendent (800 mines), Bedrock baron (850 mines), Lantern lord (900 mines), Ore orchestrator (950 mines), Strata strategist (1,000 mines), Pit prefect (1,050 mines), Pickaxe paragon (1,100 mines), Gravel governor (1,150 mines), Fault-line foreman (1,200 mines), Core sample czar (1,250 mines)
-- **Factory**: Gear grandee (750 factories), Conveyor commissioner (800 factories), Sprocket sovereign (850 factories), Blueprint boss (900 factories), Forge forecaster (950 factories), Lathe luminary (1,000 factories), Press primarch (1,050 factories), QA queen/king (1,100 factories), Throughput theocrat (1,150 factories), Assembly autarch (1,200 factories), Production paramount (1,250 factories)
-- **Bank**: Ledger luminary (750 banks), Vault vanguard (800 banks), Interest idol (850 banks), Bond baron (900 banks), Hedge high priest (950 banks), Dividend duke (1,000 banks), Capital chancellor (1,050 banks), Liquidity laureate (1,100 banks), Spread sovereign (1,150 banks), Reserve regent (1,200 banks), Seigniorage supreme (1,250 banks)
-- **Temple**: Biscuit beatified (750 temples), Piety pâtissier (800 temples), Relic ringmaster (850 temples), Canticle captain (900 temples), Pilgrim provost (950 temples), Parable patriarch (1,000 temples), Litany laureate (1,050 temples), Censer sentinel (1,100 temples), Basilica bigwig (1,150 temples), Tithe tsar (1,200 temples), Beatific baker (1,250 temples)
-- **Wizard Tower**: Rune registrar (750 wizard towers), Hex headmaster (800 wizard towers), Sigil steward (850 wizard towers), Scroll shepherd (900 wizard towers), Wand warden (950 wizard towers), Cauldron chancellor (1,000 wizard towers), Thaumaturge tribune (1,050 wizard towers), Cantrip curator (1,100 wizard towers), Leyline lord (1,150 wizard towers), Familiar field marshal (1,200 wizard towers), Archwizard emeritus (1,250 wizard towers)
-- **Shipment**: Manifest maestro (750 shipments), Hull highlord (800 shipments), Dockyard director (850 shipments), Orbital outfitter (900 shipments), Freight field marshal (950 shipments), Warpway warden (1,000 shipments), Cargo cartographer (1,050 shipments), Starport sahib (1,100 shipments), Payload patriarch (1,150 shipments), Customs czar (1,200 shipments), Interstellar impresario (1,250 shipments)
-- **Alchemy Lab**: Alembic adjudicator (750 alchemy labs), Crucible custodian (800 alchemy labs), Reagent regent (850 alchemy labs), Retort ringleader (900 alchemy labs), Tincture tycoon (950 alchemy labs), Catalyst chancellor (1,000 alchemy labs), Elixir elder (1,050 alchemy labs), Precipitate prefect (1,100 alchemy labs), Distillate duke (1,150 alchemy labs), Sublimate sovereign (1,200 alchemy labs), Magnum opus magnate (1,250 alchemy labs)
-- **Portal**: Gate gauger (750 portals), Rift rector (800 portals), Threshold thaum (850 portals), Liminal lawgiver (900 portals), Tesseract trustee (950 portals), Nth-entrance envoy (1,000 portals), Event-horizon emir (1,050 portals), Portal provost (1,100 portals), Keymaster kingpin (1,150 portals), Waystone warden (1,200 portals), Multidoor magistrate (1,250 portals)
-- **Time Machine**: Tick-tock trustee (750 time machines), Chrono chieftain (800 time machines), Paradox provost (850 time machines), Epoch executor (900 time machines), Aeon alderman (950 time machines), Timeline tactician (1,000 time machines), Loop legislator (1,050 time machines), Era eminence (1,100 time machines), Causality constable (1,150 time machines), Continuum custodian (1,200 time machines), Grandfather-clause governor (1,250 time machines)
-- **Antimatter Condenser**: Vacuum vicar (750 antimatter condensers), Negamass nabob (800 antimatter condensers), Quark quartermaster (850 antimatter condensers), Hadron high bailiff (900 antimatter condensers), Singularity steward (950 antimatter condensers), Boson baron (1,000 antimatter condensers), Lepton lieutenant (1,050 antimatter condensers), Isotope imperator (1,100 antimatter condensers), Reactor regnant (1,150 antimatter condensers), Nullspace notary (1,200 antimatter condensers), Entropy esquire (1,250 antimatter condensers)
-- **Prism**: Photon prefect (750 prisms), Spectrum superintendent (800 prisms), Refraction regent (850 prisms), Rainbow registrar (900 prisms), Lumen laureate (950 prisms), Prism prelate (1,000 prisms), Chromatic chancellor (1,050 prisms), Beam baronet (1,100 prisms), Halo highlord (1,150 prisms), Diffraction duke (1,200 prisms), Radiance regnant (1,250 prisms)
-- **Chancemaker**: Odds officer (750 chancemakers), Fortune foreman (800 chancemakers), Serendipity superintendent (850 chancemakers), Gambit governor (900 chancemakers), Probability provost (950 chancemakers), Fate facilitator (1,000 chancemakers), Draw director (1,050 chancemakers), Jackpot jurist (1,100 chancemakers), Pips preceptor (1,150 chancemakers), Stochastic sovereign (1,200 chancemakers), Luck laureate (1,250 chancemakers)
-- **Fractal Engine**: Mandel monarch (750 fractal engines), Koch kingpin (800 fractal engines), Cantor custodian (850 fractal engines), Julia jurist (900 fractal engines), Sierpiński steward (950 fractal engines), Iteration imperator (1,000 fractal engines), Recursion regent (1,050 fractal engines), Self-similarity sheriff (1,100 fractal engines), Pattern praetor (1,150 fractal engines), Infinite indexer (1,200 fractal engines), Depth-first demigod (1,250 fractal engines)
-- **Javascript Console**: Lint lord (750 javascript consoles), Closure captain (800 javascript consoles), Async archon (850 javascript consoles), Promise prelate (900 javascript consoles), Scope sovereign (950 javascript consoles), Hoist highness (1,000 javascript consoles), Node notable (1,050 javascript consoles), Regex regent (1,100 javascript consoles), Bundle baron (1,150 javascript consoles), Sandbox seer (1,200 javascript consoles), Runtime regnant (1,250 javascript consoles)
-- **Idleverse**: Multiverse marshal (750 idleverses), Replica rector (800 idleverses), Shard shepherd (850 idleverses), Universe underwriter (900 idleverses), Realm regent (950 idleverses), Cosmos comptroller (1,000 idleverses), Omniverse ombuds (1,050 idleverses), Dimension director (1,100 idleverses), Reality registrar (1,150 idleverses), Plane provost (1,200 idleverses), Horizon high steward (1,250 idleverses)
-- **Cortex Baker**: Synapse superintendent (750 cortex bakers), Cortex commissioner (800 cortex bakers), Gyrus governor (850 cortex bakers), Lobe luminary (900 cortex bakers), Neuron notable (950 cortex bakers), Axon adjudicator (1,000 cortex bakers), Myelin magistrate (1,050 cortex bakers), Thalamus thegn (1,100 cortex bakers), Cerebellum chancellor (1,150 cortex bakers), Prefrontal prelate (1,200 cortex bakers), Mind monarch (1,250 cortex bakers)
-- **You**: Me manager (750 You), Doppel director (800 You), Mirror minister (850 You), Clone commissioner (900 You), Copy chieftain (950 You), Echo executor (1,000 You), Facsimile foreman (1,050 You), Reflection regent (1,100 You), Duplicate duke (1,150 You), Replica regnant (1,200 You), Self supreme (1,250 You)
+- **Grandma**: All rise for Nana (750 grandmas), The crinkle collective (800 grandmas), Okay elder (850 grandmas), Wrinkle monarchy (900 grandmas), The wrinkling hour (950 grandmas), Matriarchal meltdown (1,000 grandmas), Cookies before crones (1,050 grandmas), Dust to crust (1,100 grandmas), Bingo bloodbath (1,150 grandmas), Supreme doughmother (1,200 grandmas), The last custodian (1,250 grandmas)
+- **Farm**: Little house on the dairy (750 farms), The plow thickens (800 farms), Cabbage patch dynasty (850 farms), Grazing amazement (900 farms), Field of creams (950 farms), Barn to be wild (1,000 farms), Crops and robbers (1,050 farms), Shoveling it in (1,100 farms), Seed syndicate (1,150 farms), Harvest high table (1,200 farms), Emperor of dirt (1,250 farms)
+- **Mine**: Shafted (750 mines), Shiny object syndrome (800 mines), Ore what? (850 mines), Rubble without a cause (900 mines), Tunnel visionaries (950 mines), Stalag-might (1,000 mines), Pyrite and prejudice (1,050 mines), Bedrock 'n roll (1,100 mines), Mantle management (1,150 mines), Hollow crown jewels (1,200 mines), Emperor of ore (1,250 mines)
+- **Factory**: Assembly required (750 factories), Quality unassured (800 factories), Error 404-manpower not found (850 factories), Spare parts department (900 factories), Conveyor belters (950 factories), Planned obsolescence (1,000 factories), Punch-card prophets (1,050 factories), Rust in peace (1,100 factories), Algorithm and blues (1,150 factories), Profit motive engine (1,200 factories), Lord of the assembly (1,250 factories)
+- **Bank**: Petty cash splash (750 banks), The Invisible Hand That Feeds (800 banks), Under-mattress banking (850 banks), Interest-ing times (900 banks), Fee-fi-fo-fund (950 banks), Liquidity theater (1,000 banks), Risk appetite: unlimited (1,050 banks), Quantitative cheesing (1,100 banks), Number go up economics (1,150 banks), Sovereign cookie fund (1,200 banks), Seigniorage supreme (1,250 banks)
+- **Temple**: Monk mode (750 temples), Ritual and error (800 temples), Chant and deliver (850 temples), Incensed and consecrated (900 temples), Shrine of the times (950 temples), Hallowed be thy grain (1,000 temples), Relic and roll (1,050 temples), Pilgrimage of crumbs (1,100 temples), The cookie pantheon (1,150 temples), Tithes and cookies (1,200 temples), Om-nom-nipotent (1,250 temples)
+- **Wizard Tower**: Is this your cardamom? (750 wizard towers), Rabbit optional, hat mandatory (800 wizard towers), Wand and done (850 wizard towers), Critical spellcheck failed (900 wizard towers), Tome Raider (950 wizard towers), Prestidigitation station (1,000 wizard towers), Counterspell culture (1,050 wizard towers), Glitter is a material component (1,100 wizard towers), Evocation nation (1,150 wizard towers), Sphere of influence (1,200 wizard towers), The Last Archmage (1,250 wizard towers)
+- **Shipment**: Door-to-airlock (750 shipments), Contents may shift in zero-G (800 shipments), Fragile: vacuum inside (850 shipments), Cosmic courier service (900 shipments), Porch pirates of Andromeda (950 shipments), Tracking number: ∞ (1,000 shipments), Relativistic courier (1,050 shipments), Orbital rendezvous only (1,100 shipments), Return to sender: event horizon (1,150 shipments), Address: Unknown Quadrant (1,200 shipments), Postmaster Galactic (1,250 shipments)
+- **Alchemy Lab**: Stir-crazy crucible (750 alchemy labs), Flask dance (800 alchemy labs), Beaker than fiction (850 alchemy labs), Alloy-oop (900 alchemy labs), Distill my beating heart (950 alchemy labs), Lead Zeppelin (1,000 alchemy labs), Hg Wells (1,050 alchemy labs), Fe-fi-fo-fum (1,100 alchemy labs), Breaking bread with Walter White (1,150 alchemy labs), Prima materia manager (1,200 alchemy labs), The Philosopher's Scone (1,250 alchemy labs)
+- **Portal**: Open sesameseed (750 portals), Mind the rift (800 portals), Doorway to s'moreway (850 portals), Contents may phase in transit (900 portals), Wormhole warranty voided (950 portals), Glitch in the Crumbatrix (1,000 portals), Second pantry to the right (1,050 portals), Liminal sprinkles (1,100 portals), Please do not feed the void (1,150 portals), Echoes from the other oven (1,200 portals), Out past the exit sign (1,250 portals)
+- **Time Machine**: Yeasterday (750 time machines), Tick-tock, bake o'clock (800 time machines), Back to the batter (850 time machines), Déjà chewed (900 time machines), Borrowed thyme (950 time machines), Second breakfast paradox (1,000 time machines), Next week's news, fresh today (1,050 time machines), Live, die, bake, repeat (1,100 time machines), Entropy-proof frosting (1,150 time machines), Past the last tick (1,200 time machines), Emperor of when (1,250 time machines)
+- **Antimatter Condenser**: Up and atom! (750 antimatter condensers), Boson buddies (800 antimatter condensers), Schrödinger's snack (850 antimatter condensers), Quantum foam party (900 antimatter condensers), Twenty years away (always) (950 antimatter condensers), Higgs and kisses (1,000 antimatter condensers), Zero-point frosting (1,050 antimatter condensers), Some like it dark (matter) (1,100 antimatter condensers), Vacuum energy bar (1,150 antimatter condensers), Singularity of flavor (1,200 antimatter condensers), Emperor of mass (1,250 antimatter condensers)
+- **Prism**: Light reading (750 prisms), Refraction action (800 prisms), Snacktrum of light (850 prisms), My cones and rods (900 prisms), Prism break (950 prisms), Prism prelate (1,000 prisms), Glare force one (1,050 prisms), Hues Your Own Adventure (1,100 prisms), Devour the spectrum (1,150 prisms), Crown of rainbows (1,200 prisms), Radiant consummation (1,250 prisms)
+- **Chancemaker**: Beginner's lucked-in (750 chancemakers), Risk it for the biscuit (800 chancemakers), Roll, baby, roll (850 chancemakers), Luck be a ladyfinger (900 chancemakers), RNG on the range (950 chancemakers), Monte Carlo kitchen (1,000 chancemakers), Gambler's fallacy, baker's edition (1,050 chancemakers), Schrödinger's jackpot (1,100 chancemakers), RNGesus take the wheel (1,150 chancemakers), Hand of Fate: Full House (1,200 chancemakers), RNG seed of fortune (1,250 chancemakers)
+- **Fractal Engine**: Copy-paste-ry (750 fractal engines), Again, but smaller (800 fractal engines), Edge-case frosting (850 fractal engines), Mandelbread set (900 fractal engines), Strange attractor, stranger baker (950 fractal engines), Recursive taste test (1,000 fractal engines), Zoom & enhance & enhance (1,050 fractal engines), The limit does not exist (1,100 fractal engines), Halting? Never heard of it (1,150 fractal engines), The set contains you (1,200 fractal engines), Emperor of self-similarity (1,250 fractal engines)
+- **Javascript Console**: F12, open sesame (750 javascript consoles), console.log('crumbs') (800 javascript consoles), Semicolons optional, sprinkles mandatory (850 javascript consoles), Undefined is not a function (nor a cookie) (900 javascript consoles), await fresh_from_oven() (950 javascript consoles), Event loop-de-loop (1,000 javascript consoles), Regexorcism (1,050 javascript consoles), Infinite scroll of dough (1,100 javascript consoles), Unhandled promise confection (1,150 javascript consoles), Single-threaded, single-minded (1,200 javascript consoles), Emperor of Runtime (1,250 javascript consoles)
+- **Idleverse**: Pick-a-verse, any verse (750 idleverses), Open in new universe (800 idleverses), Meanwhile, in a parallel tab (850 idleverses), Idle hands, infinite plans (900 idleverses), Press any world to continue (950 idleverses), NPC in someone else's save (1,000 idleverses), Cookie of Theseus (1,050 idleverses), Crossover episode (1,100 idleverses), Cosmic load balancer (1,150 idleverses), Prime instance (1,200 idleverses), The bakery at the end of everything (1,250 idleverses)
+- **Cortex Baker**: Gray matter batter (750 cortex bakers), Outside the cookie box (800 cortex bakers), Prefrontal glaze (850 cortex bakers), Snap, crackle, synapse (900 cortex bakers), Temporal batch processing (950 cortex bakers), Cogito, ergo crumb (1,000 cortex bakers), Galaxy brain, local oven (1,050 cortex bakers), The bicameral ovens (1,100 cortex bakers), Theory of crumb (1,150 cortex bakers), Lobe service (1,200 cortex bakers), Mind the monarch (1,250 cortex bakers)
+- **You**: Me, myself, and Icing (750 You), Copy of a copy (800 You), Echo chamber (850 You), Self checkout (900 You), You v2.0 (950 You), You v2.0.1 emergency hot fix (1,000 You), Me, Inc. (1,050 You), Council of Me (1,100 You), I, Legion (1,150 You), The one true you (1,200 You), Sovereign of the self (1,250 You)
 
 ### Building Production Achievements (60 achievements)
 
-- **Cursor**: Click (starring Adam Sandler) II - Make **1 septendecillion cookies** just from cursors
-- **Cursor**: Click (starring Adam Sandler) III - Make **1 quindecillion cookies** just from cursors
-- **Cursor**: Click (starring Adam Sandler) IV - Make **1 sexdecillion cookies** just from cursors
-- **Grandma**: Frantiquities II - Make **1 septendecillion cookies** just from grandmas
-- **Grandma**: Frantiquities III - Make **1 quindecillion cookies** just from grandmas
-- **Grandma**: Frantiquities IV - Make **1 sexdecillion cookies** just from grandmas
-- **Farm**: Overgrowth II - Make **1 quattuordecillion cookies** just from farms
-- **Farm**: Overgrowth III - Make **1 quindecillion cookies** just from farms
-- **Farm**: Overgrowth IV - Make **1 sexdecillion cookies** just from farms
-- **Mine**: Sedimentalism II - Make **10 quattuordecillion cookies** just from mines
-- **Mine**: Sedimentalism III - Make **10 quindecillion cookies** just from mines
-- **Mine**: Sedimentalism IV - Make **10 sexdecillion cookies** just from mines
-- **Factory**: Labor of love II - Make **100 quattuordecillion cookies** just from factories
-- **Factory**: Labor of love III - Make **100 quindecillion cookies** just from factories
-- **Factory**: Labor of love IV - Make **100 sexdecillion cookies** just from factories
-- **Bank**: Reverse funnel system II - Make **1 quindecillion cookies** just from banks
-- **Bank**: Reverse funnel system III - Make **1 sexdecillion cookies** just from banks
-- **Bank**: Reverse funnel system IV - Make **1 septendecillion cookies** just from banks
-- **Temple**: Thus spoke you II - Make **10 quindecillion cookies** just from temples
-- **Temple**: Thus spoke you III - Make **10 sexdecillion cookies** just from temples
-- **Temple**: Thus spoke you IV - Make **10 septendecillion cookies** just from temples
-- **Wizard Tower**: Manafest destiny II - Make **100 quindecillion cookies** just from wizard towers
-- **Wizard Tower**: Manafest destiny III - Make **100 sexdecillion cookies** just from wizard towers
-- **Wizard Tower**: Manafest destiny IV - Make **100 septendecillion cookies** just from wizard towers
-- **Shipment**: Neither snow nor rain nor heat nor gloom of night II - Make **1 sexdecillion cookies** just from shipments
-- **Shipment**: Neither snow nor rain nor heat nor gloom of night III - Make **1 septendecillion cookies** just from shipments
-- **Shipment**: Neither snow nor rain nor heat nor gloom of night IV - Make **1 octodecillion cookies** just from shipments
-- **Alchemy Lab**: I've got the Midas touch II - Make **10 sexdecillion cookies** just from alchemy labs
-- **Alchemy Lab**: I've got the Midas touch III - Make **10 septendecillion cookies** just from alchemy labs
-- **Alchemy Lab**: I've got the Midas touch IV - Make **10 octodecillion cookies** just from alchemy labs
-- **Portal**: Which eternal lie II - Make **100 sexdecillion cookies** just from portals
-- **Portal**: Which eternal lie III - Make **100 septendecillion cookies** just from portals
-- **Portal**: Which eternal lie IV - Make **100 octodecillion cookies** just from portals
-- **Time Machine**: Déjà vu II - Make **1 septendecillion cookies** just from time machines
-- **Time Machine**: Déjà vu III - Make **1 octodecillion cookies** just from time machines
-- **Time Machine**: Déjà vu IV - Make **1 novemdecillion cookies** just from time machines
-- **Antimatter Condenser**: Powers of Ten II - Make **10 septendecillion cookies** just from antimatter condensers
-- **Antimatter Condenser**: Powers of Ten III - Make **10 octodecillion cookies** just from antimatter condensers
-- **Antimatter Condenser**: Powers of Ten IV - Make **10 novemdecillion cookies** just from antimatter condensers
-- **Prism**: Now the dark days are gone II - Make **100 septendecillion cookies** just from prisms
-- **Prism**: Now the dark days are gone III - Make **100 octodecillion cookies** just from prisms
-- **Prism**: Now the dark days are gone IV - Make **100 novemdecillion cookies** just from prisms
-- **Chancemaker**: Murphy's wild guess II - Make **1 octodecillion cookies** just from chancemakers
-- **Chancemaker**: Murphy's wild guess III - Make **1 novemdecillion cookies** just from chancemakers
-- **Chancemaker**: Murphy's wild guess IV - Make **1 vigintillion cookies** just from chancemakers
-- **Fractal Engine**: We must go deeper II - Make **10 octodecillion cookies** just from fractal engines
-- **Fractal Engine**: We must go deeper III - Make **10 novemdecillion cookies** just from fractal engines
-- **Fractal Engine**: We must go deeper IV - Make **10 vigintillion cookies** just from fractal engines
-- **Javascript Console**: First-class citizen II - Make **100 octodecillion cookies** just from javascript consoles
-- **Javascript Console**: First-class citizen III - Make **100 novemdecillion cookies** just from javascript consoles
-- **Javascript Console**: First-class citizen IV - Make **100 vigintillion cookies** just from javascript consoles
-- **Idleverse**: Earth-616 II - Make **1 novemdecillion cookies** just from idleverses
-- **Idleverse**: Earth-616 III - Make **100 vigintillion cookies** just from idleverses
-- **Idleverse**: Earth-616 IV - Make **10 duovigintillion cookies** just from idleverses
-- **Cortex Baker**: Unthinkable II - Make **10 novemdecillion cookies** just from cortex bakers
-- **Cortex Baker**: Unthinkable III - Make **10 vigintillion cookies** just from cortex bakers
-- **Cortex Baker**: Unthinkable IV - Make **10 unvigintillion cookies** just from cortex bakers
-- **You**: That's all you II - Make **100 novemdecillion cookies** just from You
-- **You**: That's all you III - Make **100 vigintillion cookies** just from You
-- **You**: That's all you IV - Make **100 unvigintillion cookies** just from You
+- **Cursor**: Click II: the sequel - Make **1 septendecillion cookies** just from cursors
+- **Cursor**: Click III: we couldn't get Adam so it stars Jerry Seinfeld for some reason - Make **1 quindecillion cookies** just from cursors
+- **Cursor**: Click IV: 3% on rotten tomatoes - Make **1 sexdecillion cookies** just from cursors
+- **Grandma**: Scone with the wind - Make **1 septendecillion cookies** just from grandmas
+- **Grandma**: The flour of youth - Make **1 quindecillion cookies** just from grandmas
+- **Grandma**: Bake-ageddon - Make **1 sexdecillion cookies** just from grandmas
+- **Farm**: Rake in the greens - Make **1 quattuordecillion cookies** just from farms
+- **Farm**: The great threshering - Make **1 quindecillion cookies** just from farms
+- **Farm**: Bushels of burden - Make **1 sexdecillion cookies** just from farms
+- **Mine**: Ore d'oeuvres - Make **10 quattuordecillion cookies** just from mines
+- **Mine**: Seismic yield - Make **10 quindecillion cookies** just from mines
+- **Mine**: Billionaire's bedrock - Make **10 sexdecillion cookies** just from mines
+- **Factory**: Sweatshop symphony - Make **100 quattuordecillion cookies** just from factories
+- **Factory**: Cookieconomics 101 - Make **100 quindecillion cookies** just from factories
+- **Factory**: Mass production messiah - Make **100 sexdecillion cookies** just from factories
+- **Bank**: Compound interest, compounded - Make **1 quindecillion cookies** just from banks
+- **Bank**: Arbitrage avalanche - Make **1 sexdecillion cookies** just from banks
+- **Bank**: Ponzi à la mode - Make **1 septendecillion cookies** just from banks
+- **Temple**: Temple treasury overflow - Make **10 quindecillion cookies** just from temples
+- **Temple**: Pantheon payout - Make **10 sexdecillion cookies** just from temples
+- **Temple**: Sacred surplus - Make **10 septendecillion cookies** just from temples
+- **Wizard Tower**: Rabbits per minute - Make **100 quindecillion cookies** just from wizard towers
+- **Wizard Tower**: Hocus bonus - Make **100 sexdecillion cookies** just from wizard towers
+- **Wizard Tower**: Magic dividends - Make **100 septendecillion cookies** just from wizard towers
+- **Shipment**: Cargo cult classic - Make **1 sexdecillion cookies** just from shipments
+- **Shipment**: Universal basic shipping - Make **1 septendecillion cookies** just from shipments
+- **Shipment**: Comet-to-consumer - Make **1 octodecillion cookies** just from shipments
+- **Alchemy Lab**: Lead into bread - Make **10 sexdecillion cookies** just from alchemy labs
+- **Alchemy Lab**: Philosopher's yield - Make **10 septendecillion cookies** just from alchemy labs
+- **Alchemy Lab**: Auronomical returns - Make **10 octodecillion cookies** just from alchemy labs
+- **Portal**: Spacetime surcharge - Make **100 sexdecillion cookies** just from portals
+- **Portal**: Interdimensional yield farming - Make **100 septendecillion cookies** just from portals
+- **Portal**: Event-horizon markup - Make **100 octodecillion cookies** just from portals
+- **Time Machine**: Future Profits, Past Tense - Make **1 septendecillion cookies** just from time machines
+- **Time Machine**: Infinite Loop, Infinite Loot - Make **1 octodecillion cookies** just from time machines
+- **Time Machine**: Back Pay from the Big Bang - Make **1 novemdecillion cookies** just from time machines
+- **Antimatter Condenser**: Pair production payout - Make **10 septendecillion cookies** just from antimatter condensers
+- **Antimatter Condenser**: Cross-section surplus - Make **10 octodecillion cookies** just from antimatter condensers
+- **Antimatter Condenser**: Powers of crumbs - Make **10 novemdecillion cookies** just from antimatter condensers
+- **Prism**: Photons pay dividends - Make **100 septendecillion cookies** just from prisms
+- **Prism**: Spectral surplus - Make **100 octodecillion cookies** just from prisms
+- **Prism**: Dawn of plenty - Make **100 novemdecillion cookies** just from prisms
+- **Chancemaker**: Against all odds & ends - Make **1 octodecillion cookies** just from chancemakers
+- **Chancemaker**: Monte Carlo windfall - Make **1 novemdecillion cookies** just from chancemakers
+- **Chancemaker**: Fate-backed securities - Make **1 vigintillion cookies** just from chancemakers
+- **Fractal Engine**: Infinite series surplus - Make **10 octodecillion cookies** just from fractal engines
+- **Fractal Engine**: Geometric mean feast - Make **10 novemdecillion cookies** just from fractal engines
+- **Fractal Engine**: Fractal jackpot - Make **10 vigintillion cookies** just from fractal engines
+- **Javascript Console**: Cookies per second()++ - Make **100 octodecillion cookies** just from javascript consoles
+- **Javascript Console**: Promise.all(paydays) - Make **100 novemdecillion cookies** just from javascript consoles
+- **Javascript Console**: Async and ye shall receive - Make **100 vigintillion cookies** just from javascript consoles
+- **Idleverse**: Crossover dividends - Make **1 novemdecillion cookies** just from idleverses
+- **Idleverse**: Many-Worlds ROI - Make **100 vigintillion cookies** just from idleverses
+- **Idleverse**: Continuity bonus - Make **10 duovigintillion cookies** just from idleverses
+- **Cortex Baker**: Brainstorm dividend - Make **10 novemdecillion cookies** just from cortex bakers
+- **Cortex Baker**: Thought economy boom - Make **10 vigintillion cookies** just from cortex bakers
+- **Cortex Baker**: Neural net worth - Make **10 unvigintillion cookies** just from cortex bakers
+- **You**: Personal growth - Make **100 novemdecillion cookies** just from You
+- **You**: Economies of selves - Make **100 vigintillion cookies** just from You
+- **You**: Self-sustaining singularity - Make **100 unvigintillion cookies** just from You
 
 ### Building Level Achievements (40 achievements)
 
 ##### Cursor
-- **Spastic jazz hands**: Reach **level 15** Cursors  
-- **Epileptic jazz hands**: Reach **level 20** Cursors
+- **Rowdy shadow puppets**: Reach **level 15** Cursors  
+- **Frantic finger guns**: Reach **level 20** Cursors
 
 ##### Grandma
-- **Noah**: Reach **level 15** Grandmas
-- **Adam**: Reach **level 20** Grandmas
+- **Loaf & behold**: Reach **level 15** Grandmas
+- **Forbidden fruitcake**: Reach **level 20** Grandmas
 
 ##### Farm
-- **Massive tracts of land**: Reach **level 15** Farms
-- **Colossal tracts of land**: Reach **level 20** Farms
+- **Huge-er tracts of land**: Reach **level 15** Farms
+- **Hoedown showdown**: Reach **level 20** Farms
 
 ##### Mine
-- **D-d-d-d-d-deeper**: Reach **level 15** Mines
-- **D-d-d-d-d-d-deeper**: Reach **level 20** Mines
+- **Cave-in king**: Reach **level 15** Mines
+- **Digging destiny**: Reach **level 20** Mines
 
 ##### Factory
-- **Patent pending**: Reach **level 15** Factories
-- **Patent granted**: Reach **level 20** Factories
+- **Boilerplate overlord**: Reach **level 15** Factories
+- **Cookie standard time**: Reach **level 20** Factories
 
 ##### Bank
-- **A capital notion**: Reach **level 15** Banks
-- **A capital concept**: Reach **level 20** Banks
+- **Credit conjurer**: Reach **level 15** Banks
+- **Master of the Mint**: Reach **level 20** Banks
 
 ##### Temple
-- **It belongs in a cathedral**: Reach **level 15** Temples
-- **It belongs in a basilica**: Reach **level 20** Temples
+- **Acolyte ascendant**: Reach **level 15** Temples
+- **Grand hierophant**: Reach **level 20** Temples
 
 ##### Wizard Tower
-- **Chatterbox**: Reach **level 15** Wizard Towers
-- **Blabbermouth**: Reach **level 20** Wizard Towers
+- **Archmage of Meringue**: Reach **level 15** Wizard Towers
+- **Chronomancer emeritus**: Reach **level 20** Wizard Towers
 
 ##### Shipment
-- **Been everywhere done everything**: Reach **level 15** Shipments
-- **Been everywhere done everything twice**: Reach **level 20** Shipments
+- **Quartermaster of Orbits**: Reach **level 15** Shipments
+- **Docking director**: Reach **level 20** Shipments
 
 ##### Alchemy Lab
-- **Phlogisticated compounds**: Reach **level 15** Alchemy Labs
-- **Phlogisticated elements**: Reach **level 20** Alchemy Labs
+- **Retort wrangler**: Reach **level 15** Alchemy Labs
+- **Circle of Quintessence**: Reach **level 20** Alchemy Labs
 
 ##### Portal
-- **Bizarro universe**: Reach **level 15** Portals
-- **Bizarro multiverse**: Reach **level 20** Portals
+- **Non-Euclidean doorman**: Reach **level 15** Portals
+- **Warden of Elsewhere**: Reach **level 20** Portals
 
 ##### Time Machine
-- **The longer now**: Reach **level 15** Time Machines
-- **The longest now**: Reach **level 20** Time Machines
+- **Minute handler**: Reach **level 15** Time Machines
+- **Chronarch supreme**: Reach **level 20** Time Machines
 
 ##### Antimatter Condenser
-- **Plump hadrons**: Reach **level 15** Antimatter Condensers
-- **Obese hadrons**: Reach **level 20** Antimatter Condensers
+- **Quark wrangler**: Reach **level 15** Antimatter Condensers
+- **Symmetry breaker**: Reach **level 20** Antimatter Condensers
 
 ##### Prism
-- **Palettastic**: Reach **level 15** Prisms
-- **Palettacular**: Reach **level 20** Prisms
+- **Master of refraction**: Reach **level 15** Prisms
+- **Keeper of the seven hues**: Reach **level 20** Prisms
 
 ##### Chancemaker
-- **Lucky stars**: Reach **level 15** Chancemakers
-- **Lucky numbers**: Reach **level 20** Chancemakers
+- **Seedkeeper of Fortune**: Reach **level 15** Chancemakers
+- **Master of Maybe**: Reach **level 20** Chancemakers
 
 ##### Fractal Engine
-- **Fractaliciousest**: Reach **level 15** Fractal Engines
-- **Fractalicious**: Reach **level 20** Fractal Engines
+- **Archfractal**: Reach **level 15** Fractal Engines
+- **Lord of Infinite Detail**: Reach **level 20** Fractal Engines
 
 ##### Javascript Console
-- **Debuggerer**: Reach **level 15** Javascript Consoles
-- **Debuggerest**: Reach **level 20** Javascript Consoles
+- **Stack tracer**: Reach **level 15** Javascript Consoles
+- **Event-loop overlord**: Reach **level 20** Javascript Consoles
 
 ##### Idleverse
-- **Idleverse implosion**: Reach **level 15** Idleverses
-- **Idleverse explosion**: Reach **level 20** Idleverses
+- **Canon custodian**: Reach **level 15** Idleverses
+- **Keeper of the Uncountable**: Reach **level 20** Idleverses
 
 ##### Cortex Baker
-- **Brain feast**: Reach **level 15** Cortex Bakers
-- **Brain banquet**: Reach **level 20** Cortex Bakers
+- **Chief Thinker Officer**: Reach **level 15** Cortex Bakers
+- **Mind over batter**: Reach **level 20** Cortex Bakers
 
 ##### You
-- **Copy that and a half**: Reach **level 15** Yous
-- **Copy that twice**: Reach **level 20** Yous
+- **Identity custodian**: Reach **level 15** Yous
+- **First Person Plural**: Reach **level 20** Yous
 
 # New Upgrades
 
@@ -759,6 +759,10 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 
 
 ## Changelog 
+
+### Version 0.0.11
+* Ask and you shall receive, the "mid" achievement names have been replaced with more interesting ones. No save data will be lost as the old achievements automatically map to the updated ones. 
+* [The Final Countdown](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#new-achievements) was widely criticized for being too hard. It has been made easier, HOWEVER the original unlock conditions still exists so it may be unlocked starting with 20 Cursors and counting down to 1 You, or with 15 Cursors counting down to 5 Chancemakers. I thank our beta testers especially those who have completed the harder challenge for their feedback. 
 
 ### Version 0.0.10
 * Added more bake X cookies per second achievements 
