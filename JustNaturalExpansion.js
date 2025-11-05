@@ -5,10 +5,9 @@
     'use strict';
     
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.0.11';
+    var modVersion = '0.1.0';
     var debugMode = false; 
     var runtimeSessionId = Math.floor(Math.random()*1e9) + '-' + Date.now();
-    
     
     function debugLog() {
         if (!debugMode) return;
@@ -51,12 +50,17 @@
     var enableCookieUpgrades = false;  // Default to disabled for first-run experience
     var enableBuildingUpgrades = false;  // Default to disabled for first-run experience
     var enableKittenUpgrades = false;  // Default to disabled for first-run experience
+    var enableCookieAge = false;  // Default to disabled for first-run experience
+    var cookieAgeProgress = 0;  // Track puzzle quest progress (0-50)
+    var cookieAgeScriptLoaded = false;  // Track if cookieAge.js script has been loaded from CDN
     
     var modIcon = [15, 7]; // Static mod icon from main sprite sheet
     var boxIcon = [34, 4]; // Static Box of improved cookies icon from main sprite sheet
     var modInitialized = false; // Track if mod has finished initializing
     var achievementsCreated = false; // Track if achievements have been created to prevent recreation
     var modSaveData = null; // Store save data for initialization
+    var modLoadInvoked = false; // Track whether load() has run this session
+    var pendingAchievementAwards = []; // Queue for achievements to award once initialization completes
     var toggleLock = false; // Prevent rapid toggle operations
     var pendingSaveTimer = null; // Throttle saves
     var saveCooldownMs = 3000; // Minimum delay between saves
@@ -592,8 +596,11 @@
         enableCookieUpgrades: false,
         enableBuildingUpgrades: false,
         enableKittenUpgrades: true,
+        enableCookieAge: false,
+        cookieAgeProgress: 0, // Track puzzle quest progress (0-50)
         hasUsedModOutsideShadowMode: false,
-        hasMadeInitialChoice: false // Track if user has made their initial leaderboard/non-leaderboard choice
+        hasMadeInitialChoice: false, // Track if user has made their initial leaderboard/non-leaderboard choice
+        permanentSlotBackup: {}
     };
     
     // Current run tracking variables (reset on ascension)
@@ -870,6 +877,7 @@
             else if (button.id === 'toggle-cookie-upgrades') settingName = 'enableCookieUpgrades';
             else if (button.id === 'toggle-building-upgrades') settingName = 'enableBuildingUpgrades';
             else if (button.id === 'toggle-kitten-upgrades') settingName = 'enableKittenUpgrades';
+            else if (button.id === 'toggle-cookie-age') settingName = 'enableCookieAge';
             
             if (settingName) {
                 let buttonText = '';
@@ -891,6 +899,10 @@
                     case 'enableKittenUpgrades':
                         isEnabled = enableKittenUpgrades;
                         buttonText = `Kitten Upgrades<br><b style="font-size:12px;">${isEnabled ? 'ON' : 'OFF'}</b>`;
+                        break;
+                    case 'enableCookieAge':
+                        isEnabled = enableCookieAge;
+                        buttonText = `Mysteries of the Cookie<br><b style="font-size:12px;">${isEnabled ? 'ON' : 'OFF'}</b>`;
                         break;
                 }
                 button.innerHTML = buttonText;
@@ -921,6 +933,9 @@
             case 'enableKittenUpgrades':
                 targetVariable = 'enableKittenUpgrades';
                 break;
+            case 'enableCookieAge':
+                targetVariable = 'enableCookieAge';
+                break;
             default:
                 targetVariable = settingName;
         }
@@ -935,13 +950,24 @@
             newState = !enableBuildingUpgrades;
         } else if (targetVariable === 'enableKittenUpgrades') {
             newState = !enableKittenUpgrades;
+        } else if (targetVariable === 'enableCookieAge') {
+            newState = !enableCookieAge;
         }
         
-        // Show confirmation prompt for major changes
+        // Determine competition-mode transition
+        const wasInCompetitionMode = shadowAchievementMode && !enableCookieUpgrades && !enableBuildingUpgrades && !enableKittenUpgrades;
+        let willExitCompetitionMode = false;
+        if (settingName === 'shadowAchievements') {
+            willExitCompetitionMode = wasInCompetitionMode && newState === false;
+        } else if (settingName === 'enableCookieUpgrades' || settingName === 'enableBuildingUpgrades' || settingName === 'enableKittenUpgrades') {
+            willExitCompetitionMode = wasInCompetitionMode && newState === true;
+        }
+
+        // Show confirmation prompt only when leaving competition mode
         let message = '';
         let callback = '';
         
-        if (settingName === 'shadowAchievements') {
+        if (settingName === 'shadowAchievements' && willExitCompetitionMode) {
             if (newState) {
                 message = 'Enable shadow achievements?<br><small>All mod achievements will be moved to the shadow pool and will no longer grant milk or affect gameplay.</small>';
                 callback = function() { applyShadowAchievementChange(true); };
@@ -949,7 +975,7 @@
                 message = 'Disable shadow achievements?<br><small>All mod achievements will be moved to the normal pool and will grant milk and affect gameplay. This will award the "Beyond the Leaderboard" shadow achievement to indicate you have left competition mode.</small>';
                 callback = function() { applyShadowAchievementChange(false); };
             }
-        } else if (settingName === 'enableCookieUpgrades' || settingName === 'enableBuildingUpgrades' || settingName === 'enableKittenUpgrades') {
+        } else if ((settingName === 'enableCookieUpgrades' || settingName === 'enableBuildingUpgrades' || settingName === 'enableKittenUpgrades') && willExitCompetitionMode) {
             let upgradeType = settingName.replace('enable', '').replace('Upgrades', '');
             if (newState) {
                 message = 'Enable ' + upgradeType + ' upgrades?<br><small>These upgrades will be added to the game and may affect your CPS and gameplay. This will award the "Beyond the Leaderboard" shadow achievement to indicate you have left competition mode.</small>';
@@ -970,12 +996,55 @@
             showSettingsChangePrompt(message, callback);
             }
         } else {
-            // For minor changes, apply immediately
-            applySettingChange(settingName, newState);
+            if (settingName === 'enableCookieAge') {
+                applyCookieAgeChange(newState, true);
+            } else if (settingName === 'enableCookieUpgrades' || settingName === 'enableBuildingUpgrades' || settingName === 'enableKittenUpgrades') {
+                applyUpgradeChange(settingName, newState);
+            } else if (settingName === 'shadowAchievements') {
+                applyShadowAchievementChange(newState);
+            } else {
+                // For minor changes, apply immediately
+                applySettingChange(settingName, newState);
+            }
         }
     }
     
+    function playToggleSound(isEnabled) {
+        if (typeof PlaySound === 'function' && typeof Game !== 'undefined' && Game.onMenu === 'prefs') {
+            PlaySound(isEnabled ? 'snd/tick.mp3' : 'snd/tickOff.mp3');
+        }
+    }
 
+    function queueAchievementAward(achievementName) {
+        if (!Game.Achievements || !Game.Achievements[achievementName]) {
+            return;
+        }
+        if (Game.Achievements[achievementName].won) {
+            return;
+        }
+        if (pendingAchievementAwards.indexOf(achievementName) === -1) {
+            pendingAchievementAwards.push(achievementName);
+        }
+    }
+
+    function flushPendingAchievementAwards() {
+        if (!modInitialized || !pendingAchievementAwards.length) {
+            return;
+        }
+        const awardsToProcess = pendingAchievementAwards.slice();
+        pendingAchievementAwards.length = 0;
+        setTimeout(function() {
+            if (Game.ClosePrompt) {
+                Game.ClosePrompt();
+            }
+            awardsToProcess.forEach(function(name, index) {
+                setTimeout(function() {
+                    Game.Win(name);
+                }, index * 100);
+            });
+        }, 0);
+    }
+    
     
     // Function to apply shadow achievement changes
     window.applyShadowAchievementChange = function(enabled) {
@@ -986,6 +1055,13 @@
         try {
         shadowAchievementMode = enabled;
         modSettings.shadowAchievements = enabled;   
+
+        playToggleSound(enabled);
+        
+        // Update Game.JNE exposure
+        if (Game.JNE) {
+            Game.JNE.shadowAchievementMode = shadowAchievementMode;
+        }
         
         // Update achievement pools
         updateAchievementPools();
@@ -996,7 +1072,7 @@
             
             // Award the "Beyond the Leaderboard" achievement if it exists and hasn't been won
             if (Game.Achievements['Beyond the Leaderboard'] && !Game.Achievements['Beyond the Leaderboard'].won) {
-                markAchievementWon('Beyond the Leaderboard');
+                Game.Win('Beyond the Leaderboard');
             }
         }
         
@@ -1059,10 +1135,14 @@
             enableBuildingUpgrades = enabled;
         } else if (settingName === 'enableKittenUpgrades') {
             enableKittenUpgrades = enabled;
+        } else if (settingName === 'enableCookieAge') {
+            enableCookieAge = enabled;
         }
         
         // Update modSettings for compatibility
         modSettings[settingName] = enabled;
+
+        playToggleSound(enabled);
         
         // Apply changes to the game
         // First save current upgrade states to preserve any purchases made since last save
@@ -1130,6 +1210,341 @@
         }
     }
     
+    // Function to dynamically load cookieAge.js from CDN
+    function loadCookieAgeScript() {
+        // Return a resolved promise if already loaded
+        if (window.CookieAge) {
+            cookieAgeScriptLoaded = true;
+            return Promise.resolve();
+        }
+        
+        // Check if script tag already exists to avoid duplicates, date stamping to crush annoying cache issues
+        var cookieAgeScriptUrl = 'https://cdn.jsdelivr.net/gh/dfsw/Cookies@latest/cookieAge.js?v=' + Date.now();
+        var existingScript = document.querySelector('script[src="' + cookieAgeScriptUrl + '"]');
+        if (existingScript) {
+            // Script tag exists, wait for it to load
+            return new Promise(function(resolve, reject) {
+                var checkInterval = setInterval(function() {
+                    if (window.CookieAge) {
+                        clearInterval(checkInterval);
+                        cookieAgeScriptLoaded = true;
+                        resolve();
+                    }
+                }, 100);
+                
+                // Timeout after 30 seconds
+                setTimeout(function() {
+                    clearInterval(checkInterval);
+                    if (!window.CookieAge) {
+                        reject(new Error('CookieAge script loading timeout'));
+                    }
+                }, 30000);
+                
+                // Also check on script load event
+                existingScript.addEventListener('load', function() {
+                    clearInterval(checkInterval);
+                    if (window.CookieAge) {
+                        cookieAgeScriptLoaded = true;
+                        resolve();
+                    } else {
+                        reject(new Error('CookieAge script loaded but window.CookieAge not available'));
+                    }
+                });
+                
+                existingScript.addEventListener('error', function() {
+                    clearInterval(checkInterval);
+                    reject(new Error('Failed to load CookieAge script'));
+                });
+            });
+        }
+        
+        // Create and load the script
+        return new Promise(function(resolve, reject) {
+            var script = document.createElement('script');
+            script.src = cookieAgeScriptUrl;
+            script.async = true;
+            
+            script.onload = function() {
+                // Wait for window.CookieAge to be available
+                var checkInterval = setInterval(function() {
+                    if (window.CookieAge) {
+                        clearInterval(checkInterval);
+                        cookieAgeScriptLoaded = true;
+                        resolve();
+                    }
+                }, 100);
+                
+                // Timeout after 10 seconds
+                setTimeout(function() {
+                    clearInterval(checkInterval);
+                    if (!window.CookieAge) {
+                        cookieAgeScriptLoaded = false;
+                        reject(new Error('CookieAge script loaded but window.CookieAge not available'));
+                    }
+                }, 10000);
+            };
+            
+            script.onerror = function() {
+                cookieAgeScriptLoaded = false;
+                reject(new Error('Failed to load CookieAge script from CDN'));
+            };
+            
+            document.head.appendChild(script);
+        });
+    }
+    
+    // Function to apply Cookie Age changes
+    window.applyCookieAgeChange = function(enabled, isManualToggle) {
+        // Set lock to prevent rapid operations
+        toggleLock = true;
+        var asyncLockHandled = false; // Track if lock will be released by async callback
+        
+        try {
+            // Update the variable
+            enableCookieAge = enabled;
+            
+            // Update modSettings for compatibility
+            modSettings.enableCookieAge = enabled;
+            
+            playToggleSound(enabled);
+            
+            // Update the exposed variable for the Cookie Age mod
+            if (Game.JNE) {
+                Game.JNE.enableCookieAge = enabled;
+                // Only clear the save flag if this is actually a manual toggle
+                if (isManualToggle) {
+                    Game.JNE.enableCookieAgeFromSave = false;
+                }
+            }
+            
+            // Apply changes to the game
+            if (enabled) {
+                // Function to enable Cookie Age after script is loaded
+                var enableCookieAgeAfterLoad = function() {
+                    // Enable Cookie Age mod functionality (never plays audio)
+                    if (window.CookieAge && window.CookieAge.enable) {
+                        window.CookieAge.enable();
+                    }
+                    if (isManualToggle && window.CookieAge && typeof window.CookieAge.getMissingPuzzleCompletionRequirements === 'function') {
+                    try {
+                        var missingRequirements = window.CookieAge.getMissingPuzzleCompletionRequirements();
+                        if (missingRequirements && missingRequirements.length && typeof Game !== 'undefined' && Game.Prompt) {
+                            var missingBuildings = [];
+                            var missingProgress = [];
+                            var missingUpgrades = [];
+                            var missingSystem = [];
+                            var missingOther = [];
+
+                            for (var idx = 0; idx < missingRequirements.length; idx++) {
+                                var requirement = missingRequirements[idx];
+                                if (!requirement) continue;
+                                var type = requirement.type || 'other';
+                                var label = requirement.label || requirement;
+
+                                switch (type) {
+                                    case 'building':
+                                        missingBuildings.push(label);
+                                        break;
+                                    case 'progress':
+                                        missingProgress.push(label);
+                                        break;
+                                    case 'upgrade':
+                                        missingUpgrades.push(label);
+                                        break;
+                                    case 'system':
+                                        missingSystem.push(label);
+                                        break;
+                                    default:
+                                        missingOther.push(label);
+                                        break;
+                                }
+                            }
+
+                            var promptHtml = '<id CookieAgeRequirements><h3>More Progress Needed</h3>' +
+                                '<div class="block">You can activate the Mysteries of the Cookie, but you are not yet far enough into the game to complete every puzzle.</div>' +
+                                '<div class="line"></div><div class="block"><b>You are missing the following necessary milestones</b></div>';
+
+                            if (missingBuildings.length) {
+                                promptHtml += '<div class="line"></div><div class="block"><b>Building levels required:</b>';
+                                for (var b = 0; b < missingBuildings.length; b++) {
+                                    promptHtml += '<div>&bull; ' + missingBuildings[b] + '</div>';
+                                }
+                                promptHtml += '</div>';
+                            }
+
+                            if (missingProgress.length) {
+                                promptHtml += '<div class="line"></div><div class="block"><b>Cookie milestone:</b>';
+                                for (var p = 0; p < missingProgress.length; p++) {
+                                    promptHtml += '<div>&bull; ' + missingProgress[p] + '</div>';
+                                }
+                                promptHtml += '</div>';
+                            }
+
+                            if (missingUpgrades.length) {
+                                promptHtml += '<div class="line"></div><div class="block"><b>The following Heavenly upgrades are required:</b>';
+                                for (var u = 0; u < missingUpgrades.length; u++) {
+                                    promptHtml += '<div>&bull; ' + missingUpgrades[u] + '</div>';
+                                }
+                                promptHtml += '</div>';
+                            }
+
+                            if (missingSystem.length) {
+                                promptHtml += '<div class="line"></div><div class="block">' + missingSystem.join('<br>') + '</div>';
+                            }
+
+                            if (missingOther.length) {
+                                promptHtml += '<div class="line"></div><div class="block">';
+                                for (var o = 0; o < missingOther.length; o++) {
+                                    promptHtml += '<div>&bull; ' + missingOther[o] + '</div>';
+                                }
+                                promptHtml += '</div>';
+                            }
+
+                            Game.Prompt(promptHtml, [[loc('Understood'), 0]]);
+                        }
+                    } catch (requirementError) {
+                        // Silently ignore requirement prompt errors to avoid blocking the toggle
+                    }
+                }
+                // If we have deferred Cookie Age save data, apply it now
+                try {
+                    if (Game.JNE && Game.JNE.cookieAgeSavedData && window.CookieAge && window.CookieAge.applySaveData) {
+                        window.CookieAge.applySaveData(Game.JNE.cookieAgeSavedData);
+                        Game.JNE.cookieAgeSavedData = null;
+                    }
+                } catch (_) {}
+                
+                // ONLY play welcome audio if this is a manual toggle (button click)
+                if (isManualToggle && window.CookieAge && window.CookieAge.playWelcomeAudio) {
+                    setTimeout(function() {
+                        window.CookieAge.playWelcomeAudio();
+                    }, 100);
+                }
+                
+                // Force the vanilla game to recalculate AchievementsOwned
+                if (Game.Achievements) {
+                    var newAchievementsOwned = 0;
+                    for (var achName in Game.Achievements) {
+                        var ach = Game.Achievements[achName];
+                        if (ach && ach.won && ach.pool !== 'shadow') {
+                            newAchievementsOwned++;
+                        }
+                    }
+                    Game.AchievementsOwned = newAchievementsOwned;
+                }
+                
+                // Force the game to recalculate gains to update milk progress and kitten bonuses
+                if (Game.CalculateGains) {
+                    Game.CalculateGains();
+                }
+                
+                console.log('[JNE] The Mysteries of the Cookie enabled');
+                };
+                
+                // Check if script needs to be loaded
+                if (!window.CookieAge) {
+                    // Load script from CDN
+                    loadCookieAgeScript()
+                        .then(function() {
+                            // Script loaded successfully, enable Cookie Age
+                            enableCookieAgeAfterLoad();
+                            // Update menu buttons
+                            setTimeout(function() {
+                                updateMenuButtons();
+                                validateToggleButtonState('enableCookieAge', true);
+                            }, 50);
+                            // Save settings (throttled)
+                            requestModSave(false);
+                            // Release lock after enabling
+                            setTimeout(function() {
+                                toggleLock = false;
+                            }, 150);
+                        })
+                        .catch(function(error) {
+                            // Script loading failed - revert toggle state
+                            errorLog('Failed to load Cookie Age script:', error.message);
+                            enableCookieAge = false;
+                            modSettings.enableCookieAge = false;
+                            if (Game.JNE) {
+                                Game.JNE.enableCookieAge = false;
+                            }
+                            // Update menu buttons to reflect disabled state
+                            setTimeout(function() {
+                                updateMenuButtons();
+                                validateToggleButtonState('enableCookieAge', false);
+                            }, 50);
+                            // Save settings (throttled) to persist reverted state
+                            requestModSave(false);
+                            // Show error to user
+                            if (Game && Game.Prompt) {
+                                Game.Prompt(
+                                    '<h3>Failed to Load Cookie Age</h3>' +
+                                    '<div class="block">Unable to load the Mysteries of the Cookie expansion from CDN.</div>' +
+                                    '<div class="line"></div>' +
+                                    '<div class="block">Please check your internet connection and try again.</div>' +
+                                    '<div class="line"></div>' +
+                                    '<div class="block">Error: ' + (error.message || 'Unknown error') + '</div>',
+                                    [[loc('OK'), 0]]
+                                );
+                            }
+                            // Release lock after error handling
+                            setTimeout(function() {
+                                toggleLock = false;
+                            }, 150);
+                        });
+                    // Don't release lock here - wait for async operation to complete
+                    asyncLockHandled = true;
+                    return;
+                } else {
+                    // Script already loaded, enable immediately
+                    enableCookieAgeAfterLoad();
+                }
+            } else {
+                // Disable Cookie Age mod functionality
+                if (window.CookieAge && window.CookieAge.disable) {
+                    window.CookieAge.disable();
+                }
+                console.log('[JNE] The Mysteries of the Cookie disabled');
+                
+                // Force the vanilla game to recalculate AchievementsOwned
+                if (Game.Achievements) {
+                    var newAchievementsOwned = 0;
+                    for (var achName in Game.Achievements) {
+                        var ach = Game.Achievements[achName];
+                        if (ach && ach.won && ach.pool !== 'shadow') {
+                            newAchievementsOwned++;
+                        }
+                    }
+                    Game.AchievementsOwned = newAchievementsOwned;
+                }
+                
+                // Force the game to recalculate gains to update milk progress and kitten bonuses
+                if (Game.CalculateGains) {
+                    Game.CalculateGains();
+                }
+            }
+            
+            // Update menu buttons
+            setTimeout(() => {
+                updateMenuButtons();
+                validateToggleButtonState('enableCookieAge', enabled);
+            }, 50);
+            
+            // Save settings (throttled)
+            requestModSave(false);
+            
+        } catch (error) {
+            console.error('[Toggle] Error in applyCookieAgeChange:', error);
+        } finally {
+            // Release lock after operation completes (only if not handled by async callback)
+            if (!asyncLockHandled) {
+                setTimeout(() => {
+                    toggleLock = false;
+                }, 150);
+            }
+        }
+    }
+    
     // Function to validate that toggle button state matches actual variable state
     function validateToggleButtonState(settingName, expectedState) {
         try {
@@ -1143,6 +1558,9 @@
                     break;
                 case 'enableKittenUpgrades':
                     actualState = enableKittenUpgrades;
+                    break;
+                case 'enableCookieAge':
+                    actualState = enableCookieAge;
                     break;
                 case 'shadowAchievements':
                     actualState = shadowAchievementMode;
@@ -1170,10 +1588,14 @@
             enableBuildingUpgrades = newState;
         } else if (settingName === 'enableKittenUpgrades') {
             enableKittenUpgrades = newState;
+        } else if (settingName === 'enableCookieAge') {
+            enableCookieAge = newState;
         }
         
         // Also update modSettings for compatibility
         modSettings[settingName] = newState;
+        
+        playToggleSound(newState);
         
         // Check if we should mark "Beyond the Leaderboard" as won based on new settings
         checkAndMarkBeyondTheLeaderboard();
@@ -1208,28 +1630,34 @@
                                 Players seeking bigger numbers and a richer late-game can enable Cookie, Kitten, and Building upgrades, and convert shadow achievements into regular ones, earning additional milk for their accomplishments. All new achievements are designed to be attainable, though some require significant effort. Thank you for playing—and if you enjoy the mod, please spread the word!
                             </div>
                             <div class="listing">
-                                <a class="option" id="toggle-shadow-achievements" style="text-decoration:none;color:${shadowAchievementMode ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
-                                    Shadow Achievements<br><b style="font-size:12px;">${shadowAchievementMode ? 'ON' : 'OFF'}</b>
+                                <a class="option" id="toggle-shadow-achievements" style="text-decoration:none;color:${modSettings.shadowAchievements ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
+                                    Shadow Achievements<br><b style="font-size:12px;">${modSettings.shadowAchievements ? 'ON' : 'OFF'}</b>
                                 </a>
                                 <label>(Shadow achievements do not grant milk or affect gameplay, suitable for competition play.)</label>
                             </div>
                             <div class="listing">
-                                <a class="option" id="toggle-cookie-upgrades" style="text-decoration:none;color:${enableCookieUpgrades ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
-                                    Cookie Upgrades<br><b style="font-size:12px;">${enableCookieUpgrades ? 'ON' : 'OFF'}</b>
+                                <a class="option" id="toggle-cookie-upgrades" style="text-decoration:none;color:${modSettings.enableCookieUpgrades ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
+                                    Cookie Upgrades<br><b style="font-size:12px;">${modSettings.enableCookieUpgrades ? 'ON' : 'OFF'}</b>
                                 </a>
                                 <label>(Cookie upgrades add cookies which increase CPS when purchased.)</label>
                             </div>
                             <div class="listing">
-                                <a class="option" id="toggle-building-upgrades" style="text-decoration:none;color:${enableBuildingUpgrades ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
-                                    Building Upgrades<br><b style="font-size:12px;">${enableBuildingUpgrades ? 'ON' : 'OFF'}</b>
+                                <a class="option" id="toggle-building-upgrades" style="text-decoration:none;color:${modSettings.enableBuildingUpgrades ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
+                                    Building Upgrades<br><b style="font-size:12px;">${modSettings.enableBuildingUpgrades ? 'ON' : 'OFF'}</b>
                                 </a>
                                 <label>(Building upgrades add multipliers that affect specific buildings CPS.)</label>
                             </div>
                             <div class="listing">
-                                <a class="option" id="toggle-kitten-upgrades" style="text-decoration:none;color:${enableKittenUpgrades ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
-                                    Kitten Upgrades<br><b style="font-size:12px;">${enableKittenUpgrades ? 'ON' : 'OFF'}</b>
+                                <a class="option" id="toggle-kitten-upgrades" style="text-decoration:none;color:${modSettings.enableKittenUpgrades ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
+                                    Kitten Upgrades<br><b style="font-size:12px;">${modSettings.enableKittenUpgrades ? 'ON' : 'OFF'}</b>
                                 </a>
                                 <label>(Kittens can be purchased after earning enough milk, they provide an overall boost to CPS.)</label>
+                            </div>
+                            <div class="listing">
+                                <a class="option" id="toggle-cookie-age" style="text-decoration:none;color:${modSettings.enableCookieAge ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
+                                    Mysteries of the Cookie<br><b style="font-size:12px;">${modSettings.enableCookieAge ? 'ON' : 'OFF'}</b>
+                                </a>
+                                <label>An occult mystery adventure packed with riddles, puzzles, ciphers, and hidden clues. Unravel the secrets of the ancient Order of the Cookie. Only the sharpest players will succeed.</label>
                             </div>
                         </div>
                     `;
@@ -1280,10 +1708,175 @@
                             });
                         }
                         
+                        // Cookie Age toggle
+                        let cookieAgeToggle = settingsDiv.querySelector('#toggle-cookie-age');
+                        if (cookieAgeToggle) {
+                            cookieAgeToggle.addEventListener('click', function() {
+                                toggleSetting('enableCookieAge');
+                            });
+                        }
+                        
                         // Update buttons to reflect current settings
                         updateMenuButtons();
                     }, 10);
                 }
+            }
+            
+            // Function to generate puzzle completion stats HTML
+            function generatePuzzleCompletionStats() {
+                if (!Game.JNE || !Game.JNE.enableCookieAge || !window.CookieAge) {
+                    return '';
+                }
+                
+                try {
+                    // Check if Cookie Age data is properly initialized
+                    if (!window.CookieAge.getPuzzleRegistry || !window.CookieAge.getTrackStatus) {
+                        return '';
+                    }
+                    
+                    var puzzleRegistry = CookieAge.getPuzzleRegistry();
+                    if (!puzzleRegistry) {
+                        return '';
+                    }
+                    
+                    var trackStatus = CookieAge.getTrackStatus();
+                    if (!trackStatus) {
+                        return '';
+                    }
+                    
+                    var html = '';
+                    
+                    // Helper function to count unlocked puzzles for a track
+                    function countUnlockedPuzzles(trackType, puzzleRegistry) {
+                        var trackPuzzles = getPuzzlesByType(trackType, puzzleRegistry);
+                        var unlockedCount = 0;
+                        for (var i = 0; i < trackPuzzles.length; i++) {
+                            var puzzleId = trackPuzzles[i];
+                            if (window.CookieAge && window.CookieAge.isPuzzleUnlocked && 
+                                window.CookieAge.isPuzzleUnlocked(puzzleId)) {
+                                unlockedCount++;
+                            }
+                        }
+                        return unlockedCount;
+                    }
+                    
+                    // Check if all tracks have unlocked puzzles/clues available
+                    var investigateUnlockedCount = countUnlockedPuzzles('investigate', puzzleRegistry);
+                    var infiltrateUnlockedCount = countUnlockedPuzzles('infiltrate', puzzleRegistry);
+                    var chooseUnlockedCount = countUnlockedPuzzles('choose', puzzleRegistry);
+                    var hasInvestigateContent = investigateUnlockedCount > 0;
+                    var hasInfiltrateContent = infiltrateUnlockedCount > 0;
+                    var hasChooseContent = chooseUnlockedCount > 0;
+                    
+                    // Generate stats for each track
+                    ['investigate', 'infiltrate', 'choose'].forEach(function(trackType) {
+                        // Skip tracks that have no unlocked content
+                        var hasContent = (trackType === 'investigate' && hasInvestigateContent) ||
+                                        (trackType === 'infiltrate' && hasInfiltrateContent) ||
+                                        (trackType === 'choose' && hasChooseContent);
+                        
+                        if (!hasContent) {
+                            return; // Skip this track entirely
+                        }
+                        
+                        var track = trackStatus[trackType];
+                        var trackPuzzles = getPuzzlesByType(trackType, puzzleRegistry);
+                        var completedCount = track.progress || 0;
+                        var totalCount = trackPuzzles.length;
+                        var percentage = totalCount > 0 ? Math.floor((completedCount / totalCount) * 100) : 0;
+                        
+                        // Only show track title if multiple tracks have unlocked content
+                        var hasMultipleTracks = (hasInvestigateContent ? 1 : 0) + (hasInfiltrateContent ? 1 : 0) + (hasChooseContent ? 1 : 0) > 1;
+                        if (hasMultipleTracks) {
+                            // Static track titles
+                            var trackTitle = trackType === 'investigate' ? 'Investigate the Order of the Cookie' : 
+                                           trackType === 'infiltrate' ? '<br>Infiltrate the Brotherhood' : 
+                                           '<br>Choose Your Allegiance';
+                            html += `<div class="listing"><b>${trackTitle}</b></div>`;
+                        }
+                        
+                        // Always generate icons for unlocked puzzles/clues in this track
+                        var trackIconsHTML = '';
+                        
+                        // Add completed puzzles for this track
+                        for (var i = 0; i < completedCount; i++) {
+                            var puzzleId = trackPuzzles[i];
+                            var puzzle = puzzleRegistry[puzzleId];
+                            if (puzzle && puzzle.mainIcon && puzzle.description) {
+                                var icon = puzzle.mainIcon;
+                                var iconId = 'puzzle-icon-' + trackType + '-' + puzzleId;
+                                var crateClass = 'crate upgrade enabled';
+                                if (!Game.prefs.crates) crateClass += ' noFrame';
+                                
+                                var description = puzzle.description.replace(/\\n/g, '<br>');
+                                
+                                // Process conditional text if Cookie Age is available
+                                if (window.CookieAge && window.CookieAge.processConditionalText) {
+                                    description = window.CookieAge.processConditionalText(description);
+                                }
+                                var trackColor = trackType === 'investigate' ? '#4ecdc4' : trackType === 'infiltrate' ? '#ff6b6b' : '#9b59b6';
+                                var trackLabel = trackType === 'investigate' ? 'Investigate' : trackType === 'infiltrate' ? 'Infiltrate' : 'Choose';
+                                
+                                var tooltipHTML = `<div style="position:absolute;left:1px;top:1px;right:1px;bottom:1px;background:linear-gradient(125deg,rgba(50,40,40,1) 0%,rgba(50,40,40,0) 20%);mix-blend-mode:screen;z-index:1;"></div><div style="z-index:10;padding:8px 4px;min-width:350px;position:relative;" id="tooltipCrate"><div class="icon" style="float:left;margin-left:-8px;margin-top:-8px;background-position: -${icon[0] * 48}px -${icon[1] * 48}px; background-image: url('${icon[2]}');"></div><div class="name">${puzzle.name}</div><div class="tag" style="background-color:#ff6b6b;">Puzzle</div><div class="tag" style="background-color:#fff;">Solved</div><div class="line"></div><div class="description">${description}</div></div>`;
+                                
+                                trackIconsHTML += `<div class="${crateClass}" style="background-position: -${icon[0] * 48}px -${icon[1] * 48}px; background-image: url('${icon[2]}');" id="${iconId}" ${Game.getTooltip(tooltipHTML, 'middle', true)}></div>`;
+                            }
+                        }
+                        
+                        // Add next puzzle in locked state (only if dependencies are met)
+                        if (completedCount < totalCount) {
+                            var nextPuzzleId = trackPuzzles[completedCount];
+                            var nextPuzzle = puzzleRegistry[nextPuzzleId];
+                            // Check if puzzle is actually unlocked (dependencies met)
+                            var isUnlocked = window.CookieAge && window.CookieAge.isPuzzleUnlocked ? 
+                                           window.CookieAge.isPuzzleUnlocked(nextPuzzleId) : false;
+                            if (nextPuzzle && isUnlocked) {
+                                var iconId = 'puzzle-icon-next-' + trackType + '-' + nextPuzzleId;
+                                var crateClass = 'crate upgrade';
+                                if (!Game.prefs.crates) crateClass += ' noFrame';
+                                
+                                var clue = nextPuzzle.clue || nextPuzzle.description;
+                                
+                                // Process conditional text if Cookie Age is available
+                                if (window.CookieAge && window.CookieAge.processConditionalText) {
+                                    clue = window.CookieAge.processConditionalText(clue);
+                                }
+                                var trackColor = trackType === 'investigate' ? '#4ecdc4' : trackType === 'infiltrate' ? '#ff6b6b' : '#9b59b6';
+                                var trackLabel = trackType === 'investigate' ? 'Investigate' : trackType === 'infiltrate' ? 'Infiltrate' : 'Choose';
+                                
+                                var tooltipHTML = `<div style="position:absolute;left:1px;top:1px;right:1px;bottom:1px;background:linear-gradient(125deg,rgba(50,40,40,1) 0%,rgba(50,40,40,0) 20%);mix-blend-mode:screen;z-index:1;"></div><div style="z-index:10;padding:8px 4px;min-width:350px;position:relative;" id="tooltipCrate"><div class="icon" style="float:left;margin-left:-8px;margin-top:-8px;background-position: -${7 * 48}px -${17 * 48}px; background-image: url('${getSpriteSheet('custom')}');"></div><div class="name">Next Puzzle</div><div class="tag" style="background-color:#ff6b6b;">Puzzle</div><div class="tag" style="background-color:#fff;">Unsolved</div><div class="line"></div><div class="description">${clue}</div></div>`;
+                                
+                                trackIconsHTML += `<div class="${crateClass}" style="background-position: -${7 * 48}px -${17 * 48}px; background-image: url('${getSpriteSheet('custom')}');" id="${iconId}" ${Game.getTooltip(tooltipHTML, 'middle', true)}></div>`;
+                            }
+                        }
+                        
+                        // Add track icons if any exist
+                        if (trackIconsHTML) {
+                            html += `<div class="listing crateBox">${trackIconsHTML}</div>`;
+                        }
+                    });
+                    
+                    return html;
+                } catch (error) {
+                    console.error('[Just Natural Expansion] Error generating puzzle completion stats:', error);
+                    return '';
+                }
+            }
+            
+            // Helper function to get puzzles by type
+            function getPuzzlesByType(type, registry) {
+                var puzzles = [];
+                for (var id in registry) {
+                    if (registry[id].type === type) {
+                        puzzles.push(id);
+                    }
+                }
+                // Sort by trackOrder to maintain proper puzzle sequence
+                return puzzles.sort(function(a, b) {
+                    var orderA = registry[a].trackOrder || 0;
+                    var orderB = registry[b].trackOrder || 0;
+                    return orderA - orderB;
+                });
             }
             
             // Handle stats menu injection
@@ -1315,6 +1908,9 @@
                     
                     // Build lifetime stats HTML with current running totals
                     let lifetimeStatsHTML = '';
+                    
+                    
+                    
                     lifetimeStatsHTML += formatLifetimeStat(
                         getLifetimeReindeer(), 
                         'Reindeer clicked'
@@ -1450,6 +2046,104 @@
                     } else {
 
                         menuContainer.appendChild(modStatsDiv);
+                    }
+                    
+                    // Add puzzle completion stats section if Cookie Age mystery minigame is enabled
+                    if (Game.JNE && Game.JNE.enableCookieAge) {
+                        var puzzleStatsHTML = generatePuzzleCompletionStats();
+                        // Always show the puzzle section if Cookie Age is enabled, even if no puzzles completed yet
+                        if (puzzleStatsHTML || (window.CookieAge && window.CookieAge.getPuzzleRegistry && window.CookieAge.getPuzzleStatus)) {
+                            // Create separate puzzle section
+                            let puzzleStatsDiv = document.createElement('div');
+                            puzzleStatsDiv.id = 'mod-puzzle-stats-section';
+                            puzzleStatsDiv.className = 'subsection';
+                            
+                            puzzleStatsDiv.innerHTML = `
+                                <div class="title">Mysteries of the Cookie Age</div>
+                                <div id="statsPuzzles">
+                                    ${puzzleStatsHTML}
+                                </div>
+                            `;
+                            
+                            // Insert after our main mod stats section
+                            modStatsDiv.parentNode.insertBefore(puzzleStatsDiv, modStatsDiv.nextSibling);
+                            
+                            // Create hint purchase controller AFTER inserting into DOM
+                            // Both button and tooltip header use icon at [29, 14]
+                            var hintIconX = 29;
+                            var hintIconY = 14;
+                            var hintIconId = 'hintPurchaseController';
+                            
+                            // Create tooltip function - getHintTooltipContent now returns fully wrapped HTML with icon
+                            if (!window.CookieAge) window.CookieAge = {};
+                            window.CookieAge.hintRefillTooltip = function() {
+                                try {
+                                    if (window.CookieAge && typeof window.CookieAge.getHintTooltipContent === 'function') {
+                                        return window.CookieAge.getHintTooltipContent();
+                                    } else {
+                                        return '<div style="padding:8px 4px;min-width:350px;position:relative;" id="tooltipCrate"><div class="name">Puzzle Hints</div><div class="description">System not initialized</div></div>';
+                                    }
+                                } catch (e) {
+                                    console.error('Error in hint tooltip:', e);
+                                    return '<div style="padding:8px 4px;min-width:350px;position:relative;" id="tooltipCrate"><div class="name">Puzzle Hints</div><div class="description">Error: ' + (e.message || 'Unknown error') + '</div></div>';
+                                }
+                            };
+                            
+                            // Build hint controller div
+                            var statsPuzzlesDiv = puzzleStatsDiv.querySelector('#statsPuzzles');
+                            if (statsPuzzlesDiv) {
+                                var hintControllerDiv = document.createElement('div');
+                                hintControllerDiv.style.cssText = 'text-align:center;width:100%;margin:20px 0 0 0;padding:0;';
+                                hintControllerDiv.id = 'hintControllerWrapper';
+                                
+                                // Build the HTML directly - compact, centered button
+                                var hintIconHTML = '<div id="' + hintIconId + '" style="display:inline-flex;background:rgba(218,165,32,0.15);border:2px double rgba(255,215,0,0.4);border-radius:4px;box-shadow:0px 0px 8px rgba(255,215,0,0.2),inset 0px 1px 2px rgba(255,255,255,0.1),inset 0px -1px 2px rgba(0,0,0,0.2);padding:4px 18px 4px 8px;height:32px;box-sizing:border-box;align-items:center;justify-content:center;gap:6px;margin-left:20px;cursor:pointer !important;overflow:visible !important;">' +
+                                    '<span ' +
+                                    'style="display:inline-block !important;width:32px !important;height:32px !important;overflow:visible !important;vertical-align:middle !important;line-height:0 !important;font-size:0 !important;margin:0 !important;padding:0 !important;position:relative !important;top:-8px !important;left:-10px !important;transition:transform 0.1s !important;flex-shrink:0 !important;"><div style="width:48px !important;height:48px !important;background-image:url(img/icons.png) !important;background-position:-' + (hintIconX * 48) + 'px -' + (hintIconY * 48) + 'px !important;background-size:auto !important;background-repeat:no-repeat !important;transform:scale(0.66) !important;transform-origin:center center !important;"></div></span>' +
+                                    '<span style="display:inline-block !important;' +
+                                    'font-size:12px !important;line-height:12px !important;' +
+                                    'font-weight:bold !important;font-weight:700 !important;' +
+                                    'color:#ccc !important;margin:0 !important;padding:0 !important;' +
+                                    'text-shadow:0px 1px 0px #000,0px 0px 6px #000,0px 0px 3px #000 !important;white-space:nowrap !important;' +
+                                    'font-family:inherit !important;">' +
+                                    '<strong style="font-weight:bold !important;font-weight:700 !important;">Get a Hint</strong></span></div>';
+                                
+                                hintControllerDiv.innerHTML = hintIconHTML;
+                                statsPuzzlesDiv.appendChild(hintControllerDiv);
+                            }
+                            
+                            var hintButton = document.getElementById(hintIconId);
+                            
+                            // Add hover effect
+                            if (hintButton) {
+                                var iconSpan = hintButton.querySelector('span');
+                                var innerIcon = iconSpan ? iconSpan.querySelector('div') : null;
+                                if (innerIcon) {
+                                    hintButton.onmouseover = function() {
+                                        if (innerIcon) innerIcon.style.transform = 'scale(1)';
+                                    };
+                                    hintButton.onmouseout = function() {
+                                        if (innerIcon) innerIcon.style.transform = 'scale(0.66)';
+                                    };
+                                }
+                            }
+                            
+                            // Set up tooltip and click on entire button
+                            if (hintButton && Game.attachTooltip && typeof window.CookieAge.hintRefillTooltip === 'function') {
+                                Game.attachTooltip(hintButton, window.CookieAge.hintRefillTooltip);
+                            }
+                            
+                            if (window.CookieAge) {
+                                var handleHintClick = function() {
+                                    if (window.CookieAge && typeof window.CookieAge.showHintTrackSelection === 'function') {
+                                        window.CookieAge.showHintTrackSelection();
+                                    }
+                                };
+                                if (hintButton) {
+                                    hintButton.onclick = handleHintClick;
+                                }
+                            }
+                        }
                     }
                     
 
@@ -1663,6 +2357,11 @@
                 }
             }
         }, 'Detect golden cookie system availability');
+
+        // Keep permanent upgrade slots stable when mod upgrades are toggled on/off
+        registerHook('check', function() {
+            maintainPermanentSlots();
+        }, 'Maintain permanent slot compatibility for mod upgrades');
         
         // Wrinkler tracking - detect when wrinklers are popped
         registerHook('logic', function() {
@@ -2690,31 +3389,24 @@
     function checkAndMarkBeyondTheLeaderboard() {
         // Mark "Beyond the Leaderboard" as won if any upgrade is enabled or shadow mode is disabled
         if (enableCookieUpgrades || enableBuildingUpgrades || enableKittenUpgrades || !shadowAchievementMode) {
+            modSettings.hasUsedModOutsideShadowMode = true;
+
+            if (Game.Achievements['Third-party'] && !Game.Achievements['Third-party'].won) {
+                queueAchievementAward('Third-party');
+            }
+
             if (Game.Achievements['Beyond the Leaderboard'] && !Game.Achievements['Beyond the Leaderboard'].won) {
-                Game.Achievements['Beyond the Leaderboard'].won = 1;
-                
-                // Mark that the mod has been used outside shadow mode
-                modSettings.hasUsedModOutsideShadowMode = true;
-                
-                // Trigger notification if mod is initialized
-                if (modInitialized) {
-                    try {
-                        Game.Win('Third-party');
-                        Game.Win('Beyond the Leaderboard');
-                        if (Game.updateAchievementsMenu) {
-                            Game.updateAchievementsMenu();
-                        }
-                    } catch (e) {
-                        console.error('❌ Error calling Game.Win for Beyond the Leaderboard:', e);
-                    }
-                }
-                
-                // Trigger a save to persist the achievement
-                if (Game.Write) {
-                    setTimeout(() => {
-                        Game.Write('CookieClickerSave', Game.Write());
-                    }, 100);
-                }
+                queueAchievementAward('Beyond the Leaderboard');
+            }
+
+            if (modInitialized) {
+                flushPendingAchievementAwards();
+            }
+
+            if (Game.Write) {
+                setTimeout(() => {
+                    Game.Write('CookieClickerSave', Game.Write());
+                }, 100);
             }
         }
     }
@@ -2997,8 +3689,171 @@
     } // End of addUpgradesToGame function
 
 
+    var modPermanentSlotBackup = {};
+    var cachedModUpgradeNameSet = null;
+
+    function getModUpgradeNameSet() {
+        if (!cachedModUpgradeNameSet) {
+            cachedModUpgradeNameSet = {};
+            var names = getModUpgradeNames();
+            for (var i = 0; i < names.length; i++) {
+                cachedModUpgradeNameSet[names[i]] = true;
+            }
+        }
+        return cachedModUpgradeNameSet;
+    }
+
+    function capturePermanentSlotBackups() {
+        if (!Game || !Game.permanentUpgrades || !Game.UpgradesById) {
+            return;
+        }
+
+        var nameSet = getModUpgradeNameSet();
+        var newBackup = {};
+        var hasEntries = false;
+
+        for (var slot = 0; slot < Game.permanentUpgrades.length; slot++) {
+            var upgradeId = Game.permanentUpgrades[slot];
+            if (typeof upgradeId !== 'number' || upgradeId < 0) {
+                continue;
+            }
+
+            var upgrade = Game.UpgradesById[upgradeId];
+            if (upgrade && nameSet[upgrade.name]) {
+                newBackup[slot] = upgrade.name;
+                hasEntries = true;
+            }
+        }
+
+        if (hasEntries) {
+            modPermanentSlotBackup = newBackup;
+        }
+
+        modSettings.permanentSlotBackup = Object.assign({}, modPermanentSlotBackup);
+    }
+
+    function restoreModPermanentSlots() {
+        if (!Game || !Game.permanentUpgrades) {
+            return;
+        }
+
+        if ((!modPermanentSlotBackup || Object.keys(modPermanentSlotBackup).length === 0) && modSettings && modSettings.permanentSlotBackup) {
+            modPermanentSlotBackup = Object.assign({}, modSettings.permanentSlotBackup);
+        }
+
+        var menuNeedsUpdate = false;
+        for (var slot in modPermanentSlotBackup) {
+            if (!modPermanentSlotBackup.hasOwnProperty(slot)) {
+                continue;
+            }
+
+            var slotIndex = parseInt(slot, 10);
+            var upgradeName = modPermanentSlotBackup[slot];
+            var upgradeObj = Game.Upgrades[upgradeName];
+
+            if (upgradeObj) {
+                if (Game.permanentUpgrades[slotIndex] !== upgradeObj.id) {
+                    Game.permanentUpgrades[slotIndex] = upgradeObj.id;
+                    menuNeedsUpdate = true;
+                }
+            } else if (Game.permanentUpgrades[slotIndex] !== -1) {
+                Game.permanentUpgrades[slotIndex] = -1;
+                menuNeedsUpdate = true;
+            }
+        }
+
+        if (menuNeedsUpdate && Game.UpdateMenu) {
+            Game.storeToRefresh = 1;
+            Game.upgradesToRebuild = 1;
+            Game.UpdateMenu();
+        }
+    }
+
+    function maintainPermanentSlots() {
+        if (!Game || !Game.permanentUpgrades) {
+            return;
+        }
+
+        var nameSet = getModUpgradeNameSet();
+        var menuNeedsUpdate = false;
+        var gainsNeedRecalc = false;
+
+        // Ensure backup data reflects current assignments for mod upgrades
+        if (Game.UpgradesById) {
+            var backupChanged = false;
+            for (var slot = 0; slot < Game.permanentUpgrades.length; slot++) {
+                var id = Game.permanentUpgrades[slot];
+                var upgrade = (typeof id === 'number' && id >= 0) ? Game.UpgradesById[id] : null;
+                if (upgrade && nameSet[upgrade.name]) {
+                    if (modPermanentSlotBackup[slot] !== upgrade.name) {
+                        modPermanentSlotBackup[slot] = upgrade.name;
+                        backupChanged = true;
+                    }
+                }
+            }
+            if (backupChanged) {
+                modSettings.permanentSlotBackup = Object.assign({}, modPermanentSlotBackup);
+            }
+        }
+
+        // Attempt to restore missing upgrades from backup or clear invalid slots
+        for (var slotIdx = 0; slotIdx < Game.permanentUpgrades.length; slotIdx++) {
+            var currentId = Game.permanentUpgrades[slotIdx];
+            var currentUpgrade = (typeof currentId === 'number' && currentId >= 0 && Game.UpgradesById) ? Game.UpgradesById[currentId] : null;
+
+            if (currentUpgrade) {
+                if (!currentUpgrade.bought) {
+                    currentUpgrade.unlocked = 1;
+                    currentUpgrade.bought = 1;
+                    if (typeof currentUpgrade.vanilla === 'undefined') {
+                        currentUpgrade.vanilla = 0;
+                    }
+                    Game.UpgradesOwned = (Game.UpgradesOwned || 0) + 1;
+                    gainsNeedRecalc = true;
+                    menuNeedsUpdate = true;
+                }
+                continue;
+            }
+
+            var backupName = modPermanentSlotBackup[slotIdx] || (modSettings.permanentSlotBackup && modSettings.permanentSlotBackup[slotIdx]);
+            if (backupName && Game.Upgrades && Game.Upgrades[backupName]) {
+                var restored = Game.Upgrades[backupName];
+                if (Game.permanentUpgrades[slotIdx] !== restored.id) {
+                    Game.permanentUpgrades[slotIdx] = restored.id;
+                    menuNeedsUpdate = true;
+                }
+                if (!restored.bought) {
+                    restored.unlocked = 1;
+                    restored.bought = 1;
+                    if (typeof restored.vanilla === 'undefined') {
+                        restored.vanilla = 0;
+                    }
+                    Game.UpgradesOwned = (Game.UpgradesOwned || 0) + 1;
+                    gainsNeedRecalc = true;
+                }
+            } else if (Game.permanentUpgrades[slotIdx] !== -1) {
+                Game.permanentUpgrades[slotIdx] = -1;
+                menuNeedsUpdate = true;
+            }
+        }
+
+        if (menuNeedsUpdate && Game.UpdateMenu) {
+            Game.UpdateMenu();
+        }
+
+        if (gainsNeedRecalc) {
+            if (Game.recalculateGains !== undefined) {
+                Game.recalculateGains = 1;
+            }
+            if (typeof Game.CalculateGains === 'function') {
+                Game.CalculateGains();
+            }
+        }
+    }
+
     // This function saves current states before deletion - use only for mod initialization
     function recreateAllUpgradesFromSaveData() {
+        capturePermanentSlotBackups();
         // Step 1: Save current states of ALL mod upgrades before deletion
         var modUpgradeNames = getModUpgradeNames();
         if (!modSaveData) {
@@ -3037,11 +3892,14 @@
                 }
             }
         }
+
+        restoreModPermanentSlots();
     }
 
     // Function for operations that don't save current states - only loads from save
     // Used for toggle operations and save loading
     function recreateUpgradesFromSaveOnly() {
+        capturePermanentSlotBackups();
         // Step 1: Delete ALL mod upgrades from the game
         var modUpgradeNames = getModUpgradeNames();
         for (var i = 0; i < modUpgradeNames.length; i++) {
@@ -3063,6 +3921,8 @@
                 }
             }
         }
+
+        restoreModPermanentSlots();
     }
 
     // Independent function to create kitten upgrades
@@ -3155,12 +4015,31 @@
         }
     }
     
+    var settingsPromptCallbacks = {};
+    var settingsPromptCallbackId = 0;
+    function registerSettingsPromptCallback(callback) {
+        var id = 'jneSettingsPrompt_' + (++settingsPromptCallbackId);
+        settingsPromptCallbacks[id] = callback;
+        return id;
+    }
+    function runSettingsPromptCallback(id) {
+        try {
+            if (settingsPromptCallbacks[id]) {
+                settingsPromptCallbacks[id]();
+            }
+        } finally {
+            delete settingsPromptCallbacks[id];
+        }
+    }
+    window.runJNESettingsPromptCallback = runSettingsPromptCallback;
+    
     // Function to show confirmation prompt for major changes
     function showSettingsChangePrompt(message, callback) {
+        var callbackId = registerSettingsPromptCallback(callback);
         Game.Prompt('<id SettingsChange><h3>Mod Settings Change</h3><div class="block">' + 
                    tinyIcon(modIcon) + '<div class="line"></div>' + 
                    message + '</div>', 
-                   [['Yes', 'Game.ClosePrompt(); (' + callback.toString() + ')();', 'float:left'], 
+                   [['Yes', 'Game.ClosePrompt(); window.runJNESettingsPromptCallback("' + callbackId + '");', 'float:left'], 
                     ['No', 'Game.ClosePrompt();', 'float:right']]);
     }
     
@@ -3209,6 +4088,53 @@
         // Use vanilla game's built-in counters
         return { unlocked: M.plantsUnlockedN || 0, total: M.plantsN || 0 };
     }
+    
+    // Helper function to output garden status for debugging
+    function logGardenStatus() {
+        if (!Game.Objects['Farm'] || !Game.Objects['Farm'].minigame) {
+            console.log('Garden not available');
+            return;
+        }
+        
+        var M = Game.Objects['Farm'].minigame;
+        if (!M.plot || !M.plantsById) {
+            console.log('Garden plot or plants data not available');
+            return;
+        }
+        
+        console.log('=== GARDEN STATUS ===');
+        console.log('Plot size:', M.plot.length + 'x' + (M.plot[0] ? M.plot[0].length : 0));
+        console.log('Soil type:', M.soil || 'none');
+        console.log('');
+        
+        // Output each plot position with plant and maturity info
+        for (var y = 0; y < M.plot.length; y++) {
+            var row = 'Row ' + y + ': ';
+            for (var x = 0; x < M.plot[y].length; x++) {
+                var plotData = M.plot[y][x];
+                if (plotData && plotData[0] > 0) {
+                    var plantId = plotData[0] - 1; // Plant IDs are 1-indexed
+                    var plantAge = plotData[1];
+                    var plant = M.plantsById[plantId];
+                    
+                    if (plant) {
+                        var isMature = plantAge >= plant.mature;
+                        var maturityStatus = isMature ? 'MATURE' : (plantAge + '/' + plant.mature);
+                        row += plant.name + '(' + maturityStatus + ') ';
+                    } else {
+                        row += 'UnknownPlant(' + plantId + ') ';
+                    }
+                } else {
+                    row += 'EMPTY ';
+                }
+            }
+            console.log(row);
+        }
+        console.log('=== END GARDEN STATUS ===');
+    }
+    
+    // Make logGardenStatus available globally
+    window.logGardenStatus = logGardenStatus;
     
     // Centralized function to count challenge achievements won
     function countChallengeAchievements() {
@@ -9510,7 +10436,8 @@
     
 
     // Function to show the initial leaderboard/non-leaderboard choice prompt
-    function showInitialChoicePrompt() {
+    function showInitialChoicePrompt(attempt) {
+        attempt = attempt || 0;
         if (Game.Prompt) {
             Game.Prompt(
                 '<id InitialChoice><h3>Welcome to ' + modName + '!</h3><div class="block">' +
@@ -9527,14 +10454,20 @@
                 ]
             );
         } else {
-            // Fallback if Game.Prompt is not available
-            console.warn('Game.Prompt not available, using default leaderboard mode');
-            shadowAchievementMode = true;
-            enableCookieUpgrades = false;
-            enableBuildingUpgrades = false;
-            enableKittenUpgrades = false;
-            modSettings.hasMadeInitialChoice = true;
-            continueModInitialization();
+            if (attempt < 40) {
+                setTimeout(function() {
+                    showInitialChoicePrompt(attempt + 1);
+                }, 250);
+            } else {
+                // Fallback if Game.Prompt is still not available after retries
+                console.warn('Game.Prompt not available, using default leaderboard mode');
+                shadowAchievementMode = true;
+                enableCookieUpgrades = false;
+                enableBuildingUpgrades = false;
+                enableKittenUpgrades = false;
+                modSettings.hasMadeInitialChoice = true;
+                continueModInitialization();
+            }
         }
     }
     
@@ -9625,6 +10558,17 @@
                 enableKittenUpgrades = modSaveData.settings.enableKittenUpgrades;
                 modSettings.enableKittenUpgrades = modSaveData.settings.enableKittenUpgrades;
             }
+            if (modSaveData.settings.enableCookieAge !== undefined) {
+                enableCookieAge = modSaveData.settings.enableCookieAge;
+                modSettings.enableCookieAge = modSaveData.settings.enableCookieAge;
+                // Mark that this was loaded from save data
+                if (!Game.JNE) Game.JNE = {};
+                Game.JNE.enableCookieAgeFromSave = true;
+            }
+            if (modSaveData.settings.cookieAgeProgress !== undefined) {
+                cookieAgeProgress = modSaveData.settings.cookieAgeProgress;
+                modSettings.cookieAgeProgress = modSaveData.settings.cookieAgeProgress;
+            }
             if (modSaveData.settings.shadowAchievements !== undefined) {
                 shadowAchievementMode = modSaveData.settings.shadowAchievements;
                 modSettings.shadowAchievements = modSaveData.settings.shadowAchievements;
@@ -9634,14 +10578,26 @@
             if (modSaveData.settings.hasMadeInitialChoice !== undefined) {
                 modSettings.hasMadeInitialChoice = modSaveData.settings.hasMadeInitialChoice;
             }
-        } else {
-            // No save data - keep defaults (all disabled) for first-run experience
-            // The first-run prompt will set the correct values after user choice
-            modSettings.enableCookieUpgrades = enableCookieUpgrades;
-            modSettings.enableBuildingUpgrades = enableBuildingUpgrades;
-            modSettings.enableKittenUpgrades = enableKittenUpgrades;
-            modSettings.shadowAchievements = shadowAchievementMode;
-        }
+            if (modSaveData.settings.permanentSlotBackup) {
+                modSettings.permanentSlotBackup = Object.assign({}, modSaveData.settings.permanentSlotBackup);
+                modPermanentSlotBackup = Object.assign({}, modSettings.permanentSlotBackup);
+            }
+                    } else {
+                        // No save data - keep defaults (all disabled) for first-run experience
+                        // The first-run prompt will set the correct values after user choice
+                        modSettings.enableCookieUpgrades = enableCookieUpgrades;
+                        modSettings.enableBuildingUpgrades = enableBuildingUpgrades;
+                        modSettings.enableKittenUpgrades = enableKittenUpgrades;
+                        modSettings.enableCookieAge = enableCookieAge;
+                        modSettings.cookieAgeProgress = cookieAgeProgress;
+                        modSettings.shadowAchievements = shadowAchievementMode;
+                        
+                        // Mark that this was NOT loaded from save data (first run)
+                        if (!Game.JNE) {
+                            Game.JNE = {};
+                        }
+                        Game.JNE.enableCookieAgeFromSave = false;
+                    }
     }
 
     // Function to continue mod initialization after user choice (for save loading only)
@@ -9675,6 +10631,13 @@
         if (modSettings.enableKittenUpgrades !== undefined) {
             enableKittenUpgrades = modSettings.enableKittenUpgrades;
         }
+
+        // Ensure Cookie Age enabled/disabled matches saved setting, without manual side effects
+        try {
+            if (typeof window !== 'undefined' && typeof window.applyCookieAgeChange === 'function') {
+                window.applyCookieAgeChange(!!modSettings.enableCookieAge, false);
+            }
+        } catch (_) {}
 
         // NOTE: Upgrade creation is now handled by initializeModWithSaveData()
         // This function only handles tracking data restoration
@@ -9756,8 +10719,17 @@
         // Mark mod as initialized before applying save data
         modInitialized = true;
         debugLog('continueModInitialization: mod marked as initialized');
+
+        flushPendingAchievementAwards();
         
-        // Save data has already been applied during initialization
+        // Apply Cookie Age save now that systems are initialized (only if enabled)
+        try {
+            if (Game.JNE && Game.JNE.cookieAgeSavedData && window.CookieAge && window.CookieAge.applySaveData && !!modSettings.enableCookieAge) {
+                window.CookieAge.applySaveData(Game.JNE.cookieAgeSavedData);
+                Game.JNE.cookieAgeSavedData = null;
+            }
+        } catch (_) {}
+
         debugLog('continueModInitialization: save data applied during initialization');
         
         // Set up custom building multipliers (after game is fully loaded)
@@ -9782,6 +10754,13 @@
             // Update menu buttons to reflect loaded settings
             updateMenuButtons();
             
+            // Reset the save loading flag after initialization is complete
+            // Ensure Game.JNE exists before resetting the flag
+            if (!Game.JNE) {
+                Game.JNE = {};
+            }
+            Game.JNE.isLoadingFromSave = false;
+            
             // Reapply shadow achievement setting
             if (modSettings.shadowAchievements !== undefined) {
                 applyShadowAchievementChange(modSettings.shadowAchievements);
@@ -9795,38 +10774,67 @@
             // Hook into the game's ticker system using the proper mod hook
             if (Game.modHooks && Game.modHooks['ticker']) {
                 Game.modHooks['ticker'].push(function() {
-                    return [
-                        'News : People all over the globe are suddenly feeling much less accomplished. Scientists baffled.',
-                        'News : Things seem different—no one can place a finger on it—but everything looks tilted 4 degrees to the left, or maybe it is to the right.',
-                        'News : Reports from all over the globe of new kittens being spotted. Early reports suggest they are much lazier than normal.',
-                        'News : What in the name of our grandmas just happened? The cookies are acting strange.',
-                        'News : Whispers in the shadows suggest there are now... more shadows.',
-                        'News : Hundreds of new challenges quietly arrive. No one told the cookies or those who click them. People seem utterly unprepared, but generally gleeful.',
-                        'News : Unconfirmed reports claim at least 450 new ways to feel inadequate. People all over the world are putting on their best clicking gloves.',
-                        'News : Stock market instability linked to unnatural upgrade inflation. Everything just seems more expensive these days says everyone.',
-                        'News : Pantheon activity spikes as gods are swapped at alarming rates. Gods are confused. People are more confused, unsure who they are even worshipping anymore.',
-                        'News : Soil composition changes detected. Gardeners report "increased anxiety and delight."',
-                        'News : Wrath cookies are being clicked at unprecedented rates. Scientists concerned.',
-                        'News : Stock market profits are soaring. Economists confused. Some traders seem inclined to lose all their money for no apparent reason.',
-                        'News : Garden sacrifices are on the rise. Plants are nervous, sugar hornets seem pleased.',
-                        'News : Cookie clicks are reaching new heights. Fingers are tired, but the cookies are happy.',
-                        'News : Wrinklers are being popped at record rates. Eldritch beings are annoyed. Rumors of a new wrinkler in the universe, though no one has actually seen it.',
-                        'News : Elder covenants are increasing. Grandmas are confused and becoming bipolar, things are getting weird in here.',
-                        'News : Seasonal reindeer are being clicked more often. Santa is concerned, but says elf spirits remain high at the North Pole.',
-                        'News : Temple swaps are happening more frequently. Gods are dizzy. People interviewed unable to confirm their own religion.',
-                        'News : General tribalism and competition increase. People proudly stating how many challenges they have completed, earth being divided into camps.',
-                        'News : Rumors that the Secret Society of the Cookies are resurfacing, spreading like wildfire around the world.',
-                        'News : Mystery figures wearing cloaks and performing strange cookie rituals in the shadows spotted in multiple cities worldwide.',
-                        'News : Spell abuse on the rise, people seem to be casting spells at a record rate. Judgement and safety concerns are rising.',
-                        'News : Holiday seasons seem to be flipping around randomly and in quick succession. Many people are not noticing but this reporter is frankly concerned and alarmed.',
-                        'News : New cookie clicker mod rumored to be appearing everywhere. Many people are citing bouts of good luck for spreading the word.',
-                        'News : The words Just Natural Expansion are being whispered in the shadows. No one is sure what it means, but people seem to be happy to hear it.',
-                        'News : Despite all of the world changes as of late, scientist confirm cookies remain the most delicious food in the universe.',
-                        'News : Soil changes are becoming more common. Gardeners are confused. Rumors of a new soil in the universe.'
-                    ];
+                    var newsItems = [];
+                    
+                    // Always show these news items
+                    newsItems.push('News : People all over the globe are suddenly feeling much less accomplished. Scientists baffled.');
+                    newsItems.push('News : Things seem different—no one can place a finger on it—but everything looks tilted 4 degrees to the left, or maybe it is to the right.');
+                    newsItems.push('News : General tribalism and competition increase. People proudly stating how many challenges they have completed, earth being divided into camps.');
+                    
+                    // Conditional news items
+                    if (Game.AchievementsOwned >= 500) {
+                        newsItems.push('News : Reports from all over the globe of new kittens being spotted. Early reports suggest they are much lazier than normal.');
+                    }
+                    
+                    if (modTracking.templeSwapsTotal >= 25) {
+                        newsItems.push('News : Pantheon activity spikes as gods are swapped at alarming rates. Gods are confused. People are more confused, unsure who they are worshipping.');
+                    }
+                    
+                    if (modTracking.soilChangesTotal >= 20) {
+                        newsItems.push('News : Soil composition changes detected. Gardeners report "increased anxiety and delight."');
+                    }
+                    
+                    if (lifetimeData.wrathCookiesClicked >= 500) {
+                        newsItems.push('News : Wrath cookies are being clicked at unprecedented rates. Scientists concerned.');
+                    }
+                    
+                    if (lifetimeData.stockMarketAssets >= 25000000) {
+                        newsItems.push('News : Stock market profits are soaring. Economists confused. Some traders seem inclined to lose all their money for no apparent reason.');
+                    }
+                    
+                    if (lifetimeData.gardenSacrifices >= 3) {
+                        newsItems.push('News : Garden sacrifices are on the rise. Plants are nervous, sugar hornets seem pleased.');
+                    }
+                    
+                    if (lifetimeData.wrinklersPopped >= 1000) {
+                        newsItems.push('News : Wrinklers are being popped at record rates. Eldritch beings are annoyed. Rumors of a new wrinkler in the universe, though no one has actually seen it.');
+                    }
+                    
+                    if (lifetimeData.elderCovenantToggles + lifetimeData.pledges >= 300) {
+                        newsItems.push('News : Elder covenants are increasing. Grandmas are confused and becoming bipolar, things are getting weird in here.');
+                    }
+                    
+                    if (lifetimeData.reindeerClicked >= 500) {
+                        newsItems.push('News : Seasonal reindeer are being clicked more often. Santa is concerned, but says elf spirits remain high at the North Pole.');
+                    }
+                    
+                    if (Game.Achievements['Calendar Abuser'] && Game.Achievements['Calendar Abuser'].won) {
+                        newsItems.push('News : Holiday seasons seem to be flipping around randomly and in quick succession. Many people are not noticing but this reporter is frankly concerned and alarmed.');
+                    }
+                    
+                    if (Game.Achievements['Archwizard'] && Game.Achievements['Archwizard'].won) {
+                        newsItems.push('News : Spell abuse on the rise, people seem to be casting spells at a record rate. Judgement and safety concerns are rising.');
+                    }
+                    
+                    if (modTracking.soilChangesTotal >= 25) {
+                        newsItems.push('News : Soil changes are becoming more common. Gardeners are confused. Rumors of a new soil in the universe.');
+                    }
+                    
+                    return newsItems;
                 });
             }
         }, 3000); // Give extra time for everything to settle
+        
     }
     
     // Register the mod using the proper Cookie Clicker Modding API (like upgrades.js)
@@ -9850,8 +10858,26 @@
             
             // Basic mod initialization (UI, hooks, etc) but no save data dependent features
             this.initializeMod();
+            
+            // Award the vanilla "Third-party" achievement on first install
+            try {
+                if (Game.Achievements && Game.Achievements['Third-party'] && !Game.Achievements['Third-party'].won) {
+                    Game.Win('Third-party');
+                }
+            } catch (e) {
+                console.warn('Just Natural Expansion: Unable to award Third-party achievement:', e);
+            }
+            
+            // If load() never runs (no save data yet), perform first-run initialization
+            setTimeout(function() {
+                if (!modLoadInvoked) {
+                    console.log('Just Natural Expansion: load() has not been invoked; running first-run setup.');
+                    modLoadInvoked = true;
+                    modSaveData = { upgrades: {} };
+                    checkAndShowInitialChoice();
+                }
+            }, 0);
         },
-        
         
         // Initialize mod
         initializeMod: function() {
@@ -9933,11 +10959,7 @@
                 };
                 return JSON.stringify(emptyData);
             }
-            
-            // Check if this is an ascension (Game.OnAscend > 0)
-            // If ascending, don't save upgrade data so they reset to unpurchased state
-            
-            
+
             // Combine achievements and lifetime data
             const achievementsData = JSON.parse(saveAchievementsData());
             
@@ -9999,7 +11021,10 @@
                     lastSeasonalReindeerCheck: modTracking.lastSeasonalReindeerCheck || 0,
                     godUsageTime: modTracking.godUsageTime || {},
                     currentSlottedGods: modTracking.currentSlottedGods || {}
-                }
+                },
+                // Persist Cookie Age progress regardless of toggle state
+                cookieAge: (typeof window !== 'undefined' && window.CookieAge && window.CookieAge.getSaveData)
+                    ? window.CookieAge.getSaveData() : null
             };
             
             // Debug: Log what we're saving for tracking variables
@@ -10023,6 +11048,7 @@
         // load() is called automatically by the game when loading
         load: function(str) {
             debugLog('mod.saveSystem.load: begin len=', str ? str.length : 0);
+            modLoadInvoked = true;
             
             // Emit load event for any integrations
             if (typeof Game !== 'undefined' && Game.emit) {
@@ -10035,12 +11061,17 @@
                     if (!str || str.trim() === '' || str === '{}') {
                         debugLog('mod.saveSystem.load: empty/minimal, proceeding with first run');
                         modSaveData = { upgrades: {} };
-                        continueModInitialization();
+                        checkAndShowInitialChoice();
                         return;
                     }
                     
                     const modData = JSON.parse(str);
                     debugLog('mod.saveSystem.load: parsed keys=', Object.keys(modData||{}).join(','));
+                    // Stash Cookie Age save for deferred application after Cookie Age initializes
+                    try {
+                        if (!Game.JNE) Game.JNE = {};
+                        Game.JNE.cookieAgeSavedData = (modData && modData.cookieAge) ? modData.cookieAge : null;
+                    } catch (_) {}
                     
                     // Check if this save data matches the current game
                     // Initialize save data restoration flag
@@ -10166,6 +11197,13 @@
                     
                     // Load settings FIRST before recreating upgrades
                     if (modData.settings) {
+                        // Set flag to indicate we're loading from save data
+                        // Ensure Game.JNE exists before setting the flag
+                        if (!Game.JNE) {
+                            Game.JNE = {};
+                        }
+                        Game.JNE.isLoadingFromSave = true;
+                        
                         Object.keys(modData.settings).forEach(key => {
                             if (key in modSettings) {
                                 modSettings[key] = modData.settings[key];
@@ -10184,6 +11222,16 @@
                         }
                         if (modSettings.shadowAchievements !== undefined) {
                             shadowAchievementMode = modSettings.shadowAchievements;
+                        }
+                        // Always mark that we're loading from save if we're in this code path
+                        // This prevents welcome audio from playing even if the setting isn't in the save yet
+                        Game.JNE.enableCookieAgeFromSave = true;
+                        
+                        if (modSettings.enableCookieAge !== undefined) {
+                            enableCookieAge = modSettings.enableCookieAge;
+                            // Update Game.JNE as well during save loading
+                            // Game.JNE should already exist from the flag setting above
+                            Game.JNE.enableCookieAge = enableCookieAge;
                         }
                     }
                     
@@ -10696,7 +11744,7 @@
         // Create "Beyond the Leaderboard" achievement - awarded when mod has been used outside shadow mode
         var beyondLeaderboardAchievement = createAchievement(
             'Beyond the Leaderboard',
-            'Natural Expansion Mod has been used outside of Leaderboard/Competition mode.',
+            'Just Natural Expansion has been used outside of Leaderboard/Competition mode.',
             [26, 30], // Custom icon
             10000.25, // Order as requested
             function() {
@@ -11368,5 +12416,38 @@
         if (!Game.JNE) Game.JNE = {};
         Game.JNE.modName = modName;
         Game.JNE.modVersion = modVersion;
+        // Only update enableCookieAge if we're not overwriting a loaded save value
+        if (typeof Game.JNE.enableCookieAge === 'undefined') {
+            Game.JNE.enableCookieAge = enableCookieAge;
+        }
+        // Only initialize enableCookieAgeFromSave if it doesn't already exist (don't overwrite if set by save loading)
+        if (typeof Game.JNE.enableCookieAgeFromSave === 'undefined') {
+            Game.JNE.enableCookieAgeFromSave = false;
+        }
+        Game.JNE.isLoadingFromSave = false; // Flag to track save loading state
+        Game.JNE.cookieAgeProgress = cookieAgeProgress;
+        Game.JNE.shadowAchievementMode = shadowAchievementMode;
+        Game.JNE.createAchievement = createAchievement;
+        Game.JNE.markAchievementWon = markAchievementWon;
+        
+        // Function to update Cookie Age progress
+        Game.JNE.setCookieAgeProgress = function(progress) {
+            if (typeof progress !== 'number' || progress < 0 || progress > 50) {
+                console.error('[JNE] Cookie Age progress must be a number between 0 and 50');
+                return false;
+            }
+            
+            cookieAgeProgress = progress;
+            modSettings.cookieAgeProgress = progress;
+            Game.JNE.cookieAgeProgress = progress;
+            
+            // Trigger save
+            if (Game.Write) {
+                Game.Write();
+            }
+            
+            return true;
+        };
+        
     }
 })();
