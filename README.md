@@ -788,6 +788,11 @@ Don’t be discouraged if a puzzle doesn’t fall immediately. Like the rest of 
 
 ## Changelog
 
+### Version 0.1.1
+* There is a longstanding vanilla game issue/bug/feature with sugar lumps being harvested during lag, which caused Choose Your Own Lump Mod (CYOL) to be inaccurate and unreliable. The Spiced Cookies mod fixed this, but it’s no longer being updated or maintained. That was the only reason I used the Spiced Cookies mod. Now, JNE quietly fixes this issue, and CYOL will show a discrepancy of 0 for planning purposes. It’s one of those small quality-of-life tweaks that probably only I care about, but now everyone is forced to live with anyways.
+* Fixed a bug that made some Just Natural Expansion cookie upgrades stronger than they should have been. 
+* Fixed a bug that could cause unbought upgrades to quickly flash for one frame as available for purchase even if they aren't, also the season cooldown bar doesn't blink every few seconds anymore as a byproduct of this fix. 
+
 ### **Major Version 0.1.0 - Mysteries of the Cookie Age**
 * [Mysteries of the Cookie Age](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#Mysteries-of-the-Cookie-Age) Expansion Patch. May you enjoy your puzzling.
 * Fixed a bug that would prevent users from using Just Natural Expansion upgrades in Permanent Upgrade Slots. 

@@ -5,7 +5,7 @@
     'use strict';
     
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.1.0';
+    var modVersion = '0.1.1';
     var debugMode = false; 
     var runtimeSessionId = Math.floor(Math.random()*1e9) + '-' + Date.now();
     
@@ -15,6 +15,69 @@
             var msg = Array.prototype.slice.call(arguments).join(' ');
             console.log('[JNE Debug]', msg);
         } catch (e) {}
+    }
+
+    function logStoreRefresh(reason, changes) {
+        if (!debugMode) return;
+        try {
+            var payload = {
+                reason: reason,
+                timestamp: Date.now()
+            };
+            if (Array.isArray(changes) && changes.length) {
+                payload.changedUpgrades = changes.map(function(change) {
+                    var entry = {
+                        name: change.name,
+                        previous: change.previous,
+                        next: change.next
+                    };
+                    if (change.reason) {
+                        entry.reason = change.reason;
+                    }
+                    return entry;
+                });
+            }
+            console.log('[JNE Debug][StoreRefresh]', JSON.stringify(payload));
+        } catch (e) {}
+    }
+
+    function resetUnlockStateCache() {
+        modUnlockStateCache = Object.create(null);
+    }
+
+    function applyUnlockState(upgradeName, shouldUnlock, changeList, reason) {
+        var upgrade = Game.Upgrades ? Game.Upgrades[upgradeName] : null;
+        if (!upgrade) {
+            return false;
+        }
+
+        var targetState = shouldUnlock ? 1 : 0;
+        var previousState = upgrade.unlocked ? 1 : 0;
+        var hasCachedState = Object.prototype.hasOwnProperty.call(modUnlockStateCache, upgradeName);
+        var cachedState = hasCachedState ? modUnlockStateCache[upgradeName] : null;
+
+        // Only update if actually different
+        if (targetState !== previousState) {
+            upgrade.unlocked = targetState;
+        }
+
+        // Only report as changed if there's an actual state change from the cached value
+        // OR if we haven't cached it yet and it's different from previous
+        var changed = (!hasCachedState && targetState !== previousState) || 
+                      (hasCachedState && targetState !== cachedState);
+
+        modUnlockStateCache[upgradeName] = targetState;
+
+        if (changed && Array.isArray(changeList)) {
+            changeList.push({
+                name: upgradeName,
+                previous: hasCachedState ? cachedState : previousState,
+                next: targetState,
+                reason: reason
+            });
+        }
+
+        return changed;
     }
     
     // Essential error logging only
@@ -61,11 +124,45 @@
     var modSaveData = null; // Store save data for initialization
     var modLoadInvoked = false; // Track whether load() has run this session
     var pendingAchievementAwards = []; // Queue for achievements to award once initialization completes
-    var toggleLock = false; // Prevent rapid toggle operations
-    var pendingSaveTimer = null; // Throttle saves
-    var saveCooldownMs = 3000; // Minimum delay between saves
-    // Toggle save data removed - we only use modSaveData as source of truth
-    
+    var modUnlockStateCache = Object.create(null);
+var toggleLock = false; // Prevent rapid toggle operations
+var pendingSaveTimer = null; // Throttle saves
+var saveCooldownMs = 3000; // Minimum delay between saves
+
+function updateUnlockStatesForUpgrades(upgradeNames, enable) {
+    if (!upgradeNames || !upgradeNames.length || !Game || !Game.Upgrades) {
+        return;
+    }
+    var unlockChanged = false;
+    for (var i = 0; i < upgradeNames.length; i++) {
+        var upgradeName = upgradeNames[i];
+        var upgrade = Game.Upgrades[upgradeName];
+        if (!upgrade) {
+            continue;
+        }
+        var shouldUnlock = enable;
+        if (enable && typeof upgrade.unlockCondition === 'function') {
+            try {
+                shouldUnlock = !!upgrade.unlockCondition();
+            } catch (unlockErr) {
+                shouldUnlock = false;
+            }
+        }
+        var targetState = shouldUnlock ? 1 : 0;
+        if (upgrade.unlocked !== targetState) {
+            upgrade.unlocked = targetState;
+            unlockChanged = true;
+        }
+        if (!shouldUnlock && upgrade.isInStore) {
+            upgrade.isInStore = 0;
+        }
+    }
+    if (unlockChanged) {
+        Game.storeToRefresh = 1;
+        Game.upgradesToRebuild = 1;
+    }
+}
+
     // Event System for Mod Integration
     // Creates a basic event system if Cookie Clicker doesn't provide one
     function ensureEventSystem() {
@@ -97,307 +194,9 @@
         return true;
     }
     
-    // Achievement alias mapping for renamed achievements
+    // Achievement alias mapping for renamed achievements, everyone should be modernized on updated names by now lets keep this around for next time though
     var achievementAliases = {
-        "Black cat's other paw": "Find a penny, pick it up",
-        "Black cat's third paw": "Four-leaf overkill", 
-        "Black cat's fourth paw": "Rabbit's footnote",
-        "Black cat's fifth paw": "Knock on wood ",
-        "Black cat's sixth paw": "Jackpot jubilee",
-        "Click god": "Clickbait & Switch",
-        "Click emperor": "Click to the Future",
-        "Click overlord": "Clickety Clique",
-        "Click sovereign": "Clickonomicon",
-        "Click monarch": "Clicks and Stones",
-        "Click deity supreme": "Click It Till You Make It",
-        "Click deity ultimate": "One Does Not Simply Click Once",
-        "Click deity transcendent": "Lord of the Clicks",
-        // Grandma achievements
-        "Doughy doyenne": "All rise for Nana",
-        "Batter nana": "The crinkle collective",
-        "Crust custodian": "Okay elder",
-        "Oven oracle": "Wrinkle monarchy",
-        "Whisk whisperer": "The wrinkling hour",
-        "Proofing matriarch": "Matriarchal meltdown",
-        "Rolling-pin regent": "Cookies before crones",
-        "Larder luminary": "Dust to crust",
-        "Hearth highness": "Bingo bloodbath",
-        "Biscotti baroness": "Supreme doughmother",
-        "Panjandrum of pastry": "The last custodian",
-        // Farm achievements
-        "Till titan": "Little house on the dairy",
-        "Mulch magnate": "The plow thickens",
-        "Loam lord": "Cabbage patch dynasty",
-        "Furrow foreman": "Grazing amazement",
-        "Compost captain": "Field of creams",
-        "Acre archon": "Barn to be wild",
-        "Silo sovereign": "Crops and robbers",
-        "Bushel baron": "Shoveling it in",
-        "Soil sultan supreme": "Emperor of dirt",
-        // Mine achievements
-        "Vein viceroy": "Shafted",
-        "Shaft superintendent": "Shiny object syndrome",
-        "Bedrock baron": "Ore what?",
-        "Lantern lord": "Rubble without a cause",
-        "Ore orchestrator": "Tunnel visionaries",
-        "Strata strategist": "Stalag-might",
-        "Pit prefect": "Pyrite and prejudice",
-        "Pickaxe paragon": "Bedrock 'n roll",
-        "Gravel governor": "Mantle management",
-        "Fault-line foreman": "Hollow crown jewels",
-        "Core sample czar": "Emperor of ore",
-        // Factory achievements
-        "Gear grandee": "Assembly required",
-        "Conveyor commissioner": "Quality unassured",
-        "Sprocket sovereign": "Error 404-manpower not found",
-        "Blueprint boss": "Spare parts department",
-        "Forge forecaster": "Conveyor belters",
-        "Lathe luminary": "Planned obsolescence",
-        "Press primarch": "Punch-card prophets",
-        "QA queen": "Rust in peace",
-        "Throughput theocrat": "Algorithm and blues",
-        "Assembly autarch": "Profit motive engine",
-        "Production paramount": "Lord of the assembly",
-        // Bank achievements
-        "Ledger luminary": "Petty cash splash",
-        "Vault vanguard": "The Invisible Hand That Feeds",
-        "Interest idol": "Under-mattress banking",
-        "Bond baron": "Interest-ing times",
-        "Hedge high priest": "Fee-fi-fo-fund",
-        "Dividend duke": "Liquidity theater",
-        "Capital chancellor": "Risk appetite: unlimited",
-        "Liquidity laureate": "Quantitative cheesing",
-        "Spread sovereign": "Number go up economics",
-        "Reserve regent": "Sovereign cookie fund",
-        // Temple achievements
-        "Biscuit beatified": "Monk mode",
-        "Piety pâtissier": "Ritual and error",
-        "Relic ringmaster": "Chant and deliver",
-        "Canticle captain": "Incensed and consecrated",
-        "Pilgrim provost": "Shrine of the times",
-        "Parable patriarch": "Hallowed be thy grain",
-        "Litany laureate": "Relic and roll",
-        "Censer sentinel": "Pilgrimage of crumbs",
-        "Basilica bigwig": "The cookie pantheon",
-        "Tithe tsar": "Tithes and cookies",
-        "Beatific baker": "Om-nom-nipotent",
-        // Wizard tower achievements
-        "Rune registrar": "Is this your cardamom?",
-        "Hex headmaster": "Rabbit optional, hat mandatory",
-        "Sigil steward": "Wand and done",
-        "Scroll shepherd": "Critical spellcheck failed",
-        "Wand warden": "Tome Raider",
-        "Cauldron chancellor": "Prestidigitation station",
-        "Thaumaturge tribune": "Counterspell culture",
-        "Cantrip curator": "Glitter is a material component",
-        "Leyline lord": "Evocation nation",
-        "Familiar field marshal": "Sphere of influence",
-        "Archwizard emeritus": "The Last Archmage",
-        // Shipment achievements
-        "Manifest maestro": "Door-to-airlock",
-        "Hull highlord": "Contents may shift in zero-G",
-        "Dockyard director": "Fragile: vacuum inside",
-        "Orbital outfitter": "Cosmic courier service",
-        "Freight field marshal": "Porch pirates of Andromeda",
-        "Warpway warden": "Tracking number: ∞",
-        "Cargo cartographer": "Relativistic courier",
-        "Starport sahib": "Orbital rendezvous only",
-        "Payload patriarch": "Return to sender: event horizon",
-        "Customs czar": "Address: Unknown Quadrant",
-        "Interstellar impresario": "Postmaster Galactic",
-        // Alchemy lab achievements
-        "Alembic adjudicator": "Stir-crazy crucible",
-        "Crucible custodian": "Flask dance",
-        "Reagent regent": "Beaker than fiction",
-        "Retort ringleader": "Alloy-oop",
-        "Tincture tycoon": "Distill my beating heart",
-        "Catalyst chancellor": "Lead Zeppelin",
-        "Elixir elder": "Hg Wells",
-        "Precipitate prefect": "Fe-fi-fo-fum",
-        "Distillate duke": "Breaking bread with Walter White",
-        "Sublimate sovereign": "Prima materia manager",
-        "Magnum opus magnate": "The Philosopher's Scone",
-        // Portal achievements
-        "Gate gauger": "Open sesameseed",
-        "Rift rector": "Mind the rift",
-        "Threshold thaum": "Doorway to s'moreway",
-        "Liminal lawgiver": "Contents may phase in transit",
-        "Tesseract trustee": "Wormhole warranty voided",
-        "Nth-entrance envoy": "Glitch in the Crumbatrix",
-        "Event-horizon emir": "Second pantry to the right",
-        "Portal provost": "Liminal sprinkles",
-        "Keymaster kingpin": "Please do not feed the void",
-        "Waystone warden": "Echoes from the other oven",
-        "Multidoor magistrate": "Out past the exit sign",
-        // Time machine achievements
-        "Tick-tock trustee": "Yeasterday",
-        "Chrono chieftain": "Tick-tock, bake o'clock",
-        "Paradox provost": "Back to the batter",
-        "Epoch executor": "Déjà chewed",
-        "Aeon alderman": "Borrowed thyme",
-        "Timeline tactician": "Second breakfast paradox",
-        "Loop legislator": "Next week's news, fresh today",
-        "Era eminence": "Live, die, bake, repeat",
-        "Causality constable": "Entropy-proof frosting",
-        "Continuum custodian": "Past the last tick",
-        "Grandfather-clause governor": "Emperor of when",
-        // Antimatter condenser achievements
-        "Vacuum vicar": "Up and atom!",
-        "Negamass nabob": "Boson buddies",
-        "Quark quartermaster": "Schrödinger's snack",
-        "Hadron high bailiff": "Quantum foam party",
-        "Singularity steward": "Twenty years away (always)",
-        "Boson baron": "Higgs and kisses",
-        "Lepton lieutenant": "Zero-point frosting",
-        "Isotope imperator": "Some like it dark (matter)",
-        "Reactor regnant": "Vacuum energy bar",
-        "Nullspace notary": "Singularity of flavor",
-        "Entropy esquire": "Emperor of mass",
-        // Prism achievements
-        "Photon prefect": "Light reading",
-        "Spectrum superintendent": "Refraction action",
-        "Refraction regent": "Snacktrum of light",
-        "Rainbow registrar": "My cones and rods",
-        "Lumen laureate": "Prism break",
-        "Chromatic chancellor": "Glare force one",
-        "Beam baronet": "Hues Your Own Adventure",
-        "Halo highlord": "Devour the spectrum",
-        "Diffraction duke": "Crown of rainbows",
-        "Radiance regnant": "Radiant consummation",
-        // Chancemaker achievements
-        "Odds officer": "Beginner's lucked-in",
-        "Fortune foreman": "Risk it for the biscuit",
-        "Serendipity superintendent": "Roll, baby, roll",
-        "Gambit governor": "Luck be a ladyfinger",
-        "Probability provost": "RNG on the range",
-        "Fate facilitator": "Monte Carlo kitchen",
-        "Draw director": "Gambler's fallacy, baker's edition",
-        "Jackpot jurist": "Schrödinger's jackpot",
-        "Pips preceptor": "RNGesus take the wheel",
-        "Stochastic sovereign": "Hand of Fate: Full House",
-        "Luck laureate": "RNG seed of fortune",
-        // Fractal engine achievements
-        "Mandel monarch": "Copy-paste-ry",
-        "Koch kingpin": "Again, but smaller",
-        "Cantor custodian": "Edge-case frosting",
-        "Julia jurist": "Mandelbread set",
-        "Sierpiński steward": "Strange attractor, stranger baker",
-        "Iteration imperator": "Recursive taste test",
-        "Recursion regent": "Zoom & enhance & enhance",
-        "Self-similarity sheriff": "The limit does not exist",
-        "Pattern praetor": "Halting? Never heard of it",
-        "Infinite indexer": "The set contains you",
-        "Depth-first demigod": "Emperor of self-similarity",
-        // Javascript console achievements
-        "Lint lord": "F12, open sesame",
-        "Closure captain": "console.log('crumbs')",
-        "Async archon": "Semicolons optional, sprinkles mandatory",
-        "Promise prelate": "Undefined is not a function (nor a cookie)",
-        "Scope sovereign": "await fresh_from_oven()",
-        "Hoist highness": "Event loop-de-loop",
-        "Node notable": "Regexorcism",
-        "Regex regent": "Infinite scroll of dough",
-        "Bundle baron": "Unhandled promise confection",
-        "Sandbox seer": "Single-threaded, single-minded",
-        "Runtime regnant": "Emperor of Runtime",
-        // Idleverse achievements
-        "Multiverse marshal": "Pick-a-verse, any verse",
-        "Replica rector": "Open in new universe",
-        "Shard shepherd": "Meanwhile, in a parallel tab",
-        "Universe underwriter": "Idle hands, infinite plans",
-        "Realm regent": "Press any world to continue",
-        "Cosmos comptroller": "NPC in someone else's save",
-        "Omniverse ombuds": "Cookie of Theseus",
-        "Dimension director": "Crossover episode",
-        "Reality registrar": "Cosmic load balancer",
-        "Plane provost": "Prime instance",
-        "Horizon high steward": "The bakery at the end of everything",
-        // Cortex baker achievements
-        "Synapse superintendent": "Gray matter batter",
-        "Cortex commissioner": "Outside the cookie box",
-        "Gyrus governor": "Prefrontal glaze",
-        "Lobe luminary": "Snap, crackle, synapse",
-        "Neuron notable": "Temporal batch processing",
-        "Axon adjudicator": "Cogito, ergo crumb",
-        "Myelin magistrate": "Galaxy brain, local oven",
-        "Thalamus thegn": "The bicameral ovens",
-        "Cerebellum chancellor": "Theory of crumb",
-        "Prefrontal prelate": "Lobe service",
-        "Mind monarch": "Mind the monarch",
-        // You achievements
-        "Me manager": "Me, myself, and Icing",
-        "Doppel director": "Copy of a copy",
-        "Mirror minister": "Echo chamber",
-        "Clone commissioner": "Self checkout",
-        "Copy chieftain": "You v2.0",
-        "Echo executor": "You v2.0.1 emergency hot fix",
-        "Facsimile foreman": "Me, Inc.",
-        "Reflection regent": "Council of Me",
-        "Duplicate duke": "I, Legion",
-        "Replica regnant": "The one true you",
-        "Self supreme": "Sovereign of the self",
-        
-        // Production achievement aliases
-        "Click (starring Adam Sandler) II": "Click II: the sequel",
-        "Click (starring Adam Sandler) III": "Click III: we couldn't get Adam Sandler so it stars Jerry Seinfeld for some reason",
-        "Click (starring Adam Sandler) IV": "Click IV: 3% fresh on rotten tomatoes",
-        "Frantiquities II": "Scone with the wind",
-        "Frantiquities III": "The flour of youth",
-        "Frantiquities IV": "Bake-ageddon",
-        "Overgrowth II": "Rake in the greens",
-        "Overgrowth III": "The great threshering",
-        "Overgrowth IV": "Bushels of burden",
-        "Sedimentalism II": "Ore d'oeuvres",
-        "Sedimentalism III": "Seismic yield",
-        "Sedimentalism IV": "Billionaire's bedrock",
-        "Labor of love II": "Sweatshop symphony",
-        "Labor of love III": "Cookieconomics 101",
-        "Labor of love IV": "Mass production messiah",
-        "Reverse funnel system II": "Compound interest, compounded",
-        "Reverse funnel system III": "Arbitrage avalanche",
-        "Reverse funnel system IV": "Ponzi à la mode",
-        "Thus spoke you II": "Temple treasury overflow",
-        "Thus spoke you III": "Pantheon payout",
-        "Thus spoke you IV": "Sacred surplus",
-        "Manafest destiny II": "Rabbits per minute",
-        "Manafest destiny III": "Hocus bonus",
-        "Manafest destiny IV": "Magic dividends",
-        "Neither snow nor rain nor heat nor gloom of night II": "Cargo cult classic",
-        "Neither snow nor rain nor heat nor gloom of night III": "Universal basic shipping",
-        "Neither snow nor rain nor heat nor gloom of night IV": "Comet-to-consumer",
-        "I've got the Midas touch II": "Lead into bread",
-        "I've got the Midas touch III": "Philosopher's yield",
-        "I've got the Midas touch IV": "Auronomical returns",
-        "Which eternal lie II": "Spacetime surcharge",
-        "Which eternal lie III": "Interdimensional yield farming",
-        "Which eternal lie IV": "Event-horizon markup",
-        "Déjà vu II": "Future Profits, Past Tense",
-        "Déjà vu III": "Infinite Loop, Infinite Loot",
-        "Déjà vu IV": "Back Pay from the Big Bang",
-        "Powers of Ten II": "Pair production payout",
-        "Powers of Ten III": "Cross-section surplus",
-        "Powers of Ten IV": "Powers of crumbs",
-        "Now the dark days are gone II": "Photons pay dividends",
-        "Now the dark days are gone III": "Spectral surplus",
-        "Now the dark days are gone IV": "Dawn of plenty",
-        "Murphy's wild guess II": "Against all odds & ends",
-        "Murphy's wild guess III": "Monte Carlo windfall",
-        "Murphy's wild guess IV": "Fate-backed securities",
-        "We must go deeper II": "Infinite series surplus",
-        "We must go deeper III": "Geometric mean feast",
-        "We must go deeper IV": "Fractal jackpot",
-        "First-class citizen II": "Cookies per second()++",
-        "First-class citizen III": "Promise.all(paydays)",
-        "First-class citizen IV": "Async and ye shall receive",
-        "Earth-616 II": "Crossover dividends",
-        "Earth-616 III": "Many-Worlds ROI",
-        "Earth-616 IV": "Continuity bonus",
-        "Unthinkable II": "Brainstorm dividend",
-        "Unthinkable III": "Thought economy boom",
-        "Unthinkable IV": "Neural net worth",
-        "That's all you II": "Personal growth",
-        "That's all you III": "Economies of selves",
-        "That's all you IV": "Self-sustaining singularity"
+      //  "Black cat's other paw": "Find a penny, pick it up",
     };
 
     // Centralized save scheduler to avoid spamming saves
@@ -722,10 +521,12 @@
         modUpgradeNames.forEach(name => {
             if (Game.Upgrades[name]) {
                 Game.Upgrades[name].bought = 0;
-                // Note: We don't reset unlocked here because our custom unlock logic handles it
+                // We don't reset unlocked here because our custom unlock logic handles it
                 // The upgrade will be visible if its unlock condition is met
             }
         });
+
+        resetUnlockStateCache();
     }
     
     // Handle reset - clear data on full reset
@@ -776,6 +577,8 @@
             // Reset capture flags
             hasCapturedThisAscension = false;
             lastAscensionCount = 0;
+
+            resetUnlockStateCache();
             
     
         } else {
@@ -837,11 +640,8 @@
 
     // Exact building counts for "The Final Countdown" challenge (20 down to 1)
     var FINAL_COUNTDOWN_REQUIRED_COUNTS = {'Cursor': 20, 'Grandma': 19, 'Farm': 18, 'Mine': 17, 'Factory': 16, 'Bank': 15, 'Temple': 14, 'Wizard tower': 13, 'Shipment': 12, 'Alchemy lab': 11, 'Portal': 10, 'Time machine': 9, 'Antimatter condenser': 8, 'Prism': 7, 'Chancemaker': 6, 'Fractal engine': 5, 'Javascript console': 4, 'Idleverse': 3, 'Cortex baker': 2, 'You': 1};
-    
     // Alternative building counts for "The Final Countdown" challenge (15 down to 0)
     var FINAL_COUNTDOWN_REQUIRED_COUNTS_ALT = {'Cursor': 15, 'Grandma': 14, 'Farm': 13, 'Mine': 12, 'Factory': 11, 'Bank': 10, 'Temple': 9, 'Wizard tower': 8, 'Shipment': 7, 'Alchemy lab': 6, 'Portal': 5, 'Time machine': 4, 'Antimatter condenser': 3, 'Prism': 2, 'Chancemaker': 1, 'Fractal engine': 0, 'Javascript console': 0, 'Idleverse': 0, 'Cortex baker': 0, 'You': 0};
-    
-    // Helper function to check if either Final Countdown set is satisfied
     function checkFinalCountdownAchievement() {
         // Check first set (20 down to 1)
         var allBuildingsCorrect = true;
@@ -963,6 +763,19 @@
             willExitCompetitionMode = wasInCompetitionMode && newState === true;
         }
 
+        // Helper to apply changes after confirmation/prompt
+        var performToggle = function(targetSettingName, state) {
+            if (targetSettingName === 'enableCookieAge') {
+                applyCookieAgeChange(state, true);
+            } else if (targetSettingName === 'enableCookieUpgrades' || targetSettingName === 'enableBuildingUpgrades' || targetSettingName === 'enableKittenUpgrades') {
+                applyUpgradeChange(targetSettingName, state);
+            } else if (targetSettingName === 'shadowAchievements') {
+                applyShadowAchievementChange(state);
+            } else {
+                applySettingChange(targetSettingName, state);
+            }
+        };
+
         // Show confirmation prompt only when leaving competition mode
         let message = '';
         let callback = '';
@@ -970,19 +783,19 @@
         if (settingName === 'shadowAchievements' && willExitCompetitionMode) {
             if (newState) {
                 message = 'Enable shadow achievements?<br><small>All mod achievements will be moved to the shadow pool and will no longer grant milk or affect gameplay.</small>';
-                callback = function() { applyShadowAchievementChange(true); };
+                callback = function() { performToggle('shadowAchievements', true); };
             } else {
                 message = 'Disable shadow achievements?<br><small>All mod achievements will be moved to the normal pool and will grant milk and affect gameplay. This will award the "Beyond the Leaderboard" shadow achievement to indicate you have left competition mode.</small>';
-                callback = function() { applyShadowAchievementChange(false); };
+                callback = function() { performToggle('shadowAchievements', false); };
             }
         } else if ((settingName === 'enableCookieUpgrades' || settingName === 'enableBuildingUpgrades' || settingName === 'enableKittenUpgrades') && willExitCompetitionMode) {
             let upgradeType = settingName.replace('enable', '').replace('Upgrades', '');
             if (newState) {
                 message = 'Enable ' + upgradeType + ' upgrades?<br><small>These upgrades will be added to the game and may affect your CPS and gameplay. This will award the "Beyond the Leaderboard" shadow achievement to indicate you have left competition mode.</small>';
-                callback = function() { applyUpgradeChange(settingName, true); };
+                callback = function() { performToggle(settingName, true); };
             } else {
                 message = 'Disable ' + upgradeType + ' upgrades?<br><small>These upgrades will be removed from the game. Their purchase state will be remembered and will restore when turned back on.</small>';
-                callback = function() { applyUpgradeChange(settingName, false); };
+                callback = function() { performToggle(settingName, false); };
             }
         }
         
@@ -993,7 +806,7 @@
                 callback();
             } else {
                 // Show warning prompt
-            showSettingsChangePrompt(message, callback);
+                showSettingsChangePrompt(message, callback);
             }
         } else {
             if (settingName === 'enableCookieAge') {
@@ -1003,7 +816,6 @@
             } else if (settingName === 'shadowAchievements') {
                 applyShadowAchievementChange(newState);
             } else {
-                // For minor changes, apply immediately
                 applySettingChange(settingName, newState);
             }
         }
@@ -1044,7 +856,6 @@
             });
         }, 0);
     }
-    
     
     // Function to apply shadow achievement changes
     window.applyShadowAchievementChange = function(enabled) {
@@ -1121,12 +932,6 @@
         // Set lock to prevent rapid operations
         toggleLock = true;
         
-        // Track CPS before changes for kitten upgrades
-        var cpsBefore = 0;
-        if (settingName === 'enableKittenUpgrades') {
-            cpsBefore = Game.cookiesPs || 0;
-        }
-        
         try {
         // Update the variable
         if (settingName === 'enableCookieUpgrades') {
@@ -1154,7 +959,7 @@
             modSaveData.upgrades = {};
         }
         
-        // Save current states of all mod upgrades before toggling
+        // Snapshot purchases so we can restore them post-recreate
         for (var i = 0; i < modUpgradeNames.length; i++) {
             var upgradeName = modUpgradeNames[i];
             if (Game.Upgrades[upgradeName]) {
@@ -1162,42 +967,49 @@
                 modSaveData.upgrades[upgradeName] = { bought: currentBought };
             }
         }
-        
-        // Now recreate upgrades from the updated save data
+                
+        // Use full rebuild to ensure deterministic CPS
         recreateUpgradesFromSaveOnly();
         
-        // Force recalculation to apply/remove effects immediately
-        setTimeout(() => {
-            if (Game.CalculateGains) { Game.CalculateGains(); }
-            if (Game.recalculateGains) { Game.recalculateGains = 1; }
-            
-            // Track CPS after changes for kitten upgrades
-            if (settingName === 'enableKittenUpgrades') {
-                var cpsAfter = Game.cookiesPs || 0;
-                
-                // Check kitten upgrades in Game.Upgrades
-                var kittenUpgradesInGame = 0;
-                var kittenUpgradesBought = 0;
-                for (var i = 0; i < kittenUpgradeNames.length; i++) {
-                    var upgradeName = kittenUpgradeNames[i];
-                    if (Game.Upgrades[upgradeName]) {
-                        kittenUpgradesInGame++;
-                        if (Game.Upgrades[upgradeName].bought) {
-                            kittenUpgradesBought++;
-                        }
-                    }
-                }
-            }
-        }, 100);
+        // Set up custom building multipliers if building upgrades are enabled
+        if (enableBuildingUpgrades) {
+            addCustomBuildingMultipliers();
+        }
+        
+        // Update unlock states for all enabled upgrade categories to ensure immediate store visibility
+        if (enableCookieUpgrades) {
+            updateUnlockStatesForUpgrades(cookieUpgradeNames, true);
+        }
+        if (enableBuildingUpgrades) {
+            updateUnlockStatesForUpgrades(buildingUpgradeNames, true);
+        }
+        if (enableKittenUpgrades) {
+            updateUnlockStatesForUpgrades(kittenUpgradeNames, true);
+        }
+        
+        // Force immediate recalculation
+        if (Game.CalculateGains) { Game.CalculateGains(); }
+        if (Game.recalculateGains) { Game.recalculateGains = 1; }
+        
+        // Force immediate store refresh
+        Game.storeToRefresh = 1;
+        Game.upgradesToRebuild = 1;
+        if (Game.RefreshStore) { Game.RefreshStore(); }
+        if (Game.RebuildUpgrades) { Game.RebuildUpgrades(); }
+        if (Game.UpdateMenu) { Game.UpdateMenu(); }
         
         // Check if we should mark "Beyond the Leaderboard" as won based on new settings
         checkAndMarkBeyondTheLeaderboard();
         
-            // Update UI and validate button state
-            setTimeout(() => {updateMenuButtons(); validateToggleButtonState(settingName, enabled);}, 150);
-            
-            // Save settings (throttled)
-            requestModSave(false);
+        // Update UI and validate button state
+        setTimeout(() => {updateMenuButtons(); validateToggleButtonState(settingName, enabled);}, 150);
+
+            // Save after refresh (non-blocking)
+            setTimeout(function() {
+                if (Game.WriteSave) {
+                    Game.WriteSave();
+                }
+            }, 100);
             
         } catch (error) {
             console.error('Toggle error in applyUpgradeChange:', error);
@@ -2174,6 +1986,54 @@
         }
     }
     
+    // Lump discrepancy patch - keeps sugar lump timers consistent across load/harvest/click
+    //Borrowed logic from Spiced Cookies mod, which is no longer being updated or maintained.
+    function applyLumpDiscrepancyPatch() {
+        if (!Game || typeof Game !== 'object') return false;
+
+        if (Game.loadLumps && !Game.loadLumps._lumpPatchApplied) {
+            var originalLoadLumps = Game.loadLumps;
+            Game.loadLumps = function() {
+                var hadLumpT = (typeof Game.lumpT !== 'undefined');
+                var savedLumpT = Game.lumpT;
+                var result = originalLoadLumps.apply(this, arguments);
+                if (hadLumpT) Game.lumpT = savedLumpT;
+                else if (typeof Game.lumpT !== 'undefined') delete Game.lumpT;
+                return result;
+            };
+            Game.loadLumps._lumpPatchApplied = true;
+        }
+
+        if (Game.harvestLumps && !Game.harvestLumps._lumpPatchApplied) {
+            var originalHarvestLumps = Game.harvestLumps;
+            Game.harvestLumps = function() {
+                var oldLumpT = Game.lumpT;
+                var result = originalHarvestLumps.apply(this, arguments);
+                if (Game.lumpOverripeAge && Game.lumpOverripeAge > 0 && typeof oldLumpT === 'number') {
+                    var harvestedAmount = Math.floor((Date.now() - oldLumpT) / Game.lumpOverripeAge);
+                    Game.lumpT = (harvestedAmount > 0)
+                        ? oldLumpT + (Game.lumpOverripeAge * harvestedAmount)
+                        : oldLumpT;
+                } else if (typeof Game.lumpT === 'undefined') {
+                    Game.lumpT = Date.now();
+                }
+                return result;
+            };
+            Game.harvestLumps._lumpPatchApplied = true;
+        }
+
+        if (Game.clickLump && !Game.clickLump._lumpPatchApplied) {
+            var originalClickLump = Game.clickLump;
+            Game.clickLump = function() {
+                Game.lumpT = Date.now();
+                return originalClickLump.apply(this, arguments);
+            };
+            Game.clickLump._lumpPatchApplied = true;
+        }
+        
+        return true;
+    }
+    
     // Register all hooks in one place
     function registerAllHooks() {
         // Seasonal reindeer tracking - award immediately on pop
@@ -2895,6 +2755,9 @@
             Game.dropRateMult._modded = true;
         }
 
+        // Lump discrepancy patch - apply as fallback (should already be applied early, but ensure it's done)
+        applyLumpDiscrepancyPatch();
+
     }
     
     Game.checkGodUsage = function() {
@@ -3323,51 +3186,13 @@
                     // CRUCIAL: Tell the vanilla game to refresh the store
                     Game.storeToRefresh = 1;
                     
-                    // CRUCIAL: Force check of upgrade unlock conditions after achievement is won
-            
+                    // Check if any upgrades should now be unlocked after earning this achievement
+                    // Using the centralized unlock check function with throttling to prevent rapid refreshes
                     setTimeout(function() {
-                        // Check all Order upgrades for unlock condition changes
-                        var orderUpgrades = [
-                            'Order of the Golden Crumb',
-                            'Order of the Impossible Batch', 
-                            'Order of the Shining Spoon',
-                            'Order of the Cookie Eclipse',
-                            'Order of the Enchanted Whisk',
-                            'Order of the Eternal Cookie'
-                        ];
-                        
-                        var unlockChanged = false;
-                        for (var i = 0; i < orderUpgrades.length; i++) {
-                            var upgradeName = orderUpgrades[i];
-                            var upgrade = Game.Upgrades[upgradeName];
-                            
-                            if (upgrade && upgrade.unlockCondition) {
-                                var shouldUnlock = upgrade.unlockCondition();
-                                var currentlyUnlocked = upgrade.unlocked;
-                                
-                                if (shouldUnlock && currentlyUnlocked !== 1) {
-                                    upgrade.unlocked = 1;
-                                    unlockChanged = true;
-            
-                                }
-                            }
+                        if (typeof mod !== 'undefined' && mod.saveSystem && typeof mod.saveSystem.checkAndUnlockAllUpgrades === 'function') {
+                            mod.saveSystem.checkAndUnlockAllUpgrades();
                         }
-                        
-                        // If any upgrades were unlocked, force store refresh
-                        if (unlockChanged) {
-        
-                            Game.storeToRefresh = 1;
-                            if (Game.RebuildUpgrades) {
-                                Game.RebuildUpgrades();
-                            }
-                        }
-                    }, 100); // Small delay to ensure achievement is fully processed
-                    
-                    // THEN rebuild upgrades to refresh the display with the updated unlock states
-                    
-                    if (Game.RebuildUpgrades) {
-                        Game.RebuildUpgrades();
-                    }
+                    }, 100);
                     
                     // Trigger a save to persist the achievement
                     if (Game.Write) {
@@ -3417,6 +3242,7 @@
                 console.error('Invalid upgradeData structure:', upgradeData);
                 return;
             }
+            removeModCookieUpgradesFromPool();
             
         // ===== SECTION 1: ESSENTIAL GENERIC UPGRADES =====
         // Create essential upgrades that other upgrades depend on
@@ -3679,6 +3505,7 @@
         
         
         // ===== SECTION 10: FINAL SETUP =====
+            dedupeCookieUpgradePool();
         // Force store refresh
             setTimeout(() => {
                 Game.storeToRefresh = 1;
@@ -3691,6 +3518,7 @@
 
     var modPermanentSlotBackup = {};
     var cachedModUpgradeNameSet = null;
+    var cachedModCookieUpgradeNameSet = null;
 
     function getModUpgradeNameSet() {
         if (!cachedModUpgradeNameSet) {
@@ -3701,6 +3529,134 @@
             }
         }
         return cachedModUpgradeNameSet;
+    }
+
+    function getModCookieUpgradeNameSet() {
+        if (!cachedModCookieUpgradeNameSet) {
+            cachedModCookieUpgradeNameSet = {};
+            for (var i = 0; i < cookieUpgradeNames.length; i++) {
+                cachedModCookieUpgradeNameSet[cookieUpgradeNames[i]] = true;
+            }
+        }
+        return cachedModCookieUpgradeNameSet;
+    }
+
+    function removeModCookieUpgradesFromPool() {
+        if (!Game) {
+            return;
+        }
+
+        if (debugMode) {
+            var startMain = Game.cookieUpgrades ? Game.cookieUpgrades.length : 0;
+            var startPool = (Game.UpgradesByPool && Array.isArray(Game.UpgradesByPool['cookie'])) ? Game.UpgradesByPool['cookie'].length : 0;
+            debugLog('removeModCookieUpgradesFromPool_start', 'main=', startMain, 'pool=', startPool);
+        }
+
+        var removedFromMain = 0;
+        var removedFromPool = 0;
+
+        if (Game.cookieUpgrades && Array.isArray(Game.cookieUpgrades)) {
+            var beforeMain = Game.cookieUpgrades.length;
+            for (var i = Game.cookieUpgrades.length - 1; i >= 0; i--) {
+                var upgrade = Game.cookieUpgrades[i];
+                if (upgrade && upgrade.jneIsCookie) {
+                    Game.cookieUpgrades.splice(i, 1);
+                    removedFromMain++;
+                }
+            }
+            debugLog('removeModCookieUpgradesFromPool', 'mainPoolBefore=', beforeMain, 'removed=', removedFromMain, 'after=', Game.cookieUpgrades.length);
+        }
+
+        if (Game.UpgradesByPool && Array.isArray(Game.UpgradesByPool['cookie'])) {
+            var pool = Game.UpgradesByPool['cookie'];
+            var beforePool = pool.length;
+            for (var j = pool.length - 1; j >= 0; j--) {
+                var poolUpgrade = pool[j];
+                if (poolUpgrade && poolUpgrade.jneIsCookie) {
+                    pool.splice(j, 1);
+                    removedFromPool++;
+                }
+            }
+            debugLog('removeModCookieUpgradesFromPool', 'poolBefore=', beforePool, 'removed=', removedFromPool, 'after=', pool.length);
+        }
+
+        if (debugMode) {
+            var endMain = Game.cookieUpgrades ? Game.cookieUpgrades.length : 0;
+            var endPool = (Game.UpgradesByPool && Array.isArray(Game.UpgradesByPool['cookie'])) ? Game.UpgradesByPool['cookie'].length : 0;
+            debugLog('removeModCookieUpgradesFromPool_end', 'main=', endMain, 'pool=', endPool);
+        }
+    }
+
+    function dedupeCookieUpgradePool() {
+        if (!Game || !Game.cookieUpgrades) {
+            return;
+        }
+
+        if (debugMode) {
+            debugLog('dedupeCookieUpgradePool_start', 'main=', Game.cookieUpgrades.length, 'pool=', (Game.UpgradesByPool && Array.isArray(Game.UpgradesByPool['cookie'])) ? Game.UpgradesByPool['cookie'].length : 0);
+        }
+
+        var seen = {};
+        var pool = Game.cookieUpgrades;
+        var initial = pool.length;
+        var duplicatesRemoved = 0;
+        for (var i = pool.length - 1; i >= 0; i--) {
+            var upgrade = pool[i];
+            var name = upgrade && upgrade.name;
+            if (!name) {
+                continue;
+            }
+            if (upgrade && upgrade.jneIsCookie && seen[name]) {
+                pool.splice(i, 1);
+                duplicatesRemoved++;
+            } else {
+                seen[name] = true;
+            }
+        }
+        if (duplicatesRemoved > 0) {
+            debugLog('dedupeCookieUpgradePool', 'mainPoolBefore=', initial, 'removed=', duplicatesRemoved, 'after=', pool.length);
+        }
+
+        if (Game.UpgradesByPool && Array.isArray(Game.UpgradesByPool['cookie'])) {
+            var poolArr = Game.UpgradesByPool['cookie'];
+            seen = {};
+            var initialPool = poolArr.length;
+            var poolRemoved = 0;
+            for (var k = poolArr.length - 1; k >= 0; k--) {
+                var poolUpgrade = poolArr[k];
+                var poolName = poolUpgrade && poolUpgrade.name;
+                if (!poolName) {
+                    continue;
+                }
+                if (poolUpgrade && poolUpgrade.jneIsCookie && seen[poolName]) {
+                    poolArr.splice(k, 1);
+                    poolRemoved++;
+                } else {
+                    seen[poolName] = true;
+                }
+            }
+            if (poolRemoved > 0) {
+                debugLog('dedupeCookieUpgradePool', 'upgradesByPoolBefore=', initialPool, 'removed=', poolRemoved, 'after=', poolArr.length);
+            }
+        }
+
+        if (debugMode) {
+            var duplicateSummary = [];
+            if (Game.cookieUpgrades) {
+                var counts = {};
+                for (var idx = 0; idx < Game.cookieUpgrades.length; idx++) {
+                    var entry = Game.cookieUpgrades[idx];
+                    if (!entry || !entry.jneIsCookie) continue;
+                    counts[entry.name] = (counts[entry.name] || 0) + 1;
+                }
+                for (var name in counts) {
+                    if (counts.hasOwnProperty(name) && counts[name] > 1) {
+                        duplicateSummary.push(name + ':' + counts[name]);
+                    }
+                }
+            }
+            debugLog('dedupeCookieUpgradePool_end', 'main=', Game.cookieUpgrades.length, 'pool=', (Game.UpgradesByPool && Array.isArray(Game.UpgradesByPool['cookie'])) ? Game.UpgradesByPool['cookie'].length : 0, 'duplicates=', duplicateSummary.join(',') || 'none');
+        }
     }
 
     function capturePermanentSlotBackups() {
@@ -3802,7 +3758,9 @@
             var currentUpgrade = (typeof currentId === 'number' && currentId >= 0 && Game.UpgradesById) ? Game.UpgradesById[currentId] : null;
 
             if (currentUpgrade) {
-                if (!currentUpgrade.bought) {
+                // SAFETY: Only auto-unlock/buy if this is a MOD upgrade in permanent slot
+                // Permanent upgrades from ascension are an exception - they're already earned
+                if (!currentUpgrade.bought && nameSet[currentUpgrade.name]) {
                     currentUpgrade.unlocked = 1;
                     currentUpgrade.bought = 1;
                     if (typeof currentUpgrade.vanilla === 'undefined') {
@@ -3822,7 +3780,9 @@
                     Game.permanentUpgrades[slotIdx] = restored.id;
                     menuNeedsUpdate = true;
                 }
-                if (!restored.bought) {
+                // SAFETY: Only auto-unlock/buy if this is a MOD upgrade in permanent slot
+                // Permanent upgrades from ascension are an exception - they're already earned
+                if (!restored.bought && nameSet[restored.name]) {
                     restored.unlocked = 1;
                     restored.bought = 1;
                     if (typeof restored.vanilla === 'undefined') {
@@ -3854,6 +3814,7 @@
     // This function saves current states before deletion - use only for mod initialization
     function recreateAllUpgradesFromSaveData() {
         capturePermanentSlotBackups();
+        removeModCookieUpgradesFromPool();
         // Step 1: Save current states of ALL mod upgrades before deletion
         var modUpgradeNames = getModUpgradeNames();
         if (!modSaveData) {
@@ -3894,12 +3855,14 @@
         }
 
         restoreModPermanentSlots();
+        resetUnlockStateCache();
     }
 
     // Function for operations that don't save current states - only loads from save
     // Used for toggle operations and save loading
     function recreateUpgradesFromSaveOnly() {
         capturePermanentSlotBackups();
+        removeModCookieUpgradesFromPool();
         // Step 1: Delete ALL mod upgrades from the game
         var modUpgradeNames = getModUpgradeNames();
         for (var i = 0; i < modUpgradeNames.length; i++) {
@@ -3923,6 +3886,7 @@
         }
 
         restoreModPermanentSlots();
+        resetUnlockStateCache();
     }
 
     // Independent function to create kitten upgrades
@@ -9909,6 +9873,19 @@
         
         
         try {
+            if (debugMode && Game) {
+                var cookiePoolMatches = 0;
+                if (Array.isArray(Game.cookieUpgrades)) {
+                    for (var c = 0; c < Game.cookieUpgrades.length; c++) {
+                        var existingCookie = Game.cookieUpgrades[c];
+                        if (existingCookie && existingCookie.name === upgradeInfo.name) {
+                            cookiePoolMatches++;
+                        }
+                    }
+                }
+                debugLog('createCookieUpgrade_start', upgradeInfo.name, 'hasUpgrade=', Game.Upgrades && Game.Upgrades[upgradeInfo.name] ? 1 : 0, 'cookiePoolMatches=', cookiePoolMatches);
+            }
+
             var upgrade;
             
             // Create cookie upgrades using direct Game.Upgrade constructor
@@ -9955,6 +9932,36 @@
                 upgrade.desc = combinedText + upgradeInfo.ddesc;
             }
             
+            upgrade.jneIsCookie = true;
+
+            if (Array.isArray(Game.cookieUpgrades)) {
+                if (Game.cookieUpgrades.indexOf(upgrade) === -1) {
+                    Game.cookieUpgrades.push(upgrade);
+                }
+            }
+
+            if (Game.UpgradesByPool) {
+                if (!Array.isArray(Game.UpgradesByPool['cookie'])) {
+                    Game.UpgradesByPool['cookie'] = [];
+                }
+                if (Game.UpgradesByPool['cookie'].indexOf(upgrade) === -1) {
+                    Game.UpgradesByPool['cookie'].push(upgrade);
+                }
+            }
+
+            if (debugMode && Game) {
+                var postMatches = 0;
+                if (Array.isArray(Game.cookieUpgrades)) {
+                    for (var m = 0; m < Game.cookieUpgrades.length; m++) {
+                        var postEntry = Game.cookieUpgrades[m];
+                        if (postEntry && postEntry.name === upgradeInfo.name) {
+                            postMatches++;
+                        }
+                    }
+                }
+                debugLog('createCookieUpgrade_end', upgradeInfo.name, 'hasUpgrade=', Game.Upgrades && Game.Upgrades[upgradeInfo.name] ? 1 : 0, 'cookiePoolMatches=', postMatches);
+            }
+
         } catch (e) {
             console.error('Error creating cookie upgrade:', upgradeInfo.name, e);
         }
@@ -10027,17 +10034,6 @@
     
     // Apply upgrade effects function
     function applyUpgradeEffects(cps) {
-        // Apply cookie upgrade effects manually (like the working upgrades.js)
-        for (var i = 0; i < upgradeData.cookie.length; i++) {
-            var upgradeInfo = upgradeData.cookie[i];
-            if (Game.Upgrades[upgradeInfo.name] && Game.Upgrades[upgradeInfo.name].bought) {
-                // Use the power value from the actual upgrade object
-                var upgrade = Game.Upgrades[upgradeInfo.name];
-                var multiplier = 1 + (upgrade.power / 100); // Convert power to percentage
-                cps *= multiplier;
-            }
-        }
-        
         // Apply generic upgrade effects
         for (var i = 0; i < upgradeData.generic.length; i++) {
             var upgradeInfo = upgradeData.generic[i];
@@ -10065,134 +10061,129 @@
         
         // Track if any upgrades changed unlock status to trigger UI refresh
         var uiNeedsRefresh = false;
-        
+        var unlockChanges = [];
+
         // Normal unlock condition checking (when debug mode is off)
         // Check generic upgrade unlock conditions (like the working upgrades.js)
         for (var i = 0; i < upgradeData.generic.length; i++) {
-            var upgradeInfo = upgradeData.generic[i];
-            
-            if (Game.Upgrades[upgradeInfo.name]) {
-                var shouldUnlock = false;
-                var wasUnlocked = Game.Upgrades[upgradeInfo.name].unlocked;
-                
-                // Only unlock if there's a specific unlock condition
-                if (upgradeInfo.unlockCondition) {
-                    shouldUnlock = upgradeInfo.unlockCondition();
+            var genericInfo = upgradeData.generic[i];
+            var genericUpgrade = Game.Upgrades ? Game.Upgrades[genericInfo.name] : null;
+            if (!genericUpgrade) {
+                continue;
+            }
+
+            var genericShouldUnlock = false;
+            try {
+                if (typeof genericUpgrade.unlockCondition === 'function') {
+                    genericShouldUnlock = !!genericUpgrade.unlockCondition();
+                } else if (typeof genericInfo.unlockCondition === 'function') {
+                    genericShouldUnlock = !!genericInfo.unlockCondition();
                 }
-                // If no unlock condition, keep the upgrade locked
-                // The canBuy() function will handle purchase availability based on money
-                
-                // Check if unlock status changed (the custom getter will handle the actual unlock logic)
-                var isUnlockedNow = Game.Upgrades[upgradeInfo.name].unlocked;
-                if (wasUnlocked != isUnlockedNow) {
-                    uiNeedsRefresh = true;
-                }
-            } else {
-                // Upgrade not found - this is expected for some cases
+            } catch (genericError) {
+                genericShouldUnlock = false;
+            }
+
+            if (applyUnlockState(genericInfo.name, genericShouldUnlock, unlockChanges, 'generic')) {
+                uiNeedsRefresh = true;
             }
         }
-        
+
         // Check kitten upgrade unlock conditions (silent - only unlock if needed)
-        for (var i = 0; i < upgradeData.kitten.length; i++) {
-            var upgradeInfo = upgradeData.kitten[i];
-            
-            if (Game.Upgrades[upgradeInfo.name] && upgradeInfo.unlockCondition) {
-                var wasUnlocked = Game.Upgrades[upgradeInfo.name].unlocked;
-                upgradeInfo.unlockCondition();
-                
-                // Check if unlock status changed (the custom getter will handle the actual unlock logic)
-                var isUnlockedNow = Game.Upgrades[upgradeInfo.name].unlocked;
-                if (wasUnlocked != isUnlockedNow) {
-                    uiNeedsRefresh = true;
+        for (var k = 0; k < upgradeData.kitten.length; k++) {
+            var kittenInfo = upgradeData.kitten[k];
+            var kittenUpgrade = Game.Upgrades ? Game.Upgrades[kittenInfo.name] : null;
+            if (!kittenUpgrade) {
+                continue;
+            }
+
+            var kittenShouldUnlock = false;
+            try {
+                if (typeof kittenUpgrade.unlockCondition === 'function') {
+                    kittenShouldUnlock = !!kittenUpgrade.unlockCondition();
+                } else if (typeof kittenInfo.unlockCondition === 'function') {
+                    kittenShouldUnlock = !!kittenInfo.unlockCondition();
                 }
+            } catch (kittenError) {
+                kittenShouldUnlock = false;
+            }
+
+            if (applyUnlockState(kittenInfo.name, kittenShouldUnlock, unlockChanges, 'kitten')) {
+                uiNeedsRefresh = true;
             }
         }
-        
+
         // Check building upgrade unlock conditions
-        for (var i = 0; i < upgradeData.building.length; i++) {
-            var upgradeInfo = upgradeData.building[i];
-            if (Game.Upgrades[upgradeInfo.name] && upgradeInfo.unlockCondition) {
-                var wasUnlocked = Game.Upgrades[upgradeInfo.name].unlocked;
-                upgradeInfo.unlockCondition();
-                
-                // Check if unlock status changed (the custom getter will handle the actual unlock logic)
-                var isUnlockedNow = Game.Upgrades[upgradeInfo.name].unlocked;
-                if (wasUnlocked != isUnlockedNow) {
-                    uiNeedsRefresh = true;
+        for (var b = 0; b < upgradeData.building.length; b++) {
+            var buildingInfo = upgradeData.building[b];
+            var buildingUpgrade = Game.Upgrades ? Game.Upgrades[buildingInfo.name] : null;
+            if (!buildingUpgrade) {
+                continue;
+            }
+
+            var buildingShouldUnlock = false;
+            try {
+                if (typeof buildingUpgrade.unlockCondition === 'function') {
+                    buildingShouldUnlock = !!buildingUpgrade.unlockCondition();
+                } else if (typeof buildingInfo.unlockCondition === 'function') {
+                    buildingShouldUnlock = !!buildingInfo.unlockCondition();
                 }
+            } catch (buildingError) {
+                buildingShouldUnlock = false;
+            }
+
+            if (applyUnlockState(buildingInfo.name, buildingShouldUnlock, unlockChanges, 'building')) {
+                uiNeedsRefresh = true;
             }
         }
-        
+
         // Check cookie upgrade unlock conditions
         if (upgradeData.cookie && Array.isArray(upgradeData.cookie)) {
-            for (var i = 0; i < upgradeData.cookie.length; i++) {
-                var upgradeInfo = upgradeData.cookie[i];
-                
-                if (Game.Upgrades[upgradeInfo.name]) {
-                    var upgrade = Game.Upgrades[upgradeInfo.name];
-                    var shouldUnlock = false;
-                    
-                    // ONLY set unlockCondition and canBuy functions if they don't exist yet
-                    // This prevents constant overriding and flickering
-                    // Skip cookie upgrades with isBoxUpgrade - they should use vanilla require behavior
-                    if (upgradeInfo.require && !upgrade.unlockCondition && !upgradeInfo.isBoxUpgrade) {
-                        // Force the upgrade to be locked initially (only once)
-                        upgrade.unlocked = 0;
-                        
-                        // Create the unlockCondition function (only once)
-                        upgrade.unlockCondition = function() {
-                            // Check if it's an upgrade requirement first (more specific)
-                            if (Game.Upgrades[upgradeInfo.require]) {
-                                // It's an upgrade requirement - check if owned
-                                return Game.Has(upgradeInfo.require);
-                            } else if (Game.Achievements[upgradeInfo.require]) {
-                                // It's an achievement requirement - check if won
-                                return Game.Achievements[upgradeInfo.require].won;
-                            } else {
-                                // Fallback - assume it's an upgrade and check if owned
-                                return Game.Has(upgradeInfo.require);
+            for (var c = 0; c < upgradeData.cookie.length; c++) {
+                var cookieInfo = upgradeData.cookie[c];
+                var cookieUpgrade = Game.Upgrades ? Game.Upgrades[cookieInfo.name] : null;
+                if (!cookieUpgrade) {
+                    continue;
+                }
+
+                if (cookieInfo.require && !cookieUpgrade.unlockCondition && !cookieInfo.isBoxUpgrade) {
+                    (function(requirementName) {
+                        cookieUpgrade.unlocked = 0;
+                        cookieUpgrade.unlockCondition = function() {
+                            if (Game.Upgrades[requirementName]) {
+                                return Game.Has(requirementName);
+                            } else if (Game.Achievements[requirementName]) {
+                                return Game.Achievements[requirementName].won;
                             }
+                            return Game.Has(requirementName);
                         };
-                        
-                        // Create the canBuy function (only once)
-                        upgrade.canBuy = function() {
-                            // Check if the requirement is met first
+                        cookieUpgrade.canBuy = function() {
                             if (this.unlockCondition && !this.unlockCondition()) {
-                                return false; // Can't buy if requirement not met
+                                return false;
                             }
-                            
-                            // Then check if we have enough money
                             var actualPrice = this.getPrice ? this.getPrice() : this.price;
                             return !this.bought && Game.cookies >= actualPrice;
                         };
+                    })(cookieInfo.require);
+                }
+
+                var cookieShouldUnlock = false;
+                try {
+                    if (typeof cookieUpgrade.unlockCondition === 'function') {
+                        cookieShouldUnlock = !!cookieUpgrade.unlockCondition();
                     }
-                    
-                    // Track unlock status before checking
-                    var wasUnlocked = upgrade.unlocked;
-                    
-                    // Now check if the unlock condition is met (only if unlockCondition exists)
-                    if (upgrade.unlockCondition) {
-                        shouldUnlock = upgrade.unlockCondition();
-                        
-                        // Update the unlock status based on the condition
-                        if (shouldUnlock && upgrade.unlocked != 1) {
-                            upgrade.unlocked = 1;
-                        } else if (!shouldUnlock && upgrade.unlocked == 1) {
-                            upgrade.unlocked = 0;
-                        }
-                    }
-                    
-                    // Check if unlock status changed (the custom getter will handle the actual unlock logic)
-                    var isUnlockedNow = upgrade.unlocked;
-                    if (wasUnlocked != isUnlockedNow) {
-                        uiNeedsRefresh = true;
-                    }
+                } catch (cookieError) {
+                    cookieShouldUnlock = false;
+                }
+
+                if (applyUnlockState(cookieInfo.name, cookieShouldUnlock, unlockChanges, 'cookie')) {
+                    uiNeedsRefresh = true;
                 }
             }
         }
-        
+
         // If any upgrades changed unlock status, trigger UI refresh
         if (uiNeedsRefresh) {
+            logStoreRefresh('checkUpgradeUnlockConditions', unlockChanges);
             Game.storeToRefresh = 1;
             Game.upgradesToRebuild = 1;
             if (Game.UpdateMenu) { Game.UpdateMenu(); }
@@ -10205,17 +10196,10 @@
         // Check unlock conditions for all upgrade types
         checkUpgradeUnlockConditions();
         
-        // Check for upgrades that can be purchased (money-based unlocks)
-        var modUpgradeNames = getModUpgradeNames();
-        modUpgradeNames.forEach(name => {
-            if (Game.Upgrades[name] && !Game.Upgrades[name].require) {
-                // Only auto-unlock upgrades without requirements
-                var actualPrice = Game.Upgrades[name].getPrice ? Game.Upgrades[name].getPrice() : Game.Upgrades[name].price;
-                if (Game.cookies >= actualPrice && !Game.Upgrades[name].unlocked) {
-                    Game.Upgrades[name].unlocked = 1;
-                }
-            }
-        });
+        // REMOVED: Auto-unlock based on price bypasses the unlock condition system
+        // All unlock state changes should ONLY happen through checkUpgradeUnlockConditions()
+        // which properly evaluates each upgrade's unlockCondition function
+        // Price is checked in canBuy(), not in unlock state logic
     } 
     
     // Safety function to ensure upgrade properties are save-compatible
@@ -10406,11 +10390,6 @@
         const saveString = JSON.stringify(modData);
         return saveString;
     }
-    
-
-    
-    
-        
     // Debug function to check tracking variable states
     function checkTrackingVariables() {
         console.log('=== Just Natural Expansion Tracking Variables ===');
@@ -10900,44 +10879,33 @@
                 self.checkAndUnlockAllUpgrades();
             }, 1000);
             
-            // Register the check hook for ongoing upgrade monitoring
-            registerHook('check', function() {
-                self.checkAndUnlockAllUpgrades();
-            }, 'Check and unlock all upgrades based on their requirements');
+            // EVENT-DRIVEN APPROACH: Instead of checking every frame, we check when relevant events occur
+            // This prevents constant store refreshes and icon flashing
             
-            // Hook into the vanilla game's upgrade purchase process to maintain unlock states
-            // This prevents the vanilla game from resetting our carefully managed unlock states
+            // Check when achievements are earned (hooked in markAchievementWon function)
+            // Check when upgrades are purchased (hooked below)
+            // NOTE: Building-count-based unlocks will be checked manually or via cookie clicking
+            // We avoid hooking building purchases to prevent conflicts with vanilla unlock logic
+            
+            // Hook into the vanilla game's upgrade purchase process to check for newly unlockable upgrades
             var originalBuyFunction = Game.Upgrades.__proto__.buy || Game.Upgrades.__proto__.Buy;
             if (originalBuyFunction) {
                 Game.Upgrades.__proto__.buy = function() {
                     // Call the original buy function
                     var result = originalBuyFunction.apply(this, arguments);
                     
-                    // Immediately restore our unlock states after purchase
-                    // This prevents the vanilla game from showing all upgrades as unlocked
+                    // Check unlock states after purchase (some upgrades may now be unlockable)
+                    // Using setTimeout to avoid blocking the purchase
                     setTimeout(function() {
                         self.checkAndUnlockAllUpgrades();
-                    }, 0);
+                    }, 50);
                     
                     return result;
                 };
             }
             
-            // Also hook into the game's store refresh system
-            if (Game.RefreshStore) {
-                var originalRefreshStore = Game.RefreshStore;
-                Game.RefreshStore = function() {
-                    // Call the original refresh function
-                    var result = originalRefreshStore.apply(this, arguments);
-                    
-                    // Immediately restore our unlock states after store refresh
-                    setTimeout(function() {
-                        self.checkAndUnlockAllUpgrades();
-                    }, 0);
-                    
-                    return result;
-                };
-            }
+            // DEBUG: Hook into vanilla store rebuild function to track timing
+            // Vanilla logging hooks temporarily disabled (too noisy)
         },
   
         // save() is called automatically by the game when saving
@@ -11235,8 +11203,16 @@
                         }
                     }
                     
+                    // Suppress CPS recalculation during upgrade recreation to prevent spikes
+                    var previousRecalculateGains = Game.recalculateGains;
+                    Game.recalculateGains = 0;
+                    
                     // SIMPLE RULE: Delete everything and recreate from save data only
                     recreateUpgradesFromSaveOnly();
+                    
+                    // Restore recalculate flag and force one clean calculation after everything is stable
+                    Game.recalculateGains = previousRecalculateGains;
+                    if (Game.CalculateGains) { Game.CalculateGains(); }
                     
                     // Trigger initialization with a small delay to ensure save data is stable
                     setTimeout(() => {
@@ -11306,6 +11282,20 @@
         },
 
         checkAndUnlockAllUpgrades: function() {
+            // THROTTLING: Prevent this from running too frequently to avoid store flashing
+            var now = Date.now();
+            if (this._lastUnlockCheck && (now - this._lastUnlockCheck) < 500) {
+                return; // Skip if called within last 500ms
+            }
+            this._lastUnlockCheck = now;
+            
+            // CRITICAL: Only check MOD upgrades, never touch vanilla upgrades
+            // Get the list of all mod upgrade names to ensure we only affect our own upgrades
+            var modUpgradeNamesList = getModUpgradeNames();
+            var modUpgradeNamesSet = {};
+            for (var idx = 0; idx < modUpgradeNamesList.length; idx++) {
+                modUpgradeNamesSet[modUpgradeNamesList[idx]] = true;
+            }
             
             // Check Order upgrades first (they have special logic)
             var orderUpgrades = [
@@ -11318,69 +11308,69 @@
             ];
             
             var unlockChanged = false;
+            var unlockChanges = [];
             
             // Check Order upgrades
             for (var i = 0; i < orderUpgrades.length; i++) {
                 var upgradeName = orderUpgrades[i];
-                var upgrade = Game.Upgrades[upgradeName];
+                var upgrade = Game.Upgrades ? Game.Upgrades[upgradeName] : null;
                 
-                if (!upgrade || !upgrade.unlockCondition) {
+                // SAFETY: Ensure this is actually a mod upgrade
+                if (!upgrade || !modUpgradeNamesSet[upgradeName]) {
                     continue;
                 }
                 
+                if (typeof upgrade.unlockCondition !== 'function') {
+                    continue;
+                }
+
+                var orderShouldUnlock = false;
                 try {
-                    var shouldUnlock = upgrade.unlockCondition();
-                    var currentlyUnlocked = upgrade.unlocked;
-                    
-                    if (shouldUnlock && currentlyUnlocked != 1) {
-                        upgrade.unlocked = 1;
-                        unlockChanged = true;
-                    } else if (!shouldUnlock && currentlyUnlocked == 1) {
-                        // Lock the upgrade if it no longer meets requirements
-                        upgrade.unlocked = 0;
-                        unlockChanged = true;
-                    }
-                } catch (error) {
-                    // Silently continue if there's an error
+                    orderShouldUnlock = !!upgrade.unlockCondition();
+                } catch (orderError) {
+                    orderShouldUnlock = false;
+                }
+
+                if (applyUnlockState(upgradeName, orderShouldUnlock, unlockChanges, 'order')) {
+                    unlockChanged = true;
                 }
             }
             
             // Check all other upgrades with unlock conditions
-            var allUpgradeNames = getModUpgradeNames();
-            
-            for (var i = 0; i < allUpgradeNames.length; i++) {
-                var upgradeName = allUpgradeNames[i];
-                var upgrade = Game.Upgrades[upgradeName];
-                
+            for (var i = 0; i < modUpgradeNamesList.length; i++) {
+                var upgradeName = modUpgradeNamesList[i];
+                var upgrade = Game.Upgrades ? Game.Upgrades[upgradeName] : null;
+
                 // Skip Order upgrades (already handled above)
-                if (upgradeName.startsWith('Order of the ')) {
+                if (!upgrade || upgradeName.startsWith('Order of the ')) {
                     continue;
                 }
                 
-                if (!upgrade || !upgrade.unlockCondition) {
+                // SAFETY: Double-check this is a mod upgrade (should always be true here)
+                if (!modUpgradeNamesSet[upgradeName]) {
                     continue;
                 }
-                
+
+                if (typeof upgrade.unlockCondition !== 'function') {
+                    continue;
+                }
+
+                var shouldUnlockUpgrade = false;
                 try {
-                    var shouldUnlock = upgrade.unlockCondition();
-                    var currentlyUnlocked = upgrade.unlocked;
-                    
-                    if (shouldUnlock && currentlyUnlocked != 1) {
-                        upgrade.unlocked = 1;
-                        unlockChanged = true;
-                    } else if (!shouldUnlock && currentlyUnlocked == 1) {
-                        // Lock the upgrade if it no longer meets requirements
-                        upgrade.unlocked = 0;
-                        unlockChanged = true;
-                    }
-                } catch (error) {
-                    // Silently continue if there's an error
+                    shouldUnlockUpgrade = !!upgrade.unlockCondition();
+                } catch (upgradeError) {
+                    shouldUnlockUpgrade = false;
+                }
+
+                if (applyUnlockState(upgradeName, shouldUnlockUpgrade, unlockChanges, 'upgrade')) {
+                    unlockChanged = true;
                 }
             }
             
-            // Refresh store only when upgrades are newly unlocked or locked
-            // This prevents unnecessary store refreshes when no changes occur
+            // Refresh store ONLY when upgrades actually changed unlock state
+            // This prevents unnecessary store refreshes and icon flashing
             if (unlockChanged) {
+                logStoreRefresh('checkAndUnlockAllUpgrades', unlockChanges);
                 Game.storeToRefresh = 1;
                 if (Game.RebuildUpgrades) {
                     Game.RebuildUpgrades();
@@ -11388,8 +11378,6 @@
             }
         }
     });
-    
-
     
     // Initialize achievements and other mod features
     function initAchievements() {
@@ -12195,34 +12183,13 @@
             if (Game.Achievements[achievementName] && !Game.Achievements[achievementName].won) {
                 markAchievementWon(achievementName);
                 
-                        // Force upgrade check after earning The Final Challenger
-        setTimeout(function() {
-            // Force our upgrades to be recognized by the vanilla game
-            var orderUpgrades = [
-                'Order of the Golden Crumb',
-                'Order of the Impossible Batch', 
-                'Order of the Shining Spoon',
-                'Order of the Cookie Eclipse',
-                'Order of the Enchanted Whisk',
-                'Order of the Eternal Cookie'
-            ];
-            
-            for (var i = 0; i < orderUpgrades.length; i++) {
-                var upgradeName = orderUpgrades[i];
-                var upgrade = Game.Upgrades[upgradeName];
-                if (upgrade && upgrade.unlockCondition) {
-                    // Force the upgrade to check its unlock condition
-                    var shouldUnlock = upgrade.unlockCondition();
-                    if (shouldUnlock && upgrade.unlocked !== 1) {
-                        upgrade.unlocked = 1;
+                // Check upgrades after earning The Final Challenger
+                // Using centralized function to prevent redundant refreshes
+                setTimeout(function() {
+                    if (typeof mod !== 'undefined' && mod.saveSystem && typeof mod.saveSystem.checkAndUnlockAllUpgrades === 'function') {
+                        mod.saveSystem.checkAndUnlockAllUpgrades();
                     }
-                }
-            }
-            
-            if (Game.CheckUpgrades) Game.CheckUpgrades();
-            if (Game.updateUpgradesMenu) Game.updateUpgradesMenu();
-            if (Game.RebuildStore) Game.RebuildStore();
-        }, 100);
+                }, 100);
             }
         }
     }
@@ -12410,6 +12377,17 @@
     
     // Ensure event system is available for any integrations
     ensureEventSystem();
+    
+    function attemptLumpPatch() {
+        if (!Game || !Game.loadLumps || !Game.harvestLumps || !Game.clickLump) return false;
+        applyLumpDiscrepancyPatch();
+        return true;
+    }
+
+    attemptLumpPatch();
+    setTimeout(function() {
+        if (!attemptLumpPatch()) setTimeout(attemptLumpPatch, 1000);
+    }, 100);
     
     // Expose basic mod info for integrations
     if (typeof Game !== 'undefined') {
