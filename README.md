@@ -182,7 +182,7 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 | <img src="assets/generated-icons/SheetVanilla1814.png" alt="Kitten jamboree" width="24" height="24"> | **Kitten jamboree** | Own all **18 original kittens** |
 | <img src="assets/generated-icons/SheetVanilla1813.png" alt="Kitten Fiesta" width="24" height="24"> | **Kitten Fiesta** | Own all **18 original kittens** and all **11 expansion kittens** at once |
 | <img src="assets/generated-icons/SheetCustom1913.png" alt="Bearer of the Cookie Sigil" width="24" height="24"> | **Bearer of the Cookie Sigil** | Fully initiate into the Great Orders of the Cookie Age. Provides **25% faster research** and **10% more random drops** (See Upgrades Section for More Info) |
-| <img src="assets/generated-icons/SheetCustom1705.png" alt="In the Shadows" width="24" height="24"> | **In the Shadows** | Unlock all vanilla shadow achievements, except that one. |
+| <img src="assets/generated-icons/SheetVanilla1705.png" alt="In the Shadows" width="24" height="24"> | **In the Shadows** | Unlock all vanilla shadow achievements, except that one. |
 - See also **The Final Challenger**
 
 ### Combo Achievements (7 achievements)
@@ -421,7 +421,7 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 | <img src="assets/generated-icons/SheetCustom1308.png" alt="Number go up economics" width="24" height="24"> | **Number go up economics** | Own **1,150 banks** |
 | <img src="assets/generated-icons/SheetCustom1309.png" alt="Sovereign cookie fund" width="24" height="24"> | **Sovereign cookie fund** | Own **1,200 banks** |
 | <img src="assets/generated-icons/SheetCustom1310.png" alt="Seigniorage supreme" width="24" height="24"> | **Seigniorage supreme** | Own **1,250 banks** |
-|  | **compounded** | Make **1 quindecillion cookies** just from banks |
+| <img src="assets/generated-icons/SheetCustom1521.png" alt="Compound interest, compounded" width="24" height="24"> | **Compound interest, compounded** | Make **1 quindecillion cookies** just from banks |
 | <img src="assets/generated-icons/SheetCustom1522.png" alt="Arbitrage avalanche" width="24" height="24"> | **Arbitrage avalanche** | Make **1 sexdecillion cookies** just from banks |
 | <img src="assets/generated-icons/SheetCustom1523.png" alt="Ponzi à la mode" width="24" height="24"> | **Ponzi à la mode** | Make **1 septendecillion cookies** just from banks |
 | <img src="assets/generated-icons/SheetCustom1119.png" alt="Credit conjurer" width="24" height="24"> | **Credit conjurer** | Reach **level 15** Banks |
@@ -541,8 +541,8 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 | <img src="assets/generated-icons/SheetCustom0808.png" alt="Entropy-proof frosting" width="24" height="24"> | **Entropy-proof frosting** | Own **1,150 time machines** |
 | <img src="assets/generated-icons/SheetCustom0809.png" alt="Past the last tick" width="24" height="24"> | **Past the last tick** | Own **1,200 time machines** |
 | <img src="assets/generated-icons/SheetCustom0810.png" alt="Emperor of when" width="24" height="24"> | **Emperor of when** | Own **1,250 time machines** |
-|  | **Past Tense** | Make **1 septendecillion cookies** just from time machines |
-|  | **Infinite Loot** | Make **1 octodecillion cookies** just from time machines |
+| <img src="assets/generated-icons/SheetCustom0821.png" alt="Future Profits, Past Tense" width="24" height="24"> | **Future Profits, Past Tense** | Make **1 septendecillion cookies** just from time machines |
+| <img src="assets/generated-icons/SheetCustom0822.png" alt="Infinite Loop, Infinite Loot" width="24" height="24"> | **Infinite Loop, Infinite Loot** | Make **1 octodecillion cookies** just from time machines |
 | <img src="assets/generated-icons/SheetCustom0823.png" alt="Back Pay from the Big Bang" width="24" height="24"> | **Back Pay from the Big Bang** | Make **1 novemdecillion cookies** just from time machines |
 | <img src="assets/generated-icons/SheetCustom0819.png" alt="Minute handler" width="24" height="24"> | **Minute handler** | Reach **level 15** Time Machines |
 | <img src="assets/generated-icons/SheetCustom0820.png" alt="Chronarch supreme" width="24" height="24"> | **Chronarch supreme** | Reach **level 20** Time Machines |
@@ -554,10 +554,10 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 | <img src="assets/generated-icons/SheetCustom1101.png" alt="Boson buddies" width="24" height="24"> | **Boson buddies** | Own **800 antimatter condensers** |
 | <img src="assets/generated-icons/SheetCustom1102.png" alt="Schrödinger's snack" width="24" height="24"> | **Schrödinger's snack** | Own **850 antimatter condensers** |
 | <img src="assets/generated-icons/SheetCustom1103.png" alt="Quantum foam party" width="24" height="24"> | **Quantum foam party** | Own **900 antimatter condensers** |
-|  | **Twenty years away** | Own **always) (950 antimatter condensers** |
+| <img src="assets/generated-icons/SheetCustom1104.png" alt="Twenty years away (always)" width="24" height="24"> | **Twenty years away (always)** | Own **950 antimatter condensers** |
 | <img src="assets/generated-icons/SheetCustom1105.png" alt="Higgs and kisses" width="24" height="24"> | **Higgs and kisses** | Own **1,000 antimatter condensers** |
 | <img src="assets/generated-icons/SheetCustom1106.png" alt="Zero-point frosting" width="24" height="24"> | **Zero-point frosting** | Own **1,050 antimatter condensers** |
-|  | **Some like it dark** | Own **matter) (1,100 antimatter condensers** |
+| <img src="assets/generated-icons/SheetCustom1107.png" alt="Some like it dark (matter)" width="24" height="24"> | **Some like it dark (matter)** | Own **1,100 antimatter condensers** |
 | <img src="assets/generated-icons/SheetCustom1108.png" alt="Vacuum energy bar" width="24" height="24"> | **Vacuum energy bar** | Own **1,150 antimatter condensers** |
 | <img src="assets/generated-icons/SheetCustom1109.png" alt="Singularity of flavor" width="24" height="24"> | **Singularity of flavor** | Own **1,200 antimatter condensers** |
 | <img src="assets/generated-icons/SheetCustom1110.png" alt="Emperor of mass" width="24" height="24"> | **Emperor of mass** | Own **1,250 antimatter condensers** |
@@ -631,10 +631,10 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 | Icon | Achievement | Requirement |
 | --- | --- | --- |
 | <img src="assets/generated-icons/SheetCustom1900.png" alt="F12, open sesame" width="24" height="24"> | **F12, open sesame** | Own **750 javascript consoles** |
-|  | **console.log** | Own **'crumbs') (800 javascript consoles** |
+| <img src="assets/generated-icons/SheetCustom1901.png" alt="console.log('crumbs')" width="24" height="24"> | **console.log('crumbs')** | Own **800 javascript consoles** |
 | <img src="assets/generated-icons/SheetCustom1902.png" alt="Semicolons optional, sprinkles mandatory" width="24" height="24"> | **Semicolons optional, sprinkles mandatory** | Own **850 javascript consoles** |
-|  | **Undefined is not a function** | Own **nor a cookie) (900 javascript consoles** |
-| <img src="assets/generated-icons/SheetCustom1904.png" alt="await fresh_from_oven" width="24" height="24"> | **await fresh_from_oven** | Own **) (950 javascript consoles** |
+| <img src="assets/generated-icons/SheetCustom1903.png" alt="Undefined is not a function (nor a cookie)" width="24" height="24"> | **Undefined is not a function (nor a cookie)** | Own **900 javascript consoles** |
+| <img src="assets/generated-icons/SheetCustom1904.png" alt="await fresh_from_oven()" width="24" height="24"> | **await fresh_from_oven()** | Own **950 javascript consoles** |
 | <img src="assets/generated-icons/SheetCustom1905.png" alt="Event loop-de-loop" width="24" height="24"> | **Event loop-de-loop** | Own **1,000 javascript consoles** |
 | <img src="assets/generated-icons/SheetCustom1906.png" alt="Regexorcism" width="24" height="24"> | **Regexorcism** | Own **1,050 javascript consoles** |
 | <img src="assets/generated-icons/SheetCustom1907.png" alt="Infinite scroll of dough" width="24" height="24"> | **Infinite scroll of dough** | Own **1,100 javascript consoles** |
@@ -731,9 +731,9 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 | <img src="assets/generated-icons/SheetCustom1602.png" alt="Kitten remote workers" width="24" height="24"> | **Kitten remote workers** | - Requires 600 achievements | **900 octodecillion cookies** | Provides small production bonus |
 | <img src="assets/generated-icons/SheetCustom1603.png" alt="Kitten scrum masters" width="24" height="24"> | **Kitten scrum masters** | - Requires 650 achievements | **900 novemdecillion cookies** | Provides small production bonus |
 | <img src="assets/generated-icons/SheetCustom1604.png" alt="Kitten UX designers" width="24" height="24"> | **Kitten UX designers** | - Requires 700 achievements | **900 vigintillion cookies** | Provides small production bonus |
-| <img src="assets/generated-icons/SheetCustom1605.png" alt="Kitten janitors" width="24" height="24"> | **Kitten janitors** | - Requires 750 achievements | **900 unvigintillion cookies** | Provides small production bonus |
-| <img src="assets/generated-icons/SheetCustom1606.png" alt="Kitten coffee fetchers" width="24" height="24"> | **Kitten coffee fetchers** | - Requires 800 achievements | **900 duovigintillion cookies** | Provides small production bonus |
-| <img src="assets/generated-icons/SheetCustom1607.png" alt="Kitten personal assistants" width="24" height="24"> | **Kitten personal assistants** | - Requires 850 achievements | **900 trevigintillion cookies** | Provides small production bonus |
+| <img src="assets/generated-icons/SheetCustom1008.png" alt="Kitten janitors" width="24" height="24"> | **Kitten janitors** | - Requires 750 achievements | **900 unvigintillion cookies** | Provides small production bonus |
+| <img src="assets/generated-icons/SheetCustom1009.png" alt="Kitten coffee fetchers" width="24" height="24"> | **Kitten coffee fetchers** | - Requires 800 achievements | **900 duovigintillion cookies** | Provides small production bonus |
+| <img src="assets/generated-icons/SheetCustom1010.png" alt="Kitten personal assistants" width="24" height="24"> | **Kitten personal assistants** | - Requires 850 achievements | **900 trevigintillion cookies** | Provides small production bonus |
 | <img src="assets/generated-icons/SheetCustom1608.png" alt="Kitten vice presidents" width="24" height="24"> | **Kitten vice presidents** | - Requires 900 achievements | **900 quattuorvigintillion cookies** | Provides small production bonus |
 | <img src="assets/generated-icons/SheetCustom1609.png" alt="Kitten board members" width="24" height="24"> | **Kitten board members** | - Requires 950 achievements | **900 quinvigintillion cookies** | Provides small production bonus |
 | <img src="assets/generated-icons/SheetCustom1610.png" alt="Kitten founders" width="24" height="24"> | **Kitten founders** | - Requires 1000 achievements | **900 sexvigintillion cookies** | Provides small production bonus |
