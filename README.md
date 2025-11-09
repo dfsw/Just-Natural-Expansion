@@ -85,990 +85,5040 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 *Note: Yes, these challenges are all doable, and no, none of them are absurdly impossible (No [ECM Style](https://lookas123.github.io/ECM/) Here). But don’t expect a free ride. These achievements will not hold your hand, and they will not go easy on you. Think of them less as a grind and more as puzzles that demand clever planning, precise timing, and maybe a lucky cookie or a well-placed upgrade. This is late-game content meant to extend your playtime, not something to finish in a single week.*
 
 ##### Requires Born Again Mode
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetVanilla1306.png" alt="Hardercorest" width="48" height="48"> | **Hardercorest** | Bake **3 billion cookies** with no cookie clicks and no upgrades bought in Born Again mode |
-| <img src="assets/generated-icons/SheetVanilla1406.png" alt="Hardercorest-er" width="48" height="48"> | **Hardercorest-er** | Bake **1 billion cookies** with no more than 20 clicks, no more than 20 buildings (no selling), and no more than 20 upgrades in Born Again mode |
-| <img src="assets/generated-icons/SheetVanilla1307.png" alt="The Final Countdown" width="48" height="48"> | **The Final Countdown** | Own exactly 15 Cursors, 14 Grandmas, 13 Farms, yada yada yada, down to 1 Chancemaker. No selling or sacrificing any buildings. Must be earned in Born Again mode. See [Changelog](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#version-0011) for Version 0.0.11 for more info. |
-| <img src="assets/generated-icons/SheetVanilla1407.png" alt="Really more of a dog person" width="48" height="48"> | **Really more of a dog person** | Bake **1 billion cookies per second** without buying any kitten upgrades in Born Again mode |
-| <img src="assets/generated-icons/SheetCustom2309.png" alt="Gilded Restraint" width="48" height="48"> | **Gilded Restraint** | Bake **1 trillion cookies** without ever clicking a golden cookie, must be done in Born Again mode |
-| <img src="assets/generated-icons/SheetCustom2310.png" alt="Back to Basic Bakers" width="48" height="48"> | **Back to Basic Bakers** | Reach **1 million cookies per second** using only Cursors and Grandmas (no other buildings), must be done in Born Again mode |
-| <img src="assets/generated-icons/SheetCustom2311.png" alt="Modest Portfolio" width="48" height="48"> | **Modest Portfolio** | Reach **1 quadrillion cookies** without ever owning more than 10 of any building type (no selling), must be done in Born Again mode |
-| <img src="assets/generated-icons/SheetCustom2303.png" alt="Difficult Decisions" width="48" height="48"> | **Difficult Decisions** | Bake **1 billion cookies** without ever having more than **25 combined upgrades or buildings** at any given time, must be done in Born Again mode |
-| <img src="assets/generated-icons/SheetCustom2304.png" alt="Laid in Plain Sight" width="48" height="48"> | **Laid in Plain Sight** | Bake **10 cookies per second** without purchasing any buildings, must be done in Born Again mode |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement Name</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla1306.png"><img src="./assets/generated-icons/SheetVanilla1306.png" alt="Hardercorest" width="48" height="48"></a></td>
+<td><strong>Hardercorest</strong></td>
+<td>Bake <strong>3 billion cookies</strong> with no cookie clicks and no upgrades bought in Born Again mode</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla1406.png"><img src="./assets/generated-icons/SheetVanilla1406.png" alt="Hardercorest-er" width="48" height="48"></a></td>
+<td><strong>Hardercorest-er</strong></td>
+<td>Bake <strong>1 billion cookies</strong> with no more than 20 clicks, no more than 20 buildings (no selling), and no more than 20 upgrades in Born Again mode</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla1307.png"><img src="./assets/generated-icons/SheetVanilla1307.png" alt="The Final Countdown" width="48" height="48"></a></td>
+<td><strong>The Final Countdown</strong></td>
+<td>Own exactly 15 Cursors, 14 Grandmas, 13 Farms, yada yada yada, down to 1 Chancemaker. No selling or sacrificing any buildings. Must be earned in Born Again mode. See <a href="https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#version-0011">Changelog</a> for Version 0.0.11 for more info.</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla1407.png"><img src="./assets/generated-icons/SheetVanilla1407.png" alt="Really more of a dog person" width="48" height="48"></a></td>
+<td><strong>Really more of a dog person</strong></td>
+<td>Bake <strong>1 billion cookies per second</strong> without buying any kitten upgrades in Born Again mode</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2309.png"><img src="./assets/generated-icons/SheetCustom2309.png" alt="Gilded Restraint" width="48" height="48"></a></td>
+<td><strong>Gilded Restraint</strong></td>
+<td>Bake <strong>1 trillion cookies</strong> without ever clicking a golden cookie, must be done in Born Again mode</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2310.png"><img src="./assets/generated-icons/SheetCustom2310.png" alt="Back to Basic Bakers" width="48" height="48"></a></td>
+<td><strong>Back to Basic Bakers</strong></td>
+<td>Reach <strong>1 million cookies per second</strong> using only Cursors and Grandmas (no other buildings), must be done in Born Again mode</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2311.png"><img src="./assets/generated-icons/SheetCustom2311.png" alt="Modest Portfolio" width="48" height="48"></a></td>
+<td><strong>Modest Portfolio</strong></td>
+<td>Reach <strong>1 quadrillion cookies</strong> without ever owning more than 10 of any building type (no selling), must be done in Born Again mode</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2303.png"><img src="./assets/generated-icons/SheetCustom2303.png" alt="Difficult Decisions" width="48" height="48"></a></td>
+<td><strong>Difficult Decisions</strong></td>
+<td>Bake <strong>1 billion cookies</strong> without ever having more than <strong>25 combined upgrades or buildings</strong> at any given time, must be done in Born Again mode</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2304.png"><img src="./assets/generated-icons/SheetCustom2304.png" alt="Laid in Plain Sight" width="48" height="48"></a></td>
+<td><strong>Laid in Plain Sight</strong></td>
+<td>Bake <strong>10 cookies per second</strong> without purchasing any buildings, must be done in Born Again mode</td>
+</tr>
+</tbody>
+</table>
+
 
 ##### Can Be Done In Any Mode
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetVanilla2515.png" alt="I feel the need for seed" width="48" height="48"> | **I feel the need for seed** | Unlock all garden seeds within **5 days** of your last garden sacrifice. Look this one is tricky, if you reload or load a save the 5 day timer is invalidated, so you cant load in a completed garden. |
-| <img src="assets/generated-icons/SheetVanilla1804.png" alt="Holiday Hoover" width="48" height="48"> | **Holiday Hoover** | Collect all seasonal drops within **60 minutes** of an Ascension start |
-| <img src="assets/generated-icons/SheetVanilla1709.png" alt="Merry Mayhem" width="48" height="48"> | **Merry Mayhem** | Collect all seasonal drops within **40 minutes** of an Ascension start |
-| <img src="assets/generated-icons/SheetCustom0009.png" alt="Second Life, First Click" width="48" height="48"> | **Second Life, First Click** | Click a golden cookie within **120 seconds** of ascending |
-| <img src="assets/generated-icons/SheetVanilla1207.png" alt="We dont need no heavenly chips" width="48" height="48"> | **We dont need no heavenly chips** | Own at least **333 of every building type**, without owning the 'Heavenly chip secret' upgrade |
-| <img src="assets/generated-icons/SheetCustom2305.png" alt="Precision Nerd" width="48" height="48"> | **Precision Nerd** | Have exactly **1,234,567,890 cookies** in your bank and hold it for **60 seconds** |
-| <img src="assets/generated-icons/SheetCustom2312.png" alt="Treading water" width="48" height="48"> | **Treading water** | Have a CPS of 0 while owning more than 1000 buildings with no active buffs or debuffs |
-| <img src="assets/generated-icons/SheetCustom2314.png" alt="Bouncing the last cheque" width="48" height="48"> | **Bouncing the last cheque** | Reach less than 10 cookies in your bank after having at least 1 million cookies |
-| <img src="assets/generated-icons/SheetCustom2313.png" alt="Massive Inheritance" width="48" height="48"> | **Massive Inheritance** | Have a bank of at least **1 Novemdecillion cookies** within 10 minutes of ascending |
-| <img src="assets/generated-icons/SheetCustom1412.png" alt="The Final Challenger" width="48" height="48"> | **The Final Challenger** | Win **10** of the Just Natural Expansion **Challenge Achievements** |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement Name</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2515.png"><img src="./assets/generated-icons/SheetVanilla2515.png" alt="I feel the need for seed" width="48" height="48"></a></td>
+<td><strong>I feel the need for seed</strong></td>
+<td>Unlock all garden seeds within <strong>5 days</strong> of your last garden sacrifice. Look this one is tricky, if you reload or load a save the 5 day timer is invalidated, so you cant load in a completed garden.</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla1804.png"><img src="./assets/generated-icons/SheetVanilla1804.png" alt="Holiday Hoover" width="48" height="48"></a></td>
+<td><strong>Holiday Hoover</strong></td>
+<td>Collect all seasonal drops within <strong>60 minutes</strong> of an Ascension start</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla1709.png"><img src="./assets/generated-icons/SheetVanilla1709.png" alt="Merry Mayhem" width="48" height="48"></a></td>
+<td><strong>Merry Mayhem</strong></td>
+<td>Collect all seasonal drops within <strong>40 minutes</strong> of an Ascension start</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0009.png"><img src="./assets/generated-icons/SheetCustom0009.png" alt="Second Life, First Click" width="48" height="48"></a></td>
+<td><strong>Second Life, First Click</strong></td>
+<td>Click a golden cookie within <strong>120 seconds</strong> of ascending</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla1207.png"><img src="./assets/generated-icons/SheetVanilla1207.png" alt="We dont need no heavenly chips" width="48" height="48"></a></td>
+<td><strong>We dont need no heavenly chips</strong></td>
+<td>Own at least <strong>333 of every building type</strong>, without owning the 'Heavenly chip secret' upgrade</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2305.png"><img src="./assets/generated-icons/SheetCustom2305.png" alt="Precision Nerd" width="48" height="48"></a></td>
+<td><strong>Precision Nerd</strong></td>
+<td>Have exactly <strong>1,234,567,890 cookies</strong> in your bank and hold it for <strong>60 seconds</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2312.png"><img src="./assets/generated-icons/SheetCustom2312.png" alt="Treading water" width="48" height="48"></a></td>
+<td><strong>Treading water</strong></td>
+<td>Have a CPS of 0 while owning more than 1000 buildings with no active buffs or debuffs</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2314.png"><img src="./assets/generated-icons/SheetCustom2314.png" alt="Bouncing the last cheque" width="48" height="48"></a></td>
+<td><strong>Bouncing the last cheque</strong></td>
+<td>Reach less than 10 cookies in your bank after having at least 1 million cookies</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2313.png"><img src="./assets/generated-icons/SheetCustom2313.png" alt="Massive Inheritance" width="48" height="48"></a></td>
+<td><strong>Massive Inheritance</strong></td>
+<td>Have a bank of at least <strong>1 Novemdecillion cookies</strong> within 10 minutes of ascending</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1412.png"><img src="./assets/generated-icons/SheetCustom1412.png" alt="The Final Challenger" width="48" height="48"></a></td>
+<td><strong>The Final Challenger</strong></td>
+<td>Win <strong>10</strong> of the Just Natural Expansion <strong>Challenge Achievements</strong></td>
+</tr>
+</tbody>
+</table>
+
 
 ### Minigame Achievements (29 achievements)
 
 #### Stock Market
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetVanilla1706.png" alt="Doughfolio Debut" width="48" height="48"> | **Doughfolio Debut** | Have **$25 million** in stock market profits across all ascensions |
-| <img src="assets/generated-icons/SheetVanilla2607.png" alt="Crumb Fund Manager" width="48" height="48"> | **Crumb Fund Manager** | Have **$100 million** in stock market profits across all ascensions |
-| <img src="assets/generated-icons/SheetVanilla3333.png" alt="Biscuit Market Baron" width="48" height="48"> | **Biscuit Market Baron** | Have **$250 million** in stock market profits across all ascensions |
-| <img src="assets/generated-icons/SheetVanilla2829.png" alt="Fortune Cookie Tycoon" width="48" height="48"> | **Fortune Cookie Tycoon** | Have **$500 million** in stock market profits across all ascensions |
-| <img src="assets/generated-icons/SheetVanilla3108.png" alt="Dough Jones Legend" width="48" height="48"> | **Dough Jones Legend** | Have **$1 billion** in stock market profits across all ascensions |
-| <img src="assets/generated-icons/SheetVanilla1508.png" alt="The Dough Jones Plunge" width="48" height="48"> | **The Dough Jones Plunge** | Have **$1 million** in stock market losses in one ascension |
-| <img src="assets/generated-icons/SheetCustom2301.png" alt="Broiler room" width="48" height="48"> | **Broiler room** | Hire at least **100** stockbrokers in the Stock Market |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement Name</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla1706.png"><img src="./assets/generated-icons/SheetVanilla1706.png" alt="Doughfolio Debut" width="48" height="48"></a></td>
+<td><strong>Doughfolio Debut</strong></td>
+<td>Have <strong>$25 million</strong> in stock market profits across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2607.png"><img src="./assets/generated-icons/SheetVanilla2607.png" alt="Crumb Fund Manager" width="48" height="48"></a></td>
+<td><strong>Crumb Fund Manager</strong></td>
+<td>Have <strong>$100 million</strong> in stock market profits across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla3333.png"><img src="./assets/generated-icons/SheetVanilla3333.png" alt="Biscuit Market Baron" width="48" height="48"></a></td>
+<td><strong>Biscuit Market Baron</strong></td>
+<td>Have <strong>$250 million</strong> in stock market profits across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2829.png"><img src="./assets/generated-icons/SheetVanilla2829.png" alt="Fortune Cookie Tycoon" width="48" height="48"></a></td>
+<td><strong>Fortune Cookie Tycoon</strong></td>
+<td>Have <strong>$500 million</strong> in stock market profits across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla3108.png"><img src="./assets/generated-icons/SheetVanilla3108.png" alt="Dough Jones Legend" width="48" height="48"></a></td>
+<td><strong>Dough Jones Legend</strong></td>
+<td>Have <strong>$1 billion</strong> in stock market profits across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla1508.png"><img src="./assets/generated-icons/SheetVanilla1508.png" alt="The Dough Jones Plunge" width="48" height="48"></a></td>
+<td><strong>The Dough Jones Plunge</strong></td>
+<td>Have <strong>$1 million</strong> in stock market losses in one ascension</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2301.png"><img src="./assets/generated-icons/SheetCustom2301.png" alt="Broiler room" width="48" height="48"></a></td>
+<td><strong>Broiler room</strong></td>
+<td>Hire at least <strong>100</strong> stockbrokers in the Stock Market</td>
+</tr>
+</tbody>
+</table>
+
 
 #### Garden
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetGarden0034.png" alt="Seedless to eternity" width="48" height="48"> | **Seedless to eternity** | Convert a complete seed log into sugar lumps by sacrificing your garden to the sugar hornets **5 times** |
-| <img src="assets/generated-icons/SheetGarden0134.png" alt="Seedless to infinity" width="48" height="48"> | **Seedless to infinity** | Convert a complete seed log into sugar lumps by sacrificing your garden to the sugar hornets **10 times** |
-| <img src="assets/generated-icons/SheetGarden0234.png" alt="Seedless to beyond" width="48" height="48"> | **Seedless to beyond** | Convert a complete seed log into sugar lumps by sacrificing your garden to the sugar hornets **25 times** |
-| <img src="assets/generated-icons/SheetGarden0402.png" alt="Greener, aching thumb" width="48" height="48"> | **Greener, aching thumb** | Harvest **2,000 mature garden plants** across all ascensions |
-| <img src="assets/generated-icons/SheetGarden0410.png" alt="Greenest, aching thumb" width="48" height="48"> | **Greenest, aching thumb** | Harvest **3,000 mature garden plants** across all ascensions |
-| <img src="assets/generated-icons/SheetGarden0417.png" alt="Photosynthetic prodigy" width="48" height="48"> | **Photosynthetic prodigy** | Harvest **5,000 mature garden plants** across all ascensions |
-| <img src="assets/generated-icons/SheetGarden0418.png" alt="Garden master" width="48" height="48"> | **Garden master** | Harvest **7,500 mature garden plants** across all ascensions |
-| <img src="assets/generated-icons/SheetGarden0419.png" alt="Plant whisperer" width="48" height="48"> | **Plant whisperer** | Harvest **10,000 mature garden plants** across all ascensions |
-| <img src="assets/generated-icons/SheetVanilla2715.png" alt="Botanical Perfection" width="48" height="48"> | **Botanical Perfection** | Have one of every type of plant in the mature stage at once |
-| <img src="assets/generated-icons/SheetGarden0019.png" alt="Duketater Salad" width="48" height="48"> | **Duketater Salad** | Harvest **12 mature Duketaters** simultaneously |
-| <img src="assets/generated-icons/SheetGarden0334.png" alt="Fifty Shades of Clay" width="48" height="48"> | **Fifty Shades of Clay** | Change the soil type of your Garden **100 times** in one ascension |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement Name</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetGarden0034.png"><img src="./assets/generated-icons/SheetGarden0034.png" alt="Seedless to eternity" width="48" height="48"></a></td>
+<td><strong>Seedless to eternity</strong></td>
+<td>Convert a complete seed log into sugar lumps by sacrificing your garden to the sugar hornets <strong>5 times</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetGarden0134.png"><img src="./assets/generated-icons/SheetGarden0134.png" alt="Seedless to infinity" width="48" height="48"></a></td>
+<td><strong>Seedless to infinity</strong></td>
+<td>Convert a complete seed log into sugar lumps by sacrificing your garden to the sugar hornets <strong>10 times</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetGarden0234.png"><img src="./assets/generated-icons/SheetGarden0234.png" alt="Seedless to beyond" width="48" height="48"></a></td>
+<td><strong>Seedless to beyond</strong></td>
+<td>Convert a complete seed log into sugar lumps by sacrificing your garden to the sugar hornets <strong>25 times</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetGarden0402.png"><img src="./assets/generated-icons/SheetGarden0402.png" alt="Greener, aching thumb" width="48" height="48"></a></td>
+<td><strong>Greener, aching thumb</strong></td>
+<td>Harvest <strong>2,000 mature garden plants</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetGarden0410.png"><img src="./assets/generated-icons/SheetGarden0410.png" alt="Greenest, aching thumb" width="48" height="48"></a></td>
+<td><strong>Greenest, aching thumb</strong></td>
+<td>Harvest <strong>3,000 mature garden plants</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetGarden0417.png"><img src="./assets/generated-icons/SheetGarden0417.png" alt="Photosynthetic prodigy" width="48" height="48"></a></td>
+<td><strong>Photosynthetic prodigy</strong></td>
+<td>Harvest <strong>5,000 mature garden plants</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetGarden0418.png"><img src="./assets/generated-icons/SheetGarden0418.png" alt="Garden master" width="48" height="48"></a></td>
+<td><strong>Garden master</strong></td>
+<td>Harvest <strong>7,500 mature garden plants</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetGarden0419.png"><img src="./assets/generated-icons/SheetGarden0419.png" alt="Plant whisperer" width="48" height="48"></a></td>
+<td><strong>Plant whisperer</strong></td>
+<td>Harvest <strong>10,000 mature garden plants</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2715.png"><img src="./assets/generated-icons/SheetVanilla2715.png" alt="Botanical Perfection" width="48" height="48"></a></td>
+<td><strong>Botanical Perfection</strong></td>
+<td>Have one of every type of plant in the mature stage at once</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetGarden0019.png"><img src="./assets/generated-icons/SheetGarden0019.png" alt="Duketater Salad" width="48" height="48"></a></td>
+<td><strong>Duketater Salad</strong></td>
+<td>Harvest <strong>12 mature Duketaters</strong> simultaneously</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetGarden0334.png"><img src="./assets/generated-icons/SheetGarden0334.png" alt="Fifty Shades of Clay" width="48" height="48"></a></td>
+<td><strong>Fifty Shades of Clay</strong></td>
+<td>Change the soil type of your Garden <strong>100 times</strong> in one ascension</td>
+</tr>
+</tbody>
+</table>
+
 - See also **I feel the need for seed**
 
 #### Grimoire
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetVanilla2212.png" alt="Archwizard" width="48" height="48"> | **Archwizard** | Cast **1,999 spells** across all ascensions |
-| <img src="assets/generated-icons/SheetCustom2014.png" alt="Spellmaster" width="48" height="48"> | **Spellmaster** | Cast **2,999 spells** across all ascensions |
-| <img src="assets/generated-icons/SheetCustom2013.png" alt="Cookieomancer" width="48" height="48"> | **Cookieomancer** | Cast **3,999 spells** across all ascensions |
-| <img src="assets/generated-icons/SheetVanilla2812.png" alt="Spell lord" width="48" height="48"> | **Spell lord** | Cast **4,999 spells** across all ascensions |
-| <img src="assets/generated-icons/SheetVanilla2712.png" alt="Magic emperor" width="48" height="48"> | **Magic emperor** | Cast **9,999 spells** across all ascensions |
-| <img src="assets/generated-icons/SheetVanilla3020.png" alt="Hogwarts Graduate" width="48" height="48"> | **Hogwarts Graduate** | Have **3 positive Grimoire spell effects** active at once |
-| <img src="assets/generated-icons/SheetVanilla3120.png" alt="Hogwarts Dropout" width="48" height="48"> | **Hogwarts Dropout** | Have **3 negative Grimoire spell effects** active at once |
-| <img src="assets/generated-icons/SheetVanilla3204.png" alt="Spell Slinger" width="48" height="48"> | **Spell Slinger** | Cast **10 spells** within a 10-second window |
-| <img src="assets/generated-icons/SheetCustom2015.png" alt="Sweet Sorcery" width="48" height="48"> | **Sweet Sorcery** | Get the **Free Sugar Lump** outcome from a magically spawned golden cookie |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement Name</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2212.png"><img src="./assets/generated-icons/SheetVanilla2212.png" alt="Archwizard" width="48" height="48"></a></td>
+<td><strong>Archwizard</strong></td>
+<td>Cast <strong>1,999 spells</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2014.png"><img src="./assets/generated-icons/SheetCustom2014.png" alt="Spellmaster" width="48" height="48"></a></td>
+<td><strong>Spellmaster</strong></td>
+<td>Cast <strong>2,999 spells</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2013.png"><img src="./assets/generated-icons/SheetCustom2013.png" alt="Cookieomancer" width="48" height="48"></a></td>
+<td><strong>Cookieomancer</strong></td>
+<td>Cast <strong>3,999 spells</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2812.png"><img src="./assets/generated-icons/SheetVanilla2812.png" alt="Spell lord" width="48" height="48"></a></td>
+<td><strong>Spell lord</strong></td>
+<td>Cast <strong>4,999 spells</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2712.png"><img src="./assets/generated-icons/SheetVanilla2712.png" alt="Magic emperor" width="48" height="48"></a></td>
+<td><strong>Magic emperor</strong></td>
+<td>Cast <strong>9,999 spells</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla3020.png"><img src="./assets/generated-icons/SheetVanilla3020.png" alt="Hogwarts Graduate" width="48" height="48"></a></td>
+<td><strong>Hogwarts Graduate</strong></td>
+<td>Have <strong>3 positive Grimoire spell effects</strong> active at once</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla3120.png"><img src="./assets/generated-icons/SheetVanilla3120.png" alt="Hogwarts Dropout" width="48" height="48"></a></td>
+<td><strong>Hogwarts Dropout</strong></td>
+<td>Have <strong>3 negative Grimoire spell effects</strong> active at once</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla3204.png"><img src="./assets/generated-icons/SheetVanilla3204.png" alt="Spell Slinger" width="48" height="48"></a></td>
+<td><strong>Spell Slinger</strong></td>
+<td>Cast <strong>10 spells</strong> within a 10-second window</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2015.png"><img src="./assets/generated-icons/SheetCustom2015.png" alt="Sweet Sorcery" width="48" height="48"></a></td>
+<td><strong>Sweet Sorcery</strong></td>
+<td>Get the <strong>Free Sugar Lump</strong> outcome from a magically spawned golden cookie</td>
+</tr>
+</tbody>
+</table>
+
 
 #### Pantheon
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetVanilla2118.png" alt="Faithless Loyalty" width="48" height="48"> | **Faithless Loyalty** | Swap gods in the Pantheon **100 times** in one ascension |
-| <img src="assets/generated-icons/SheetVanilla2218.png" alt="God of All Gods" width="48" height="48"> | **God of All Gods** | Use each pantheon god for at least **24 hours** total across all ascensions |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement Name</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2118.png"><img src="./assets/generated-icons/SheetVanilla2118.png" alt="Faithless Loyalty" width="48" height="48"></a></td>
+<td><strong>Faithless Loyalty</strong></td>
+<td>Swap gods in the Pantheon <strong>100 times</strong> in one ascension</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2218.png"><img src="./assets/generated-icons/SheetVanilla2218.png" alt="God of All Gods" width="48" height="48"></a></td>
+<td><strong>God of All Gods</strong></td>
+<td>Use each pantheon god for at least <strong>24 hours</strong> total across all ascensions</td>
+</tr>
+</tbody>
+</table>
+
 
 ### Seasonal Achievements (9 achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetVanilla1606.png" alt="Calendar Abuser" width="48" height="48"> | **Calendar Abuser** | Switch seasons **50 times** in one ascension |
-| <img src="assets/generated-icons/SheetCustom1917.png" alt="Reindeer destroyer" width="48" height="48"> | **Reindeer destroyer** | Pop **500 reindeer** across all ascensions |
-| <img src="assets/generated-icons/SheetCustom1916.png" alt="Reindeer obliterator" width="48" height="48"> | **Reindeer obliterator** | Pop **1,000 reindeer** across all ascensions |
-| <img src="assets/generated-icons/SheetCustom1915.png" alt="Reindeer extinction event" width="48" height="48"> | **Reindeer extinction event** | Pop **2,000 reindeer** across all ascensions |
-| <img src="assets/generated-icons/SheetCustom1914.png" alt="Reindeer apocalypse" width="48" height="48"> | **Reindeer apocalypse** | Pop **5,000 reindeer** across all ascensions |
-| <img src="assets/generated-icons/SheetCustom1816.png" alt="Cupid's Reindeer" width="48" height="48"> | **Cupid's Reindeer** | Pop a reindeer during **Valentine's Day season** |
-| <img src="assets/generated-icons/SheetCustom1815.png" alt="Business Reindeer" width="48" height="48"> | **Business Reindeer** | Pop a reindeer during **Business Day season** |
-| <img src="assets/generated-icons/SheetCustom1814.png" alt="Bundeer" width="48" height="48"> | **Bundeer** | Pop a reindeer during **Easter season** |
-| <img src="assets/generated-icons/SheetCustom1817.png" alt="Ghost Reindeer" width="48" height="48"> | **Ghost Reindeer** | Pop a reindeer during **Halloween season** |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement Name</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla1606.png"><img src="./assets/generated-icons/SheetVanilla1606.png" alt="Calendar Abuser" width="48" height="48"></a></td>
+<td><strong>Calendar Abuser</strong></td>
+<td>Switch seasons <strong>50 times</strong> in one ascension</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1917.png"><img src="./assets/generated-icons/SheetCustom1917.png" alt="Reindeer destroyer" width="48" height="48"></a></td>
+<td><strong>Reindeer destroyer</strong></td>
+<td>Pop <strong>500 reindeer</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1916.png"><img src="./assets/generated-icons/SheetCustom1916.png" alt="Reindeer obliterator" width="48" height="48"></a></td>
+<td><strong>Reindeer obliterator</strong></td>
+<td>Pop <strong>1,000 reindeer</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1915.png"><img src="./assets/generated-icons/SheetCustom1915.png" alt="Reindeer extinction event" width="48" height="48"></a></td>
+<td><strong>Reindeer extinction event</strong></td>
+<td>Pop <strong>2,000 reindeer</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1914.png"><img src="./assets/generated-icons/SheetCustom1914.png" alt="Reindeer apocalypse" width="48" height="48"></a></td>
+<td><strong>Reindeer apocalypse</strong></td>
+<td>Pop <strong>5,000 reindeer</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1816.png"><img src="./assets/generated-icons/SheetCustom1816.png" alt="Cupid's Reindeer" width="48" height="48"></a></td>
+<td><strong>Cupid's Reindeer</strong></td>
+<td>Pop a reindeer during <strong>Valentine's Day season</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1815.png"><img src="./assets/generated-icons/SheetCustom1815.png" alt="Business Reindeer" width="48" height="48"></a></td>
+<td><strong>Business Reindeer</strong></td>
+<td>Pop a reindeer during <strong>Business Day season</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1814.png"><img src="./assets/generated-icons/SheetCustom1814.png" alt="Bundeer" width="48" height="48"></a></td>
+<td><strong>Bundeer</strong></td>
+<td>Pop a reindeer during <strong>Easter season</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1817.png"><img src="./assets/generated-icons/SheetCustom1817.png" alt="Ghost Reindeer" width="48" height="48"></a></td>
+<td><strong>Ghost Reindeer</strong></td>
+<td>Pop a reindeer during <strong>Halloween season</strong></td>
+</tr>
+</tbody>
+</table>
+
 - See also **Holiday Hoover** and **Merry Mayhem**
 
 ### Completionist Achievements (7 achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetVanilla2207.png" alt="Vanilla Star" width="48" height="48"> | **Vanilla Star** | Own all **622 original achievements** |
-| <img src="assets/generated-icons/SheetVanilla2916.png" alt="Sweet Child of Mine" width="48" height="48"> | **Sweet Child of Mine** | Own **100 sugar lumps** at once |
-| <img src="assets/generated-icons/SheetVanilla2007.png" alt="Beyond Prestige" width="48" height="48"> | **Beyond Prestige** | Own all **129 original heavenly upgrades** |
-| <img src="assets/generated-icons/SheetVanilla1814.png" alt="Kitten jamboree" width="48" height="48"> | **Kitten jamboree** | Own all **18 original kittens** |
-| <img src="assets/generated-icons/SheetVanilla1813.png" alt="Kitten Fiesta" width="48" height="48"> | **Kitten Fiesta** | Own all **18 original kittens** and all **11 expansion kittens** at once |
-| <img src="assets/generated-icons/SheetCustom1913.png" alt="Bearer of the Cookie Sigil" width="48" height="48"> | **Bearer of the Cookie Sigil** | Fully initiate into the Great Orders of the Cookie Age. Provides **25% faster research** and **10% more random drops** (See Upgrades Section for More Info) |
-| <img src="assets/generated-icons/SheetVanilla1705.png" alt="In the Shadows" width="48" height="48"> | **In the Shadows** | Unlock all vanilla shadow achievements, except that one. |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement Name</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2207.png"><img src="./assets/generated-icons/SheetVanilla2207.png" alt="Vanilla Star" width="48" height="48"></a></td>
+<td><strong>Vanilla Star</strong></td>
+<td>Own all <strong>622 original achievements</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2916.png"><img src="./assets/generated-icons/SheetVanilla2916.png" alt="Sweet Child of Mine" width="48" height="48"></a></td>
+<td><strong>Sweet Child of Mine</strong></td>
+<td>Own <strong>100 sugar lumps</strong> at once</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2007.png"><img src="./assets/generated-icons/SheetVanilla2007.png" alt="Beyond Prestige" width="48" height="48"></a></td>
+<td><strong>Beyond Prestige</strong></td>
+<td>Own all <strong>129 original heavenly upgrades</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla1814.png"><img src="./assets/generated-icons/SheetVanilla1814.png" alt="Kitten jamboree" width="48" height="48"></a></td>
+<td><strong>Kitten jamboree</strong></td>
+<td>Own all <strong>18 original kittens</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla1813.png"><img src="./assets/generated-icons/SheetVanilla1813.png" alt="Kitten Fiesta" width="48" height="48"></a></td>
+<td><strong>Kitten Fiesta</strong></td>
+<td>Own all <strong>18 original kittens</strong> and all <strong>11 expansion kittens</strong> at once</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1913.png"><img src="./assets/generated-icons/SheetCustom1913.png" alt="Bearer of the Cookie Sigil" width="48" height="48"></a></td>
+<td><strong>Bearer of the Cookie Sigil</strong></td>
+<td>Fully initiate into the Great Orders of the Cookie Age. Provides <strong>25% faster research</strong> and <strong>10% more random drops</strong> (See Upgrades Section for More Info)</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla1705.png"><img src="./assets/generated-icons/SheetVanilla1705.png" alt="In the Shadows" width="48" height="48"></a></td>
+<td><strong>In the Shadows</strong></td>
+<td>Unlock all vanilla shadow achievements, except that one.</td>
+</tr>
+</tbody>
+</table>
+
 - See also **The Final Challenger**
 
 ### Combo Achievements (7 achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetVanilla2536.png" alt="Trifecta Combo" width="48" height="48"> | **Trifecta Combo** | Have **3 buffs** active at once |
-| <img src="assets/generated-icons/SheetVanilla2611.png" alt="Combo Initiate" width="48" height="48"> | **Combo Initiate** | Have **6 buffs** active at once |
-| <img src="assets/generated-icons/SheetVanilla2211.png" alt="Combo God" width="48" height="48"> | **Combo God** | Have **9 buffs** active at once |
-| <img src="assets/generated-icons/SheetVanilla2311.png" alt="Combo Hacker" width="48" height="48"> | **Combo Hacker** | Have **12 buffs** active at once |
-| <img src="assets/generated-icons/SheetCustom2302.png" alt="Frenzy frenzy" width="48" height="48"> | **Frenzy frenzy** | Have all three frenzy buffs active at once |
-| <img src="assets/generated-icons/SheetVanilla3012.png" alt="Double Dragon Clicker" width="48" height="48"> | **Double Dragon Clicker** | Have a dragon flight and a click frenzy active at the same time |
-| <img src="assets/generated-icons/SheetVanilla2213.png" alt="Frenzy Marathon" width="48" height="48"> | **Frenzy Marathon** | Have a frenzy buff with a total duration of at least **10 minutes** |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement Name</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2536.png"><img src="./assets/generated-icons/SheetVanilla2536.png" alt="Trifecta Combo" width="48" height="48"></a></td>
+<td><strong>Trifecta Combo</strong></td>
+<td>Have <strong>3 buffs</strong> active at once</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2611.png"><img src="./assets/generated-icons/SheetVanilla2611.png" alt="Combo Initiate" width="48" height="48"></a></td>
+<td><strong>Combo Initiate</strong></td>
+<td>Have <strong>6 buffs</strong> active at once</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2211.png"><img src="./assets/generated-icons/SheetVanilla2211.png" alt="Combo God" width="48" height="48"></a></td>
+<td><strong>Combo God</strong></td>
+<td>Have <strong>9 buffs</strong> active at once</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2311.png"><img src="./assets/generated-icons/SheetVanilla2311.png" alt="Combo Hacker" width="48" height="48"></a></td>
+<td><strong>Combo Hacker</strong></td>
+<td>Have <strong>12 buffs</strong> active at once</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2302.png"><img src="./assets/generated-icons/SheetCustom2302.png" alt="Frenzy frenzy" width="48" height="48"></a></td>
+<td><strong>Frenzy frenzy</strong></td>
+<td>Have all three frenzy buffs active at once</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla3012.png"><img src="./assets/generated-icons/SheetVanilla3012.png" alt="Double Dragon Clicker" width="48" height="48"></a></td>
+<td><strong>Double Dragon Clicker</strong></td>
+<td>Have a dragon flight and a click frenzy active at the same time</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2213.png"><img src="./assets/generated-icons/SheetVanilla2213.png" alt="Frenzy Marathon" width="48" height="48"></a></td>
+<td><strong>Frenzy Marathon</strong></td>
+<td>Have a frenzy buff with a total duration of at least <strong>10 minutes</strong></td>
+</tr>
+</tbody>
+</table>
+
 
 ### CPS Achievements (9 achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom0012.png" alt="Beyond the speed of dough" width="48" height="48"> | **Beyond the speed of dough** | Bake **1 octodecillion** per second |
-| <img src="assets/generated-icons/SheetCustom0112.png" alt="Speed of sound" width="48" height="48"> | **Speed of sound** | Bake **10 octodecillion** per second |
-| <img src="assets/generated-icons/SheetCustom0212.png" alt="Speed of light" width="48" height="48"> | **Speed of light** | Bake **100 octodecillion** per second |
-| <img src="assets/generated-icons/SheetCustom0312.png" alt="Faster than light" width="48" height="48"> | **Faster than light** | Bake **1 novemdecillion** per second |
-| <img src="assets/generated-icons/SheetCustom0412.png" alt="Speed of thought" width="48" height="48"> | **Speed of thought** | Bake **10 novemdecillion** per second |
-| <img src="assets/generated-icons/SheetCustom0512.png" alt="Faster than speed of thought" width="48" height="48"> | **Faster than speed of thought** | Bake **100 novemdecillion** per second |
-| <img src="assets/generated-icons/SheetCustom0612.png" alt="Plaid" width="48" height="48"> | **Plaid** | Bake **1 vigintillion** per second |
-| <img src="assets/generated-icons/SheetCustom0712.png" alt="Somehow faster than plaid" width="48" height="48"> | **Somehow faster than plaid** | Bake **10 vigintillion** per second |
-| <img src="assets/generated-icons/SheetCustom0812.png" alt="Transcending the very concept of speed itself" width="48" height="48"> | **Transcending the very concept of speed itself** | Bake **100 vigintillion** per second |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement Name</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0012.png"><img src="./assets/generated-icons/SheetCustom0012.png" alt="Beyond the speed of dough" width="48" height="48"></a></td>
+<td><strong>Beyond the speed of dough</strong></td>
+<td>Bake <strong>1 octodecillion</strong> per second</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0112.png"><img src="./assets/generated-icons/SheetCustom0112.png" alt="Speed of sound" width="48" height="48"></a></td>
+<td><strong>Speed of sound</strong></td>
+<td>Bake <strong>10 octodecillion</strong> per second</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0212.png"><img src="./assets/generated-icons/SheetCustom0212.png" alt="Speed of light" width="48" height="48"></a></td>
+<td><strong>Speed of light</strong></td>
+<td>Bake <strong>100 octodecillion</strong> per second</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0312.png"><img src="./assets/generated-icons/SheetCustom0312.png" alt="Faster than light" width="48" height="48"></a></td>
+<td><strong>Faster than light</strong></td>
+<td>Bake <strong>1 novemdecillion</strong> per second</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0412.png"><img src="./assets/generated-icons/SheetCustom0412.png" alt="Speed of thought" width="48" height="48"></a></td>
+<td><strong>Speed of thought</strong></td>
+<td>Bake <strong>10 novemdecillion</strong> per second</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0512.png"><img src="./assets/generated-icons/SheetCustom0512.png" alt="Faster than speed of thought" width="48" height="48"></a></td>
+<td><strong>Faster than speed of thought</strong></td>
+<td>Bake <strong>100 novemdecillion</strong> per second</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0612.png"><img src="./assets/generated-icons/SheetCustom0612.png" alt="Plaid" width="48" height="48"></a></td>
+<td><strong>Plaid</strong></td>
+<td>Bake <strong>1 vigintillion</strong> per second</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0712.png"><img src="./assets/generated-icons/SheetCustom0712.png" alt="Somehow faster than plaid" width="48" height="48"></a></td>
+<td><strong>Somehow faster than plaid</strong></td>
+<td>Bake <strong>10 vigintillion</strong> per second</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0812.png"><img src="./assets/generated-icons/SheetCustom0812.png" alt="Transcending the very concept of speed itself" width="48" height="48"></a></td>
+<td><strong>Transcending the very concept of speed itself</strong></td>
+<td>Bake <strong>100 vigintillion</strong> per second</td>
+</tr>
+</tbody>
+</table>
+
 
 ### Click Achievements (9 achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom0908.png" alt="Click of the Titans" width="48" height="48"> | **Click of the Titans** | Generate **1 year of raw CPS** in a single cookie click |
-| <img src="assets/generated-icons/SheetVanilla1230.png" alt="Buff Finger" width="48" height="48"> | **Buff Finger** | Click the cookie **250,000 times** across all ascensions |
-| <img src="assets/generated-icons/SheetCustom1012.png" alt="News ticker addict" width="48" height="48"> | **News ticker addict** | Click on the news ticker **1,000 times** in one ascension |
-| <img src="assets/generated-icons/SheetCustom0900.png" alt="Clickbait &amp; Switch" width="48" height="48"> | **Clickbait & Switch** | Make **1 vigintillion** from clicking |
-| <img src="assets/generated-icons/SheetCustom0901.png" alt="Click to the Future" width="48" height="48"> | **Click to the Future** | Make **1 duovigintillion** from clicking |
-| <img src="assets/generated-icons/SheetCustom0902.png" alt="Clickety Clique" width="48" height="48"> | **Clickety Clique** | Make **1 quattuorvigintillion** from clicking |
-| <img src="assets/generated-icons/SheetCustom0903.png" alt="Clickonomicon" width="48" height="48"> | **Clickonomicon** | Make **1 sexvigintillion** from clicking |
-| <img src="assets/generated-icons/SheetCustom0904.png" alt="Clicks and Stones" width="48" height="48"> | **Clicks and Stones** | Make **1 octovigintillion** from clicking |
-| <img src="assets/generated-icons/SheetCustom0905.png" alt="Click It Till You Make It" width="48" height="48"> | **Click It Till You Make It** | Make **1 trigintillion** from clicking |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement Name</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0908.png"><img src="./assets/generated-icons/SheetCustom0908.png" alt="Click of the Titans" width="48" height="48"></a></td>
+<td><strong>Click of the Titans</strong></td>
+<td>Generate <strong>1 year of raw CPS</strong> in a single cookie click</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla1230.png"><img src="./assets/generated-icons/SheetVanilla1230.png" alt="Buff Finger" width="48" height="48"></a></td>
+<td><strong>Buff Finger</strong></td>
+<td>Click the cookie <strong>250,000 times</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1012.png"><img src="./assets/generated-icons/SheetCustom1012.png" alt="News ticker addict" width="48" height="48"></a></td>
+<td><strong>News ticker addict</strong></td>
+<td>Click on the news ticker <strong>1,000 times</strong> in one ascension</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0900.png"><img src="./assets/generated-icons/SheetCustom0900.png" alt="Clickbait &amp; Switch" width="48" height="48"></a></td>
+<td><strong>Clickbait & Switch</strong></td>
+<td>Make <strong>1 vigintillion</strong> from clicking</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0901.png"><img src="./assets/generated-icons/SheetCustom0901.png" alt="Click to the Future" width="48" height="48"></a></td>
+<td><strong>Click to the Future</strong></td>
+<td>Make <strong>1 duovigintillion</strong> from clicking</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0902.png"><img src="./assets/generated-icons/SheetCustom0902.png" alt="Clickety Clique" width="48" height="48"></a></td>
+<td><strong>Clickety Clique</strong></td>
+<td>Make <strong>1 quattuorvigintillion</strong> from clicking</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0903.png"><img src="./assets/generated-icons/SheetCustom0903.png" alt="Clickonomicon" width="48" height="48"></a></td>
+<td><strong>Clickonomicon</strong></td>
+<td>Make <strong>1 sexvigintillion</strong> from clicking</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0904.png"><img src="./assets/generated-icons/SheetCustom0904.png" alt="Clicks and Stones" width="48" height="48"></a></td>
+<td><strong>Clicks and Stones</strong></td>
+<td>Make <strong>1 octovigintillion</strong> from clicking</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0905.png"><img src="./assets/generated-icons/SheetCustom0905.png" alt="Click It Till You Make It" width="48" height="48"></a></td>
+<td><strong>Click It Till You Make It</strong></td>
+<td>Make <strong>1 trigintillion</strong> from clicking</td>
+</tr>
+</tbody>
+</table>
+
 
 ### Grandmapocalypse Achievements (15 achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom2116.png" alt="Wrinkler annihilator" width="48" height="48"> | **Wrinkler annihilator** | Burst **666 wrinklers** across all ascensions |
-| <img src="assets/generated-icons/SheetCustom2117.png" alt="Wrinkler eradicator" width="48" height="48"> | **Wrinkler eradicator** | Burst **2,666 wrinklers** across all ascensions |
-| <img src="assets/generated-icons/SheetCustom2118.png" alt="Wrinkler extinction event" width="48" height="48"> | **Wrinkler extinction event** | Burst **6,666 wrinklers** across all ascensions |
-| <img src="assets/generated-icons/SheetCustom2219.png" alt="Wrinkler apocalypse" width="48" height="48"> | **Wrinkler apocalypse** | Burst **16,666 wrinklers** across all ascensions |
-| <img src="assets/generated-icons/SheetCustom2218.png" alt="Wrinkler armageddon" width="48" height="48"> | **Wrinkler armageddon** | Burst **26,666 wrinklers** across all ascensions |
-| <img src="assets/generated-icons/SheetCustom2113.png" alt="Rare specimen collector" width="48" height="48"> | **Rare specimen collector** | Burst **2 shiny wrinklers** across all ascensions |
-| <img src="assets/generated-icons/SheetCustom2114.png" alt="Endangered species hunter" width="48" height="48"> | **Endangered species hunter** | Burst **5 shiny wrinklers** across all ascensions |
-| <img src="assets/generated-icons/SheetCustom2115.png" alt="Extinction event architect" width="48" height="48"> | **Extinction event architect** | Burst **10 shiny wrinklers** across all ascensions |
-| <img src="assets/generated-icons/SheetCustom2319.png" alt="Golden wrinkler" width="48" height="48"> | **Golden wrinkler** | Burst a wrinkler worth **6.66 years of CPS** |
-| <img src="assets/generated-icons/SheetCustom2318.png" alt="Wrinkler Rush" width="48" height="48"> | **Wrinkler Rush** | Pop a wrinkler within **15 minutes and 30 seconds** of ascending |
-| <img src="assets/generated-icons/SheetCustom2119.png" alt="Wrinkler Windfall" width="48" height="48"> | **Wrinkler Windfall** | Sextuple (6x) your bank with a single wrinkler pop |
-| <img src="assets/generated-icons/SheetVanilla0209.png" alt="Deep elder nap" width="48" height="48"> | **Deep elder nap** | Quash the grandmatriarchs one way or another **666 times** across all ascensions |
-| <img src="assets/generated-icons/SheetCustom2018.png" alt="Warm-Up Ritual" width="48" height="48"> | **Warm-Up Ritual** | Click **66 wrath cookies** across all ascensions |
-| <img src="assets/generated-icons/SheetCustom2017.png" alt="Deal of the Slightly Damned" width="48" height="48"> | **Deal of the Slightly Damned** | Click **666 wrath cookies** across all ascensions |
-| <img src="assets/generated-icons/SheetCustom2016.png" alt="Baker of the Beast" width="48" height="48"> | **Baker of the Beast** | Click **6,666 wrath cookies** across all ascensions |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement Name</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2116.png"><img src="./assets/generated-icons/SheetCustom2116.png" alt="Wrinkler annihilator" width="48" height="48"></a></td>
+<td><strong>Wrinkler annihilator</strong></td>
+<td>Burst <strong>666 wrinklers</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2117.png"><img src="./assets/generated-icons/SheetCustom2117.png" alt="Wrinkler eradicator" width="48" height="48"></a></td>
+<td><strong>Wrinkler eradicator</strong></td>
+<td>Burst <strong>2,666 wrinklers</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2118.png"><img src="./assets/generated-icons/SheetCustom2118.png" alt="Wrinkler extinction event" width="48" height="48"></a></td>
+<td><strong>Wrinkler extinction event</strong></td>
+<td>Burst <strong>6,666 wrinklers</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2219.png"><img src="./assets/generated-icons/SheetCustom2219.png" alt="Wrinkler apocalypse" width="48" height="48"></a></td>
+<td><strong>Wrinkler apocalypse</strong></td>
+<td>Burst <strong>16,666 wrinklers</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2218.png"><img src="./assets/generated-icons/SheetCustom2218.png" alt="Wrinkler armageddon" width="48" height="48"></a></td>
+<td><strong>Wrinkler armageddon</strong></td>
+<td>Burst <strong>26,666 wrinklers</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2113.png"><img src="./assets/generated-icons/SheetCustom2113.png" alt="Rare specimen collector" width="48" height="48"></a></td>
+<td><strong>Rare specimen collector</strong></td>
+<td>Burst <strong>2 shiny wrinklers</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2114.png"><img src="./assets/generated-icons/SheetCustom2114.png" alt="Endangered species hunter" width="48" height="48"></a></td>
+<td><strong>Endangered species hunter</strong></td>
+<td>Burst <strong>5 shiny wrinklers</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2115.png"><img src="./assets/generated-icons/SheetCustom2115.png" alt="Extinction event architect" width="48" height="48"></a></td>
+<td><strong>Extinction event architect</strong></td>
+<td>Burst <strong>10 shiny wrinklers</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2319.png"><img src="./assets/generated-icons/SheetCustom2319.png" alt="Golden wrinkler" width="48" height="48"></a></td>
+<td><strong>Golden wrinkler</strong></td>
+<td>Burst a wrinkler worth <strong>6.66 years of CPS</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2318.png"><img src="./assets/generated-icons/SheetCustom2318.png" alt="Wrinkler Rush" width="48" height="48"></a></td>
+<td><strong>Wrinkler Rush</strong></td>
+<td>Pop a wrinkler within <strong>15 minutes and 30 seconds</strong> of ascending</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2119.png"><img src="./assets/generated-icons/SheetCustom2119.png" alt="Wrinkler Windfall" width="48" height="48"></a></td>
+<td><strong>Wrinkler Windfall</strong></td>
+<td>Sextuple (6x) your bank with a single wrinkler pop</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0209.png"><img src="./assets/generated-icons/SheetVanilla0209.png" alt="Deep elder nap" width="48" height="48"></a></td>
+<td><strong>Deep elder nap</strong></td>
+<td>Quash the grandmatriarchs one way or another <strong>666 times</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2018.png"><img src="./assets/generated-icons/SheetCustom2018.png" alt="Warm-Up Ritual" width="48" height="48"></a></td>
+<td><strong>Warm-Up Ritual</strong></td>
+<td>Click <strong>66 wrath cookies</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2017.png"><img src="./assets/generated-icons/SheetCustom2017.png" alt="Deal of the Slightly Damned" width="48" height="48"></a></td>
+<td><strong>Deal of the Slightly Damned</strong></td>
+<td>Click <strong>666 wrath cookies</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2016.png"><img src="./assets/generated-icons/SheetCustom2016.png" alt="Baker of the Beast" width="48" height="48"></a></td>
+<td><strong>Baker of the Beast</strong></td>
+<td>Click <strong>6,666 wrath cookies</strong> across all ascensions</td>
+</tr>
+</tbody>
+</table>
+
 
 ### Golden Cookie Achievements (6 achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom0013.png" alt="Find a penny, pick it up" width="48" height="48"> | **Find a penny, pick it up** | Click **17,777 golden cookies** across all ascensions |
-| <img src="assets/generated-icons/SheetCustom0113.png" alt="Four-leaf overkill" width="48" height="48"> | **Four-leaf overkill** | Click **37,777 golden cookies** across all ascensions |
-| <img src="assets/generated-icons/SheetCustom0213.png" alt="Rabbit's footnote" width="48" height="48"> | **Rabbit's footnote** | Click **47,777 golden cookies** across all ascensions |
-| <img src="assets/generated-icons/SheetCustom0313.png" alt="Knock on wood" width="48" height="48"> | **Knock on wood** | Click **57,777 golden cookies** across all ascensions |
-| <img src="assets/generated-icons/SheetCustom0413.png" alt="Jackpot jubilee" width="48" height="48"> | **Jackpot jubilee** | Click **67,777 golden cookies** across all ascensions |
-| <img src="assets/generated-icons/SheetCustom0513.png" alt="Black cat's seventh paw" width="48" height="48"> | **Black cat's seventh paw** | Click **77,777 golden cookies** across all ascensions |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement Name</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0013.png"><img src="./assets/generated-icons/SheetCustom0013.png" alt="Find a penny, pick it up" width="48" height="48"></a></td>
+<td><strong>Find a penny, pick it up</strong></td>
+<td>Click <strong>17,777 golden cookies</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0113.png"><img src="./assets/generated-icons/SheetCustom0113.png" alt="Four-leaf overkill" width="48" height="48"></a></td>
+<td><strong>Four-leaf overkill</strong></td>
+<td>Click <strong>37,777 golden cookies</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0213.png"><img src="./assets/generated-icons/SheetCustom0213.png" alt="Rabbit's footnote" width="48" height="48"></a></td>
+<td><strong>Rabbit's footnote</strong></td>
+<td>Click <strong>47,777 golden cookies</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0313.png"><img src="./assets/generated-icons/SheetCustom0313.png" alt="Knock on wood" width="48" height="48"></a></td>
+<td><strong>Knock on wood</strong></td>
+<td>Click <strong>57,777 golden cookies</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0413.png"><img src="./assets/generated-icons/SheetCustom0413.png" alt="Jackpot jubilee" width="48" height="48"></a></td>
+<td><strong>Jackpot jubilee</strong></td>
+<td>Click <strong>67,777 golden cookies</strong> across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0513.png"><img src="./assets/generated-icons/SheetCustom0513.png" alt="Black cat's seventh paw" width="48" height="48"></a></td>
+<td><strong>Black cat's seventh paw</strong></td>
+<td>Click <strong>77,777 golden cookies</strong> across all ascensions</td>
+</tr>
+</tbody>
+</table>
+
 - See also **Gilded Restraint** and **Second Life, First Click**
 
 ### Cookies Baked In Ascension Achievements (7 achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom0012.png" alt="The Doughpocalypse" width="48" height="48"> | **The Doughpocalypse** | Bake **10 trevigintillion cookies** in one ascension |
-| <img src="assets/generated-icons/SheetCustom0112.png" alt="The Flour Flood" width="48" height="48"> | **The Flour Flood** | Bake **1 quattuorvigintillion cookies** in one ascension |
-| <img src="assets/generated-icons/SheetCustom0212.png" alt="The Ovenverse" width="48" height="48"> | **The Ovenverse** | Bake **100 quattuorvigintillion cookies** in one ascension |
-| <img src="assets/generated-icons/SheetCustom0312.png" alt="The Crumb Crusade" width="48" height="48"> | **The Crumb Crusade** | Bake **10 quinvigintillion cookies** in one ascension |
-| <img src="assets/generated-icons/SheetCustom0412.png" alt="The Final Batch" width="48" height="48"> | **The Final Batch** | Bake **1 sexvigintillion cookies** in one ascension |
-| <img src="assets/generated-icons/SheetCustom0512.png" alt="The Ultimate Ascension" width="48" height="48"> | **The Ultimate Ascension** | Bake **100 sexvigintillion cookies** in one ascension |
-| <img src="assets/generated-icons/SheetCustom0612.png" alt="The Transcendent Rise" width="48" height="48"> | **The Transcendent Rise** | Bake **10 septenvigintillion cookies** in one ascension |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement Name</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0012.png"><img src="./assets/generated-icons/SheetCustom0012.png" alt="The Doughpocalypse" width="48" height="48"></a></td>
+<td><strong>The Doughpocalypse</strong></td>
+<td>Bake <strong>10 trevigintillion cookies</strong> in one ascension</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0112.png"><img src="./assets/generated-icons/SheetCustom0112.png" alt="The Flour Flood" width="48" height="48"></a></td>
+<td><strong>The Flour Flood</strong></td>
+<td>Bake <strong>1 quattuorvigintillion cookies</strong> in one ascension</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0212.png"><img src="./assets/generated-icons/SheetCustom0212.png" alt="The Ovenverse" width="48" height="48"></a></td>
+<td><strong>The Ovenverse</strong></td>
+<td>Bake <strong>100 quattuorvigintillion cookies</strong> in one ascension</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0312.png"><img src="./assets/generated-icons/SheetCustom0312.png" alt="The Crumb Crusade" width="48" height="48"></a></td>
+<td><strong>The Crumb Crusade</strong></td>
+<td>Bake <strong>10 quinvigintillion cookies</strong> in one ascension</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0412.png"><img src="./assets/generated-icons/SheetCustom0412.png" alt="The Final Batch" width="48" height="48"></a></td>
+<td><strong>The Final Batch</strong></td>
+<td>Bake <strong>1 sexvigintillion cookies</strong> in one ascension</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0512.png"><img src="./assets/generated-icons/SheetCustom0512.png" alt="The Ultimate Ascension" width="48" height="48"></a></td>
+<td><strong>The Ultimate Ascension</strong></td>
+<td>Bake <strong>100 sexvigintillion cookies</strong> in one ascension</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0612.png"><img src="./assets/generated-icons/SheetCustom0612.png" alt="The Transcendent Rise" width="48" height="48"></a></td>
+<td><strong>The Transcendent Rise</strong></td>
+<td>Bake <strong>10 septenvigintillion cookies</strong> in one ascension</td>
+</tr>
+</tbody>
+</table>
+
 
 ### Forfeited Cookies Achievements (13 achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetVanilla0011.png" alt="Dante's unwaking dream" width="48" height="48"> | **Dante's unwaking dream** | Forfeit **1 novemdecillion cookies** total across all ascensions |
-| <img src="assets/generated-icons/SheetVanilla0111.png" alt="The abyss gazes back" width="48" height="48"> | **The abyss gazes back** | Forfeit **1 vigintillion cookies** total across all ascensions |
-| <img src="assets/generated-icons/SheetVanilla0211.png" alt="Charon's final toll" width="48" height="48"> | **Charon's final toll** | Forfeit **1 unvigintillion cookies** total across all ascensions |
-| <img src="assets/generated-icons/SheetVanilla0311.png" alt="Cerberus's third head" width="48" height="48"> | **Cerberus's third head** | Forfeit **1 duovigintillion cookies** total across all ascensions |
-| <img src="assets/generated-icons/SheetVanilla0411.png" alt="Minos's eternal judgment" width="48" height="48"> | **Minos's eternal judgment** | Forfeit **1 trevigintillion cookies** total across all ascensions |
-| <img src="assets/generated-icons/SheetVanilla0511.png" alt="The river Styx flows backward" width="48" height="48"> | **The river Styx flows backward** | Forfeit **1 quattuorvigintillion cookies** total across all ascensions |
-| <img src="assets/generated-icons/SheetVanilla0611.png" alt="Ixion's wheel spins faster" width="48" height="48"> | **Ixion's wheel spins faster** | Forfeit **1 quinvigintillion cookies** total across all ascensions |
-| <img src="assets/generated-icons/SheetVanilla0711.png" alt="Sisyphus's boulder crumbles" width="48" height="48"> | **Sisyphus's boulder crumbles** | Forfeit **1 sexvigintillion cookies** total across all ascensions |
-| <img src="assets/generated-icons/SheetVanilla0811.png" alt="Tantalus's eternal thirst" width="48" height="48"> | **Tantalus's eternal thirst** | Forfeit **1 septenvigintillion cookies** total across all ascensions |
-| <img src="assets/generated-icons/SheetVanilla0911.png" alt="The ninth circle's center" width="48" height="48"> | **The ninth circle's center** | Forfeit **1 octovigintillion cookies** total across all ascensions |
-| <img src="assets/generated-icons/SheetVanilla1011.png" alt="Lucifer's frozen tears" width="48" height="48"> | **Lucifer's frozen tears** | Forfeit **1 novemvigintillion cookies** total across all ascensions |
-| <img src="assets/generated-icons/SheetVanilla1111.png" alt="Beyond the void's edge" width="48" height="48"> | **Beyond the void's edge** | Forfeit **1 trigintillion cookies** total across all ascensions |
-| <img src="assets/generated-icons/SheetVanilla1211.png" alt="The final descent's end" width="48" height="48"> | **The final descent's end** | Forfeit **1 untrigintillion cookies** total across all ascensions |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement Name</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0011.png"><img src="./assets/generated-icons/SheetVanilla0011.png" alt="Dante's unwaking dream" width="48" height="48"></a></td>
+<td><strong>Dante's unwaking dream</strong></td>
+<td>Forfeit <strong>1 novemdecillion cookies</strong> total across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0111.png"><img src="./assets/generated-icons/SheetVanilla0111.png" alt="The abyss gazes back" width="48" height="48"></a></td>
+<td><strong>The abyss gazes back</strong></td>
+<td>Forfeit <strong>1 vigintillion cookies</strong> total across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0211.png"><img src="./assets/generated-icons/SheetVanilla0211.png" alt="Charon's final toll" width="48" height="48"></a></td>
+<td><strong>Charon's final toll</strong></td>
+<td>Forfeit <strong>1 unvigintillion cookies</strong> total across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0311.png"><img src="./assets/generated-icons/SheetVanilla0311.png" alt="Cerberus's third head" width="48" height="48"></a></td>
+<td><strong>Cerberus's third head</strong></td>
+<td>Forfeit <strong>1 duovigintillion cookies</strong> total across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0411.png"><img src="./assets/generated-icons/SheetVanilla0411.png" alt="Minos's eternal judgment" width="48" height="48"></a></td>
+<td><strong>Minos's eternal judgment</strong></td>
+<td>Forfeit <strong>1 trevigintillion cookies</strong> total across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0511.png"><img src="./assets/generated-icons/SheetVanilla0511.png" alt="The river Styx flows backward" width="48" height="48"></a></td>
+<td><strong>The river Styx flows backward</strong></td>
+<td>Forfeit <strong>1 quattuorvigintillion cookies</strong> total across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0611.png"><img src="./assets/generated-icons/SheetVanilla0611.png" alt="Ixion's wheel spins faster" width="48" height="48"></a></td>
+<td><strong>Ixion's wheel spins faster</strong></td>
+<td>Forfeit <strong>1 quinvigintillion cookies</strong> total across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0711.png"><img src="./assets/generated-icons/SheetVanilla0711.png" alt="Sisyphus's boulder crumbles" width="48" height="48"></a></td>
+<td><strong>Sisyphus's boulder crumbles</strong></td>
+<td>Forfeit <strong>1 sexvigintillion cookies</strong> total across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0811.png"><img src="./assets/generated-icons/SheetVanilla0811.png" alt="Tantalus's eternal thirst" width="48" height="48"></a></td>
+<td><strong>Tantalus's eternal thirst</strong></td>
+<td>Forfeit <strong>1 septenvigintillion cookies</strong> total across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0911.png"><img src="./assets/generated-icons/SheetVanilla0911.png" alt="The ninth circle's center" width="48" height="48"></a></td>
+<td><strong>The ninth circle's center</strong></td>
+<td>Forfeit <strong>1 octovigintillion cookies</strong> total across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla1011.png"><img src="./assets/generated-icons/SheetVanilla1011.png" alt="Lucifer's frozen tears" width="48" height="48"></a></td>
+<td><strong>Lucifer's frozen tears</strong></td>
+<td>Forfeit <strong>1 novemvigintillion cookies</strong> total across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla1111.png"><img src="./assets/generated-icons/SheetVanilla1111.png" alt="Beyond the void's edge" width="48" height="48"></a></td>
+<td><strong>Beyond the void's edge</strong></td>
+<td>Forfeit <strong>1 trigintillion cookies</strong> total across all ascensions</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla1211.png"><img src="./assets/generated-icons/SheetVanilla1211.png" alt="The final descent's end" width="48" height="48"></a></td>
+<td><strong>The final descent's end</strong></td>
+<td>Forfeit <strong>1 untrigintillion cookies</strong> total across all ascensions</td>
+</tr>
+</tbody>
+</table>
+
 
 ### Building Ownership Achievements (13 achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom1612.png" alt="Septcentennial and a half" width="48" height="48"> | **Septcentennial and a half** | Have at least **750 of everything** |
-| <img src="assets/generated-icons/SheetCustom1712.png" alt="Octcentennial" width="48" height="48"> | **Octcentennial** | Have at least **800 of everything** |
-| <img src="assets/generated-icons/SheetCustom1812.png" alt="Octcentennial and a half" width="48" height="48"> | **Octcentennial and a half** | Have at least **850 of everything** |
-| <img src="assets/generated-icons/SheetCustom1912.png" alt="Nonacentennial" width="48" height="48"> | **Nonacentennial** | Have at least **900 of everything** |
-| <img src="assets/generated-icons/SheetCustom2012.png" alt="Nonacentennial and a half" width="48" height="48"> | **Nonacentennial and a half** | Have at least **950 of everything** |
-| <img src="assets/generated-icons/SheetCustom2112.png" alt="Millennial" width="48" height="48"> | **Millennial** | Have at least **1,000 of everything** |
-| <img src="assets/generated-icons/SheetCustom2212.png" alt="Building behemoth" width="48" height="48"> | **Building behemoth** | Own **15,000 buildings** |
-| <img src="assets/generated-icons/SheetCustom2213.png" alt="Construction colossus" width="48" height="48"> | **Construction colossus** | Own **20,000 buildings** |
-| <img src="assets/generated-icons/SheetCustom2214.png" alt="Architectural apex" width="48" height="48"> | **Architectural apex** | Own **25,000 buildings** |
-| <img src="assets/generated-icons/SheetVanilla2826.png" alt="Asset Liquidator" width="48" height="48"> | **Asset Liquidator** | Sell **25,000 buildings** in one ascension |
-| <img src="assets/generated-icons/SheetVanilla1509.png" alt="Flip City" width="48" height="48"> | **Flip City** | Sell **50,000 buildings** in one ascension |
-| <img src="assets/generated-icons/SheetVanilla3233.png" alt="Ghost Town Tycoon" width="48" height="48"> | **Ghost Town Tycoon** | Sell **100,000 buildings** in one ascension |
-| <img src="assets/generated-icons/SheetVanilla2627.png" alt="Have your sugar and eat it too" width="48" height="48"> | **Have your sugar and eat it too** | Have every building reach **level 10** |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement Name</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1612.png"><img src="./assets/generated-icons/SheetCustom1612.png" alt="Septcentennial and a half" width="48" height="48"></a></td>
+<td><strong>Septcentennial and a half</strong></td>
+<td>Have at least <strong>750 of everything</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1712.png"><img src="./assets/generated-icons/SheetCustom1712.png" alt="Octcentennial" width="48" height="48"></a></td>
+<td><strong>Octcentennial</strong></td>
+<td>Have at least <strong>800 of everything</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1812.png"><img src="./assets/generated-icons/SheetCustom1812.png" alt="Octcentennial and a half" width="48" height="48"></a></td>
+<td><strong>Octcentennial and a half</strong></td>
+<td>Have at least <strong>850 of everything</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1912.png"><img src="./assets/generated-icons/SheetCustom1912.png" alt="Nonacentennial" width="48" height="48"></a></td>
+<td><strong>Nonacentennial</strong></td>
+<td>Have at least <strong>900 of everything</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2012.png"><img src="./assets/generated-icons/SheetCustom2012.png" alt="Nonacentennial and a half" width="48" height="48"></a></td>
+<td><strong>Nonacentennial and a half</strong></td>
+<td>Have at least <strong>950 of everything</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2112.png"><img src="./assets/generated-icons/SheetCustom2112.png" alt="Millennial" width="48" height="48"></a></td>
+<td><strong>Millennial</strong></td>
+<td>Have at least <strong>1,000 of everything</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2212.png"><img src="./assets/generated-icons/SheetCustom2212.png" alt="Building behemoth" width="48" height="48"></a></td>
+<td><strong>Building behemoth</strong></td>
+<td>Own <strong>15,000 buildings</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2213.png"><img src="./assets/generated-icons/SheetCustom2213.png" alt="Construction colossus" width="48" height="48"></a></td>
+<td><strong>Construction colossus</strong></td>
+<td>Own <strong>20,000 buildings</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2214.png"><img src="./assets/generated-icons/SheetCustom2214.png" alt="Architectural apex" width="48" height="48"></a></td>
+<td><strong>Architectural apex</strong></td>
+<td>Own <strong>25,000 buildings</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2826.png"><img src="./assets/generated-icons/SheetVanilla2826.png" alt="Asset Liquidator" width="48" height="48"></a></td>
+<td><strong>Asset Liquidator</strong></td>
+<td>Sell <strong>25,000 buildings</strong> in one ascension</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla1509.png"><img src="./assets/generated-icons/SheetVanilla1509.png" alt="Flip City" width="48" height="48"></a></td>
+<td><strong>Flip City</strong></td>
+<td>Sell <strong>50,000 buildings</strong> in one ascension</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla3233.png"><img src="./assets/generated-icons/SheetVanilla3233.png" alt="Ghost Town Tycoon" width="48" height="48"></a></td>
+<td><strong>Ghost Town Tycoon</strong></td>
+<td>Sell <strong>100,000 buildings</strong> in one ascension</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2627.png"><img src="./assets/generated-icons/SheetVanilla2627.png" alt="Have your sugar and eat it too" width="48" height="48"></a></td>
+<td><strong>Have your sugar and eat it too</strong></td>
+<td>Have every building reach <strong>level 10</strong></td>
+</tr>
+</tbody>
+</table>
+
 - See also **The Final Countdown**, **Back to Basic Bakers**, **Modest Portfolio**, **Difficult Decisions**, and **Treading water**
 
 ### Reincarnation Achievements (3 achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom1716.png" alt="Ascension master" width="48" height="48"> | **Ascension master** | Ascend **250 times** |
-| <img src="assets/generated-icons/SheetCustom1715.png" alt="Ascension legend" width="48" height="48"> | **Ascension legend** | Ascend **500 times** |
-| <img src="assets/generated-icons/SheetCustom1714.png" alt="Ascension deity" width="48" height="48"> | **Ascension deity** | Ascend **999 times** |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement Name</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1716.png"><img src="./assets/generated-icons/SheetCustom1716.png" alt="Ascension master" width="48" height="48"></a></td>
+<td><strong>Ascension master</strong></td>
+<td>Ascend <strong>250 times</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1715.png"><img src="./assets/generated-icons/SheetCustom1715.png" alt="Ascension legend" width="48" height="48"></a></td>
+<td><strong>Ascension legend</strong></td>
+<td>Ascend <strong>500 times</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1714.png"><img src="./assets/generated-icons/SheetCustom1714.png" alt="Ascension deity" width="48" height="48"></a></td>
+<td><strong>Ascension deity</strong></td>
+<td>Ascend <strong>999 times</strong></td>
+</tr>
+</tbody>
+</table>
+
 
 ### Building Achievements by Building
 
 #### Cursor (16 Achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom0000.png" alt="Carpal diem" width="48" height="48"> | **Carpal diem** | Own **1,100 cursors** |
-| <img src="assets/generated-icons/SheetCustom0001.png" alt="Hand over fist" width="48" height="48"> | **Hand over fist** | Own **1,150 cursors** |
-| <img src="assets/generated-icons/SheetCustom0002.png" alt="Finger guns" width="48" height="48"> | **Finger guns** | Own **1,250 cursors** |
-| <img src="assets/generated-icons/SheetCustom0003.png" alt="Thumbs up, buttercup" width="48" height="48"> | **Thumbs up, buttercup** | Own **1,300 cursors** |
-| <img src="assets/generated-icons/SheetCustom0004.png" alt="Pointer sisters" width="48" height="48"> | **Pointer sisters** | Own **1,400 cursors** |
-| <img src="assets/generated-icons/SheetCustom0005.png" alt="Knuckle sandwich" width="48" height="48"> | **Knuckle sandwich** | Own **1,450 cursors** |
-| <img src="assets/generated-icons/SheetCustom0006.png" alt="Phalanx formation" width="48" height="48"> | **Phalanx formation** | Own **1,550 cursors** |
-| <img src="assets/generated-icons/SheetCustom0007.png" alt="Manual override" width="48" height="48"> | **Manual override** | Own **1,600 cursors** |
-| <img src="assets/generated-icons/SheetCustom0008.png" alt="Clickbaiter-in-chief" width="48" height="48"> | **Clickbaiter-in-chief** | Own **1,700 cursors** |
-| <img src="assets/generated-icons/SheetCustom0009.png" alt="With flying digits" width="48" height="48"> | **With flying digits** | Own **1,750 cursors** |
-| <img src="assets/generated-icons/SheetCustom0010.png" alt="Palm before the storm" width="48" height="48"> | **Palm before the storm** | Own **1,850 cursors** |
-| <img src="assets/generated-icons/SheetCustom0021.png" alt="Click II: the sequel" width="48" height="48"> | **Click II: the sequel** | Make **1 septendecillion cookies** just from cursors |
-| <img src="assets/generated-icons/SheetCustom0022.png" alt="Click III: we couldn't get Adam so it stars Jerry Seinfeld for some reason" width="48" height="48"> | **Click III: we couldn't get Adam so it stars Jerry Seinfeld for some reason** | Make **1 quindecillion cookies** just from cursors |
-| <img src="assets/generated-icons/SheetCustom0023.png" alt="Click IV: 3% on rotten tomatoes" width="48" height="48"> | **Click IV: 3% on rotten tomatoes** | Make **1 sexdecillion cookies** just from cursors |
-| <img src="assets/generated-icons/SheetCustom0019.png" alt="Rowdy shadow puppets" width="48" height="48"> | **Rowdy shadow puppets** | Reach **level 15** Cursors |
-| <img src="assets/generated-icons/SheetCustom0020.png" alt="Frantic finger guns" width="48" height="48"> | **Frantic finger guns** | Reach **level 20** Cursors |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0000.png"><img src="./assets/generated-icons/SheetCustom0000.png" alt="Carpal diem" width="48" height="48"></a></td>
+<td><strong>Carpal diem</strong></td>
+<td>Own <strong>1,100 cursors</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0001.png"><img src="./assets/generated-icons/SheetCustom0001.png" alt="Hand over fist" width="48" height="48"></a></td>
+<td><strong>Hand over fist</strong></td>
+<td>Own <strong>1,150 cursors</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0002.png"><img src="./assets/generated-icons/SheetCustom0002.png" alt="Finger guns" width="48" height="48"></a></td>
+<td><strong>Finger guns</strong></td>
+<td>Own <strong>1,250 cursors</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0003.png"><img src="./assets/generated-icons/SheetCustom0003.png" alt="Thumbs up, buttercup" width="48" height="48"></a></td>
+<td><strong>Thumbs up, buttercup</strong></td>
+<td>Own <strong>1,300 cursors</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0004.png"><img src="./assets/generated-icons/SheetCustom0004.png" alt="Pointer sisters" width="48" height="48"></a></td>
+<td><strong>Pointer sisters</strong></td>
+<td>Own <strong>1,400 cursors</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0005.png"><img src="./assets/generated-icons/SheetCustom0005.png" alt="Knuckle sandwich" width="48" height="48"></a></td>
+<td><strong>Knuckle sandwich</strong></td>
+<td>Own <strong>1,450 cursors</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0006.png"><img src="./assets/generated-icons/SheetCustom0006.png" alt="Phalanx formation" width="48" height="48"></a></td>
+<td><strong>Phalanx formation</strong></td>
+<td>Own <strong>1,550 cursors</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0007.png"><img src="./assets/generated-icons/SheetCustom0007.png" alt="Manual override" width="48" height="48"></a></td>
+<td><strong>Manual override</strong></td>
+<td>Own <strong>1,600 cursors</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0008.png"><img src="./assets/generated-icons/SheetCustom0008.png" alt="Clickbaiter-in-chief" width="48" height="48"></a></td>
+<td><strong>Clickbaiter-in-chief</strong></td>
+<td>Own <strong>1,700 cursors</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0009.png"><img src="./assets/generated-icons/SheetCustom0009.png" alt="With flying digits" width="48" height="48"></a></td>
+<td><strong>With flying digits</strong></td>
+<td>Own <strong>1,750 cursors</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0010.png"><img src="./assets/generated-icons/SheetCustom0010.png" alt="Palm before the storm" width="48" height="48"></a></td>
+<td><strong>Palm before the storm</strong></td>
+<td>Own <strong>1,850 cursors</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0021.png"><img src="./assets/generated-icons/SheetCustom0021.png" alt="Click II: the sequel" width="48" height="48"></a></td>
+<td><strong>Click II: the sequel</strong></td>
+<td>Make <strong>1 septendecillion cookies</strong> just from cursors</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0022.png"><img src="./assets/generated-icons/SheetCustom0022.png" alt="Click III: we couldn't get Adam so it stars Jerry Seinfeld for some reason" width="48" height="48"></a></td>
+<td><strong>Click III: we couldn't get Adam so it stars Jerry Seinfeld for some reason</strong></td>
+<td>Make <strong>1 quindecillion cookies</strong> just from cursors</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0023.png"><img src="./assets/generated-icons/SheetCustom0023.png" alt="Click IV: 3% on rotten tomatoes" width="48" height="48"></a></td>
+<td><strong>Click IV: 3% on rotten tomatoes</strong></td>
+<td>Make <strong>1 sexdecillion cookies</strong> just from cursors</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0019.png"><img src="./assets/generated-icons/SheetCustom0019.png" alt="Rowdy shadow puppets" width="48" height="48"></a></td>
+<td><strong>Rowdy shadow puppets</strong></td>
+<td>Reach <strong>level 15</strong> Cursors</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0020.png"><img src="./assets/generated-icons/SheetCustom0020.png" alt="Frantic finger guns" width="48" height="48"></a></td>
+<td><strong>Frantic finger guns</strong></td>
+<td>Reach <strong>level 20</strong> Cursors</td>
+</tr>
+</tbody>
+</table>
 
 #### Grandma (16 Achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom0100.png" alt="All rise for Nana" width="48" height="48"> | **All rise for Nana** | Own **750 grandmas** |
-| <img src="assets/generated-icons/SheetCustom0101.png" alt="The crinkle collective" width="48" height="48"> | **The crinkle collective** | Own **800 grandmas** |
-| <img src="assets/generated-icons/SheetCustom0102.png" alt="Okay elder" width="48" height="48"> | **Okay elder** | Own **850 grandmas** |
-| <img src="assets/generated-icons/SheetCustom0103.png" alt="Wrinkle monarchy" width="48" height="48"> | **Wrinkle monarchy** | Own **900 grandmas** |
-| <img src="assets/generated-icons/SheetCustom0104.png" alt="The wrinkling hour" width="48" height="48"> | **The wrinkling hour** | Own **950 grandmas** |
-| <img src="assets/generated-icons/SheetCustom0105.png" alt="Matriarchal meltdown" width="48" height="48"> | **Matriarchal meltdown** | Own **1,000 grandmas** |
-| <img src="assets/generated-icons/SheetCustom0106.png" alt="Cookies before crones" width="48" height="48"> | **Cookies before crones** | Own **1,050 grandmas** |
-| <img src="assets/generated-icons/SheetCustom0107.png" alt="Dust to crust" width="48" height="48"> | **Dust to crust** | Own **1,100 grandmas** |
-| <img src="assets/generated-icons/SheetCustom0108.png" alt="Bingo bloodbath" width="48" height="48"> | **Bingo bloodbath** | Own **1,150 grandmas** |
-| <img src="assets/generated-icons/SheetCustom0109.png" alt="Supreme doughmother" width="48" height="48"> | **Supreme doughmother** | Own **1,200 grandmas** |
-| <img src="assets/generated-icons/SheetCustom0110.png" alt="The last custodian" width="48" height="48"> | **The last custodian** | Own **1,250 grandmas** |
-| <img src="assets/generated-icons/SheetCustom0121.png" alt="Scone with the wind" width="48" height="48"> | **Scone with the wind** | Make **1 septendecillion cookies** just from grandmas |
-| <img src="assets/generated-icons/SheetCustom0122.png" alt="The flour of youth" width="48" height="48"> | **The flour of youth** | Make **1 quindecillion cookies** just from grandmas |
-| <img src="assets/generated-icons/SheetCustom0123.png" alt="Bake-ageddon" width="48" height="48"> | **Bake-ageddon** | Make **1 sexdecillion cookies** just from grandmas |
-| <img src="assets/generated-icons/SheetCustom0119.png" alt="Loaf &amp; behold" width="48" height="48"> | **Loaf & behold** | Reach **level 15** Grandmas |
-| <img src="assets/generated-icons/SheetCustom0120.png" alt="Forbidden fruitcake" width="48" height="48"> | **Forbidden fruitcake** | Reach **level 20** Grandmas |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0100.png"><img src="./assets/generated-icons/SheetCustom0100.png" alt="All rise for Nana" width="48" height="48"></a></td>
+<td><strong>All rise for Nana</strong></td>
+<td>Own <strong>750 grandmas</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0101.png"><img src="./assets/generated-icons/SheetCustom0101.png" alt="The crinkle collective" width="48" height="48"></a></td>
+<td><strong>The crinkle collective</strong></td>
+<td>Own <strong>800 grandmas</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0102.png"><img src="./assets/generated-icons/SheetCustom0102.png" alt="Okay elder" width="48" height="48"></a></td>
+<td><strong>Okay elder</strong></td>
+<td>Own <strong>850 grandmas</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0103.png"><img src="./assets/generated-icons/SheetCustom0103.png" alt="Wrinkle monarchy" width="48" height="48"></a></td>
+<td><strong>Wrinkle monarchy</strong></td>
+<td>Own <strong>900 grandmas</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0104.png"><img src="./assets/generated-icons/SheetCustom0104.png" alt="The wrinkling hour" width="48" height="48"></a></td>
+<td><strong>The wrinkling hour</strong></td>
+<td>Own <strong>950 grandmas</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0105.png"><img src="./assets/generated-icons/SheetCustom0105.png" alt="Matriarchal meltdown" width="48" height="48"></a></td>
+<td><strong>Matriarchal meltdown</strong></td>
+<td>Own <strong>1,000 grandmas</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0106.png"><img src="./assets/generated-icons/SheetCustom0106.png" alt="Cookies before crones" width="48" height="48"></a></td>
+<td><strong>Cookies before crones</strong></td>
+<td>Own <strong>1,050 grandmas</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0107.png"><img src="./assets/generated-icons/SheetCustom0107.png" alt="Dust to crust" width="48" height="48"></a></td>
+<td><strong>Dust to crust</strong></td>
+<td>Own <strong>1,100 grandmas</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0108.png"><img src="./assets/generated-icons/SheetCustom0108.png" alt="Bingo bloodbath" width="48" height="48"></a></td>
+<td><strong>Bingo bloodbath</strong></td>
+<td>Own <strong>1,150 grandmas</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0109.png"><img src="./assets/generated-icons/SheetCustom0109.png" alt="Supreme doughmother" width="48" height="48"></a></td>
+<td><strong>Supreme doughmother</strong></td>
+<td>Own <strong>1,200 grandmas</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0110.png"><img src="./assets/generated-icons/SheetCustom0110.png" alt="The last custodian" width="48" height="48"></a></td>
+<td><strong>The last custodian</strong></td>
+<td>Own <strong>1,250 grandmas</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0121.png"><img src="./assets/generated-icons/SheetCustom0121.png" alt="Scone with the wind" width="48" height="48"></a></td>
+<td><strong>Scone with the wind</strong></td>
+<td>Make <strong>1 septendecillion cookies</strong> just from grandmas</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0122.png"><img src="./assets/generated-icons/SheetCustom0122.png" alt="The flour of youth" width="48" height="48"></a></td>
+<td><strong>The flour of youth</strong></td>
+<td>Make <strong>1 quindecillion cookies</strong> just from grandmas</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0123.png"><img src="./assets/generated-icons/SheetCustom0123.png" alt="Bake-ageddon" width="48" height="48"></a></td>
+<td><strong>Bake-ageddon</strong></td>
+<td>Make <strong>1 sexdecillion cookies</strong> just from grandmas</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0119.png"><img src="./assets/generated-icons/SheetCustom0119.png" alt="Loaf &amp; behold" width="48" height="48"></a></td>
+<td><strong>Loaf & behold</strong></td>
+<td>Reach <strong>level 15</strong> Grandmas</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0120.png"><img src="./assets/generated-icons/SheetCustom0120.png" alt="Forbidden fruitcake" width="48" height="48"></a></td>
+<td><strong>Forbidden fruitcake</strong></td>
+<td>Reach <strong>level 20</strong> Grandmas</td>
+</tr>
+</tbody>
+</table>
 
 #### Farm (16 Achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom0200.png" alt="Little house on the dairy" width="48" height="48"> | **Little house on the dairy** | Own **750 farms** |
-| <img src="assets/generated-icons/SheetCustom0201.png" alt="The plow thickens" width="48" height="48"> | **The plow thickens** | Own **800 farms** |
-| <img src="assets/generated-icons/SheetCustom0202.png" alt="Cabbage patch dynasty" width="48" height="48"> | **Cabbage patch dynasty** | Own **850 farms** |
-| <img src="assets/generated-icons/SheetCustom0203.png" alt="Grazing amazement" width="48" height="48"> | **Grazing amazement** | Own **900 farms** |
-| <img src="assets/generated-icons/SheetCustom0204.png" alt="Field of creams" width="48" height="48"> | **Field of creams** | Own **950 farms** |
-| <img src="assets/generated-icons/SheetCustom0205.png" alt="Barn to be wild" width="48" height="48"> | **Barn to be wild** | Own **1,000 farms** |
-| <img src="assets/generated-icons/SheetCustom0206.png" alt="Crops and robbers" width="48" height="48"> | **Crops and robbers** | Own **1,050 farms** |
-| <img src="assets/generated-icons/SheetCustom0207.png" alt="Shoveling it in" width="48" height="48"> | **Shoveling it in** | Own **1,100 farms** |
-| <img src="assets/generated-icons/SheetCustom0208.png" alt="Seed syndicate" width="48" height="48"> | **Seed syndicate** | Own **1,150 farms** |
-| <img src="assets/generated-icons/SheetCustom0209.png" alt="Harvest high table" width="48" height="48"> | **Harvest high table** | Own **1,200 farms** |
-| <img src="assets/generated-icons/SheetCustom0210.png" alt="Emperor of dirt" width="48" height="48"> | **Emperor of dirt** | Own **1,250 farms** |
-| <img src="assets/generated-icons/SheetCustom0221.png" alt="Rake in the greens" width="48" height="48"> | **Rake in the greens** | Make **1 quattuordecillion cookies** just from farms |
-| <img src="assets/generated-icons/SheetCustom0222.png" alt="The great threshering" width="48" height="48"> | **The great threshering** | Make **1 quindecillion cookies** just from farms |
-| <img src="assets/generated-icons/SheetCustom0223.png" alt="Bushels of burden" width="48" height="48"> | **Bushels of burden** | Make **1 sexdecillion cookies** just from farms |
-| <img src="assets/generated-icons/SheetCustom0219.png" alt="Huge-er tracts of land" width="48" height="48"> | **Huge-er tracts of land** | Reach **level 15** Farms |
-| <img src="assets/generated-icons/SheetCustom0220.png" alt="Hoedown showdown" width="48" height="48"> | **Hoedown showdown** | Reach **level 20** Farms |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0200.png"><img src="./assets/generated-icons/SheetCustom0200.png" alt="Little house on the dairy" width="48" height="48"></a></td>
+<td><strong>Little house on the dairy</strong></td>
+<td>Own <strong>750 farms</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0201.png"><img src="./assets/generated-icons/SheetCustom0201.png" alt="The plow thickens" width="48" height="48"></a></td>
+<td><strong>The plow thickens</strong></td>
+<td>Own <strong>800 farms</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0202.png"><img src="./assets/generated-icons/SheetCustom0202.png" alt="Cabbage patch dynasty" width="48" height="48"></a></td>
+<td><strong>Cabbage patch dynasty</strong></td>
+<td>Own <strong>850 farms</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0203.png"><img src="./assets/generated-icons/SheetCustom0203.png" alt="Grazing amazement" width="48" height="48"></a></td>
+<td><strong>Grazing amazement</strong></td>
+<td>Own <strong>900 farms</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0204.png"><img src="./assets/generated-icons/SheetCustom0204.png" alt="Field of creams" width="48" height="48"></a></td>
+<td><strong>Field of creams</strong></td>
+<td>Own <strong>950 farms</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0205.png"><img src="./assets/generated-icons/SheetCustom0205.png" alt="Barn to be wild" width="48" height="48"></a></td>
+<td><strong>Barn to be wild</strong></td>
+<td>Own <strong>1,000 farms</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0206.png"><img src="./assets/generated-icons/SheetCustom0206.png" alt="Crops and robbers" width="48" height="48"></a></td>
+<td><strong>Crops and robbers</strong></td>
+<td>Own <strong>1,050 farms</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0207.png"><img src="./assets/generated-icons/SheetCustom0207.png" alt="Shoveling it in" width="48" height="48"></a></td>
+<td><strong>Shoveling it in</strong></td>
+<td>Own <strong>1,100 farms</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0208.png"><img src="./assets/generated-icons/SheetCustom0208.png" alt="Seed syndicate" width="48" height="48"></a></td>
+<td><strong>Seed syndicate</strong></td>
+<td>Own <strong>1,150 farms</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0209.png"><img src="./assets/generated-icons/SheetCustom0209.png" alt="Harvest high table" width="48" height="48"></a></td>
+<td><strong>Harvest high table</strong></td>
+<td>Own <strong>1,200 farms</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0210.png"><img src="./assets/generated-icons/SheetCustom0210.png" alt="Emperor of dirt" width="48" height="48"></a></td>
+<td><strong>Emperor of dirt</strong></td>
+<td>Own <strong>1,250 farms</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0221.png"><img src="./assets/generated-icons/SheetCustom0221.png" alt="Rake in the greens" width="48" height="48"></a></td>
+<td><strong>Rake in the greens</strong></td>
+<td>Make <strong>1 quattuordecillion cookies</strong> just from farms</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0222.png"><img src="./assets/generated-icons/SheetCustom0222.png" alt="The great threshering" width="48" height="48"></a></td>
+<td><strong>The great threshering</strong></td>
+<td>Make <strong>1 quindecillion cookies</strong> just from farms</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0223.png"><img src="./assets/generated-icons/SheetCustom0223.png" alt="Bushels of burden" width="48" height="48"></a></td>
+<td><strong>Bushels of burden</strong></td>
+<td>Make <strong>1 sexdecillion cookies</strong> just from farms</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0219.png"><img src="./assets/generated-icons/SheetCustom0219.png" alt="Huge-er tracts of land" width="48" height="48"></a></td>
+<td><strong>Huge-er tracts of land</strong></td>
+<td>Reach <strong>level 15</strong> Farms</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0220.png"><img src="./assets/generated-icons/SheetCustom0220.png" alt="Hoedown showdown" width="48" height="48"></a></td>
+<td><strong>Hoedown showdown</strong></td>
+<td>Reach <strong>level 20</strong> Farms</td>
+</tr>
+</tbody>
+</table>
 
 #### Mine (16 Achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom0300.png" alt="Shafted" width="48" height="48"> | **Shafted** | Own **750 mines** |
-| <img src="assets/generated-icons/SheetCustom0301.png" alt="Shiny object syndrome" width="48" height="48"> | **Shiny object syndrome** | Own **800 mines** |
-| <img src="assets/generated-icons/SheetCustom0302.png" alt="Ore what?" width="48" height="48"> | **Ore what?** | Own **850 mines** |
-| <img src="assets/generated-icons/SheetCustom0303.png" alt="Rubble without a cause" width="48" height="48"> | **Rubble without a cause** | Own **900 mines** |
-| <img src="assets/generated-icons/SheetCustom0304.png" alt="Tunnel visionaries" width="48" height="48"> | **Tunnel visionaries** | Own **950 mines** |
-| <img src="assets/generated-icons/SheetCustom0305.png" alt="Stalag-might" width="48" height="48"> | **Stalag-might** | Own **1,000 mines** |
-| <img src="assets/generated-icons/SheetCustom0306.png" alt="Pyrite and prejudice" width="48" height="48"> | **Pyrite and prejudice** | Own **1,050 mines** |
-| <img src="assets/generated-icons/SheetCustom0307.png" alt="Bedrock 'n roll" width="48" height="48"> | **Bedrock 'n roll** | Own **1,100 mines** |
-| <img src="assets/generated-icons/SheetCustom0308.png" alt="Mantle management" width="48" height="48"> | **Mantle management** | Own **1,150 mines** |
-| <img src="assets/generated-icons/SheetCustom0309.png" alt="Hollow crown jewels" width="48" height="48"> | **Hollow crown jewels** | Own **1,200 mines** |
-| <img src="assets/generated-icons/SheetCustom0310.png" alt="Emperor of ore" width="48" height="48"> | **Emperor of ore** | Own **1,250 mines** |
-| <img src="assets/generated-icons/SheetCustom0321.png" alt="Ore d'oeuvres" width="48" height="48"> | **Ore d'oeuvres** | Make **10 quattuordecillion cookies** just from mines |
-| <img src="assets/generated-icons/SheetCustom0322.png" alt="Seismic yield" width="48" height="48"> | **Seismic yield** | Make **10 quindecillion cookies** just from mines |
-| <img src="assets/generated-icons/SheetCustom0323.png" alt="Billionaire's bedrock" width="48" height="48"> | **Billionaire's bedrock** | Make **10 sexdecillion cookies** just from mines |
-| <img src="assets/generated-icons/SheetCustom0319.png" alt="Cave-in king" width="48" height="48"> | **Cave-in king** | Reach **level 15** Mines |
-| <img src="assets/generated-icons/SheetCustom0320.png" alt="Digging destiny" width="48" height="48"> | **Digging destiny** | Reach **level 20** Mines |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0300.png"><img src="./assets/generated-icons/SheetCustom0300.png" alt="Shafted" width="48" height="48"></a></td>
+<td><strong>Shafted</strong></td>
+<td>Own <strong>750 mines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0301.png"><img src="./assets/generated-icons/SheetCustom0301.png" alt="Shiny object syndrome" width="48" height="48"></a></td>
+<td><strong>Shiny object syndrome</strong></td>
+<td>Own <strong>800 mines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0302.png"><img src="./assets/generated-icons/SheetCustom0302.png" alt="Ore what?" width="48" height="48"></a></td>
+<td><strong>Ore what?</strong></td>
+<td>Own <strong>850 mines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0303.png"><img src="./assets/generated-icons/SheetCustom0303.png" alt="Rubble without a cause" width="48" height="48"></a></td>
+<td><strong>Rubble without a cause</strong></td>
+<td>Own <strong>900 mines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0304.png"><img src="./assets/generated-icons/SheetCustom0304.png" alt="Tunnel visionaries" width="48" height="48"></a></td>
+<td><strong>Tunnel visionaries</strong></td>
+<td>Own <strong>950 mines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0305.png"><img src="./assets/generated-icons/SheetCustom0305.png" alt="Stalag-might" width="48" height="48"></a></td>
+<td><strong>Stalag-might</strong></td>
+<td>Own <strong>1,000 mines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0306.png"><img src="./assets/generated-icons/SheetCustom0306.png" alt="Pyrite and prejudice" width="48" height="48"></a></td>
+<td><strong>Pyrite and prejudice</strong></td>
+<td>Own <strong>1,050 mines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0307.png"><img src="./assets/generated-icons/SheetCustom0307.png" alt="Bedrock 'n roll" width="48" height="48"></a></td>
+<td><strong>Bedrock 'n roll</strong></td>
+<td>Own <strong>1,100 mines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0308.png"><img src="./assets/generated-icons/SheetCustom0308.png" alt="Mantle management" width="48" height="48"></a></td>
+<td><strong>Mantle management</strong></td>
+<td>Own <strong>1,150 mines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0309.png"><img src="./assets/generated-icons/SheetCustom0309.png" alt="Hollow crown jewels" width="48" height="48"></a></td>
+<td><strong>Hollow crown jewels</strong></td>
+<td>Own <strong>1,200 mines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0310.png"><img src="./assets/generated-icons/SheetCustom0310.png" alt="Emperor of ore" width="48" height="48"></a></td>
+<td><strong>Emperor of ore</strong></td>
+<td>Own <strong>1,250 mines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0321.png"><img src="./assets/generated-icons/SheetCustom0321.png" alt="Ore d'oeuvres" width="48" height="48"></a></td>
+<td><strong>Ore d'oeuvres</strong></td>
+<td>Make <strong>10 quattuordecillion cookies</strong> just from mines</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0322.png"><img src="./assets/generated-icons/SheetCustom0322.png" alt="Seismic yield" width="48" height="48"></a></td>
+<td><strong>Seismic yield</strong></td>
+<td>Make <strong>10 quindecillion cookies</strong> just from mines</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0323.png"><img src="./assets/generated-icons/SheetCustom0323.png" alt="Billionaire's bedrock" width="48" height="48"></a></td>
+<td><strong>Billionaire's bedrock</strong></td>
+<td>Make <strong>10 sexdecillion cookies</strong> just from mines</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0319.png"><img src="./assets/generated-icons/SheetCustom0319.png" alt="Cave-in king" width="48" height="48"></a></td>
+<td><strong>Cave-in king</strong></td>
+<td>Reach <strong>level 15</strong> Mines</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0320.png"><img src="./assets/generated-icons/SheetCustom0320.png" alt="Digging destiny" width="48" height="48"></a></td>
+<td><strong>Digging destiny</strong></td>
+<td>Reach <strong>level 20</strong> Mines</td>
+</tr>
+</tbody>
+</table>
 
 #### Factory (16 Achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom0400.png" alt="Assembly required" width="48" height="48"> | **Assembly required** | Own **750 factories** |
-| <img src="assets/generated-icons/SheetCustom0401.png" alt="Quality unassured" width="48" height="48"> | **Quality unassured** | Own **800 factories** |
-| <img src="assets/generated-icons/SheetCustom0402.png" alt="Error 404-manpower not found" width="48" height="48"> | **Error 404-manpower not found** | Own **850 factories** |
-| <img src="assets/generated-icons/SheetCustom0403.png" alt="Spare parts department" width="48" height="48"> | **Spare parts department** | Own **900 factories** |
-| <img src="assets/generated-icons/SheetCustom0404.png" alt="Conveyor belters" width="48" height="48"> | **Conveyor belters** | Own **950 factories** |
-| <img src="assets/generated-icons/SheetCustom0405.png" alt="Planned obsolescence" width="48" height="48"> | **Planned obsolescence** | Own **1,000 factories** |
-| <img src="assets/generated-icons/SheetCustom0406.png" alt="Punch-card prophets" width="48" height="48"> | **Punch-card prophets** | Own **1,050 factories** |
-| <img src="assets/generated-icons/SheetCustom0407.png" alt="Rust in peace" width="48" height="48"> | **Rust in peace** | Own **1,100 factories** |
-| <img src="assets/generated-icons/SheetCustom0408.png" alt="Algorithm and blues" width="48" height="48"> | **Algorithm and blues** | Own **1,150 factories** |
-| <img src="assets/generated-icons/SheetCustom0409.png" alt="Profit motive engine" width="48" height="48"> | **Profit motive engine** | Own **1,200 factories** |
-| <img src="assets/generated-icons/SheetCustom0410.png" alt="Lord of the assembly" width="48" height="48"> | **Lord of the assembly** | Own **1,250 factories** |
-| <img src="assets/generated-icons/SheetCustom0421.png" alt="Sweatshop symphony" width="48" height="48"> | **Sweatshop symphony** | Make **100 quattuordecillion cookies** just from factories |
-| <img src="assets/generated-icons/SheetCustom0422.png" alt="Cookieconomics 101" width="48" height="48"> | **Cookieconomics 101** | Make **100 quindecillion cookies** just from factories |
-| <img src="assets/generated-icons/SheetCustom0423.png" alt="Mass production messiah" width="48" height="48"> | **Mass production messiah** | Make **100 sexdecillion cookies** just from factories |
-| <img src="assets/generated-icons/SheetCustom0419.png" alt="Boilerplate overlord" width="48" height="48"> | **Boilerplate overlord** | Reach **level 15** Factories |
-| <img src="assets/generated-icons/SheetCustom0420.png" alt="Cookie standard time" width="48" height="48"> | **Cookie standard time** | Reach **level 20** Factories |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0400.png"><img src="./assets/generated-icons/SheetCustom0400.png" alt="Assembly required" width="48" height="48"></a></td>
+<td><strong>Assembly required</strong></td>
+<td>Own <strong>750 factories</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0401.png"><img src="./assets/generated-icons/SheetCustom0401.png" alt="Quality unassured" width="48" height="48"></a></td>
+<td><strong>Quality unassured</strong></td>
+<td>Own <strong>800 factories</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0402.png"><img src="./assets/generated-icons/SheetCustom0402.png" alt="Error 404-manpower not found" width="48" height="48"></a></td>
+<td><strong>Error 404-manpower not found</strong></td>
+<td>Own <strong>850 factories</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0403.png"><img src="./assets/generated-icons/SheetCustom0403.png" alt="Spare parts department" width="48" height="48"></a></td>
+<td><strong>Spare parts department</strong></td>
+<td>Own <strong>900 factories</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0404.png"><img src="./assets/generated-icons/SheetCustom0404.png" alt="Conveyor belters" width="48" height="48"></a></td>
+<td><strong>Conveyor belters</strong></td>
+<td>Own <strong>950 factories</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0405.png"><img src="./assets/generated-icons/SheetCustom0405.png" alt="Planned obsolescence" width="48" height="48"></a></td>
+<td><strong>Planned obsolescence</strong></td>
+<td>Own <strong>1,000 factories</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0406.png"><img src="./assets/generated-icons/SheetCustom0406.png" alt="Punch-card prophets" width="48" height="48"></a></td>
+<td><strong>Punch-card prophets</strong></td>
+<td>Own <strong>1,050 factories</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0407.png"><img src="./assets/generated-icons/SheetCustom0407.png" alt="Rust in peace" width="48" height="48"></a></td>
+<td><strong>Rust in peace</strong></td>
+<td>Own <strong>1,100 factories</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0408.png"><img src="./assets/generated-icons/SheetCustom0408.png" alt="Algorithm and blues" width="48" height="48"></a></td>
+<td><strong>Algorithm and blues</strong></td>
+<td>Own <strong>1,150 factories</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0409.png"><img src="./assets/generated-icons/SheetCustom0409.png" alt="Profit motive engine" width="48" height="48"></a></td>
+<td><strong>Profit motive engine</strong></td>
+<td>Own <strong>1,200 factories</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0410.png"><img src="./assets/generated-icons/SheetCustom0410.png" alt="Lord of the assembly" width="48" height="48"></a></td>
+<td><strong>Lord of the assembly</strong></td>
+<td>Own <strong>1,250 factories</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0421.png"><img src="./assets/generated-icons/SheetCustom0421.png" alt="Sweatshop symphony" width="48" height="48"></a></td>
+<td><strong>Sweatshop symphony</strong></td>
+<td>Make <strong>100 quattuordecillion cookies</strong> just from factories</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0422.png"><img src="./assets/generated-icons/SheetCustom0422.png" alt="Cookieconomics 101" width="48" height="48"></a></td>
+<td><strong>Cookieconomics 101</strong></td>
+<td>Make <strong>100 quindecillion cookies</strong> just from factories</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0423.png"><img src="./assets/generated-icons/SheetCustom0423.png" alt="Mass production messiah" width="48" height="48"></a></td>
+<td><strong>Mass production messiah</strong></td>
+<td>Make <strong>100 sexdecillion cookies</strong> just from factories</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0419.png"><img src="./assets/generated-icons/SheetCustom0419.png" alt="Boilerplate overlord" width="48" height="48"></a></td>
+<td><strong>Boilerplate overlord</strong></td>
+<td>Reach <strong>level 15</strong> Factories</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0420.png"><img src="./assets/generated-icons/SheetCustom0420.png" alt="Cookie standard time" width="48" height="48"></a></td>
+<td><strong>Cookie standard time</strong></td>
+<td>Reach <strong>level 20</strong> Factories</td>
+</tr>
+</tbody>
+</table>
 
 #### Bank (16 Achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom1300.png" alt="Petty cash splash" width="48" height="48"> | **Petty cash splash** | Own **750 banks** |
-| <img src="assets/generated-icons/SheetCustom1301.png" alt="The Invisible Hand That Feeds" width="48" height="48"> | **The Invisible Hand That Feeds** | Own **800 banks** |
-| <img src="assets/generated-icons/SheetCustom1302.png" alt="Under-mattress banking" width="48" height="48"> | **Under-mattress banking** | Own **850 banks** |
-| <img src="assets/generated-icons/SheetCustom1303.png" alt="Interest-ing times" width="48" height="48"> | **Interest-ing times** | Own **900 banks** |
-| <img src="assets/generated-icons/SheetCustom1304.png" alt="Fee-fi-fo-fund" width="48" height="48"> | **Fee-fi-fo-fund** | Own **950 banks** |
-| <img src="assets/generated-icons/SheetCustom1305.png" alt="Liquidity theater" width="48" height="48"> | **Liquidity theater** | Own **1,000 banks** |
-| <img src="assets/generated-icons/SheetCustom1306.png" alt="Risk appetite: unlimited" width="48" height="48"> | **Risk appetite: unlimited** | Own **1,050 banks** |
-| <img src="assets/generated-icons/SheetCustom1307.png" alt="Quantitative cheesing" width="48" height="48"> | **Quantitative cheesing** | Own **1,100 banks** |
-| <img src="assets/generated-icons/SheetCustom1308.png" alt="Number go up economics" width="48" height="48"> | **Number go up economics** | Own **1,150 banks** |
-| <img src="assets/generated-icons/SheetCustom1309.png" alt="Sovereign cookie fund" width="48" height="48"> | **Sovereign cookie fund** | Own **1,200 banks** |
-| <img src="assets/generated-icons/SheetCustom1310.png" alt="Seigniorage supreme" width="48" height="48"> | **Seigniorage supreme** | Own **1,250 banks** |
-| <img src="assets/generated-icons/SheetCustom1521.png" alt="Compound interest, compounded" width="48" height="48"> | **Compound interest, compounded** | Make **1 quindecillion cookies** just from banks |
-| <img src="assets/generated-icons/SheetCustom1522.png" alt="Arbitrage avalanche" width="48" height="48"> | **Arbitrage avalanche** | Make **1 sexdecillion cookies** just from banks |
-| <img src="assets/generated-icons/SheetCustom1523.png" alt="Ponzi à la mode" width="48" height="48"> | **Ponzi à la mode** | Make **1 septendecillion cookies** just from banks |
-| <img src="assets/generated-icons/SheetCustom1119.png" alt="Credit conjurer" width="48" height="48"> | **Credit conjurer** | Reach **level 15** Banks |
-| <img src="assets/generated-icons/SheetCustom1120.png" alt="Master of the Mint" width="48" height="48"> | **Master of the Mint** | Reach **level 20** Banks |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1300.png"><img src="./assets/generated-icons/SheetCustom1300.png" alt="Petty cash splash" width="48" height="48"></a></td>
+<td><strong>Petty cash splash</strong></td>
+<td>Own <strong>750 banks</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1301.png"><img src="./assets/generated-icons/SheetCustom1301.png" alt="The Invisible Hand That Feeds" width="48" height="48"></a></td>
+<td><strong>The Invisible Hand That Feeds</strong></td>
+<td>Own <strong>800 banks</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1302.png"><img src="./assets/generated-icons/SheetCustom1302.png" alt="Under-mattress banking" width="48" height="48"></a></td>
+<td><strong>Under-mattress banking</strong></td>
+<td>Own <strong>850 banks</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1303.png"><img src="./assets/generated-icons/SheetCustom1303.png" alt="Interest-ing times" width="48" height="48"></a></td>
+<td><strong>Interest-ing times</strong></td>
+<td>Own <strong>900 banks</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1304.png"><img src="./assets/generated-icons/SheetCustom1304.png" alt="Fee-fi-fo-fund" width="48" height="48"></a></td>
+<td><strong>Fee-fi-fo-fund</strong></td>
+<td>Own <strong>950 banks</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1305.png"><img src="./assets/generated-icons/SheetCustom1305.png" alt="Liquidity theater" width="48" height="48"></a></td>
+<td><strong>Liquidity theater</strong></td>
+<td>Own <strong>1,000 banks</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1306.png"><img src="./assets/generated-icons/SheetCustom1306.png" alt="Risk appetite: unlimited" width="48" height="48"></a></td>
+<td><strong>Risk appetite: unlimited</strong></td>
+<td>Own <strong>1,050 banks</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1307.png"><img src="./assets/generated-icons/SheetCustom1307.png" alt="Quantitative cheesing" width="48" height="48"></a></td>
+<td><strong>Quantitative cheesing</strong></td>
+<td>Own <strong>1,100 banks</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1308.png"><img src="./assets/generated-icons/SheetCustom1308.png" alt="Number go up economics" width="48" height="48"></a></td>
+<td><strong>Number go up economics</strong></td>
+<td>Own <strong>1,150 banks</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1309.png"><img src="./assets/generated-icons/SheetCustom1309.png" alt="Sovereign cookie fund" width="48" height="48"></a></td>
+<td><strong>Sovereign cookie fund</strong></td>
+<td>Own <strong>1,200 banks</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1310.png"><img src="./assets/generated-icons/SheetCustom1310.png" alt="Seigniorage supreme" width="48" height="48"></a></td>
+<td><strong>Seigniorage supreme</strong></td>
+<td>Own <strong>1,250 banks</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1521.png"><img src="./assets/generated-icons/SheetCustom1521.png" alt="Compound interest, compounded" width="48" height="48"></a></td>
+<td><strong>Compound interest, compounded</strong></td>
+<td>Make <strong>1 quindecillion cookies</strong> just from banks</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1522.png"><img src="./assets/generated-icons/SheetCustom1522.png" alt="Arbitrage avalanche" width="48" height="48"></a></td>
+<td><strong>Arbitrage avalanche</strong></td>
+<td>Make <strong>1 sexdecillion cookies</strong> just from banks</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1523.png"><img src="./assets/generated-icons/SheetCustom1523.png" alt="Ponzi à la mode" width="48" height="48"></a></td>
+<td><strong>Ponzi à la mode</strong></td>
+<td>Make <strong>1 septendecillion cookies</strong> just from banks</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1119.png"><img src="./assets/generated-icons/SheetCustom1119.png" alt="Credit conjurer" width="48" height="48"></a></td>
+<td><strong>Credit conjurer</strong></td>
+<td>Reach <strong>level 15</strong> Banks</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1120.png"><img src="./assets/generated-icons/SheetCustom1120.png" alt="Master of the Mint" width="48" height="48"></a></td>
+<td><strong>Master of the Mint</strong></td>
+<td>Reach <strong>level 20</strong> Banks</td>
+</tr>
+</tbody>
+</table>
 
 #### Temple (16 Achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom1400.png" alt="Monk mode" width="48" height="48"> | **Monk mode** | Own **750 temples** |
-| <img src="assets/generated-icons/SheetCustom1401.png" alt="Ritual and error" width="48" height="48"> | **Ritual and error** | Own **800 temples** |
-| <img src="assets/generated-icons/SheetCustom1402.png" alt="Chant and deliver" width="48" height="48"> | **Chant and deliver** | Own **850 temples** |
-| <img src="assets/generated-icons/SheetCustom1403.png" alt="Incensed and consecrated" width="48" height="48"> | **Incensed and consecrated** | Own **900 temples** |
-| <img src="assets/generated-icons/SheetCustom1404.png" alt="Shrine of the times" width="48" height="48"> | **Shrine of the times** | Own **950 temples** |
-| <img src="assets/generated-icons/SheetCustom1405.png" alt="Hallowed be thy grain" width="48" height="48"> | **Hallowed be thy grain** | Own **1,000 temples** |
-| <img src="assets/generated-icons/SheetCustom1406.png" alt="Relic and roll" width="48" height="48"> | **Relic and roll** | Own **1,050 temples** |
-| <img src="assets/generated-icons/SheetCustom1407.png" alt="Pilgrimage of crumbs" width="48" height="48"> | **Pilgrimage of crumbs** | Own **1,100 temples** |
-| <img src="assets/generated-icons/SheetCustom1408.png" alt="The cookie pantheon" width="48" height="48"> | **The cookie pantheon** | Own **1,150 temples** |
-| <img src="assets/generated-icons/SheetCustom1409.png" alt="Tithes and cookies" width="48" height="48"> | **Tithes and cookies** | Own **1,200 temples** |
-| <img src="assets/generated-icons/SheetCustom1410.png" alt="Om-nom-nipotent" width="48" height="48"> | **Om-nom-nipotent** | Own **1,250 temples** |
-| <img src="assets/generated-icons/SheetCustom1621.png" alt="Temple treasury overflow" width="48" height="48"> | **Temple treasury overflow** | Make **10 quindecillion cookies** just from temples |
-| <img src="assets/generated-icons/SheetCustom1622.png" alt="Pantheon payout" width="48" height="48"> | **Pantheon payout** | Make **10 sexdecillion cookies** just from temples |
-| <img src="assets/generated-icons/SheetCustom1623.png" alt="Sacred surplus" width="48" height="48"> | **Sacred surplus** | Make **10 septendecillion cookies** just from temples |
-| <img src="assets/generated-icons/SheetCustom1219.png" alt="Acolyte ascendant" width="48" height="48"> | **Acolyte ascendant** | Reach **level 15** Temples |
-| <img src="assets/generated-icons/SheetCustom1220.png" alt="Grand hierophant" width="48" height="48"> | **Grand hierophant** | Reach **level 20** Temples |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1400.png"><img src="./assets/generated-icons/SheetCustom1400.png" alt="Monk mode" width="48" height="48"></a></td>
+<td><strong>Monk mode</strong></td>
+<td>Own <strong>750 temples</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1401.png"><img src="./assets/generated-icons/SheetCustom1401.png" alt="Ritual and error" width="48" height="48"></a></td>
+<td><strong>Ritual and error</strong></td>
+<td>Own <strong>800 temples</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1402.png"><img src="./assets/generated-icons/SheetCustom1402.png" alt="Chant and deliver" width="48" height="48"></a></td>
+<td><strong>Chant and deliver</strong></td>
+<td>Own <strong>850 temples</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1403.png"><img src="./assets/generated-icons/SheetCustom1403.png" alt="Incensed and consecrated" width="48" height="48"></a></td>
+<td><strong>Incensed and consecrated</strong></td>
+<td>Own <strong>900 temples</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1404.png"><img src="./assets/generated-icons/SheetCustom1404.png" alt="Shrine of the times" width="48" height="48"></a></td>
+<td><strong>Shrine of the times</strong></td>
+<td>Own <strong>950 temples</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1405.png"><img src="./assets/generated-icons/SheetCustom1405.png" alt="Hallowed be thy grain" width="48" height="48"></a></td>
+<td><strong>Hallowed be thy grain</strong></td>
+<td>Own <strong>1,000 temples</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1406.png"><img src="./assets/generated-icons/SheetCustom1406.png" alt="Relic and roll" width="48" height="48"></a></td>
+<td><strong>Relic and roll</strong></td>
+<td>Own <strong>1,050 temples</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1407.png"><img src="./assets/generated-icons/SheetCustom1407.png" alt="Pilgrimage of crumbs" width="48" height="48"></a></td>
+<td><strong>Pilgrimage of crumbs</strong></td>
+<td>Own <strong>1,100 temples</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1408.png"><img src="./assets/generated-icons/SheetCustom1408.png" alt="The cookie pantheon" width="48" height="48"></a></td>
+<td><strong>The cookie pantheon</strong></td>
+<td>Own <strong>1,150 temples</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1409.png"><img src="./assets/generated-icons/SheetCustom1409.png" alt="Tithes and cookies" width="48" height="48"></a></td>
+<td><strong>Tithes and cookies</strong></td>
+<td>Own <strong>1,200 temples</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1410.png"><img src="./assets/generated-icons/SheetCustom1410.png" alt="Om-nom-nipotent" width="48" height="48"></a></td>
+<td><strong>Om-nom-nipotent</strong></td>
+<td>Own <strong>1,250 temples</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1621.png"><img src="./assets/generated-icons/SheetCustom1621.png" alt="Temple treasury overflow" width="48" height="48"></a></td>
+<td><strong>Temple treasury overflow</strong></td>
+<td>Make <strong>10 quindecillion cookies</strong> just from temples</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1622.png"><img src="./assets/generated-icons/SheetCustom1622.png" alt="Pantheon payout" width="48" height="48"></a></td>
+<td><strong>Pantheon payout</strong></td>
+<td>Make <strong>10 sexdecillion cookies</strong> just from temples</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1623.png"><img src="./assets/generated-icons/SheetCustom1623.png" alt="Sacred surplus" width="48" height="48"></a></td>
+<td><strong>Sacred surplus</strong></td>
+<td>Make <strong>10 septendecillion cookies</strong> just from temples</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1219.png"><img src="./assets/generated-icons/SheetCustom1219.png" alt="Acolyte ascendant" width="48" height="48"></a></td>
+<td><strong>Acolyte ascendant</strong></td>
+<td>Reach <strong>level 15</strong> Temples</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1220.png"><img src="./assets/generated-icons/SheetCustom1220.png" alt="Grand hierophant" width="48" height="48"></a></td>
+<td><strong>Grand hierophant</strong></td>
+<td>Reach <strong>level 20</strong> Temples</td>
+</tr>
+</tbody>
+</table>
 
 #### Wizard Tower (16 Achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom1500.png" alt="Is this your cardamom?" width="48" height="48"> | **Is this your cardamom?** | Own **750 wizard towers** |
-| <img src="assets/generated-icons/SheetCustom1501.png" alt="Rabbit optional, hat mandatory" width="48" height="48"> | **Rabbit optional, hat mandatory** | Own **800 wizard towers** |
-| <img src="assets/generated-icons/SheetCustom1502.png" alt="Wand and done" width="48" height="48"> | **Wand and done** | Own **850 wizard towers** |
-| <img src="assets/generated-icons/SheetCustom1503.png" alt="Critical spellcheck failed" width="48" height="48"> | **Critical spellcheck failed** | Own **900 wizard towers** |
-| <img src="assets/generated-icons/SheetCustom1504.png" alt="Tome Raider" width="48" height="48"> | **Tome Raider** | Own **950 wizard towers** |
-| <img src="assets/generated-icons/SheetCustom1505.png" alt="Prestidigitation station" width="48" height="48"> | **Prestidigitation station** | Own **1,000 wizard towers** |
-| <img src="assets/generated-icons/SheetCustom1506.png" alt="Counterspell culture" width="48" height="48"> | **Counterspell culture** | Own **1,050 wizard towers** |
-| <img src="assets/generated-icons/SheetCustom1507.png" alt="Glitter is a material component" width="48" height="48"> | **Glitter is a material component** | Own **1,100 wizard towers** |
-| <img src="assets/generated-icons/SheetCustom1508.png" alt="Evocation nation" width="48" height="48"> | **Evocation nation** | Own **1,150 wizard towers** |
-| <img src="assets/generated-icons/SheetCustom1509.png" alt="Sphere of influence" width="48" height="48"> | **Sphere of influence** | Own **1,200 wizard towers** |
-| <img src="assets/generated-icons/SheetCustom1510.png" alt="The Last Archmage" width="48" height="48"> | **The Last Archmage** | Own **1,250 wizard towers** |
-| <img src="assets/generated-icons/SheetCustom1721.png" alt="Rabbits per minute" width="48" height="48"> | **Rabbits per minute** | Make **100 quindecillion cookies** just from wizard towers |
-| <img src="assets/generated-icons/SheetCustom1722.png" alt="Hocus bonus" width="48" height="48"> | **Hocus bonus** | Make **100 sexdecillion cookies** just from wizard towers |
-| <img src="assets/generated-icons/SheetCustom1723.png" alt="Magic dividends" width="48" height="48"> | **Magic dividends** | Make **100 septendecillion cookies** just from wizard towers |
-| <img src="assets/generated-icons/SheetCustom1319.png" alt="Archmage of Meringue" width="48" height="48"> | **Archmage of Meringue** | Reach **level 15** Wizard Towers |
-| <img src="assets/generated-icons/SheetCustom1320.png" alt="Chronomancer emeritus" width="48" height="48"> | **Chronomancer emeritus** | Reach **level 20** Wizard Towers |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1500.png"><img src="./assets/generated-icons/SheetCustom1500.png" alt="Is this your cardamom?" width="48" height="48"></a></td>
+<td><strong>Is this your cardamom?</strong></td>
+<td>Own <strong>750 wizard towers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1501.png"><img src="./assets/generated-icons/SheetCustom1501.png" alt="Rabbit optional, hat mandatory" width="48" height="48"></a></td>
+<td><strong>Rabbit optional, hat mandatory</strong></td>
+<td>Own <strong>800 wizard towers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1502.png"><img src="./assets/generated-icons/SheetCustom1502.png" alt="Wand and done" width="48" height="48"></a></td>
+<td><strong>Wand and done</strong></td>
+<td>Own <strong>850 wizard towers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1503.png"><img src="./assets/generated-icons/SheetCustom1503.png" alt="Critical spellcheck failed" width="48" height="48"></a></td>
+<td><strong>Critical spellcheck failed</strong></td>
+<td>Own <strong>900 wizard towers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1504.png"><img src="./assets/generated-icons/SheetCustom1504.png" alt="Tome Raider" width="48" height="48"></a></td>
+<td><strong>Tome Raider</strong></td>
+<td>Own <strong>950 wizard towers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1505.png"><img src="./assets/generated-icons/SheetCustom1505.png" alt="Prestidigitation station" width="48" height="48"></a></td>
+<td><strong>Prestidigitation station</strong></td>
+<td>Own <strong>1,000 wizard towers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1506.png"><img src="./assets/generated-icons/SheetCustom1506.png" alt="Counterspell culture" width="48" height="48"></a></td>
+<td><strong>Counterspell culture</strong></td>
+<td>Own <strong>1,050 wizard towers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1507.png"><img src="./assets/generated-icons/SheetCustom1507.png" alt="Glitter is a material component" width="48" height="48"></a></td>
+<td><strong>Glitter is a material component</strong></td>
+<td>Own <strong>1,100 wizard towers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1508.png"><img src="./assets/generated-icons/SheetCustom1508.png" alt="Evocation nation" width="48" height="48"></a></td>
+<td><strong>Evocation nation</strong></td>
+<td>Own <strong>1,150 wizard towers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1509.png"><img src="./assets/generated-icons/SheetCustom1509.png" alt="Sphere of influence" width="48" height="48"></a></td>
+<td><strong>Sphere of influence</strong></td>
+<td>Own <strong>1,200 wizard towers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1510.png"><img src="./assets/generated-icons/SheetCustom1510.png" alt="The Last Archmage" width="48" height="48"></a></td>
+<td><strong>The Last Archmage</strong></td>
+<td>Own <strong>1,250 wizard towers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1721.png"><img src="./assets/generated-icons/SheetCustom1721.png" alt="Rabbits per minute" width="48" height="48"></a></td>
+<td><strong>Rabbits per minute</strong></td>
+<td>Make <strong>100 quindecillion cookies</strong> just from wizard towers</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1722.png"><img src="./assets/generated-icons/SheetCustom1722.png" alt="Hocus bonus" width="48" height="48"></a></td>
+<td><strong>Hocus bonus</strong></td>
+<td>Make <strong>100 sexdecillion cookies</strong> just from wizard towers</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1723.png"><img src="./assets/generated-icons/SheetCustom1723.png" alt="Magic dividends" width="48" height="48"></a></td>
+<td><strong>Magic dividends</strong></td>
+<td>Make <strong>100 septendecillion cookies</strong> just from wizard towers</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1319.png"><img src="./assets/generated-icons/SheetCustom1319.png" alt="Archmage of Meringue" width="48" height="48"></a></td>
+<td><strong>Archmage of Meringue</strong></td>
+<td>Reach <strong>level 15</strong> Wizard Towers</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1320.png"><img src="./assets/generated-icons/SheetCustom1320.png" alt="Chronomancer emeritus" width="48" height="48"></a></td>
+<td><strong>Chronomancer emeritus</strong></td>
+<td>Reach <strong>level 20</strong> Wizard Towers</td>
+</tr>
+</tbody>
+</table>
 
 #### Shipment (16 Achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom0500.png" alt="Door-to-airlock" width="48" height="48"> | **Door-to-airlock** | Own **750 shipments** |
-| <img src="assets/generated-icons/SheetCustom0501.png" alt="Contents may shift in zero-G" width="48" height="48"> | **Contents may shift in zero-G** | Own **800 shipments** |
-| <img src="assets/generated-icons/SheetCustom0502.png" alt="Fragile: vacuum inside" width="48" height="48"> | **Fragile: vacuum inside** | Own **850 shipments** |
-| <img src="assets/generated-icons/SheetCustom0503.png" alt="Cosmic courier service" width="48" height="48"> | **Cosmic courier service** | Own **900 shipments** |
-| <img src="assets/generated-icons/SheetCustom0504.png" alt="Porch pirates of Andromeda" width="48" height="48"> | **Porch pirates of Andromeda** | Own **950 shipments** |
-| <img src="assets/generated-icons/SheetCustom0505.png" alt="Tracking number: ∞" width="48" height="48"> | **Tracking number: ∞** | Own **1,000 shipments** |
-| <img src="assets/generated-icons/SheetCustom0506.png" alt="Relativistic courier" width="48" height="48"> | **Relativistic courier** | Own **1,050 shipments** |
-| <img src="assets/generated-icons/SheetCustom0507.png" alt="Orbital rendezvous only" width="48" height="48"> | **Orbital rendezvous only** | Own **1,100 shipments** |
-| <img src="assets/generated-icons/SheetCustom0508.png" alt="Return to sender: event horizon" width="48" height="48"> | **Return to sender: event horizon** | Own **1,150 shipments** |
-| <img src="assets/generated-icons/SheetCustom0509.png" alt="Address: Unknown Quadrant" width="48" height="48"> | **Address: Unknown Quadrant** | Own **1,200 shipments** |
-| <img src="assets/generated-icons/SheetCustom0510.png" alt="Postmaster Galactic" width="48" height="48"> | **Postmaster Galactic** | Own **1,250 shipments** |
-| <img src="assets/generated-icons/SheetCustom0521.png" alt="Cargo cult classic" width="48" height="48"> | **Cargo cult classic** | Make **1 sexdecillion cookies** just from shipments |
-| <img src="assets/generated-icons/SheetCustom0522.png" alt="Universal basic shipping" width="48" height="48"> | **Universal basic shipping** | Make **1 septendecillion cookies** just from shipments |
-| <img src="assets/generated-icons/SheetCustom0523.png" alt="Comet-to-consumer" width="48" height="48"> | **Comet-to-consumer** | Make **1 octodecillion cookies** just from shipments |
-| <img src="assets/generated-icons/SheetCustom0519.png" alt="Quartermaster of Orbits" width="48" height="48"> | **Quartermaster of Orbits** | Reach **level 15** Shipments |
-| <img src="assets/generated-icons/SheetCustom0520.png" alt="Docking director" width="48" height="48"> | **Docking director** | Reach **level 20** Shipments |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0500.png"><img src="./assets/generated-icons/SheetCustom0500.png" alt="Door-to-airlock" width="48" height="48"></a></td>
+<td><strong>Door-to-airlock</strong></td>
+<td>Own <strong>750 shipments</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0501.png"><img src="./assets/generated-icons/SheetCustom0501.png" alt="Contents may shift in zero-G" width="48" height="48"></a></td>
+<td><strong>Contents may shift in zero-G</strong></td>
+<td>Own <strong>800 shipments</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0502.png"><img src="./assets/generated-icons/SheetCustom0502.png" alt="Fragile: vacuum inside" width="48" height="48"></a></td>
+<td><strong>Fragile: vacuum inside</strong></td>
+<td>Own <strong>850 shipments</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0503.png"><img src="./assets/generated-icons/SheetCustom0503.png" alt="Cosmic courier service" width="48" height="48"></a></td>
+<td><strong>Cosmic courier service</strong></td>
+<td>Own <strong>900 shipments</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0504.png"><img src="./assets/generated-icons/SheetCustom0504.png" alt="Porch pirates of Andromeda" width="48" height="48"></a></td>
+<td><strong>Porch pirates of Andromeda</strong></td>
+<td>Own <strong>950 shipments</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0505.png"><img src="./assets/generated-icons/SheetCustom0505.png" alt="Tracking number: ∞" width="48" height="48"></a></td>
+<td><strong>Tracking number: ∞</strong></td>
+<td>Own <strong>1,000 shipments</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0506.png"><img src="./assets/generated-icons/SheetCustom0506.png" alt="Relativistic courier" width="48" height="48"></a></td>
+<td><strong>Relativistic courier</strong></td>
+<td>Own <strong>1,050 shipments</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0507.png"><img src="./assets/generated-icons/SheetCustom0507.png" alt="Orbital rendezvous only" width="48" height="48"></a></td>
+<td><strong>Orbital rendezvous only</strong></td>
+<td>Own <strong>1,100 shipments</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0508.png"><img src="./assets/generated-icons/SheetCustom0508.png" alt="Return to sender: event horizon" width="48" height="48"></a></td>
+<td><strong>Return to sender: event horizon</strong></td>
+<td>Own <strong>1,150 shipments</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0509.png"><img src="./assets/generated-icons/SheetCustom0509.png" alt="Address: Unknown Quadrant" width="48" height="48"></a></td>
+<td><strong>Address: Unknown Quadrant</strong></td>
+<td>Own <strong>1,200 shipments</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0510.png"><img src="./assets/generated-icons/SheetCustom0510.png" alt="Postmaster Galactic" width="48" height="48"></a></td>
+<td><strong>Postmaster Galactic</strong></td>
+<td>Own <strong>1,250 shipments</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0521.png"><img src="./assets/generated-icons/SheetCustom0521.png" alt="Cargo cult classic" width="48" height="48"></a></td>
+<td><strong>Cargo cult classic</strong></td>
+<td>Make <strong>1 sexdecillion cookies</strong> just from shipments</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0522.png"><img src="./assets/generated-icons/SheetCustom0522.png" alt="Universal basic shipping" width="48" height="48"></a></td>
+<td><strong>Universal basic shipping</strong></td>
+<td>Make <strong>1 septendecillion cookies</strong> just from shipments</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0523.png"><img src="./assets/generated-icons/SheetCustom0523.png" alt="Comet-to-consumer" width="48" height="48"></a></td>
+<td><strong>Comet-to-consumer</strong></td>
+<td>Make <strong>1 octodecillion cookies</strong> just from shipments</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0519.png"><img src="./assets/generated-icons/SheetCustom0519.png" alt="Quartermaster of Orbits" width="48" height="48"></a></td>
+<td><strong>Quartermaster of Orbits</strong></td>
+<td>Reach <strong>level 15</strong> Shipments</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0520.png"><img src="./assets/generated-icons/SheetCustom0520.png" alt="Docking director" width="48" height="48"></a></td>
+<td><strong>Docking director</strong></td>
+<td>Reach <strong>level 20</strong> Shipments</td>
+</tr>
+</tbody>
+</table>
 
 #### Alchemy Lab (16 Achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom0600.png" alt="Stir-crazy crucible" width="48" height="48"> | **Stir-crazy crucible** | Own **750 alchemy labs** |
-| <img src="assets/generated-icons/SheetCustom0601.png" alt="Flask dance" width="48" height="48"> | **Flask dance** | Own **800 alchemy labs** |
-| <img src="assets/generated-icons/SheetCustom0602.png" alt="Beaker than fiction" width="48" height="48"> | **Beaker than fiction** | Own **850 alchemy labs** |
-| <img src="assets/generated-icons/SheetCustom0603.png" alt="Alloy-oop" width="48" height="48"> | **Alloy-oop** | Own **900 alchemy labs** |
-| <img src="assets/generated-icons/SheetCustom0604.png" alt="Distill my beating heart" width="48" height="48"> | **Distill my beating heart** | Own **950 alchemy labs** |
-| <img src="assets/generated-icons/SheetCustom0605.png" alt="Lead Zeppelin" width="48" height="48"> | **Lead Zeppelin** | Own **1,000 alchemy labs** |
-| <img src="assets/generated-icons/SheetCustom0606.png" alt="Hg Wells" width="48" height="48"> | **Hg Wells** | Own **1,050 alchemy labs** |
-| <img src="assets/generated-icons/SheetCustom0607.png" alt="Fe-fi-fo-fum" width="48" height="48"> | **Fe-fi-fo-fum** | Own **1,100 alchemy labs** |
-| <img src="assets/generated-icons/SheetCustom0608.png" alt="Breaking bread with Walter White" width="48" height="48"> | **Breaking bread with Walter White** | Own **1,150 alchemy labs** |
-| <img src="assets/generated-icons/SheetCustom0609.png" alt="Prima materia manager" width="48" height="48"> | **Prima materia manager** | Own **1,200 alchemy labs** |
-| <img src="assets/generated-icons/SheetCustom0610.png" alt="The Philosopher's Scone" width="48" height="48"> | **The Philosopher's Scone** | Own **1,250 alchemy labs** |
-| <img src="assets/generated-icons/SheetCustom0621.png" alt="Lead into bread" width="48" height="48"> | **Lead into bread** | Make **10 sexdecillion cookies** just from alchemy labs |
-| <img src="assets/generated-icons/SheetCustom0622.png" alt="Philosopher's yield" width="48" height="48"> | **Philosopher's yield** | Make **10 septendecillion cookies** just from alchemy labs |
-| <img src="assets/generated-icons/SheetCustom0623.png" alt="Auronomical returns" width="48" height="48"> | **Auronomical returns** | Make **10 octodecillion cookies** just from alchemy labs |
-| <img src="assets/generated-icons/SheetCustom0619.png" alt="Retort wrangler" width="48" height="48"> | **Retort wrangler** | Reach **level 15** Alchemy Labs |
-| <img src="assets/generated-icons/SheetCustom0620.png" alt="Circle of Quintessence" width="48" height="48"> | **Circle of Quintessence** | Reach **level 20** Alchemy Labs |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0600.png"><img src="./assets/generated-icons/SheetCustom0600.png" alt="Stir-crazy crucible" width="48" height="48"></a></td>
+<td><strong>Stir-crazy crucible</strong></td>
+<td>Own <strong>750 alchemy labs</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0601.png"><img src="./assets/generated-icons/SheetCustom0601.png" alt="Flask dance" width="48" height="48"></a></td>
+<td><strong>Flask dance</strong></td>
+<td>Own <strong>800 alchemy labs</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0602.png"><img src="./assets/generated-icons/SheetCustom0602.png" alt="Beaker than fiction" width="48" height="48"></a></td>
+<td><strong>Beaker than fiction</strong></td>
+<td>Own <strong>850 alchemy labs</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0603.png"><img src="./assets/generated-icons/SheetCustom0603.png" alt="Alloy-oop" width="48" height="48"></a></td>
+<td><strong>Alloy-oop</strong></td>
+<td>Own <strong>900 alchemy labs</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0604.png"><img src="./assets/generated-icons/SheetCustom0604.png" alt="Distill my beating heart" width="48" height="48"></a></td>
+<td><strong>Distill my beating heart</strong></td>
+<td>Own <strong>950 alchemy labs</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0605.png"><img src="./assets/generated-icons/SheetCustom0605.png" alt="Lead Zeppelin" width="48" height="48"></a></td>
+<td><strong>Lead Zeppelin</strong></td>
+<td>Own <strong>1,000 alchemy labs</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0606.png"><img src="./assets/generated-icons/SheetCustom0606.png" alt="Hg Wells" width="48" height="48"></a></td>
+<td><strong>Hg Wells</strong></td>
+<td>Own <strong>1,050 alchemy labs</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0607.png"><img src="./assets/generated-icons/SheetCustom0607.png" alt="Fe-fi-fo-fum" width="48" height="48"></a></td>
+<td><strong>Fe-fi-fo-fum</strong></td>
+<td>Own <strong>1,100 alchemy labs</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0608.png"><img src="./assets/generated-icons/SheetCustom0608.png" alt="Breaking bread with Walter White" width="48" height="48"></a></td>
+<td><strong>Breaking bread with Walter White</strong></td>
+<td>Own <strong>1,150 alchemy labs</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0609.png"><img src="./assets/generated-icons/SheetCustom0609.png" alt="Prima materia manager" width="48" height="48"></a></td>
+<td><strong>Prima materia manager</strong></td>
+<td>Own <strong>1,200 alchemy labs</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0610.png"><img src="./assets/generated-icons/SheetCustom0610.png" alt="The Philosopher's Scone" width="48" height="48"></a></td>
+<td><strong>The Philosopher's Scone</strong></td>
+<td>Own <strong>1,250 alchemy labs</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0621.png"><img src="./assets/generated-icons/SheetCustom0621.png" alt="Lead into bread" width="48" height="48"></a></td>
+<td><strong>Lead into bread</strong></td>
+<td>Make <strong>10 sexdecillion cookies</strong> just from alchemy labs</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0622.png"><img src="./assets/generated-icons/SheetCustom0622.png" alt="Philosopher's yield" width="48" height="48"></a></td>
+<td><strong>Philosopher's yield</strong></td>
+<td>Make <strong>10 septendecillion cookies</strong> just from alchemy labs</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0623.png"><img src="./assets/generated-icons/SheetCustom0623.png" alt="Auronomical returns" width="48" height="48"></a></td>
+<td><strong>Auronomical returns</strong></td>
+<td>Make <strong>10 octodecillion cookies</strong> just from alchemy labs</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0619.png"><img src="./assets/generated-icons/SheetCustom0619.png" alt="Retort wrangler" width="48" height="48"></a></td>
+<td><strong>Retort wrangler</strong></td>
+<td>Reach <strong>level 15</strong> Alchemy Labs</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0620.png"><img src="./assets/generated-icons/SheetCustom0620.png" alt="Circle of Quintessence" width="48" height="48"></a></td>
+<td><strong>Circle of Quintessence</strong></td>
+<td>Reach <strong>level 20</strong> Alchemy Labs</td>
+</tr>
+</tbody>
+</table>
 
 #### Portal (16 Achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom0700.png" alt="Open sesameseed" width="48" height="48"> | **Open sesameseed** | Own **750 portals** |
-| <img src="assets/generated-icons/SheetCustom0701.png" alt="Mind the rift" width="48" height="48"> | **Mind the rift** | Own **800 portals** |
-| <img src="assets/generated-icons/SheetCustom0702.png" alt="Doorway to s'moreway" width="48" height="48"> | **Doorway to s'moreway** | Own **850 portals** |
-| <img src="assets/generated-icons/SheetCustom0703.png" alt="Contents may phase in transit" width="48" height="48"> | **Contents may phase in transit** | Own **900 portals** |
-| <img src="assets/generated-icons/SheetCustom0704.png" alt="Wormhole warranty voided" width="48" height="48"> | **Wormhole warranty voided** | Own **950 portals** |
-| <img src="assets/generated-icons/SheetCustom0705.png" alt="Glitch in the Crumbatrix" width="48" height="48"> | **Glitch in the Crumbatrix** | Own **1,000 portals** |
-| <img src="assets/generated-icons/SheetCustom0706.png" alt="Second pantry to the right" width="48" height="48"> | **Second pantry to the right** | Own **1,050 portals** |
-| <img src="assets/generated-icons/SheetCustom0707.png" alt="Liminal sprinkles" width="48" height="48"> | **Liminal sprinkles** | Own **1,100 portals** |
-| <img src="assets/generated-icons/SheetCustom0708.png" alt="Please do not feed the void" width="48" height="48"> | **Please do not feed the void** | Own **1,150 portals** |
-| <img src="assets/generated-icons/SheetCustom0709.png" alt="Echoes from the other oven" width="48" height="48"> | **Echoes from the other oven** | Own **1,200 portals** |
-| <img src="assets/generated-icons/SheetCustom0710.png" alt="Out past the exit sign" width="48" height="48"> | **Out past the exit sign** | Own **1,250 portals** |
-| <img src="assets/generated-icons/SheetCustom0721.png" alt="Spacetime surcharge" width="48" height="48"> | **Spacetime surcharge** | Make **100 sexdecillion cookies** just from portals |
-| <img src="assets/generated-icons/SheetCustom0722.png" alt="Interdimensional yield farming" width="48" height="48"> | **Interdimensional yield farming** | Make **100 septendecillion cookies** just from portals |
-| <img src="assets/generated-icons/SheetCustom0723.png" alt="Event-horizon markup" width="48" height="48"> | **Event-horizon markup** | Make **100 octodecillion cookies** just from portals |
-| <img src="assets/generated-icons/SheetCustom0719.png" alt="Non-Euclidean doorman" width="48" height="48"> | **Non-Euclidean doorman** | Reach **level 15** Portals |
-| <img src="assets/generated-icons/SheetCustom0720.png" alt="Warden of Elsewhere" width="48" height="48"> | **Warden of Elsewhere** | Reach **level 20** Portals |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0700.png"><img src="./assets/generated-icons/SheetCustom0700.png" alt="Open sesameseed" width="48" height="48"></a></td>
+<td><strong>Open sesameseed</strong></td>
+<td>Own <strong>750 portals</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0701.png"><img src="./assets/generated-icons/SheetCustom0701.png" alt="Mind the rift" width="48" height="48"></a></td>
+<td><strong>Mind the rift</strong></td>
+<td>Own <strong>800 portals</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0702.png"><img src="./assets/generated-icons/SheetCustom0702.png" alt="Doorway to s'moreway" width="48" height="48"></a></td>
+<td><strong>Doorway to s'moreway</strong></td>
+<td>Own <strong>850 portals</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0703.png"><img src="./assets/generated-icons/SheetCustom0703.png" alt="Contents may phase in transit" width="48" height="48"></a></td>
+<td><strong>Contents may phase in transit</strong></td>
+<td>Own <strong>900 portals</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0704.png"><img src="./assets/generated-icons/SheetCustom0704.png" alt="Wormhole warranty voided" width="48" height="48"></a></td>
+<td><strong>Wormhole warranty voided</strong></td>
+<td>Own <strong>950 portals</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0705.png"><img src="./assets/generated-icons/SheetCustom0705.png" alt="Glitch in the Crumbatrix" width="48" height="48"></a></td>
+<td><strong>Glitch in the Crumbatrix</strong></td>
+<td>Own <strong>1,000 portals</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0706.png"><img src="./assets/generated-icons/SheetCustom0706.png" alt="Second pantry to the right" width="48" height="48"></a></td>
+<td><strong>Second pantry to the right</strong></td>
+<td>Own <strong>1,050 portals</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0707.png"><img src="./assets/generated-icons/SheetCustom0707.png" alt="Liminal sprinkles" width="48" height="48"></a></td>
+<td><strong>Liminal sprinkles</strong></td>
+<td>Own <strong>1,100 portals</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0708.png"><img src="./assets/generated-icons/SheetCustom0708.png" alt="Please do not feed the void" width="48" height="48"></a></td>
+<td><strong>Please do not feed the void</strong></td>
+<td>Own <strong>1,150 portals</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0709.png"><img src="./assets/generated-icons/SheetCustom0709.png" alt="Echoes from the other oven" width="48" height="48"></a></td>
+<td><strong>Echoes from the other oven</strong></td>
+<td>Own <strong>1,200 portals</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0710.png"><img src="./assets/generated-icons/SheetCustom0710.png" alt="Out past the exit sign" width="48" height="48"></a></td>
+<td><strong>Out past the exit sign</strong></td>
+<td>Own <strong>1,250 portals</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0721.png"><img src="./assets/generated-icons/SheetCustom0721.png" alt="Spacetime surcharge" width="48" height="48"></a></td>
+<td><strong>Spacetime surcharge</strong></td>
+<td>Make <strong>100 sexdecillion cookies</strong> just from portals</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0722.png"><img src="./assets/generated-icons/SheetCustom0722.png" alt="Interdimensional yield farming" width="48" height="48"></a></td>
+<td><strong>Interdimensional yield farming</strong></td>
+<td>Make <strong>100 septendecillion cookies</strong> just from portals</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0723.png"><img src="./assets/generated-icons/SheetCustom0723.png" alt="Event-horizon markup" width="48" height="48"></a></td>
+<td><strong>Event-horizon markup</strong></td>
+<td>Make <strong>100 octodecillion cookies</strong> just from portals</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0719.png"><img src="./assets/generated-icons/SheetCustom0719.png" alt="Non-Euclidean doorman" width="48" height="48"></a></td>
+<td><strong>Non-Euclidean doorman</strong></td>
+<td>Reach <strong>level 15</strong> Portals</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0720.png"><img src="./assets/generated-icons/SheetCustom0720.png" alt="Warden of Elsewhere" width="48" height="48"></a></td>
+<td><strong>Warden of Elsewhere</strong></td>
+<td>Reach <strong>level 20</strong> Portals</td>
+</tr>
+</tbody>
+</table>
 
 #### Time Machine (16 Achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom0800.png" alt="Yeasterday" width="48" height="48"> | **Yeasterday** | Own **750 time machines** |
-| <img src="assets/generated-icons/SheetCustom0801.png" alt="Tick-tock, bake o'clock" width="48" height="48"> | **Tick-tock, bake o'clock** | Own **800 time machines** |
-| <img src="assets/generated-icons/SheetCustom0802.png" alt="Back to the batter" width="48" height="48"> | **Back to the batter** | Own **850 time machines** |
-| <img src="assets/generated-icons/SheetCustom0803.png" alt="Déjà chewed" width="48" height="48"> | **Déjà chewed** | Own **900 time machines** |
-| <img src="assets/generated-icons/SheetCustom0804.png" alt="Borrowed thyme" width="48" height="48"> | **Borrowed thyme** | Own **950 time machines** |
-| <img src="assets/generated-icons/SheetCustom0805.png" alt="Second breakfast paradox" width="48" height="48"> | **Second breakfast paradox** | Own **1,000 time machines** |
-| <img src="assets/generated-icons/SheetCustom0806.png" alt="Next week's news, fresh today" width="48" height="48"> | **Next week's news, fresh today** | Own **1,050 time machines** |
-| <img src="assets/generated-icons/SheetCustom0807.png" alt="Live, die, bake, repeat" width="48" height="48"> | **Live, die, bake, repeat** | Own **1,100 time machines** |
-| <img src="assets/generated-icons/SheetCustom0808.png" alt="Entropy-proof frosting" width="48" height="48"> | **Entropy-proof frosting** | Own **1,150 time machines** |
-| <img src="assets/generated-icons/SheetCustom0809.png" alt="Past the last tick" width="48" height="48"> | **Past the last tick** | Own **1,200 time machines** |
-| <img src="assets/generated-icons/SheetCustom0810.png" alt="Emperor of when" width="48" height="48"> | **Emperor of when** | Own **1,250 time machines** |
-| <img src="assets/generated-icons/SheetCustom0821.png" alt="Future Profits, Past Tense" width="48" height="48"> | **Future Profits, Past Tense** | Make **1 septendecillion cookies** just from time machines |
-| <img src="assets/generated-icons/SheetCustom0822.png" alt="Infinite Loop, Infinite Loot" width="48" height="48"> | **Infinite Loop, Infinite Loot** | Make **1 octodecillion cookies** just from time machines |
-| <img src="assets/generated-icons/SheetCustom0823.png" alt="Back Pay from the Big Bang" width="48" height="48"> | **Back Pay from the Big Bang** | Make **1 novemdecillion cookies** just from time machines |
-| <img src="assets/generated-icons/SheetCustom0819.png" alt="Minute handler" width="48" height="48"> | **Minute handler** | Reach **level 15** Time Machines |
-| <img src="assets/generated-icons/SheetCustom0820.png" alt="Chronarch supreme" width="48" height="48"> | **Chronarch supreme** | Reach **level 20** Time Machines |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0800.png"><img src="./assets/generated-icons/SheetCustom0800.png" alt="Yeasterday" width="48" height="48"></a></td>
+<td><strong>Yeasterday</strong></td>
+<td>Own <strong>750 time machines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0801.png"><img src="./assets/generated-icons/SheetCustom0801.png" alt="Tick-tock, bake o'clock" width="48" height="48"></a></td>
+<td><strong>Tick-tock, bake o'clock</strong></td>
+<td>Own <strong>800 time machines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0802.png"><img src="./assets/generated-icons/SheetCustom0802.png" alt="Back to the batter" width="48" height="48"></a></td>
+<td><strong>Back to the batter</strong></td>
+<td>Own <strong>850 time machines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0803.png"><img src="./assets/generated-icons/SheetCustom0803.png" alt="Déjà chewed" width="48" height="48"></a></td>
+<td><strong>Déjà chewed</strong></td>
+<td>Own <strong>900 time machines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0804.png"><img src="./assets/generated-icons/SheetCustom0804.png" alt="Borrowed thyme" width="48" height="48"></a></td>
+<td><strong>Borrowed thyme</strong></td>
+<td>Own <strong>950 time machines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0805.png"><img src="./assets/generated-icons/SheetCustom0805.png" alt="Second breakfast paradox" width="48" height="48"></a></td>
+<td><strong>Second breakfast paradox</strong></td>
+<td>Own <strong>1,000 time machines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0806.png"><img src="./assets/generated-icons/SheetCustom0806.png" alt="Next week's news, fresh today" width="48" height="48"></a></td>
+<td><strong>Next week's news, fresh today</strong></td>
+<td>Own <strong>1,050 time machines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0807.png"><img src="./assets/generated-icons/SheetCustom0807.png" alt="Live, die, bake, repeat" width="48" height="48"></a></td>
+<td><strong>Live, die, bake, repeat</strong></td>
+<td>Own <strong>1,100 time machines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0808.png"><img src="./assets/generated-icons/SheetCustom0808.png" alt="Entropy-proof frosting" width="48" height="48"></a></td>
+<td><strong>Entropy-proof frosting</strong></td>
+<td>Own <strong>1,150 time machines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0809.png"><img src="./assets/generated-icons/SheetCustom0809.png" alt="Past the last tick" width="48" height="48"></a></td>
+<td><strong>Past the last tick</strong></td>
+<td>Own <strong>1,200 time machines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0810.png"><img src="./assets/generated-icons/SheetCustom0810.png" alt="Emperor of when" width="48" height="48"></a></td>
+<td><strong>Emperor of when</strong></td>
+<td>Own <strong>1,250 time machines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0821.png"><img src="./assets/generated-icons/SheetCustom0821.png" alt="Future Profits, Past Tense" width="48" height="48"></a></td>
+<td><strong>Future Profits, Past Tense</strong></td>
+<td>Make <strong>1 septendecillion cookies</strong> just from time machines</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0822.png"><img src="./assets/generated-icons/SheetCustom0822.png" alt="Infinite Loop, Infinite Loot" width="48" height="48"></a></td>
+<td><strong>Infinite Loop, Infinite Loot</strong></td>
+<td>Make <strong>1 octodecillion cookies</strong> just from time machines</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0823.png"><img src="./assets/generated-icons/SheetCustom0823.png" alt="Back Pay from the Big Bang" width="48" height="48"></a></td>
+<td><strong>Back Pay from the Big Bang</strong></td>
+<td>Make <strong>1 novemdecillion cookies</strong> just from time machines</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0819.png"><img src="./assets/generated-icons/SheetCustom0819.png" alt="Minute handler" width="48" height="48"></a></td>
+<td><strong>Minute handler</strong></td>
+<td>Reach <strong>level 15</strong> Time Machines</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0820.png"><img src="./assets/generated-icons/SheetCustom0820.png" alt="Chronarch supreme" width="48" height="48"></a></td>
+<td><strong>Chronarch supreme</strong></td>
+<td>Reach <strong>level 20</strong> Time Machines</td>
+</tr>
+</tbody>
+</table>
 
 #### Antimatter Condenser (16 Achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom1100.png" alt="Up and atom!" width="48" height="48"> | **Up and atom!** | Own **750 antimatter condensers** |
-| <img src="assets/generated-icons/SheetCustom1101.png" alt="Boson buddies" width="48" height="48"> | **Boson buddies** | Own **800 antimatter condensers** |
-| <img src="assets/generated-icons/SheetCustom1102.png" alt="Schrödinger's snack" width="48" height="48"> | **Schrödinger's snack** | Own **850 antimatter condensers** |
-| <img src="assets/generated-icons/SheetCustom1103.png" alt="Quantum foam party" width="48" height="48"> | **Quantum foam party** | Own **900 antimatter condensers** |
-| <img src="assets/generated-icons/SheetCustom1104.png" alt="Twenty years away (always)" width="48" height="48"> | **Twenty years away (always)** | Own **950 antimatter condensers** |
-| <img src="assets/generated-icons/SheetCustom1105.png" alt="Higgs and kisses" width="48" height="48"> | **Higgs and kisses** | Own **1,000 antimatter condensers** |
-| <img src="assets/generated-icons/SheetCustom1106.png" alt="Zero-point frosting" width="48" height="48"> | **Zero-point frosting** | Own **1,050 antimatter condensers** |
-| <img src="assets/generated-icons/SheetCustom1107.png" alt="Some like it dark (matter)" width="48" height="48"> | **Some like it dark (matter)** | Own **1,100 antimatter condensers** |
-| <img src="assets/generated-icons/SheetCustom1108.png" alt="Vacuum energy bar" width="48" height="48"> | **Vacuum energy bar** | Own **1,150 antimatter condensers** |
-| <img src="assets/generated-icons/SheetCustom1109.png" alt="Singularity of flavor" width="48" height="48"> | **Singularity of flavor** | Own **1,200 antimatter condensers** |
-| <img src="assets/generated-icons/SheetCustom1110.png" alt="Emperor of mass" width="48" height="48"> | **Emperor of mass** | Own **1,250 antimatter condensers** |
-| <img src="assets/generated-icons/SheetCustom1321.png" alt="Pair production payout" width="48" height="48"> | **Pair production payout** | Make **10 septendecillion cookies** just from antimatter condensers |
-| <img src="assets/generated-icons/SheetCustom1322.png" alt="Cross-section surplus" width="48" height="48"> | **Cross-section surplus** | Make **10 octodecillion cookies** just from antimatter condensers |
-| <img src="assets/generated-icons/SheetCustom1323.png" alt="Powers of crumbs" width="48" height="48"> | **Powers of crumbs** | Make **10 novemdecillion cookies** just from antimatter condensers |
-| <img src="assets/generated-icons/SheetCustom0919.png" alt="Quark wrangler" width="48" height="48"> | **Quark wrangler** | Reach **level 15** Antimatter Condensers |
-| <img src="assets/generated-icons/SheetCustom0920.png" alt="Symmetry breaker" width="48" height="48"> | **Symmetry breaker** | Reach **level 20** Antimatter Condensers |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1100.png"><img src="./assets/generated-icons/SheetCustom1100.png" alt="Up and atom!" width="48" height="48"></a></td>
+<td><strong>Up and atom!</strong></td>
+<td>Own <strong>750 antimatter condensers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1101.png"><img src="./assets/generated-icons/SheetCustom1101.png" alt="Boson buddies" width="48" height="48"></a></td>
+<td><strong>Boson buddies</strong></td>
+<td>Own <strong>800 antimatter condensers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1102.png"><img src="./assets/generated-icons/SheetCustom1102.png" alt="Schrödinger's snack" width="48" height="48"></a></td>
+<td><strong>Schrödinger's snack</strong></td>
+<td>Own <strong>850 antimatter condensers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1103.png"><img src="./assets/generated-icons/SheetCustom1103.png" alt="Quantum foam party" width="48" height="48"></a></td>
+<td><strong>Quantum foam party</strong></td>
+<td>Own <strong>900 antimatter condensers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1104.png"><img src="./assets/generated-icons/SheetCustom1104.png" alt="Twenty years away (always)" width="48" height="48"></a></td>
+<td><strong>Twenty years away (always)</strong></td>
+<td>Own <strong>950 antimatter condensers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1105.png"><img src="./assets/generated-icons/SheetCustom1105.png" alt="Higgs and kisses" width="48" height="48"></a></td>
+<td><strong>Higgs and kisses</strong></td>
+<td>Own <strong>1,000 antimatter condensers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1106.png"><img src="./assets/generated-icons/SheetCustom1106.png" alt="Zero-point frosting" width="48" height="48"></a></td>
+<td><strong>Zero-point frosting</strong></td>
+<td>Own <strong>1,050 antimatter condensers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1107.png"><img src="./assets/generated-icons/SheetCustom1107.png" alt="Some like it dark (matter)" width="48" height="48"></a></td>
+<td><strong>Some like it dark (matter)</strong></td>
+<td>Own <strong>1,100 antimatter condensers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1108.png"><img src="./assets/generated-icons/SheetCustom1108.png" alt="Vacuum energy bar" width="48" height="48"></a></td>
+<td><strong>Vacuum energy bar</strong></td>
+<td>Own <strong>1,150 antimatter condensers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1109.png"><img src="./assets/generated-icons/SheetCustom1109.png" alt="Singularity of flavor" width="48" height="48"></a></td>
+<td><strong>Singularity of flavor</strong></td>
+<td>Own <strong>1,200 antimatter condensers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1110.png"><img src="./assets/generated-icons/SheetCustom1110.png" alt="Emperor of mass" width="48" height="48"></a></td>
+<td><strong>Emperor of mass</strong></td>
+<td>Own <strong>1,250 antimatter condensers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1321.png"><img src="./assets/generated-icons/SheetCustom1321.png" alt="Pair production payout" width="48" height="48"></a></td>
+<td><strong>Pair production payout</strong></td>
+<td>Make <strong>10 septendecillion cookies</strong> just from antimatter condensers</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1322.png"><img src="./assets/generated-icons/SheetCustom1322.png" alt="Cross-section surplus" width="48" height="48"></a></td>
+<td><strong>Cross-section surplus</strong></td>
+<td>Make <strong>10 octodecillion cookies</strong> just from antimatter condensers</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1323.png"><img src="./assets/generated-icons/SheetCustom1323.png" alt="Powers of crumbs" width="48" height="48"></a></td>
+<td><strong>Powers of crumbs</strong></td>
+<td>Make <strong>10 novemdecillion cookies</strong> just from antimatter condensers</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0919.png"><img src="./assets/generated-icons/SheetCustom0919.png" alt="Quark wrangler" width="48" height="48"></a></td>
+<td><strong>Quark wrangler</strong></td>
+<td>Reach <strong>level 15</strong> Antimatter Condensers</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0920.png"><img src="./assets/generated-icons/SheetCustom0920.png" alt="Symmetry breaker" width="48" height="48"></a></td>
+<td><strong>Symmetry breaker</strong></td>
+<td>Reach <strong>level 20</strong> Antimatter Condensers</td>
+</tr>
+</tbody>
+</table>
 
 #### Prism (16 Achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom1200.png" alt="Light reading" width="48" height="48"> | **Light reading** | Own **750 prisms** |
-| <img src="assets/generated-icons/SheetCustom1201.png" alt="Refraction action" width="48" height="48"> | **Refraction action** | Own **800 prisms** |
-| <img src="assets/generated-icons/SheetCustom1202.png" alt="Snacktrum of light" width="48" height="48"> | **Snacktrum of light** | Own **850 prisms** |
-| <img src="assets/generated-icons/SheetCustom1203.png" alt="My cones and rods" width="48" height="48"> | **My cones and rods** | Own **900 prisms** |
-| <img src="assets/generated-icons/SheetCustom1204.png" alt="Prism break" width="48" height="48"> | **Prism break** | Own **950 prisms** |
-| <img src="assets/generated-icons/SheetCustom1205.png" alt="Prism prelate" width="48" height="48"> | **Prism prelate** | Own **1,000 prisms** |
-| <img src="assets/generated-icons/SheetCustom1206.png" alt="Glare force one" width="48" height="48"> | **Glare force one** | Own **1,050 prisms** |
-| <img src="assets/generated-icons/SheetCustom1207.png" alt="Hues Your Own Adventure" width="48" height="48"> | **Hues Your Own Adventure** | Own **1,100 prisms** |
-| <img src="assets/generated-icons/SheetCustom1208.png" alt="Devour the spectrum" width="48" height="48"> | **Devour the spectrum** | Own **1,150 prisms** |
-| <img src="assets/generated-icons/SheetCustom1209.png" alt="Crown of rainbows" width="48" height="48"> | **Crown of rainbows** | Own **1,200 prisms** |
-| <img src="assets/generated-icons/SheetCustom1210.png" alt="Radiant consummation" width="48" height="48"> | **Radiant consummation** | Own **1,250 prisms** |
-| <img src="assets/generated-icons/SheetCustom1421.png" alt="Photons pay dividends" width="48" height="48"> | **Photons pay dividends** | Make **100 septendecillion cookies** just from prisms |
-| <img src="assets/generated-icons/SheetCustom1422.png" alt="Spectral surplus" width="48" height="48"> | **Spectral surplus** | Make **100 octodecillion cookies** just from prisms |
-| <img src="assets/generated-icons/SheetCustom1423.png" alt="Dawn of plenty" width="48" height="48"> | **Dawn of plenty** | Make **100 novemdecillion cookies** just from prisms |
-| <img src="assets/generated-icons/SheetCustom1019.png" alt="Master of refraction" width="48" height="48"> | **Master of refraction** | Reach **level 15** Prisms |
-| <img src="assets/generated-icons/SheetCustom1020.png" alt="Keeper of the seven hues" width="48" height="48"> | **Keeper of the seven hues** | Reach **level 20** Prisms |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1200.png"><img src="./assets/generated-icons/SheetCustom1200.png" alt="Light reading" width="48" height="48"></a></td>
+<td><strong>Light reading</strong></td>
+<td>Own <strong>750 prisms</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1201.png"><img src="./assets/generated-icons/SheetCustom1201.png" alt="Refraction action" width="48" height="48"></a></td>
+<td><strong>Refraction action</strong></td>
+<td>Own <strong>800 prisms</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1202.png"><img src="./assets/generated-icons/SheetCustom1202.png" alt="Snacktrum of light" width="48" height="48"></a></td>
+<td><strong>Snacktrum of light</strong></td>
+<td>Own <strong>850 prisms</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1203.png"><img src="./assets/generated-icons/SheetCustom1203.png" alt="My cones and rods" width="48" height="48"></a></td>
+<td><strong>My cones and rods</strong></td>
+<td>Own <strong>900 prisms</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1204.png"><img src="./assets/generated-icons/SheetCustom1204.png" alt="Prism break" width="48" height="48"></a></td>
+<td><strong>Prism break</strong></td>
+<td>Own <strong>950 prisms</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1205.png"><img src="./assets/generated-icons/SheetCustom1205.png" alt="Prism prelate" width="48" height="48"></a></td>
+<td><strong>Prism prelate</strong></td>
+<td>Own <strong>1,000 prisms</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1206.png"><img src="./assets/generated-icons/SheetCustom1206.png" alt="Glare force one" width="48" height="48"></a></td>
+<td><strong>Glare force one</strong></td>
+<td>Own <strong>1,050 prisms</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1207.png"><img src="./assets/generated-icons/SheetCustom1207.png" alt="Hues Your Own Adventure" width="48" height="48"></a></td>
+<td><strong>Hues Your Own Adventure</strong></td>
+<td>Own <strong>1,100 prisms</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1208.png"><img src="./assets/generated-icons/SheetCustom1208.png" alt="Devour the spectrum" width="48" height="48"></a></td>
+<td><strong>Devour the spectrum</strong></td>
+<td>Own <strong>1,150 prisms</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1209.png"><img src="./assets/generated-icons/SheetCustom1209.png" alt="Crown of rainbows" width="48" height="48"></a></td>
+<td><strong>Crown of rainbows</strong></td>
+<td>Own <strong>1,200 prisms</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1210.png"><img src="./assets/generated-icons/SheetCustom1210.png" alt="Radiant consummation" width="48" height="48"></a></td>
+<td><strong>Radiant consummation</strong></td>
+<td>Own <strong>1,250 prisms</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1421.png"><img src="./assets/generated-icons/SheetCustom1421.png" alt="Photons pay dividends" width="48" height="48"></a></td>
+<td><strong>Photons pay dividends</strong></td>
+<td>Make <strong>100 septendecillion cookies</strong> just from prisms</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1422.png"><img src="./assets/generated-icons/SheetCustom1422.png" alt="Spectral surplus" width="48" height="48"></a></td>
+<td><strong>Spectral surplus</strong></td>
+<td>Make <strong>100 octodecillion cookies</strong> just from prisms</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1423.png"><img src="./assets/generated-icons/SheetCustom1423.png" alt="Dawn of plenty" width="48" height="48"></a></td>
+<td><strong>Dawn of plenty</strong></td>
+<td>Make <strong>100 novemdecillion cookies</strong> just from prisms</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1019.png"><img src="./assets/generated-icons/SheetCustom1019.png" alt="Master of refraction" width="48" height="48"></a></td>
+<td><strong>Master of refraction</strong></td>
+<td>Reach <strong>level 15</strong> Prisms</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1020.png"><img src="./assets/generated-icons/SheetCustom1020.png" alt="Keeper of the seven hues" width="48" height="48"></a></td>
+<td><strong>Keeper of the seven hues</strong></td>
+<td>Reach <strong>level 20</strong> Prisms</td>
+</tr>
+</tbody>
+</table>
 
 #### Chancemaker (16 Achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom1700.png" alt="Beginner's lucked-in" width="48" height="48"> | **Beginner's lucked-in** | Own **750 chancemakers** |
-| <img src="assets/generated-icons/SheetCustom1701.png" alt="Risk it for the biscuit" width="48" height="48"> | **Risk it for the biscuit** | Own **800 chancemakers** |
-| <img src="assets/generated-icons/SheetCustom1702.png" alt="Roll, baby, roll" width="48" height="48"> | **Roll, baby, roll** | Own **850 chancemakers** |
-| <img src="assets/generated-icons/SheetCustom1703.png" alt="Luck be a ladyfinger" width="48" height="48"> | **Luck be a ladyfinger** | Own **900 chancemakers** |
-| <img src="assets/generated-icons/SheetCustom1704.png" alt="RNG on the range" width="48" height="48"> | **RNG on the range** | Own **950 chancemakers** |
-| <img src="assets/generated-icons/SheetCustom1705.png" alt="Monte Carlo kitchen" width="48" height="48"> | **Monte Carlo kitchen** | Own **1,000 chancemakers** |
-| <img src="assets/generated-icons/SheetCustom1706.png" alt="Gambler's fallacy, baker's edition" width="48" height="48"> | **Gambler's fallacy, baker's edition** | Own **1,050 chancemakers** |
-| <img src="assets/generated-icons/SheetCustom1707.png" alt="Schrödinger's jackpot" width="48" height="48"> | **Schrödinger's jackpot** | Own **1,100 chancemakers** |
-| <img src="assets/generated-icons/SheetCustom1708.png" alt="RNGesus take the wheel" width="48" height="48"> | **RNGesus take the wheel** | Own **1,150 chancemakers** |
-| <img src="assets/generated-icons/SheetCustom1709.png" alt="Hand of Fate: Full House" width="48" height="48"> | **Hand of Fate: Full House** | Own **1,200 chancemakers** |
-| <img src="assets/generated-icons/SheetCustom1710.png" alt="RNG seed of fortune" width="48" height="48"> | **RNG seed of fortune** | Own **1,250 chancemakers** |
-| <img src="assets/generated-icons/SheetCustom1821.png" alt="Against all odds &amp; ends" width="48" height="48"> | **Against all odds & ends** | Make **1 octodecillion cookies** just from chancemakers |
-| <img src="assets/generated-icons/SheetCustom1822.png" alt="Monte Carlo windfall" width="48" height="48"> | **Monte Carlo windfall** | Make **1 novemdecillion cookies** just from chancemakers |
-| <img src="assets/generated-icons/SheetCustom1823.png" alt="Fate-backed securities" width="48" height="48"> | **Fate-backed securities** | Make **1 vigintillion cookies** just from chancemakers |
-| <img src="assets/generated-icons/SheetCustom1419.png" alt="Seedkeeper of Fortune" width="48" height="48"> | **Seedkeeper of Fortune** | Reach **level 15** Chancemakers |
-| <img src="assets/generated-icons/SheetCustom1420.png" alt="Master of Maybe" width="48" height="48"> | **Master of Maybe** | Reach **level 20** Chancemakers |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1700.png"><img src="./assets/generated-icons/SheetCustom1700.png" alt="Beginner's lucked-in" width="48" height="48"></a></td>
+<td><strong>Beginner's lucked-in</strong></td>
+<td>Own <strong>750 chancemakers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1701.png"><img src="./assets/generated-icons/SheetCustom1701.png" alt="Risk it for the biscuit" width="48" height="48"></a></td>
+<td><strong>Risk it for the biscuit</strong></td>
+<td>Own <strong>800 chancemakers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1702.png"><img src="./assets/generated-icons/SheetCustom1702.png" alt="Roll, baby, roll" width="48" height="48"></a></td>
+<td><strong>Roll, baby, roll</strong></td>
+<td>Own <strong>850 chancemakers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1703.png"><img src="./assets/generated-icons/SheetCustom1703.png" alt="Luck be a ladyfinger" width="48" height="48"></a></td>
+<td><strong>Luck be a ladyfinger</strong></td>
+<td>Own <strong>900 chancemakers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1704.png"><img src="./assets/generated-icons/SheetCustom1704.png" alt="RNG on the range" width="48" height="48"></a></td>
+<td><strong>RNG on the range</strong></td>
+<td>Own <strong>950 chancemakers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1705.png"><img src="./assets/generated-icons/SheetCustom1705.png" alt="Monte Carlo kitchen" width="48" height="48"></a></td>
+<td><strong>Monte Carlo kitchen</strong></td>
+<td>Own <strong>1,000 chancemakers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1706.png"><img src="./assets/generated-icons/SheetCustom1706.png" alt="Gambler's fallacy, baker's edition" width="48" height="48"></a></td>
+<td><strong>Gambler's fallacy, baker's edition</strong></td>
+<td>Own <strong>1,050 chancemakers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1707.png"><img src="./assets/generated-icons/SheetCustom1707.png" alt="Schrödinger's jackpot" width="48" height="48"></a></td>
+<td><strong>Schrödinger's jackpot</strong></td>
+<td>Own <strong>1,100 chancemakers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1708.png"><img src="./assets/generated-icons/SheetCustom1708.png" alt="RNGesus take the wheel" width="48" height="48"></a></td>
+<td><strong>RNGesus take the wheel</strong></td>
+<td>Own <strong>1,150 chancemakers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1709.png"><img src="./assets/generated-icons/SheetCustom1709.png" alt="Hand of Fate: Full House" width="48" height="48"></a></td>
+<td><strong>Hand of Fate: Full House</strong></td>
+<td>Own <strong>1,200 chancemakers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1710.png"><img src="./assets/generated-icons/SheetCustom1710.png" alt="RNG seed of fortune" width="48" height="48"></a></td>
+<td><strong>RNG seed of fortune</strong></td>
+<td>Own <strong>1,250 chancemakers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1821.png"><img src="./assets/generated-icons/SheetCustom1821.png" alt="Against all odds &amp; ends" width="48" height="48"></a></td>
+<td><strong>Against all odds & ends</strong></td>
+<td>Make <strong>1 octodecillion cookies</strong> just from chancemakers</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1822.png"><img src="./assets/generated-icons/SheetCustom1822.png" alt="Monte Carlo windfall" width="48" height="48"></a></td>
+<td><strong>Monte Carlo windfall</strong></td>
+<td>Make <strong>1 novemdecillion cookies</strong> just from chancemakers</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1823.png"><img src="./assets/generated-icons/SheetCustom1823.png" alt="Fate-backed securities" width="48" height="48"></a></td>
+<td><strong>Fate-backed securities</strong></td>
+<td>Make <strong>1 vigintillion cookies</strong> just from chancemakers</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1419.png"><img src="./assets/generated-icons/SheetCustom1419.png" alt="Seedkeeper of Fortune" width="48" height="48"></a></td>
+<td><strong>Seedkeeper of Fortune</strong></td>
+<td>Reach <strong>level 15</strong> Chancemakers</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1420.png"><img src="./assets/generated-icons/SheetCustom1420.png" alt="Master of Maybe" width="48" height="48"></a></td>
+<td><strong>Master of Maybe</strong></td>
+<td>Reach <strong>level 20</strong> Chancemakers</td>
+</tr>
+</tbody>
+</table>
 
 #### Fractal Engine (16 Achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom1800.png" alt="Copy-paste-ry" width="48" height="48"> | **Copy-paste-ry** | Own **750 fractal engines** |
-| <img src="assets/generated-icons/SheetCustom1801.png" alt="Again, but smaller" width="48" height="48"> | **Again, but smaller** | Own **800 fractal engines** |
-| <img src="assets/generated-icons/SheetCustom1802.png" alt="Edge-case frosting" width="48" height="48"> | **Edge-case frosting** | Own **850 fractal engines** |
-| <img src="assets/generated-icons/SheetCustom1803.png" alt="Mandelbread set" width="48" height="48"> | **Mandelbread set** | Own **900 fractal engines** |
-| <img src="assets/generated-icons/SheetCustom1804.png" alt="Strange attractor, stranger baker" width="48" height="48"> | **Strange attractor, stranger baker** | Own **950 fractal engines** |
-| <img src="assets/generated-icons/SheetCustom1805.png" alt="Recursive taste test" width="48" height="48"> | **Recursive taste test** | Own **1,000 fractal engines** |
-| <img src="assets/generated-icons/SheetCustom1806.png" alt="Zoom &amp; enhance &amp; enhance" width="48" height="48"> | **Zoom & enhance & enhance** | Own **1,050 fractal engines** |
-| <img src="assets/generated-icons/SheetCustom1807.png" alt="The limit does not exist" width="48" height="48"> | **The limit does not exist** | Own **1,100 fractal engines** |
-| <img src="assets/generated-icons/SheetCustom1808.png" alt="Halting? Never heard of it" width="48" height="48"> | **Halting? Never heard of it** | Own **1,150 fractal engines** |
-| <img src="assets/generated-icons/SheetCustom1809.png" alt="The set contains you" width="48" height="48"> | **The set contains you** | Own **1,200 fractal engines** |
-| <img src="assets/generated-icons/SheetCustom1810.png" alt="Emperor of self-similarity" width="48" height="48"> | **Emperor of self-similarity** | Own **1,250 fractal engines** |
-| <img src="assets/generated-icons/SheetCustom1921.png" alt="Infinite series surplus" width="48" height="48"> | **Infinite series surplus** | Make **10 octodecillion cookies** just from fractal engines |
-| <img src="assets/generated-icons/SheetCustom1922.png" alt="Geometric mean feast" width="48" height="48"> | **Geometric mean feast** | Make **10 novemdecillion cookies** just from fractal engines |
-| <img src="assets/generated-icons/SheetCustom1923.png" alt="Fractal jackpot" width="48" height="48"> | **Fractal jackpot** | Make **10 vigintillion cookies** just from fractal engines |
-| <img src="assets/generated-icons/SheetCustom1519.png" alt="Archfractal" width="48" height="48"> | **Archfractal** | Reach **level 15** Fractal Engines |
-| <img src="assets/generated-icons/SheetCustom1520.png" alt="Lord of Infinite Detail" width="48" height="48"> | **Lord of Infinite Detail** | Reach **level 20** Fractal Engines |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1800.png"><img src="./assets/generated-icons/SheetCustom1800.png" alt="Copy-paste-ry" width="48" height="48"></a></td>
+<td><strong>Copy-paste-ry</strong></td>
+<td>Own <strong>750 fractal engines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1801.png"><img src="./assets/generated-icons/SheetCustom1801.png" alt="Again, but smaller" width="48" height="48"></a></td>
+<td><strong>Again, but smaller</strong></td>
+<td>Own <strong>800 fractal engines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1802.png"><img src="./assets/generated-icons/SheetCustom1802.png" alt="Edge-case frosting" width="48" height="48"></a></td>
+<td><strong>Edge-case frosting</strong></td>
+<td>Own <strong>850 fractal engines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1803.png"><img src="./assets/generated-icons/SheetCustom1803.png" alt="Mandelbread set" width="48" height="48"></a></td>
+<td><strong>Mandelbread set</strong></td>
+<td>Own <strong>900 fractal engines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1804.png"><img src="./assets/generated-icons/SheetCustom1804.png" alt="Strange attractor, stranger baker" width="48" height="48"></a></td>
+<td><strong>Strange attractor, stranger baker</strong></td>
+<td>Own <strong>950 fractal engines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1805.png"><img src="./assets/generated-icons/SheetCustom1805.png" alt="Recursive taste test" width="48" height="48"></a></td>
+<td><strong>Recursive taste test</strong></td>
+<td>Own <strong>1,000 fractal engines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1806.png"><img src="./assets/generated-icons/SheetCustom1806.png" alt="Zoom &amp; enhance &amp; enhance" width="48" height="48"></a></td>
+<td><strong>Zoom & enhance & enhance</strong></td>
+<td>Own <strong>1,050 fractal engines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1807.png"><img src="./assets/generated-icons/SheetCustom1807.png" alt="The limit does not exist" width="48" height="48"></a></td>
+<td><strong>The limit does not exist</strong></td>
+<td>Own <strong>1,100 fractal engines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1808.png"><img src="./assets/generated-icons/SheetCustom1808.png" alt="Halting? Never heard of it" width="48" height="48"></a></td>
+<td><strong>Halting? Never heard of it</strong></td>
+<td>Own <strong>1,150 fractal engines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1809.png"><img src="./assets/generated-icons/SheetCustom1809.png" alt="The set contains you" width="48" height="48"></a></td>
+<td><strong>The set contains you</strong></td>
+<td>Own <strong>1,200 fractal engines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1810.png"><img src="./assets/generated-icons/SheetCustom1810.png" alt="Emperor of self-similarity" width="48" height="48"></a></td>
+<td><strong>Emperor of self-similarity</strong></td>
+<td>Own <strong>1,250 fractal engines</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1921.png"><img src="./assets/generated-icons/SheetCustom1921.png" alt="Infinite series surplus" width="48" height="48"></a></td>
+<td><strong>Infinite series surplus</strong></td>
+<td>Make <strong>10 octodecillion cookies</strong> just from fractal engines</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1922.png"><img src="./assets/generated-icons/SheetCustom1922.png" alt="Geometric mean feast" width="48" height="48"></a></td>
+<td><strong>Geometric mean feast</strong></td>
+<td>Make <strong>10 novemdecillion cookies</strong> just from fractal engines</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1923.png"><img src="./assets/generated-icons/SheetCustom1923.png" alt="Fractal jackpot" width="48" height="48"></a></td>
+<td><strong>Fractal jackpot</strong></td>
+<td>Make <strong>10 vigintillion cookies</strong> just from fractal engines</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1519.png"><img src="./assets/generated-icons/SheetCustom1519.png" alt="Archfractal" width="48" height="48"></a></td>
+<td><strong>Archfractal</strong></td>
+<td>Reach <strong>level 15</strong> Fractal Engines</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1520.png"><img src="./assets/generated-icons/SheetCustom1520.png" alt="Lord of Infinite Detail" width="48" height="48"></a></td>
+<td><strong>Lord of Infinite Detail</strong></td>
+<td>Reach <strong>level 20</strong> Fractal Engines</td>
+</tr>
+</tbody>
+</table>
 
 #### Javascript Console (16 Achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom1900.png" alt="F12, open sesame" width="48" height="48"> | **F12, open sesame** | Own **750 javascript consoles** |
-| <img src="assets/generated-icons/SheetCustom1901.png" alt="console.log('crumbs')" width="48" height="48"> | **console.log('crumbs')** | Own **800 javascript consoles** |
-| <img src="assets/generated-icons/SheetCustom1902.png" alt="Semicolons optional, sprinkles mandatory" width="48" height="48"> | **Semicolons optional, sprinkles mandatory** | Own **850 javascript consoles** |
-| <img src="assets/generated-icons/SheetCustom1903.png" alt="Undefined is not a function (nor a cookie)" width="48" height="48"> | **Undefined is not a function (nor a cookie)** | Own **900 javascript consoles** |
-| <img src="assets/generated-icons/SheetCustom1904.png" alt="await fresh_from_oven()" width="48" height="48"> | **await fresh_from_oven()** | Own **950 javascript consoles** |
-| <img src="assets/generated-icons/SheetCustom1905.png" alt="Event loop-de-loop" width="48" height="48"> | **Event loop-de-loop** | Own **1,000 javascript consoles** |
-| <img src="assets/generated-icons/SheetCustom1906.png" alt="Regexorcism" width="48" height="48"> | **Regexorcism** | Own **1,050 javascript consoles** |
-| <img src="assets/generated-icons/SheetCustom1907.png" alt="Infinite scroll of dough" width="48" height="48"> | **Infinite scroll of dough** | Own **1,100 javascript consoles** |
-| <img src="assets/generated-icons/SheetCustom1908.png" alt="Unhandled promise confection" width="48" height="48"> | **Unhandled promise confection** | Own **1,150 javascript consoles** |
-| <img src="assets/generated-icons/SheetCustom1909.png" alt="Single-threaded, single-minded" width="48" height="48"> | **Single-threaded, single-minded** | Own **1,200 javascript consoles** |
-| <img src="assets/generated-icons/SheetCustom1910.png" alt="Emperor of Runtime" width="48" height="48"> | **Emperor of Runtime** | Own **1,250 javascript consoles** |
-| <img src="assets/generated-icons/SheetCustom2021.png" alt="Cookies per second()++" width="48" height="48"> | **Cookies per second()++** | Make **100 octodecillion cookies** just from javascript consoles |
-| <img src="assets/generated-icons/SheetCustom2022.png" alt="Promise.all(paydays)" width="48" height="48"> | **Promise.all(paydays)** | Make **100 novemdecillion cookies** just from javascript consoles |
-| <img src="assets/generated-icons/SheetCustom2023.png" alt="Async and ye shall receive" width="48" height="48"> | **Async and ye shall receive** | Make **100 vigintillion cookies** just from javascript consoles |
-| <img src="assets/generated-icons/SheetCustom1619.png" alt="Stack tracer" width="48" height="48"> | **Stack tracer** | Reach **level 15** Javascript Consoles |
-| <img src="assets/generated-icons/SheetCustom1620.png" alt="Event-loop overlord" width="48" height="48"> | **Event-loop overlord** | Reach **level 20** Javascript Consoles |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1900.png"><img src="./assets/generated-icons/SheetCustom1900.png" alt="F12, open sesame" width="48" height="48"></a></td>
+<td><strong>F12, open sesame</strong></td>
+<td>Own <strong>750 javascript consoles</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1901.png"><img src="./assets/generated-icons/SheetCustom1901.png" alt="console.log('crumbs')" width="48" height="48"></a></td>
+<td><strong>console.log('crumbs')</strong></td>
+<td>Own <strong>800 javascript consoles</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1902.png"><img src="./assets/generated-icons/SheetCustom1902.png" alt="Semicolons optional, sprinkles mandatory" width="48" height="48"></a></td>
+<td><strong>Semicolons optional, sprinkles mandatory</strong></td>
+<td>Own <strong>850 javascript consoles</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1903.png"><img src="./assets/generated-icons/SheetCustom1903.png" alt="Undefined is not a function (nor a cookie)" width="48" height="48"></a></td>
+<td><strong>Undefined is not a function (nor a cookie)</strong></td>
+<td>Own <strong>900 javascript consoles</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1904.png"><img src="./assets/generated-icons/SheetCustom1904.png" alt="await fresh_from_oven()" width="48" height="48"></a></td>
+<td><strong>await fresh_from_oven()</strong></td>
+<td>Own <strong>950 javascript consoles</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1905.png"><img src="./assets/generated-icons/SheetCustom1905.png" alt="Event loop-de-loop" width="48" height="48"></a></td>
+<td><strong>Event loop-de-loop</strong></td>
+<td>Own <strong>1,000 javascript consoles</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1906.png"><img src="./assets/generated-icons/SheetCustom1906.png" alt="Regexorcism" width="48" height="48"></a></td>
+<td><strong>Regexorcism</strong></td>
+<td>Own <strong>1,050 javascript consoles</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1907.png"><img src="./assets/generated-icons/SheetCustom1907.png" alt="Infinite scroll of dough" width="48" height="48"></a></td>
+<td><strong>Infinite scroll of dough</strong></td>
+<td>Own <strong>1,100 javascript consoles</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1908.png"><img src="./assets/generated-icons/SheetCustom1908.png" alt="Unhandled promise confection" width="48" height="48"></a></td>
+<td><strong>Unhandled promise confection</strong></td>
+<td>Own <strong>1,150 javascript consoles</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1909.png"><img src="./assets/generated-icons/SheetCustom1909.png" alt="Single-threaded, single-minded" width="48" height="48"></a></td>
+<td><strong>Single-threaded, single-minded</strong></td>
+<td>Own <strong>1,200 javascript consoles</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1910.png"><img src="./assets/generated-icons/SheetCustom1910.png" alt="Emperor of Runtime" width="48" height="48"></a></td>
+<td><strong>Emperor of Runtime</strong></td>
+<td>Own <strong>1,250 javascript consoles</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2021.png"><img src="./assets/generated-icons/SheetCustom2021.png" alt="Cookies per second()++" width="48" height="48"></a></td>
+<td><strong>Cookies per second()++</strong></td>
+<td>Make <strong>100 octodecillion cookies</strong> just from javascript consoles</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2022.png"><img src="./assets/generated-icons/SheetCustom2022.png" alt="Promise.all(paydays)" width="48" height="48"></a></td>
+<td><strong>Promise.all(paydays)</strong></td>
+<td>Make <strong>100 novemdecillion cookies</strong> just from javascript consoles</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2023.png"><img src="./assets/generated-icons/SheetCustom2023.png" alt="Async and ye shall receive" width="48" height="48"></a></td>
+<td><strong>Async and ye shall receive</strong></td>
+<td>Make <strong>100 vigintillion cookies</strong> just from javascript consoles</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1619.png"><img src="./assets/generated-icons/SheetCustom1619.png" alt="Stack tracer" width="48" height="48"></a></td>
+<td><strong>Stack tracer</strong></td>
+<td>Reach <strong>level 15</strong> Javascript Consoles</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1620.png"><img src="./assets/generated-icons/SheetCustom1620.png" alt="Event-loop overlord" width="48" height="48"></a></td>
+<td><strong>Event-loop overlord</strong></td>
+<td>Reach <strong>level 20</strong> Javascript Consoles</td>
+</tr>
+</tbody>
+</table>
 
 #### Idleverse (16 Achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom2000.png" alt="Pick-a-verse, any verse" width="48" height="48"> | **Pick-a-verse, any verse** | Own **750 idleverses** |
-| <img src="assets/generated-icons/SheetCustom2001.png" alt="Open in new universe" width="48" height="48"> | **Open in new universe** | Own **800 idleverses** |
-| <img src="assets/generated-icons/SheetCustom2002.png" alt="Meanwhile, in a parallel tab" width="48" height="48"> | **Meanwhile, in a parallel tab** | Own **850 idleverses** |
-| <img src="assets/generated-icons/SheetCustom2003.png" alt="Idle hands, infinite plans" width="48" height="48"> | **Idle hands, infinite plans** | Own **900 idleverses** |
-| <img src="assets/generated-icons/SheetCustom2004.png" alt="Press any world to continue" width="48" height="48"> | **Press any world to continue** | Own **950 idleverses** |
-| <img src="assets/generated-icons/SheetCustom2005.png" alt="NPC in someone else's save" width="48" height="48"> | **NPC in someone else's save** | Own **1,000 idleverses** |
-| <img src="assets/generated-icons/SheetCustom2006.png" alt="Cookie of Theseus" width="48" height="48"> | **Cookie of Theseus** | Own **1,050 idleverses** |
-| <img src="assets/generated-icons/SheetCustom2007.png" alt="Crossover episode" width="48" height="48"> | **Crossover episode** | Own **1,100 idleverses** |
-| <img src="assets/generated-icons/SheetCustom2008.png" alt="Cosmic load balancer" width="48" height="48"> | **Cosmic load balancer** | Own **1,150 idleverses** |
-| <img src="assets/generated-icons/SheetCustom2009.png" alt="Prime instance" width="48" height="48"> | **Prime instance** | Own **1,200 idleverses** |
-| <img src="assets/generated-icons/SheetCustom2010.png" alt="The bakery at the end of everything" width="48" height="48"> | **The bakery at the end of everything** | Own **1,250 idleverses** |
-| <img src="assets/generated-icons/SheetCustom2121.png" alt="Crossover dividends" width="48" height="48"> | **Crossover dividends** | Make **1 novemdecillion cookies** just from idleverses |
-| <img src="assets/generated-icons/SheetCustom2122.png" alt="Many-Worlds ROI" width="48" height="48"> | **Many-Worlds ROI** | Make **100 vigintillion cookies** just from idleverses |
-| <img src="assets/generated-icons/SheetCustom2123.png" alt="Continuity bonus" width="48" height="48"> | **Continuity bonus** | Make **10 duovigintillion cookies** just from idleverses |
-| <img src="assets/generated-icons/SheetCustom1719.png" alt="Canon custodian" width="48" height="48"> | **Canon custodian** | Reach **level 15** Idleverses |
-| <img src="assets/generated-icons/SheetCustom1720.png" alt="Keeper of the Uncountable" width="48" height="48"> | **Keeper of the Uncountable** | Reach **level 20** Idleverses |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2000.png"><img src="./assets/generated-icons/SheetCustom2000.png" alt="Pick-a-verse, any verse" width="48" height="48"></a></td>
+<td><strong>Pick-a-verse, any verse</strong></td>
+<td>Own <strong>750 idleverses</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2001.png"><img src="./assets/generated-icons/SheetCustom2001.png" alt="Open in new universe" width="48" height="48"></a></td>
+<td><strong>Open in new universe</strong></td>
+<td>Own <strong>800 idleverses</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2002.png"><img src="./assets/generated-icons/SheetCustom2002.png" alt="Meanwhile, in a parallel tab" width="48" height="48"></a></td>
+<td><strong>Meanwhile, in a parallel tab</strong></td>
+<td>Own <strong>850 idleverses</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2003.png"><img src="./assets/generated-icons/SheetCustom2003.png" alt="Idle hands, infinite plans" width="48" height="48"></a></td>
+<td><strong>Idle hands, infinite plans</strong></td>
+<td>Own <strong>900 idleverses</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2004.png"><img src="./assets/generated-icons/SheetCustom2004.png" alt="Press any world to continue" width="48" height="48"></a></td>
+<td><strong>Press any world to continue</strong></td>
+<td>Own <strong>950 idleverses</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2005.png"><img src="./assets/generated-icons/SheetCustom2005.png" alt="NPC in someone else's save" width="48" height="48"></a></td>
+<td><strong>NPC in someone else's save</strong></td>
+<td>Own <strong>1,000 idleverses</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2006.png"><img src="./assets/generated-icons/SheetCustom2006.png" alt="Cookie of Theseus" width="48" height="48"></a></td>
+<td><strong>Cookie of Theseus</strong></td>
+<td>Own <strong>1,050 idleverses</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2007.png"><img src="./assets/generated-icons/SheetCustom2007.png" alt="Crossover episode" width="48" height="48"></a></td>
+<td><strong>Crossover episode</strong></td>
+<td>Own <strong>1,100 idleverses</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2008.png"><img src="./assets/generated-icons/SheetCustom2008.png" alt="Cosmic load balancer" width="48" height="48"></a></td>
+<td><strong>Cosmic load balancer</strong></td>
+<td>Own <strong>1,150 idleverses</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2009.png"><img src="./assets/generated-icons/SheetCustom2009.png" alt="Prime instance" width="48" height="48"></a></td>
+<td><strong>Prime instance</strong></td>
+<td>Own <strong>1,200 idleverses</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2010.png"><img src="./assets/generated-icons/SheetCustom2010.png" alt="The bakery at the end of everything" width="48" height="48"></a></td>
+<td><strong>The bakery at the end of everything</strong></td>
+<td>Own <strong>1,250 idleverses</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2121.png"><img src="./assets/generated-icons/SheetCustom2121.png" alt="Crossover dividends" width="48" height="48"></a></td>
+<td><strong>Crossover dividends</strong></td>
+<td>Make <strong>1 novemdecillion cookies</strong> just from idleverses</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2122.png"><img src="./assets/generated-icons/SheetCustom2122.png" alt="Many-Worlds ROI" width="48" height="48"></a></td>
+<td><strong>Many-Worlds ROI</strong></td>
+<td>Make <strong>100 vigintillion cookies</strong> just from idleverses</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2123.png"><img src="./assets/generated-icons/SheetCustom2123.png" alt="Continuity bonus" width="48" height="48"></a></td>
+<td><strong>Continuity bonus</strong></td>
+<td>Make <strong>10 duovigintillion cookies</strong> just from idleverses</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1719.png"><img src="./assets/generated-icons/SheetCustom1719.png" alt="Canon custodian" width="48" height="48"></a></td>
+<td><strong>Canon custodian</strong></td>
+<td>Reach <strong>level 15</strong> Idleverses</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1720.png"><img src="./assets/generated-icons/SheetCustom1720.png" alt="Keeper of the Uncountable" width="48" height="48"></a></td>
+<td><strong>Keeper of the Uncountable</strong></td>
+<td>Reach <strong>level 20</strong> Idleverses</td>
+</tr>
+</tbody>
+</table>
 
 #### Cortex Baker (16 Achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom2100.png" alt="Gray matter batter" width="48" height="48"> | **Gray matter batter** | Own **750 cortex bakers** |
-| <img src="assets/generated-icons/SheetCustom2101.png" alt="Outside the cookie box" width="48" height="48"> | **Outside the cookie box** | Own **800 cortex bakers** |
-| <img src="assets/generated-icons/SheetCustom2102.png" alt="Prefrontal glaze" width="48" height="48"> | **Prefrontal glaze** | Own **850 cortex bakers** |
-| <img src="assets/generated-icons/SheetCustom2103.png" alt="Snap, crackle, synapse" width="48" height="48"> | **Snap, crackle, synapse** | Own **900 cortex bakers** |
-| <img src="assets/generated-icons/SheetCustom2104.png" alt="Temporal batch processing" width="48" height="48"> | **Temporal batch processing** | Own **950 cortex bakers** |
-| <img src="assets/generated-icons/SheetCustom2105.png" alt="Cogito, ergo crumb" width="48" height="48"> | **Cogito, ergo crumb** | Own **1,000 cortex bakers** |
-| <img src="assets/generated-icons/SheetCustom2106.png" alt="Galaxy brain, local oven" width="48" height="48"> | **Galaxy brain, local oven** | Own **1,050 cortex bakers** |
-| <img src="assets/generated-icons/SheetCustom2107.png" alt="The bicameral ovens" width="48" height="48"> | **The bicameral ovens** | Own **1,100 cortex bakers** |
-| <img src="assets/generated-icons/SheetCustom2108.png" alt="Theory of crumb" width="48" height="48"> | **Theory of crumb** | Own **1,150 cortex bakers** |
-| <img src="assets/generated-icons/SheetCustom2109.png" alt="Lobe service" width="48" height="48"> | **Lobe service** | Own **1,200 cortex bakers** |
-| <img src="assets/generated-icons/SheetCustom2110.png" alt="Mind the monarch" width="48" height="48"> | **Mind the monarch** | Own **1,250 cortex bakers** |
-| <img src="assets/generated-icons/SheetCustom2221.png" alt="Brainstorm dividend" width="48" height="48"> | **Brainstorm dividend** | Make **10 novemdecillion cookies** just from cortex bakers |
-| <img src="assets/generated-icons/SheetCustom2222.png" alt="Thought economy boom" width="48" height="48"> | **Thought economy boom** | Make **10 vigintillion cookies** just from cortex bakers |
-| <img src="assets/generated-icons/SheetCustom2223.png" alt="Neural net worth" width="48" height="48"> | **Neural net worth** | Make **10 unvigintillion cookies** just from cortex bakers |
-| <img src="assets/generated-icons/SheetCustom1819.png" alt="Chief Thinker Officer" width="48" height="48"> | **Chief Thinker Officer** | Reach **level 15** Cortex Bakers |
-| <img src="assets/generated-icons/SheetCustom1820.png" alt="Mind over batter" width="48" height="48"> | **Mind over batter** | Reach **level 20** Cortex Bakers |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2100.png"><img src="./assets/generated-icons/SheetCustom2100.png" alt="Gray matter batter" width="48" height="48"></a></td>
+<td><strong>Gray matter batter</strong></td>
+<td>Own <strong>750 cortex bakers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2101.png"><img src="./assets/generated-icons/SheetCustom2101.png" alt="Outside the cookie box" width="48" height="48"></a></td>
+<td><strong>Outside the cookie box</strong></td>
+<td>Own <strong>800 cortex bakers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2102.png"><img src="./assets/generated-icons/SheetCustom2102.png" alt="Prefrontal glaze" width="48" height="48"></a></td>
+<td><strong>Prefrontal glaze</strong></td>
+<td>Own <strong>850 cortex bakers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2103.png"><img src="./assets/generated-icons/SheetCustom2103.png" alt="Snap, crackle, synapse" width="48" height="48"></a></td>
+<td><strong>Snap, crackle, synapse</strong></td>
+<td>Own <strong>900 cortex bakers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2104.png"><img src="./assets/generated-icons/SheetCustom2104.png" alt="Temporal batch processing" width="48" height="48"></a></td>
+<td><strong>Temporal batch processing</strong></td>
+<td>Own <strong>950 cortex bakers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2105.png"><img src="./assets/generated-icons/SheetCustom2105.png" alt="Cogito, ergo crumb" width="48" height="48"></a></td>
+<td><strong>Cogito, ergo crumb</strong></td>
+<td>Own <strong>1,000 cortex bakers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2106.png"><img src="./assets/generated-icons/SheetCustom2106.png" alt="Galaxy brain, local oven" width="48" height="48"></a></td>
+<td><strong>Galaxy brain, local oven</strong></td>
+<td>Own <strong>1,050 cortex bakers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2107.png"><img src="./assets/generated-icons/SheetCustom2107.png" alt="The bicameral ovens" width="48" height="48"></a></td>
+<td><strong>The bicameral ovens</strong></td>
+<td>Own <strong>1,100 cortex bakers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2108.png"><img src="./assets/generated-icons/SheetCustom2108.png" alt="Theory of crumb" width="48" height="48"></a></td>
+<td><strong>Theory of crumb</strong></td>
+<td>Own <strong>1,150 cortex bakers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2109.png"><img src="./assets/generated-icons/SheetCustom2109.png" alt="Lobe service" width="48" height="48"></a></td>
+<td><strong>Lobe service</strong></td>
+<td>Own <strong>1,200 cortex bakers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2110.png"><img src="./assets/generated-icons/SheetCustom2110.png" alt="Mind the monarch" width="48" height="48"></a></td>
+<td><strong>Mind the monarch</strong></td>
+<td>Own <strong>1,250 cortex bakers</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2221.png"><img src="./assets/generated-icons/SheetCustom2221.png" alt="Brainstorm dividend" width="48" height="48"></a></td>
+<td><strong>Brainstorm dividend</strong></td>
+<td>Make <strong>10 novemdecillion cookies</strong> just from cortex bakers</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2222.png"><img src="./assets/generated-icons/SheetCustom2222.png" alt="Thought economy boom" width="48" height="48"></a></td>
+<td><strong>Thought economy boom</strong></td>
+<td>Make <strong>10 vigintillion cookies</strong> just from cortex bakers</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2223.png"><img src="./assets/generated-icons/SheetCustom2223.png" alt="Neural net worth" width="48" height="48"></a></td>
+<td><strong>Neural net worth</strong></td>
+<td>Make <strong>10 unvigintillion cookies</strong> just from cortex bakers</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1819.png"><img src="./assets/generated-icons/SheetCustom1819.png" alt="Chief Thinker Officer" width="48" height="48"></a></td>
+<td><strong>Chief Thinker Officer</strong></td>
+<td>Reach <strong>level 15</strong> Cortex Bakers</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1820.png"><img src="./assets/generated-icons/SheetCustom1820.png" alt="Mind over batter" width="48" height="48"></a></td>
+<td><strong>Mind over batter</strong></td>
+<td>Reach <strong>level 20</strong> Cortex Bakers</td>
+</tr>
+</tbody>
+</table>
 
 #### You (16 Achievements)
-| Icon | Achievement | Requirement |
-| --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom2200.png" alt="Me, myself, and Icing" width="48" height="48"> | **Me, myself, and Icing** | Own **750 You** |
-| <img src="assets/generated-icons/SheetCustom2201.png" alt="Copy of a copy" width="48" height="48"> | **Copy of a copy** | Own **800 You** |
-| <img src="assets/generated-icons/SheetCustom2202.png" alt="Echo chamber" width="48" height="48"> | **Echo chamber** | Own **850 You** |
-| <img src="assets/generated-icons/SheetCustom2203.png" alt="Self checkout" width="48" height="48"> | **Self checkout** | Own **900 You** |
-| <img src="assets/generated-icons/SheetCustom2204.png" alt="You v2.0" width="48" height="48"> | **You v2.0** | Own **950 You** |
-| <img src="assets/generated-icons/SheetCustom2205.png" alt="You v2.0.1 emergency hot fix" width="48" height="48"> | **You v2.0.1 emergency hot fix** | Own **1,000 You** |
-| <img src="assets/generated-icons/SheetCustom2206.png" alt="Me, Inc." width="48" height="48"> | **Me, Inc.** | Own **1,050 You** |
-| <img src="assets/generated-icons/SheetCustom2207.png" alt="Council of Me" width="48" height="48"> | **Council of Me** | Own **1,100 You** |
-| <img src="assets/generated-icons/SheetCustom2208.png" alt="I, Legion" width="48" height="48"> | **I, Legion** | Own **1,150 You** |
-| <img src="assets/generated-icons/SheetCustom2209.png" alt="The one true you" width="48" height="48"> | **The one true you** | Own **1,200 You** |
-| <img src="assets/generated-icons/SheetCustom2210.png" alt="Sovereign of the self" width="48" height="48"> | **Sovereign of the self** | Own **1,250 You** |
-| <img src="assets/generated-icons/SheetCustom2321.png" alt="Personal growth" width="48" height="48"> | **Personal growth** | Make **100 novemdecillion cookies** just from You |
-| <img src="assets/generated-icons/SheetCustom2322.png" alt="Economies of selves" width="48" height="48"> | **Economies of selves** | Make **100 vigintillion cookies** just from You |
-| <img src="assets/generated-icons/SheetCustom2323.png" alt="Self-sustaining singularity" width="48" height="48"> | **Self-sustaining singularity** | Make **100 unvigintillion cookies** just from You |
-| <img src="assets/generated-icons/SheetCustom1919.png" alt="Identity custodian" width="48" height="48"> | **Identity custodian** | Reach **level 15** Yous |
-| <img src="assets/generated-icons/SheetCustom1920.png" alt="First Person Plural" width="48" height="48"> | **First Person Plural** | Reach **level 20** Yous |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2200.png"><img src="./assets/generated-icons/SheetCustom2200.png" alt="Me, myself, and Icing" width="48" height="48"></a></td>
+<td><strong>Me, myself, and Icing</strong></td>
+<td>Own <strong>750 You</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2201.png"><img src="./assets/generated-icons/SheetCustom2201.png" alt="Copy of a copy" width="48" height="48"></a></td>
+<td><strong>Copy of a copy</strong></td>
+<td>Own <strong>800 You</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2202.png"><img src="./assets/generated-icons/SheetCustom2202.png" alt="Echo chamber" width="48" height="48"></a></td>
+<td><strong>Echo chamber</strong></td>
+<td>Own <strong>850 You</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2203.png"><img src="./assets/generated-icons/SheetCustom2203.png" alt="Self checkout" width="48" height="48"></a></td>
+<td><strong>Self checkout</strong></td>
+<td>Own <strong>900 You</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2204.png"><img src="./assets/generated-icons/SheetCustom2204.png" alt="You v2.0" width="48" height="48"></a></td>
+<td><strong>You v2.0</strong></td>
+<td>Own <strong>950 You</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2205.png"><img src="./assets/generated-icons/SheetCustom2205.png" alt="You v2.0.1 emergency hot fix" width="48" height="48"></a></td>
+<td><strong>You v2.0.1 emergency hot fix</strong></td>
+<td>Own <strong>1,000 You</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2206.png"><img src="./assets/generated-icons/SheetCustom2206.png" alt="Me, Inc." width="48" height="48"></a></td>
+<td><strong>Me, Inc.</strong></td>
+<td>Own <strong>1,050 You</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2207.png"><img src="./assets/generated-icons/SheetCustom2207.png" alt="Council of Me" width="48" height="48"></a></td>
+<td><strong>Council of Me</strong></td>
+<td>Own <strong>1,100 You</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2208.png"><img src="./assets/generated-icons/SheetCustom2208.png" alt="I, Legion" width="48" height="48"></a></td>
+<td><strong>I, Legion</strong></td>
+<td>Own <strong>1,150 You</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2209.png"><img src="./assets/generated-icons/SheetCustom2209.png" alt="The one true you" width="48" height="48"></a></td>
+<td><strong>The one true you</strong></td>
+<td>Own <strong>1,200 You</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2210.png"><img src="./assets/generated-icons/SheetCustom2210.png" alt="Sovereign of the self" width="48" height="48"></a></td>
+<td><strong>Sovereign of the self</strong></td>
+<td>Own <strong>1,250 You</strong></td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2321.png"><img src="./assets/generated-icons/SheetCustom2321.png" alt="Personal growth" width="48" height="48"></a></td>
+<td><strong>Personal growth</strong></td>
+<td>Make <strong>100 novemdecillion cookies</strong> just from You</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2322.png"><img src="./assets/generated-icons/SheetCustom2322.png" alt="Economies of selves" width="48" height="48"></a></td>
+<td><strong>Economies of selves</strong></td>
+<td>Make <strong>100 vigintillion cookies</strong> just from You</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2323.png"><img src="./assets/generated-icons/SheetCustom2323.png" alt="Self-sustaining singularity" width="48" height="48"></a></td>
+<td><strong>Self-sustaining singularity</strong></td>
+<td>Make <strong>100 unvigintillion cookies</strong> just from You</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1919.png"><img src="./assets/generated-icons/SheetCustom1919.png" alt="Identity custodian" width="48" height="48"></a></td>
+<td><strong>Identity custodian</strong></td>
+<td>Reach <strong>level 15</strong> Yous</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1920.png"><img src="./assets/generated-icons/SheetCustom1920.png" alt="First Person Plural" width="48" height="48"></a></td>
+<td><strong>First Person Plural</strong></td>
+<td>Reach <strong>level 20</strong> Yous</td>
+</tr>
+</tbody>
+</table>
 
 # New Upgrades
 
 ### The Great Orders of the Cookie Age
 *Long before ovens were kindled and sugar knew its name, there arose six Orders, bakers, mystics, and crumb-guardians whose deeds shaped the fate of cookies forevermore. Each sworn to a creed, each guarding secrets older than the dough itself. - Transcribed by Crumblekeeper Thryce, 3rd Sifter of the Sacred Pantry*
 
-| Icon | Upgrade | Requirement | Cost | Description |
-| --- | --- | --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom1413.png" alt="Order of the Golden Crumb" width="48" height="48"> | **Order of the Golden Crumb** | - Requires [Vanilla Star achievement](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#completionist-achievements-7-achievements) | 250 years of base CpS, but no less than 1 duovigintillion cookies | Golden cookies appear **5%** more often. |
-| <img src="assets/generated-icons/SheetCustom1513.png" alt="Order of the Impossible Batch" width="48" height="48"> | **Order of the Impossible Batch** | - Requires The [Final Challenger achievement](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#challenge-achievements-19-achievements) | 250 years of base CpS, but no less than 1 duovigintillion cookies | Golden cookies appear **5%** more often. |
-| <img src="assets/generated-icons/SheetCustom1813.png" alt="Order of the Shining Spoon" width="48" height="48"> | **Order of the Shining Spoon** | - Requires all [Combo achievements](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#combo-achievements-7-achievements) | 250 years of base CpS, but no less than 1 duovigintillion cookies | Golden cookie effects last **5%** longer. |
-| <img src="assets/generated-icons/SheetCustom1713.png" alt="Order of the Cookie Eclipse" width="48" height="48"> | **Order of the Cookie Eclipse** | - Requires all [Grandmapocalypse achievements](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#grandmapocalypse-achievements-15-achievements) | 250 years of base CpS, but no less than 1 duovigintillion cookies | Golden cookie effects last **5%** longer. |
-| <img src="assets/generated-icons/SheetCustom1613.png" alt="Order of the Enchanted Whisk" width="48" height="48"> | **Order of the Enchanted Whisk** | - Requires all [Grimoire achievements](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#grimoire) | 250 years of base CpS, but no less than 1 duovigintillion cookies | Frenzy, Click Frenzy, and Elder Frenzy buffs are **5%** more powerful. |
-| <img src="assets/generated-icons/SheetCustom1913.png" alt="Order of the Eternal Cookie" width="48" height="48"> | **Order of the Eternal Cookie** | - Requires all previous Great Orders of the Cookie Age upgrades | 1000 years of base CpS, but no less than 1 trevigintillion cookies | Golden cookies appear **5%** more often and effects last **5%** longer. |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Upgrade Name</th>
+<th>Unlock Condition</th>
+<th>Base Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1413.png"><img src="./assets/generated-icons/SheetCustom1413.png" alt="Order of the Golden Crumb" width="48" height="48"></a></td>
+<td><strong>Order of the Golden Crumb</strong></td>
+<td>Requires <a href="https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#completionist-achievements-7-achievements">Vanilla Star achievement</a></td>
+<td>250 years of base CpS, but no less than 1 duovigintillion cookies</td>
+<td>Golden cookies appear <strong>5%</strong> more often.</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1513.png"><img src="./assets/generated-icons/SheetCustom1513.png" alt="Order of the Impossible Batch" width="48" height="48"></a></td>
+<td><strong>Order of the Impossible Batch</strong></td>
+<td>Requires The <a href="https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#challenge-achievements-19-achievements">Final Challenger achievement</a></td>
+<td>250 years of base CpS, but no less than 1 duovigintillion cookies</td>
+<td>Golden cookies appear <strong>5%</strong> more often.</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1813.png"><img src="./assets/generated-icons/SheetCustom1813.png" alt="Order of the Shining Spoon" width="48" height="48"></a></td>
+<td><strong>Order of the Shining Spoon</strong></td>
+<td>Requires all <a href="https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#combo-achievements-7-achievements">Combo achievements</a></td>
+<td>250 years of base CpS, but no less than 1 duovigintillion cookies</td>
+<td>Golden cookie effects last <strong>5%</strong> longer.</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1713.png"><img src="./assets/generated-icons/SheetCustom1713.png" alt="Order of the Cookie Eclipse" width="48" height="48"></a></td>
+<td><strong>Order of the Cookie Eclipse</strong></td>
+<td>Requires all <a href="https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#grandmapocalypse-achievements-15-achievements">Grandmapocalypse achievements</a></td>
+<td>250 years of base CpS, but no less than 1 duovigintillion cookies</td>
+<td>Golden cookie effects last <strong>5%</strong> longer.</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1613.png"><img src="./assets/generated-icons/SheetCustom1613.png" alt="Order of the Enchanted Whisk" width="48" height="48"></a></td>
+<td><strong>Order of the Enchanted Whisk</strong></td>
+<td>Requires all <a href="https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#grimoire">Grimoire achievements</a></td>
+<td>250 years of base CpS, but no less than 1 duovigintillion cookies</td>
+<td>Frenzy, Click Frenzy, and Elder Frenzy buffs are <strong>5%</strong> more powerful.</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1913.png"><img src="./assets/generated-icons/SheetCustom1913.png" alt="Order of the Eternal Cookie" width="48" height="48"></a></td>
+<td><strong>Order of the Eternal Cookie</strong></td>
+<td>Requires all previous Great Orders of the Cookie Age upgrades</td>
+<td>1000 years of base CpS, but no less than 1 trevigintillion cookies</td>
+<td>Golden cookies appear <strong>5%</strong> more often and effects last <strong>5%</strong> longer.</td>
+</tr>
+</tbody>
+</table>
+
 
 ### Kitten Upgrades (11 New Kitten Upgrades)
 *Note: Expansion Kittens are the knock-off brand: cute, cuddly, and noticeably worse at their job. Don’t expect them to pull their weight like original vanilla flavored kittens, but they sure as heck do try hard.*
 
-| Icon | Upgrade | Requirement | Cost | Description |
-| --- | --- | --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom1600.png" alt="Kitten unpaid interns" width="48" height="48"> | **Kitten unpaid interns** | - Requires 500 achievements | **900 sexdecillion cookies** | Provides small production bonus |
-| <img src="assets/generated-icons/SheetCustom1601.png" alt="Kitten overpaid &quot;temporary&quot; contractors" width="48" height="48"> | **Kitten overpaid "temporary" contractors** | - Requires 550 achievements | **900 septendecillion cookies** | Provides small production bonus |
-| <img src="assets/generated-icons/SheetCustom1602.png" alt="Kitten remote workers" width="48" height="48"> | **Kitten remote workers** | - Requires 600 achievements | **900 octodecillion cookies** | Provides small production bonus |
-| <img src="assets/generated-icons/SheetCustom1603.png" alt="Kitten scrum masters" width="48" height="48"> | **Kitten scrum masters** | - Requires 650 achievements | **900 novemdecillion cookies** | Provides small production bonus |
-| <img src="assets/generated-icons/SheetCustom1604.png" alt="Kitten UX designers" width="48" height="48"> | **Kitten UX designers** | - Requires 700 achievements | **900 vigintillion cookies** | Provides small production bonus |
-| <img src="assets/generated-icons/SheetCustom1008.png" alt="Kitten janitors" width="48" height="48"> | **Kitten janitors** | - Requires 750 achievements | **900 unvigintillion cookies** | Provides small production bonus |
-| <img src="assets/generated-icons/SheetCustom1009.png" alt="Kitten coffee fetchers" width="48" height="48"> | **Kitten coffee fetchers** | - Requires 800 achievements | **900 duovigintillion cookies** | Provides small production bonus |
-| <img src="assets/generated-icons/SheetCustom1010.png" alt="Kitten personal assistants" width="48" height="48"> | **Kitten personal assistants** | - Requires 850 achievements | **900 trevigintillion cookies** | Provides small production bonus |
-| <img src="assets/generated-icons/SheetCustom1608.png" alt="Kitten vice presidents" width="48" height="48"> | **Kitten vice presidents** | - Requires 900 achievements | **900 quattuorvigintillion cookies** | Provides small production bonus |
-| <img src="assets/generated-icons/SheetCustom1609.png" alt="Kitten board members" width="48" height="48"> | **Kitten board members** | - Requires 950 achievements | **900 quinvigintillion cookies** | Provides small production bonus |
-| <img src="assets/generated-icons/SheetCustom1610.png" alt="Kitten founders" width="48" height="48"> | **Kitten founders** | - Requires 1000 achievements | **900 sexvigintillion cookies** | Provides small production bonus |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Upgrade Name</th>
+<th>Unlock Condition</th>
+<th>Base Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1600.png"><img src="./assets/generated-icons/SheetCustom1600.png" alt="Kitten unpaid interns" width="48" height="48"></a></td>
+<td><strong>Kitten unpaid interns</strong></td>
+<td>Requires 500 achievements</td>
+<td><strong>900 sexdecillion cookies</strong></td>
+<td>Provides small production bonus</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1601.png"><img src="./assets/generated-icons/SheetCustom1601.png" alt="Kitten overpaid &quot;temporary&quot; contractors" width="48" height="48"></a></td>
+<td><strong>Kitten overpaid "temporary" contractors</strong></td>
+<td>Requires 550 achievements</td>
+<td><strong>900 septendecillion cookies</strong></td>
+<td>Provides small production bonus</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1602.png"><img src="./assets/generated-icons/SheetCustom1602.png" alt="Kitten remote workers" width="48" height="48"></a></td>
+<td><strong>Kitten remote workers</strong></td>
+<td>Requires 600 achievements</td>
+<td><strong>900 octodecillion cookies</strong></td>
+<td>Provides small production bonus</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1603.png"><img src="./assets/generated-icons/SheetCustom1603.png" alt="Kitten scrum masters" width="48" height="48"></a></td>
+<td><strong>Kitten scrum masters</strong></td>
+<td>Requires 650 achievements</td>
+<td><strong>900 novemdecillion cookies</strong></td>
+<td>Provides small production bonus</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1604.png"><img src="./assets/generated-icons/SheetCustom1604.png" alt="Kitten UX designers" width="48" height="48"></a></td>
+<td><strong>Kitten UX designers</strong></td>
+<td>Requires 700 achievements</td>
+<td><strong>900 vigintillion cookies</strong></td>
+<td>Provides small production bonus</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1008.png"><img src="./assets/generated-icons/SheetCustom1008.png" alt="Kitten janitors" width="48" height="48"></a></td>
+<td><strong>Kitten janitors</strong></td>
+<td>Requires 750 achievements</td>
+<td><strong>900 unvigintillion cookies</strong></td>
+<td>Provides small production bonus</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1009.png"><img src="./assets/generated-icons/SheetCustom1009.png" alt="Kitten coffee fetchers" width="48" height="48"></a></td>
+<td><strong>Kitten coffee fetchers</strong></td>
+<td>Requires 800 achievements</td>
+<td><strong>900 duovigintillion cookies</strong></td>
+<td>Provides small production bonus</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1010.png"><img src="./assets/generated-icons/SheetCustom1010.png" alt="Kitten personal assistants" width="48" height="48"></a></td>
+<td><strong>Kitten personal assistants</strong></td>
+<td>Requires 850 achievements</td>
+<td><strong>900 trevigintillion cookies</strong></td>
+<td>Provides small production bonus</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1608.png"><img src="./assets/generated-icons/SheetCustom1608.png" alt="Kitten vice presidents" width="48" height="48"></a></td>
+<td><strong>Kitten vice presidents</strong></td>
+<td>Requires 900 achievements</td>
+<td><strong>900 quattuorvigintillion cookies</strong></td>
+<td>Provides small production bonus</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1609.png"><img src="./assets/generated-icons/SheetCustom1609.png" alt="Kitten board members" width="48" height="48"></a></td>
+<td><strong>Kitten board members</strong></td>
+<td>Requires 950 achievements</td>
+<td><strong>900 quinvigintillion cookies</strong></td>
+<td>Provides small production bonus</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1610.png"><img src="./assets/generated-icons/SheetCustom1610.png" alt="Kitten founders" width="48" height="48"></a></td>
+<td><strong>Kitten founders</strong></td>
+<td>Requires 1000 achievements</td>
+<td><strong>900 sexvigintillion cookies</strong></td>
+<td>Provides small production bonus</td>
+</tr>
+</tbody>
+</table>
+
 
 ### Generic Upgrades
-| Icon | Upgrade | Requirement | Cost | Description |
-| --- | --- | --- | --- | --- |
-| <img src="assets/generated-icons/SheetVanilla3404.png" alt="Box of improved cookies" width="48" height="48"> | **Box of improved cookies** | - Requires 25 unvigintillion cookies baked | **25 unvigintillion cookies** | Contains an assortment of scientifically improved cookies, 25 cookies to a box. |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Upgrade Name</th>
+<th>Unlock Condition</th>
+<th>Base Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla3404.png"><img src="./assets/generated-icons/SheetVanilla3404.png" alt="Box of improved cookies" width="48" height="48"></a></td>
+<td><strong>Box of improved cookies</strong></td>
+<td>Requires 25 unvigintillion cookies baked</td>
+<td><strong>25 unvigintillion cookies</strong></td>
+<td>Contains an assortment of scientifically improved cookies, 25 cookies to a box.</td>
+</tr>
+</tbody>
+</table>
+
 
 ### Cookie Production Upgrades (25 New Cookies)
-| Icon | Upgrade | Requirement | Cost | Description |
-| --- | --- | --- | --- | --- |
-| <img src="assets/generated-icons/SheetVanilla0203.png" alt="Improved Plain cookies" width="48" height="48"> | **Improved Plain cookies** | - Requires Box of improved cookies<br>- Requires 250 unvigintillion cookies baked | **500 unvigintillion cookies** | 2% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla0703.png" alt="Improved Sugar cookies" width="48" height="48"> | **Improved Sugar cookies** | - Requires Box of improved cookies<br>- Requires 500 unvigintillion cookies baked | **1 duovigintillion cookies** | 2% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla0003.png" alt="Improved Oatmeal raisin cookies" width="48" height="48"> | **Improved Oatmeal raisin cookies** | - Requires Box of improved cookies<br>- Requires 1 duovigintillion cookies baked | **2 duovigintillion cookies** | 2% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla0103.png" alt="Improved Peanut butter cookies" width="48" height="48"> | **Improved Peanut butter cookies** | - Requires Box of improved cookies<br>- Requires 2 duovigintillion cookies baked | **4 duovigintillion cookies** | 2% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla0303.png" alt="Improved Coconut cookies" width="48" height="48"> | **Improved Coconut cookies** | - Requires Box of improved cookies<br>- Requires 4 duovigintillion cookies baked | **8 duovigintillion cookies** | 2% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla0503.png" alt="Improved Macadamia nut cookies" width="48" height="48"> | **Improved Macadamia nut cookies** | - Requires Box of improved cookies<br>- Requires 8 duovigintillion cookies baked | **16 duovigintillion cookies** | 2% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla2127.png" alt="Improved Almond cookies" width="48" height="48"> | **Improved Almond cookies** | - Requires Box of improved cookies<br>- Requires 16 duovigintillion cookies baked | **32 duovigintillion cookies** | 2% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla2227.png" alt="Improved Hazelnut cookies" width="48" height="48"> | **Improved Hazelnut cookies** | - Requires Box of improved cookies<br>- Requires 32.5 duovigintillion cookies baked | **65 duovigintillion cookies** | 2% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla2327.png" alt="Improved Walnut cookies" width="48" height="48"> | **Improved Walnut cookies** | - Requires Box of improved cookies<br>- Requires 65 duovigintillion cookies baked | **130 duovigintillion cookies** | 2% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla3207.png" alt="Improved Cashew cookies" width="48" height="48"> | **Improved Cashew cookies** | - Requires Box of improved cookies<br>- Requires 130 duovigintillion cookies baked | **260 duovigintillion cookies** | 2% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla0403.png" alt="Improved White chocolate cookies" width="48" height="48"> | **Improved White chocolate cookies** | - Requires Box of improved cookies<br>- Requires 260 duovigintillion cookies baked | **520 duovigintillion cookies** | 2% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla3307.png" alt="Improved Milk chocolate cookies" width="48" height="48"> | **Improved Milk chocolate cookies** | - Requires Box of improved cookies<br>- Requires 500 duovigintillion cookies baked | **1 trevigintillion cookies** | 2% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla0603.png" alt="Improved Double-chip cookies" width="48" height="48"> | **Improved Double-chip cookies** | - Requires Box of improved cookies<br>- Requires 1 trevigintillion cookies baked | **2 trevigintillion cookies** | 2% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla0803.png" alt="Improved White chocolate macadamia nut cookies" width="48" height="48"> | **Improved White chocolate macadamia nut cookies** | - Requires Box of improved cookies<br>- Requires 2 trevigintillion cookies baked | **4 trevigintillion cookies** | 2% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla0903.png" alt="Improved All-chocolate cookies" width="48" height="48"> | **Improved All-chocolate cookies** | - Requires Box of improved cookies<br>- Requires 4 trevigintillion cookies baked | **8 trevigintillion cookies** | 2% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla1003.png" alt="Improved Dark chocolate-coated cookies" width="48" height="48"> | **Improved Dark chocolate-coated cookies** | - Requires Box of improved cookies<br>- Requires 8 trevigintillion cookies baked | **16 trevigintillion cookies** | 2% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla1103.png" alt="Improved White chocolate-coated cookies" width="48" height="48"> | **Improved White chocolate-coated cookies** | - Requires Box of improved cookies<br>- Requires 16 trevigintillion cookies baked | **32 trevigintillion cookies** | 2% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla0004.png" alt="Improved Eclipse cookies" width="48" height="48"> | **Improved Eclipse cookies** | - Requires Box of improved cookies<br>- Requires 32.5 trevigintillion cookies baked | **65 trevigintillion cookies** | 2% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla0104.png" alt="Improved Zebra cookies" width="48" height="48"> | **Improved Zebra cookies** | - Requires Box of improved cookies<br>- Requires 65 trevigintillion cookies baked | **130 trevigintillion cookies** | 2% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla0204.png" alt="Improved Snickerdoodles" width="48" height="48"> | **Improved Snickerdoodles** | - Requires Box of improved cookies<br>- Requires 130 trevigintillion cookies baked | **260 trevigintillion cookies** | 2% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla0304.png" alt="Improved Stroopwafels" width="48" height="48"> | **Improved Stroopwafels** | - Requires Box of improved cookies<br>- Requires 260 trevigintillion cookies baked | **520 trevigintillion cookies** | 2% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla0404.png" alt="Improved Macaroons" width="48" height="48"> | **Improved Macaroons** | - Requires Box of improved cookies<br>- Requires 500 trevigintillion cookies baked | **1 quattuorvigintillion cookies** | 2% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla0504.png" alt="Improved Empire biscuits" width="48" height="48"> | **Improved Empire biscuits** | - Requires Box of improved cookies<br>- Requires 1 quattuorvigintillion cookies baked | **2 quattuorvigintillion cookies** | 2% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla1203.png" alt="Improved Madeleines" width="48" height="48"> | **Improved Madeleines** | - Requires Box of improved cookies<br>- Requires 2 quattuorvigintillion cookies baked | **4 quattuorvigintillion cookies** | 2% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla1303.png" alt="Improved Palmiers" width="48" height="48"> | **Improved Palmiers** | - Requires Box of improved cookies<br>- Requires 5 quattuorvigintillion cookies baked | **10 quattuorvigintillion cookies** | 2% cookie production increase |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Upgrade Name</th>
+<th>Unlock Condition</th>
+<th>Base Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0203.png"><img src="./assets/generated-icons/SheetVanilla0203.png" alt="Improved Plain cookies" width="48" height="48"></a></td>
+<td><strong>Improved Plain cookies</strong></td>
+<td>Requires Box of improved cookies and Requires 250 unvigintillion cookies baked</td>
+<td><strong>500 unvigintillion cookies</strong></td>
+<td>2% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0703.png"><img src="./assets/generated-icons/SheetVanilla0703.png" alt="Improved Sugar cookies" width="48" height="48"></a></td>
+<td><strong>Improved Sugar cookies</strong></td>
+<td>Requires Box of improved cookies and Requires 500 unvigintillion cookies baked</td>
+<td><strong>1 duovigintillion cookies</strong></td>
+<td>2% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0003.png"><img src="./assets/generated-icons/SheetVanilla0003.png" alt="Improved Oatmeal raisin cookies" width="48" height="48"></a></td>
+<td><strong>Improved Oatmeal raisin cookies</strong></td>
+<td>Requires Box of improved cookies and Requires 1 duovigintillion cookies baked</td>
+<td><strong>2 duovigintillion cookies</strong></td>
+<td>2% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0103.png"><img src="./assets/generated-icons/SheetVanilla0103.png" alt="Improved Peanut butter cookies" width="48" height="48"></a></td>
+<td><strong>Improved Peanut butter cookies</strong></td>
+<td>Requires Box of improved cookies and Requires 2 duovigintillion cookies baked</td>
+<td><strong>4 duovigintillion cookies</strong></td>
+<td>2% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0303.png"><img src="./assets/generated-icons/SheetVanilla0303.png" alt="Improved Coconut cookies" width="48" height="48"></a></td>
+<td><strong>Improved Coconut cookies</strong></td>
+<td>Requires Box of improved cookies and Requires 4 duovigintillion cookies baked</td>
+<td><strong>8 duovigintillion cookies</strong></td>
+<td>2% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0503.png"><img src="./assets/generated-icons/SheetVanilla0503.png" alt="Improved Macadamia nut cookies" width="48" height="48"></a></td>
+<td><strong>Improved Macadamia nut cookies</strong></td>
+<td>Requires Box of improved cookies and Requires 8 duovigintillion cookies baked</td>
+<td><strong>16 duovigintillion cookies</strong></td>
+<td>2% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2127.png"><img src="./assets/generated-icons/SheetVanilla2127.png" alt="Improved Almond cookies" width="48" height="48"></a></td>
+<td><strong>Improved Almond cookies</strong></td>
+<td>Requires Box of improved cookies and Requires 16 duovigintillion cookies baked</td>
+<td><strong>32 duovigintillion cookies</strong></td>
+<td>2% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2227.png"><img src="./assets/generated-icons/SheetVanilla2227.png" alt="Improved Hazelnut cookies" width="48" height="48"></a></td>
+<td><strong>Improved Hazelnut cookies</strong></td>
+<td>Requires Box of improved cookies and Requires 32.5 duovigintillion cookies baked</td>
+<td><strong>65 duovigintillion cookies</strong></td>
+<td>2% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2327.png"><img src="./assets/generated-icons/SheetVanilla2327.png" alt="Improved Walnut cookies" width="48" height="48"></a></td>
+<td><strong>Improved Walnut cookies</strong></td>
+<td>Requires Box of improved cookies and Requires 65 duovigintillion cookies baked</td>
+<td><strong>130 duovigintillion cookies</strong></td>
+<td>2% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla3207.png"><img src="./assets/generated-icons/SheetVanilla3207.png" alt="Improved Cashew cookies" width="48" height="48"></a></td>
+<td><strong>Improved Cashew cookies</strong></td>
+<td>Requires Box of improved cookies and Requires 130 duovigintillion cookies baked</td>
+<td><strong>260 duovigintillion cookies</strong></td>
+<td>2% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0403.png"><img src="./assets/generated-icons/SheetVanilla0403.png" alt="Improved White chocolate cookies" width="48" height="48"></a></td>
+<td><strong>Improved White chocolate cookies</strong></td>
+<td>Requires Box of improved cookies and Requires 260 duovigintillion cookies baked</td>
+<td><strong>520 duovigintillion cookies</strong></td>
+<td>2% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla3307.png"><img src="./assets/generated-icons/SheetVanilla3307.png" alt="Improved Milk chocolate cookies" width="48" height="48"></a></td>
+<td><strong>Improved Milk chocolate cookies</strong></td>
+<td>Requires Box of improved cookies and Requires 500 duovigintillion cookies baked</td>
+<td><strong>1 trevigintillion cookies</strong></td>
+<td>2% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0603.png"><img src="./assets/generated-icons/SheetVanilla0603.png" alt="Improved Double-chip cookies" width="48" height="48"></a></td>
+<td><strong>Improved Double-chip cookies</strong></td>
+<td>Requires Box of improved cookies and Requires 1 trevigintillion cookies baked</td>
+<td><strong>2 trevigintillion cookies</strong></td>
+<td>2% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0803.png"><img src="./assets/generated-icons/SheetVanilla0803.png" alt="Improved White chocolate macadamia nut cookies" width="48" height="48"></a></td>
+<td><strong>Improved White chocolate macadamia nut cookies</strong></td>
+<td>Requires Box of improved cookies and Requires 2 trevigintillion cookies baked</td>
+<td><strong>4 trevigintillion cookies</strong></td>
+<td>2% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0903.png"><img src="./assets/generated-icons/SheetVanilla0903.png" alt="Improved All-chocolate cookies" width="48" height="48"></a></td>
+<td><strong>Improved All-chocolate cookies</strong></td>
+<td>Requires Box of improved cookies and Requires 4 trevigintillion cookies baked</td>
+<td><strong>8 trevigintillion cookies</strong></td>
+<td>2% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla1003.png"><img src="./assets/generated-icons/SheetVanilla1003.png" alt="Improved Dark chocolate-coated cookies" width="48" height="48"></a></td>
+<td><strong>Improved Dark chocolate-coated cookies</strong></td>
+<td>Requires Box of improved cookies and Requires 8 trevigintillion cookies baked</td>
+<td><strong>16 trevigintillion cookies</strong></td>
+<td>2% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla1103.png"><img src="./assets/generated-icons/SheetVanilla1103.png" alt="Improved White chocolate-coated cookies" width="48" height="48"></a></td>
+<td><strong>Improved White chocolate-coated cookies</strong></td>
+<td>Requires Box of improved cookies and Requires 16 trevigintillion cookies baked</td>
+<td><strong>32 trevigintillion cookies</strong></td>
+<td>2% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0004.png"><img src="./assets/generated-icons/SheetVanilla0004.png" alt="Improved Eclipse cookies" width="48" height="48"></a></td>
+<td><strong>Improved Eclipse cookies</strong></td>
+<td>Requires Box of improved cookies and Requires 32.5 trevigintillion cookies baked</td>
+<td><strong>65 trevigintillion cookies</strong></td>
+<td>2% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0104.png"><img src="./assets/generated-icons/SheetVanilla0104.png" alt="Improved Zebra cookies" width="48" height="48"></a></td>
+<td><strong>Improved Zebra cookies</strong></td>
+<td>Requires Box of improved cookies and Requires 65 trevigintillion cookies baked</td>
+<td><strong>130 trevigintillion cookies</strong></td>
+<td>2% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0204.png"><img src="./assets/generated-icons/SheetVanilla0204.png" alt="Improved Snickerdoodles" width="48" height="48"></a></td>
+<td><strong>Improved Snickerdoodles</strong></td>
+<td>Requires Box of improved cookies and Requires 130 trevigintillion cookies baked</td>
+<td><strong>260 trevigintillion cookies</strong></td>
+<td>2% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0304.png"><img src="./assets/generated-icons/SheetVanilla0304.png" alt="Improved Stroopwafels" width="48" height="48"></a></td>
+<td><strong>Improved Stroopwafels</strong></td>
+<td>Requires Box of improved cookies and Requires 260 trevigintillion cookies baked</td>
+<td><strong>520 trevigintillion cookies</strong></td>
+<td>2% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0404.png"><img src="./assets/generated-icons/SheetVanilla0404.png" alt="Improved Macaroons" width="48" height="48"></a></td>
+<td><strong>Improved Macaroons</strong></td>
+<td>Requires Box of improved cookies and Requires 500 trevigintillion cookies baked</td>
+<td><strong>1 quattuorvigintillion cookies</strong></td>
+<td>2% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla0504.png"><img src="./assets/generated-icons/SheetVanilla0504.png" alt="Improved Empire biscuits" width="48" height="48"></a></td>
+<td><strong>Improved Empire biscuits</strong></td>
+<td>Requires Box of improved cookies and Requires 1 quattuorvigintillion cookies baked</td>
+<td><strong>2 quattuorvigintillion cookies</strong></td>
+<td>2% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla1203.png"><img src="./assets/generated-icons/SheetVanilla1203.png" alt="Improved Madeleines" width="48" height="48"></a></td>
+<td><strong>Improved Madeleines</strong></td>
+<td>Requires Box of improved cookies and Requires 2 quattuorvigintillion cookies baked</td>
+<td><strong>4 quattuorvigintillion cookies</strong></td>
+<td>2% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla1303.png"><img src="./assets/generated-icons/SheetVanilla1303.png" alt="Improved Palmiers" width="48" height="48"></a></td>
+<td><strong>Improved Palmiers</strong></td>
+<td>Requires Box of improved cookies and Requires 5 quattuorvigintillion cookies baked</td>
+<td><strong>10 quattuorvigintillion cookies</strong></td>
+<td>2% cookie production increase</td>
+</tr>
+</tbody>
+</table>
+
 
 ### Building Count Reward Cookies
-| Icon | Upgrade | Requirement | Cost | Description |
-| --- | --- | --- | --- | --- |
-| <img src="assets/generated-icons/SheetVanilla2708.png" alt="Improved Milk chocolate butter biscuit" width="48" height="48"> | **Improved Milk chocolate butter biscuit** | - Requires at least 750 of every building type | **1 duovigintillion cookies** | 10% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla2709.png" alt="Improved Dark chocolate butter biscuit" width="48" height="48"> | **Improved Dark chocolate butter biscuit** | - Requires at least 800 of every building type | **1 trevigintillion cookies** | 10% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla2809.png" alt="Improved White chocolate butter biscuit" width="48" height="48"> | **Improved White chocolate butter biscuit** | - Requires at least 850 of every building type | **1 quattuorvigintillion cookies** | 10% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla2808.png" alt="Improved Ruby chocolate butter biscuit" width="48" height="48"> | **Improved Ruby chocolate butter biscuit** | - Requires at least 900 of every building type | **1 quinvigintillion cookies** | 10% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla2610.png" alt="Improved Lavender chocolate butter biscuit" width="48" height="48"> | **Improved Lavender chocolate butter biscuit** | - Requires at least 950 of every building type | **1 sexvigintillion cookies** | 10% cookie production increase |
-| <img src="assets/generated-icons/SheetVanilla2426.png" alt="Improved Synthetic chocolate green honey butter biscuit" width="48" height="48"> | **Improved Synthetic chocolate green honey butter biscuit** | - Requires at least 1,000 of every building type | **1 septenvigintillion cookies** | 10% cookie production increase |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Upgrade Name</th>
+<th>Unlock Condition</th>
+<th>Base Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2708.png"><img src="./assets/generated-icons/SheetVanilla2708.png" alt="Improved Milk chocolate butter biscuit" width="48" height="48"></a></td>
+<td><strong>Improved Milk chocolate butter biscuit</strong></td>
+<td>Requires at least 750 of every building type</td>
+<td><strong>1 duovigintillion cookies</strong></td>
+<td>10% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2709.png"><img src="./assets/generated-icons/SheetVanilla2709.png" alt="Improved Dark chocolate butter biscuit" width="48" height="48"></a></td>
+<td><strong>Improved Dark chocolate butter biscuit</strong></td>
+<td>Requires at least 800 of every building type</td>
+<td><strong>1 trevigintillion cookies</strong></td>
+<td>10% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2809.png"><img src="./assets/generated-icons/SheetVanilla2809.png" alt="Improved White chocolate butter biscuit" width="48" height="48"></a></td>
+<td><strong>Improved White chocolate butter biscuit</strong></td>
+<td>Requires at least 850 of every building type</td>
+<td><strong>1 quattuorvigintillion cookies</strong></td>
+<td>10% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2808.png"><img src="./assets/generated-icons/SheetVanilla2808.png" alt="Improved Ruby chocolate butter biscuit" width="48" height="48"></a></td>
+<td><strong>Improved Ruby chocolate butter biscuit</strong></td>
+<td>Requires at least 900 of every building type</td>
+<td><strong>1 quinvigintillion cookies</strong></td>
+<td>10% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2610.png"><img src="./assets/generated-icons/SheetVanilla2610.png" alt="Improved Lavender chocolate butter biscuit" width="48" height="48"></a></td>
+<td><strong>Improved Lavender chocolate butter biscuit</strong></td>
+<td>Requires at least 950 of every building type</td>
+<td><strong>1 sexvigintillion cookies</strong></td>
+<td>10% cookie production increase</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetVanilla2426.png"><img src="./assets/generated-icons/SheetVanilla2426.png" alt="Improved Synthetic chocolate green honey butter biscuit" width="48" height="48"></a></td>
+<td><strong>Improved Synthetic chocolate green honey butter biscuit</strong></td>
+<td>Requires at least 1,000 of every building type</td>
+<td><strong>1 septenvigintillion cookies</strong></td>
+<td>10% cookie production increase</td>
+</tr>
+</tbody>
+</table>
+
 
 ### Building Upgrades (Efficiency + Cost Reductions) (209 Upgrades)
 *Note: These upgrades provide cumulative 5% cost reductions for their respective buildings. Each upgrade applies a 5% discount to the remaining cost, so owning all 6 upgrades for a building provides approximately a 26.5% total discount.*
 
 ##### Grandma
-| Icon | Upgrade | Requirement | Cost | Description |
-| --- | --- | --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom0100.png" alt="Increased Social Security Checks" width="48" height="48"> | **Increased Social Security Checks** | - Requires 750 grandmas | **5 quattuordecillion cookies** | Grandmas cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0101.png" alt="Advanced knitting techniques" width="48" height="48"> | **Advanced knitting techniques** | - Requires 800 grandmas | **500 quattuordecillion cookies** | Grandmas are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0102.png" alt="Off-Brand Eyeglasses" width="48" height="48"> | **Off-Brand Eyeglasses** | - Requires 850 grandmas | **50 quindecillion cookies** | Grandmas cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0103.png" alt="Bingo night optimization" width="48" height="48"> | **Bingo night optimization** | - Requires 900 grandmas | **5 sexdecillion cookies** | Grandmas are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0104.png" alt="Plastic Walkers" width="48" height="48"> | **Plastic Walkers** | - Requires 950 grandmas | **500 sexdecillion cookies** | Grandmas cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0105.png" alt="Tea time efficiency" width="48" height="48"> | **Tea time efficiency** | - Requires 1000 grandmas | **50 septendecillion cookies** | Grandmas are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0106.png" alt="Bulk Discount Hearing Aids" width="48" height="48"> | **Bulk Discount Hearing Aids** | - Requires 1050 grandmas | **5 octodecillion cookies** | Grandmas cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0107.png" alt="Gossip-powered baking" width="48" height="48"> | **Gossip-powered baking** | - Requires 1100 grandmas | **500 octodecillion cookies** | Grandmas are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0108.png" alt="Generic Arthritis Medication" width="48" height="48"> | **Generic Arthritis Medication** | - Requires 1150 grandmas | **50 novemdecillion cookies** | Grandmas cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0109.png" alt="Senior discount mastery" width="48" height="48"> | **Senior discount mastery** | - Requires 1200 grandmas | **5 vigintillion cookies** | Grandmas are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0110.png" alt="Wholesale Denture Adhesive" width="48" height="48"> | **Wholesale Denture Adhesive** | - Requires 1250 grandmas | **500 vigintillion cookies** | Grandmas cost **5%** less |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Upgrade Name</th>
+<th>Unlock Condition</th>
+<th>Base Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0100.png"><img src="./assets/generated-icons/SheetCustom0100.png" alt="Increased Social Security Checks" width="48" height="48"></a></td>
+<td><strong>Increased Social Security Checks</strong></td>
+<td>Requires 750 grandmas</td>
+<td><strong>5 quattuordecillion cookies</strong></td>
+<td>Grandmas cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0101.png"><img src="./assets/generated-icons/SheetCustom0101.png" alt="Advanced knitting techniques" width="48" height="48"></a></td>
+<td><strong>Advanced knitting techniques</strong></td>
+<td>Requires 800 grandmas</td>
+<td><strong>500 quattuordecillion cookies</strong></td>
+<td>Grandmas are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0102.png"><img src="./assets/generated-icons/SheetCustom0102.png" alt="Off-Brand Eyeglasses" width="48" height="48"></a></td>
+<td><strong>Off-Brand Eyeglasses</strong></td>
+<td>Requires 850 grandmas</td>
+<td><strong>50 quindecillion cookies</strong></td>
+<td>Grandmas cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0103.png"><img src="./assets/generated-icons/SheetCustom0103.png" alt="Bingo night optimization" width="48" height="48"></a></td>
+<td><strong>Bingo night optimization</strong></td>
+<td>Requires 900 grandmas</td>
+<td><strong>5 sexdecillion cookies</strong></td>
+<td>Grandmas are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0104.png"><img src="./assets/generated-icons/SheetCustom0104.png" alt="Plastic Walkers" width="48" height="48"></a></td>
+<td><strong>Plastic Walkers</strong></td>
+<td>Requires 950 grandmas</td>
+<td><strong>500 sexdecillion cookies</strong></td>
+<td>Grandmas cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0105.png"><img src="./assets/generated-icons/SheetCustom0105.png" alt="Tea time efficiency" width="48" height="48"></a></td>
+<td><strong>Tea time efficiency</strong></td>
+<td>Requires 1000 grandmas</td>
+<td><strong>50 septendecillion cookies</strong></td>
+<td>Grandmas are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0106.png"><img src="./assets/generated-icons/SheetCustom0106.png" alt="Bulk Discount Hearing Aids" width="48" height="48"></a></td>
+<td><strong>Bulk Discount Hearing Aids</strong></td>
+<td>Requires 1050 grandmas</td>
+<td><strong>5 octodecillion cookies</strong></td>
+<td>Grandmas cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0107.png"><img src="./assets/generated-icons/SheetCustom0107.png" alt="Gossip-powered baking" width="48" height="48"></a></td>
+<td><strong>Gossip-powered baking</strong></td>
+<td>Requires 1100 grandmas</td>
+<td><strong>500 octodecillion cookies</strong></td>
+<td>Grandmas are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0108.png"><img src="./assets/generated-icons/SheetCustom0108.png" alt="Generic Arthritis Medication" width="48" height="48"></a></td>
+<td><strong>Generic Arthritis Medication</strong></td>
+<td>Requires 1150 grandmas</td>
+<td><strong>50 novemdecillion cookies</strong></td>
+<td>Grandmas cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0109.png"><img src="./assets/generated-icons/SheetCustom0109.png" alt="Senior discount mastery" width="48" height="48"></a></td>
+<td><strong>Senior discount mastery</strong></td>
+<td>Requires 1200 grandmas</td>
+<td><strong>5 vigintillion cookies</strong></td>
+<td>Grandmas are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0110.png"><img src="./assets/generated-icons/SheetCustom0110.png" alt="Wholesale Denture Adhesive" width="48" height="48"></a></td>
+<td><strong>Wholesale Denture Adhesive</strong></td>
+<td>Requires 1250 grandmas</td>
+<td><strong>500 vigintillion cookies</strong></td>
+<td>Grandmas cost <strong>5%</strong> less</td>
+</tr>
+</tbody>
+</table>
+
 
 ##### Farm
-| Icon | Upgrade | Requirement | Cost | Description |
-| --- | --- | --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom0200.png" alt="Biodiesel fueled tractors" width="48" height="48"> | **Biodiesel fueled tractors** | - Requires 750 farms | **50 quattuordecillion cookies** | Farms cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0201.png" alt="Hydroponic cookie cultivation" width="48" height="48"> | **Hydroponic cookie cultivation** | - Requires 800 farms | **5 quindecillion cookies** | Farms are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0202.png" alt="Free manure from clone factories" width="48" height="48"> | **Free manure from clone factories** | - Requires 850 farms | **500 quindecillion cookies** | Farms cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0203.png" alt="Vertical farming revolution" width="48" height="48"> | **Vertical farming revolution** | - Requires 900 farms | **50 sexdecillion cookies** | Farms are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0204.png" alt="Solar-powered irrigation systems" width="48" height="48"> | **Solar-powered irrigation systems** | - Requires 950 farms | **5 septendecillion cookies** | Farms cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0205.png" alt="Quantum crop rotation" width="48" height="48"> | **Quantum crop rotation** | - Requires 1000 farms | **500 septendecillion cookies** | Farms are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0206.png" alt="Bulk seed purchases" width="48" height="48"> | **Bulk seed purchases** | - Requires 1050 farms | **50 octodecillion cookies** | Farms cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0207.png" alt="Sentient soil enhancement" width="48" height="48"> | **Sentient soil enhancement** | - Requires 1100 farms | **5 novemdecillion cookies** | Farms are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0208.png" alt="Robot farm hands" width="48" height="48"> | **Robot farm hands** | - Requires 1150 farms | **500 novemdecillion cookies** | Farms cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0209.png" alt="Temporal harvest acceleration" width="48" height="48"> | **Temporal harvest acceleration** | - Requires 1200 farms | **50 vigintillion cookies** | Farms are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0210.png" alt="Vertical farming subsidies" width="48" height="48"> | **Vertical farming subsidies** | - Requires 1250 farms | **5 unvigintillion cookies** | Farms cost **5%** less |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Upgrade Name</th>
+<th>Unlock Condition</th>
+<th>Base Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0200.png"><img src="./assets/generated-icons/SheetCustom0200.png" alt="Biodiesel fueled tractors" width="48" height="48"></a></td>
+<td><strong>Biodiesel fueled tractors</strong></td>
+<td>Requires 750 farms</td>
+<td><strong>50 quattuordecillion cookies</strong></td>
+<td>Farms cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0201.png"><img src="./assets/generated-icons/SheetCustom0201.png" alt="Hydroponic cookie cultivation" width="48" height="48"></a></td>
+<td><strong>Hydroponic cookie cultivation</strong></td>
+<td>Requires 800 farms</td>
+<td><strong>5 quindecillion cookies</strong></td>
+<td>Farms are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0202.png"><img src="./assets/generated-icons/SheetCustom0202.png" alt="Free manure from clone factories" width="48" height="48"></a></td>
+<td><strong>Free manure from clone factories</strong></td>
+<td>Requires 850 farms</td>
+<td><strong>500 quindecillion cookies</strong></td>
+<td>Farms cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0203.png"><img src="./assets/generated-icons/SheetCustom0203.png" alt="Vertical farming revolution" width="48" height="48"></a></td>
+<td><strong>Vertical farming revolution</strong></td>
+<td>Requires 900 farms</td>
+<td><strong>50 sexdecillion cookies</strong></td>
+<td>Farms are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0204.png"><img src="./assets/generated-icons/SheetCustom0204.png" alt="Solar-powered irrigation systems" width="48" height="48"></a></td>
+<td><strong>Solar-powered irrigation systems</strong></td>
+<td>Requires 950 farms</td>
+<td><strong>5 septendecillion cookies</strong></td>
+<td>Farms cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0205.png"><img src="./assets/generated-icons/SheetCustom0205.png" alt="Quantum crop rotation" width="48" height="48"></a></td>
+<td><strong>Quantum crop rotation</strong></td>
+<td>Requires 1000 farms</td>
+<td><strong>500 septendecillion cookies</strong></td>
+<td>Farms are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0206.png"><img src="./assets/generated-icons/SheetCustom0206.png" alt="Bulk seed purchases" width="48" height="48"></a></td>
+<td><strong>Bulk seed purchases</strong></td>
+<td>Requires 1050 farms</td>
+<td><strong>50 octodecillion cookies</strong></td>
+<td>Farms cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0207.png"><img src="./assets/generated-icons/SheetCustom0207.png" alt="Sentient soil enhancement" width="48" height="48"></a></td>
+<td><strong>Sentient soil enhancement</strong></td>
+<td>Requires 1100 farms</td>
+<td><strong>5 novemdecillion cookies</strong></td>
+<td>Farms are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0208.png"><img src="./assets/generated-icons/SheetCustom0208.png" alt="Robot farm hands" width="48" height="48"></a></td>
+<td><strong>Robot farm hands</strong></td>
+<td>Requires 1150 farms</td>
+<td><strong>500 novemdecillion cookies</strong></td>
+<td>Farms cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0209.png"><img src="./assets/generated-icons/SheetCustom0209.png" alt="Temporal harvest acceleration" width="48" height="48"></a></td>
+<td><strong>Temporal harvest acceleration</strong></td>
+<td>Requires 1200 farms</td>
+<td><strong>50 vigintillion cookies</strong></td>
+<td>Farms are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0210.png"><img src="./assets/generated-icons/SheetCustom0210.png" alt="Vertical farming subsidies" width="48" height="48"></a></td>
+<td><strong>Vertical farming subsidies</strong></td>
+<td>Requires 1250 farms</td>
+<td><strong>5 unvigintillion cookies</strong></td>
+<td>Farms cost <strong>5%</strong> less</td>
+</tr>
+</tbody>
+</table>
+
 
 ##### Mine
-| Icon | Upgrade | Requirement | Cost | Description |
-| --- | --- | --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom0300.png" alt="Clearance shaft kits" width="48" height="48"> | **Clearance shaft kits** | - Requires 750 mines | **500 quattuordecillion cookies** | Mines cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0301.png" alt="Quantum tunneling excavation" width="48" height="48"> | **Quantum tunneling excavation** | - Requires 800 mines | **50 quindecillion cookies** | Mines are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0302.png" alt="Punch-card TNT club" width="48" height="48"> | **Punch-card TNT club** | - Requires 850 mines | **5 sexdecillion cookies** | Mines cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0303.png" alt="Neutron star compression" width="48" height="48"> | **Neutron star compression** | - Requires 900 mines | **500 sexdecillion cookies** | Mines are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0304.png" alt="Hand-me-down hardhats" width="48" height="48"> | **Hand-me-down hardhats** | - Requires 950 mines | **50 septendecillion cookies** | Mines cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0305.png" alt="Dimensional rift mining" width="48" height="48"> | **Dimensional rift mining** | - Requires 1000 mines | **5 octodecillion cookies** | Mines are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0306.png" alt="Lease-back drill rigs" width="48" height="48"> | **Lease-back drill rigs** | - Requires 1050 mines | **500 octodecillion cookies** | Mines cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0307.png" alt="Singularity core extraction" width="48" height="48"> | **Singularity core extraction** | - Requires 1100 mines | **50 novemdecillion cookies** | Mines are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0308.png" alt="Ore cartel coupons" width="48" height="48"> | **Ore cartel coupons** | - Requires 1150 mines | **5 vigintillion cookies** | Mines cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0309.png" alt="Temporal paradox drilling" width="48" height="48"> | **Temporal paradox drilling** | - Requires 1200 mines | **500 vigintillion cookies** | Mines are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0310.png" alt="Cave-in insurance kickbacks" width="48" height="48"> | **Cave-in insurance kickbacks** | - Requires 1250 mines | **50 unvigintillion cookies** | Mines cost **5%** less |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Upgrade Name</th>
+<th>Unlock Condition</th>
+<th>Base Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0300.png"><img src="./assets/generated-icons/SheetCustom0300.png" alt="Clearance shaft kits" width="48" height="48"></a></td>
+<td><strong>Clearance shaft kits</strong></td>
+<td>Requires 750 mines</td>
+<td><strong>500 quattuordecillion cookies</strong></td>
+<td>Mines cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0301.png"><img src="./assets/generated-icons/SheetCustom0301.png" alt="Quantum tunneling excavation" width="48" height="48"></a></td>
+<td><strong>Quantum tunneling excavation</strong></td>
+<td>Requires 800 mines</td>
+<td><strong>50 quindecillion cookies</strong></td>
+<td>Mines are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0302.png"><img src="./assets/generated-icons/SheetCustom0302.png" alt="Punch-card TNT club" width="48" height="48"></a></td>
+<td><strong>Punch-card TNT club</strong></td>
+<td>Requires 850 mines</td>
+<td><strong>5 sexdecillion cookies</strong></td>
+<td>Mines cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0303.png"><img src="./assets/generated-icons/SheetCustom0303.png" alt="Neutron star compression" width="48" height="48"></a></td>
+<td><strong>Neutron star compression</strong></td>
+<td>Requires 900 mines</td>
+<td><strong>500 sexdecillion cookies</strong></td>
+<td>Mines are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0304.png"><img src="./assets/generated-icons/SheetCustom0304.png" alt="Hand-me-down hardhats" width="48" height="48"></a></td>
+<td><strong>Hand-me-down hardhats</strong></td>
+<td>Requires 950 mines</td>
+<td><strong>50 septendecillion cookies</strong></td>
+<td>Mines cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0305.png"><img src="./assets/generated-icons/SheetCustom0305.png" alt="Dimensional rift mining" width="48" height="48"></a></td>
+<td><strong>Dimensional rift mining</strong></td>
+<td>Requires 1000 mines</td>
+<td><strong>5 octodecillion cookies</strong></td>
+<td>Mines are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0306.png"><img src="./assets/generated-icons/SheetCustom0306.png" alt="Lease-back drill rigs" width="48" height="48"></a></td>
+<td><strong>Lease-back drill rigs</strong></td>
+<td>Requires 1050 mines</td>
+<td><strong>500 octodecillion cookies</strong></td>
+<td>Mines cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0307.png"><img src="./assets/generated-icons/SheetCustom0307.png" alt="Singularity core extraction" width="48" height="48"></a></td>
+<td><strong>Singularity core extraction</strong></td>
+<td>Requires 1100 mines</td>
+<td><strong>50 novemdecillion cookies</strong></td>
+<td>Mines are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0308.png"><img src="./assets/generated-icons/SheetCustom0308.png" alt="Ore cartel coupons" width="48" height="48"></a></td>
+<td><strong>Ore cartel coupons</strong></td>
+<td>Requires 1150 mines</td>
+<td><strong>5 vigintillion cookies</strong></td>
+<td>Mines cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0309.png"><img src="./assets/generated-icons/SheetCustom0309.png" alt="Temporal paradox drilling" width="48" height="48"></a></td>
+<td><strong>Temporal paradox drilling</strong></td>
+<td>Requires 1200 mines</td>
+<td><strong>500 vigintillion cookies</strong></td>
+<td>Mines are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0310.png"><img src="./assets/generated-icons/SheetCustom0310.png" alt="Cave-in insurance kickbacks" width="48" height="48"></a></td>
+<td><strong>Cave-in insurance kickbacks</strong></td>
+<td>Requires 1250 mines</td>
+<td><strong>50 unvigintillion cookies</strong></td>
+<td>Mines cost <strong>5%</strong> less</td>
+</tr>
+</tbody>
+</table>
+
 
 ##### Factory
-| Icon | Upgrade | Requirement | Cost | Description |
-| --- | --- | --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom0400.png" alt="Flat-pack factory frames" width="48" height="48"> | **Flat-pack factory frames** | - Requires 750 factories | **5 quindecillion cookies** | Factories cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0401.png" alt="Quantum assembly optimization" width="48" height="48"> | **Quantum assembly optimization** | - Requires 800 factories | **500 quindecillion cookies** | Factories are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0402.png" alt="BOGO rivet bins" width="48" height="48"> | **BOGO rivet bins** | - Requires 850 factories | **50 sexdecillion cookies** | Factories cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0403.png" alt="Temporal manufacturing loops" width="48" height="48"> | **Temporal manufacturing loops** | - Requires 900 factories | **5 septendecillion cookies** | Factories are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0404.png" alt="Off-brand gear grease" width="48" height="48"> | **Off-brand gear grease** | - Requires 950 factories | **500 septendecillion cookies** | Factories cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0405.png" alt="Dimensional cookie synthesis" width="48" height="48"> | **Dimensional cookie synthesis** | - Requires 1000 factories | **50 octodecillion cookies** | Factories are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0406.png" alt="Misprint warning labels" width="48" height="48"> | **Misprint warning labels** | - Requires 1050 factories | **5 novemdecillion cookies** | Factories cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0407.png" alt="Singularity production cores" width="48" height="48"> | **Singularity production cores** | - Requires 1100 factories | **500 novemdecillion cookies** | Factories are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0408.png" alt="Pallet-jack rebates" width="48" height="48"> | **Pallet-jack rebates** | - Requires 1150 factories | **50 vigintillion cookies** | Factories cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0409.png" alt="Reality-warping assembly" width="48" height="48"> | **Reality-warping assembly** | - Requires 1200 factories | **5 unvigintillion cookies** | Factories are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0410.png" alt="Prefab cookie modules" width="48" height="48"> | **Prefab cookie modules** | - Requires 1250 factories | **500 unvigintillion cookies** | Factories cost **5%** less |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Upgrade Name</th>
+<th>Unlock Condition</th>
+<th>Base Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0400.png"><img src="./assets/generated-icons/SheetCustom0400.png" alt="Flat-pack factory frames" width="48" height="48"></a></td>
+<td><strong>Flat-pack factory frames</strong></td>
+<td>Requires 750 factories</td>
+<td><strong>5 quindecillion cookies</strong></td>
+<td>Factories cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0401.png"><img src="./assets/generated-icons/SheetCustom0401.png" alt="Quantum assembly optimization" width="48" height="48"></a></td>
+<td><strong>Quantum assembly optimization</strong></td>
+<td>Requires 800 factories</td>
+<td><strong>500 quindecillion cookies</strong></td>
+<td>Factories are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0402.png"><img src="./assets/generated-icons/SheetCustom0402.png" alt="BOGO rivet bins" width="48" height="48"></a></td>
+<td><strong>BOGO rivet bins</strong></td>
+<td>Requires 850 factories</td>
+<td><strong>50 sexdecillion cookies</strong></td>
+<td>Factories cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0403.png"><img src="./assets/generated-icons/SheetCustom0403.png" alt="Temporal manufacturing loops" width="48" height="48"></a></td>
+<td><strong>Temporal manufacturing loops</strong></td>
+<td>Requires 900 factories</td>
+<td><strong>5 septendecillion cookies</strong></td>
+<td>Factories are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0404.png"><img src="./assets/generated-icons/SheetCustom0404.png" alt="Off-brand gear grease" width="48" height="48"></a></td>
+<td><strong>Off-brand gear grease</strong></td>
+<td>Requires 950 factories</td>
+<td><strong>500 septendecillion cookies</strong></td>
+<td>Factories cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0405.png"><img src="./assets/generated-icons/SheetCustom0405.png" alt="Dimensional cookie synthesis" width="48" height="48"></a></td>
+<td><strong>Dimensional cookie synthesis</strong></td>
+<td>Requires 1000 factories</td>
+<td><strong>50 octodecillion cookies</strong></td>
+<td>Factories are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0406.png"><img src="./assets/generated-icons/SheetCustom0406.png" alt="Misprint warning labels" width="48" height="48"></a></td>
+<td><strong>Misprint warning labels</strong></td>
+<td>Requires 1050 factories</td>
+<td><strong>5 novemdecillion cookies</strong></td>
+<td>Factories cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0407.png"><img src="./assets/generated-icons/SheetCustom0407.png" alt="Singularity production cores" width="48" height="48"></a></td>
+<td><strong>Singularity production cores</strong></td>
+<td>Requires 1100 factories</td>
+<td><strong>500 novemdecillion cookies</strong></td>
+<td>Factories are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0408.png"><img src="./assets/generated-icons/SheetCustom0408.png" alt="Pallet-jack rebates" width="48" height="48"></a></td>
+<td><strong>Pallet-jack rebates</strong></td>
+<td>Requires 1150 factories</td>
+<td><strong>50 vigintillion cookies</strong></td>
+<td>Factories cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0409.png"><img src="./assets/generated-icons/SheetCustom0409.png" alt="Reality-warping assembly" width="48" height="48"></a></td>
+<td><strong>Reality-warping assembly</strong></td>
+<td>Requires 1200 factories</td>
+<td><strong>5 unvigintillion cookies</strong></td>
+<td>Factories are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0410.png"><img src="./assets/generated-icons/SheetCustom0410.png" alt="Prefab cookie modules" width="48" height="48"></a></td>
+<td><strong>Prefab cookie modules</strong></td>
+<td>Requires 1250 factories</td>
+<td><strong>500 unvigintillion cookies</strong></td>
+<td>Factories cost <strong>5%</strong> less</td>
+</tr>
+</tbody>
+</table>
+
 
 ##### Bank
-| Icon | Upgrade | Requirement | Cost | Description |
-| --- | --- | --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom1300.png" alt="Piggy buyback bonanza" width="48" height="48"> | **Piggy buyback bonanza** | - Requires 750 banks | **50 quindecillion cookies** | Banks cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1301.png" alt="Quantum banking protocols" width="48" height="48"> | **Quantum banking protocols** | - Requires 800 banks | **5 sexdecillion cookies** | Banks are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1302.png" alt="Vault door floor-models" width="48" height="48"> | **Vault door floor-models** | - Requires 850 banks | **500 sexdecillion cookies** | Banks cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1303.png" alt="Temporal interest compounding" width="48" height="48"> | **Temporal interest compounding** | - Requires 900 banks | **50 septendecillion cookies** | Banks are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1304.png" alt="Pen-on-a-chain procurement" width="48" height="48"> | **Pen-on-a-chain procurement** | - Requires 950 banks | **5 octodecillion cookies** | Banks cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1305.png" alt="Dimensional currency exchange" width="48" height="48"> | **Dimensional currency exchange** | - Requires 1000 banks | **500 octodecillion cookies** | Banks are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1306.png" alt="Complimentary complimentary mints" width="48" height="48"> | **Complimentary complimentary mints** | - Requires 1050 banks | **50 novemdecillion cookies** | Banks cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1307.png" alt="Singularity financial algorithms" width="48" height="48"> | **Singularity financial algorithms** | - Requires 1100 banks | **5 vigintillion cookies** | Banks are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1308.png" alt="Fee waiver wavers" width="48" height="48"> | **Fee waiver wavers** | - Requires 1150 banks | **500 vigintillion cookies** | Banks cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1309.png" alt="Reality-warping economics" width="48" height="48"> | **Reality-warping economics** | - Requires 1200 banks | **50 unvigintillion cookies** | Banks are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1310.png" alt="Dough Jones clearance" width="48" height="48"> | **Dough Jones clearance** | - Requires 1250 banks | **5 duovigintillion cookies** | Banks cost **5%** less |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Upgrade Name</th>
+<th>Unlock Condition</th>
+<th>Base Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1300.png"><img src="./assets/generated-icons/SheetCustom1300.png" alt="Piggy buyback bonanza" width="48" height="48"></a></td>
+<td><strong>Piggy buyback bonanza</strong></td>
+<td>Requires 750 banks</td>
+<td><strong>50 quindecillion cookies</strong></td>
+<td>Banks cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1301.png"><img src="./assets/generated-icons/SheetCustom1301.png" alt="Quantum banking protocols" width="48" height="48"></a></td>
+<td><strong>Quantum banking protocols</strong></td>
+<td>Requires 800 banks</td>
+<td><strong>5 sexdecillion cookies</strong></td>
+<td>Banks are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1302.png"><img src="./assets/generated-icons/SheetCustom1302.png" alt="Vault door floor-models" width="48" height="48"></a></td>
+<td><strong>Vault door floor-models</strong></td>
+<td>Requires 850 banks</td>
+<td><strong>500 sexdecillion cookies</strong></td>
+<td>Banks cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1303.png"><img src="./assets/generated-icons/SheetCustom1303.png" alt="Temporal interest compounding" width="48" height="48"></a></td>
+<td><strong>Temporal interest compounding</strong></td>
+<td>Requires 900 banks</td>
+<td><strong>50 septendecillion cookies</strong></td>
+<td>Banks are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1304.png"><img src="./assets/generated-icons/SheetCustom1304.png" alt="Pen-on-a-chain procurement" width="48" height="48"></a></td>
+<td><strong>Pen-on-a-chain procurement</strong></td>
+<td>Requires 950 banks</td>
+<td><strong>5 octodecillion cookies</strong></td>
+<td>Banks cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1305.png"><img src="./assets/generated-icons/SheetCustom1305.png" alt="Dimensional currency exchange" width="48" height="48"></a></td>
+<td><strong>Dimensional currency exchange</strong></td>
+<td>Requires 1000 banks</td>
+<td><strong>500 octodecillion cookies</strong></td>
+<td>Banks are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1306.png"><img src="./assets/generated-icons/SheetCustom1306.png" alt="Complimentary complimentary mints" width="48" height="48"></a></td>
+<td><strong>Complimentary complimentary mints</strong></td>
+<td>Requires 1050 banks</td>
+<td><strong>50 novemdecillion cookies</strong></td>
+<td>Banks cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1307.png"><img src="./assets/generated-icons/SheetCustom1307.png" alt="Singularity financial algorithms" width="48" height="48"></a></td>
+<td><strong>Singularity financial algorithms</strong></td>
+<td>Requires 1100 banks</td>
+<td><strong>5 vigintillion cookies</strong></td>
+<td>Banks are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1308.png"><img src="./assets/generated-icons/SheetCustom1308.png" alt="Fee waiver wavers" width="48" height="48"></a></td>
+<td><strong>Fee waiver wavers</strong></td>
+<td>Requires 1150 banks</td>
+<td><strong>500 vigintillion cookies</strong></td>
+<td>Banks cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1309.png"><img src="./assets/generated-icons/SheetCustom1309.png" alt="Reality-warping economics" width="48" height="48"></a></td>
+<td><strong>Reality-warping economics</strong></td>
+<td>Requires 1200 banks</td>
+<td><strong>50 unvigintillion cookies</strong></td>
+<td>Banks are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1310.png"><img src="./assets/generated-icons/SheetCustom1310.png" alt="Dough Jones clearance" width="48" height="48"></a></td>
+<td><strong>Dough Jones clearance</strong></td>
+<td>Requires 1250 banks</td>
+<td><strong>5 duovigintillion cookies</strong></td>
+<td>Banks cost <strong>5%</strong> less</td>
+</tr>
+</tbody>
+</table>
+
 
 ##### Temple
-| Icon | Upgrade | Requirement | Cost | Description |
-| --- | --- | --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom1400.png" alt="Tithe punch cards" width="48" height="48"> | **Tithe punch cards** | - Requires 750 temples | **500 quindecillion cookies** | Temples cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1401.png" alt="Quantum divine intervention" width="48" height="48"> | **Quantum divine intervention** | - Requires 800 temples | **50 sexdecillion cookies** | Temples are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1402.png" alt="Relic replica racks" width="48" height="48"> | **Relic replica racks** | - Requires 850 temples | **5 septendecillion cookies** | Temples cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1403.png" alt="Temporal prayer loops" width="48" height="48"> | **Temporal prayer loops** | - Requires 900 temples | **500 septendecillion cookies** | Temples are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1404.png" alt="Incense refill program" width="48" height="48"> | **Incense refill program** | - Requires 950 temples | **50 octodecillion cookies** | Temples cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1405.png" alt="Dimensional deity summoning" width="48" height="48"> | **Dimensional deity summoning** | - Requires 1000 temples | **5 novemdecillion cookies** | Temples are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1406.png" alt="Chant-o-matic hymn reels" width="48" height="48"> | **Chant-o-matic hymn reels** | - Requires 1050 temples | **500 novemdecillion cookies** | Temples cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1407.png" alt="Singularity divine consciousness" width="48" height="48"> | **Singularity divine consciousness** | - Requires 1100 temples | **50 vigintillion cookies** | Temples are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1408.png" alt="Pew-per-view sponsorships" width="48" height="48"> | **Pew-per-view sponsorships** | - Requires 1150 temples | **5 unvigintillion cookies** | Temples cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1409.png" alt="Reality-warping divinity" width="48" height="48"> | **Reality-warping divinity** | - Requires 1200 temples | **500 unvigintillion cookies** | Temples are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1410.png" alt="Sacred site tax amnesty" width="48" height="48"> | **Sacred site tax amnesty** | - Requires 1250 temples | **50 duovigintillion cookies** | Temples cost **5%** less |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Upgrade Name</th>
+<th>Unlock Condition</th>
+<th>Base Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1400.png"><img src="./assets/generated-icons/SheetCustom1400.png" alt="Tithe punch cards" width="48" height="48"></a></td>
+<td><strong>Tithe punch cards</strong></td>
+<td>Requires 750 temples</td>
+<td><strong>500 quindecillion cookies</strong></td>
+<td>Temples cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1401.png"><img src="./assets/generated-icons/SheetCustom1401.png" alt="Quantum divine intervention" width="48" height="48"></a></td>
+<td><strong>Quantum divine intervention</strong></td>
+<td>Requires 800 temples</td>
+<td><strong>50 sexdecillion cookies</strong></td>
+<td>Temples are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1402.png"><img src="./assets/generated-icons/SheetCustom1402.png" alt="Relic replica racks" width="48" height="48"></a></td>
+<td><strong>Relic replica racks</strong></td>
+<td>Requires 850 temples</td>
+<td><strong>5 septendecillion cookies</strong></td>
+<td>Temples cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1403.png"><img src="./assets/generated-icons/SheetCustom1403.png" alt="Temporal prayer loops" width="48" height="48"></a></td>
+<td><strong>Temporal prayer loops</strong></td>
+<td>Requires 900 temples</td>
+<td><strong>500 septendecillion cookies</strong></td>
+<td>Temples are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1404.png"><img src="./assets/generated-icons/SheetCustom1404.png" alt="Incense refill program" width="48" height="48"></a></td>
+<td><strong>Incense refill program</strong></td>
+<td>Requires 950 temples</td>
+<td><strong>50 octodecillion cookies</strong></td>
+<td>Temples cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1405.png"><img src="./assets/generated-icons/SheetCustom1405.png" alt="Dimensional deity summoning" width="48" height="48"></a></td>
+<td><strong>Dimensional deity summoning</strong></td>
+<td>Requires 1000 temples</td>
+<td><strong>5 novemdecillion cookies</strong></td>
+<td>Temples are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1406.png"><img src="./assets/generated-icons/SheetCustom1406.png" alt="Chant-o-matic hymn reels" width="48" height="48"></a></td>
+<td><strong>Chant-o-matic hymn reels</strong></td>
+<td>Requires 1050 temples</td>
+<td><strong>500 novemdecillion cookies</strong></td>
+<td>Temples cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1407.png"><img src="./assets/generated-icons/SheetCustom1407.png" alt="Singularity divine consciousness" width="48" height="48"></a></td>
+<td><strong>Singularity divine consciousness</strong></td>
+<td>Requires 1100 temples</td>
+<td><strong>50 vigintillion cookies</strong></td>
+<td>Temples are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1408.png"><img src="./assets/generated-icons/SheetCustom1408.png" alt="Pew-per-view sponsorships" width="48" height="48"></a></td>
+<td><strong>Pew-per-view sponsorships</strong></td>
+<td>Requires 1150 temples</td>
+<td><strong>5 unvigintillion cookies</strong></td>
+<td>Temples cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1409.png"><img src="./assets/generated-icons/SheetCustom1409.png" alt="Reality-warping divinity" width="48" height="48"></a></td>
+<td><strong>Reality-warping divinity</strong></td>
+<td>Requires 1200 temples</td>
+<td><strong>500 unvigintillion cookies</strong></td>
+<td>Temples are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1410.png"><img src="./assets/generated-icons/SheetCustom1410.png" alt="Sacred site tax amnesty" width="48" height="48"></a></td>
+<td><strong>Sacred site tax amnesty</strong></td>
+<td>Requires 1250 temples</td>
+<td><strong>50 duovigintillion cookies</strong></td>
+<td>Temples cost <strong>5%</strong> less</td>
+</tr>
+</tbody>
+</table>
+
 
 ##### Wizard Tower
-| Icon | Upgrade | Requirement | Cost | Description |
-| --- | --- | --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom1500.png" alt="Wand warranty returns" width="48" height="48"> | **Wand warranty returns** | - Requires 750 wizard towers | **5 sexdecillion cookies** | Wizard towers cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1501.png" alt="Arcane resonance" width="48" height="48"> | **Arcane resonance** | - Requires 800 wizard towers | **500 sexdecillion cookies** | Wizard towers are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1502.png" alt="Grimoire remainder sale" width="48" height="48"> | **Grimoire remainder sale** | - Requires 850 wizard towers | **50 septendecillion cookies** | Wizard towers cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1503.png" alt="Spell weaving" width="48" height="48"> | **Spell weaving** | - Requires 900 wizard towers | **5 octodecillion cookies** | Wizard towers are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1504.png" alt="Robes with “character”" width="48" height="48"> | **Robes with “character”** | - Requires 950 wizard towers | **500 octodecillion cookies** | Wizard towers cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1505.png" alt="Mystical attunement" width="48" height="48"> | **Mystical attunement** | - Requires 1000 wizard towers | **50 novemdecillion cookies** | Wizard towers are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1506.png" alt="Familiar foster program" width="48" height="48"> | **Familiar foster program** | - Requires 1050 wizard towers | **5 vigintillion cookies** | Wizard towers cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1507.png" alt="Ethereal manifestation" width="48" height="48"> | **Ethereal manifestation** | - Requires 1100 wizard towers | **500 vigintillion cookies** | Wizard towers are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1508.png" alt="Council scroll stipends" width="48" height="48"> | **Council scroll stipends** | - Requires 1150 wizard towers | **50 unvigintillion cookies** | Wizard towers cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1509.png" alt="Transcendent thaumaturgy" width="48" height="48"> | **Transcendent thaumaturgy** | - Requires 1200 wizard towers | **5 duovigintillion cookies** | Wizard towers are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1510.png" alt="Broom-sharing scheme" width="48" height="48"> | **Broom-sharing scheme** | - Requires 1250 wizard towers | **500 duovigintillion cookies** | Wizard towers cost **5%** less |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Upgrade Name</th>
+<th>Unlock Condition</th>
+<th>Base Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1500.png"><img src="./assets/generated-icons/SheetCustom1500.png" alt="Wand warranty returns" width="48" height="48"></a></td>
+<td><strong>Wand warranty returns</strong></td>
+<td>Requires 750 wizard towers</td>
+<td><strong>5 sexdecillion cookies</strong></td>
+<td>Wizard towers cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1501.png"><img src="./assets/generated-icons/SheetCustom1501.png" alt="Arcane resonance" width="48" height="48"></a></td>
+<td><strong>Arcane resonance</strong></td>
+<td>Requires 800 wizard towers</td>
+<td><strong>500 sexdecillion cookies</strong></td>
+<td>Wizard towers are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1502.png"><img src="./assets/generated-icons/SheetCustom1502.png" alt="Grimoire remainder sale" width="48" height="48"></a></td>
+<td><strong>Grimoire remainder sale</strong></td>
+<td>Requires 850 wizard towers</td>
+<td><strong>50 septendecillion cookies</strong></td>
+<td>Wizard towers cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1503.png"><img src="./assets/generated-icons/SheetCustom1503.png" alt="Spell weaving" width="48" height="48"></a></td>
+<td><strong>Spell weaving</strong></td>
+<td>Requires 900 wizard towers</td>
+<td><strong>5 octodecillion cookies</strong></td>
+<td>Wizard towers are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1504.png"><img src="./assets/generated-icons/SheetCustom1504.png" alt="Robes with “character”" width="48" height="48"></a></td>
+<td><strong>Robes with “character”</strong></td>
+<td>Requires 950 wizard towers</td>
+<td><strong>500 octodecillion cookies</strong></td>
+<td>Wizard towers cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1505.png"><img src="./assets/generated-icons/SheetCustom1505.png" alt="Mystical attunement" width="48" height="48"></a></td>
+<td><strong>Mystical attunement</strong></td>
+<td>Requires 1000 wizard towers</td>
+<td><strong>50 novemdecillion cookies</strong></td>
+<td>Wizard towers are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1506.png"><img src="./assets/generated-icons/SheetCustom1506.png" alt="Familiar foster program" width="48" height="48"></a></td>
+<td><strong>Familiar foster program</strong></td>
+<td>Requires 1050 wizard towers</td>
+<td><strong>5 vigintillion cookies</strong></td>
+<td>Wizard towers cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1507.png"><img src="./assets/generated-icons/SheetCustom1507.png" alt="Ethereal manifestation" width="48" height="48"></a></td>
+<td><strong>Ethereal manifestation</strong></td>
+<td>Requires 1100 wizard towers</td>
+<td><strong>500 vigintillion cookies</strong></td>
+<td>Wizard towers are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1508.png"><img src="./assets/generated-icons/SheetCustom1508.png" alt="Council scroll stipends" width="48" height="48"></a></td>
+<td><strong>Council scroll stipends</strong></td>
+<td>Requires 1150 wizard towers</td>
+<td><strong>50 unvigintillion cookies</strong></td>
+<td>Wizard towers cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1509.png"><img src="./assets/generated-icons/SheetCustom1509.png" alt="Transcendent thaumaturgy" width="48" height="48"></a></td>
+<td><strong>Transcendent thaumaturgy</strong></td>
+<td>Requires 1200 wizard towers</td>
+<td><strong>5 duovigintillion cookies</strong></td>
+<td>Wizard towers are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1510.png"><img src="./assets/generated-icons/SheetCustom1510.png" alt="Broom-sharing scheme" width="48" height="48"></a></td>
+<td><strong>Broom-sharing scheme</strong></td>
+<td>Requires 1250 wizard towers</td>
+<td><strong>500 duovigintillion cookies</strong></td>
+<td>Wizard towers cost <strong>5%</strong> less</td>
+</tr>
+</tbody>
+</table>
+
 
 ##### Shipment
-| Icon | Upgrade | Requirement | Cost | Description |
-| --- | --- | --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom0500.png" alt="Retired cargo pods" width="48" height="48"> | **Retired cargo pods** | - Requires 750 shipments | **50 sexdecillion cookies** | Shipments cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0501.png" alt="Hypervelocity transport" width="48" height="48"> | **Hypervelocity transport** | - Requires 800 shipments | **5 septendecillion cookies** | Shipments are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0502.png" alt="Container co-op cards" width="48" height="48"> | **Container co-op cards** | - Requires 850 shipments | **500 septendecillion cookies** | Shipments cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0503.png" alt="Spatial compression" width="48" height="48"> | **Spatial compression** | - Requires 900 shipments | **50 octodecillion cookies** | Shipments are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0504.png" alt="Reusable launch crates" width="48" height="48"> | **Reusable launch crates** | - Requires 950 shipments | **5 novemdecillion cookies** | Shipments cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0505.png" alt="Dimensional routing" width="48" height="48"> | **Dimensional routing** | - Requires 1000 shipments | **500 novemdecillion cookies** | Shipments are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0506.png" alt="Autodocker apprentices" width="48" height="48"> | **Autodocker apprentices** | - Requires 1050 shipments | **50 vigintillion cookies** | Shipments cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0507.png" alt="Quantum teleportation" width="48" height="48"> | **Quantum teleportation** | - Requires 1100 shipments | **5 unvigintillion cookies** | Shipments are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0508.png" alt="Route rebate vouchers" width="48" height="48"> | **Route rebate vouchers** | - Requires 1150 shipments | **500 unvigintillion cookies** | Shipments cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0509.png" alt="Causality manipulation" width="48" height="48"> | **Causality manipulation** | - Requires 1200 shipments | **50 duovigintillion cookies** | Shipments are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0510.png" alt="Free-trade cookie ports" width="48" height="48"> | **Free-trade cookie ports** | - Requires 1250 shipments | **5 trevigintillion cookies** | Shipments cost **5%** less |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Upgrade Name</th>
+<th>Unlock Condition</th>
+<th>Base Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0500.png"><img src="./assets/generated-icons/SheetCustom0500.png" alt="Retired cargo pods" width="48" height="48"></a></td>
+<td><strong>Retired cargo pods</strong></td>
+<td>Requires 750 shipments</td>
+<td><strong>50 sexdecillion cookies</strong></td>
+<td>Shipments cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0501.png"><img src="./assets/generated-icons/SheetCustom0501.png" alt="Hypervelocity transport" width="48" height="48"></a></td>
+<td><strong>Hypervelocity transport</strong></td>
+<td>Requires 800 shipments</td>
+<td><strong>5 septendecillion cookies</strong></td>
+<td>Shipments are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0502.png"><img src="./assets/generated-icons/SheetCustom0502.png" alt="Container co-op cards" width="48" height="48"></a></td>
+<td><strong>Container co-op cards</strong></td>
+<td>Requires 850 shipments</td>
+<td><strong>500 septendecillion cookies</strong></td>
+<td>Shipments cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0503.png"><img src="./assets/generated-icons/SheetCustom0503.png" alt="Spatial compression" width="48" height="48"></a></td>
+<td><strong>Spatial compression</strong></td>
+<td>Requires 900 shipments</td>
+<td><strong>50 octodecillion cookies</strong></td>
+<td>Shipments are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0504.png"><img src="./assets/generated-icons/SheetCustom0504.png" alt="Reusable launch crates" width="48" height="48"></a></td>
+<td><strong>Reusable launch crates</strong></td>
+<td>Requires 950 shipments</td>
+<td><strong>5 novemdecillion cookies</strong></td>
+<td>Shipments cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0505.png"><img src="./assets/generated-icons/SheetCustom0505.png" alt="Dimensional routing" width="48" height="48"></a></td>
+<td><strong>Dimensional routing</strong></td>
+<td>Requires 1000 shipments</td>
+<td><strong>500 novemdecillion cookies</strong></td>
+<td>Shipments are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0506.png"><img src="./assets/generated-icons/SheetCustom0506.png" alt="Autodocker apprentices" width="48" height="48"></a></td>
+<td><strong>Autodocker apprentices</strong></td>
+<td>Requires 1050 shipments</td>
+<td><strong>50 vigintillion cookies</strong></td>
+<td>Shipments cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0507.png"><img src="./assets/generated-icons/SheetCustom0507.png" alt="Quantum teleportation" width="48" height="48"></a></td>
+<td><strong>Quantum teleportation</strong></td>
+<td>Requires 1100 shipments</td>
+<td><strong>5 unvigintillion cookies</strong></td>
+<td>Shipments are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0508.png"><img src="./assets/generated-icons/SheetCustom0508.png" alt="Route rebate vouchers" width="48" height="48"></a></td>
+<td><strong>Route rebate vouchers</strong></td>
+<td>Requires 1150 shipments</td>
+<td><strong>500 unvigintillion cookies</strong></td>
+<td>Shipments cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0509.png"><img src="./assets/generated-icons/SheetCustom0509.png" alt="Causality manipulation" width="48" height="48"></a></td>
+<td><strong>Causality manipulation</strong></td>
+<td>Requires 1200 shipments</td>
+<td><strong>50 duovigintillion cookies</strong></td>
+<td>Shipments are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0510.png"><img src="./assets/generated-icons/SheetCustom0510.png" alt="Free-trade cookie ports" width="48" height="48"></a></td>
+<td><strong>Free-trade cookie ports</strong></td>
+<td>Requires 1250 shipments</td>
+<td><strong>5 trevigintillion cookies</strong></td>
+<td>Shipments cost <strong>5%</strong> less</td>
+</tr>
+</tbody>
+</table>
+
 
 ##### Alchemy Lab
-| Icon | Upgrade | Requirement | Cost | Description |
-| --- | --- | --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom0600.png" alt="Beaker buybacks" width="48" height="48"> | **Beaker buybacks** | - Requires 750 alchemy labs | **500 sexdecillion cookies** | Alchemy labs cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0601.png" alt="Essence distillation" width="48" height="48"> | **Essence distillation** | - Requires 800 alchemy labs | **50 septendecillion cookies** | Alchemy labs are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0602.png" alt="Philosopher’s pebbles" width="48" height="48"> | **Philosopher’s pebbles** | - Requires 850 alchemy labs | **5 octodecillion cookies** | Alchemy labs cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0603.png" alt="Molecular gastronomy" width="48" height="48"> | **Molecular gastronomy** | - Requires 900 alchemy labs | **500 octodecillion cookies** | Alchemy labs are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0604.png" alt="Cool-running crucibles" width="48" height="48"> | **Cool-running crucibles** | - Requires 950 alchemy labs | **50 novemdecillion cookies** | Alchemy labs cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0605.png" alt="Flavor alchemy" width="48" height="48"> | **Flavor alchemy** | - Requires 1000 alchemy labs | **5 vigintillion cookies** | Alchemy labs are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0606.png" alt="Batch homunculi permits" width="48" height="48"> | **Batch homunculi permits** | - Requires 1050 alchemy labs | **500 vigintillion cookies** | Alchemy labs cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0607.png" alt="Culinary transmutation" width="48" height="48"> | **Culinary transmutation** | - Requires 1100 alchemy labs | **50 unvigintillion cookies** | Alchemy labs are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0608.png" alt="Guild reagent rates" width="48" height="48"> | **Guild reagent rates** | - Requires 1150 alchemy labs | **5 duovigintillion cookies** | Alchemy labs cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0609.png" alt="Gastronomic enlightenment" width="48" height="48"> | **Gastronomic enlightenment** | - Requires 1200 alchemy labs | **500 duovigintillion cookies** | Alchemy labs are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0610.png" alt="“Mostly lead” gold grants" width="48" height="48"> | **“Mostly lead” gold grants** | - Requires 1250 alchemy labs | **50 trevigintillion cookies** | Alchemy labs cost **5%** less |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Upgrade Name</th>
+<th>Unlock Condition</th>
+<th>Base Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0600.png"><img src="./assets/generated-icons/SheetCustom0600.png" alt="Beaker buybacks" width="48" height="48"></a></td>
+<td><strong>Beaker buybacks</strong></td>
+<td>Requires 750 alchemy labs</td>
+<td><strong>500 sexdecillion cookies</strong></td>
+<td>Alchemy labs cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0601.png"><img src="./assets/generated-icons/SheetCustom0601.png" alt="Essence distillation" width="48" height="48"></a></td>
+<td><strong>Essence distillation</strong></td>
+<td>Requires 800 alchemy labs</td>
+<td><strong>50 septendecillion cookies</strong></td>
+<td>Alchemy labs are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0602.png"><img src="./assets/generated-icons/SheetCustom0602.png" alt="Philosopher’s pebbles" width="48" height="48"></a></td>
+<td><strong>Philosopher’s pebbles</strong></td>
+<td>Requires 850 alchemy labs</td>
+<td><strong>5 octodecillion cookies</strong></td>
+<td>Alchemy labs cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0603.png"><img src="./assets/generated-icons/SheetCustom0603.png" alt="Molecular gastronomy" width="48" height="48"></a></td>
+<td><strong>Molecular gastronomy</strong></td>
+<td>Requires 900 alchemy labs</td>
+<td><strong>500 octodecillion cookies</strong></td>
+<td>Alchemy labs are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0604.png"><img src="./assets/generated-icons/SheetCustom0604.png" alt="Cool-running crucibles" width="48" height="48"></a></td>
+<td><strong>Cool-running crucibles</strong></td>
+<td>Requires 950 alchemy labs</td>
+<td><strong>50 novemdecillion cookies</strong></td>
+<td>Alchemy labs cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0605.png"><img src="./assets/generated-icons/SheetCustom0605.png" alt="Flavor alchemy" width="48" height="48"></a></td>
+<td><strong>Flavor alchemy</strong></td>
+<td>Requires 1000 alchemy labs</td>
+<td><strong>5 vigintillion cookies</strong></td>
+<td>Alchemy labs are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0606.png"><img src="./assets/generated-icons/SheetCustom0606.png" alt="Batch homunculi permits" width="48" height="48"></a></td>
+<td><strong>Batch homunculi permits</strong></td>
+<td>Requires 1050 alchemy labs</td>
+<td><strong>500 vigintillion cookies</strong></td>
+<td>Alchemy labs cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0607.png"><img src="./assets/generated-icons/SheetCustom0607.png" alt="Culinary transmutation" width="48" height="48"></a></td>
+<td><strong>Culinary transmutation</strong></td>
+<td>Requires 1100 alchemy labs</td>
+<td><strong>50 unvigintillion cookies</strong></td>
+<td>Alchemy labs are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0608.png"><img src="./assets/generated-icons/SheetCustom0608.png" alt="Guild reagent rates" width="48" height="48"></a></td>
+<td><strong>Guild reagent rates</strong></td>
+<td>Requires 1150 alchemy labs</td>
+<td><strong>5 duovigintillion cookies</strong></td>
+<td>Alchemy labs cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0609.png"><img src="./assets/generated-icons/SheetCustom0609.png" alt="Gastronomic enlightenment" width="48" height="48"></a></td>
+<td><strong>Gastronomic enlightenment</strong></td>
+<td>Requires 1200 alchemy labs</td>
+<td><strong>500 duovigintillion cookies</strong></td>
+<td>Alchemy labs are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0610.png"><img src="./assets/generated-icons/SheetCustom0610.png" alt="“Mostly lead” gold grants" width="48" height="48"></a></td>
+<td><strong>“Mostly lead” gold grants</strong></td>
+<td>Requires 1250 alchemy labs</td>
+<td><strong>50 trevigintillion cookies</strong></td>
+<td>Alchemy labs cost <strong>5%</strong> less</td>
+</tr>
+</tbody>
+</table>
+
 
 ##### Portal
-| Icon | Upgrade | Requirement | Cost | Description |
-| --- | --- | --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom0700.png" alt="Pre-owned ring frames" width="48" height="48"> | **Pre-owned ring frames** | - Requires 750 portals | **5 septendecillion cookies** | Portals cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0701.png" alt="Dimensional gateways" width="48" height="48"> | **Dimensional gateways** | - Requires 800 portals | **500 septendecillion cookies** | Portals are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0702.png" alt="Anchor warehouse club" width="48" height="48"> | **Anchor warehouse club** | - Requires 850 portals | **50 octodecillion cookies** | Portals cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0703.png" alt="Reality bridges" width="48" height="48"> | **Reality bridges** | - Requires 900 portals | **5 novemdecillion cookies** | Portals are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0704.png" alt="Passive rift baffles" width="48" height="48"> | **Passive rift baffles** | - Requires 950 portals | **500 novemdecillion cookies** | Portals cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0705.png" alt="Spatial conduits" width="48" height="48"> | **Spatial conduits** | - Requires 1000 portals | **50 vigintillion cookies** | Portals are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0706.png" alt="Volunteer gatekeepers" width="48" height="48"> | **Volunteer gatekeepers** | - Requires 1050 portals | **5 unvigintillion cookies** | Portals cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0707.png" alt="Interdimensional highways" width="48" height="48"> | **Interdimensional highways** | - Requires 1100 portals | **500 unvigintillion cookies** | Portals are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0708.png" alt="Interrealm stipend scrolls" width="48" height="48"> | **Interrealm stipend scrolls** | - Requires 1150 portals | **50 duovigintillion cookies** | Portals cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0709.png" alt="Cosmic gateways" width="48" height="48"> | **Cosmic gateways** | - Requires 1200 portals | **5 trevigintillion cookies** | Portals are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0710.png" alt="Multiversal enterprise zone" width="48" height="48"> | **Multiversal enterprise zone** | - Requires 1250 portals | **500 trevigintillion cookies** | Portals cost **5%** less |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Upgrade Name</th>
+<th>Unlock Condition</th>
+<th>Base Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0700.png"><img src="./assets/generated-icons/SheetCustom0700.png" alt="Pre-owned ring frames" width="48" height="48"></a></td>
+<td><strong>Pre-owned ring frames</strong></td>
+<td>Requires 750 portals</td>
+<td><strong>5 septendecillion cookies</strong></td>
+<td>Portals cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0701.png"><img src="./assets/generated-icons/SheetCustom0701.png" alt="Dimensional gateways" width="48" height="48"></a></td>
+<td><strong>Dimensional gateways</strong></td>
+<td>Requires 800 portals</td>
+<td><strong>500 septendecillion cookies</strong></td>
+<td>Portals are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0702.png"><img src="./assets/generated-icons/SheetCustom0702.png" alt="Anchor warehouse club" width="48" height="48"></a></td>
+<td><strong>Anchor warehouse club</strong></td>
+<td>Requires 850 portals</td>
+<td><strong>50 octodecillion cookies</strong></td>
+<td>Portals cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0703.png"><img src="./assets/generated-icons/SheetCustom0703.png" alt="Reality bridges" width="48" height="48"></a></td>
+<td><strong>Reality bridges</strong></td>
+<td>Requires 900 portals</td>
+<td><strong>5 novemdecillion cookies</strong></td>
+<td>Portals are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0704.png"><img src="./assets/generated-icons/SheetCustom0704.png" alt="Passive rift baffles" width="48" height="48"></a></td>
+<td><strong>Passive rift baffles</strong></td>
+<td>Requires 950 portals</td>
+<td><strong>500 novemdecillion cookies</strong></td>
+<td>Portals cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0705.png"><img src="./assets/generated-icons/SheetCustom0705.png" alt="Spatial conduits" width="48" height="48"></a></td>
+<td><strong>Spatial conduits</strong></td>
+<td>Requires 1000 portals</td>
+<td><strong>50 vigintillion cookies</strong></td>
+<td>Portals are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0706.png"><img src="./assets/generated-icons/SheetCustom0706.png" alt="Volunteer gatekeepers" width="48" height="48"></a></td>
+<td><strong>Volunteer gatekeepers</strong></td>
+<td>Requires 1050 portals</td>
+<td><strong>5 unvigintillion cookies</strong></td>
+<td>Portals cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0707.png"><img src="./assets/generated-icons/SheetCustom0707.png" alt="Interdimensional highways" width="48" height="48"></a></td>
+<td><strong>Interdimensional highways</strong></td>
+<td>Requires 1100 portals</td>
+<td><strong>500 unvigintillion cookies</strong></td>
+<td>Portals are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0708.png"><img src="./assets/generated-icons/SheetCustom0708.png" alt="Interrealm stipend scrolls" width="48" height="48"></a></td>
+<td><strong>Interrealm stipend scrolls</strong></td>
+<td>Requires 1150 portals</td>
+<td><strong>50 duovigintillion cookies</strong></td>
+<td>Portals cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0709.png"><img src="./assets/generated-icons/SheetCustom0709.png" alt="Cosmic gateways" width="48" height="48"></a></td>
+<td><strong>Cosmic gateways</strong></td>
+<td>Requires 1200 portals</td>
+<td><strong>5 trevigintillion cookies</strong></td>
+<td>Portals are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0710.png"><img src="./assets/generated-icons/SheetCustom0710.png" alt="Multiversal enterprise zone" width="48" height="48"></a></td>
+<td><strong>Multiversal enterprise zone</strong></td>
+<td>Requires 1250 portals</td>
+<td><strong>500 trevigintillion cookies</strong></td>
+<td>Portals cost <strong>5%</strong> less</td>
+</tr>
+</tbody>
+</table>
+
 
 ##### Time Machine
-| Icon | Upgrade | Requirement | Cost | Description |
-| --- | --- | --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom0800.png" alt="Pre-loved hourglasses" width="48" height="48"> | **Pre-loved hourglasses** | - Requires 750 time machines | **50 septendecillion cookies** | Time machines cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0801.png" alt="Temporal engineering" width="48" height="48"> | **Temporal engineering** | - Requires 800 time machines | **5 octodecillion cookies** | Time machines are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0802.png" alt="Depreciated timeline scraps" width="48" height="48"> | **Depreciated timeline scraps** | - Requires 850 time machines | **500 octodecillion cookies** | Time machines cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0803.png" alt="Chronological optimization" width="48" height="48"> | **Chronological optimization** | - Requires 900 time machines | **50 novemdecillion cookies** | Time machines are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0804.png" alt="Off-season flux valves" width="48" height="48"> | **Off-season flux valves** | - Requires 950 time machines | **5 vigintillion cookies** | Time machines cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0805.png" alt="Historical preservation" width="48" height="48"> | **Historical preservation** | - Requires 1000 time machines | **500 vigintillion cookies** | Time machines are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0806.png" alt="Weekend paradox passes" width="48" height="48"> | **Weekend paradox passes** | - Requires 1050 time machines | **50 unvigintillion cookies** | Time machines cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0807.png" alt="Temporal synchronization" width="48" height="48"> | **Temporal synchronization** | - Requires 1100 time machines | **5 duovigintillion cookies** | Time machines are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0808.png" alt="Department of When grants" width="48" height="48"> | **Department of When grants** | - Requires 1150 time machines | **500 duovigintillion cookies** | Time machines cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom0809.png" alt="Chronological mastery" width="48" height="48"> | **Chronological mastery** | - Requires 1200 time machines | **50 trevigintillion cookies** | Time machines are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom0810.png" alt="Antique warranty loopholes" width="48" height="48"> | **Antique warranty loopholes** | - Requires 1250 time machines | **5 quattuorvigintillion cookies** | Time machines cost **5%** less |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Upgrade Name</th>
+<th>Unlock Condition</th>
+<th>Base Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0800.png"><img src="./assets/generated-icons/SheetCustom0800.png" alt="Pre-loved hourglasses" width="48" height="48"></a></td>
+<td><strong>Pre-loved hourglasses</strong></td>
+<td>Requires 750 time machines</td>
+<td><strong>50 septendecillion cookies</strong></td>
+<td>Time machines cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0801.png"><img src="./assets/generated-icons/SheetCustom0801.png" alt="Temporal engineering" width="48" height="48"></a></td>
+<td><strong>Temporal engineering</strong></td>
+<td>Requires 800 time machines</td>
+<td><strong>5 octodecillion cookies</strong></td>
+<td>Time machines are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0802.png"><img src="./assets/generated-icons/SheetCustom0802.png" alt="Depreciated timeline scraps" width="48" height="48"></a></td>
+<td><strong>Depreciated timeline scraps</strong></td>
+<td>Requires 850 time machines</td>
+<td><strong>500 octodecillion cookies</strong></td>
+<td>Time machines cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0803.png"><img src="./assets/generated-icons/SheetCustom0803.png" alt="Chronological optimization" width="48" height="48"></a></td>
+<td><strong>Chronological optimization</strong></td>
+<td>Requires 900 time machines</td>
+<td><strong>50 novemdecillion cookies</strong></td>
+<td>Time machines are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0804.png"><img src="./assets/generated-icons/SheetCustom0804.png" alt="Off-season flux valves" width="48" height="48"></a></td>
+<td><strong>Off-season flux valves</strong></td>
+<td>Requires 950 time machines</td>
+<td><strong>5 vigintillion cookies</strong></td>
+<td>Time machines cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0805.png"><img src="./assets/generated-icons/SheetCustom0805.png" alt="Historical preservation" width="48" height="48"></a></td>
+<td><strong>Historical preservation</strong></td>
+<td>Requires 1000 time machines</td>
+<td><strong>500 vigintillion cookies</strong></td>
+<td>Time machines are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0806.png"><img src="./assets/generated-icons/SheetCustom0806.png" alt="Weekend paradox passes" width="48" height="48"></a></td>
+<td><strong>Weekend paradox passes</strong></td>
+<td>Requires 1050 time machines</td>
+<td><strong>50 unvigintillion cookies</strong></td>
+<td>Time machines cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0807.png"><img src="./assets/generated-icons/SheetCustom0807.png" alt="Temporal synchronization" width="48" height="48"></a></td>
+<td><strong>Temporal synchronization</strong></td>
+<td>Requires 1100 time machines</td>
+<td><strong>5 duovigintillion cookies</strong></td>
+<td>Time machines are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0808.png"><img src="./assets/generated-icons/SheetCustom0808.png" alt="Department of When grants" width="48" height="48"></a></td>
+<td><strong>Department of When grants</strong></td>
+<td>Requires 1150 time machines</td>
+<td><strong>500 duovigintillion cookies</strong></td>
+<td>Time machines cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0809.png"><img src="./assets/generated-icons/SheetCustom0809.png" alt="Chronological mastery" width="48" height="48"></a></td>
+<td><strong>Chronological mastery</strong></td>
+<td>Requires 1200 time machines</td>
+<td><strong>50 trevigintillion cookies</strong></td>
+<td>Time machines are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom0810.png"><img src="./assets/generated-icons/SheetCustom0810.png" alt="Antique warranty loopholes" width="48" height="48"></a></td>
+<td><strong>Antique warranty loopholes</strong></td>
+<td>Requires 1250 time machines</td>
+<td><strong>5 quattuorvigintillion cookies</strong></td>
+<td>Time machines cost <strong>5%</strong> less</td>
+</tr>
+</tbody>
+</table>
+
 
 ##### Antimatter Condenser
-| Icon | Upgrade | Requirement | Cost | Description |
-| --- | --- | --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom1100.png" alt="Certified negamatter cans" width="48" height="48"> | **Certified negamatter cans** | - Requires 750 antimatter condensers | **500 septendecillion cookies** | Antimatter condensers cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1101.png" alt="Particle synthesis" width="48" height="48"> | **Particle synthesis** | - Requires 800 antimatter condensers | **50 octodecillion cookies** | Antimatter condensers are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1102.png" alt="Matter swap rebates" width="48" height="48"> | **Matter swap rebates** | - Requires 850 antimatter condensers | **5 novemdecillion cookies** | Antimatter condensers cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1103.png" alt="Matter transmutation" width="48" height="48"> | **Matter transmutation** | - Requires 900 antimatter condensers | **500 novemdecillion cookies** | Antimatter condensers are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1104.png" alt="Low-idle annihilators" width="48" height="48"> | **Low-idle annihilators** | - Requires 950 antimatter condensers | **50 vigintillion cookies** | Antimatter condensers cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1105.png" alt="Quantum baking" width="48" height="48"> | **Quantum baking** | - Requires 1000 antimatter condensers | **5 unvigintillion cookies** | Antimatter condensers are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1106.png" alt="Grad-lab particle labor" width="48" height="48"> | **Grad-lab particle labor** | - Requires 1050 antimatter condensers | **500 unvigintillion cookies** | Antimatter condensers cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1107.png" alt="Particle optimization" width="48" height="48"> | **Particle optimization** | - Requires 1100 antimatter condensers | **50 duovigintillion cookies** | Antimatter condensers are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1108.png" alt="Institute endowment match" width="48" height="48"> | **Institute endowment match** | - Requires 1150 antimatter condensers | **5 trevigintillion cookies** | Antimatter condensers cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1109.png" alt="Matter manipulation" width="48" height="48"> | **Matter manipulation** | - Requires 1200 antimatter condensers | **500 trevigintillion cookies** | Antimatter condensers are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1110.png" alt="Void-zone incentives" width="48" height="48"> | **Void-zone incentives** | - Requires 1250 antimatter condensers | **50 quattuorvigintillion cookies** | Antimatter condensers cost **5%** less |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Upgrade Name</th>
+<th>Unlock Condition</th>
+<th>Base Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1100.png"><img src="./assets/generated-icons/SheetCustom1100.png" alt="Certified negamatter cans" width="48" height="48"></a></td>
+<td><strong>Certified negamatter cans</strong></td>
+<td>Requires 750 antimatter condensers</td>
+<td><strong>500 septendecillion cookies</strong></td>
+<td>Antimatter condensers cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1101.png"><img src="./assets/generated-icons/SheetCustom1101.png" alt="Particle synthesis" width="48" height="48"></a></td>
+<td><strong>Particle synthesis</strong></td>
+<td>Requires 800 antimatter condensers</td>
+<td><strong>50 octodecillion cookies</strong></td>
+<td>Antimatter condensers are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1102.png"><img src="./assets/generated-icons/SheetCustom1102.png" alt="Matter swap rebates" width="48" height="48"></a></td>
+<td><strong>Matter swap rebates</strong></td>
+<td>Requires 850 antimatter condensers</td>
+<td><strong>5 novemdecillion cookies</strong></td>
+<td>Antimatter condensers cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1103.png"><img src="./assets/generated-icons/SheetCustom1103.png" alt="Matter transmutation" width="48" height="48"></a></td>
+<td><strong>Matter transmutation</strong></td>
+<td>Requires 900 antimatter condensers</td>
+<td><strong>500 novemdecillion cookies</strong></td>
+<td>Antimatter condensers are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1104.png"><img src="./assets/generated-icons/SheetCustom1104.png" alt="Low-idle annihilators" width="48" height="48"></a></td>
+<td><strong>Low-idle annihilators</strong></td>
+<td>Requires 950 antimatter condensers</td>
+<td><strong>50 vigintillion cookies</strong></td>
+<td>Antimatter condensers cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1105.png"><img src="./assets/generated-icons/SheetCustom1105.png" alt="Quantum baking" width="48" height="48"></a></td>
+<td><strong>Quantum baking</strong></td>
+<td>Requires 1000 antimatter condensers</td>
+<td><strong>5 unvigintillion cookies</strong></td>
+<td>Antimatter condensers are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1106.png"><img src="./assets/generated-icons/SheetCustom1106.png" alt="Grad-lab particle labor" width="48" height="48"></a></td>
+<td><strong>Grad-lab particle labor</strong></td>
+<td>Requires 1050 antimatter condensers</td>
+<td><strong>500 unvigintillion cookies</strong></td>
+<td>Antimatter condensers cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1107.png"><img src="./assets/generated-icons/SheetCustom1107.png" alt="Particle optimization" width="48" height="48"></a></td>
+<td><strong>Particle optimization</strong></td>
+<td>Requires 1100 antimatter condensers</td>
+<td><strong>50 duovigintillion cookies</strong></td>
+<td>Antimatter condensers are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1108.png"><img src="./assets/generated-icons/SheetCustom1108.png" alt="Institute endowment match" width="48" height="48"></a></td>
+<td><strong>Institute endowment match</strong></td>
+<td>Requires 1150 antimatter condensers</td>
+<td><strong>5 trevigintillion cookies</strong></td>
+<td>Antimatter condensers cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1109.png"><img src="./assets/generated-icons/SheetCustom1109.png" alt="Matter manipulation" width="48" height="48"></a></td>
+<td><strong>Matter manipulation</strong></td>
+<td>Requires 1200 antimatter condensers</td>
+<td><strong>500 trevigintillion cookies</strong></td>
+<td>Antimatter condensers are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1110.png"><img src="./assets/generated-icons/SheetCustom1110.png" alt="Void-zone incentives" width="48" height="48"></a></td>
+<td><strong>Void-zone incentives</strong></td>
+<td>Requires 1250 antimatter condensers</td>
+<td><strong>50 quattuorvigintillion cookies</strong></td>
+<td>Antimatter condensers cost <strong>5%</strong> less</td>
+</tr>
+</tbody>
+</table>
+
 
 ##### Prism
-| Icon | Upgrade | Requirement | Cost | Description |
-| --- | --- | --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom1200.png" alt="Lens co-op exchange" width="48" height="48"> | **Lens co-op exchange** | - Requires 750 prisms | **50 octodecillion cookies** | Prisms cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1201.png" alt="Light crystallization" width="48" height="48"> | **Light crystallization** | - Requires 800 prisms | **5 novemdecillion cookies** | Prisms are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1202.png" alt="Spectral seconds" width="48" height="48"> | **Spectral seconds** | - Requires 850 prisms | **500 novemdecillion cookies** | Prisms cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1203.png" alt="Spectral baking" width="48" height="48"> | **Spectral baking** | - Requires 900 prisms | **50 vigintillion cookies** | Prisms are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1204.png" alt="Sleep-mode rainbows" width="48" height="48"> | **Sleep-mode rainbows** | - Requires 950 prisms | **5 unvigintillion cookies** | Prisms cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1205.png" alt="Optical alchemy" width="48" height="48"> | **Optical alchemy** | - Requires 1000 prisms | **500 unvigintillion cookies** | Prisms are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1206.png" alt="Apprentice refractioneers" width="48" height="48"> | **Apprentice refractioneers** | - Requires 1050 prisms | **50 duovigintillion cookies** | Prisms cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1207.png" alt="Luminous confectionery" width="48" height="48"> | **Luminous confectionery** | - Requires 1100 prisms | **5 trevigintillion cookies** | Prisms are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1208.png" alt="Arts-of-Optics grants" width="48" height="48"> | **Arts-of-Optics grants** | - Requires 1150 prisms | **500 trevigintillion cookies** | Prisms cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1209.png" alt="Radiant gastronomy" width="48" height="48"> | **Radiant gastronomy** | - Requires 1200 prisms | **50 quattuorvigintillion cookies** | Prisms are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1210.png" alt="Rainbow renewal credits" width="48" height="48"> | **Rainbow renewal credits** | - Requires 1250 prisms | **5 quinvigintillion cookies** | Prisms cost **5%** less |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Upgrade Name</th>
+<th>Unlock Condition</th>
+<th>Base Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1200.png"><img src="./assets/generated-icons/SheetCustom1200.png" alt="Lens co-op exchange" width="48" height="48"></a></td>
+<td><strong>Lens co-op exchange</strong></td>
+<td>Requires 750 prisms</td>
+<td><strong>50 octodecillion cookies</strong></td>
+<td>Prisms cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1201.png"><img src="./assets/generated-icons/SheetCustom1201.png" alt="Light crystallization" width="48" height="48"></a></td>
+<td><strong>Light crystallization</strong></td>
+<td>Requires 800 prisms</td>
+<td><strong>5 novemdecillion cookies</strong></td>
+<td>Prisms are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1202.png"><img src="./assets/generated-icons/SheetCustom1202.png" alt="Spectral seconds" width="48" height="48"></a></td>
+<td><strong>Spectral seconds</strong></td>
+<td>Requires 850 prisms</td>
+<td><strong>500 novemdecillion cookies</strong></td>
+<td>Prisms cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1203.png"><img src="./assets/generated-icons/SheetCustom1203.png" alt="Spectral baking" width="48" height="48"></a></td>
+<td><strong>Spectral baking</strong></td>
+<td>Requires 900 prisms</td>
+<td><strong>50 vigintillion cookies</strong></td>
+<td>Prisms are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1204.png"><img src="./assets/generated-icons/SheetCustom1204.png" alt="Sleep-mode rainbows" width="48" height="48"></a></td>
+<td><strong>Sleep-mode rainbows</strong></td>
+<td>Requires 950 prisms</td>
+<td><strong>5 unvigintillion cookies</strong></td>
+<td>Prisms cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1205.png"><img src="./assets/generated-icons/SheetCustom1205.png" alt="Optical alchemy" width="48" height="48"></a></td>
+<td><strong>Optical alchemy</strong></td>
+<td>Requires 1000 prisms</td>
+<td><strong>500 unvigintillion cookies</strong></td>
+<td>Prisms are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1206.png"><img src="./assets/generated-icons/SheetCustom1206.png" alt="Apprentice refractioneers" width="48" height="48"></a></td>
+<td><strong>Apprentice refractioneers</strong></td>
+<td>Requires 1050 prisms</td>
+<td><strong>50 duovigintillion cookies</strong></td>
+<td>Prisms cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1207.png"><img src="./assets/generated-icons/SheetCustom1207.png" alt="Luminous confectionery" width="48" height="48"></a></td>
+<td><strong>Luminous confectionery</strong></td>
+<td>Requires 1100 prisms</td>
+<td><strong>5 trevigintillion cookies</strong></td>
+<td>Prisms are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1208.png"><img src="./assets/generated-icons/SheetCustom1208.png" alt="Arts-of-Optics grants" width="48" height="48"></a></td>
+<td><strong>Arts-of-Optics grants</strong></td>
+<td>Requires 1150 prisms</td>
+<td><strong>500 trevigintillion cookies</strong></td>
+<td>Prisms cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1209.png"><img src="./assets/generated-icons/SheetCustom1209.png" alt="Radiant gastronomy" width="48" height="48"></a></td>
+<td><strong>Radiant gastronomy</strong></td>
+<td>Requires 1200 prisms</td>
+<td><strong>50 quattuorvigintillion cookies</strong></td>
+<td>Prisms are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1210.png"><img src="./assets/generated-icons/SheetCustom1210.png" alt="Rainbow renewal credits" width="48" height="48"></a></td>
+<td><strong>Rainbow renewal credits</strong></td>
+<td>Requires 1250 prisms</td>
+<td><strong>5 quinvigintillion cookies</strong></td>
+<td>Prisms cost <strong>5%</strong> less</td>
+</tr>
+</tbody>
+</table>
+
 
 ##### Chancemaker
-| Icon | Upgrade | Requirement | Cost | Description |
-| --- | --- | --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom1700.png" alt="Misprinted fortunes" width="48" height="48"> | **Misprinted fortunes** | - Requires 750 chancemakers | **5 novemdecillion cookies** | Chancemakers cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1701.png" alt="Probability manipulation" width="48" height="48"> | **Probability manipulation** | - Requires 800 chancemakers | **500 novemdecillion cookies** | Chancemakers are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1702.png" alt="Reroll refund policy" width="48" height="48"> | **Reroll refund policy** | - Requires 850 chancemakers | **50 vigintillion cookies** | Chancemakers cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1703.png" alt="Fortune optimization" width="48" height="48"> | **Fortune optimization** | - Requires 900 chancemakers | **5 unvigintillion cookies** | Chancemakers are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1704.png" alt="Economy-grade omens" width="48" height="48"> | **Economy-grade omens** | - Requires 950 chancemakers | **500 unvigintillion cookies** | Chancemakers cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1705.png" alt="Serendipity engineering" width="48" height="48"> | **Serendipity engineering** | - Requires 1000 chancemakers | **50 duovigintillion cookies** | Chancemakers are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1706.png" alt="Volunteer augury nights" width="48" height="48"> | **Volunteer augury nights** | - Requires 1050 chancemakers | **5 trevigintillion cookies** | Chancemakers cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1707.png" alt="Random enhancement" width="48" height="48"> | **Random enhancement** | - Requires 1100 chancemakers | **500 trevigintillion cookies** | Chancemakers are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1708.png" alt="Lottery board matching" width="48" height="48"> | **Lottery board matching** | - Requires 1150 chancemakers | **50 quattuorvigintillion cookies** | Chancemakers cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1709.png" alt="Luck amplification" width="48" height="48"> | **Luck amplification** | - Requires 1200 chancemakers | **5 quinvigintillion cookies** | Chancemakers are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1710.png" alt="Lucky district waivers" width="48" height="48"> | **Lucky district waivers** | - Requires 1250 chancemakers | **500 quinvigintillion cookies** | Chancemakers cost **5%** less |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Upgrade Name</th>
+<th>Unlock Condition</th>
+<th>Base Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1700.png"><img src="./assets/generated-icons/SheetCustom1700.png" alt="Misprinted fortunes" width="48" height="48"></a></td>
+<td><strong>Misprinted fortunes</strong></td>
+<td>Requires 750 chancemakers</td>
+<td><strong>5 novemdecillion cookies</strong></td>
+<td>Chancemakers cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1701.png"><img src="./assets/generated-icons/SheetCustom1701.png" alt="Probability manipulation" width="48" height="48"></a></td>
+<td><strong>Probability manipulation</strong></td>
+<td>Requires 800 chancemakers</td>
+<td><strong>500 novemdecillion cookies</strong></td>
+<td>Chancemakers are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1702.png"><img src="./assets/generated-icons/SheetCustom1702.png" alt="Reroll refund policy" width="48" height="48"></a></td>
+<td><strong>Reroll refund policy</strong></td>
+<td>Requires 850 chancemakers</td>
+<td><strong>50 vigintillion cookies</strong></td>
+<td>Chancemakers cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1703.png"><img src="./assets/generated-icons/SheetCustom1703.png" alt="Fortune optimization" width="48" height="48"></a></td>
+<td><strong>Fortune optimization</strong></td>
+<td>Requires 900 chancemakers</td>
+<td><strong>5 unvigintillion cookies</strong></td>
+<td>Chancemakers are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1704.png"><img src="./assets/generated-icons/SheetCustom1704.png" alt="Economy-grade omens" width="48" height="48"></a></td>
+<td><strong>Economy-grade omens</strong></td>
+<td>Requires 950 chancemakers</td>
+<td><strong>500 unvigintillion cookies</strong></td>
+<td>Chancemakers cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1705.png"><img src="./assets/generated-icons/SheetCustom1705.png" alt="Serendipity engineering" width="48" height="48"></a></td>
+<td><strong>Serendipity engineering</strong></td>
+<td>Requires 1000 chancemakers</td>
+<td><strong>50 duovigintillion cookies</strong></td>
+<td>Chancemakers are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1706.png"><img src="./assets/generated-icons/SheetCustom1706.png" alt="Volunteer augury nights" width="48" height="48"></a></td>
+<td><strong>Volunteer augury nights</strong></td>
+<td>Requires 1050 chancemakers</td>
+<td><strong>5 trevigintillion cookies</strong></td>
+<td>Chancemakers cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1707.png"><img src="./assets/generated-icons/SheetCustom1707.png" alt="Random enhancement" width="48" height="48"></a></td>
+<td><strong>Random enhancement</strong></td>
+<td>Requires 1100 chancemakers</td>
+<td><strong>500 trevigintillion cookies</strong></td>
+<td>Chancemakers are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1708.png"><img src="./assets/generated-icons/SheetCustom1708.png" alt="Lottery board matching" width="48" height="48"></a></td>
+<td><strong>Lottery board matching</strong></td>
+<td>Requires 1150 chancemakers</td>
+<td><strong>50 quattuorvigintillion cookies</strong></td>
+<td>Chancemakers cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1709.png"><img src="./assets/generated-icons/SheetCustom1709.png" alt="Luck amplification" width="48" height="48"></a></td>
+<td><strong>Luck amplification</strong></td>
+<td>Requires 1200 chancemakers</td>
+<td><strong>5 quinvigintillion cookies</strong></td>
+<td>Chancemakers are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1710.png"><img src="./assets/generated-icons/SheetCustom1710.png" alt="Lucky district waivers" width="48" height="48"></a></td>
+<td><strong>Lucky district waivers</strong></td>
+<td>Requires 1250 chancemakers</td>
+<td><strong>500 quinvigintillion cookies</strong></td>
+<td>Chancemakers cost <strong>5%</strong> less</td>
+</tr>
+</tbody>
+</table>
+
 
 ##### Fractal Engine
-| Icon | Upgrade | Requirement | Cost | Description |
-| --- | --- | --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom1800.png" alt="Iteration liquidation" width="48" height="48"> | **Iteration liquidation** | - Requires 750 fractal engines | **500 novemdecillion cookies** | Fractal engines cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1801.png" alt="Infinite recursion" width="48" height="48"> | **Infinite recursion** | - Requires 800 fractal engines | **50 vigintillion cookies** | Fractal engines are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1802.png" alt="Self-similar spare parts" width="48" height="48"> | **Self-similar spare parts** | - Requires 850 fractal engines | **5 unvigintillion cookies** | Fractal engines cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1803.png" alt="Self-similar baking" width="48" height="48"> | **Self-similar baking** | - Requires 900 fractal engines | **500 unvigintillion cookies** | Fractal engines are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1804.png" alt="Recursion rebates" width="48" height="48"> | **Recursion rebates** | - Requires 950 fractal engines | **50 duovigintillion cookies** | Fractal engines cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1805.png" alt="Fractal optimization" width="48" height="48"> | **Fractal optimization** | - Requires 1000 fractal engines | **5 trevigintillion cookies** | Fractal engines are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1806.png" alt="Autogenerator residencies" width="48" height="48"> | **Autogenerator residencies** | - Requires 1050 fractal engines | **500 trevigintillion cookies** | Fractal engines cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1807.png" alt="Recursive enhancement" width="48" height="48"> | **Recursive enhancement** | - Requires 1100 fractal engines | **50 quattuorvigintillion cookies** | Fractal engines are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1808.png" alt="Grant-funded proofs" width="48" height="48"> | **Grant-funded proofs** | - Requires 1150 fractal engines | **5 quinvigintillion cookies** | Fractal engines cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1809.png" alt="Fractal gastronomy" width="48" height="48"> | **Fractal gastronomy** | - Requires 1200 fractal engines | **500 quinvigintillion cookies** | Fractal engines are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1810.png" alt="Infinite-lot variances" width="48" height="48"> | **Infinite-lot variances** | - Requires 1250 fractal engines | **50 sexvigintillion cookies** | Fractal engines cost **5%** less |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Upgrade Name</th>
+<th>Unlock Condition</th>
+<th>Base Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1800.png"><img src="./assets/generated-icons/SheetCustom1800.png" alt="Iteration liquidation" width="48" height="48"></a></td>
+<td><strong>Iteration liquidation</strong></td>
+<td>Requires 750 fractal engines</td>
+<td><strong>500 novemdecillion cookies</strong></td>
+<td>Fractal engines cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1801.png"><img src="./assets/generated-icons/SheetCustom1801.png" alt="Infinite recursion" width="48" height="48"></a></td>
+<td><strong>Infinite recursion</strong></td>
+<td>Requires 800 fractal engines</td>
+<td><strong>50 vigintillion cookies</strong></td>
+<td>Fractal engines are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1802.png"><img src="./assets/generated-icons/SheetCustom1802.png" alt="Self-similar spare parts" width="48" height="48"></a></td>
+<td><strong>Self-similar spare parts</strong></td>
+<td>Requires 850 fractal engines</td>
+<td><strong>5 unvigintillion cookies</strong></td>
+<td>Fractal engines cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1803.png"><img src="./assets/generated-icons/SheetCustom1803.png" alt="Self-similar baking" width="48" height="48"></a></td>
+<td><strong>Self-similar baking</strong></td>
+<td>Requires 900 fractal engines</td>
+<td><strong>500 unvigintillion cookies</strong></td>
+<td>Fractal engines are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1804.png"><img src="./assets/generated-icons/SheetCustom1804.png" alt="Recursion rebates" width="48" height="48"></a></td>
+<td><strong>Recursion rebates</strong></td>
+<td>Requires 950 fractal engines</td>
+<td><strong>50 duovigintillion cookies</strong></td>
+<td>Fractal engines cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1805.png"><img src="./assets/generated-icons/SheetCustom1805.png" alt="Fractal optimization" width="48" height="48"></a></td>
+<td><strong>Fractal optimization</strong></td>
+<td>Requires 1000 fractal engines</td>
+<td><strong>5 trevigintillion cookies</strong></td>
+<td>Fractal engines are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1806.png"><img src="./assets/generated-icons/SheetCustom1806.png" alt="Autogenerator residencies" width="48" height="48"></a></td>
+<td><strong>Autogenerator residencies</strong></td>
+<td>Requires 1050 fractal engines</td>
+<td><strong>500 trevigintillion cookies</strong></td>
+<td>Fractal engines cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1807.png"><img src="./assets/generated-icons/SheetCustom1807.png" alt="Recursive enhancement" width="48" height="48"></a></td>
+<td><strong>Recursive enhancement</strong></td>
+<td>Requires 1100 fractal engines</td>
+<td><strong>50 quattuorvigintillion cookies</strong></td>
+<td>Fractal engines are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1808.png"><img src="./assets/generated-icons/SheetCustom1808.png" alt="Grant-funded proofs" width="48" height="48"></a></td>
+<td><strong>Grant-funded proofs</strong></td>
+<td>Requires 1150 fractal engines</td>
+<td><strong>5 quinvigintillion cookies</strong></td>
+<td>Fractal engines cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1809.png"><img src="./assets/generated-icons/SheetCustom1809.png" alt="Fractal gastronomy" width="48" height="48"></a></td>
+<td><strong>Fractal gastronomy</strong></td>
+<td>Requires 1200 fractal engines</td>
+<td><strong>500 quinvigintillion cookies</strong></td>
+<td>Fractal engines are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1810.png"><img src="./assets/generated-icons/SheetCustom1810.png" alt="Infinite-lot variances" width="48" height="48"></a></td>
+<td><strong>Infinite-lot variances</strong></td>
+<td>Requires 1250 fractal engines</td>
+<td><strong>50 sexvigintillion cookies</strong></td>
+<td>Fractal engines cost <strong>5%</strong> less</td>
+</tr>
+</tbody>
+</table>
+
 
 ##### Javascript Console
-| Icon | Upgrade | Requirement | Cost | Description |
-| --- | --- | --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom1900.png" alt="Refurb dev boards" width="48" height="48"> | **Refurb dev boards** | - Requires 750 javascript consoles | **50 vigintillion cookies** | Javascript consoles cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1901.png" alt="Code optimization" width="48" height="48"> | **Code optimization** | - Requires 800 javascript consoles | **5 unvigintillion cookies** | Javascript consoles are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1902.png" alt="Compiler credit program" width="48" height="48"> | **Compiler credit program** | - Requires 850 javascript consoles | **500 unvigintillion cookies** | Javascript consoles cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1903.png" alt="Programmatic baking" width="48" height="48"> | **Programmatic baking** | - Requires 900 javascript consoles | **50 duovigintillion cookies** | Javascript consoles are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1904.png" alt="Idle-friendly runtimes" width="48" height="48"> | **Idle-friendly runtimes** | - Requires 950 javascript consoles | **5 trevigintillion cookies** | Javascript consoles cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1905.png" alt="Algorithmic enhancement" width="48" height="48"> | **Algorithmic enhancement** | - Requires 1000 javascript consoles | **500 trevigintillion cookies** | Javascript consoles are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1906.png" alt="Peer-review co-ops" width="48" height="48"> | **Peer-review co-ops** | - Requires 1050 javascript consoles | **50 quattuorvigintillion cookies** | Javascript consoles cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1907.png" alt="Computational gastronomy" width="48" height="48"> | **Computational gastronomy** | - Requires 1100 javascript consoles | **5 quinvigintillion cookies** | Javascript consoles are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1908.png" alt="Open-source grants" width="48" height="48"> | **Open-source grants** | - Requires 1150 javascript consoles | **500 quinvigintillion cookies** | Javascript consoles cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom1909.png" alt="Digital confectionery" width="48" height="48"> | **Digital confectionery** | - Requires 1200 javascript consoles | **50 sexvigintillion cookies** | Javascript consoles are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom1910.png" alt="Cloud credit vouchers" width="48" height="48"> | **Cloud credit vouchers** | - Requires 1250 javascript consoles | **5 septenvigintillion cookies** | Javascript consoles cost **5%** less |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Upgrade Name</th>
+<th>Unlock Condition</th>
+<th>Base Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1900.png"><img src="./assets/generated-icons/SheetCustom1900.png" alt="Refurb dev boards" width="48" height="48"></a></td>
+<td><strong>Refurb dev boards</strong></td>
+<td>Requires 750 javascript consoles</td>
+<td><strong>50 vigintillion cookies</strong></td>
+<td>Javascript consoles cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1901.png"><img src="./assets/generated-icons/SheetCustom1901.png" alt="Code optimization" width="48" height="48"></a></td>
+<td><strong>Code optimization</strong></td>
+<td>Requires 800 javascript consoles</td>
+<td><strong>5 unvigintillion cookies</strong></td>
+<td>Javascript consoles are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1902.png"><img src="./assets/generated-icons/SheetCustom1902.png" alt="Compiler credit program" width="48" height="48"></a></td>
+<td><strong>Compiler credit program</strong></td>
+<td>Requires 850 javascript consoles</td>
+<td><strong>500 unvigintillion cookies</strong></td>
+<td>Javascript consoles cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1903.png"><img src="./assets/generated-icons/SheetCustom1903.png" alt="Programmatic baking" width="48" height="48"></a></td>
+<td><strong>Programmatic baking</strong></td>
+<td>Requires 900 javascript consoles</td>
+<td><strong>50 duovigintillion cookies</strong></td>
+<td>Javascript consoles are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1904.png"><img src="./assets/generated-icons/SheetCustom1904.png" alt="Idle-friendly runtimes" width="48" height="48"></a></td>
+<td><strong>Idle-friendly runtimes</strong></td>
+<td>Requires 950 javascript consoles</td>
+<td><strong>5 trevigintillion cookies</strong></td>
+<td>Javascript consoles cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1905.png"><img src="./assets/generated-icons/SheetCustom1905.png" alt="Algorithmic enhancement" width="48" height="48"></a></td>
+<td><strong>Algorithmic enhancement</strong></td>
+<td>Requires 1000 javascript consoles</td>
+<td><strong>500 trevigintillion cookies</strong></td>
+<td>Javascript consoles are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1906.png"><img src="./assets/generated-icons/SheetCustom1906.png" alt="Peer-review co-ops" width="48" height="48"></a></td>
+<td><strong>Peer-review co-ops</strong></td>
+<td>Requires 1050 javascript consoles</td>
+<td><strong>50 quattuorvigintillion cookies</strong></td>
+<td>Javascript consoles cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1907.png"><img src="./assets/generated-icons/SheetCustom1907.png" alt="Computational gastronomy" width="48" height="48"></a></td>
+<td><strong>Computational gastronomy</strong></td>
+<td>Requires 1100 javascript consoles</td>
+<td><strong>5 quinvigintillion cookies</strong></td>
+<td>Javascript consoles are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1908.png"><img src="./assets/generated-icons/SheetCustom1908.png" alt="Open-source grants" width="48" height="48"></a></td>
+<td><strong>Open-source grants</strong></td>
+<td>Requires 1150 javascript consoles</td>
+<td><strong>500 quinvigintillion cookies</strong></td>
+<td>Javascript consoles cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1909.png"><img src="./assets/generated-icons/SheetCustom1909.png" alt="Digital confectionery" width="48" height="48"></a></td>
+<td><strong>Digital confectionery</strong></td>
+<td>Requires 1200 javascript consoles</td>
+<td><strong>50 sexvigintillion cookies</strong></td>
+<td>Javascript consoles are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom1910.png"><img src="./assets/generated-icons/SheetCustom1910.png" alt="Cloud credit vouchers" width="48" height="48"></a></td>
+<td><strong>Cloud credit vouchers</strong></td>
+<td>Requires 1250 javascript consoles</td>
+<td><strong>5 septenvigintillion cookies</strong></td>
+<td>Javascript consoles cost <strong>5%</strong> less</td>
+</tr>
+</tbody>
+</table>
+
 
 ##### Idleverse
-| Icon | Upgrade | Requirement | Cost | Description |
-| --- | --- | --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom2000.png" alt="Interdimensional tax breaks" width="48" height="48"> | **Interdimensional tax breaks** | - Requires 750 idleverses | **6 unvigintillion cookies** | Idleverses cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom2001.png" alt="Reality real estate" width="48" height="48"> | **Reality real estate** | - Requires 800 idleverses | **600 unvigintillion cookies** | Idleverses are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom2002.png" alt="Reality consolidation discounts" width="48" height="48"> | **Reality consolidation discounts** | - Requires 850 idleverses | **60 duovigintillion cookies** | Idleverses cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom2003.png" alt="Dimensional franchising" width="48" height="48"> | **Dimensional franchising** | - Requires 900 idleverses | **6 trevigintillion cookies** | Idleverses are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom2004.png" alt="Cosmic bulk purchasing" width="48" height="48"> | **Cosmic bulk purchasing** | - Requires 950 idleverses | **600 trevigintillion cookies** | Idleverses cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom2005.png" alt="Cosmic supply chains" width="48" height="48"> | **Cosmic supply chains** | - Requires 1000 idleverses | **60 quattuorvigintillion cookies** | Idleverses are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom2006.png" alt="Multiverse supplier networks" width="48" height="48"> | **Multiverse supplier networks** | - Requires 1050 idleverses | **6 quinvigintillion cookies** | Idleverses cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom2007.png" alt="Reality marketplaces" width="48" height="48"> | **Reality marketplaces** | - Requires 1100 idleverses | **600 quinvigintillion cookies** | Idleverses are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom2008.png" alt="Dimensional economies of scale" width="48" height="48"> | **Dimensional economies of scale** | - Requires 1150 idleverses | **60 sexvigintillion cookies** | Idleverses cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom2009.png" alt="Multiverse headquarters" width="48" height="48"> | **Multiverse headquarters** | - Requires 1200 idleverses | **6 septenvigintillion cookies** | Idleverses are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom2010.png" alt="Reality monopoly pricing" width="48" height="48"> | **Reality monopoly pricing** | - Requires 1250 idleverses | **600 septenvigintillion cookies** | Idleverses cost **5%** less |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Upgrade Name</th>
+<th>Unlock Condition</th>
+<th>Base Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2000.png"><img src="./assets/generated-icons/SheetCustom2000.png" alt="Interdimensional tax breaks" width="48" height="48"></a></td>
+<td><strong>Interdimensional tax breaks</strong></td>
+<td>Requires 750 idleverses</td>
+<td><strong>6 unvigintillion cookies</strong></td>
+<td>Idleverses cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2001.png"><img src="./assets/generated-icons/SheetCustom2001.png" alt="Reality real estate" width="48" height="48"></a></td>
+<td><strong>Reality real estate</strong></td>
+<td>Requires 800 idleverses</td>
+<td><strong>600 unvigintillion cookies</strong></td>
+<td>Idleverses are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2002.png"><img src="./assets/generated-icons/SheetCustom2002.png" alt="Reality consolidation discounts" width="48" height="48"></a></td>
+<td><strong>Reality consolidation discounts</strong></td>
+<td>Requires 850 idleverses</td>
+<td><strong>60 duovigintillion cookies</strong></td>
+<td>Idleverses cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2003.png"><img src="./assets/generated-icons/SheetCustom2003.png" alt="Dimensional franchising" width="48" height="48"></a></td>
+<td><strong>Dimensional franchising</strong></td>
+<td>Requires 900 idleverses</td>
+<td><strong>6 trevigintillion cookies</strong></td>
+<td>Idleverses are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2004.png"><img src="./assets/generated-icons/SheetCustom2004.png" alt="Cosmic bulk purchasing" width="48" height="48"></a></td>
+<td><strong>Cosmic bulk purchasing</strong></td>
+<td>Requires 950 idleverses</td>
+<td><strong>600 trevigintillion cookies</strong></td>
+<td>Idleverses cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2005.png"><img src="./assets/generated-icons/SheetCustom2005.png" alt="Cosmic supply chains" width="48" height="48"></a></td>
+<td><strong>Cosmic supply chains</strong></td>
+<td>Requires 1000 idleverses</td>
+<td><strong>60 quattuorvigintillion cookies</strong></td>
+<td>Idleverses are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2006.png"><img src="./assets/generated-icons/SheetCustom2006.png" alt="Multiverse supplier networks" width="48" height="48"></a></td>
+<td><strong>Multiverse supplier networks</strong></td>
+<td>Requires 1050 idleverses</td>
+<td><strong>6 quinvigintillion cookies</strong></td>
+<td>Idleverses cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2007.png"><img src="./assets/generated-icons/SheetCustom2007.png" alt="Reality marketplaces" width="48" height="48"></a></td>
+<td><strong>Reality marketplaces</strong></td>
+<td>Requires 1100 idleverses</td>
+<td><strong>600 quinvigintillion cookies</strong></td>
+<td>Idleverses are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2008.png"><img src="./assets/generated-icons/SheetCustom2008.png" alt="Dimensional economies of scale" width="48" height="48"></a></td>
+<td><strong>Dimensional economies of scale</strong></td>
+<td>Requires 1150 idleverses</td>
+<td><strong>60 sexvigintillion cookies</strong></td>
+<td>Idleverses cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2009.png"><img src="./assets/generated-icons/SheetCustom2009.png" alt="Multiverse headquarters" width="48" height="48"></a></td>
+<td><strong>Multiverse headquarters</strong></td>
+<td>Requires 1200 idleverses</td>
+<td><strong>6 septenvigintillion cookies</strong></td>
+<td>Idleverses are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2010.png"><img src="./assets/generated-icons/SheetCustom2010.png" alt="Reality monopoly pricing" width="48" height="48"></a></td>
+<td><strong>Reality monopoly pricing</strong></td>
+<td>Requires 1250 idleverses</td>
+<td><strong>600 septenvigintillion cookies</strong></td>
+<td>Idleverses cost <strong>5%</strong> less</td>
+</tr>
+</tbody>
+</table>
+
 
 ##### Cortex Baker
-| Icon | Upgrade | Requirement | Cost | Description |
-| --- | --- | --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom2100.png" alt="Neural bulk purchasing" width="48" height="48"> | **Neural bulk purchasing** | - Requires 750 cortex bakers | **950 unvigintillion cookies** | Cortex bakers cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom2101.png" alt="Neural plasticity" width="48" height="48"> | **Neural plasticity** | - Requires 800 cortex bakers | **95 duovigintillion cookies** | Cortex bakers are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom2102.png" alt="Synaptic wholesale networks" width="48" height="48"> | **Synaptic wholesale networks** | - Requires 850 cortex bakers | **9.5 trevigintillion cookies** | Cortex bakers cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom2103.png" alt="Synaptic pruning" width="48" height="48"> | **Synaptic pruning** | - Requires 900 cortex bakers | **950 trevigintillion cookies** | Cortex bakers are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom2104.png" alt="Cerebral mass production" width="48" height="48"> | **Cerebral mass production** | - Requires 950 cortex bakers | **95 quattuorvigintillion cookies** | Cortex bakers cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom2105.png" alt="Cognitive load balancing" width="48" height="48"> | **Cognitive load balancing** | - Requires 1000 cortex bakers | **9.5 quinvigintillion cookies** | Cortex bakers are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom2106.png" alt="Mind monopoly pricing" width="48" height="48"> | **Mind monopoly pricing** | - Requires 1050 cortex bakers | **950 quinvigintillion cookies** | Cortex bakers cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom2107.png" alt="Metacognitive awareness" width="48" height="48"> | **Metacognitive awareness** | - Requires 1100 cortex bakers | **95 sexvigintillion cookies** | Cortex bakers are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom2108.png" alt="Neural economies of scale" width="48" height="48"> | **Neural economies of scale** | - Requires 1150 cortex bakers | **9.5 septenvigintillion cookies** | Cortex bakers cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom2109.png" alt="Neural synchronization" width="48" height="48"> | **Neural synchronization** | - Requires 1200 cortex bakers | **950 septenvigintillion cookies** | Cortex bakers are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom2110.png" alt="Synaptic supply dominance" width="48" height="48"> | **Synaptic supply dominance** | - Requires 1250 cortex bakers | **95 octovigintillion cookies** | Cortex bakers cost **5%** less |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Upgrade Name</th>
+<th>Unlock Condition</th>
+<th>Base Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2100.png"><img src="./assets/generated-icons/SheetCustom2100.png" alt="Neural bulk purchasing" width="48" height="48"></a></td>
+<td><strong>Neural bulk purchasing</strong></td>
+<td>Requires 750 cortex bakers</td>
+<td><strong>950 unvigintillion cookies</strong></td>
+<td>Cortex bakers cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2101.png"><img src="./assets/generated-icons/SheetCustom2101.png" alt="Neural plasticity" width="48" height="48"></a></td>
+<td><strong>Neural plasticity</strong></td>
+<td>Requires 800 cortex bakers</td>
+<td><strong>95 duovigintillion cookies</strong></td>
+<td>Cortex bakers are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2102.png"><img src="./assets/generated-icons/SheetCustom2102.png" alt="Synaptic wholesale networks" width="48" height="48"></a></td>
+<td><strong>Synaptic wholesale networks</strong></td>
+<td>Requires 850 cortex bakers</td>
+<td><strong>9.5 trevigintillion cookies</strong></td>
+<td>Cortex bakers cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2103.png"><img src="./assets/generated-icons/SheetCustom2103.png" alt="Synaptic pruning" width="48" height="48"></a></td>
+<td><strong>Synaptic pruning</strong></td>
+<td>Requires 900 cortex bakers</td>
+<td><strong>950 trevigintillion cookies</strong></td>
+<td>Cortex bakers are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2104.png"><img src="./assets/generated-icons/SheetCustom2104.png" alt="Cerebral mass production" width="48" height="48"></a></td>
+<td><strong>Cerebral mass production</strong></td>
+<td>Requires 950 cortex bakers</td>
+<td><strong>95 quattuorvigintillion cookies</strong></td>
+<td>Cortex bakers cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2105.png"><img src="./assets/generated-icons/SheetCustom2105.png" alt="Cognitive load balancing" width="48" height="48"></a></td>
+<td><strong>Cognitive load balancing</strong></td>
+<td>Requires 1000 cortex bakers</td>
+<td><strong>9.5 quinvigintillion cookies</strong></td>
+<td>Cortex bakers are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2106.png"><img src="./assets/generated-icons/SheetCustom2106.png" alt="Mind monopoly pricing" width="48" height="48"></a></td>
+<td><strong>Mind monopoly pricing</strong></td>
+<td>Requires 1050 cortex bakers</td>
+<td><strong>950 quinvigintillion cookies</strong></td>
+<td>Cortex bakers cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2107.png"><img src="./assets/generated-icons/SheetCustom2107.png" alt="Metacognitive awareness" width="48" height="48"></a></td>
+<td><strong>Metacognitive awareness</strong></td>
+<td>Requires 1100 cortex bakers</td>
+<td><strong>95 sexvigintillion cookies</strong></td>
+<td>Cortex bakers are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2108.png"><img src="./assets/generated-icons/SheetCustom2108.png" alt="Neural economies of scale" width="48" height="48"></a></td>
+<td><strong>Neural economies of scale</strong></td>
+<td>Requires 1150 cortex bakers</td>
+<td><strong>9.5 septenvigintillion cookies</strong></td>
+<td>Cortex bakers cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2109.png"><img src="./assets/generated-icons/SheetCustom2109.png" alt="Neural synchronization" width="48" height="48"></a></td>
+<td><strong>Neural synchronization</strong></td>
+<td>Requires 1200 cortex bakers</td>
+<td><strong>950 septenvigintillion cookies</strong></td>
+<td>Cortex bakers are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2110.png"><img src="./assets/generated-icons/SheetCustom2110.png" alt="Synaptic supply dominance" width="48" height="48"></a></td>
+<td><strong>Synaptic supply dominance</strong></td>
+<td>Requires 1250 cortex bakers</td>
+<td><strong>95 octovigintillion cookies</strong></td>
+<td>Cortex bakers cost <strong>5%</strong> less</td>
+</tr>
+</tbody>
+</table>
+
 
 ##### You
-| Icon | Upgrade | Requirement | Cost | Description |
-| --- | --- | --- | --- | --- |
-| <img src="assets/generated-icons/SheetCustom2200.png" alt="Clone factory economies" width="48" height="48"> | **Clone factory economies** | - Requires 750 You | **27 duovigintillion cookies** | You cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom2201.png" alt="Mitotic mastery" width="48" height="48"> | **Mitotic mastery** | - Requires 800 You | **2.7 trevigintillion cookies** | You are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom2202.png" alt="Replica production lines" width="48" height="48"> | **Replica production lines** | - Requires 850 You | **270 trevigintillion cookies** | You cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom2203.png" alt="Epigenetic programming" width="48" height="48"> | **Epigenetic programming** | - Requires 900 You | **27 quattuorvigintillion cookies** | You are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom2204.png" alt="Mirror manufacturing mastery" width="48" height="48"> | **Mirror manufacturing mastery** | - Requires 950 You | **2.7 quinvigintillion cookies** | You cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom2205.png" alt="Cellular differentiation" width="48" height="48"> | **Cellular differentiation** | - Requires 1000 You | **270 quinvigintillion cookies** | You are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom2206.png" alt="Twin tycoon pricing" width="48" height="48"> | **Twin tycoon pricing** | - Requires 1050 You | **27 sexvigintillion cookies** | You cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom2207.png" alt="Telomere regeneration" width="48" height="48"> | **Telomere regeneration** | - Requires 1100 You | **2.7 septenvigintillion cookies** | You are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom2208.png" alt="Doppelganger discount networks" width="48" height="48"> | **Doppelganger discount networks** | - Requires 1150 You | **270 septenvigintillion cookies** | You cost **5%** less |
-| <img src="assets/generated-icons/SheetCustom2209.png" alt="Quantum entanglement" width="48" height="48"> | **Quantum entanglement** | - Requires 1200 You | **27 octovigintillion cookies** | You are **8%** more efficient |
-| <img src="assets/generated-icons/SheetCustom2210.png" alt="Clone supply dominance" width="48" height="48"> | **Clone supply dominance** | - Requires 1250 You | **2.7 novemvigintillion cookies** | You cost **5%** less |
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Upgrade Name</th>
+<th>Unlock Condition</th>
+<th>Base Price</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2200.png"><img src="./assets/generated-icons/SheetCustom2200.png" alt="Clone factory economies" width="48" height="48"></a></td>
+<td><strong>Clone factory economies</strong></td>
+<td>Requires 750 You</td>
+<td><strong>27 duovigintillion cookies</strong></td>
+<td>You cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2201.png"><img src="./assets/generated-icons/SheetCustom2201.png" alt="Mitotic mastery" width="48" height="48"></a></td>
+<td><strong>Mitotic mastery</strong></td>
+<td>Requires 800 You</td>
+<td><strong>2.7 trevigintillion cookies</strong></td>
+<td>You are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2202.png"><img src="./assets/generated-icons/SheetCustom2202.png" alt="Replica production lines" width="48" height="48"></a></td>
+<td><strong>Replica production lines</strong></td>
+<td>Requires 850 You</td>
+<td><strong>270 trevigintillion cookies</strong></td>
+<td>You cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2203.png"><img src="./assets/generated-icons/SheetCustom2203.png" alt="Epigenetic programming" width="48" height="48"></a></td>
+<td><strong>Epigenetic programming</strong></td>
+<td>Requires 900 You</td>
+<td><strong>27 quattuorvigintillion cookies</strong></td>
+<td>You are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2204.png"><img src="./assets/generated-icons/SheetCustom2204.png" alt="Mirror manufacturing mastery" width="48" height="48"></a></td>
+<td><strong>Mirror manufacturing mastery</strong></td>
+<td>Requires 950 You</td>
+<td><strong>2.7 quinvigintillion cookies</strong></td>
+<td>You cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2205.png"><img src="./assets/generated-icons/SheetCustom2205.png" alt="Cellular differentiation" width="48" height="48"></a></td>
+<td><strong>Cellular differentiation</strong></td>
+<td>Requires 1000 You</td>
+<td><strong>270 quinvigintillion cookies</strong></td>
+<td>You are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2206.png"><img src="./assets/generated-icons/SheetCustom2206.png" alt="Twin tycoon pricing" width="48" height="48"></a></td>
+<td><strong>Twin tycoon pricing</strong></td>
+<td>Requires 1050 You</td>
+<td><strong>27 sexvigintillion cookies</strong></td>
+<td>You cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2207.png"><img src="./assets/generated-icons/SheetCustom2207.png" alt="Telomere regeneration" width="48" height="48"></a></td>
+<td><strong>Telomere regeneration</strong></td>
+<td>Requires 1100 You</td>
+<td><strong>2.7 septenvigintillion cookies</strong></td>
+<td>You are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2208.png"><img src="./assets/generated-icons/SheetCustom2208.png" alt="Doppelganger discount networks" width="48" height="48"></a></td>
+<td><strong>Doppelganger discount networks</strong></td>
+<td>Requires 1150 You</td>
+<td><strong>270 septenvigintillion cookies</strong></td>
+<td>You cost <strong>5%</strong> less</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2209.png"><img src="./assets/generated-icons/SheetCustom2209.png" alt="Quantum entanglement" width="48" height="48"></a></td>
+<td><strong>Quantum entanglement</strong></td>
+<td>Requires 1200 You</td>
+<td><strong>27 octovigintillion cookies</strong></td>
+<td>You are <strong>8%</strong> more efficient</td>
+</tr>
+<tr>
+<td width="48"><a href="./assets/generated-icons/SheetCustom2210.png"><img src="./assets/generated-icons/SheetCustom2210.png" alt="Clone supply dominance" width="48" height="48"></a></td>
+<td><strong>Clone supply dominance</strong></td>
+<td>Requires 1250 You</td>
+<td><strong>2.7 novemvigintillion cookies</strong></td>
+<td>You cost <strong>5%</strong> less</td>
+</tr>
+</tbody>
+</table>
+
 
 ## Mysteries of the Cookie Age
 
