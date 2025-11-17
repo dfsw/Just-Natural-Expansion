@@ -5,7 +5,7 @@
     'use strict';
     
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.1.2';
+    var modVersion = '0.2.0';
     var debugMode = false; 
     var runtimeSessionId = Math.floor(Math.random()*1e9) + '-' + Date.now();
     
@@ -18,27 +18,7 @@
     }
 
     function logStoreRefresh(reason, changes) {
-        if (!debugMode) return;
-        try {
-            var payload = {
-                reason: reason,
-                timestamp: Date.now()
-            };
-            if (Array.isArray(changes) && changes.length) {
-                payload.changedUpgrades = changes.map(function(change) {
-                    var entry = {
-                        name: change.name,
-                        previous: change.previous,
-                        next: change.next
-                    };
-                    if (change.reason) {
-                        entry.reason = change.reason;
-                    }
-                    return entry;
-                });
-            }
-            console.log('[JNE Debug][StoreRefresh]', JSON.stringify(payload));
-        } catch (e) {}
+        // Store refresh logging disabled for clean console during normal gameplay
     }
 
     function resetUnlockStateCache() {
@@ -113,18 +93,25 @@
     var enableCookieUpgrades = false;  // Default to disabled for first-run experience
     var enableBuildingUpgrades = false;  // Default to disabled for first-run experience
     var enableKittenUpgrades = false;  // Default to disabled for first-run experience
+    var enableJSMiniGame = false;  // Default to disabled for first-run experience
     var enableCookieAge = false;  // Default to disabled for first-run experience
     var cookieAgeProgress = 0;  // Track puzzle quest progress (0-50)
     var cookieAgeScriptLoaded = false;  // Track if cookieAge.js script has been loaded from CDN
     
     var modIcon = [15, 7]; // Static mod icon from main sprite sheet
     var boxIcon = [34, 4]; // Static Box of improved cookies icon from main sprite sheet
-    var modInitialized = false; // Track if mod has finished initializing
-    var achievementsCreated = false; // Track if achievements have been created to prevent recreation
-    var modSaveData = null; // Store save data for initialization
-    var modLoadInvoked = false; // Track whether load() has run this session
-    var pendingAchievementAwards = []; // Queue for achievements to award once initialization completes
-    var modUnlockStateCache = Object.create(null);
+
+var terminalMinigameScriptUrl = 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/minigameTerminal.js';
+var pendingTerminalMinigameSave = '';
+var terminalMinigameLoadedOnce = false;
+var terminalMinigameOpen = false;
+var terminalMinigameSyncPending = false; // Prevent multiple concurrent syncs
+var modInitialized = false; // Track if mod has finished initializing
+var achievementsCreated = false; // Track if achievements have been created to prevent recreation
+var modSaveData = null; // Store save data for initialization
+var modLoadInvoked = false; // Track whether load() has run this session
+var pendingAchievementAwards = []; // Queue for achievements to award once initialization completes
+var modUnlockStateCache = Object.create(null);
 var toggleLock = false; // Prevent rapid toggle operations
 var pendingSaveTimer = null; // Throttle saves
 var saveCooldownMs = 3000; // Minimum delay between saves
@@ -227,6 +214,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     // Complete reset system for new save loads
     function resetAllModDataForNewSave() {
         debugLog('resetAllModDataForNewSave: start');
+        setTerminalMinigameSave('');
         // Reset lifetime tracking variables
         lifetimeData = {
             reindeerClicked: 0,
@@ -395,6 +383,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         enableCookieUpgrades: false,
         enableBuildingUpgrades: false,
         enableKittenUpgrades: true,
+        enableJSMiniGame: false,
         enableCookieAge: false,
         cookieAgeProgress: 0, // Track puzzle quest progress (0-50)
         hasUsedModOutsideShadowMode: false,
@@ -677,6 +666,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             else if (button.id === 'toggle-cookie-upgrades') settingName = 'enableCookieUpgrades';
             else if (button.id === 'toggle-building-upgrades') settingName = 'enableBuildingUpgrades';
             else if (button.id === 'toggle-kitten-upgrades') settingName = 'enableKittenUpgrades';
+            else if (button.id === 'toggle-js-minigame') settingName = 'enableJSMiniGame';
             else if (button.id === 'toggle-cookie-age') settingName = 'enableCookieAge';
             
             if (settingName) {
@@ -699,6 +689,10 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     case 'enableKittenUpgrades':
                         isEnabled = enableKittenUpgrades;
                         buttonText = `Kitten Upgrades<br><b style="font-size:12px;">${isEnabled ? 'ON' : 'OFF'}</b>`;
+                        break;
+                    case 'enableJSMiniGame':
+                        isEnabled = enableJSMiniGame;
+                        buttonText = `JS Console Minigame<br><b style="font-size:12px;">${isEnabled ? 'ON' : 'OFF'}</b>`;
                         break;
                     case 'enableCookieAge':
                         isEnabled = enableCookieAge;
@@ -733,6 +727,9 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             case 'enableKittenUpgrades':
                 targetVariable = 'enableKittenUpgrades';
                 break;
+            case 'enableJSMiniGame':
+                targetVariable = 'enableJSMiniGame';
+                break;
             case 'enableCookieAge':
                 targetVariable = 'enableCookieAge';
                 break;
@@ -750,16 +747,24 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             newState = !enableBuildingUpgrades;
         } else if (targetVariable === 'enableKittenUpgrades') {
             newState = !enableKittenUpgrades;
+        } else if (targetVariable === 'enableJSMiniGame') {
+            newState = !enableJSMiniGame;
         } else if (targetVariable === 'enableCookieAge') {
             newState = !enableCookieAge;
         }
         
+        // Prevent disabling the Terminal while it is open
+        if (settingName === 'enableJSMiniGame' && newState === false && isTerminalMinigameOpen()) {
+            showTerminalMinigameClosePrompt();
+            return;
+        }
+
         // Determine competition-mode transition
-        const wasInCompetitionMode = shadowAchievementMode && !enableCookieUpgrades && !enableBuildingUpgrades && !enableKittenUpgrades;
+        const wasInCompetitionMode = shadowAchievementMode && !enableCookieUpgrades && !enableBuildingUpgrades && !enableKittenUpgrades && !enableJSMiniGame;
         let willExitCompetitionMode = false;
         if (settingName === 'shadowAchievements') {
             willExitCompetitionMode = wasInCompetitionMode && newState === false;
-        } else if (settingName === 'enableCookieUpgrades' || settingName === 'enableBuildingUpgrades' || settingName === 'enableKittenUpgrades') {
+        } else if (settingName === 'enableCookieUpgrades' || settingName === 'enableBuildingUpgrades' || settingName === 'enableKittenUpgrades' || settingName === 'enableJSMiniGame') {
             willExitCompetitionMode = wasInCompetitionMode && newState === true;
         }
 
@@ -767,7 +772,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         var performToggle = function(targetSettingName, state) {
             if (targetSettingName === 'enableCookieAge') {
                 applyCookieAgeChange(state, true);
-            } else if (targetSettingName === 'enableCookieUpgrades' || targetSettingName === 'enableBuildingUpgrades' || targetSettingName === 'enableKittenUpgrades') {
+            } else if (targetSettingName === 'enableCookieUpgrades' || targetSettingName === 'enableBuildingUpgrades' || targetSettingName === 'enableKittenUpgrades' || targetSettingName === 'enableJSMiniGame') {
                 applyUpgradeChange(targetSettingName, state);
             } else if (targetSettingName === 'shadowAchievements') {
                 applyShadowAchievementChange(state);
@@ -788,10 +793,10 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 message = 'Disable shadow achievements?<br><small>All mod achievements will be moved to the normal pool and will grant milk and affect gameplay. This will award the "Beyond the Leaderboard" shadow achievement to indicate you have left competition mode.</small>';
                 callback = function() { performToggle('shadowAchievements', false); };
             }
-        } else if ((settingName === 'enableCookieUpgrades' || settingName === 'enableBuildingUpgrades' || settingName === 'enableKittenUpgrades') && willExitCompetitionMode) {
+        } else if ((settingName === 'enableCookieUpgrades' || settingName === 'enableBuildingUpgrades' || settingName === 'enableKittenUpgrades' || settingName === 'enableJSMiniGame') && willExitCompetitionMode) {
             let upgradeType = settingName.replace('enable', '').replace('Upgrades', '');
             if (newState) {
-                message = 'Enable ' + upgradeType + ' upgrades?<br><small>These upgrades will be added to the game and may affect your CPS and gameplay. This will award the "Beyond the Leaderboard" shadow achievement to indicate you have left competition mode.</small>';
+                message = 'Enable ' + upgradeType + ' upgrades?<br><small>These upgrades will be added to the game and may affect your CpS and gameplay. This will award the "Beyond the Leaderboard" shadow achievement to indicate you have left competition mode.</small>';
                 callback = function() { performToggle(settingName, true); };
             } else {
                 message = 'Disable ' + upgradeType + ' upgrades?<br><small>These upgrades will be removed from the game. Their purchase state will be remembered and will restore when turned back on.</small>';
@@ -811,7 +816,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         } else {
             if (settingName === 'enableCookieAge') {
                 applyCookieAgeChange(newState, true);
-            } else if (settingName === 'enableCookieUpgrades' || settingName === 'enableBuildingUpgrades' || settingName === 'enableKittenUpgrades') {
+            } else if (settingName === 'enableCookieUpgrades' || settingName === 'enableBuildingUpgrades' || settingName === 'enableKittenUpgrades' || settingName === 'enableJSMiniGame') {
                 applyUpgradeChange(settingName, newState);
             } else if (settingName === 'shadowAchievements') {
                 applyShadowAchievementChange(newState);
@@ -940,6 +945,55 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             enableBuildingUpgrades = enabled;
         } else if (settingName === 'enableKittenUpgrades') {
             enableKittenUpgrades = enabled;
+        } else if (settingName === 'enableJSMiniGame') {
+            enableJSMiniGame = enabled;
+            // Set Game.JNE flag so minigameTerminal.js can check it
+            if (!Game.JNE) Game.JNE = {};
+            Game.JNE.enableJSMiniGame = enabled;
+            // Enable or disable the minigame based on toggle state
+            if (enabled) {
+                enableTerminalMinigame();
+                // Create terminal achievements if minigame is enabled
+                if (Game.Objects && Game.Objects['Javascript console']) {
+                    var jsConsole = Game.Objects['Javascript console'];
+                    if (jsConsole.minigame && typeof jsConsole.minigame.createAchievements === 'function') {
+                        jsConsole.minigame.createAchievements();
+                    } else if (typeof window.createTerminalAchievements === 'function') {
+                        window.createTerminalAchievements();
+                    }
+                }
+            } else {
+                disableTerminalMinigame();
+                // Remove terminal achievements if minigame is disabled
+                // Try to call via minigame object first, but also try direct function call as fallback
+                if (Game.Objects && Game.Objects['Javascript console']) {
+                    var jsConsole = Game.Objects['Javascript console'];
+                    if (jsConsole.minigame && typeof jsConsole.minigame.removeAchievements === 'function') {
+                        jsConsole.minigame.removeAchievements();
+                    } else if (typeof window.removeTerminalAchievements === 'function') {
+                        window.removeTerminalAchievements();
+                    }
+                }
+                
+                // Force the vanilla game to recalculate AchievementsOwned
+                if (Game.Achievements) {
+                    var newAchievementsOwned = 0;
+                    for (var achName in Game.Achievements) {
+                        var ach = Game.Achievements[achName];
+                        if (ach && ach.won && ach.pool !== 'shadow') {
+                            newAchievementsOwned++;
+                        }
+                    }
+                    Game.AchievementsOwned = newAchievementsOwned;
+                }
+                
+                // Force the game to recalculate gains to update milk progress and kitten bonuses
+                if (Game.CalculateGains) {
+                    Game.CalculateGains();
+                }
+            }
+            // Sync button visibility
+            syncTerminalMinigameButtonWithSetting();
         } else if (settingName === 'enableCookieAge') {
             enableCookieAge = enabled;
         }
@@ -1371,6 +1425,9 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 case 'enableKittenUpgrades':
                     actualState = enableKittenUpgrades;
                     break;
+                case 'enableJSMiniGame':
+                    actualState = enableJSMiniGame;
+                    break;
                 case 'enableCookieAge':
                     actualState = enableCookieAge;
                     break;
@@ -1400,6 +1457,54 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             enableBuildingUpgrades = newState;
         } else if (settingName === 'enableKittenUpgrades') {
             enableKittenUpgrades = newState;
+        } else if (settingName === 'enableJSMiniGame') {
+            enableJSMiniGame = newState;
+            // Set Game.JNE flag so minigameTerminal.js can check it
+            if (!Game.JNE) Game.JNE = {};
+            Game.JNE.enableJSMiniGame = newState;
+            // Enable or disable the minigame based on toggle state
+            if (newState) {
+                enableTerminalMinigame();
+                // Create terminal achievements if minigame is enabled
+                if (Game.Objects && Game.Objects['Javascript console']) {
+                    var jsConsole = Game.Objects['Javascript console'];
+                    if (jsConsole.minigame && typeof jsConsole.minigame.createAchievements === 'function') {
+                        jsConsole.minigame.createAchievements();
+                    } else if (typeof window.createTerminalAchievements === 'function') {
+                        window.createTerminalAchievements();
+                    }
+                }
+            } else {
+                disableTerminalMinigame();
+                // Remove terminal achievements if minigame is disabled
+                // Try to call via minigame object first, but also try direct function call as fallback
+                if (Game.Objects && Game.Objects['Javascript console']) {
+                    var jsConsole = Game.Objects['Javascript console'];
+                    if (jsConsole.minigame && typeof jsConsole.minigame.removeAchievements === 'function') {
+                        jsConsole.minigame.removeAchievements();
+                    } else if (typeof window.removeTerminalAchievements === 'function') {
+                        window.removeTerminalAchievements();
+                    }
+                }
+                
+                // Force the vanilla game to recalculate AchievementsOwned
+                if (Game.Achievements) {
+                    var newAchievementsOwned = 0;
+                    for (var achName in Game.Achievements) {
+                        var ach = Game.Achievements[achName];
+                        if (ach && ach.won && ach.pool !== 'shadow') {
+                            newAchievementsOwned++;
+                        }
+                    }
+                    Game.AchievementsOwned = newAchievementsOwned;
+                }
+                
+                // Force the game to recalculate gains to update milk progress and kitten bonuses
+                if (Game.CalculateGains) {
+                    Game.CalculateGains();
+                }
+            }
+            syncTerminalMinigameButtonWithSetting();
         } else if (settingName === 'enableCookieAge') {
             enableCookieAge = newState;
         }
@@ -1437,10 +1542,9 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                         <div class="subsection" style="padding:0px;">
                             <div class="title">${modName} v${modVersion}</div>
                             <div style="margin:10px 0px;color:#ccc;font-size:11px;line-height:1.3;">
-                                <span style="font-weight:bold;">The ${modName} Mod</span> enhances Cookie Clicker's endgame without disrupting core gameplay, staying true to the spirit of the vanilla experience. It introduces over <span style="font-weight:bold;">450 achievements</span> and <span style="font-weight:bold;">250 upgrades</span>, all specifically designed for late-game progression—so early or mid-game players may not immediately notice changes upon installation. By default, the mod adds no upgrades and marks new achievements as shadow, allowing leaderboard-focused players to pursue extra challenges without affecting their current gameplay.
-                                <br><br>
-                                Players seeking bigger numbers and a richer late-game can enable Cookie, Kitten, and Building upgrades, and convert shadow achievements into regular ones, earning additional milk for their accomplishments. All new achievements are designed to be attainable, though some require significant effort. Thank you for playing—and if you enjoy the mod, please spread the word!
-                            </div>
+							    The <span style="font-weight:bold;">${modName} Mod</span> expands Cookie Clicker's endgame while keeping the core game intact. It adds new upgrades, achievements, minigames, and even an occult puzzle mystery thriller, all designed not to break the vanilla feel and cadence of the game. Every feature can be toggled on or off for leaderboard safe play or tailored to your own style.
+							    <br><br>Thanks for playing, and if you enjoy the mod, please spread the word. The more support the mod gets, the more features and updates I can add.<br> 
+							</div>
                             <div class="listing">
                                 <a class="option" id="toggle-shadow-achievements" style="text-decoration:none;color:${modSettings.shadowAchievements ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
                                     Shadow Achievements<br><b style="font-size:12px;">${modSettings.shadowAchievements ? 'ON' : 'OFF'}</b>
@@ -1451,19 +1555,25 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                                 <a class="option" id="toggle-cookie-upgrades" style="text-decoration:none;color:${modSettings.enableCookieUpgrades ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
                                     Cookie Upgrades<br><b style="font-size:12px;">${modSettings.enableCookieUpgrades ? 'ON' : 'OFF'}</b>
                                 </a>
-                                <label>(Cookie upgrades add cookies which increase CPS when purchased.)</label>
+                                <label>(Cookie upgrades add cookies which increase CpS when purchased.)</label>
                             </div>
                             <div class="listing">
                                 <a class="option" id="toggle-building-upgrades" style="text-decoration:none;color:${modSettings.enableBuildingUpgrades ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
                                     Building Upgrades<br><b style="font-size:12px;">${modSettings.enableBuildingUpgrades ? 'ON' : 'OFF'}</b>
                                 </a>
-                                <label>(Building upgrades add multipliers that affect specific buildings CPS.)</label>
+                                <label>(Building upgrades add multipliers that affect specific buildings CpS.)</label>
                             </div>
                             <div class="listing">
                                 <a class="option" id="toggle-kitten-upgrades" style="text-decoration:none;color:${modSettings.enableKittenUpgrades ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
                                     Kitten Upgrades<br><b style="font-size:12px;">${modSettings.enableKittenUpgrades ? 'ON' : 'OFF'}</b>
                                 </a>
-                                <label>(Kittens can be purchased after earning enough milk, they provide an overall boost to CPS.)</label>
+                                <label>(Kittens can be bought after earning enough milk, providing an overall boost to CpS.)</label>
+                            </div>
+                            <div class="listing">
+                                <a class="option" id="toggle-js-minigame" style="text-decoration:none;color:${modSettings.enableJSMiniGame ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
+                                    JS Console Minigame<br><b style="font-size:12px;">${modSettings.enableJSMiniGame ? 'ON' : 'OFF'}</b>
+                                </a>
+                                <label>(A scripting and automation minigame added to the Javascript Console. Unlocked at Level 1 Javascript Consoles.)</label>
                             </div>
                             <div class="listing">
                                 <a class="option" id="toggle-cookie-age" style="text-decoration:none;color:${modSettings.enableCookieAge ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
@@ -1517,6 +1627,14 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                         if (kittenToggle) {
                             kittenToggle.addEventListener('click', function() {
                                 toggleSetting('enableKittenUpgrades');
+                            });
+                        }
+                        
+                        // Javascript Minigame toggle
+                        let jsMiniGameToggle = settingsDiv.querySelector('#toggle-js-minigame');
+                        if (jsMiniGameToggle) {
+                            jsMiniGameToggle.addEventListener('click', function() {
+                                toggleSetting('enableJSMiniGame');
                             });
                         }
                         
@@ -1986,6 +2104,183 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         }
     }
     
+    function setTerminalMinigameSave(serializedState) {
+        try {
+            if (!Game.JNE) Game.JNE = {};
+            Game.JNE.terminalSavedData = (typeof serializedState === 'string') ? serializedState : '';
+            pendingTerminalMinigameSave = Game.JNE.terminalSavedData;
+            
+            if (window.TerminalMinigame && typeof window.TerminalMinigame.applySaveData === 'function') {
+                window.TerminalMinigame.applySaveData(Game.JNE.terminalSavedData);
+            }
+        } catch (e) {
+            errorLog('Failed to set Terminal minigame state:', e && e.message ? e.message : e);
+        }
+    }
+    
+    function isTerminalMinigameOpen() {
+        if (typeof Game !== 'undefined' && Game.Objects && Game.Objects['Javascript console']) {
+            var jsConsole = Game.Objects['Javascript console'];
+            if (jsConsole && typeof jsConsole.onMinigame !== 'undefined') {
+                terminalMinigameOpen = !!jsConsole.onMinigame;
+            }
+        }
+        return !!terminalMinigameOpen;
+    }
+    
+    function showTerminalMinigameClosePrompt() {
+        if (typeof Game === 'undefined' || typeof Game.Prompt !== 'function') {
+            return;
+        }
+        var iconMarkup = (typeof tinyIcon === 'function') ? tinyIcon(modIcon) : '';
+        var promptHtml = '<id TerminalCloseWarning><h3>Close Terminal First</h3><div class="block">' +
+            iconMarkup + (iconMarkup ? '<div class="line"></div>' : '') +
+            'Please close the Javascript Console minigame before disabling it.</div>';
+        Game.Prompt(promptHtml, [['OK', 'Game.ClosePrompt();', 'float:right']]);
+    }
+    
+    function syncTerminalMinigameButtonWithSetting() {
+        if (terminalMinigameSyncPending) return;
+        if (typeof Game === 'undefined' || !Game.Objects || !Game.Objects['Javascript console']) return;
+        
+        var jsConsole = Game.Objects['Javascript console'];
+        if (!jsConsole) return;
+        
+        var shouldShow = !!enableJSMiniGame;
+        var currentUrl = jsConsole.minigameUrl || '';
+        var urlMatches = (currentUrl === terminalMinigameScriptUrl);
+        
+        if (shouldShow === urlMatches) return;
+        
+        terminalMinigameSyncPending = true;
+        
+        if (shouldShow) {
+            jsConsole.minigameName = 'Terminal';
+            jsConsole.minigameUrl = terminalMinigameScriptUrl;
+            jsConsole.minigameIcon = [19, 11, getSpriteSheet('custom')];
+            jsConsole.minigameLoading = false;
+            
+            var scriptAlreadyLoaded = jsConsole.minigame && jsConsole.minigameLoaded;
+            if (!scriptAlreadyLoaded && typeof Game.LoadMinigames === 'function') {
+                try {
+                    Game.LoadMinigames();
+                    jsConsole.minigameLoading = false;
+                } catch (e) {
+                    errorLog('Error loading minigames:', e);
+                    jsConsole.minigameLoading = false;
+                    terminalMinigameSyncPending = false;
+                    return;
+                }
+            }
+            
+            jsConsole.minigameLoading = false;
+            
+            if (typeof jsConsole.refresh === 'function') {
+                try {
+                    jsConsole.refresh();
+                } catch (e) {
+                    errorLog('Error refreshing after enabling minigame:', e);
+                }
+            }
+            
+            // Final check to ensure minigameLoading is false
+            jsConsole.minigameLoading = false;
+            
+            terminalMinigameSyncPending = false;
+        } else {
+            jsConsole.minigameUrl = '';
+            jsConsole.minigameName = '';
+            jsConsole.minigameIcon = null;
+            
+            // CRITICAL: Clear minigameLoading flag when disabling minigame
+            // This ensures saves work even if the minigame was never fully loaded
+            jsConsole.minigameLoading = false;
+            
+            if (typeof jsConsole.refresh === 'function') {
+                try {
+                    jsConsole.refresh();
+                } catch (e) {
+                    errorLog('Error refreshing after disabling minigame:', e);
+                }
+            }
+            
+            terminalMinigameSyncPending = false;
+        }
+    }
+    
+    // Public API for Terminal minigame save/load (matches CookieAge pattern)
+    if (!window.TerminalMinigame) {
+        window.TerminalMinigame = {
+            getSaveData: function() {
+                return (typeof pendingTerminalMinigameSave === 'string') ? pendingTerminalMinigameSave : '';
+            },
+            
+            applySaveData: function(saveString) {
+                try {
+                    if (typeof saveString !== 'string') return;
+                    if (!Game.JNE) Game.JNE = {};
+                    Game.JNE.terminalSavedData = saveString;
+                    pendingTerminalMinigameSave = saveString;
+                    
+                    if (Game && Game.Objects && Game.Objects['Javascript console']) {
+                        var jsConsole = Game.Objects['Javascript console'];
+                        if (jsConsole.minigameLoaded && jsConsole.minigame && 
+                            typeof jsConsole.minigame.load === 'function') {
+                            jsConsole.minigame.load(saveString);
+                        }
+                    }
+                } catch (e) {
+                    errorLog('TerminalMinigame.applySaveData failed:', e && e.message ? e.message : e);
+                }
+            },
+            
+            writeCache: function(saveString) {
+                if (typeof saveString !== 'string') saveString = '';
+                if (!Game.JNE) Game.JNE = {};
+                Game.JNE.terminalSavedData = saveString;
+                pendingTerminalMinigameSave = saveString;
+            },
+            
+            requestSave: function() {
+                try {
+                    requestModSave(false);
+                } catch (e) {
+                    errorLog('TerminalMinigame.requestSave failed:', e && e.message ? e.message : e);
+                }
+            }
+        };
+    }
+    
+    function disableTerminalMinigame() {
+        if (!Game || !Game.Objects || !Game.Objects['Javascript console']) return;
+        
+        var jsConsole = Game.Objects['Javascript console'];
+        if (jsConsole.onMinigame && jsConsole.minigame && typeof jsConsole.minigame.close === 'function') {
+            try {
+                jsConsole.minigame.close();
+            } catch (e) {}
+        }
+        jsConsole.onMinigame = 0;
+        terminalMinigameOpen = false;
+        
+        syncTerminalMinigameButtonWithSetting();
+    }
+    
+    function enableTerminalMinigame() {
+        syncTerminalMinigameButtonWithSetting();
+    }
+    
+    function getTerminalMinigameSaveString() {
+        try {
+            if (window.TerminalMinigame && typeof window.TerminalMinigame.getSaveData === 'function') {
+                return window.TerminalMinigame.getSaveData();
+            }
+        } catch (e) {
+            errorLog('Failed to get Terminal save data:', e && e.message ? e.message : e);
+        }
+        return pendingTerminalMinigameSave || '';
+    }
+    
     // Lump discrepancy patch - keeps sugar lump timers consistent across load/harvest/click
     //Borrowed logic from Spiced Cookies mod, which is no longer being updated or maintained.
     function applyLumpDiscrepancyPatch() {
@@ -2025,8 +2320,9 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         if (Game.clickLump && !Game.clickLump._lumpPatchApplied) {
             var originalClickLump = Game.clickLump;
             Game.clickLump = function() {
+                var result = originalClickLump.apply(this, arguments);
                 Game.lumpT = Date.now();
-                return originalClickLump.apply(this, arguments);
+                return result;
             };
             Game.clickLump._lumpPatchApplied = true;
         }
@@ -2036,6 +2332,37 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     
     // Register all hooks in one place
     function registerAllHooks() {
+        registerHook('logic', function() {
+            if (!Game || !Game.Objects || !Game.Objects['Javascript console']) return;
+            
+            var jsConsole = Game.Objects['Javascript console'];
+            
+            if (jsConsole.minigame && jsConsole.minigameLoaded) {
+                terminalMinigameLoadedOnce = true;
+            }
+            
+            var isOpen = !!jsConsole.onMinigame;
+            if (isOpen !== terminalMinigameOpen) {
+                terminalMinigameOpen = isOpen;
+            }
+            
+            if (!enableJSMiniGame && isOpen && jsConsole.minigame && typeof jsConsole.minigame.close === 'function') {
+                try {
+                    jsConsole.minigame.close();
+                } catch (e) {}
+                jsConsole.onMinigame = 0;
+                terminalMinigameOpen = false;
+            }
+            
+            var shouldShow = !!enableJSMiniGame;
+            var currentUrl = jsConsole.minigameUrl || '';
+            var urlMatches = (currentUrl === terminalMinigameScriptUrl);
+            
+            if (shouldShow !== urlMatches && !terminalMinigameSyncPending) {
+                syncTerminalMinigameButtonWithSetting();
+            }
+        }, 'Monitor terminal minigame state');
+        
         // Seasonal reindeer tracking - award immediately on pop
         registerHook('logic', function() {
             if (Game.reindeerClicked > (modTracking.lastSeasonalReindeerCheck || 0)) {
@@ -3213,7 +3540,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     // Helper function to check and mark "Beyond the Leaderboard" as won
     function checkAndMarkBeyondTheLeaderboard() {
         // Mark "Beyond the Leaderboard" as won if any upgrade is enabled or shadow mode is disabled
-        if (enableCookieUpgrades || enableBuildingUpgrades || enableKittenUpgrades || !shadowAchievementMode) {
+        if (enableCookieUpgrades || enableBuildingUpgrades || enableKittenUpgrades || enableJSMiniGame || !shadowAchievementMode) {
             modSettings.hasUsedModOutsideShadowMode = true;
 
             if (Game.Achievements['Third-party'] && !Game.Achievements['Third-party'].won) {
@@ -4975,7 +5302,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             click: {
                 names: ["Clickbait & Switch", "Click to the Future", "Clickety Clique", "Clickonomicon", "Clicks and Stones", "Click It Till You Make It", "One Does Not Simply Click Once", "Lord of the Clicks", "Click of the Titans"],
                 thresholds: [1e63, 1e69, 1e75, 1e81, 1e87, 1e93, 1e99, 1e105, "clickOfTitans"],
-                descs: ["Make <b>1 vigintillion</b> from clicking.<q>Tired finger yet?</q>", "Make <b>1 duovigintillion</b> from clicking.", "Make <b>1 quattuorvigintillion</b> from clicking.", "Make <b>1 sexvigintillion</b> from clicking.", "Make <b>1 octovigintillion</b> from clicking.", "Make <b>1 trigintillion</b> from clicking.", "Make <b>1 duotrigintillion</b> from clicking.", "Make <b>1 quattuortrigintillion</b> from clicking.", "Generate <b>1 year of raw CPS</b> in a single cookie click.<q>One click to rule them all!</q>"],
+                descs: ["Make <b>1 vigintillion</b> from clicking.<q>Tired finger yet?</q>", "Make <b>1 duovigintillion</b> from clicking.", "Make <b>1 quattuorvigintillion</b> from clicking.", "Make <b>1 sexvigintillion</b> from clicking.", "Make <b>1 octovigintillion</b> from clicking.", "Make <b>1 trigintillion</b> from clicking.", "Make <b>1 duotrigintillion</b> from clicking.", "Make <b>1 quattuortrigintillion</b> from clicking.", "Generate <b>1 year of raw CpS</b> in a single cookie click.<q>One click to rule them all!</q>"],
                 vanillaTarget: "What's not clicking",
                 customIcons: [[9, 0, getSpriteSheet('custom')], [9, 1, getSpriteSheet('custom')], [9, 2, getSpriteSheet('custom')], [9, 3, getSpriteSheet('custom')], [9, 4, getSpriteSheet('custom')], [9, 5, getSpriteSheet('custom')], [9, 6, getSpriteSheet('custom')], [9, 7, getSpriteSheet('custom')], [9, 8, getSpriteSheet('custom')]]
             },
@@ -4988,7 +5315,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             goldenWrinkler: {
                 names: ["Golden wrinkler"],
                 thresholds: [210000000], // 6.66 years in seconds (6.66 * 365.25 * 24 * 60 * 60)
-                descs: ["Burst a wrinkler worth <b>6.66 years of CPS</b>.<q>That's not cream filling, that's a retirement fund!</q>"],
+                descs: ["Burst a wrinkler worth <b>6.66 years of CpS</b>.<q>That's not cream filling, that's a retirement fund!</q>"],
                 vanillaTarget: "Moistburster",
                 customIcons: [[23, 19, getSpriteSheet('custom')]]
             },
@@ -5286,7 +5613,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         hardcoreTreadingWater: {
             names: ["Treading water"],
             thresholds: [0], // Dummy threshold, actual logic handled in requirement function
-            descs: ["Have a CPS of 0 while owning more than 1000 buildings with no active buffs or debuffs.<q>Sometimes it really feels like you are just not being very productive here.</q>"],
+            descs: ["Have a CpS of 0 while owning more than 1000 buildings with no active buffs or debuffs.<q>Sometimes it really feels like you are just not being very productive here.</q>"],
             vanillaTarget: "Hardcore",
             customIcons: [[23, 12, getSpriteSheet('custom')]]
         },
@@ -10424,7 +10751,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 'Do you want to install in Competition or Full Experience Mode<br><br>' +
                 '<div style="text-align: left;">' +
                 '<b>Competition:</b> Achievements are Shadow Achievements and don\'t award milk, no new upgrades are added, Gameplay is not changed. Safe for competitive play, if not a bit boring.<br><br>' +
-                '<b>Full Experience:</b> Achievements award milk. New upgrades, items, and gameplay features are added. Your CPS may change.' +
+                '<b>Full Experience:</b> Achievements award milk. New upgrades, items, and gameplay features are added. Your CpS may change.' +
                 '</div><br><br>' +
                 'These settings can be changed at any time in the Options Menu.</div>',
                 [
@@ -10444,6 +10771,10 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 enableCookieUpgrades = false;
                 enableBuildingUpgrades = false;
                 enableKittenUpgrades = false;
+                enableJSMiniGame = false;
+                if (!Game.JNE) Game.JNE = {};
+                Game.JNE.enableJSMiniGame = false;
+                syncTerminalMinigameButtonWithSetting();
                 modSettings.hasMadeInitialChoice = true;
                 continueModInitialization();
             }
@@ -10457,12 +10788,17 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         enableCookieUpgrades = false;
         enableBuildingUpgrades = false;
         enableKittenUpgrades = false;
+        enableJSMiniGame = false;
         
         // Update modSettings to match
         modSettings.shadowAchievements = true;
         modSettings.enableCookieUpgrades = false;
         modSettings.enableBuildingUpgrades = false;
         modSettings.enableKittenUpgrades = false;
+        modSettings.enableJSMiniGame = false;
+        if (!Game.JNE) Game.JNE = {};
+        Game.JNE.enableJSMiniGame = false;
+        setTerminalMinigameButtonVisibility(false);
         modSettings.hasMadeInitialChoice = true;
         // Reset this flag when choosing leaderboard mode
         modSettings.hasUsedModOutsideShadowMode = false;
@@ -10484,12 +10820,17 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         enableCookieUpgrades = true;
         enableBuildingUpgrades = true;
         enableKittenUpgrades = true;
+        enableJSMiniGame = true;
         
         // Update modSettings to match
         modSettings.shadowAchievements = false;
         modSettings.enableCookieUpgrades = true;
         modSettings.enableBuildingUpgrades = true;
         modSettings.enableKittenUpgrades = true;
+        modSettings.enableJSMiniGame = true;
+        if (!Game.JNE) Game.JNE = {};
+        Game.JNE.enableJSMiniGame = true;
+        syncTerminalMinigameButtonWithSetting();
         modSettings.hasMadeInitialChoice = true;
         // Reset this flag when making a new choice
         modSettings.hasUsedModOutsideShadowMode = false;
@@ -10537,6 +10878,13 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 enableKittenUpgrades = modSaveData.settings.enableKittenUpgrades;
                 modSettings.enableKittenUpgrades = modSaveData.settings.enableKittenUpgrades;
             }
+            if (modSaveData.settings.enableJSMiniGame !== undefined) {
+                enableJSMiniGame = modSaveData.settings.enableJSMiniGame;
+                modSettings.enableJSMiniGame = modSaveData.settings.enableJSMiniGame;
+                // Set Game.JNE flag so minigameTerminal.js can check it
+                if (!Game.JNE) Game.JNE = {};
+                Game.JNE.enableJSMiniGame = enableJSMiniGame;
+            }
             if (modSaveData.settings.enableCookieAge !== undefined) {
                 enableCookieAge = modSaveData.settings.enableCookieAge;
                 modSettings.enableCookieAge = modSaveData.settings.enableCookieAge;
@@ -10567,6 +10915,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                         modSettings.enableCookieUpgrades = enableCookieUpgrades;
                         modSettings.enableBuildingUpgrades = enableBuildingUpgrades;
                         modSettings.enableKittenUpgrades = enableKittenUpgrades;
+                        modSettings.enableJSMiniGame = enableJSMiniGame;
                         modSettings.enableCookieAge = enableCookieAge;
                         modSettings.cookieAgeProgress = cookieAgeProgress;
                         modSettings.shadowAchievements = shadowAchievementMode;
@@ -10610,6 +10959,12 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         if (modSettings.enableKittenUpgrades !== undefined) {
             enableKittenUpgrades = modSettings.enableKittenUpgrades;
         }
+        if (modSettings.enableJSMiniGame !== undefined) {
+            enableJSMiniGame = modSettings.enableJSMiniGame;
+            if (!Game.JNE) Game.JNE = {};
+            Game.JNE.enableJSMiniGame = enableJSMiniGame;
+        }
+        syncTerminalMinigameButtonWithSetting();
 
         // Ensure Cookie Age enabled/disabled matches saved setting, without manual side effects
         try {
@@ -10834,6 +11189,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             
             // Initialize empty save data structure
             modSaveData = { upgrades: {} };
+            setTerminalMinigameSave('');
             
             // Basic mod initialization (UI, hooks, etc) but no save data dependent features
             this.initializeMod();
@@ -10864,6 +11220,11 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             // Show mod loaded notification
             new Game.Notify(modName + ' v' + modVersion + ' Mod Loaded!', 'Use the options menu to configure settings for ' + modName + '.', modIcon);
             console.log('Just Natural Expansion: Mod notification shown');
+            
+            // Initialize terminal minigame if enabled
+            if (enableJSMiniGame) {
+                syncTerminalMinigameButtonWithSetting();
+            }
             
             // Initialization is handled directly in the load() function
             
@@ -10910,107 +11271,159 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
   
         // save() is called automatically by the game when saving
         save: function() {
-            debugLog('mod.saveSystem.save: ===== BEGIN SAVE FUNCTION =====');
-            // Minimal save diagnostics
-            debugLog('mod.saveSystem.save: start');
-            
-            // Record when we generate save data to detect save-before-load cycles
-            var currentTime = Date.now();
-            
-            // In reset mode, return empty data to overwrite save with clean state
-            if (resetMode) {
-                const emptyData = {
-                    version: modVersion,
-                    upgrades: {},
-                    achievements: {},
-                    lifetime: {}
-                };
-                return JSON.stringify(emptyData);
-            }
+            try {
+                debugLog('mod.saveSystem.save: ===== BEGIN SAVE FUNCTION =====');
+                debugLog('mod.saveSystem.save: start');
+                
+                // Record when we generate save data to detect save-before-load cycles
+                var currentTime = Date.now();
+                
+                // In reset mode, return empty data to overwrite save with clean state
+                if (resetMode) {
+                    const emptyData = {
+                        version: modVersion,
+                        upgrades: {},
+                        achievements: {},
+                        lifetime: {}
+                    };
+                    return JSON.stringify(emptyData);
+                }
 
-            // Combine achievements and lifetime data
-            const achievementsData = JSON.parse(saveAchievementsData());
-            
-            // DEBUG: Log achievement data being saved
-            debugLog('mod.saveSystem.save: saving achievement data');
-            var wonAchievements = 0;
-            var totalAchievements = 0;
-            for (var achievementName in achievementsData) {
-                totalAchievements++;
-                if (achievementsData[achievementName] && achievementsData[achievementName].won > 0) {
-                    wonAchievements++;
-                    debugLog('mod.saveSystem.save: achievement', achievementName, 'is WON in save data');
+                // Combine achievements and lifetime data
+                var achievementsData;
+                try {
+                    achievementsData = JSON.parse(saveAchievementsData());
+                } catch (e) {
+                    errorLog('mod.saveSystem.save: Error saving achievements data:', e);
+                    achievementsData = { achievements: {} };
+                }
+                
+                // DEBUG: Log achievement data being saved
+                debugLog('mod.saveSystem.save: saving achievement data');
+                var wonAchievements = 0;
+                var totalAchievements = 0;
+                for (var achievementName in achievementsData) {
+                    totalAchievements++;
+                    if (achievementsData[achievementName] && achievementsData[achievementName].won > 0) {
+                        wonAchievements++;
+                        debugLog('mod.saveSystem.save: achievement', achievementName, 'is WON in save data');
+                    }
+                }
+                debugLog('mod.saveSystem.save: achievement summary - won:', wonAchievements, 'total:', totalAchievements);
+                
+                // Always save upgrade data (ascension reset is handled separately in handleReincarnate)
+                var upgradesData;
+                try {
+                    upgradesData = JSON.parse(saveUpgradesData());
+                } catch (e) {
+                    errorLog('mod.saveSystem.save: Error saving upgrades data:', e);
+                    upgradesData = { upgrades: {} };
+                }
+                
+                // Create a copy of lifetime data without the sacrifice time
+                // Debug log removed for clean console
+                var lifetimeDataToSave = {
+                    reindeerClicked: lifetimeData.reindeerClicked || 0,
+                    stockMarketAssets: lifetimeData.stockMarketAssets || 0,
+                    shinyWrinklersPopped: lifetimeData.shinyWrinklersPopped || 0,
+                    wrathCookiesClicked: lifetimeData.wrathCookiesClicked || 0,
+                    totalGardenSacrifices: lifetimeData.totalGardenSacrifices || 0,
+                    totalCookieClicks: lifetimeData.totalCookieClicks || 0,
+                    wrinklersPopped: lifetimeData.wrinklersPopped || 0,
+                    elderCovenantToggles: lifetimeData.elderCovenantToggles || 0,
+                    pledges: lifetimeData.pledges || 0,
+                    gardenSacrifices: lifetimeData.gardenSacrifices || 0,
+                    totalSpellsCast: lifetimeData.totalSpellsCast || 0,
+                    godUsageTime: lifetimeData.godUsageTime || {}
+                    // Note: lastGardenSacrificeTime is intentionally excluded
+                };
+                // Debug log removed for clean console
+                
+                // Safely get terminal minigame save string
+                var terminalSaveString = '';
+                try {
+                    terminalSaveString = getTerminalMinigameSaveString();
+                } catch (e) {
+                    errorLog('mod.saveSystem.save: Error getting terminal save string:', e);
+                }
+                
+                // Safely get Cookie Age save data
+                var cookieAgeData = null;
+                try {
+                    if (typeof window !== 'undefined' && window.CookieAge && window.CookieAge.getSaveData) {
+                        cookieAgeData = window.CookieAge.getSaveData();
+                    }
+                } catch (e) {
+                    errorLog('mod.saveSystem.save: Error getting Cookie Age save data:', e);
+                }
+                
+                // Merge the data
+                const combinedData = {
+                    version: modVersion,
+                    gameSignature: {
+                        bakeryName: Game.bakeryName || '',
+                        startDate: Game.startDate || 0,
+                        resets: Game.resets || 0
+                    },
+
+                    saveTimestamp: currentTime,  // Add timestamp to detect save-before-load cycles
+                    runtimeSessionId: runtimeSessionId,
+                    upgrades: upgradesData.upgrades || {},
+                    achievements: achievementsData.achievements || {},
+                    lifetime: lifetimeDataToSave,
+                    settings: modSettings,
+                    terminal: terminalSaveString,
+                    modTracking: {
+                        shinyWrinklersPopped: modTracking.shinyWrinklersPopped || 0,
+                        templeSwapsTotal: modTracking.templeSwapsTotal || 0,
+                        soilChangesTotal: modTracking.soilChangesTotal || 0,
+                        // cookie click/reindeer baselines tracked via sessionBaselines
+                        lastSeasonalReindeerCheck: modTracking.lastSeasonalReindeerCheck || 0,
+                        godUsageTime: modTracking.godUsageTime || {},
+                        currentSlottedGods: modTracking.currentSlottedGods || {}
+                    },
+                    // Persist Cookie Age progress regardless of toggle state
+                    cookieAge: cookieAgeData
+                };
+                
+                // Debug logging removed for clean console during normal gameplay
+                
+                var saveString = JSON.stringify(combinedData);
+                debugLog('mod.saveSystem.save: end len=', saveString.length);
+                
+                // Emit save event for any integrations
+                try {
+                    if (typeof Game !== 'undefined' && Game.emit) {
+                        Game.emit('save', { modName: modName, modVersion: modVersion });
+                    }
+                } catch (e) {
+                    errorLog('mod.saveSystem.save: Error emitting save event:', e);
+                }
+                
+                // Ensure we always return a valid string
+                if (typeof saveString !== 'string') {
+                    errorLog('mod.saveSystem.save: ERROR: saveString is not a string, type:', typeof saveString);
+                    saveString = JSON.stringify({ version: modVersion, upgrades: {}, achievements: {}, lifetime: {} });
+                }
+                return saveString;
+            } catch (e) {
+                // Critical error handling - return minimal save data to prevent breaking vanilla saves
+                errorLog('mod.saveSystem.save: CRITICAL ERROR in save function:', e);
+                try {
+                    // Return minimal valid save data so vanilla save can still complete
+                    const minimalData = {
+                        version: modVersion,
+                        upgrades: {},
+                        achievements: {},
+                        lifetime: {}
+                    };
+                    return JSON.stringify(minimalData);
+                } catch (e2) {
+                    // If even minimal save fails, return empty string (mod data will be lost but game save will work)
+                    errorLog('mod.saveSystem.save: CRITICAL ERROR creating minimal save:', e2);
+                    return '';
                 }
             }
-            debugLog('mod.saveSystem.save: achievement summary - won:', wonAchievements, 'total:', totalAchievements);
-            
-            // Always save upgrade data (ascension reset is handled separately in handleReincarnate)
-            var upgradesData = JSON.parse(saveUpgradesData());
-            
-            // Create a copy of lifetime data without the sacrifice time
-            // Debug log removed for clean console
-            var lifetimeDataToSave = {
-                reindeerClicked: lifetimeData.reindeerClicked || 0,
-                stockMarketAssets: lifetimeData.stockMarketAssets || 0,
-                shinyWrinklersPopped: lifetimeData.shinyWrinklersPopped || 0,
-                wrathCookiesClicked: lifetimeData.wrathCookiesClicked || 0,
-                totalGardenSacrifices: lifetimeData.totalGardenSacrifices || 0,
-                totalCookieClicks: lifetimeData.totalCookieClicks || 0,
-                wrinklersPopped: lifetimeData.wrinklersPopped || 0,
-                elderCovenantToggles: lifetimeData.elderCovenantToggles || 0,
-                pledges: lifetimeData.pledges || 0,
-                gardenSacrifices: lifetimeData.gardenSacrifices || 0,
-                totalSpellsCast: lifetimeData.totalSpellsCast || 0,
-                godUsageTime: lifetimeData.godUsageTime || {}
-                // Note: lastGardenSacrificeTime is intentionally excluded
-            };
-            // Debug log removed for clean console
-            
-            // Merge the data
-            const combinedData = {
-                version: modVersion,
-                gameSignature: {
-                    bakeryName: Game.bakeryName || '',
-                    startDate: Game.startDate || 0,
-                    resets: Game.resets || 0
-                },
-
-                saveTimestamp: currentTime,  // Add timestamp to detect save-before-load cycles
-                runtimeSessionId: runtimeSessionId,
-                upgrades: upgradesData.upgrades || {},
-                achievements: achievementsData.achievements || {},
-                lifetime: lifetimeDataToSave,
-                settings: modSettings,
-                modTracking: {
-                    shinyWrinklersPopped: modTracking.shinyWrinklersPopped || 0,
-                    templeSwapsTotal: modTracking.templeSwapsTotal || 0,
-                    soilChangesTotal: modTracking.soilChangesTotal || 0,
-                    // cookie click/reindeer baselines tracked via sessionBaselines
-                    lastSeasonalReindeerCheck: modTracking.lastSeasonalReindeerCheck || 0,
-                    godUsageTime: modTracking.godUsageTime || {},
-                    currentSlottedGods: modTracking.currentSlottedGods || {}
-                },
-                // Persist Cookie Age progress regardless of toggle state
-                cookieAge: (typeof window !== 'undefined' && window.CookieAge && window.CookieAge.getSaveData)
-                    ? window.CookieAge.getSaveData() : null
-            };
-            
-            // Debug: Log what we're saving for tracking variables
-            if (debugMode) {
-                console.log('Just Natural Expansion: Saving modTracking data:', JSON.stringify(combinedData.modTracking, null, 2));
-                console.log('Just Natural Expansion: Saving lifetime data:', JSON.stringify(combinedData.lifetime, null, 2));
-                console.log('Just Natural Expansion: Current modTracking values at save time:', JSON.stringify(modTracking, null, 2));
-            }
-            
-            var saveString = JSON.stringify(combinedData);
-            debugLog('mod.saveSystem.save: end len=', saveString.length);
-            
-            // Emit save event for any integrations
-            if (typeof Game !== 'undefined' && Game.emit) {
-                Game.emit('save', { modName: modName, modVersion: modVersion });
-            }
-            
-            return saveString;
         },
         
         // load() is called automatically by the game when loading
@@ -11029,6 +11442,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     if (!str || str.trim() === '' || str === '{}') {
                         debugLog('mod.saveSystem.load: empty/minimal, proceeding with first run');
                         modSaveData = { upgrades: {} };
+                        setTerminalMinigameSave('');
                         checkAndShowInitialChoice();
                         return;
                     }
@@ -11151,14 +11565,21 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     
                     if (!hasData) {
                         debugLog('mod.saveSystem.load: no meaningful data');
+                        setTerminalMinigameSave('');
                         return;
                     }
                     
                     // Store save data for initialization (or empty data if signature mismatch)
                     if (shouldRestoreSaveData) {
                         modSaveData = modData;
+                        if (typeof modData.terminal !== 'undefined') {
+                            setTerminalMinigameSave(modData.terminal);
+                        } else {
+                            setTerminalMinigameSave('');
+                        }
                     } else {
                         modSaveData = { upgrades: {} };
+                        setTerminalMinigameSave('');
                     }
                     debugLog('mod.saveSystem.load: stored save data for initialization');
                     
@@ -11274,6 +11695,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     debugLog('mod.saveSystem.load: error loading save data:', error);
                     // Fall back to defaults on error
                     modSaveData = { upgrades: {} };
+                    setTerminalMinigameSave('');
                     continueModInitialization();
                 }
             }
