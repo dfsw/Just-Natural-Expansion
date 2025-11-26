@@ -1130,17 +1130,17 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0021.png"><img src="./assets/generated-icons/SheetCustom0021.png" alt="Click II: the sequel" width="48" height="48"></a></td>
 <td><strong>Click II: the sequel</strong></td>
-<td>Make <strong>1 septendecillion cookies</strong> just from cursors</td>
+<td>Make <strong>100 sexdecillion cookies</strong> just from cursors</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0022.png"><img src="./assets/generated-icons/SheetCustom0022.png" alt="Click III: we couldn't get Adam so it stars Jerry Seinfeld for some reason" width="48" height="48"></a></td>
 <td><strong>Click III: we couldn't get Adam so it stars Jerry Seinfeld for some reason</strong></td>
-<td>Make <strong>1 quindecillion cookies</strong> just from cursors</td>
+<td>Make <strong>100 novemdecillion cookies</strong> just from cursors</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0023.png"><img src="./assets/generated-icons/SheetCustom0023.png" alt="Click IV: 3% on rotten tomatoes" width="48" height="48"></a></td>
 <td><strong>Click IV: 3% on rotten tomatoes</strong></td>
-<td>Make <strong>1 sexdecillion cookies</strong> just from cursors</td>
+<td>Make <strong>100 vigintillion cookies</strong> just from cursors</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0019.png"><img src="./assets/generated-icons/SheetCustom0019.png" alt="Rowdy shadow puppets" width="48" height="48"></a></td>
@@ -1223,17 +1223,17 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0121.png"><img src="./assets/generated-icons/SheetCustom0121.png" alt="Scone with the wind" width="48" height="48"></a></td>
 <td><strong>Scone with the wind</strong></td>
-<td>Make <strong>1 septendecillion cookies</strong> just from grandmas</td>
+<td>Make <strong>100 sexdecillion cookies</strong> just from grandmas</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0122.png"><img src="./assets/generated-icons/SheetCustom0122.png" alt="The flour of youth" width="48" height="48"></a></td>
 <td><strong>The flour of youth</strong></td>
-<td>Make <strong>1 quindecillion cookies</strong> just from grandmas</td>
+<td>Make <strong>100 novemdecillion cookies</strong> just from grandmas</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0123.png"><img src="./assets/generated-icons/SheetCustom0123.png" alt="Bake-ageddon" width="48" height="48"></a></td>
 <td><strong>Bake-ageddon</strong></td>
-<td>Make <strong>1 sexdecillion cookies</strong> just from grandmas</td>
+<td>Make <strong>100 vigintillion cookies</strong> just from grandmas</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0119.png"><img src="./assets/generated-icons/SheetCustom0119.png" alt="Loaf &amp; behold" width="48" height="48"></a></td>
@@ -1316,17 +1316,17 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0221.png"><img src="./assets/generated-icons/SheetCustom0221.png" alt="Rake in the greens" width="48" height="48"></a></td>
 <td><strong>Rake in the greens</strong></td>
-<td>Make <strong>1 quattuordecillion cookies</strong> just from farms</td>
+<td>Make <strong>1 quindecillion cookies</strong> just from farms</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0222.png"><img src="./assets/generated-icons/SheetCustom0222.png" alt="The great threshering" width="48" height="48"></a></td>
 <td><strong>The great threshering</strong></td>
-<td>Make <strong>1 quindecillion cookies</strong> just from farms</td>
+<td>Make <strong>1 octodecillion cookies</strong> just from farms</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0223.png"><img src="./assets/generated-icons/SheetCustom0223.png" alt="Bushels of burden" width="48" height="48"></a></td>
 <td><strong>Bushels of burden</strong></td>
-<td>Make <strong>1 sexdecillion cookies</strong> just from farms</td>
+<td>Make <strong>1 novemdecillion cookies</strong> just from farms</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0219.png"><img src="./assets/generated-icons/SheetCustom0219.png" alt="Huge-er tracts of land" width="48" height="48"></a></td>
@@ -1409,17 +1409,17 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0321.png"><img src="./assets/generated-icons/SheetCustom0321.png" alt="Ore d'oeuvres" width="48" height="48"></a></td>
 <td><strong>Ore d'oeuvres</strong></td>
-<td>Make <strong>10 quattuordecillion cookies</strong> just from mines</td>
+<td>Make <strong>10 quindecillion cookies</strong> just from mines</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0322.png"><img src="./assets/generated-icons/SheetCustom0322.png" alt="Seismic yield" width="48" height="48"></a></td>
 <td><strong>Seismic yield</strong></td>
-<td>Make <strong>10 quindecillion cookies</strong> just from mines</td>
+<td>Make <strong>10 octodecillion cookies</strong> just from mines</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0323.png"><img src="./assets/generated-icons/SheetCustom0323.png" alt="Billionaire's bedrock" width="48" height="48"></a></td>
 <td><strong>Billionaire's bedrock</strong></td>
-<td>Make <strong>10 sexdecillion cookies</strong> just from mines</td>
+<td>Make <strong>10 novemdecillion cookies</strong> just from mines</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0319.png"><img src="./assets/generated-icons/SheetCustom0319.png" alt="Cave-in king" width="48" height="48"></a></td>
@@ -1502,17 +1502,17 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0421.png"><img src="./assets/generated-icons/SheetCustom0421.png" alt="Sweatshop symphony" width="48" height="48"></a></td>
 <td><strong>Sweatshop symphony</strong></td>
-<td>Make <strong>100 quattuordecillion cookies</strong> just from factories</td>
+<td>Make <strong>100 quindecillion cookies</strong> just from factories</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0422.png"><img src="./assets/generated-icons/SheetCustom0422.png" alt="Cookieconomics 101" width="48" height="48"></a></td>
 <td><strong>Cookieconomics 101</strong></td>
-<td>Make <strong>100 quindecillion cookies</strong> just from factories</td>
+<td>Make <strong>100 octodecillion cookies</strong> just from factories</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0423.png"><img src="./assets/generated-icons/SheetCustom0423.png" alt="Mass production messiah" width="48" height="48"></a></td>
 <td><strong>Mass production messiah</strong></td>
-<td>Make <strong>100 sexdecillion cookies</strong> just from factories</td>
+<td>Make <strong>100 novemdecillion cookies</strong> just from factories</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0419.png"><img src="./assets/generated-icons/SheetCustom0419.png" alt="Boilerplate overlord" width="48" height="48"></a></td>
@@ -1595,17 +1595,17 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1521.png"><img src="./assets/generated-icons/SheetCustom1521.png" alt="Compound interest, compounded" width="48" height="48"></a></td>
 <td><strong>Compound interest, compounded</strong></td>
-<td>Make <strong>1 quindecillion cookies</strong> just from banks</td>
+<td>Make <strong>1 sexdecillion cookies</strong> just from banks</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1522.png"><img src="./assets/generated-icons/SheetCustom1522.png" alt="Arbitrage avalanche" width="48" height="48"></a></td>
 <td><strong>Arbitrage avalanche</strong></td>
-<td>Make <strong>1 sexdecillion cookies</strong> just from banks</td>
+<td>Make <strong>1 novemdecillion cookies</strong> just from banks</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1523.png"><img src="./assets/generated-icons/SheetCustom1523.png" alt="Ponzi à la mode" width="48" height="48"></a></td>
 <td><strong>Ponzi à la mode</strong></td>
-<td>Make <strong>1 septendecillion cookies</strong> just from banks</td>
+<td>Make <strong>1 vigintillion cookies</strong> just from banks</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1119.png"><img src="./assets/generated-icons/SheetCustom1119.png" alt="Credit conjurer" width="48" height="48"></a></td>
@@ -1688,17 +1688,17 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1621.png"><img src="./assets/generated-icons/SheetCustom1621.png" alt="Temple treasury overflow" width="48" height="48"></a></td>
 <td><strong>Temple treasury overflow</strong></td>
-<td>Make <strong>10 quindecillion cookies</strong> just from temples</td>
+<td>Make <strong>10 sexdecillion cookies</strong> just from temples</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1622.png"><img src="./assets/generated-icons/SheetCustom1622.png" alt="Pantheon payout" width="48" height="48"></a></td>
 <td><strong>Pantheon payout</strong></td>
-<td>Make <strong>10 sexdecillion cookies</strong> just from temples</td>
+<td>Make <strong>10 novemdecillion cookies</strong> just from temples</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1623.png"><img src="./assets/generated-icons/SheetCustom1623.png" alt="Sacred surplus" width="48" height="48"></a></td>
 <td><strong>Sacred surplus</strong></td>
-<td>Make <strong>10 septendecillion cookies</strong> just from temples</td>
+<td>Make <strong>10 vigintillion cookies</strong> just from temples</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1219.png"><img src="./assets/generated-icons/SheetCustom1219.png" alt="Acolyte ascendant" width="48" height="48"></a></td>
@@ -1781,17 +1781,17 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1721.png"><img src="./assets/generated-icons/SheetCustom1721.png" alt="Rabbits per minute" width="48" height="48"></a></td>
 <td><strong>Rabbits per minute</strong></td>
-<td>Make <strong>100 quindecillion cookies</strong> just from wizard towers</td>
+<td>Make <strong>100 sexdecillion cookies</strong> just from wizard towers</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1722.png"><img src="./assets/generated-icons/SheetCustom1722.png" alt="Hocus bonus" width="48" height="48"></a></td>
 <td><strong>Hocus bonus</strong></td>
-<td>Make <strong>100 sexdecillion cookies</strong> just from wizard towers</td>
+<td>Make <strong>100 novemdecillion cookies</strong> just from wizard towers</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1723.png"><img src="./assets/generated-icons/SheetCustom1723.png" alt="Magic dividends" width="48" height="48"></a></td>
 <td><strong>Magic dividends</strong></td>
-<td>Make <strong>100 septendecillion cookies</strong> just from wizard towers</td>
+<td>Make <strong>100 vigintillion cookies</strong> just from wizard towers</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1319.png"><img src="./assets/generated-icons/SheetCustom1319.png" alt="Archmage of Meringue" width="48" height="48"></a></td>
@@ -1874,17 +1874,17 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0521.png"><img src="./assets/generated-icons/SheetCustom0521.png" alt="Cargo cult classic" width="48" height="48"></a></td>
 <td><strong>Cargo cult classic</strong></td>
-<td>Make <strong>1 sexdecillion cookies</strong> just from shipments</td>
+<td>Make <strong>1 septendecillion cookies</strong> just from shipments</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0522.png"><img src="./assets/generated-icons/SheetCustom0522.png" alt="Universal basic shipping" width="48" height="48"></a></td>
 <td><strong>Universal basic shipping</strong></td>
-<td>Make <strong>1 septendecillion cookies</strong> just from shipments</td>
+<td>Make <strong>1 vigintillion cookies</strong> just from shipments</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0523.png"><img src="./assets/generated-icons/SheetCustom0523.png" alt="Comet-to-consumer" width="48" height="48"></a></td>
 <td><strong>Comet-to-consumer</strong></td>
-<td>Make <strong>1 octodecillion cookies</strong> just from shipments</td>
+<td>Make <strong>1 unvigintillion cookies</strong> just from shipments</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0519.png"><img src="./assets/generated-icons/SheetCustom0519.png" alt="Quartermaster of Orbits" width="48" height="48"></a></td>
@@ -1967,17 +1967,17 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0621.png"><img src="./assets/generated-icons/SheetCustom0621.png" alt="Lead into bread" width="48" height="48"></a></td>
 <td><strong>Lead into bread</strong></td>
-<td>Make <strong>10 sexdecillion cookies</strong> just from alchemy labs</td>
+<td>Make <strong>10 septendecillion cookies</strong> just from alchemy labs</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0622.png"><img src="./assets/generated-icons/SheetCustom0622.png" alt="Philosopher's yield" width="48" height="48"></a></td>
 <td><strong>Philosopher's yield</strong></td>
-<td>Make <strong>10 septendecillion cookies</strong> just from alchemy labs</td>
+<td>Make <strong>10 vigintillion cookies</strong> just from alchemy labs</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0623.png"><img src="./assets/generated-icons/SheetCustom0623.png" alt="Auronomical returns" width="48" height="48"></a></td>
 <td><strong>Auronomical returns</strong></td>
-<td>Make <strong>10 octodecillion cookies</strong> just from alchemy labs</td>
+<td>Make <strong>10 unvigintillion cookies</strong> just from alchemy labs</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0619.png"><img src="./assets/generated-icons/SheetCustom0619.png" alt="Retort wrangler" width="48" height="48"></a></td>
@@ -2060,17 +2060,17 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0721.png"><img src="./assets/generated-icons/SheetCustom0721.png" alt="Spacetime surcharge" width="48" height="48"></a></td>
 <td><strong>Spacetime surcharge</strong></td>
-<td>Make <strong>100 sexdecillion cookies</strong> just from portals</td>
+<td>Make <strong>100 septendecillion cookies</strong> just from portals</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0722.png"><img src="./assets/generated-icons/SheetCustom0722.png" alt="Interdimensional yield farming" width="48" height="48"></a></td>
 <td><strong>Interdimensional yield farming</strong></td>
-<td>Make <strong>100 septendecillion cookies</strong> just from portals</td>
+<td>Make <strong>100 vigintillion cookies</strong> just from portals</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0723.png"><img src="./assets/generated-icons/SheetCustom0723.png" alt="Event-horizon markup" width="48" height="48"></a></td>
 <td><strong>Event-horizon markup</strong></td>
-<td>Make <strong>100 octodecillion cookies</strong> just from portals</td>
+<td>Make <strong>100 unvigintillion cookies</strong> just from portals</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0719.png"><img src="./assets/generated-icons/SheetCustom0719.png" alt="Non-Euclidean doorman" width="48" height="48"></a></td>
@@ -2153,17 +2153,17 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0821.png"><img src="./assets/generated-icons/SheetCustom0821.png" alt="Future Profits, Past Tense" width="48" height="48"></a></td>
 <td><strong>Future Profits, Past Tense</strong></td>
-<td>Make <strong>1 septendecillion cookies</strong> just from time machines</td>
+<td>Make <strong>1 octodecillion cookies</strong> just from time machines</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0822.png"><img src="./assets/generated-icons/SheetCustom0822.png" alt="Infinite Loop, Infinite Loot" width="48" height="48"></a></td>
 <td><strong>Infinite Loop, Infinite Loot</strong></td>
-<td>Make <strong>1 octodecillion cookies</strong> just from time machines</td>
+<td>Make <strong>1 unvigintillion cookies</strong> just from time machines</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0823.png"><img src="./assets/generated-icons/SheetCustom0823.png" alt="Back Pay from the Big Bang" width="48" height="48"></a></td>
 <td><strong>Back Pay from the Big Bang</strong></td>
-<td>Make <strong>1 novemdecillion cookies</strong> just from time machines</td>
+<td>Make <strong>1 duovigintillion cookies</strong> just from time machines</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0819.png"><img src="./assets/generated-icons/SheetCustom0819.png" alt="Minute handler" width="48" height="48"></a></td>
@@ -2246,17 +2246,17 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1321.png"><img src="./assets/generated-icons/SheetCustom1321.png" alt="Pair production payout" width="48" height="48"></a></td>
 <td><strong>Pair production payout</strong></td>
-<td>Make <strong>10 septendecillion cookies</strong> just from antimatter condensers</td>
+<td>Make <strong>10 octodecillion cookies</strong> just from antimatter condensers</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1322.png"><img src="./assets/generated-icons/SheetCustom1322.png" alt="Cross-section surplus" width="48" height="48"></a></td>
 <td><strong>Cross-section surplus</strong></td>
-<td>Make <strong>10 octodecillion cookies</strong> just from antimatter condensers</td>
+<td>Make <strong>10 unvigintillion cookies</strong> just from antimatter condensers</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1323.png"><img src="./assets/generated-icons/SheetCustom1323.png" alt="Powers of crumbs" width="48" height="48"></a></td>
 <td><strong>Powers of crumbs</strong></td>
-<td>Make <strong>10 novemdecillion cookies</strong> just from antimatter condensers</td>
+<td>Make <strong>10 duovigintillion cookies</strong> just from antimatter condensers</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom0919.png"><img src="./assets/generated-icons/SheetCustom0919.png" alt="Quark wrangler" width="48" height="48"></a></td>
@@ -2339,17 +2339,17 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1421.png"><img src="./assets/generated-icons/SheetCustom1421.png" alt="Photons pay dividends" width="48" height="48"></a></td>
 <td><strong>Photons pay dividends</strong></td>
-<td>Make <strong>100 septendecillion cookies</strong> just from prisms</td>
+<td>Make <strong>100 octodecillion cookies</strong> just from prisms</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1422.png"><img src="./assets/generated-icons/SheetCustom1422.png" alt="Spectral surplus" width="48" height="48"></a></td>
 <td><strong>Spectral surplus</strong></td>
-<td>Make <strong>100 octodecillion cookies</strong> just from prisms</td>
+<td>Make <strong>100 unvigintillion cookies</strong> just from prisms</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1423.png"><img src="./assets/generated-icons/SheetCustom1423.png" alt="Dawn of plenty" width="48" height="48"></a></td>
 <td><strong>Dawn of plenty</strong></td>
-<td>Make <strong>100 novemdecillion cookies</strong> just from prisms</td>
+<td>Make <strong>100 duovigintillion cookies</strong> just from prisms</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1019.png"><img src="./assets/generated-icons/SheetCustom1019.png" alt="Master of refraction" width="48" height="48"></a></td>
@@ -2432,17 +2432,17 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1821.png"><img src="./assets/generated-icons/SheetCustom1821.png" alt="Against all odds &amp; ends" width="48" height="48"></a></td>
 <td><strong>Against all odds & ends</strong></td>
-<td>Make <strong>1 octodecillion cookies</strong> just from chancemakers</td>
+<td>Make <strong>1 novemdecillion cookies</strong> just from chancemakers</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1822.png"><img src="./assets/generated-icons/SheetCustom1822.png" alt="Monte Carlo windfall" width="48" height="48"></a></td>
 <td><strong>Monte Carlo windfall</strong></td>
-<td>Make <strong>1 novemdecillion cookies</strong> just from chancemakers</td>
+<td>Make <strong>1 duovigintillion cookies</strong> just from chancemakers</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1823.png"><img src="./assets/generated-icons/SheetCustom1823.png" alt="Fate-backed securities" width="48" height="48"></a></td>
 <td><strong>Fate-backed securities</strong></td>
-<td>Make <strong>1 vigintillion cookies</strong> just from chancemakers</td>
+<td>Make <strong>1 trevigintillion cookies</strong> just from chancemakers</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1419.png"><img src="./assets/generated-icons/SheetCustom1419.png" alt="Seedkeeper of Fortune" width="48" height="48"></a></td>
@@ -2525,17 +2525,17 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1921.png"><img src="./assets/generated-icons/SheetCustom1921.png" alt="Infinite series surplus" width="48" height="48"></a></td>
 <td><strong>Infinite series surplus</strong></td>
-<td>Make <strong>10 octodecillion cookies</strong> just from fractal engines</td>
+<td>Make <strong>10 novemdecillion cookies</strong> just from fractal engines</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1922.png"><img src="./assets/generated-icons/SheetCustom1922.png" alt="Geometric mean feast" width="48" height="48"></a></td>
 <td><strong>Geometric mean feast</strong></td>
-<td>Make <strong>10 novemdecillion cookies</strong> just from fractal engines</td>
+<td>Make <strong>10 duovigintillion cookies</strong> just from fractal engines</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1923.png"><img src="./assets/generated-icons/SheetCustom1923.png" alt="Fractal jackpot" width="48" height="48"></a></td>
 <td><strong>Fractal jackpot</strong></td>
-<td>Make <strong>10 vigintillion cookies</strong> just from fractal engines</td>
+<td>Make <strong>10 trevigintillion cookies</strong> just from fractal engines</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1519.png"><img src="./assets/generated-icons/SheetCustom1519.png" alt="Archfractal" width="48" height="48"></a></td>
@@ -2618,17 +2618,17 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom2021.png"><img src="./assets/generated-icons/SheetCustom2021.png" alt="Cookies per second()++" width="48" height="48"></a></td>
 <td><strong>Cookies per second()++</strong></td>
-<td>Make <strong>100 octodecillion cookies</strong> just from javascript consoles</td>
+<td>Make <strong>100 novemdecillion cookies</strong> just from javascript consoles</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom2022.png"><img src="./assets/generated-icons/SheetCustom2022.png" alt="Promise.all(paydays)" width="48" height="48"></a></td>
 <td><strong>Promise.all(paydays)</strong></td>
-<td>Make <strong>100 novemdecillion cookies</strong> just from javascript consoles</td>
+<td>Make <strong>100 duovigintillion cookies</strong> just from javascript consoles</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom2023.png"><img src="./assets/generated-icons/SheetCustom2023.png" alt="Async and ye shall receive" width="48" height="48"></a></td>
 <td><strong>Async and ye shall receive</strong></td>
-<td>Make <strong>100 vigintillion cookies</strong> just from javascript consoles</td>
+<td>Make <strong>100 trevigintillion cookies</strong> just from javascript consoles</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1619.png"><img src="./assets/generated-icons/SheetCustom1619.png" alt="Stack tracer" width="48" height="48"></a></td>
@@ -2711,17 +2711,17 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom2121.png"><img src="./assets/generated-icons/SheetCustom2121.png" alt="Crossover dividends" width="48" height="48"></a></td>
 <td><strong>Crossover dividends</strong></td>
-<td>Make <strong>1 novemdecillion cookies</strong> just from idleverses</td>
+<td>Make <strong>1 vigintillion cookies</strong> just from idleverses</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom2122.png"><img src="./assets/generated-icons/SheetCustom2122.png" alt="Many-Worlds ROI" width="48" height="48"></a></td>
 <td><strong>Many-Worlds ROI</strong></td>
-<td>Make <strong>100 vigintillion cookies</strong> just from idleverses</td>
+<td>Make <strong>1 trevigintillion cookies</strong> just from idleverses</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom2123.png"><img src="./assets/generated-icons/SheetCustom2123.png" alt="Continuity bonus" width="48" height="48"></a></td>
 <td><strong>Continuity bonus</strong></td>
-<td>Make <strong>10 duovigintillion cookies</strong> just from idleverses</td>
+<td>Make <strong>1 quattuorvigintillion cookies</strong> just from idleverses</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1719.png"><img src="./assets/generated-icons/SheetCustom1719.png" alt="Canon custodian" width="48" height="48"></a></td>
@@ -2804,17 +2804,17 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom2221.png"><img src="./assets/generated-icons/SheetCustom2221.png" alt="Brainstorm dividend" width="48" height="48"></a></td>
 <td><strong>Brainstorm dividend</strong></td>
-<td>Make <strong>10 novemdecillion cookies</strong> just from cortex bakers</td>
+<td>Make <strong>10 vigintillion cookies</strong> just from cortex bakers</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom2222.png"><img src="./assets/generated-icons/SheetCustom2222.png" alt="Thought economy boom" width="48" height="48"></a></td>
 <td><strong>Thought economy boom</strong></td>
-<td>Make <strong>10 vigintillion cookies</strong> just from cortex bakers</td>
+<td>Make <strong>10 trevigintillion cookies</strong> just from cortex bakers</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom2223.png"><img src="./assets/generated-icons/SheetCustom2223.png" alt="Neural net worth" width="48" height="48"></a></td>
 <td><strong>Neural net worth</strong></td>
-<td>Make <strong>10 unvigintillion cookies</strong> just from cortex bakers</td>
+<td>Make <strong>10 quattuorvigintillion cookies</strong> just from cortex bakers</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1819.png"><img src="./assets/generated-icons/SheetCustom1819.png" alt="Chief Thinker Officer" width="48" height="48"></a></td>
@@ -2897,17 +2897,17 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom2321.png"><img src="./assets/generated-icons/SheetCustom2321.png" alt="Personal growth" width="48" height="48"></a></td>
 <td><strong>Personal growth</strong></td>
-<td>Make <strong>100 novemdecillion cookies</strong> just from You</td>
+<td>Make <strong>100 vigintillion cookies</strong> just from You</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom2322.png"><img src="./assets/generated-icons/SheetCustom2322.png" alt="Economies of selves" width="48" height="48"></a></td>
 <td><strong>Economies of selves</strong></td>
-<td>Make <strong>100 vigintillion cookies</strong> just from You</td>
+<td>Make <strong>100 trevigintillion cookies</strong> just from You</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom2323.png"><img src="./assets/generated-icons/SheetCustom2323.png" alt="Self-sustaining singularity" width="48" height="48"></a></td>
 <td><strong>Self-sustaining singularity</strong></td>
-<td>Make <strong>100 unvigintillion cookies</strong> just from You</td>
+<td>Make <strong>100 quattuorvigintillion cookies</strong> just from You</td>
 </tr>
 <tr>
 <td width="48"><a href="./assets/generated-icons/SheetCustom1919.png"><img src="./assets/generated-icons/SheetCustom1919.png" alt="Identity custodian" width="48" height="48"></a></td>
