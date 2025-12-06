@@ -5128,11 +5128,11 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 This story add-on layers an occult mystery over your Cookie Clicker run: riddles to solve, ciphers to break, puzzles to test your wits, and secret rites to perform—**all inside the world you’re already playing**.
 
 ### What to expect *(spoiler-free)*
-- **Diegetic puzzles.** Clues arrive in-world and puzzles are solved in game, no seperated gameplay or isolated minigames, just careful observation and precise actions.
-- **Escalating difficulty.** As the story unfolds, puzzles grow sharper and more demanding. Some will click; others will test your patience.
-- **Intrigue and mystery.** Early nudges become hard asks. Your cover tightens; your choices start to matter. 
-- **Unfolding lore.** The signs, taboos, and symbols of an ancient and mystical Order emerge piece by piece, if you’re paying attention.
-- **Deep gameplay.** With dozens of puzzles, ciphers, riddles, and tasks to carry out, days, weeks, even months of mystery adventure awaits you. There *is* an end to the mystery, but not everyone will make it. 
+- **Diegetic puzzles:** Clues arrive in-world and puzzles are solved in game, no seperated gameplay or isolated minigames, just careful observation and precise actions.
+- **Escalating difficulty:** As the story unfolds, puzzles grow sharper and more demanding. Some will click; others will test your patience.
+- **Intrigue and mystery:** Early nudges become hard asks. Your cover tightens; your choices start to matter. 
+- **Unfolding lore:** The signs, taboos, and symbols of an ancient and mystical Order emerge piece by piece, if you’re paying attention.
+- **Deep gameplay:** With dozens of puzzles, ciphers, riddles, and tasks to carry out, days, weeks, even months of mystery adventure awaits you. There *is* an end to the mystery, but not everyone will make it. 
 
 ### How to begin
 1. Open **Options** → toggle **“Mysteries of the Cookie”** to **ON**.  
