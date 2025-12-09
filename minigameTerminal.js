@@ -2997,6 +2997,10 @@ M.launch = function () {
                     // Minigame was hidden, close it
                     M.parent.onMinigame = 0;
                 }
+                // Refresh the building to apply visibility change to DOM
+                if (typeof M.parent.refresh === 'function') {
+                    M.parent.refresh();
+                }
             }
 
             checkAndAwardTerminalAchievements();
@@ -3210,7 +3214,24 @@ M.removeAchievements = function() {
 if (typeof window !== 'undefined') {
     window.removeTerminalAchievements = removeTerminalAchievements;
     window.createTerminalAchievements = createTerminalAchievements;
+    
+    // Preserve existing API functions from cookie.js while adding M's properties
+    var existingAPI = window.TerminalMinigame || {};
     window.TerminalMinigame = M;
+    
+    // Restore the API functions that cookie.js set up
+    if (typeof existingAPI.getSaveData === 'function') {
+        window.TerminalMinigame.getSaveData = existingAPI.getSaveData;
+    }
+    if (typeof existingAPI.applySaveData === 'function') {
+        window.TerminalMinigame.applySaveData = existingAPI.applySaveData;
+    }
+    if (typeof existingAPI.writeCache === 'function') {
+        window.TerminalMinigame.writeCache = existingAPI.writeCache;
+    }
+    if (typeof existingAPI.requestSave === 'function') {
+        window.TerminalMinigame.requestSave = existingAPI.requestSave;
+    }
 }
 
 if (Game.Objects && Game.Objects['Javascript console']) {
