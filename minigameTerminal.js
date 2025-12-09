@@ -2989,22 +2989,32 @@ M.launch = function () {
             M.updateCooldownDisplay();
 
             // Restore minigame visibility state
-            if (M.parent && typeof M.parent.onMinigame !== 'undefined') {
-                if (isVisible) {
-                    // Minigame was visible, restore it
-                    M.parent.onMinigame = 1;
-                    // Re-initialize UI elements when restoring open state
-                    M.initializeSlots();
-                    M.updateSlots();
-                    M.showCurrentProgram();
-                    M.ensureUnlockedSlots();
+            if (M.parent && typeof M.parent.onMinigame !== 'undefined' && isVisible) {
+                // Minigame was visible - defer opening until game is fully ready
+                // Use requestAnimationFrame to ensure DOM is ready, then a short delay
+                // to ensure Cookie Clicker's game loop has started
+                var openMinigame = function() {
+                    if (M.parent && !M.parent.onMinigame) {
+                        M.parent.onMinigame = 1;
+                        if (typeof M.parent.refresh === 'function') {
+                            M.parent.refresh();
+                        }
+                    }
+                };
+                
+                // Try to hook into game ready state, fallback to delayed execution
+                if (typeof Game !== 'undefined' && Game.ready) {
+                    setTimeout(openMinigame, 50);
                 } else {
-                    // Minigame was hidden, close it
-                    M.parent.onMinigame = 0;
-                }
-                // Refresh the building to apply visibility change to DOM
-                if (typeof M.parent.refresh === 'function') {
-                    M.parent.refresh();
+                    // Game not ready yet, wait for it
+                    var checkReady = function() {
+                        if (typeof Game !== 'undefined' && Game.ready) {
+                            setTimeout(openMinigame, 50);
+                        } else {
+                            setTimeout(checkReady, 100);
+                        }
+                    };
+                    checkReady();
                 }
             }
 
