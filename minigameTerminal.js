@@ -1,5 +1,16 @@
+//version 1.0.1
+
 var M = {};
-M.parent = Game.Objects['Javascript console'];
+M.parent = Game.Objects && Game.Objects['Javascript console'] ? Game.Objects['Javascript console'] : {
+    id: 0,
+    level: 10,
+    minigameName: 'Terminal',
+    minigameLoaded: false,
+    minigameLoading: false,
+    minigameDiv: null,
+    l: null,
+    refresh: function() {}
+};
 M.parent.minigame = M;
 
 const UPDATED_CUSTOM_SPRITE_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
@@ -1692,7 +1703,6 @@ M.launch = function () {
         var interval = 35, targetX = null, targetY = null;
         var bigCookie = (typeof l === 'function') ? l('bigCookie') : null;
         if (bigCookie && typeof bigCookie.getBounds === 'function') {
-            
             //make sure the click popups appear on the cookie not on the terminal
             var bounds = bigCookie.getBounds();
             if (bounds) {
@@ -1712,7 +1722,7 @@ M.launch = function () {
                 else if (typeof Game.Earn === 'function') Game.Earn(Game.cookiesPs / Game.fps);
             }, i * interval);
         }
-        return { success: true, message: 'Clicked the big cookie ' + Beautify(clicks) + ' times.', delay: clicks * interval + 50 }; //an extra 50ms to account for lagging
+        return { success: true, message: 'Clicked the big cookie ' + Beautify(clicks) + ' times.', delay: clicks * interval + 250 }; //250ms pause after all clicks complete before next program
     });
 
     M.slot = [];
@@ -2640,9 +2650,8 @@ M.launch = function () {
             if (result && typeof result.delay === 'number' && result.delay >= 0) {
                 delay = result.delay;
             }
-            if (item.program && item.program.key === 'clickCookie' && index + 1 < queue.length) {
-                delay = 50;
-            }
+            // Removed override that was causing clickCookie to advance too quickly
+            // The delay from the handler ensures all clicks complete before next program runs
             if (index + 1 < queue.length) {
                 setTimeout(function () {
                     runNext(index + 1);
@@ -2673,7 +2682,7 @@ M.launch = function () {
             '#terminalProgramDisplay{display:flex;justify-content:center;flex:1;}' +
             '#terminalProgramNavBar{display:flex;gap:6px;margin-top:6px;}' +
             '#terminalProgramParameters{display:flex;flex-direction:column;align-items:stretch;gap:6px;margin-top:12px;width:100%;max-width:520px;padding:12px 0px;}' +
-            '#terminalProgramConfig{display:flex;flex-wrap:wrap;gap:27px;justify-content:center;width:100%;}' +
+            '#terminalProgramConfig{display:flex;flex-wrap:wrap;gap:27px;justify-content:center;align-items:center;width:100%;min-height:120px;}' +
             '.terminalProgramConfigNone{font-size:11px;color:rgba(255,255,255,0.65);text-align:center;padding:6px 0;width:100%;}' +
             '#tooltipProgram .tooltipProgramIcon,#tooltipTerminalSlot .tooltipProgramIcon{float:left;margin:-8px 8px 0 -8px;width:48px;height:48px;display:flex;align-items:center;justify-content:center;}' +
             '#tooltipProgram .tooltipProgramIcon .tooltipIcon,#tooltipTerminalSlot .tooltipProgramIcon .tooltipIcon,.tooltipIcon{width:48px;height:48px;}' +
@@ -2869,13 +2878,18 @@ M.launch = function () {
         var runCount = Math.max(0, Math.floor(M.programsRun) || 0);
         var runTotal = Math.max(0, Math.floor(M.programsRunTotal) || 0);
         var cooldownStamp = M.executionCooldownStart ? Math.max(0, Math.floor(M.executionCooldownStart)) : 0;
+        var isVisible = 0;
+        if (M.parent && typeof M.parent.onMinigame !== 'undefined') {
+            isVisible = M.parent.onMinigame ? 1 : 0;
+        }
         var saveParts = [
             Math.max(0, unlocked),
             slotPart,
             settingsPart,
             runCount,
             runTotal,
-            cooldownStamp
+            cooldownStamp,
+            isVisible
         ];
         return saveParts.join(' ');
     };
@@ -2912,6 +2926,7 @@ M.launch = function () {
             var runCount = 0;
             var runTotal = 0;
             var cooldownStamp = 0;
+            var isVisible = 0;
 
             if (legacyFormat) {
                 var legacyParts = str.split(';');
@@ -2924,6 +2939,7 @@ M.launch = function () {
                 runCount = parseInt(legacyParts[3] || 0) || 0;
                 runTotal = parseInt(legacyParts[4] || 0) || 0;
                 cooldownStamp = parseFloat(legacyParts[5] || 0) || 0;
+                isVisible = parseInt(legacyParts[6] || 0) || 0;
             } else {
                 var parts = str.split(' ');
                 unlocked = Math.min(M.absoluteMaxSlots, parseInt(parts[0]) || 0);
@@ -2938,6 +2954,7 @@ M.launch = function () {
                 runCount = parseInt(parts[3] || 0) || 0;
                 runTotal = parseInt(parts[4] || 0) || 0;
                 cooldownStamp = parseFloat(parts[5] || 0) || 0;
+                isVisible = parseInt(parts[6] || 0) || 0;
             }
 
             M.slot.length = unlocked;
@@ -2970,6 +2987,17 @@ M.launch = function () {
             M.setExecutingSlot(-1);
             M.updateProgramsRunDisplay();
             M.updateCooldownDisplay();
+
+            // Restore minigame visibility state
+            if (M.parent && typeof M.parent.onMinigame !== 'undefined') {
+                if (isVisible) {
+                    // Minigame was visible, restore it
+                    M.parent.onMinigame = 1;
+                } else {
+                    // Minigame was hidden, close it
+                    M.parent.onMinigame = 0;
+                }
+            }
 
             checkAndAwardTerminalAchievements();
 
@@ -3182,17 +3210,28 @@ M.removeAchievements = function() {
 if (typeof window !== 'undefined') {
     window.removeTerminalAchievements = removeTerminalAchievements;
     window.createTerminalAchievements = createTerminalAchievements;
+    window.TerminalMinigame = M;
 }
 
 if (Game.Objects && Game.Objects['Javascript console']) {
     var isEnabled = false;
-    if (Game.JNE && Game.JNE.enableJSMiniGame !== undefined) {
+    // Force enabled when loading via console (main mod not loaded or not initialized)
+    var isConsoleLoading = !Game.JNE || (Game.JNE && Game.JNE.enableJSMiniGame === undefined && (!Game.mods || !Game.mods['JustNaturalExpansionMod']));
+    
+    if (isConsoleLoading) {
+        // Force enable when loading via console
+        if (!Game.JNE) Game.JNE = {};
+        Game.JNE.enableJSMiniGame = true;
+        isEnabled = true;
+    } else if (Game.JNE && Game.JNE.enableJSMiniGame !== undefined) {
         isEnabled = Game.JNE.enableJSMiniGame;
     } else if (Game.mods && Game.mods['JustNaturalExpansionMod'] && Game.mods['JustNaturalExpansionMod'].saveSystem) {
         try {
             var modSave = Game.mods['JustNaturalExpansionMod'].saveSystem.load(Game.ReadSave());
             if (modSave && modSave.settings && modSave.settings.enableJSMiniGame !== undefined) {
                 isEnabled = modSave.settings.enableJSMiniGame;
+            } else {
+                isEnabled = true;
             }
         } catch (e) {
             isEnabled = true;
@@ -3226,12 +3265,24 @@ if (Game.Objects && Game.Objects['Javascript console']) {
                 }
                 createTerminalAchievements();
                 checkAndAwardTerminalAchievements();
+                // Ensure minigame is assigned
+                if (!jsConsole.minigame) {
+                    jsConsole.minigame = M;
+                }
+                // Set minigameUrl so the button appears (only when loading via console)
+                if (isConsoleLoading && !jsConsole.minigameUrl) {
+                    jsConsole.minigameUrl = 'terminal';
+                    jsConsole.minigameIcon = [19, 11];
+                }
                 jsConsole.refresh();
+                // Redraw building to create button when loading via console
+                if (isConsoleLoading && typeof Game.ObjectsById[jsConsole.id].draw === 'function') {
+                    Game.ObjectsById[jsConsole.id].draw();
+                }
             } catch (e) {
                 jsConsole.minigameLoading = false;
                 throw e;
             }
-            // Ensure minigameLoading stays false after successful initialization
             jsConsole.minigameLoading = false;
         } else if (jsConsole.minigameLoaded && !M.launched) {
             try {
