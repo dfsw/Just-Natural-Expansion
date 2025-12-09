@@ -2993,6 +2993,11 @@ M.launch = function () {
                 if (isVisible) {
                     // Minigame was visible, restore it
                     M.parent.onMinigame = 1;
+                    // Re-initialize UI elements when restoring open state
+                    M.initializeSlots();
+                    M.updateSlots();
+                    M.showCurrentProgram();
+                    M.ensureUnlockedSlots();
                 } else {
                     // Minigame was hidden, close it
                     M.parent.onMinigame = 0;
