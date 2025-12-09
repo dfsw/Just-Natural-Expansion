@@ -5128,7 +5128,7 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 This story add-on layers an occult mystery over your Cookie Clicker run: riddles to solve, ciphers to break, puzzles to test your wits, and secret rites to perform—**all inside the world you’re already playing**.
 
 ### What to expect *(spoiler-free)*
-- **Diegetic puzzles:** Clues arrive in-world and puzzles are solved in game, no seperated gameplay or isolated minigames, just careful observation and precise actions.
+- **Diegetic puzzles:** Clues arrive in-world and puzzles are solved in game, no separated gameplay or isolated minigames, just careful observation and precise actions.
 - **Escalating difficulty:** As the story unfolds, puzzles grow sharper and more demanding. Some will click; others will test your patience.
 - **Intrigue and mystery:** Early nudges become hard asks. Your cover tightens; your choices start to matter. 
 - **Unfolding lore:** The signs, taboos, and symbols of an ancient and mystical Order emerge piece by piece, if you’re paying attention.
@@ -5252,6 +5252,21 @@ sweet_Runtime_Swizzler();
 
 
 ## Changelog
+
+### Version 0.2.1
+* Updated several production achievement descriptions to correct the use of wrong notation numbers. The logic was always correct, but the descriptions were incorrect. Thanks to Reddit user mei_ch.
+* Cleaned up some outdated code that was hanging around.
+* Several quality-of-life fixes to the terminal minigame to improve layout and behavior.
+* Terminal minigame: fixed a bug that could cause Shimmering Veil to break if placed after click generators on laggy computers. 
+* Fixed Garden Sacrifice achievements to track the existing sacrifice counter.
+* Fixed an exploit that could award Spellslinger via save-scumming.
+* Fixed a bug with In the Shadows not being awarded due to character encoding mismatches.
+* Holding down the Shift key while viewing a completed Mysteries of the Cookie Age puzzle will now display the original clue you solved. Thanks to CursedSliver for the idea.
+* Various puzzle tweaks in Mysteries of the Cookie Age to reduce tolerance and make things more fair to solve; no puzzle logic has been updated.
+* Fixed the vanilla bug that could corrupt a save file if two spirits are swapped before a save. Many thanks to Fillexs and CursedSliver for the code and guidance on the fix.
+* Fixed a bug that would apply mod upgrades in permanent upgrade slots in Born Again mode when they shouldn’t have been.
+* Many additional small fixes and UI improvements.
+
 
 ### **Major Version 0.2.0 - Terminal a Javascript Console Minigame**
 * Introducing a whole new minigame for Cookie Clicker! The [Javascript Console Minigame: Terminal](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#javascript-console-minigame-terminal) allows the player to write programs for Cookie Clicker to automate actions and create perfect combos or crash the system and ruin their setups. Unlocked at Level 1 Javascript Consoles are toggled on/off in the Options Menu. 
