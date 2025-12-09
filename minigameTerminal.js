@@ -2990,32 +2990,23 @@ M.launch = function () {
 
             // Restore minigame visibility state
             if (M.parent && typeof M.parent.onMinigame !== 'undefined' && isVisible) {
-                // Minigame was visible - defer opening until game is fully ready
-                // Use requestAnimationFrame to ensure DOM is ready, then a short delay
-                // to ensure Cookie Clicker's game loop has started
-                var openMinigame = function() {
+                // Use a short delay to ensure game is fully ready, then use proper switchMinigame method
+                setTimeout(function() {
                     if (M.parent && !M.parent.onMinigame) {
-                        M.parent.onMinigame = 1;
-                        if (typeof M.parent.refresh === 'function') {
-                            M.parent.refresh();
+                        if (typeof M.parent.switchMinigame === 'function') {
+                            M.parent.switchMinigame(true);
+                        } else {
+                            // Fallback if switchMinigame not available
+                            M.parent.onMinigame = 1;
+                            if (M.parent.minigameDiv && M.parent.minigameDiv.parentNode) {
+                                M.parent.minigameDiv.parentNode.classList.add('onMinigame');
+                            }
+                            if (typeof M.parent.refresh === 'function') {
+                                M.parent.refresh();
+                            }
                         }
                     }
-                };
-                
-                // Try to hook into game ready state, fallback to delayed execution
-                if (typeof Game !== 'undefined' && Game.ready) {
-                    setTimeout(openMinigame, 50);
-                } else {
-                    // Game not ready yet, wait for it
-                    var checkReady = function() {
-                        if (typeof Game !== 'undefined' && Game.ready) {
-                            setTimeout(openMinigame, 50);
-                        } else {
-                            setTimeout(checkReady, 100);
-                        }
-                    };
-                    checkReady();
-                }
+                }, 50);
             }
 
             checkAndAwardTerminalAchievements();
@@ -3247,6 +3238,31 @@ if (typeof window !== 'undefined') {
     if (typeof existingAPI.requestSave === 'function') {
         window.TerminalMinigame.requestSave = existingAPI.requestSave;
     }
+    
+    // DEBUG: Manual test function for visibility restoration
+    // Call from console: TerminalMinigame.testVisibilityRestore()
+    window.TerminalMinigame.testVisibilityRestore = function() {
+        // Test save string with isVisible = 1
+        var testSaveString = '10 -1/-1/-1/-1/-1/-1/-1/-1/-1/-1 ~~~~~~~~~ 10 10 0 1';
+        M.load(testSaveString);
+        return 'Test complete - minigame should open in 50ms';
+    };
+    
+    // DEBUG: Force open the minigame right now
+    window.TerminalMinigame.forceOpen = function() {
+        if (M.parent && typeof M.parent.switchMinigame === 'function') {
+            M.parent.switchMinigame(true);
+        } else if (M.parent) {
+            M.parent.onMinigame = 1;
+            if (M.parent.minigameDiv && M.parent.minigameDiv.parentNode) {
+                M.parent.minigameDiv.parentNode.classList.add('onMinigame');
+            }
+            if (typeof M.parent.refresh === 'function') {
+                M.parent.refresh();
+            }
+        }
+        return 'Force open complete';
+    };
 }
 
 if (Game.Objects && Game.Objects['Javascript console']) {
