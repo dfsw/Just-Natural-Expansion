@@ -1,4 +1,4 @@
-//version 1.0.1
+//version 1.0.2
 
 var M = {};
 M.parent = Game.Objects && Game.Objects['Javascript console'] ? Game.Objects['Javascript console'] : {
@@ -30,7 +30,7 @@ M.launch = function () {
     var M = this;
     M.name = M.parent.minigameName;
     M.maxSlots = 10;
-    M.absoluteMaxSlots = M.maxSlots + 1; //for the aura bonus 
+    M.absoluteMaxSlots = M.maxSlots + 1; //outdated will be updated dynamically 
 
     const TERMINAL_BACKGROUND_URL = 'https://raw.githubusercontent.com/dfsw/Cookies/main/TerminalBG.png';
     const TERMINAL_DIRECTIONAL_URL = 'https://raw.githubusercontent.com/dfsw/Cookies/main/directional.png';
@@ -159,9 +159,23 @@ M.launch = function () {
         return '';
     }
 
+    function shouldIncludeGardenPlant(plantKey) {
+        if (plantKey === 'sparklingSugarCane') return Game.Has('Sparkling sugar cane');
+        if (plantKey === 'krazyKudzu') return Game.Has('Krazy kudzu');
+        if (plantKey === 'magicMushroom') return Game.Has('Magic mushroom');
+        return true;
+    }
+
     function buildGardenSeedIcon(iconIndex) {
         var index = parseInt(iconIndex, 10);
         if (isNaN(index) || index < 0) return null;
+        if (index >= 34 && index <= 36) {
+            var customSheet = '';
+            if (typeof getSpriteSheet === 'function') customSheet = getSpriteSheet('custom') || '';
+            if (!customSheet) customSheet = UPDATED_CUSTOM_SPRITE_URL;
+            if (!customSheet) return null;
+            return [(index - 34) * 5, 24, customSheet];
+        }
         var sheet = getGardenSpriteSheet();
         if (!sheet) return null;
         return [0, index, sheet];
@@ -268,7 +282,7 @@ M.launch = function () {
                     var god = minigame.godsById[i];
                     if (!god) continue;
                     var value = god.id !== undefined ? god.id : i;
-                    var icon = baseIcons[i] || [21 + i, 18];
+                    var icon = (god.icon && god.icon.length) ? god.icon : (baseIcons[i] || [21 + i, 18]);
                     list.push({ value: value, label: god.name, icon: icon });
                 }
             } else if (minigame.gods) {
@@ -278,7 +292,7 @@ M.launch = function () {
                     var g = minigame.gods[key];
                     if (!g) continue;
                     var valueKey = g.id !== undefined ? g.id : (g.key !== undefined ? g.key : key);
-                    var iconFallback = baseIcons[index] || [21 + index, 18];
+                    var iconFallback = (g.icon && g.icon.length) ? g.icon : (baseIcons[index] || [21 + index, 18]);
                     list.push({ value: valueKey, label: g.name, icon: iconFallback });
                     index++;
                 }
@@ -319,6 +333,11 @@ M.launch = function () {
                     if (!spell) continue;
                     var value = spell.id !== undefined ? spell.id : (spell.key || spell.name || i);
                     var icon = [baseIconX + i, baseIconY];
+                    if (spell.customIconSheet && spell.icon && spell.icon.length >= 2) {
+                        icon = [spell.icon[0], spell.icon[1], spell.customIconSheet];
+                    } else if (spell.icon && spell.icon.length) {
+                        icon = spell.icon;
+                    }
                     list.push({ value: value, label: spell.name, icon: icon });
                 }
             } else if (minigame.spells) {
@@ -328,6 +347,11 @@ M.launch = function () {
                     var s = minigame.spells[key];
                     if (!s) continue;
                     var sIcon = [baseIconX + index, baseIconY];
+                    if (s.customIconSheet && s.icon && s.icon.length >= 2) {
+                        sIcon = [s.icon[0], s.icon[1], s.customIconSheet];
+                    } else if (s.icon && s.icon.length) {
+                        sIcon = s.icon;
+                    }
                     list.push({ value: key, label: s.name, icon: sIcon });
                     index++;
                 }
@@ -345,6 +369,7 @@ M.launch = function () {
                     var plantById = minigame.plantsById[i];
                     if (!plantById) continue;
                     var plantValue = plantById.key !== undefined ? plantById.key : (plantById.id !== undefined ? plantById.id : i);
+                    if (!shouldIncludeGardenPlant('' + plantValue)) continue;
                     var plantIcon = buildGardenSeedIcon(plantById.icon);
                     var option = { value: plantValue, label: plantById.name };
                     if (plantIcon) option.icon = plantIcon;
@@ -355,6 +380,7 @@ M.launch = function () {
                     if (!minigame.plants.hasOwnProperty(key)) continue;
                     var plant = minigame.plants[key];
                     if (!plant) continue;
+                    if (!shouldIncludeGardenPlant(key)) continue;
                     var value = plant.key !== undefined ? plant.key : (plant.id !== undefined ? plant.id : key);
                     var icon = buildGardenSeedIcon(plant.icon);
                     var item = { value: value, label: plant.name };
@@ -380,7 +406,12 @@ M.launch = function () {
                 var soil = minigame.soilsById[i];
                 if (!soil) continue;
                 var soilValue = soil.key !== undefined ? soil.key : (soil.id !== undefined ? soil.id : i);
-                var soilIcon = buildGardenSoilIcon(soil.icon);
+                var soilIcon = null;
+                if (soil.customIconSheet && soil.customIcon && soil.customIcon.length >= 2) {
+                    soilIcon = [soil.customIcon[0], soil.customIcon[1], soil.customIconSheet];
+                } else {
+                    soilIcon = buildGardenSoilIcon(soil.icon);
+                }
                 var option = { value: soilValue, label: soil.name };
                 if (soilIcon) option.icon = soilIcon;
                 list.push(option);
@@ -471,14 +502,33 @@ M.launch = function () {
         ];
     }
 
+    function getSugarFrenzyLumpCost() {
+        var up = Game.Upgrades ? Game.Upgrades['Sugar frenzy'] : null;
+        var cost = 1;
+        // Prefer the live runtime value (Sugar frenzy II updates this immediately);
+        // upgrade.priceLumps may not be updated until the upgrade UI/tooltip is rebuilt.
+        if (Game.sugarFrenzyPrice !== undefined) cost = Game.sugarFrenzyPrice;
+        else if (up && up.priceLumps !== undefined) cost = up.priceLumps;
+        cost = parseInt(cost, 10);
+        if (isNaN(cost) || cost < 1) cost = 1;
+        return cost;
+    }
+
     function getSweetRuntimeOptions() {
-        return [
-            { value: 'sugarFrenzy', label: 'Activate sugar frenzy<br>(Warning: cost 1 sugar lump)', icon: [22, 17] },
+        var frenzyCost = getSugarFrenzyLumpCost();
+        var list = [
+            { value: 'sugarFrenzy', label: 'Activate sugar frenzy<br>(Warning: cost ' + frenzyCost + ' sugar lump' + (frenzyCost === 1 ? '' : 's') + ')', icon: [22, 17] }
+        ];
+        if (Game.Has('Sugar for sugar trading')) {
+            list.push({ value: 'sugarTrade', label: 'Activate sugar trade<br>(Warning: cost 1 sugar lump)', icon: [21, 17] });
+        }
+        list.push(
             { value: 'refreshMana', label: 'Refresh grimoire mana<br>(Warning: cost 1 sugar lump)', icon: [17, 0] },
             { value: 'refreshPantheon', label: 'Refresh pantheon swaps cooldown<br>(Warning: cost 1 sugar lump)', icon: [16, 0] },
             { value: 'harvestLump', label: 'Harvest sugar lump', icon: [29, 27] },
             { value: 'clickGolden', label: 'Click all on screen golden cookies', icon: [23, 6] }
-        ];
+        );
+        return list;
     }
 
     function createSellBuyProgram() {
@@ -1524,13 +1574,59 @@ M.launch = function () {
         var upgrade = Game.Upgrades['Sugar frenzy'];
         if (!upgrade) return err('Sugar frenzy is unavailable.');
         if (!upgrade.unlocked) return err('Sugar frenzy is not unlocked yet.');
+
+        if (upgrade._sugarFrenzyII) {
+            var cooldown = 24 * 60 * 60 * 1000;
+            var lastUse = Game.sugarFrenzyLastUse || 0;
+            var elapsed = Date.now() - lastUse;
+            if (elapsed < cooldown) {
+                var remainingMs = cooldown - elapsed;
+                var remainingText = '';
+                if (typeof Game.sayTime === 'function' && typeof Game.fps === 'number') {
+                    remainingText = Game.sayTime((remainingMs / 1000 + 1) * Game.fps, -1);
+                } else {
+                    remainingText = Beautify(Math.ceil(remainingMs / 1000)) + 's';
+                }
+                return err('Sugar frenzy is cooling down. Usable again in ' + remainingText + '.');
+            }
+
+            var price = getSugarFrenzyLumpCost();
+            if (!haveSugarLumps(price)) return err('Not enough sugar lumps to activate Sugar frenzy.');
+            Game.sugarFrenzyLastUse = Date.now();
+            spendSugarLumps(price);
+            Game.sugarFrenzyPrice = (parseInt(price, 10) || 1) + 1;
+            Game.gainBuff('sugar frenzy', 60 * 60, 3);
+            Game.Notify(loc("Sugar frenzy!"), loc("CpS x%1 for 1 hour!", 3), [29, 14]);
+            return ok('Sugar frenzy activated.');
+        }
+
         if (upgrade.bought) return err('Sugar frenzy has already been used this ascension.');
-        if (!haveSugarLumps(1)) return err('Not enough sugar lumps to activate Sugar frenzy.');
-        spendSugarLumps(1);
+        var lumpCost = getSugarFrenzyLumpCost();
+        if (!haveSugarLumps(lumpCost)) return err('Not enough sugar lumps to activate Sugar frenzy.');
+        spendSugarLumps(lumpCost);
         upgrade.buy(1);
         Game.gainBuff('sugar frenzy', 60 * 60, 3);
         Game.Notify(loc("Sugar frenzy!"), loc("CpS x%1 for 1 hour!", 3), [29, 14]);
         return ok('Sugar frenzy activated.');
+    }
+
+    function activateSugarTrade() {
+        var upgrade = Game.Upgrades ? Game.Upgrades['Sugar trade'] : null;
+        if (!upgrade) return err('Sugar trade is unavailable.');
+        if (!upgrade.unlocked) return err('Sugar trade is not unlocked yet.');
+        if (upgrade.bought) return err('Sugar trade has already been used this ascension.');
+        if (!haveSugarLumps(1)) return err('Not enough sugar lumps to activate Sugar trade.');
+
+        // Bypass the in-game confirmation prompt by applying the effect directly.
+        spendSugarLumps(1);
+        upgrade.buy(1);
+        if (typeof Game.shimmer === 'function') {
+            new Game.shimmer('golden');
+        } else if (typeof Game.shimmerTypes !== 'undefined' && Game.shimmerTypes && Game.shimmerTypes.golden) {
+            new Game.shimmer('golden');
+        }
+        Game.Notify("Sugar trade", "Summoned a golden cookie.", [21, 17]);
+        return ok('Sugar trade activated.');
     }
 
     function refreshGrimoireMana() {
@@ -1605,6 +1701,7 @@ M.launch = function () {
         config = config || {};
         var action = config.action || 'sugarFrenzy';
         if (action === 'sugarFrenzy') return activateSugarFrenzy();
+        if (action === 'sugarTrade') return activateSugarTrade();
         if (action === 'refreshMana') return refreshGrimoireMana();
         if (action === 'refreshPantheon') return refreshPantheonSwaps();
         if (action === 'harvestLump') return harvestSugarLump();
@@ -1738,11 +1835,13 @@ M.launch = function () {
 
     M.executionCooldownDuration = 1000 * 60 * 60 * 8;
     M.executionCooldownStart = 0;
+    M.isExecutingSequence = false;
 
     M.getExecutionCooldownRemaining = function () {
         var start = M.executionCooldownStart || 0;
         if (!start) return 0;
-        var end = start + M.executionCooldownDuration;
+        var duration = M.executionCooldownDuration - (Game.Has('Water cooled processors') ? 1000 * 60 * 60 : 0);
+        var end = start + duration;
         return Math.max(0, end - Date.now());
     };
 
@@ -1763,7 +1862,7 @@ M.launch = function () {
     M.updateExecuteButtonState = function () {
         var executeBtn = M.executeBtn || l('terminalExecute');
         if (!executeBtn) return;
-        var ready = M.isExecutionReady();
+        var ready = M.isExecutionReady() && !M.isExecutingSequence;
         if (ready) {
             executeBtn.classList.remove('disabled');
             executeBtn.setAttribute('aria-disabled', 'false');
@@ -1838,14 +1937,20 @@ M.launch = function () {
     };
 
     M.getSupremeIntellectBonus = function () {
-        var bonus = 0;
-        if (typeof Game.auraMult === 'function') {
-            var mult = Game.auraMult('Supreme Intellect');
-            if (!isNaN(mult) && mult > 0) bonus = Math.max(0, Math.floor(mult));
-        } else if (typeof Game.hasAura === 'function' && Game.hasAura('Supreme Intellect')) {
-            bonus = 1;
+        if (typeof Game.hasAura === 'function') {
+            return Game.hasAura('Supreme Intellect') ? 1 : 0;
         }
-        return bonus;
+        if (Game.dragonAuras) {
+            var id1 = (typeof Game.dragonAura === 'number') ? Game.dragonAura : -1;
+            var id2 = (typeof Game.dragonAura2 === 'number') ? Game.dragonAura2 : -1;
+            var a1 = (id1 >= 0 && Game.dragonAuras[id1]) ? Game.dragonAuras[id1] : null;
+            var a2 = (id2 >= 0 && Game.dragonAuras[id2]) ? Game.dragonAuras[id2] : null;
+            if ((a1 && (a1.name === 'Supreme Intellect' || a1.dname === 'Supreme Intellect')) ||
+                (a2 && (a2.name === 'Supreme Intellect' || a2.dname === 'Supreme Intellect'))) {
+                return 1;
+            }
+        }
+        return 0;
     };
 
     M.setExecutingSlot = function (slotIndex) {
@@ -1869,8 +1974,10 @@ M.launch = function () {
         var level = (M.parent && typeof M.parent.level === 'number') ? M.parent.level : 0;
         var baseUnlocked = Math.max(0, Math.floor(level));
         var auraBonus = M.getSupremeIntellectBonus();
-        var capacity = M.maxSlots + auraBonus;
-        return Math.min(capacity, baseUnlocked + auraBonus);
+        var upgradeBonus = Game.Has('Overclocked GPUs') ? 1 : 0;
+        var capacity = M.maxSlots + upgradeBonus + auraBonus;
+        var result = Math.min(capacity, baseUnlocked + auraBonus + upgradeBonus);
+        return result;
     };
 
     M.dragonBoostTooltip = function () {
@@ -2387,6 +2494,7 @@ M.launch = function () {
     M.initializeSlots = function () {
         var slotsContainer = l('terminalSlots');
         if (!slotsContainer) return;
+        M.absoluteMaxSlots = M.maxSlots + 1 + (Game.Has('Overclocked GPUs') ? 1 : 0);
         var unlocked = M.getUnlockedSlotCount();
         var html = '';
         for (let i = 0; i < M.absoluteMaxSlots; i++) {
@@ -2404,6 +2512,13 @@ M.launch = function () {
     };
 
     M.ensureUnlockedSlots = function () {
+        var desiredAbsoluteMaxSlots = M.maxSlots + 1 + (Game.Has('Overclocked GPUs') ? 1 : 0);
+        var hadAbsoluteMaxSlots = M.absoluteMaxSlots;
+        M.absoluteMaxSlots = desiredAbsoluteMaxSlots;
+        // we need to rebuild the slot DOM; otherwise the extra slot never appears.
+        if (hadAbsoluteMaxSlots !== desiredAbsoluteMaxSlots || !l('terminalSlot' + (desiredAbsoluteMaxSlots - 1))) {
+            M.initializeSlots();
+        }
         var unlocked = M.getUnlockedSlotCount();
         if (M.slot.length < unlocked) {
             while (M.slot.length < unlocked) M.slot.push(-1);
@@ -2513,7 +2628,7 @@ M.launch = function () {
                 var from = M.dragging.fromSlot;
                 if (target === from) {
                     setSlot(target, commandId, configToAssign);
-        } else {
+                } else {
                     var previousProgram = M.slot[target];
                     var previousSettings = M.slotSettings[target];
                     setSlot(target, commandId, configToAssign);
@@ -2574,6 +2689,7 @@ M.launch = function () {
     };
 
     M.execute = function () {
+        if (M.isExecutingSequence) return;
         if (!M.isExecutionReady()) {
             var cooldownPos = M.getExecuteButtonPopupPosition();
             var remaining = M.getExecutionCooldownRemaining();
@@ -2603,17 +2719,24 @@ M.launch = function () {
             return;
         }
 
+        M.isExecutingSequence = true;
+        M.updateExecuteButtonState();
+
         var basePopupPos = M.getExecuteButtonPopupPosition();
         var popupStep = 50;
         var popupOffset = 0;
 
         var finalize = function () {
+            M.isExecutingSequence = false;
             M.programsRun += 1;
             M.programsRunTotal += 1;
             M.setExecutingSlot(-1);
             M.startExecutionCooldown();
             M.updateProgramsRunDisplay();
             checkAndAwardTerminalAchievements();
+            if (typeof M.showCurrentProgram === 'function') {
+                M.showCurrentProgram();
+            }
         };
 
         var DEFAULT_DELAY = 250;
@@ -2911,7 +3034,8 @@ M.launch = function () {
             M.programsRun = 0;
             M.programsRunTotal = 0;
             M.executionCooldownStart = 0;
-			M.setExecutingSlot(-1);
+            M.isExecutingSequence = false;
+            M.setExecutingSlot(-1);
             M.ensureUnlockedSlots();
             M.updateProgramsRunDisplay();
             M.updateCooldownDisplay();
@@ -3266,94 +3390,85 @@ if (typeof window !== 'undefined') {
 }
 
 if (Game.Objects && Game.Objects['Javascript console']) {
-    var isEnabled = false;
+    var jsConsole = Game.Objects['Javascript console'];
+    var flagDefined = !!(Game.JNE && Game.JNE.enableJSMiniGame !== undefined);
     // Force enabled when loading via console (main mod not loaded or not initialized)
-    var isConsoleLoading = !Game.JNE || (Game.JNE && Game.JNE.enableJSMiniGame === undefined && (!Game.mods || !Game.mods['JustNaturalExpansionMod']));
-    
-    if (isConsoleLoading) {
-        // Force enable when loading via console
-        if (!Game.JNE) Game.JNE = {};
-        Game.JNE.enableJSMiniGame = true;
-        isEnabled = true;
-    } else if (Game.JNE && Game.JNE.enableJSMiniGame !== undefined) {
-        isEnabled = Game.JNE.enableJSMiniGame;
-    } else if (Game.mods && Game.mods['JustNaturalExpansionMod'] && Game.mods['JustNaturalExpansionMod'].saveSystem) {
-        try {
-            var modSave = Game.mods['JustNaturalExpansionMod'].saveSystem.load(Game.ReadSave());
-            if (modSave && modSave.settings && modSave.settings.enableJSMiniGame !== undefined) {
-                isEnabled = modSave.settings.enableJSMiniGame;
-            } else {
-                isEnabled = true;
-            }
-        } catch (e) {
-            isEnabled = true;
+    var isConsoleLoading = !flagDefined;
+    var isEnabled = flagDefined ? !!Game.JNE.enableJSMiniGame : true;
+
+    function ensureMinigameDiv() {
+        if (jsConsole.minigameDiv) return;
+        var existingDiv = l('rowSpecial' + jsConsole.id);
+        if (existingDiv) {
+            jsConsole.minigameDiv = existingDiv;
+        } else {
+            jsConsole.minigameDiv = document.createElement('div');
+            jsConsole.minigameDiv.id = 'rowSpecial' + jsConsole.id;
+            jsConsole.minigameDiv.className = 'rowSpecial';
+            if (jsConsole.l) jsConsole.l.appendChild(jsConsole.minigameDiv);
         }
-    } else {
-        isEnabled = true;
     }
 
-    if (isEnabled) {
-        var jsConsole = Game.Objects['Javascript console'];
+    function bootMinigame() {
+        if (!jsConsole) return;
         if (!jsConsole.minigameLoaded) {
             jsConsole.minigameLoaded = true;
             jsConsole.minigameName = jsConsole.minigameName || 'Terminal';
             jsConsole.minigameLoading = false;
-            try {
-                if (!jsConsole.minigameDiv) {
-                    var existingDiv = l('rowSpecial' + jsConsole.id);
-                    if (existingDiv) {
-                        jsConsole.minigameDiv = existingDiv;
-                    } else {
-                        jsConsole.minigameDiv = document.createElement('div');
-                        jsConsole.minigameDiv.id = 'rowSpecial' + jsConsole.id;
-                        jsConsole.minigameDiv.className = 'rowSpecial';
-                        if (jsConsole.l) jsConsole.l.appendChild(jsConsole.minigameDiv);
-                    }
-                }
-                M.launch();
-                M.init(jsConsole.minigameDiv);
-                if (Game.JNE && Game.JNE.terminalSavedData) {
-                    M.load(Game.JNE.terminalSavedData);
-                }
-                createTerminalAchievements();
-                checkAndAwardTerminalAchievements();
-                // Ensure minigame is assigned
-                if (!jsConsole.minigame) {
-                    jsConsole.minigame = M;
-                }
-                // Set minigameUrl so the button appears (only when loading via console)
-                if (isConsoleLoading && !jsConsole.minigameUrl) {
-                    jsConsole.minigameUrl = 'terminal';
-                    jsConsole.minigameIcon = [19, 11];
-                }
-                jsConsole.refresh();
-                // Redraw building to create button when loading via console
-                if (isConsoleLoading && typeof Game.ObjectsById[jsConsole.id].draw === 'function') {
-                    Game.ObjectsById[jsConsole.id].draw();
-                }
-            } catch (e) {
-                jsConsole.minigameLoading = false;
-                throw e;
-            }
-            jsConsole.minigameLoading = false;
-        } else if (jsConsole.minigameLoaded && !M.launched) {
-            try {
+        }
+
+        ensureMinigameDiv();
+        M.launch();
+        M.init(jsConsole.minigameDiv);
+
+        if (Game.JNE && Game.JNE.terminalSavedData) {
+            M.load(Game.JNE.terminalSavedData);
+        }
+
+        if (typeof M.createAchievements === 'function') {
+            M.createAchievements();
+        }
+
+        if (!jsConsole.minigame) {
+            jsConsole.minigame = M;
+        }
+
+        if (isConsoleLoading && !jsConsole.minigameUrl) {
+            jsConsole.minigameUrl = 'terminal';
+            jsConsole.minigameIcon = [19, 11];
+        }
+
+        if (typeof jsConsole.refresh === 'function') {
+            jsConsole.refresh();
+        }
+        if (isConsoleLoading && Game.ObjectsById && Game.ObjectsById[jsConsole.id] && typeof Game.ObjectsById[jsConsole.id].draw === 'function') {
+            Game.ObjectsById[jsConsole.id].draw();
+        }
+    }
+
+    if (isEnabled) {
+        try {
+            if (!jsConsole.minigameLoaded) {
+                bootMinigame();
+            } else if (jsConsole.minigameLoaded && !M.launched) {
                 M.launch();
                 M.launched = true;
-                createTerminalAchievements();
-                checkAndAwardTerminalAchievements();
-            } catch (e) {
-                jsConsole.minigameLoading = false;
-                throw e;
+                if (typeof M.createAchievements === 'function') {
+                    M.createAchievements();
+                }
             }
+        } catch (e) {
             jsConsole.minigameLoading = false;
+            throw e;
         }
+        jsConsole.minigameLoading = false;
     } else {
-        var jsConsole = Game.Objects['Javascript console'];
-        if (jsConsole) {
-            jsConsole.minigameLoading = false;
+        jsConsole.minigameLoading = false;
+        if (typeof M.removeAchievements === 'function') {
+            M.removeAchievements();
+        } else {
+            removeTerminalAchievements();
         }
-        removeTerminalAchievements();
     }
 }
 
