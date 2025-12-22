@@ -4110,7 +4110,7 @@
     function setupBigCookieImageSelector() {
         if (Game.Upgrades['Cookie image selector']) return;
         if (Game.cookieImageType === undefined) Game.cookieImageType = 0;
-        if (!Game.CookiesByChoice) Game.CookiesByChoice = {0: {name: 'Perfect cookie', icon: [0, 3], pic: 'perfectCookie.png'}, 1: {name: 'Imperfect cookie', icon: [9, 3], pic: 'imperfectCookie.png'}, 2: {name: 'Snickerdoodle', icon: [29, 10], pic: 'https://raw.githubusercontent.com/dfsw/Cookies/main/CookieImg/snickerdoodle.png'}, 3: {name: 'Chocolate Cookie', icon: [10, 3], pic: 'https://raw.githubusercontent.com/dfsw/Cookies/main/CookieImg/chocolate.png'}, 4: {name: 'Oatmeal Raisin Cookie', icon: [6, 3], pic: 'https://raw.githubusercontent.com/dfsw/Cookies/main/CookieImg/oatmeal.png'}, 5: {name: 'Thumbprint Cookie', icon: [25, 32], pic: 'https://raw.githubusercontent.com/dfsw/Cookies/main/CookieImg/sugarjam.png'}, 6: {name: 'Oreo Cookie', icon: [16, 3], pic: 'https://raw.githubusercontent.com/dfsw/Cookies/main/CookieImg/oreo.png'}, 7: {name: 'Heart Cookie', icon: [20, 3], pic: 'https://raw.githubusercontent.com/dfsw/Cookies/main/CookieImg/heartcookie.png'}, 8: {name: 'Pixel Cookie', icon: [20, 33], pic: 'https://raw.githubusercontent.com/dfsw/Cookies/main/CookieImg/pixel.png'}, 9: {name: 'Eaten Cookie', icon: [22, 16], pic: 'https://raw.githubusercontent.com/dfsw/Cookies/main/CookieImg/eaten.png'}, 10: {name: 'Gingerbread Cookie', icon: [18, 4], pic: 'https://raw.githubusercontent.com/dfsw/Cookies/main/CookieImg/gingerbread.png'}, 11: {name: 'Smiley Cookie', icon: [24, 18], pic: 'https://raw.githubusercontent.com/dfsw/Cookies/main/CookieImg/smiley.png'}, 12: {name: 'Jam Cookie', icon: [26, 33], pic: 'https://raw.githubusercontent.com/dfsw/Cookies/main/CookieImg/jamcookie.png'}, 13: {name: 'Red Velvet Cookie', icon: [15, 5], pic: 'https://raw.githubusercontent.com/dfsw/Cookies/main/CookieImg/velvet.png'}, 14: {name: 'Sugar Cookie', icon: [2, 4], pic: 'https://raw.githubusercontent.com/dfsw/Cookies/main/CookieImg/sugar.png'}, 15: {name: 'Macaron', icon: [22, 3], pic: 'https://raw.githubusercontent.com/dfsw/Cookies/main/CookieImg/macaron.png'}, 16: {name: 'Sprinkle Cookie', icon: [21, 14], pic: 'https://raw.githubusercontent.com/dfsw/Cookies/main/CookieImg/sprinkle.png'}, 17: {name: 'Winter Biscuit', icon: [13, 10], pic: 'https://raw.githubusercontent.com/dfsw/Cookies/main/CookieImg/snow.png'}};
+        if (!Game.CookiesByChoice) Game.CookiesByChoice = {0: {name: 'Perfect cookie', icon: [0, 3], pic: 'perfectCookie.png'}, 1: {name: 'Imperfect cookie', icon: [9, 3], pic: 'imperfectCookie.png'}, 2: {name: 'Snickerdoodle', icon: [29, 10], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/snickerdoodle.png'}, 3: {name: 'Chocolate Cookie', icon: [10, 3], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/chocolate.png'}, 4: {name: 'Oatmeal Raisin Cookie', icon: [6, 3], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/oatmeal.png'}, 5: {name: 'Thumbprint Cookie', icon: [25, 32], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/sugarjam.png'}, 6: {name: 'Oreo Cookie', icon: [16, 3], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/oreo.png'}, 7: {name: 'Heart Cookie', icon: [20, 3], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/heartcookie.png'}, 8: {name: 'Pixel Cookie', icon: [20, 33], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/pixel.png'}, 9: {name: 'Eaten Cookie', icon: [22, 16], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/eaten.png'}, 10: {name: 'Gingerbread Cookie', icon: [18, 4], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/gingerbread.png'}, 11: {name: 'Smiley Cookie', icon: [24, 18], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/smiley.png'}, 12: {name: 'Jam Cookie', icon: [26, 33], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/jamcookie.png'}, 13: {name: 'Red Velvet Cookie', icon: [15, 5], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/velvet.png'}, 14: {name: 'Sugar Cookie', icon: [2, 4], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/sugar.png'}, 15: {name: 'Macaron', icon: [22, 3], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/macaron.png'}, 16: {name: 'Sprinkle Cookie', icon: [21, 14], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/sprinkle.png'}, 17: {name: 'Winter Biscuit', icon: [13, 10], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/snow.png'}};
         new Game.Upgrade('Cookie image selector', 'Lets you pick which cookie image to display.', 0, [5, 3]);
         Game.last.pool = 'toggle';
         Game.last.order = 51002;
@@ -5232,7 +5232,7 @@
             icon: [23, 17, getSpriteSheet('custom')],
             posX: -3160,
             posY: -1038,
-            require: ['Mail in sweepstake winner']
+            require: ['Mail in sweepstake winner', 'Fading payout']
         });
         
         createHeavenlyUpgrade({
@@ -5283,7 +5283,7 @@
             name: 'Abra-Ka-Wiggle',
             desc: 'Resurrect Abomination spell has a <b>2%</b> chance to summon a shiny wrinkler.',
             ddesc: 'Resurrect Abomination spell has a <b>2%</b> chance to summon a shiny wrinkler.',
-            price: 25e15,
+            price: 250e15,
             icon: [6, 16, getSpriteSheet('custom')],
             posX: -2258,
             posY: -1406,
@@ -5294,7 +5294,7 @@
             name: 'Alakazoodle evil noodle',
             desc: 'Resurrect Abomination spell has a <b>3%</b> chance to summon a shiny wrinkler.',
             ddesc: 'Resurrect Abomination spell has a <b>3%</b> chance to summon a shiny wrinkler.<q>I think I missed this day at Hogwarts.</q>',
-            price: 30e15,
+            price: 750e15,
             icon: [14, 16, getSpriteSheet('custom')],
             posX: -2448,
             posY: -1653,
