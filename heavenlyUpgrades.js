@@ -515,7 +515,8 @@
         }
     }
     
-    if (Game.UpdateMenu) {
+    if (Game.UpdateMenu && !Game.UpdateMenu._erasablePensHooked) {
+        Game.UpdateMenu._erasablePensHooked = true;
         var originalUpdateMenu = Game.UpdateMenu;
         Game.UpdateMenu = function() {
             var result = originalUpdateMenu.apply(this, arguments);
@@ -1376,6 +1377,8 @@
     }
     
     function setupFadingPayout() {
+        if (Game._jneFadingPayoutHooked) return;
+        Game._jneFadingPayoutHooked = true;
         if (Game.registerHook) {
             var scheduledTimers = {};
             var fadeThreshold = Game.fps * 1.0; //tried to line up the fade but fps varies so shrug
@@ -1908,7 +1911,7 @@
             ageTick: 2,
             ageTickR: 0.2,
             mature: 30,
-            unlocked: 1,
+            unlocked: 0,
             children: [],
             effsStr: '<div class="green">&bull; your least productive building is 100% more effective</div><div class="red">&bull; golden cookie frequency -1%</div>',
             q: 'A psychotropic fungus known for its peculiar effect on perception.',
@@ -5754,6 +5757,14 @@
                     if (toyOn && toyOff) {
                         toyOn.bought = (Game.TOYS === 1) ? 0 : 1;
                         toyOff.bought = (Game.TOYS === 1) ? 1 : 0;
+                    }
+                }
+                if (saveData.switches.winklers !== undefined) {
+                    Game.WINKLERS = saveData.switches.winklers || 0;
+                    var pinkOn = Game.Upgrades['Pink stuff [on]'], pinkOff = Game.Upgrades['Pink stuff [off]'];
+                    if (pinkOn && pinkOff) {
+                        pinkOn.bought = (Game.WINKLERS === 1) ? 0 : 1;
+                        pinkOff.bought = (Game.WINKLERS === 1) ? 1 : 0;
                     }
                 }
             }
