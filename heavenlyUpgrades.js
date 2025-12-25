@@ -414,6 +414,37 @@
                 try { runUpgradeSetups(); } catch (e) {}
                 resetSugarFrenzyIIState();
                 ensureSugarTradeAvailable();
+                
+                // Unlock toggle upgrades if player owns the corresponding heavenly upgrade
+                // Following vanilla pattern like Shimmering veil
+                if (Game.Has('Toy box') && Game.Upgrades['Toy mode [on]'] && Game.Upgrades['Toy mode [off]']) {
+                    if (!Game.Has('Toy mode [off]') && !Game.Has('Toy mode [on]')) {
+                        var toys = Game.TOYS || 0;
+                        if (toys === 0) {
+                            Game.Unlock('Toy mode [on]');
+                            Game.Upgrades['Toy mode [off]'].earn();
+                        } else {
+                            Game.Unlock('Toy mode [off]');
+                            Game.Upgrades['Toy mode [on]'].earn();
+                        }
+                    }
+                }
+                if (Game.Has('Pink stuff') && Game.Upgrades['Pink stuff [on]'] && Game.Upgrades['Pink stuff [off]']) {
+                    if (!Game.Has('Pink stuff [off]') && !Game.Has('Pink stuff [on]')) {
+                        var winklers = Game.WINKLERS || 0;
+                        if (winklers === 0) {
+                            Game.Unlock('Pink stuff [on]');
+                            Game.Upgrades['Pink stuff [off]'].earn();
+                        } else {
+                            Game.Unlock('Pink stuff [off]');
+                            Game.Upgrades['Pink stuff [on]'].earn();
+                        }
+                    }
+                }
+                if (Game.Has('Big cookie image selector') && Game.Upgrades['Cookie image selector']) {
+                    Game.Unlock('Cookie image selector');
+                }
+                
                 Game.storeToRefresh = 1;
                 Game.upgradesToRebuild = 1;
                 if (Game.RebuildUpgrades) { Game.RebuildUpgrades(); }
