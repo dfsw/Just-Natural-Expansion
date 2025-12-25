@@ -134,7 +134,7 @@
             var now = jneEvery('_jneBingoCenterSlotsLast', 60000); ///60000 
             if (now && Game.OnAscend !== 1 && Game.Has('Bingo center/Research facility') && Game.Objects['Grandma']) {
                 var grandmas = Game.Objects['Grandma'].amount;
-                if (grandmas > 0 && Math.random() < grandmas / 2000000) { //2000000
+                if (grandmas > 0 && Math.random() < grandmas / 2000000) { //one in 2 million per grandma per minute
                     Game.JNE.bingoJackpotWins = (Game.JNE.bingoJackpotWins || 0) + 1;
                     var bingoSlotsIcon = (Game.Upgrades && Game.Upgrades['Bingo center slots'] && Game.Upgrades['Bingo center slots'].icon) ? Game.Upgrades['Bingo center slots'].icon : [31, 12];
                     var roll = Math.random() * 100;
@@ -455,7 +455,6 @@
         var positiveFeedbackLoopIcon = [15, 13, getSpriteSheet('custom')];
         setupCustomBuffTypes();
         Game._achievementWinCallbacks.push(function(achievement) {
-            console.log('[Heavenly Upgrades] Achievement won:', achievement.name || achievement.dname || 'Unknown');
             if (Game.Has('Positive feedback loop') && Game.gainBuff) {
                 Game.gainBuff('feedback loop', 3600, 1);
                 Game.Notify('Positive feedback loop!', 'Golden cookies appear 10% more often for the next hour.', positiveFeedbackLoopIcon);
@@ -1044,6 +1043,11 @@
                 if (!god) return orig.apply(this, arguments);
                 var prev = god.slot, result = orig.apply(this, arguments);
                 var proc = M.gods['procrastination'], self = M.gods['selfishness'];
+                
+                if (slot !== prev) {
+                    Game.recalculateGains = true;
+                }
+                
                 if (proc && god.id === proc.id) {
                     var oldTime = M._procrastinationSlotTime;
                     var newTime = (slot !== -1 && prev !== slot) ? Date.now() : (slot === -1 ? null : M._procrastinationSlotTime);
@@ -3451,10 +3455,11 @@
                 for (var i = 0; i < loops; i++) {
                     if (Math.random() < chance1) { t0.push(1); t1.push(1); t2.push(1); t3.push(1); }
                     if (Math.random() < 0.003) { t0.push(2); t1.push(2); t2.push(2); t3.push(2); }
-                    var roll = Math.random();
-                    if (roll < 0.1) t1.push(3);
-                    if (roll < 0.2) t2.push(3);
-                    if (roll < 0.3) t3.push(3);
+                    var meatyRoll = Math.random();
+                    if (meatyRoll < 0.1 * 0) t0.push(3);
+                    if (meatyRoll < 0.1 * 1) t1.push(3);
+                    if (meatyRoll < 0.1 * 2) t2.push(3);
+                    if (meatyRoll < 0.1 * 3) t3.push(3);
                     if (Math.random() < 0.02) { t0.push(4); t1.push(4); t2.push(4); t3.push(4); }
                 }
 
