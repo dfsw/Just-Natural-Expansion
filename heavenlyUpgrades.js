@@ -46,6 +46,9 @@
     //condensed into unreadable mess to save space
     function runUpgradeSetups() {
         if (!Game.JNE) Game.JNE = {};
+        if (Game.JNE._runningUpgradeSetups) return;
+        Game.JNE._runningUpgradeSetups = true;
+        try {
         if (!Game.JNE._upgradeSetups) {
             Game.JNE._upgradeSetups = [
                 { id: 'Custom buff types', owned: function() { return true; }, ready: function() { return !!Game.buffType; }, done: function() { return !!Game._jneCustomBuffTypesCreated; }, setup: setupCustomBuffTypes },
@@ -182,6 +185,9 @@
 
         if (Game.Upgrades && ((Game.Upgrades['Morrowen, Spirit of Procrastination'] && Game.Upgrades['Morrowen, Spirit of Procrastination'].bought) || (Game.Upgrades['Solgreth, Spirit of Selfishness'] && Game.Upgrades['Solgreth, Spirit of Selfishness'].bought))) {
             addNewPantheonSpirits();
+        }
+        } finally {
+            Game.JNE._runningUpgradeSetups = false;
         }
     }
 
@@ -404,6 +410,14 @@
             if (hard) return;
             resetSugarFrenzyIIState();
             ensureSugarTradeAvailable();
+            
+            // Reset Pantheon spirit state
+            var M = Game.Objects['Temple']?.minigame;
+            if (M) {
+                M._procrastinationSlotTime = null;
+                M._selfishnessClickCount = 0;
+            }
+            
             Game.storeToRefresh = 1;
             Game.upgradesToRebuild = 1;
         }, 'JNE ascension state reset');
@@ -415,8 +429,6 @@
                 resetSugarFrenzyIIState();
                 ensureSugarTradeAvailable();
                 
-                // Unlock toggle upgrades if player owns the corresponding heavenly upgrade
-                // Following vanilla pattern like Shimmering veil
                 if (Game.Has('Toy box') && Game.Upgrades['Toy mode [on]'] && Game.Upgrades['Toy mode [off]']) {
                     if (!Game.Has('Toy mode [off]') && !Game.Has('Toy mode [on]')) {
                         var toys = Game.TOYS || 0;
@@ -1622,11 +1634,11 @@
         if (!Game.Objects['Farm'] || !Game.Objects['Farm'].minigameLoaded) return;
         var M = Game.Objects['Farm'].minigame;
         if (!M || M._soilInspectorHooked) return;
-        M._soilInspectorHooked = true;
         
         if (!M.originalTileTooltip) {
             M.originalTileTooltip = M.tileTooltip;
         }
+        M._soilInspectorHooked = true;
         
         function getPlantGrowthChances(x, y) {
             if (!M || !M.getMuts || !M.getTile || !M.plants || !M.plantsById || !M.soilsById || !M.plotBoost) return null;
@@ -1677,7 +1689,6 @@
     function setupGardenSaveHookImmediate() {
         var M = Game.Objects['Farm']?.minigame;
         if (!M?.save || M.save._heavenlyUpgradesHooked) return;
-        M.save._heavenlyUpgradesHooked = true;
         var originalSave = M.save;
         M.save = function() {
             var savedPlants = [], savedSoil = M.soil, isAerated = M.soils?.aerated && M.soil === M.soils.aerated.id;
@@ -1703,6 +1714,7 @@
             if (isAerated) M.soil = savedSoil;
             return result;
         };
+        M.save._heavenlyUpgradesHooked = true;
     }
     
         
@@ -2231,7 +2243,8 @@
                 };
             }
 
-            if (M.buildPanel) {
+            if (M.buildPanel && !M._buildPanelHookedForIcons) {
+                M._buildPanelHookedForIcons = true;
                 var orig = M.buildPanel;
                 M.buildPanel = function() {
                     orig.call(this);
@@ -2278,7 +2291,8 @@
                     }
                 };
             }
-            if (M.seedTooltip) {
+            if (M.seedTooltip && !M._seedTooltipHookedForIcons) {
+                M._seedTooltipHookedForIcons = true;
                 var origSeedTooltip = M.seedTooltip;
                 M.seedTooltip = function(id) {
                     var func = origSeedTooltip.call(this, id);
@@ -2318,7 +2332,8 @@
                 };
             }
             
-            if (M.tileTooltip) {
+            if (M.tileTooltip && !M._tileTooltipHookedForIcons) {
+                M._tileTooltipHookedForIcons = true;
                 var origTileTooltip = M.tileTooltip;
                 M.tileTooltip = function(x, y) {
                     var func = origTileTooltip.call(this, x, y);
@@ -2362,7 +2377,8 @@
                 };
             }
 
-            if (M.toolTooltip) {
+            if (M.toolTooltip && !M._toolTooltipHookedForIcons) {
+                M._toolTooltipHookedForIcons = true;
                 var origToolTooltip = M.toolTooltip;
                 M.toolTooltip = function(id) {
                     var func = origToolTooltip.call(this, id);
