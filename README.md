@@ -6218,9 +6218,14 @@ sweet_Runtime_Swizzler();
 
 ## Changelog
 
+### Version 0.3.1
+* The heavenly upgrade patch is now fully compatible with FTHOF Planner v1-6, Clairvoyance, and Fortune Cookie mods. As a design choice Gilded Allure spells will not shuffle into GFD anymore. 
+* Fixed a bug that would crash old saves with permanent upgrade slots items that were created before our previous fix. 
+
 ### **Major Version 0.3.0 - Heavenly Upgrades**
 * Introducing 97 new heavenly upgrades for your clicking pleasure. Unlocked after purchasing the Unshackled You vanilla heavenly upgrade. You can find the new upgrade tree to the left of the existing vanilla tree. Existing players will need to turn on Heavenly Upgrades in options.
 * Fixed an exploit in the terminal minigame that allowed the user to spam execute radpidly to get the program to execute multiple times in a row. 
+* Compatibility updates for Cookie Clicker 2.057 Beta. 
 
 
 ### Version 0.2.1

@@ -1200,13 +1200,18 @@
     function setupCookieReduction() {
         if (typeof choose !== 'function' || choose._jneCookieReductionHooked) return;
         
+        // Independent random that doesn't consume seeded Math.random() values
+        var independentRandom = function() {
+            return crypto.getRandomValues(new Uint32Array(1))[0] / 4294967295;
+        };
+        
         var originalChoose = choose;
             choose = function(arr) {
                 if (Array.isArray(arr)) {
                     if (arr.indexOf('multiply cookies') !== -1) {
                         var reduction = Game.Has('Even more unlucky luckier') ? 0.01 : Game.Has('Unlucky luckier') ? 0.05 : 0;
                     
-                    if (reduction > 0 && Math.random() < reduction) {
+                    if (reduction > 0 && independentRandom() < reduction) {
                         arr = arr.filter(function(item) {
                             return item !== 'multiply cookies';
                         });
@@ -1218,7 +1223,7 @@
                     if (arr.indexOf('ruin cookies') !== -1) {
                         var reduction = Game.Has('Flavor enhanced wrath') ? 0.01 : Game.Has('Slightly less bitter wrath') ? 0.05 : 0;
                     
-                    if (reduction > 0 && Math.random() < reduction) {
+                    if (reduction > 0 && independentRandom() < reduction) {
                         arr = arr.filter(function(item) {
                             return item !== 'ruin cookies';
                         });
@@ -2820,7 +2825,7 @@
         var M = Game.Objects['Wizard tower']?.minigame;
         if (!M || M._gildedAllureHooked || !M.spells || !M.spellsById || typeof l !== 'function' || !l('grimoireSpells')) return;
         var me={name:loc("Gilded Allure"),desc:loc("Golden Cookies appear 30% more often for the next 10 minutes."),failDesc:loc("Golden Cookies appear 75% less often for the next hour."),icon:[20,19],customIconSheet:getSpriteSheet('custom'),costMin:15,costPercent:0.5,
-            win:()=>{Game.killBuff('Gilded allure');Game.killBuff('Midas curse');Game.gainBuff('gilded allure',600,1);Game.Popup(loc("Golden allure!"),Game.mouseX,Game.mouseY);},
+            win:()=>{Game.killBuff('Gilded allure');Game.killBuff('Midas curse');Game.gainBuff('gilded allure',600,1);Game.Popup(loc("Gilded allure!"),Game.mouseX,Game.mouseY);},
             fail:()=>{Game.killBuff('Gilded allure');Game.killBuff('Midas curse');Game.gainBuff('midas curse',3600,1);Game.Popup(loc("Backfire!")+'<br>'+loc("Midas curse!"),Game.mouseX,Game.mouseY);}};
         M.spells['gilded allure']=me; me.id=M.spellsById.length; M.spellsById[me.id]=me; M._gildedAllureHooked=true;
         var div = document.createElement('div');
@@ -2853,6 +2858,133 @@
                 }
                 return tooltipFunc;
             };
+        }
+        
+        // Various patches for other mods dealing with spell predictions, fortune cookie and Clairvoyance, planner is a stand alone so no issues there. 
+        var vanillaSpellCount = 8; 
+        
+        var patchFortuneCookie = function() {
+            if (typeof FortuneCookie === 'undefined') return;
+            if (!FortuneCookie.spellForecast) return;
+            if (FortuneCookie._gildedAllurePatched) return;
+            FortuneCookie._gildedAllurePatched = true;
+            
+            // Patch the GFD forecast to use vanilla spell count
+            var originalSpellForecast = FortuneCookie.spellForecast;
+            FortuneCookie.spellForecast = function(spell) {
+                var M = Game.Objects['Wizard tower']?.minigame;
+                if (!M) return originalSpellForecast.apply(this, arguments);
+                
+                // For GFD predictions, temporarily hide our custom spell
+                if (spell && spell.name === "Gambler's Fever Dream") {
+                    var originalSpellsById = M.spellsById;
+                    var originalSpells = M.spells;
+                    
+                    M.spellsById = originalSpellsById.slice(0, vanillaSpellCount);
+                    var filteredSpells = {};
+                    for (var key in originalSpells) {
+                        if (key !== 'gilded allure') {
+                            filteredSpells[key] = originalSpells[key];
+                        }
+                    }
+                    M.spells = filteredSpells;
+                    
+                    try {
+                        return originalSpellForecast.apply(this, arguments);
+                    } finally {
+                        M.spellsById = originalSpellsById;
+                        M.spells = originalSpells;
+                    }
+                }
+                return originalSpellForecast.apply(this, arguments);
+            };
+        };
+        
+        // Hook the actual GFD spell to exclude our custom spell from random selection
+        var patchGFDSpell = function() {
+            var gfd = M.spells["gambler's fever dream"];
+            
+            if (!gfd) {
+                // Try to find it by iterating
+                for (var key in M.spells) {
+                    if (M.spells[key].name && M.spells[key].name.toLowerCase().includes('gambler')) {
+                        gfd = M.spells[key];
+                        break;
+                    }
+                }
+            }
+            
+            if (!gfd || gfd._gildedAllurePatched) return;
+            
+            gfd._gildedAllurePatched = true;
+            
+            var originalWin = gfd.win;
+            
+            gfd.win = function() {
+                // Temporarily filter BOTH spellsById AND spells during GFD execution
+                var originalSpellsById = M.spellsById;
+                var originalSpells = M.spells;
+                
+                // Create filtered versions
+                M.spellsById = originalSpellsById.slice(0, vanillaSpellCount);
+                
+                // Create a new spells object without gilded allure
+                var filteredSpells = {};
+                for (var key in originalSpells) {
+                    if (key !== 'gilded allure') {
+                        filteredSpells[key] = originalSpells[key];
+                    }
+                }
+                M.spells = filteredSpells;
+                
+                try {
+                    return originalWin.apply(this, arguments);
+                } finally {
+                    M.spellsById = originalSpellsById;
+                    M.spells = originalSpells;
+                }
+            };
+            
+            // ALSO hook castSpell to catch the actual spell selection
+            if (!M._castSpellGildedAllurePatched) {
+                M._castSpellGildedAllurePatched = true;
+                var originalCastSpell = M.castSpell;
+                M.castSpell = function(spell, target) {
+                    // If casting GFD, filter spells before and during the entire cast
+                    if (spell && spell.name === "Gambler's Fever Dream") {
+                        var originalSpellsById = M.spellsById;
+                        var originalSpells = M.spells;
+                        
+                        M.spellsById = originalSpellsById.slice(0, vanillaSpellCount);
+                        var filteredSpells = {};
+                        for (var key in originalSpells) {
+                            if (key !== 'gilded allure') {
+                                filteredSpells[key] = originalSpells[key];
+                            }
+                        }
+                        M.spells = filteredSpells;
+                        
+                        try {
+                            return originalCastSpell.apply(this, arguments);
+                        } finally {
+                            M.spellsById = originalSpellsById;
+                            M.spells = originalSpells;
+                        }
+                    }
+                    
+                    return originalCastSpell.apply(this, arguments);
+                };
+            }
+        };
+        
+        patchGFDSpell();
+        patchFortuneCookie();
+        //try again in 10000ms incase load order isnt what we expect
+        setTimeout(patchFortuneCookie, 10000);
+        
+        // And hook into CCSE's post-load if available
+        if (typeof CCSE !== 'undefined' && CCSE.postLoadHooks) {
+            CCSE.postLoadHooks.push(patchFortuneCookie);
         }
     }
 
@@ -3901,12 +4033,17 @@
                         chance = 0.01; // Retripled luck only: 1% this really isnt possible but it was useful for testing
                     }
                     
-                    if (chance > 0 && Math.random() < chance) {
-                        var extraOptions = options ? Object.assign({}, options, {_retripledLuckExtra: true}) : {_retripledLuckExtra: true};
-                        var extraShimmer = new originalShimmer(type, extraOptions);
-                        if (extraShimmer) {
-                            extraShimmer.spawnLead = 1;
-                        }
+                    // Defer random check to a few ms to avoid consuming seeded Math.random() values
+                    // This preserves planner spell predictions
+                    if (chance > 0) {
+                        (function(t, o, c) {
+                            setTimeout(function() {
+                                if (Math.random() < c) { //ideally we could use a seperate random function here but this should work
+                                    var extra = new originalShimmer(t, Object.assign({}, o || {}, {_retripledLuckExtra: true}));
+                                    if (extra) extra.spawnLead = 1;
+                                }
+                            }, 10); //10 MS should be more than enough
+                        })(type, options, chance);
                     }
                 }
                 

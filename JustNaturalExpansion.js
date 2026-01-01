@@ -5,7 +5,7 @@
     'use strict';
     
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.3.0';
+    var modVersion = '0.3.1';
     var debugMode = false; 
     var runtimeSessionId = Math.floor(Math.random()*1e9) + '-' + Date.now();
     
@@ -3282,8 +3282,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             }
         }, 'Check buff achievements in real-time');
         
-        // Hook into Grimoire spell casting to track Spell Slinger achievement and FtHoF cookies
-        // This runs when the Grimoire minigame is available
+        // Hook into Grimoire spell casting to track Spell Slinger 
         if (Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].minigame) {
             var originalCastSpell = Game.Objects['Wizard tower'].minigame.castSpell;
             if (originalCastSpell) {
@@ -3292,16 +3291,8 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     var result = originalCastSpell.call(this, spell, obj);
                     
                     // Only track successful spell casts (when result is true)
-                    if (result === true) {
-                        modTracking.spellCastTimes.push(Date.now());
-                        
-                        // Track FtHoF spell specifically
-                        if (spell.name === 'Force the Hand of Fate') {
-                            // FtHoF spell cast - next golden cookie will be forced
-                        }
-                    }
+                    if (result === true) {modTracking.spellCastTimes.push(Date.now());}
                     
-                    // Return the original result
                     return result;
                 };
             }
@@ -3524,7 +3515,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     }
                     
                     if (foundPattern) {
-                        // Create injection code for all 11 kitten upgrades (0.005 = ~15.8% per kitten with current milk stats)
+                        // Create injection code for all expansion kitten upgrades 0.005 = ~15.8% per kitten 
                         const injection = "if(Game.Has('Kitten unpaid interns')){catMult*=(1+Game.milkProgress*0.005*milkMult);}\n" +
                                          "if(Game.Has('Kitten overpaid \"temporary\" contractors')){catMult*=(1+Game.milkProgress*0.005*milkMult);}\n" +
                                          "if(Game.Has('Kitten remote workers')){catMult*=(1+Game.milkProgress*0.005*milkMult);}\n" +
@@ -4355,6 +4346,35 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     var cachedModUpgradeNameSet = null;
     var cachedModCookieUpgradeNameSet = null;
 
+    //this fixes old saves from corrupting the game after we changed how we handle perm slot upgrades this is safe to remove down the road a ways.
+    function cleanupOldPermanentSlotFormat() {
+        if (!Game || !Game.permanentUpgrades || !Game.UpgradesById) return;
+        if (modSettings && modSettings.permanentSlotBackup && Object.keys(modSettings.permanentSlotBackup).length > 0) return;
+
+        var nameSet = getModUpgradeNameSet();
+        var migrated = 0;
+
+        for (var slot = 0; slot < Game.permanentUpgrades.length; slot++) {
+            var upgradeId = Game.permanentUpgrades[slot];
+            if (typeof upgradeId !== 'number' || upgradeId < 0) continue;
+
+            var upgrade = Game.UpgradesById[upgradeId];
+            
+            if (upgrade && nameSet[upgrade.name]) {
+                if (!modPermanentSlotBackup) modPermanentSlotBackup = {};
+                modPermanentSlotBackup[slot] = upgrade.name;
+                Game.permanentUpgrades[slot] = -1;
+                migrated++;
+            } else if (!upgrade) {
+                Game.permanentUpgrades[slot] = -1;
+            }
+        }
+
+        if (migrated > 0 && Object.keys(modPermanentSlotBackup).length > 0) {
+            modSettings.permanentSlotBackup = Object.assign({}, modPermanentSlotBackup);
+        }
+    }
+
     function getModUpgradeNameSet() {
         if (!cachedModUpgradeNameSet) {
             cachedModUpgradeNameSet = {};
@@ -4510,9 +4530,13 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             }
 
             var upgrade = Game.UpgradesById[upgradeId];
+            // Safety check: upgrade might not exist if IDs changed
             if (upgrade && nameSet[upgrade.name]) {
                 newBackup[slot] = upgrade.name;
                 hasEntries = true;
+            } else if (!upgrade) {
+                // Old save format: upgrade ID no longer exists
+                debugLog('capturePermanentSlotBackups: Invalid upgrade ID ' + upgradeId + ' in slot ' + slot + ' (likely old save format)');
             }
         }
 
@@ -11272,8 +11296,8 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             modSaveData.upgrades = {};
         }
         
-        // Load settings from save data FIRST, before any upgrade creation
         loadSettingsFromSaveData();
+        cleanupOldPermanentSlotFormat();
         
         // Sync mod settings to ensure they're applied BEFORE creating upgrades
         if (modSettings.shadowAchievements !== undefined) {
@@ -11576,10 +11600,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         
         // Initialize mod
         initializeMod: function() {
-            console.log('Just Natural Expansion: initializeMod() called');
-            // Show mod loaded notification
             new Game.Notify(modName + ' v' + modVersion + ' Mod Loaded!', 'Use the options menu to configure settings for ' + modName + '.', modIcon);
-            console.log('Just Natural Expansion: Mod notification shown');
             
             // Initialize terminal minigame if enabled
             if (enableJSMiniGame) {

@@ -1,3 +1,4 @@
+//Just Natural Expansion Terminal minigame
 //version 1.0.2
 
 var M = {};
