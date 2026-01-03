@@ -187,7 +187,7 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 <tr>
 <td width="48"><a href="/assets/generated-icons/SheetCustom2312.png"><img src="/assets/generated-icons/SheetCustom2312.png" alt="Treading water" width="48" height="48"></a></td>
 <td><strong>Treading water</strong></td>
-<td>Have a CPS of 0 while owning more than 1000 buildings with no active buffs or debuffs</td>
+<td>Have a CPS of 0 while owning more than 1000 buildings with no active buffs, debuffs, or help from Solgreth</td>
 </tr>
 <tr>
 <td width="48"><a href="/assets/generated-icons/SheetCustom2314.png"><img src="/assets/generated-icons/SheetCustom2314.png" alt="Bouncing the last cheque" width="48" height="48"></a></td>
@@ -6217,6 +6217,12 @@ sweet_Runtime_Swizzler();
 
 
 ## Changelog
+
+### Version 0.3.2
+* Improvements to make JNE heavenly upgrades and CYOL (3rd party mod) more compatiable. 
+* Treading water achievement now exempts using Solgreth, Spirit of Selfishness as a win condition.
+* Adjusted values for Hellish hunger and Ravenous leeches upgrades. 
+* Fixed a bug that caused Cookie Fish not to be clickable in Cookie Clicker 2.057 Beta. 
 
 ### Version 0.3.1
 * The heavenly upgrade patch is now fully compatible with FTHOF Planner v1-6, Clairvoyance, and Fortune Cookie mods. As a design choice Gilded Allure spells will not shuffle into GFD anymore. 

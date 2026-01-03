@@ -5,7 +5,7 @@
     'use strict';
     
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.3.1';
+    var modVersion = '0.3.2';
     var debugMode = false; 
     var runtimeSessionId = Math.floor(Math.random()*1e9) + '-' + Date.now();
     
@@ -2768,6 +2768,11 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     function applyLumpDiscrepancyPatch() {
         if (!Game || typeof Game !== 'object') return false;
 
+        //"trick" CYOL into thinking the patch is applied from Spice Cookies. 
+        if (!window.Spice) window.Spice = {};
+        if (!window.Spice.settings) window.Spice.settings = {};
+        window.Spice.settings.patchDiscrepancy = true;
+
         if (Game.loadLumps && !Game.loadLumps._lumpPatchApplied) {
             var originalLoadLumps = Game.loadLumps;
             Game.loadLumps = function() {
@@ -5378,6 +5383,13 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                         
                         return false;
                     case 'hardcoreTreadingWater':
+
+                        // Check if Solgreth is slotted
+                        var M = Game.Objects['Temple']?.minigame;
+                        if (M && Game.hasGod('selfishness')) {
+                            return false;
+                        }
+                        
                         // Check if CPS is 0 or negative (with wrinkler sucking)
                         var cpsCondition = (Game.cookiesPs <= 0) || (Game.cpsSucked >= 1);
                         if (!cpsCondition) {
@@ -5961,7 +5973,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         hardcoreTreadingWater: {
             names: ["Treading water"],
             thresholds: [0], // Dummy threshold, actual logic handled in requirement function
-            descs: ["Have a CpS of 0 while owning more than 1000 buildings with no active buffs or debuffs.<q>Sometimes it really feels like you are just not being very productive here.</q>"],
+            descs: ["Have a CPS of 0 while owning more than 1000 buildings with no active buffs, debuffs, or help from Solgreth<q>Sometimes it really feels like you are just not being very productive here.</q>"],
             vanillaTarget: "Hardcore",
             customIcons: [[23, 12, getSpriteSheet('custom')]]
         },

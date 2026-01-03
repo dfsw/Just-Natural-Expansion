@@ -3,7 +3,7 @@
     'use strict';
     
     const SIMPLE_MOD_NAME = 'Just Natural Expansion';
-    const MOD_HU_VERSION = '1.0.0';
+    const MOD_HU_VERSION = '1.0.2';
     var isInitialized = false;
     const MOD_ICON = [15, 7];
     const CUSTOM_SPRITE_SHEET_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
@@ -41,6 +41,12 @@
             if (Game.Has(list[i])) return true;
         }
         return false;
+    }
+
+    // Unified independent random function that doesn't consume seeded Math.random() values
+    // This preserves predictor functionality while providing true randomness
+    function jneIndependentRandom() {
+        return crypto.getRandomValues(new Uint32Array(1))[0] / 4294967295;
     }
 
     //condensed into unreadable mess to save space
@@ -715,8 +721,8 @@
         Game.eff = function(what) {
             var val = originalEff.apply(this, arguments);
             if (what === 'wrinklerEat') {
-                if (Game.Has('Ravenous leeches')) val *= 1.2;
-                else if (Game.Has('Hellish hunger')) val *= 1.1;
+                if (Game.Has('Ravenous leeches')) val *= 1.1;
+                else if (Game.Has('Hellish hunger')) val *= 1.05;
             } else if (what === 'wrinklerSpawn') {
                 if (Game.Has('Wide open door of hell')) val *= 1.2;
                 else if (Game.Has('Unlocked gates of hell')) val *= 1.1;
@@ -1200,18 +1206,13 @@
     function setupCookieReduction() {
         if (typeof choose !== 'function' || choose._jneCookieReductionHooked) return;
         
-        // Independent random that doesn't consume seeded Math.random() values
-        var independentRandom = function() {
-            return crypto.getRandomValues(new Uint32Array(1))[0] / 4294967295;
-        };
-        
         var originalChoose = choose;
             choose = function(arr) {
                 if (Array.isArray(arr)) {
                     if (arr.indexOf('multiply cookies') !== -1) {
                         var reduction = Game.Has('Even more unlucky luckier') ? 0.01 : Game.Has('Unlucky luckier') ? 0.05 : 0;
                     
-                    if (reduction > 0 && independentRandom() < reduction) {
+                    if (reduction > 0 && jneIndependentRandom() < reduction) {
                         arr = arr.filter(function(item) {
                             return item !== 'multiply cookies';
                         });
@@ -1223,7 +1224,7 @@
                     if (arr.indexOf('ruin cookies') !== -1) {
                         var reduction = Game.Has('Flavor enhanced wrath') ? 0.01 : Game.Has('Slightly less bitter wrath') ? 0.05 : 0;
                     
-                    if (reduction > 0 && independentRandom() < reduction) {
+                    if (reduction > 0 && jneIndependentRandom() < reduction) {
                         arr = arr.filter(function(item) {
                             return item !== 'ruin cookies';
                         });
@@ -1288,6 +1289,13 @@
                         me['swimFreq' + i] = Math.random() * 0.04 + (i === 1 ? 0.03 : 0.08);
                         me['swimPhase' + i] = Math.random() * Math.PI * 2;
                     }
+                    
+                    // Manually add click listener - the beta's shimmer constructor listener
+                    // doesn't work properly for fish shimmers, so we add our own
+                    var shimmerObj = me;
+                    me.l.addEventListener('click', function(e) {
+                        shimmerObj.pop(e);
+                    });
                 },
                 updateFunc: function(me) {
                     if (me.life <= 0) return;
@@ -1321,10 +1329,8 @@
                         return;
                     }
                     
-                    if (me.popped) {
-                        return;
-                    }
-                    me.popped = true;
+                    // Note: In beta, pop() already sets me.popped = true before calling popFunc
+                    // So we don't check/set it here anymore
                     me.die();
                     
                     if (!Game.JNE) Game.JNE = {};
@@ -2625,7 +2631,7 @@
             };
         }
 
-        if (M.freeze !== undefined && !M._newPlantFreezeHooked) {
+        if (M.freeze !== undefined && !M._newPlantFreezeHooked && Game.Has('Sparkling sugar cane')) {
             M._newPlantFreezeHooked = true;
 
             var checkFreeze = function() {
@@ -2638,7 +2644,7 @@
                             var tile = M.plot[y][x];
                             if (tile && tile[0] > 0) {
                                 var me = M.plantsById[tile[0] - 1];
-                                if (me.key === 'sparklingSugarCane' && Math.random() < 0.95) {
+                                if (me.key === 'sparklingSugarCane' && jneIndependentRandom() < 0.95) {
                                     M.plot[y][x] = [0, 0];
                                     M.toRebuild = true;
                                 }
@@ -2655,8 +2661,9 @@
             }
         }
 
-        if (Game.harvestLumps && !Game._sugarCaneHooked) {
+        if (Game.harvestLumps && !Game._sugarCaneHooked && Game.Has('Sparkling sugar cane')) {
             Game._sugarCaneHooked = true;
+            
             var originalHarvestLumps = Game.harvestLumps;
             Game.harvestLumps = function(amount, silent) {
                 var M = Game.Objects['Farm'] && Game.Objects['Farm'].minigame;
@@ -2691,7 +2698,7 @@
 
                     if (totalMult > 0) {
                         var chance = totalMult * 0.01;
-                        if (Math.random() < chance) {
+                        if (jneIndependentRandom() < chance) {
                             amount *= 2;
                             if (!silent) {
                                 Game.Notify('Sugar cane doubled your sugar lumps!', 'Your sparkling sugar cane plants triggered a lucky doubling!', [4, 24, getSpriteSheet('custom')], 6);
@@ -4002,7 +4009,7 @@
         // wrap Game.shimmer and handle all double spawn logic here
         if (Game.shimmer && !Game.shimmer._retripledLuckHooked) {
             var originalShimmer = Game.shimmer;
-            Game.shimmer = function(type, options) {
+            var ShimmerWrapper = function(type, options) {
                 var hasVanillaLuck = Game.Has('Distilled essence of redoubled luck');
                 var hasRetripledLuck = Game.Has('Distilled essence of retripled luck');
                 var shouldMaskVanilla = (type === 'golden' && (!options || !options._retripledLuckExtra) && hasVanillaLuck && hasRetripledLuck);
@@ -4049,6 +4056,9 @@
                 
                 return shimmer;
             };
+            // Preserve the prototype chain so that 'new Game.shimmer()' works correctly
+            ShimmerWrapper.prototype = originalShimmer.prototype;
+            Game.shimmer = ShimmerWrapper;
             Game.shimmer._retripledLuckHooked = true;
         }
     }
@@ -5321,8 +5331,8 @@
         
         createHeavenlyUpgrade({
             name: 'Hellish hunger',
-            desc: 'Wrinklers suck <b>10%</b> more.',
-            ddesc: 'Wrinklers suck <b>10%</b> more.',
+            desc: 'Wrinklers suck <b>5%</b> more.',
+            ddesc: 'Wrinklers suck <b>5%</b> more.',
             price: 15e15,
             icon: [21, 16, getSpriteSheet('custom')],
             posX: -2506,
@@ -5332,8 +5342,8 @@
         
         createHeavenlyUpgrade({
             name: 'Ravenous leeches',
-            desc: 'Wrinklers suck <b>20%</b> more.',
-            ddesc: 'Wrinklers suck <b>20%</b> more.<q>Sluuuurrrp.</q>',
+            desc: 'Wrinklers suck <b>10%</b> more.',
+            ddesc: 'Wrinklers suck <b>10%</b> more.<q>Sluuuurrrp.</q>',
             price: 15e15,
             icon: [21, 17, getSpriteSheet('custom')],
             posX: -2647,
