@@ -2824,32 +2824,31 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         if (!Game.Objects || !Game.Objects['Temple']) return false;
         
         var temple = Game.Objects['Temple'];
-        if (!temple.minigame || !temple.minigame.slotGod || temple.minigame.slotGod._godSwapPatchApplied) {
+        if (!temple.minigame || !temple.minigame.slotGod) {
             return false;
         }
         
         var pantheon = temple.minigame;
         
-        // Store vanilla slotGod - check if heavenlyUpgrades already stored it
-        if (!pantheon._vanillaSlotGod) {
-            var fn = pantheon.slotGod;
-            // Make sure we're not storing a wrapped version
-            if (!fn._hooked && !fn._godSwapPatchApplied) {
-                pantheon._vanillaSlotGod = fn;
-            }
+        // Check flag on pantheon object, not on function (survives CCSE re-wrapping)
+        if (pantheon._godSwapPatchApplied) {
+            return false;
         }
         
-        if (!pantheon._vanillaSlotGod) return false;
+        // Store original on object to survive CCSE eval wrapping
+        if (typeof pantheon._originalSlotGodForSwapPatch === 'undefined') {
+            pantheon._originalSlotGodForSwapPatch = pantheon.slotGod;
+        }
         
         pantheon.slotGod = function(god, slot) {
-            var result = this._vanillaSlotGod.apply(this, arguments);
+            var result = this._originalSlotGodForSwapPatch.apply(this, arguments);
             if (this.slot && Array.isArray(this.slot) && this.slot.length >= 3) {
                 this.slot = [this.slot[0], this.slot[1], this.slot[2]];
             }
             
             return result;
         };
-        pantheon.slotGod._godSwapPatchApplied = true;
+        pantheon._godSwapPatchApplied = true;
         
         return true;
     }

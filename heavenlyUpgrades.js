@@ -1108,25 +1108,17 @@
         M._procrastinationSlotTime = M._procrastinationSlotTime || null;
         M._selfishnessClickCount = M._selfishnessClickCount || 0;
 
-        // Store the vanilla slotGod before ANY wrapping happens
-        // This must be done once and never overwritten
-        if (!M._vanillaSlotGod) {
-            // Walk the chain to find the original vanilla function
-            var fn = M.slotGod;
-            // If JNE already wrapped, use their stored original
-            if (M._originalSlotGodForSwapPatch && !M._originalSlotGodForSwapPatch._hooked && !M._originalSlotGodForSwapPatch._godSwapPatchApplied) {
-                fn = M._originalSlotGodForSwapPatch;
+        // Check flag on M object, not on function (survives CCSE re-wrapping)
+        if (M.slotGod && !M._slotGodHooked) {
+            // Store original on object to survive CCSE eval wrapping
+            if (typeof M._originalSlotGodForHeavenly === 'undefined') {
+                M._originalSlotGodForHeavenly = M.slotGod;
             }
-            // Make sure we're not storing a wrapped version
-            if (!fn._hooked && !fn._godSwapPatchApplied) {
-                M._vanillaSlotGod = fn;
-            }
-        }
-
-        if (M.slotGod && !M.slotGod._hooked && M._vanillaSlotGod) {
+            
             M.slotGod = function(god, slot) {
-                if (!god) return this._vanillaSlotGod.apply(this, arguments);
-                var prev = god.slot, result = this._vanillaSlotGod.apply(this, arguments);
+                var orig = this._originalSlotGodForHeavenly;
+                if (!god) return orig.apply(this, arguments);
+                var prev = god.slot, result = orig.apply(this, arguments);
                 var proc = this.gods['procrastination'], self = this.gods['selfishness'];
                 
                 if (slot !== prev) {
@@ -1156,7 +1148,7 @@
                 }
                 return result;
             };
-            M.slotGod._hooked = true;
+            M._slotGodHooked = true;
         }
 
         var st = Game.shimmerTypes && Game.shimmerTypes.golden;
@@ -1205,7 +1197,7 @@
             Game._jneProcrastinationRecalcHooked = true;
         }
 
-        if (M.slotGod?._hooked && st?._hooked && st?._selfishnessSpawnConditionsHooked) M._spiritEffectsSetup = true;
+        if (M._slotGodHooked && st?._hooked && st?._selfishnessSpawnConditionsHooked) M._spiritEffectsSetup = true;
     }
 
     function setupRegifting() {
