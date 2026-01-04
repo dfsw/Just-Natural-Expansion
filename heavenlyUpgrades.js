@@ -1109,21 +1109,22 @@
         M._selfishnessClickCount = M._selfishnessClickCount || 0;
 
         if (M.slotGod && !M.slotGod._hooked) {
-            var orig = M.slotGod;
+            // Store on object instead of closure to survive CCSE eval wrapping
+            M._originalSlotGodForHeavenly = M.slotGod;
             M.slotGod = function(god, slot) {
-                if (!god) return orig.apply(this, arguments);
-                var prev = god.slot, result = orig.apply(this, arguments);
-                var proc = M.gods['procrastination'], self = M.gods['selfishness'];
+                if (!god) return this._originalSlotGodForHeavenly.apply(this, arguments);
+                var prev = god.slot, result = this._originalSlotGodForHeavenly.apply(this, arguments);
+                var proc = this.gods['procrastination'], self = this.gods['selfishness'];
                 
                 if (slot !== prev) {
                     Game.recalculateGains = true;
                 }
                 
                 if (proc && god.id === proc.id) {
-                    var oldTime = M._procrastinationSlotTime;
-                    var newTime = (slot !== -1 && prev !== slot) ? Date.now() : (slot === -1 ? null : M._procrastinationSlotTime);
+                    var oldTime = this._procrastinationSlotTime;
+                    var newTime = (slot !== -1 && prev !== slot) ? Date.now() : (slot === -1 ? null : this._procrastinationSlotTime);
                     if (newTime !== oldTime) {
-                        M._procrastinationSlotTime = newTime;
+                        this._procrastinationSlotTime = newTime;
                         Game.recalculateGains = true;
                     }
                 }
@@ -1131,13 +1132,13 @@
                     var endBuffs = ['frenzy', 'lucky', 'blood frenzy', 'clot', 'click frenzy', 'cookie storm', 'building buff', 'dragon harvest', 'dragonflight'];
                     if (slot === -1 && prev !== -1) {
                         for (var i in Game.buffs) if (Game.buffs[i]?.type && endBuffs.indexOf(Game.buffs[i].type.name) !== -1) Game.buffs[i].time = 0;
-                        M._selfishnessClickCount = 0;
+                        this._selfishnessClickCount = 0;
                         Game.recalculateGains = true;
                     } else if (slot !== -1 && prev !== -1 && prev !== slot) {
                         for (var i in Game.buffs) if (Game.buffs[i]?.type && endBuffs.indexOf(Game.buffs[i].type.name) !== -1) Game.buffs[i].time = 0;
-                        M._selfishnessClickCount = 0;
+                        this._selfishnessClickCount = 0;
                     } else if (slot !== -1 && prev === -1) {
-                        M._selfishnessClickCount = 0;
+                        this._selfishnessClickCount = 0;
                     }
                 }
                 return result;
