@@ -3,7 +3,7 @@
     'use strict';
     
     const SIMPLE_MOD_NAME = 'Just Natural Expansion';
-    const MOD_HU_VERSION = '1.0.2';
+    const MOD_HU_VERSION = '1.0.3';
     var isInitialized = false;
     const MOD_ICON = [15, 7];
     const CUSTOM_SPRITE_SHEET_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
@@ -171,11 +171,33 @@
             if (now) {
                 var interval = Game.Has('Doordashing every day') ? 24 * 60 * 60 * 1000 : (Game.Has('Second day takeout') ? 2 * 24 * 60 * 60 * 1000 : (Game.Has('Chinese leftovers') ? 3 * 24 * 60 * 60 * 1000 : null));
                 if (interval) {
-                    var lastReset = Game.JNE.heavenlyUpgradesSavedData.fortuneCookieLastResetTime;
-                    if (!lastReset || (now - lastReset >= interval)) {
+                    // Fortune GC 
+                    var gcUsed = (Game.fortuneGC === 1);
+                    var gcLastUsedTime = Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastUsedTime;
+                    
+                    if (gcUsed && !gcLastUsedTime) {
+                        // Just used start timer
+                        Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastUsedTime = now;
+                    } else if (!gcUsed && gcLastUsedTime) {
+                        // Available again 
+                        Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastUsedTime = 0;
+                    } else if (gcUsed && gcLastUsedTime && (now - gcLastUsedTime >= interval)) {
+                        //regenerate
                         Game.fortuneGC = 0;
+                        Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastUsedTime = 0;
+                    }
+                    
+                    // Fortune CPS 
+                    var cpsUsed = (Game.fortuneCPS === 1);
+                    var cpsLastUsedTime = Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastUsedTime;
+                    
+                    if (cpsUsed && !cpsLastUsedTime) {
+                        Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastUsedTime = now;
+                    } else if (!cpsUsed && cpsLastUsedTime) {
+                        Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastUsedTime = 0;
+                    } else if (cpsUsed && cpsLastUsedTime && (now - cpsLastUsedTime >= interval)) {
                         Game.fortuneCPS = 0;
-                        Game.JNE.heavenlyUpgradesSavedData.fortuneCookieLastResetTime = now;
+                        Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastUsedTime = 0;
                     }
                 }
             }
@@ -5871,8 +5893,11 @@
             }
             
             // Save timers
-            if (Game.JNE.heavenlyUpgradesSavedData.fortuneCookieLastResetTime) {
-                saveData.timers.fortuneCookieLastResetTime = Game.JNE.heavenlyUpgradesSavedData.fortuneCookieLastResetTime;
+            if (Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastUsedTime) {
+                saveData.timers.fortuneGCLastUsedTime = Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastUsedTime;
+            }
+            if (Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastUsedTime) {
+                saveData.timers.fortuneCPSLastUsedTime = Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastUsedTime;
             }
             
             saveData.stats.cookieFishCaught = Game.JNE.cookieFishCaught || 0;
@@ -5969,10 +5994,16 @@
             }
             
             // Restore timers and stats
-            if (saveData.timers && saveData.timers.fortuneCookieLastResetTime !== undefined) {
+            if (saveData.timers) {
                 if (!Game.JNE) Game.JNE = {};
                 if (!Game.JNE.heavenlyUpgradesSavedData) Game.JNE.heavenlyUpgradesSavedData = {};
-                Game.JNE.heavenlyUpgradesSavedData.fortuneCookieLastResetTime = saveData.timers.fortuneCookieLastResetTime;
+                // Load individual fortune cookie timers
+                if (saveData.timers.fortuneGCLastUsedTime !== undefined) {
+                    Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastUsedTime = saveData.timers.fortuneGCLastUsedTime;
+                }
+                if (saveData.timers.fortuneCPSLastUsedTime !== undefined) {
+                    Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastUsedTime = saveData.timers.fortuneCPSLastUsedTime;
+                }
             }
             if (saveData.stats && saveData.stats.cookieFishCaught !== undefined) {
                 if (!Game.JNE) Game.JNE = {};

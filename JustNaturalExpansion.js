@@ -5,7 +5,7 @@
     'use strict';
     
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.3.2';
+    var modVersion = '0.3.3';
     var debugMode = false; 
     var runtimeSessionId = Math.floor(Math.random()*1e9) + '-' + Date.now();
     
@@ -2807,8 +2807,9 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         if (Game.clickLump && !Game.clickLump._lumpPatchApplied) {
             var originalClickLump = Game.clickLump;
             Game.clickLump = function() {
+                var oldLumps = Game.lumps;
                 var result = originalClickLump.apply(this, arguments);
-                Game.lumpT = Date.now();
+
                 return result;
             };
             Game.clickLump._lumpPatchApplied = true;
@@ -2828,10 +2829,11 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         }
         
         var pantheon = temple.minigame;
-        var originalSlotGod = pantheon.slotGod;
+        // Store on the object to survive CCSE eval wrapping
+        pantheon._originalSlotGodForSwapPatch = pantheon.slotGod;
         
         pantheon.slotGod = function(god, slot) {
-            var result = originalSlotGod.apply(this, arguments);
+            var result = this._originalSlotGodForSwapPatch.apply(this, arguments);
             if (this.slot && Array.isArray(this.slot) && this.slot.length >= 3) {
                 this.slot = [this.slot[0], this.slot[1], this.slot[2]];
             }

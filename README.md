@@ -6218,6 +6218,12 @@ sweet_Runtime_Swizzler();
 
 ## Changelog
 
+### Version 0.3.3
+* Fixed a sugar harvesting bug that would allow a user to reroll the random seed unintentionally.
+* Fixed a bug that would cause Doordashing every day, Second day takeout, and Chinese leftovers to regenerate fortunes too often.
+* Fixed a bug that could cause a conflict with CCSE based mods and not restore saved god info. 
+* Additional Cookie Clicker 2.057 Beta fixes and support. 
+
 ### Version 0.3.2
 * Improvements to make JNE heavenly upgrades and CYOL (3rd party mod) more compatiable. 
 * Treading water achievement now exempts using Solgreth, Spirit of Selfishness as a win condition.
