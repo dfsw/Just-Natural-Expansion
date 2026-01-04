@@ -1108,21 +1108,25 @@
         M._procrastinationSlotTime = M._procrastinationSlotTime || null;
         M._selfishnessClickCount = M._selfishnessClickCount || 0;
 
-        if (M.slotGod && !M.slotGod._hooked) {
-            // Store on object instead of closure to survive CCSE eval wrapping
-            // Only set if not already set to avoid circular reference on re-initialization
-            // Also check if JNE already wrapped it and use their stored original
-            if (!M._originalSlotGodForHeavenly) {
-                if (M._originalSlotGodForSwapPatch) {
-                    // JNE already wrapped it, use their stored original
-                    M._originalSlotGodForHeavenly = M._originalSlotGodForSwapPatch;
-                } else {
-                    M._originalSlotGodForHeavenly = M.slotGod;
-                }
+        // Store the vanilla slotGod before ANY wrapping happens
+        // This must be done once and never overwritten
+        if (!M._vanillaSlotGod) {
+            // Walk the chain to find the original vanilla function
+            var fn = M.slotGod;
+            // If JNE already wrapped, use their stored original
+            if (M._originalSlotGodForSwapPatch && !M._originalSlotGodForSwapPatch._hooked && !M._originalSlotGodForSwapPatch._godSwapPatchApplied) {
+                fn = M._originalSlotGodForSwapPatch;
             }
+            // Make sure we're not storing a wrapped version
+            if (!fn._hooked && !fn._godSwapPatchApplied) {
+                M._vanillaSlotGod = fn;
+            }
+        }
+
+        if (M.slotGod && !M.slotGod._hooked && M._vanillaSlotGod) {
             M.slotGod = function(god, slot) {
-                if (!god) return this._originalSlotGodForHeavenly.apply(this, arguments);
-                var prev = god.slot, result = this._originalSlotGodForHeavenly.apply(this, arguments);
+                if (!god) return this._vanillaSlotGod.apply(this, arguments);
+                var prev = god.slot, result = this._vanillaSlotGod.apply(this, arguments);
                 var proc = this.gods['procrastination'], self = this.gods['selfishness'];
                 
                 if (slot !== prev) {

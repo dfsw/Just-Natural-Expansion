@@ -2829,14 +2829,20 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         }
         
         var pantheon = temple.minigame;
-        // Store on the object to survive CCSE eval wrapping
-        // Only set if not already set to avoid circular reference on re-initialization
-        if (!pantheon._originalSlotGodForSwapPatch) {
-            pantheon._originalSlotGodForSwapPatch = pantheon.slotGod;
+        
+        // Store vanilla slotGod - check if heavenlyUpgrades already stored it
+        if (!pantheon._vanillaSlotGod) {
+            var fn = pantheon.slotGod;
+            // Make sure we're not storing a wrapped version
+            if (!fn._hooked && !fn._godSwapPatchApplied) {
+                pantheon._vanillaSlotGod = fn;
+            }
         }
         
+        if (!pantheon._vanillaSlotGod) return false;
+        
         pantheon.slotGod = function(god, slot) {
-            var result = this._originalSlotGodForSwapPatch.apply(this, arguments);
+            var result = this._vanillaSlotGod.apply(this, arguments);
             if (this.slot && Array.isArray(this.slot) && this.slot.length >= 3) {
                 this.slot = [this.slot[0], this.slot[1], this.slot[2]];
             }
