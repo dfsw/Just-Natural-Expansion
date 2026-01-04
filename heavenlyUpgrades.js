@@ -3,7 +3,7 @@
     'use strict';
     
     const SIMPLE_MOD_NAME = 'Just Natural Expansion';
-    const MOD_HU_VERSION = '1.0.4';
+    const MOD_HU_VERSION = '1.0.5';
     var isInitialized = false;
     const MOD_ICON = [15, 7];
     const CUSTOM_SPRITE_SHEET_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
@@ -1108,15 +1108,10 @@
         M._procrastinationSlotTime = M._procrastinationSlotTime || null;
         M._selfishnessClickCount = M._selfishnessClickCount || 0;
 
-        // Check flag on M object, not on function (survives CCSE re-wrapping)
         if (M.slotGod && !M._slotGodHooked) {
-            // Store original on object to survive CCSE eval wrapping
-            if (typeof M._originalSlotGodForHeavenly === 'undefined') {
-                M._originalSlotGodForHeavenly = M.slotGod;
-            }
-            
+            M._vanillaSlotGod = M.slotGod;
             M.slotGod = function(god, slot) {
-                var orig = this._originalSlotGodForHeavenly;
+                var orig = this._vanillaSlotGod;
                 if (!god) return orig.apply(this, arguments);
                 var prev = god.slot, result = orig.apply(this, arguments);
                 var proc = this.gods['procrastination'], self = this.gods['selfishness'];

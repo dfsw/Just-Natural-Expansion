@@ -2818,33 +2818,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         return true;
     }
     
-    //Thanks to fillexs for original code
-    function applyGodSwapPatch() {
-        if (!Game || typeof Game !== 'object') return false;
-        if (!Game.Objects || !Game.Objects['Temple']) return false;
-        
-        var temple = Game.Objects['Temple'];
-        if (!temple.minigame || !temple.minigame.slotGod || temple.minigame.slotGod._godSwapPatchApplied) {
-            return false;
-        }
-        
-        var pantheon = temple.minigame;
-        // Store on the object to survive CCSE eval wrapping
-        pantheon._originalSlotGodForSwapPatch = pantheon.slotGod;
-        
-        pantheon.slotGod = function(god, slot) {
-            var result = this._originalSlotGodForSwapPatch.apply(this, arguments);
-            if (this.slot && Array.isArray(this.slot) && this.slot.length >= 3) {
-                this.slot = [this.slot[0], this.slot[1], this.slot[2]];
-            }
-            
-            return result;
-        };
-        pantheon.slotGod._godSwapPatchApplied = true;
-        
-        return true;
-    }
-    
     // Register all hooks in one place
     function registerAllHooks() {
         registerHook('logic', function() {
@@ -3593,9 +3566,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
 
         // Lump discrepancy patch - apply as fallback (should already be applied early, but ensure it's done)
         applyLumpDiscrepancyPatch();
-        
-        // God swap save corruption patch - apply as fallback (should already be applied early, but ensure it's done)
-        applyGodSwapPatch();
 
     }
     
@@ -13202,20 +13172,12 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     function attemptLumpPatch() {
         if (!Game || !Game.loadLumps || !Game.harvestLumps || !Game.clickLump) return false;
         applyLumpDiscrepancyPatch();
-        applyGodSwapPatch();
         return true;
     }
     
-    function attemptGodSwapPatch() {
-        if (!Game || !Game.Objects || !Game.Objects['Temple']) return false;
-        return applyGodSwapPatch();
-    }
-
     attemptLumpPatch();
-    attemptGodSwapPatch();
     setTimeout(function() {
         if (!attemptLumpPatch()) setTimeout(attemptLumpPatch, 1000);
-        if (!attemptGodSwapPatch()) setTimeout(attemptGodSwapPatch, 1000);
     }, 100);
     
     // Expose basic mod info for integrations
