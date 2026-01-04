@@ -2819,38 +2819,10 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     }
     
     //Thanks to fillexs for original code
+    //DISABLED: This patch was causing stack overflow issues with CCSE eval wrapping
+    //The patch truncates slot array to 3 elements - disabling until a safe fix is found
     function applyGodSwapPatch() {
-        if (!Game || typeof Game !== 'object') return false;
-        if (!Game.Objects || !Game.Objects['Temple']) return false;
-        
-        var temple = Game.Objects['Temple'];
-        if (!temple.minigame || !temple.minigame.slotGod) {
-            return false;
-        }
-        
-        var pantheon = temple.minigame;
-        
-        // Check flag on pantheon object, not on function (survives CCSE re-wrapping)
-        if (pantheon._godSwapPatchApplied) {
-            return false;
-        }
-        
-        // Store original on object to survive CCSE eval wrapping
-        if (typeof pantheon._originalSlotGodForSwapPatch === 'undefined') {
-            pantheon._originalSlotGodForSwapPatch = pantheon.slotGod;
-        }
-        
-        pantheon.slotGod = function(god, slot) {
-            var result = this._originalSlotGodForSwapPatch.apply(this, arguments);
-            if (this.slot && Array.isArray(this.slot) && this.slot.length >= 3) {
-                this.slot = [this.slot[0], this.slot[1], this.slot[2]];
-            }
-            
-            return result;
-        };
-        pantheon._godSwapPatchApplied = true;
-        
-        return true;
+        return false;
     }
     
     // Register all hooks in one place
