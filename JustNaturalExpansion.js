@@ -5,7 +5,7 @@
     'use strict';
     
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.3.3';
+    var modVersion = '0.3.4';
     var debugMode = false; 
     var runtimeSessionId = Math.floor(Math.random()*1e9) + '-' + Date.now();
     
@@ -2819,10 +2819,30 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     }
     
     //Thanks to fillexs for original code
-    //DISABLED: This patch was causing stack overflow issues with CCSE eval wrapping
-    //The patch truncates slot array to 3 elements - disabling until a safe fix is found
     function applyGodSwapPatch() {
-        return false;
+        if (!Game || typeof Game !== 'object') return false;
+        if (!Game.Objects || !Game.Objects['Temple']) return false;
+        
+        var temple = Game.Objects['Temple'];
+        if (!temple.minigame || !temple.minigame.slotGod || temple.minigame.slotGod._godSwapPatchApplied) {
+            return false;
+        }
+        
+        var pantheon = temple.minigame;
+        // Store on the object to survive CCSE eval wrapping
+        pantheon._originalSlotGodForSwapPatch = pantheon.slotGod;
+        
+        pantheon.slotGod = function(god, slot) {
+            var result = this._originalSlotGodForSwapPatch.apply(this, arguments);
+            if (this.slot && Array.isArray(this.slot) && this.slot.length >= 3) {
+                this.slot = [this.slot[0], this.slot[1], this.slot[2]];
+            }
+            
+            return result;
+        };
+        pantheon.slotGod._godSwapPatchApplied = true;
+        
+        return true;
     }
     
     // Register all hooks in one place
