@@ -1110,7 +1110,16 @@
 
         if (M.slotGod && !M.slotGod._hooked) {
             // Store on object instead of closure to survive CCSE eval wrapping
-            M._originalSlotGodForHeavenly = M.slotGod;
+            // Only set if not already set to avoid circular reference on re-initialization
+            // Also check if JNE already wrapped it and use their stored original
+            if (!M._originalSlotGodForHeavenly) {
+                if (M._originalSlotGodForSwapPatch) {
+                    // JNE already wrapped it, use their stored original
+                    M._originalSlotGodForHeavenly = M._originalSlotGodForSwapPatch;
+                } else {
+                    M._originalSlotGodForHeavenly = M.slotGod;
+                }
+            }
             M.slotGod = function(god, slot) {
                 if (!god) return this._originalSlotGodForHeavenly.apply(this, arguments);
                 var prev = god.slot, result = this._originalSlotGodForHeavenly.apply(this, arguments);
