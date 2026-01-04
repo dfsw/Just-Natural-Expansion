@@ -2830,7 +2830,10 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         
         var pantheon = temple.minigame;
         // Store on the object to survive CCSE eval wrapping
-        pantheon._originalSlotGodForSwapPatch = pantheon.slotGod;
+        // Only set if not already set to avoid circular reference on re-initialization
+        if (!pantheon._originalSlotGodForSwapPatch) {
+            pantheon._originalSlotGodForSwapPatch = pantheon.slotGod;
+        }
         
         pantheon.slotGod = function(god, slot) {
             var result = this._originalSlotGodForSwapPatch.apply(this, arguments);
