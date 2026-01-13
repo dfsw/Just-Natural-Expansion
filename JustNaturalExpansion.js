@@ -5,7 +5,7 @@
     'use strict';
     
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.3.4';
+    var modVersion = '0.3.5';
     var debugMode = false; 
     var runtimeSessionId = Math.floor(Math.random()*1e9) + '-' + Date.now();
     
@@ -2793,9 +2793,13 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 var result = originalHarvestLumps.apply(this, arguments);
                 if (Game.lumpOverripeAge && Game.lumpOverripeAge > 0 && typeof oldLumpT === 'number') {
                     var harvestedAmount = Math.floor((Date.now() - oldLumpT) / Game.lumpOverripeAge);
-                    Game.lumpT = (harvestedAmount > 0)
-                        ? oldLumpT + (Game.lumpOverripeAge * harvestedAmount)
-                        : oldLumpT;
+                    if (harvestedAmount > 0) {
+                        // Multiple overripe periods - adjust lumpT to account for all harvested
+                        Game.lumpT = oldLumpT + (Game.lumpOverripeAge * harvestedAmount);
+                    } else {
+                        // Just harvested (not overripe) - reset timer to now
+                        Game.lumpT = Date.now();
+                    }
                 } else if (typeof Game.lumpT === 'undefined') {
                     Game.lumpT = Date.now();
                 }
@@ -12637,6 +12641,18 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     } catch (e) {
                         console.warn('Error checking achievement requirement:', ach.name, e);
                     }
+                }
+            }
+        }
+        
+        // Also check forfeited achievements in the regular check loop
+        if (achievementData && achievementData.other && achievementData.other.forfeited) {
+            var forfeitedData = achievementData.other.forfeited;
+            for (var i = 0; i < forfeitedData.names.length; i++) {
+                var achievementName = forfeitedData.names[i];
+                var achievement = Game.Achievements[achievementName];
+                if (achievement && !achievement.won && (Game.cookiesReset || 0) >= forfeitedData.thresholds[i]) {
+                    markAchievementWon(achievementName);
                 }
             }
         }

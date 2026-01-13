@@ -6218,6 +6218,17 @@ sweet_Runtime_Swizzler();
 
 ## Changelog
 
+### Version 0.3.5
+* Heavenly upgrade Mega Clicks can no longer consume RNG generation values.
+* Fixed a regression that could allow a user to harvest multiple sugar lumps at once. This was a byproduct of the fix for sugar lump harvesting that rerolled the random seed.
+* Fixed a crash that could be caused by the setup of Wholesale Discount Club and CCSE.
+* Added more robust awarding logic for the Ascension Forfeited achievements to deal with third-party mod conflicts.
+* Fixed a bug that could prevent Box of Donuts upgrades from saving their purchase state.
+* Fixed a bug that would allow unintentional low mana cycling of Gambler’s Fever Dream to enable infinite spell cycling.
+
+### Version 0.3.4
+* Hotfix
+
 ### Version 0.3.3
 * Fixed a sugar harvesting bug that would allow a user to reroll the random seed unintentionally.
 * Fixed a bug that would cause Doordashing every day, Second day takeout, and Chinese leftovers to regenerate fortunes too often.

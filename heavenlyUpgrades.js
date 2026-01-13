@@ -3,7 +3,7 @@
     'use strict';
     
     const SIMPLE_MOD_NAME = 'Just Natural Expansion';
-    const MOD_HU_VERSION = '1.0.5';
+    const MOD_HU_VERSION = '1.0.6';
     var isInitialized = false;
     const MOD_ICON = [15, 7];
     const CUSTOM_SPRITE_SHEET_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
@@ -699,15 +699,49 @@
         if (!Game.Upgrade || !Game.Upgrade.prototype) return;
         if (Game.Upgrade.prototype.getPrice && Game.Upgrade.prototype.getPrice._jneWholesaleDiscountClubHooked) return;
         
-        var originalGetPrice = Game.Upgrade.prototype.getPrice;
+        // Check if getPrice exists and is a function
+        if (!Game.Upgrade.prototype.getPrice || typeof Game.Upgrade.prototype.getPrice !== 'function') {
+            return;
+        }
+        
+        // Try to get original from CCSE.Backup if available, otherwise use current function
+        var originalGetPrice = null;
+        if (typeof CCSE !== 'undefined' && CCSE.Backup && CCSE.Backup.Upgrade && CCSE.Backup.Upgrade.prototype && CCSE.Backup.Upgrade.prototype.getPrice) {
+            originalGetPrice = CCSE.Backup.Upgrade.prototype.getPrice;
+        } else {
+            originalGetPrice = Game.Upgrade.prototype.getPrice;
+        }
+        
+        // Ensure we have a valid function to call
+        if (!originalGetPrice || typeof originalGetPrice !== 'function') {
+            return;
+        }
+        
+        // Store original in closure to avoid losing reference if CCSE wraps it later
+        var storedOriginal = originalGetPrice;
+        
         Game.Upgrade.prototype.getPrice = function() {
-            var price = originalGetPrice.call(this);
+            var price;
+            try {
+                // Use stored original function from closure
+                if (storedOriginal && typeof storedOriginal === 'function') {
+                    price = storedOriginal.call(this);
+                } else {
+                    // Fallback: use base price property
+                    price = this.price || 0;
+                }
+            } catch (e) {
+                // If call fails, use base price property as last resort
+                price = this.price || 0;
+            }
             if (this.pool !== 'prestige' && this.name !== 'Wholesale discount club' && Game.Has('Wholesale discount club')) {
                 price *= 0.9;
             }
             return price;
         };
         Game.Upgrade.prototype.getPrice._jneWholesaleDiscountClubHooked = true;
+        // Store original reference on the wrapper function for potential future use
+        Game.Upgrade.prototype.getPrice._jneOriginalGetPrice = storedOriginal;
     }
     
     function setupCookieDisplayUnit() {
@@ -842,7 +876,7 @@
             Game.registerHook('click', function() {
                 if (Game.Has && Game.Has('Mega clicks')) {
                     var megaClickChance = Game.Has('Lucky mega clicks') ? 0.015 : 0.01;
-                    var isMegaClick = Math.random() < megaClickChance; 
+                    var isMegaClick = jneIndependentRandom() < megaClickChance; 
                     if (isMegaClick) {
                         var clickAmount = Game.computedMouseCps || 0;
                         var multiplier = Game.Has('Extreme mega clicks') ? 14 : 9;
@@ -2688,7 +2722,15 @@
             Game._sugarCaneHooked = true;
             
             var originalHarvestLumps = Game.harvestLumps;
-            Game.harvestLumps = function(amount, silent) {
+            
+            // Store original on function object so CCSE can access it
+            Game.harvestLumps = function() {
+                // Get original from function property (accessible to CCSE) or fallback to closure variable
+                var original = Game.harvestLumps._jneOriginalHarvestLumps || originalHarvestLumps;
+                
+                var amount = arguments[0];
+                var silent = arguments[1];
+                
                 var M = Game.Objects['Farm'] && Game.Objects['Farm'].minigame;
                 if (M && M.plants && M.plants['sparklingSugarCane'] && M.plot) {
                     var totalMult = 0;
@@ -2719,18 +2761,24 @@
                         }
                     }
 
-                    if (totalMult > 0) {
+                    if (totalMult > 0 && typeof amount !== 'undefined') {
                         var chance = totalMult * 0.01;
                         if (jneIndependentRandom() < chance) {
-                            amount *= 2;
+                            arguments[0] = amount * 2;
                             if (!silent) {
                                 Game.Notify('Sugar cane doubled your sugar lumps!', 'Your sparkling sugar cane plants triggered a lucky doubling!', [4, 24, getSpriteSheet('custom')], 6);
                             }
                         }
                     }
                 }
-                return originalHarvestLumps.call(this, amount, silent);
+                
+                if (original && typeof original === 'function') {
+                    return original.apply(this, arguments);
+                }
+                return undefined;
             };
+            // Store original reference on the wrapper function for CCSE compatibility
+            Game.harvestLumps._jneOriginalHarvestLumps = originalHarvestLumps;
         }
 
         
@@ -2806,7 +2854,7 @@
         var M = Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].minigame;
         if (!M || !M.castSpell || M._shinyWrinklerHooked) return;
         var originalCastSpell = M.castSpell;
-        M.castSpell = function(spell) {
+        M.castSpell = function(spell, obj) {
             var before = new Set();
             if (spell && spell.name === 'Resurrect Abomination') {
                 for (var i in Game.wrinklers) {
@@ -2814,7 +2862,7 @@
                     if (w && w.phase > 0) before.add(w);
                 }
             }
-            var result = originalCastSpell.call(this, spell);
+            var result = originalCastSpell.call(this, spell, obj);
             if (spell && spell.name === 'Resurrect Abomination' && result !== -1) {
                 var chance = 0, upgrade = null;
                 if (Game.Has('Alakazoodle evil noodle')) { chance = 0.03; upgrade = Game.Upgrades['Alakazoodle evil noodle']; }
@@ -4378,33 +4426,39 @@
                         '<div class="line"></div>';
         
         for (var i = 0; i < donuts.length; i++) {
-            if (Game.Upgrades[donuts[i].name]) continue;
-            
-            var price = basePrice * Math.pow(2.5, i);
-            var prodDesc = 'Cookie production multiplier <b>+3%</b>.<q>' + donuts[i].desc + '</q>';
-            var upgrade = new Game.Upgrade(donuts[i].name, prodDesc, price, donuts[i].icon);
-            
-            upgrade.power = 3;
-            upgrade.pool = 'cookie';
-            upgrade.ddesc = prodDesc;
-            upgrade.desc = prodDesc;
-            
-            if (Game.UnlockAt) {
-                var toPush = {cookies: price / 20, name: donuts[i].name, require: 'Box of overpriced donuts'};
-                Game.UnlockAt.push(toPush);
-            }
-            
-            upgrade.ddesc = sourceText + upgrade.ddesc;
-            upgrade.desc = sourceText + upgrade.desc;
-            
-            if (Game.cookieUpgrades && Game.cookieUpgrades.indexOf(upgrade) === -1) {
-                Game.cookieUpgrades.push(upgrade);
-            }
-            if (Game.UpgradesByPool) {
-                if (!Game.UpgradesByPool['cookie']) Game.UpgradesByPool['cookie'] = [];
-                if (Game.UpgradesByPool['cookie'].indexOf(upgrade) === -1) {
-                    Game.UpgradesByPool['cookie'].push(upgrade);
+            var upgrade = Game.Upgrades[donuts[i].name];
+            if (!upgrade) {
+                var price = basePrice * Math.pow(2.5, i);
+                var prodDesc = 'Cookie production multiplier <b>+3%</b>.<q>' + donuts[i].desc + '</q>';
+                upgrade = new Game.Upgrade(donuts[i].name, prodDesc, price, donuts[i].icon);
+                
+                upgrade.power = 3;
+                upgrade.pool = 'cookie';
+                upgrade.ddesc = prodDesc;
+                upgrade.desc = prodDesc;
+                
+                if (Game.UnlockAt) {
+                    var toPush = {cookies: price / 20, name: donuts[i].name, require: 'Box of overpriced donuts'};
+                    Game.UnlockAt.push(toPush);
                 }
+                
+                upgrade.ddesc = sourceText + upgrade.ddesc;
+                upgrade.desc = sourceText + upgrade.desc;
+                
+                if (Game.cookieUpgrades && Game.cookieUpgrades.indexOf(upgrade) === -1) {
+                    Game.cookieUpgrades.push(upgrade);
+                }
+                if (Game.UpgradesByPool) {
+                    if (!Game.UpgradesByPool['cookie']) Game.UpgradesByPool['cookie'] = [];
+                    if (Game.UpgradesByPool['cookie'].indexOf(upgrade) === -1) {
+                        Game.UpgradesByPool['cookie'].push(upgrade);
+                    }
+                }
+            }
+            
+            // Ensure it's marked for save/load (whether newly created or already existing)
+            if (upgrade) {
+                upgrade._heavenlyUpgrade = true;
             }
         }
     }
