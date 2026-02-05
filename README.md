@@ -6218,6 +6218,17 @@ sweet_Runtime_Swizzler();
 
 ## Changelog
 
+### Version 0.3.6
+* Fixed a regression that would cause Doordashing every day, Second day takeout, and Chinese leftovers to not reliably work as intended. 
+* Fixed a UI bug with Sugar Predictor when having more than 600 Grandmas owned on a lump that requires 600+. 
+* Tweaking Slot Machine Jackpot win rates and making the notification for them a bit more sticky.
+* Seasonal reindeer achievements are now more stable and reliable. 
+* Fixed a bug that prevented the item in the expanded (Heavenly upgrade/aura) 11th and 12th slots of the Terminal minigame from saving and restoring on load.
+* Updated Fortune Tolls For You heavenly upgrade to take advantage of the new ticker hook added with the last vanilla version update. 
+* Improved pantheon custom god save restortation logic to fix some funky behavior that was bothering mostly me.
+* Fixed a bug that could prevent seeds from the heavenly upgrades from restoring their unlock state due to a loading race condition. 
+* Various other small fixes.
+
 ### Version 0.3.5
 * Heavenly upgrade Mega Clicks can no longer consume RNG generation values.
 * Fixed a regression that could allow a user to harvest multiple sugar lumps at once. This was a byproduct of the fix for sugar lump harvesting that rerolled the random seed.

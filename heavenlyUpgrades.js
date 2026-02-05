@@ -3,7 +3,7 @@
     'use strict';
     
     const SIMPLE_MOD_NAME = 'Just Natural Expansion';
-    const MOD_HU_VERSION = '1.0.6';
+    const MOD_HU_VERSION = '1.0.7';
     var isInitialized = false;
     const MOD_ICON = [15, 7];
     const CUSTOM_SPRITE_SHEET_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
@@ -147,20 +147,20 @@
                     Game.JNE.bingoJackpotWins = (Game.JNE.bingoJackpotWins || 0) + 1;
                     var bingoSlotsIcon = (Game.Upgrades && Game.Upgrades['Bingo center slots'] && Game.Upgrades['Bingo center slots'].icon) ? Game.Upgrades['Bingo center slots'].icon : [31, 12];
                     var roll = Math.random() * 100;
-                    if (roll < 70) {
+                    if (roll < 60) {
                         var exp = Math.floor(Math.log10(Game.cookiesPsRaw || 1));
                         var cookiesEarned = 7.77 * Math.pow(10, exp + 4);
                         Game.Earn(cookiesEarned);
-                        Game.Notify('Jackpot!', 'A grandma has hit the jackpot in slots and earned <b>' + Beautify(cookiesEarned) + '</b> cookies!', bingoSlotsIcon);
-                    } else if (roll < 85) {
+                        new Game.Note('Jackpot!', 'A grandma has hit the jackpot in slots and earned <b>' + Beautify(cookiesEarned) + '</b> cookies!', bingoSlotsIcon, 10000);
+                    } else if (roll < 80) {
                         new Game.shimmer('golden');
-                        Game.Notify('Jackpot!', 'A grandma won a <b>golden cookie</b> while playing slots!', bingoSlotsIcon);
-                    } else if (roll < 98) {
+                        new Game.Note('Jackpot!', 'A grandma won a <b>golden cookie</b> while playing slots!', bingoSlotsIcon, 10000);
+                    } else if (roll < 97) {
                         Game.Earn(Game.cookies * 0.1);
-                        Game.Notify('Jackpot!', 'A grandma won the mega jackpot while playing slots and your cookie bank has been <b>increased by 10%!</b>', bingoSlotsIcon);
+                        new Game.Note('Jackpot!', 'A grandma won the mega jackpot while playing slots and your cookie bank has been <b>increased by 10%!</b>', bingoSlotsIcon, 10000);
                     } else {
                         Game.gainLumps(1);
-                        Game.Notify('Jackpot!', 'A grandma hit the mega sugar jackpot in slots and won a <b>free sugar lump!</b>', bingoSlotsIcon);
+                        new Game.Note('Jackpot!', 'A grandma hit the mega sugar jackpot in slots and won a <b>free sugar lump!</b>', bingoSlotsIcon, 10000);
                     }
                 }
             }
@@ -171,32 +171,27 @@
             if (now) {
                 var interval = Game.Has('Doordashing every day') ? 24 * 60 * 60 * 1000 : (Game.Has('Second day takeout') ? 2 * 24 * 60 * 60 * 1000 : (Game.Has('Chinese leftovers') ? 3 * 24 * 60 * 60 * 1000 : null));
                 if (interval) {
-                    // Fortune GC 
                     var gcUsed = (Game.fortuneGC === 1);
                     var gcLastUsedTime = Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastUsedTime;
                     
                     if (gcUsed && !gcLastUsedTime) {
-                        // Just used start timer
                         Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastUsedTime = now;
-                    } else if (!gcUsed && gcLastUsedTime) {
-                        // Available again 
-                        Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastUsedTime = 0;
                     } else if (gcUsed && gcLastUsedTime && (now - gcLastUsedTime >= interval)) {
-                        //regenerate
                         Game.fortuneGC = 0;
+                        Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastUsedTime = 0;
+                    } else if (!gcUsed && gcLastUsedTime) {
                         Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastUsedTime = 0;
                     }
                     
-                    // Fortune CPS 
                     var cpsUsed = (Game.fortuneCPS === 1);
                     var cpsLastUsedTime = Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastUsedTime;
                     
                     if (cpsUsed && !cpsLastUsedTime) {
                         Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastUsedTime = now;
-                    } else if (!cpsUsed && cpsLastUsedTime) {
-                        Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastUsedTime = 0;
                     } else if (cpsUsed && cpsLastUsedTime && (now - cpsLastUsedTime >= interval)) {
                         Game.fortuneCPS = 0;
+                        Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastUsedTime = 0;
+                    } else if (!cpsUsed && cpsLastUsedTime) {
                         Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastUsedTime = 0;
                     }
                 }
@@ -1805,6 +1800,7 @@
         if (Game.Has('Aerated soil') && !M.soils.aerated && l('gardenSoils')) {
             M.soils.aerated = {
                     name: 'Aerated soil',
+                    key: 'aerated',
                     icon: 5,
                     customIcon: [15, 24],
                     customIconSheet: getSpriteSheet('custom'),
@@ -2136,7 +2132,27 @@
             M._loadHooked = true;
             var origLoad = M.load;
             M.load = function(str) {
+                // Store custom seed unlock states before vanilla load
+                var customSeedStates = {};
+                if (M.plants) {
+                    MOD_PLANT_KEYS.forEach(function(key) {
+                        if (M.plants[key]) {
+                            customSeedStates[key] = M.plants[key].unlocked;
+                        }
+                    });
+                }
+                
+                // Call vanilla load (this will reset custom seeds to 0)
                 origLoad.call(this, str);
+                
+                // Restore custom seed unlock states after vanilla load
+                // Only restore if the player owns the heavenly upgrade
+                var upgradeMap = {'sparklingSugarCane': 'Sparkling sugar cane', 'krazyKudzu': 'Krazy kudzu', 'magicMushroom': 'Magic mushroom'};
+                MOD_PLANT_KEYS.forEach(function(key) {
+                    if (M.plants[key] && customSeedStates[key] && Game.Has(upgradeMap[key])) {
+                        M.plants[key].unlocked = customSeedStates[key];
+                    }
+                });
             };
         }
         
@@ -3897,7 +3913,7 @@
             if (!cur || !sol) return null;
             var possibleWraths = (sol.possibleElderWraths && Array.isArray(sol.possibleElderWraths)) ? sol.possibleElderWraths : [false, false, false, false];
             var wrath = (typeof cur.wrath === 'number') ? cur.wrath : 0;
-            var grandmasMet = Math.floor(cur.grandmas) === Math.floor(sol.grandmas);
+            var grandmasMet = (sol.grandmas >= 600) ? (Math.floor(cur.grandmas) >= 600) : (Math.floor(cur.grandmas) === Math.floor(sol.grandmas));
             var wrathMet = !!possibleWraths[wrath];
             var rigidelMet = (cur.rigidel === sol.rigidelSlot) && (sol.rigidelSlot === 0 || Game.BuildingsOwned % 10 === 0);
             var dcMet = (cur.dragonsCurve === sol.dragonsCurve);
@@ -4021,58 +4037,15 @@
     
     function setupFortuneTolls() {
         if (Game._fortuneTollsHooked) return;
-        if (Game._fortuneTollsInterval) {
-            clearInterval(Game._fortuneTollsInterval);
-            Game._fortuneTollsInterval = 0;
-        }
         
-        if (!Game._fortuneTollsTickerEffectHooked) {
-            var originalTickerEffect = Game.TickerEffect;
-            Object.defineProperty(Game, 'TickerEffect', {
-                get: function() {
-                    return this._tickerEffect;
-                },
-                set: function(value) {
-                    this._tickerEffect = value;
-                    if (!Game.Has || !Game.Has('Fortune tolls for you')) {
-                        Game._fortuneTollsLastTickerEffectKey = null;
-                        return;
-                    }
-
-                    var currentTickerEffect = value || this._tickerEffect;
-                    if (currentTickerEffect && currentTickerEffect.type === 'fortune') {
-                        var effectKey = null;
-                        var sub = currentTickerEffect.sub;
-                        if (sub === undefined || sub === null) {
-                            effectKey = 'fortune';
-                        } else if (typeof sub === 'string' || typeof sub === 'number') {
-                            effectKey = String(sub);
-                        } else if (typeof sub === 'object') {
-                            if (sub.name) effectKey = String(sub.name);
-                            else if (sub.id !== undefined) effectKey = String(sub.id);
-                            else {
-                                try { effectKey = JSON.stringify(sub); } catch (e) { effectKey = 'fortune'; }
-                            }
-                        } else {
-                            effectKey = 'fortune';
-                        }
-                        if (effectKey && effectKey !== Game._fortuneTollsLastTickerEffectKey) {
-                            if (Game.playGoldenCookieChime) {
-                                try { Game.playGoldenCookieChime(); } catch (e) {}
-                            } else if (typeof PlaySound === 'function') {
-                                try { PlaySound('snd/click3.mp3'); } catch (e) {}
-                            }
-                            Game._fortuneTollsLastTickerEffectKey = effectKey;
-                        }
-                    } else {
-                        Game._fortuneTollsLastTickerEffectKey = null;
-                    }
-                },
-                configurable: true
-            });
-            Game._tickerEffect = originalTickerEffect;
-            Game._fortuneTollsTickerEffectHooked = true;
-        }
+        Game.registerHook('tickerFinal', function(ticker) {
+            if (Game.Has('Fortune tolls for you') && Game.TickerEffect && Game.TickerEffect.type === 'fortune') {
+                Game.playGoldenCookieChime();
+            }
+            
+            return ticker;
+        });
+        
         Game._fortuneTollsHooked = true;
     }
     
@@ -4830,8 +4803,8 @@
         
         createHeavenlyUpgrade({
             name: 'Erasable pens',
-            desc: 'Edit <b>permanent upgrade slots</b> between ascensions.',
-            ddesc: 'Edit <b>permanent upgrade slots</b> between ascensions.<q>Nothing wrong with a little tweaking.</q>',
+            desc: 'Edit <b>permanent upgrade slots</b> between ascensions.(Click associated slot in Stats to edit)',
+            ddesc: 'Edit <b>permanent upgrade slots</b> between ascensions.(Click associated slot in Stats to edit)<q>Nothing wrong with a little tweaking.</q>',
             price: 5e15,
             icon: [12, 15, getSpriteSheet('custom')],
             posX: -2116,
@@ -5948,10 +5921,10 @@
             }
             
             // Save timers
-            if (Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastUsedTime) {
+            if (Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastUsedTime !== undefined) {
                 saveData.timers.fortuneGCLastUsedTime = Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastUsedTime;
             }
-            if (Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastUsedTime) {
+            if (Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastUsedTime !== undefined) {
                 saveData.timers.fortuneCPSLastUsedTime = Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastUsedTime;
             }
             
@@ -6048,16 +6021,23 @@
                 }
             }
             
-            // Restore timers and stats
             if (saveData.timers) {
                 if (!Game.JNE) Game.JNE = {};
                 if (!Game.JNE.heavenlyUpgradesSavedData) Game.JNE.heavenlyUpgradesSavedData = {};
-                // Load individual fortune cookie timers
                 if (saveData.timers.fortuneGCLastUsedTime !== undefined) {
                     Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastUsedTime = saveData.timers.fortuneGCLastUsedTime;
                 }
                 if (saveData.timers.fortuneCPSLastUsedTime !== undefined) {
                     Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastUsedTime = saveData.timers.fortuneCPSLastUsedTime;
+                }
+            }
+            
+            if (Game.JNE.heavenlyUpgradesSavedData && Game.JNE.heavenlyUpgradesSavedData.timers) {
+                if (Game.JNE.heavenlyUpgradesSavedData.timers.fortuneGCLastUsedTime !== undefined) {
+                    Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastUsedTime = Game.JNE.heavenlyUpgradesSavedData.timers.fortuneGCLastUsedTime;
+                }
+                if (Game.JNE.heavenlyUpgradesSavedData.timers.fortuneCPSLastUsedTime !== undefined) {
+                    Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastUsedTime = Game.JNE.heavenlyUpgradesSavedData.timers.fortuneCPSLastUsedTime;
                 }
             }
             if (saveData.stats && saveData.stats.cookieFishCaught !== undefined) {
@@ -6115,18 +6095,26 @@
         
         M._heavenlyUpgradesRestored = true;
 
-        // Restore soil
+        // Restore soil - only if it's the custom aerated soil
+        // Vanilla soil types are already loaded correctly by the vanilla save system
         if (saveData.garden.soil !== undefined && M.soilsById?.[saveData.garden.soil]) {
-            M.soil = saveData.garden.soil;
+            var savedSoil = M.soilsById[saveData.garden.soil];
+            // Only restore if this is the custom aerated soil
+            if (savedSoil && savedSoil.key === 'aerated' && Game.Has('Aerated soil')) {
+                M.soil = saveData.garden.soil;
+            }
         }
 
         // Restore seeds
         if (saveData.garden.modSeedsUnlocked) {
             var modSeeds = ['sparklingSugarCane', 'krazyKudzu', 'magicMushroom'];
+            var upgradeMap = {'sparklingSugarCane': 'Sparkling sugar cane', 'krazyKudzu': 'Krazy kudzu', 'magicMushroom': 'Magic mushroom'};
             modSeeds.forEach(function(key) {
                 var shouldBeUnlocked = saveData.garden.modSeedsUnlocked[key];
+                var heavenlyUpgradeName = upgradeMap[key];
                 
-                if (shouldBeUnlocked && M.plants && M.plants[key]) {
+                // Only restore unlocked state if the player owns the heavenly upgrade
+                if (shouldBeUnlocked && M.plants && M.plants[key] && Game.Has(heavenlyUpgradeName)) {
                     M.plants[key].unlocked = 1;
                     if (M.unlockSeed) {
                         M.unlockSeed(M.plants[key]);
@@ -6178,14 +6166,21 @@
         var savedSelfishnessCount = saveData.pantheon.selfishnessClickCount;
 
         if (saveData.pantheon.slots) {
+            var customGodKeys = ['procrastination', 'selfishness'];
             for (var i = 0; i < Math.min(saveData.pantheon.slots.length, M.slot.length); i++) {
                 var savedSlot = saveData.pantheon.slots[i];
                 if (!savedSlot || savedSlot === -1) continue;
+                
+                // Only restore our custom gods, not vanilla gods
+                if (typeof savedSlot === 'string' && customGodKeys.indexOf(savedSlot) === -1) continue;
+                
                 var god = (typeof savedSlot === 'string' && M.gods[savedSlot]) || (typeof savedSlot === 'number' && M.godsById[savedSlot]);
                 if (!god) continue;
 
-                var currentGod = M.slot[i] !== -1 ? M.godsById[M.slot[i]] : null;
-                if (currentGod?.key !== savedSlot && M.slotGod) {
+                // Only restore if the slot is currently empty
+                if (M.slot[i] !== -1) continue;
+
+                if (M.slotGod) {
                     if (god.slot === undefined) god.slot = -1;
                     M.slotGod(god, i);
                 }

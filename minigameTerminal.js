@@ -1,5 +1,5 @@
 //Just Natural Expansion Terminal minigame
-//version 1.0.2
+//version 1.0.3
 
 var M = {};
 M.parent = Game.Objects && Game.Objects['Javascript console'] ? Game.Objects['Javascript console'] : {
@@ -30,8 +30,7 @@ var terminalAchievementState = {
 M.launch = function () {
     var M = this;
     M.name = M.parent.minigameName;
-    M.maxSlots = 10;
-    M.absoluteMaxSlots = M.maxSlots + 1; //outdated will be updated dynamically 
+    M.maxSlots = 12; 
 
     const TERMINAL_BACKGROUND_URL = 'https://raw.githubusercontent.com/dfsw/Cookies/main/TerminalBG.png';
     const TERMINAL_DIRECTIONAL_URL = 'https://raw.githubusercontent.com/dfsw/Cookies/main/directional.png';
@@ -1976,8 +1975,7 @@ M.launch = function () {
         var baseUnlocked = Math.max(0, Math.floor(level));
         var auraBonus = M.getSupremeIntellectBonus();
         var upgradeBonus = Game.Has('Overclocked GPUs') ? 1 : 0;
-        var capacity = M.maxSlots + upgradeBonus + auraBonus;
-        var result = Math.min(capacity, baseUnlocked + auraBonus + upgradeBonus);
+        var result = Math.min(M.maxSlots, baseUnlocked + auraBonus + upgradeBonus);
         return result;
     };
 
@@ -1994,7 +1992,7 @@ M.launch = function () {
 
     M.updateSlots = function () {
         var unlocked = M.getUnlockedSlotCount();
-        for (var i = 0; i < M.absoluteMaxSlots; i++) {
+        for (var i = 0; i < M.maxSlots; i++) {
             var slotDiv = l('terminalSlot' + i);
             var contentDiv = l('terminalSlotContent' + i);
             if (!slotDiv || !contentDiv) continue;
@@ -2495,10 +2493,9 @@ M.launch = function () {
     M.initializeSlots = function () {
         var slotsContainer = l('terminalSlots');
         if (!slotsContainer) return;
-        M.absoluteMaxSlots = M.maxSlots + 1 + (Game.Has('Overclocked GPUs') ? 1 : 0);
         var unlocked = M.getUnlockedSlotCount();
         var html = '';
-        for (let i = 0; i < M.absoluteMaxSlots; i++) {
+        for (let i = 0; i < M.maxSlots; i++) {
             var display = i < unlocked ? '' : 'display:none;';
             html += '<div class="ready terminalProgram terminalProgram' + (i % 4) + ' terminalSlot titleFont" id="terminalSlot' + i + '" style="' + display + '" ' + Game.getDynamicTooltip('Game.ObjectsById[' + M.parent.id + '].minigame.slotTooltip(' + i + ')', 'this') + '>' +
                 '<div class="terminalSlotContent" id="terminalSlotContent' + i + '"></div>' +
@@ -2507,17 +2504,14 @@ M.launch = function () {
         }
         slotsContainer.innerHTML = html;
 
-        for (let si = 0; si < M.absoluteMaxSlots; si++) {
+        for (let si = 0; si < M.maxSlots; si++) {
             attachSlotEventHandlers(si);
         }
     };
 
     M.ensureUnlockedSlots = function () {
-        var desiredAbsoluteMaxSlots = M.maxSlots + 1 + (Game.Has('Overclocked GPUs') ? 1 : 0);
-        var hadAbsoluteMaxSlots = M.absoluteMaxSlots;
-        M.absoluteMaxSlots = desiredAbsoluteMaxSlots;
         // we need to rebuild the slot DOM; otherwise the extra slot never appears.
-        if (hadAbsoluteMaxSlots !== desiredAbsoluteMaxSlots || !l('terminalSlot' + (desiredAbsoluteMaxSlots - 1))) {
+        if (!l('terminalSlot' + (M.maxSlots - 1))) {
             M.initializeSlots();
         }
         var unlocked = M.getUnlockedSlotCount();
@@ -2536,7 +2530,7 @@ M.launch = function () {
         }
         if (M.unlockedSlots !== unlocked) {
             M.unlockedSlots = unlocked;
-            for (var i = 0; i < M.absoluteMaxSlots; i++) {
+            for (var i = 0; i < M.maxSlots; i++) {
                 var slotDiv = l('terminalSlot' + i);
                 if (!slotDiv) continue;
                 slotDiv.style.display = (i < unlocked) ? '' : 'none';
@@ -3055,7 +3049,7 @@ M.launch = function () {
 
             if (legacyFormat) {
                 var legacyParts = str.split(';');
-                unlocked = Math.min(M.absoluteMaxSlots, parseInt(legacyParts[0]) || 0);
+                unlocked = Math.min(M.maxSlots, parseInt(legacyParts[0]) || 0);
                 assignments = legacyParts[1] ? legacyParts[1].split(',') : [];
                 if (legacyParts[2]) {
                     if (legacyParts[2].indexOf('~') !== -1) settingsData = legacyParts[2].split('~');
@@ -3067,7 +3061,7 @@ M.launch = function () {
                 isVisible = parseInt(legacyParts[6] || 0) || 0;
             } else {
                 var parts = str.split(' ');
-                unlocked = Math.min(M.absoluteMaxSlots, parseInt(parts[0]) || 0);
+                unlocked = Math.min(M.maxSlots, parseInt(parts[0]) || 0);
                 var assignmentsPart = parts[1] || '-';
                 if (assignmentsPart !== '-' && assignmentsPart !== '') {
                     assignments = assignmentsPart.split('/');

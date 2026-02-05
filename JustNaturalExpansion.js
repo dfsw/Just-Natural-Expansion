@@ -5,7 +5,7 @@
     'use strict';
     
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.3.5';
+    var modVersion = '0.3.6';
     var debugMode = false; 
     var runtimeSessionId = Math.floor(Math.random()*1e9) + '-' + Date.now();
     
@@ -265,7 +265,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             soilChangesTotal: 0,
             pledges: 0,
             reindeerClicked: 0,
-            lastSeasonalReindeerCheck: 0,
             cookieClicks: 0,
             previousTempleSwaps: 0,
             previousSoilType: null,
@@ -371,7 +370,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         soilChangesTotal: 0,
         pledges: 0,
         reindeerClicked: 0,
-        lastSeasonalReindeerCheck: 0,
         cookieClicks: 0,
         previousTempleSwaps: 0,
         previousSoilType: null,
@@ -558,12 +556,12 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     function handleReset() {
         // Check if this is a full reset (not an ascension)
         if (!Game.OnAscend || Game.OnAscend === 0) {
-            // CRITICAL: Don't reset achievements during save loading operations
+            //  Don't reset achievements during save loading operations
             // Only reset for user-initiated hard resets
             
             // This is a full reset - clear everything
             
-            // CRITICAL: Clear mod save data to prevent cross-contamination
+            //  Clear mod save data to prevent cross-contamination
             modSaveData = null;
             debugLog('handleReset: cleared modSaveData to prevent cross-contamination');
             
@@ -2614,7 +2612,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             jsConsole.minigameName = '';
             jsConsole.minigameIcon = null;
             
-            // CRITICAL: Clear minigameLoading flag when disabling minigame
+            //  Clear minigameLoading flag when disabling minigame
             // This ensures saves work even if the minigame was never fully loaded
             jsConsole.minigameLoading = false;
             
@@ -2803,6 +2801,13 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 } else if (typeof Game.lumpT === 'undefined') {
                     Game.lumpT = Date.now();
                 }
+                
+                if (Game.Has && Game.Has('Sugar predictor') && Game.calculateLumpPredictions) {
+                    setTimeout(function() {
+                        Game.calculateLumpPredictions(true);
+                    }, 0);
+                }
+                
                 return result;
             };
             Game.harvestLumps._lumpPatchApplied = true;
@@ -2857,22 +2862,29 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         }, 'Monitor terminal minigame state');
         
         // Seasonal reindeer tracking - award immediately on pop
-        registerHook('logic', function() {
-            if (Game.reindeerClicked > (modTracking.lastSeasonalReindeerCheck || 0)) {
-                var season = getCurrentSeason();
-                if (season && season !== 'christmas') {
-                    var achName = mapSeasonToReindeerAchievement(season);
-                    if (achName && Game.Achievements[achName] && !Game.Achievements[achName].won) {
-                        markAchievementWon(achName);
+        if (Game.shimmerTypes && Game.shimmerTypes['reindeer']) {
+            var originalReindeerPop = Game.shimmerTypes['reindeer'].popFunc;
+            if (originalReindeerPop && !Game.shimmerTypes['reindeer']._seasonalReindeerHooked) {
+                Game.shimmerTypes['reindeer'].popFunc = function(me) {
+                    originalReindeerPop.call(this, me);
+                    
+                    if (me.spawnLead) {
+                        var seasonMap = {
+                            'valentines': "Cupid's Reindeer",
+                            'fools': 'Business Reindeer',
+                            'easter': 'Bundeer',
+                            'halloween': 'Ghost Reindeer'
+                        };
+                        
+                        var achName = seasonMap[Game.season];
+                        if (achName && Game.Achievements[achName] && !Game.Achievements[achName].won) {
+                            markAchievementWon(achName);
+                        }
                     }
-                    // Maintain compatibility with any UI relying on popped flags
-                    if (seasonalReindeerData[season]) {
-                        seasonalReindeerData[season].popped = true;
-                    }
-                }
-                modTracking.lastSeasonalReindeerCheck = Game.reindeerClicked;
+                };
+                Game.shimmerTypes['reindeer']._seasonalReindeerHooked = true;
             }
-        }, 'Track seasonal reindeer pops');
+        }
         
         // Garden harvest all hook for duketater achievement
         function hookGardenHarvestAll() {
@@ -3819,7 +3831,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         }
         
         // Set won state based on save data if available
-        // CRITICAL: If achievement already exists and is won, preserve that state
+        //  If achievement already exists and is won, preserve that state
         var existingAchievement = Game.Achievements[name];
         if (existingAchievement && existingAchievement.won === 1) {
             ach.won = 1;
@@ -4088,7 +4100,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             }
             
         // ===== SECTION 3: BOX OF IMPROVED COOKIES SETUP =====
-            // CRITICAL: Ensure "Box of improved cookies" is fully registered before creating cookie upgrades
+            //  Ensure "Box of improved cookies" is fully registered before creating cookie upgrades
                 if (enableCookieUpgrades && Game.Upgrades['Box of improved cookies']) {
                     // Force the upgrade to be fully available in the game's systems
                     Game.Upgrades['Box of improved cookies'].isUnlocked = function() { return this.unlockCondition ? this.unlockCondition() : true; };
@@ -4292,7 +4304,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         
         
         // ===== SECTION 8: SAVE DATA INITIALIZATION =====
-            // CRITICAL: Initialize missing upgrades in save data
+            //  Initialize missing upgrades in save data
             // This ensures that ALL upgrades are properly tracked in the save system, even when disabled
             if (modSaveData && modSaveData.upgrades) {
                 var modUpgradeNames = getModUpgradeNames();
@@ -6045,9 +6057,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         }
     }
     
-    function initializeSeasonalReindeerTracking() {
-        modTracking.lastSeasonalReindeerCheck = Game.reindeerClicked || 0;
-    }
     
     // Create seasonal reindeer achievements
     function createSeasonalReindeerAchievements() {
@@ -6093,12 +6102,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             if (!modTracking.previousWrinklerStates) modTracking.previousWrinklerStates = {};
             if (!modTracking.bankSextupledByWrinkler) modTracking.bankSextupledByWrinkler = false;
             if (!modTracking.fthofCookieOutcomes) modTracking.fthofCookieOutcomes = [];
-
-            // Cookie/reindeer click tracking moved to modular baselines/deltas
-            if (modTracking.lastSeasonalReindeerCheck === undefined) {
-                modTracking.lastSeasonalReindeerCheck = Game.reindeerClicked || 0;
-            }
-
         }
     
     function initializeTempleSwapTracking() {
@@ -10442,16 +10445,18 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 upgrade.order = upgradeInfo.order;
             }
             
-            // Handle requirements entirely through our custom logic
             if (upgradeInfo.require) {
-                // Set the require property for display purposes
                 upgrade.require = upgradeInfo.require;
                 
-                // CRITICAL: Force the upgrade to be locked initially
                 upgrade.unlocked = 0;
                 
                 // Create the unlockCondition function that will control when it unlocks
                 upgrade.unlockCondition = function() {
+                    // Butter biscuit special case: once unlocked, stay unlocked (don't relock if buildings are sold)
+                    if (this.unlocked && upgradeInfo.require.startsWith('butterBiscuit')) {
+                        return true;
+                    }
+                    
                     var result = false;
                     
                     // Check if it's an upgrade requirement first (more specific)
@@ -10489,7 +10494,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 // Start cookie upgrades as locked - our checkAndUnlockOrderUpgrades function will manage unlock state
                 upgrade.unlocked = 0;
                 
-                // CRITICAL: Also override the canBuy function to ensure it respects the requirement
+                //  Also override the canBuy function to ensure it respects the requirement
                 // This provides an additional layer of protection
                 upgrade.canBuy = function() {
                     // ALWAYS check the requirement first - if not met, can't buy
@@ -11338,11 +11343,8 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     modTracking.shinyWrinklersPopped = modSaveData.modTracking.shinyWrinklersPopped || 0;
                     modTracking.templeSwapsTotal = modSaveData.modTracking.templeSwapsTotal || 0;
                     modTracking.soilChangesTotal = modSaveData.modTracking.soilChangesTotal || 0;
-                    modTracking.lastSeasonalReindeerCheck = modSaveData.modTracking.lastSeasonalReindeerCheck || 0;
                     modTracking.godUsageTime = modSaveData.modTracking.godUsageTime || {};
                     modTracking.currentSlottedGods = modSaveData.modTracking.currentSlottedGods || {};
-                    // Clamp seasonal reindeer baseline to current value to avoid missing first pop
-                    modTracking.lastSeasonalReindeerCheck = Math.min(modTracking.lastSeasonalReindeerCheck || 0, Game.reindeerClicked || 0);
                     // Clear spell cast times on load to prevent save-scumming the Spell Slinger achievement
                     modTracking.spellCastTimes = [];
                     debugLog('continueModInitialization: restored tracking variables from save data');
@@ -11376,7 +11378,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             } catch (error) {
                 console.warn('Error restoring save data, falling back to defaults:', error);
                 debugLog('continueModInitialization: error restoring save data, using defaults');
-                initializeSeasonalReindeerTracking();
                 initializeShinyWrinklerTracking();
                 initializeTempleSwapTracking();
                 initializeSoilChangeTracking();
@@ -11751,8 +11752,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                         shinyWrinklersPopped: modTracking.shinyWrinklersPopped || 0,
                         templeSwapsTotal: modTracking.templeSwapsTotal || 0,
                         soilChangesTotal: modTracking.soilChangesTotal || 0,
-                        // cookie click/reindeer baselines tracked via sessionBaselines
-                        lastSeasonalReindeerCheck: modTracking.lastSeasonalReindeerCheck || 0,
                         godUsageTime: modTracking.godUsageTime || {},
                         currentSlottedGods: modTracking.currentSlottedGods || {}
                     },
@@ -11909,7 +11908,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                         previousWrinklerStates: {},
                         templeSwapsTotal: 0,
                         soilChangesTotal: 0,
-                        lastSeasonalReindeerCheck: 0,
                         godUsageTime: {},
                         currentSlottedGods: {},
                         pledges: 0,
@@ -12091,7 +12089,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             }
             this._lastUnlockCheck = now;
             
-            // CRITICAL: Only check MOD upgrades, never touch vanilla upgrades
+            //  Only check MOD upgrades, never touch vanilla upgrades
             // Get the list of all mod upgrade names to ensure we only affect our own upgrades
             var modUpgradeNamesList = getModUpgradeNames();
             var modUpgradeNamesSet = {};
@@ -12159,7 +12157,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
 
                 var shouldUnlockUpgrade = false;
                 
-                // CRITICAL: If upgrade was bought in a previous ascension, keep it unlocke This allows it to appear in permanent upgrade selection even if requirements aren't met, this was a super annoying bug.
                 if (upgrade.bought > 0) {
                     shouldUnlockUpgrade = true;
                 } else {
