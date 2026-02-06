@@ -175,24 +175,24 @@
                     var gcLastUsedTime = Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastUsedTime;
                     
                     if (gcUsed && !gcLastUsedTime) {
+                        // Fortune is used and no timer set - record when it was used
                         Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastUsedTime = now;
-                    } else if (gcUsed && gcLastUsedTime && (now - gcLastUsedTime >= interval)) {
+                    } else if (gcLastUsedTime && (now - gcLastUsedTime >= interval)) {
+                        // Timer exists and interval passed - reset fortune and clear timer
                         Game.fortuneGC = 0;
-                        Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastUsedTime = 0;
-                    } else if (!gcUsed && gcLastUsedTime) {
-                        Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastUsedTime = 0;
+                        delete Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastUsedTime;
                     }
                     
                     var cpsUsed = (Game.fortuneCPS === 1);
                     var cpsLastUsedTime = Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastUsedTime;
                     
                     if (cpsUsed && !cpsLastUsedTime) {
+                        // Fortune is used and no timer set - record when it was used
                         Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastUsedTime = now;
-                    } else if (cpsUsed && cpsLastUsedTime && (now - cpsLastUsedTime >= interval)) {
+                    } else if (cpsLastUsedTime && (now - cpsLastUsedTime >= interval)) {
+                        // Timer exists and interval passed - reset fortune and clear timer
                         Game.fortuneCPS = 0;
-                        Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastUsedTime = 0;
-                    } else if (!cpsUsed && cpsLastUsedTime) {
-                        Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastUsedTime = 0;
+                        delete Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastUsedTime;
                     }
                 }
             }

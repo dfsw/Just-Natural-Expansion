@@ -3076,6 +3076,7 @@ M.launch = function () {
                 isVisible = parseInt(parts[6] || 0) || 0;
             }
 
+            // Restore saved slots - ensureUnlockedSlots will handle sizing to actual unlocked count
             M.slot.length = unlocked;
             M.slotSettings.length = unlocked;
             for (var i = 0; i < unlocked; i++) {
@@ -3099,6 +3100,8 @@ M.launch = function () {
                     M.slotSettings[i] = null;
                 }
             }
+            // Ensure slots are sized/visible according to actual unlocked count
+            M.ensureUnlockedSlots();
             M.programsRun = runCount;
             M.programsRunTotal = runTotal;
             M.executionCooldownStart = cooldownStamp;
@@ -3340,11 +3343,9 @@ if (typeof window !== 'undefined') {
     window.removeTerminalAchievements = removeTerminalAchievements;
     window.createTerminalAchievements = createTerminalAchievements;
     
-    // Preserve existing API functions from cookie.js while adding M's properties
     var existingAPI = window.TerminalMinigame || {};
     window.TerminalMinigame = M;
     
-    // Restore the API functions that cookie.js set up
     if (typeof existingAPI.getSaveData === 'function') {
         window.TerminalMinigame.getSaveData = existingAPI.getSaveData;
     }
@@ -3358,10 +3359,7 @@ if (typeof window !== 'undefined') {
         window.TerminalMinigame.requestSave = existingAPI.requestSave;
     }
     
-    // DEBUG: Manual test function for visibility restoration
-    // Call from console: TerminalMinigame.testVisibilityRestore()
     window.TerminalMinigame.testVisibilityRestore = function() {
-        // Test save string with isVisible = 1
         var testSaveString = '10 -1/-1/-1/-1/-1/-1/-1/-1/-1/-1 ~~~~~~~~~ 10 10 0 1';
         M.load(testSaveString);
         return 'Test complete - minigame should open in 50ms';
