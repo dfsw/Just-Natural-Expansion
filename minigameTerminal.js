@@ -2973,10 +2973,12 @@ M.launch = function () {
     };
 
     M.buildSaveString = function () {
-        var unlocked = M.getUnlockedSlotCount();
+        // Save all slots that exist in M.slot array, not just currently unlocked ones
+        // This ensures we don't lose data if user temporarily loses an upgrade/aura
+        var slotsToSave = M.slot.length;
         var data = [];
         var settings = [];
-        for (var i = 0; i < unlocked; i++) {
+        for (var i = 0; i < slotsToSave; i++) {
             var slotValue = (M.slot[i] !== undefined && M.slot[i] !== null) ? parseInt(M.slot[i]) : -1;
             if (isNaN(slotValue)) slotValue = -1;
             data.push(slotValue);
@@ -3001,7 +3003,7 @@ M.launch = function () {
             isVisible = M.parent.onMinigame ? 1 : 0;
         }
         var saveParts = [
-            Math.max(0, unlocked),
+            Math.max(0, slotsToSave),
             slotPart,
             settingsPart,
             runCount,
