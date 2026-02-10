@@ -2510,21 +2510,19 @@ M.launch = function () {
     };
 
     M.ensureUnlockedSlots = function () {
-        // we need to rebuild the slot DOM; otherwise the extra slot never appears.
         if (!l('terminalSlot' + (M.maxSlots - 1))) {
             M.initializeSlots();
         }
         var unlocked = M.getUnlockedSlotCount();
+
         if (M.slot.length < unlocked) {
             while (M.slot.length < unlocked) M.slot.push(-1);
-        } else if (M.slot.length > unlocked) {
-            M.slot.length = unlocked;
         }
+
         if (M.slotSettings.length < unlocked) {
             while (M.slotSettings.length < unlocked) M.slotSettings.push(null);
-        } else if (M.slotSettings.length > unlocked) {
-            M.slotSettings.length = unlocked;
         }
+
         if (M.executingSlot !== -1 && M.executingSlot >= unlocked) {
             M.setExecutingSlot(-1);
         }
@@ -2973,8 +2971,6 @@ M.launch = function () {
     };
 
     M.buildSaveString = function () {
-        // Save all slots that exist in M.slot array, not just currently unlocked ones
-        // This ensures we don't lose data if user temporarily loses an upgrade/aura
         var slotsToSave = M.slot.length;
         var data = [];
         var settings = [];
@@ -3102,7 +3098,6 @@ M.launch = function () {
                     M.slotSettings[i] = null;
                 }
             }
-            // Ensure slots are sized/visible according to actual unlocked count
             M.ensureUnlockedSlots();
             M.programsRun = runCount;
             M.programsRunTotal = runTotal;
@@ -3111,10 +3106,7 @@ M.launch = function () {
             M.setExecutingSlot(-1);
             M.updateProgramsRunDisplay();
             M.updateCooldownDisplay();
-
-            // Restore minigame visibility state
             if (M.parent && typeof M.parent.onMinigame !== 'undefined' && isVisible) {
-                // Use a short delay to ensure game is fully ready, then use proper switchMinigame method
                 setTimeout(function() {
                     if (M.parent && !M.parent.onMinigame) {
                         if (typeof M.parent.switchMinigame === 'function') {
