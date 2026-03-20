@@ -1,5 +1,7 @@
 //Just Natural Expansion Terminal minigame
 //version 1.0.3
+(function() {
+'use strict';
 
 var M = {};
 M.parent = Game.Objects && Game.Objects['Javascript console'] ? Game.Objects['Javascript console'] : {
@@ -14,7 +16,7 @@ M.parent = Game.Objects && Game.Objects['Javascript console'] ? Game.Objects['Ja
 };
 M.parent.minigame = M;
 
-const UPDATED_CUSTOM_SPRITE_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
+const TERMINAL_CUSTOM_SPRITE_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
 
 var terminalAchievementNames = [
     '10x Full-Stack rockstar ninja wizard engineer',
@@ -172,7 +174,7 @@ M.launch = function () {
         if (index >= 34 && index <= 36) {
             var customSheet = '';
             if (typeof getSpriteSheet === 'function') customSheet = getSpriteSheet('custom') || '';
-            if (!customSheet) customSheet = UPDATED_CUSTOM_SPRITE_URL;
+            if (!customSheet) customSheet = TERMINAL_CUSTOM_SPRITE_URL;
             if (!customSheet) return null;
             return [(index - 34) * 5, 24, customSheet];
         }
@@ -280,8 +282,8 @@ M.launch = function () {
             if (minigame.godsById && minigame.godsById.length) {
                 for (var i = 0; i < minigame.godsById.length; i++) {
                     var god = minigame.godsById[i];
-                    if (!god) continue;
-                    var value = god.id !== undefined ? god.id : i;
+                    if (!god || god.id === undefined || !god.name) continue;
+                    var value = god.id;
                     var icon = (god.icon && god.icon.length) ? god.icon : (baseIcons[i] || [21 + i, 18]);
                     list.push({ value: value, label: god.name, icon: icon });
                 }
@@ -290,7 +292,7 @@ M.launch = function () {
                 for (var key in minigame.gods) {
                     if (!minigame.gods.hasOwnProperty(key)) continue;
                     var g = minigame.gods[key];
-                    if (!g) continue;
+                    if (!g || !g.name) continue;
                     var valueKey = g.id !== undefined ? g.id : (g.key !== undefined ? g.key : key);
                     var iconFallback = (g.icon && g.icon.length) ? g.icon : (baseIcons[index] || [21 + index, 18]);
                     list.push({ value: valueKey, label: g.name, icon: iconFallback });
@@ -306,7 +308,6 @@ M.launch = function () {
         return list;
     }
 
-    //orteil and his mini icons, annoying, just put them centered in a full size slot dude, come on.
     function getPantheonSlotOptions() {
         return [
             { value: 0, label: 'Diamond slot', icon: [23, 15, null, 24, 24] },
@@ -671,7 +672,7 @@ M.launch = function () {
                     options: function () {
                         var plantIcon = buildGardenSoilIcon(0);
                         var harvestIcon = buildGardenToolIcon(0);
-                        var swapSoilIcon = [11, 16, UPDATED_CUSTOM_SPRITE_URL];
+                        var swapSoilIcon = [11, 16, TERMINAL_CUSTOM_SPRITE_URL];
                         return [
                             { value: 'plant', label: 'Plant', icon: plantIcon },
                             { value: 'harvest', label: 'Harvest', icon: harvestIcon },
@@ -725,7 +726,7 @@ M.launch = function () {
             key: 'changeAura',
             name: 'Aura Heap Controller',
             desc: 'Switch dragon auras.',
-            icon: [6, 17, UPDATED_CUSTOM_SPRITE_URL],
+            icon: [6, 17, TERMINAL_CUSTOM_SPRITE_URL],
             config: [
                 {
                     id: 'slot',
@@ -3021,6 +3022,15 @@ M.launch = function () {
     };
 
     M.load = function (str) {
+        // Decode URL-encoded save data
+        if (str && str.indexOf('%') !== -1) {
+            try {
+                str = decodeURIComponent(str);
+            } catch (e) {
+                // Use original string if decoding fails
+            }
+        }
+        
         if (!str || str === '') {
             M.slot.length = 0;
             M.slotSettings.length = 0;
@@ -3207,13 +3217,13 @@ function createTerminalAchievements() {
         {
             name: '10x Full-Stack rockstar ninja wizard engineer',
             desc: 'Execute <b>100 Programs</b> in the Terminal minigame.<q>Human Resources is adding another adjective to your job title as we speak. Technically, they\'re nouns masquerading as adjectives, just like recruiters masquerading as engineers.</q>',
-            icon: [19, 9, UPDATED_CUSTOM_SPRITE_URL],
+            icon: [19, 9, TERMINAL_CUSTOM_SPRITE_URL],
             order: baseOrder + 0.1
         },
         {
             name: 'Agile hacker samurai jedi-craftsman engineer',
             desc: 'Execute <b>500 Programs</b> in the Terminal minigame.<q>Your LinkedIn job title history now reads like the opening chapter of a J.R.R. Tolkien novel, complete with wizards, jedi, ninjas, and at least one guru.</q>',
-            icon: [19, 10, UPDATED_CUSTOM_SPRITE_URL],
+            icon: [19, 10, TERMINAL_CUSTOM_SPRITE_URL],
             order: baseOrder + 0.2
         }
     ];
@@ -3321,7 +3331,9 @@ function checkAndAwardTerminalAchievements() {
 }
 
 M.onResize = function () {
-    M.updateSlots();
+    if (M.updateSlots && typeof M.updateSlots === 'function') {
+        M.updateSlots();
+    }
 };
 
 M.createAchievements = function() {
@@ -3379,8 +3391,7 @@ if (typeof window !== 'undefined') {
 if (Game.Objects && Game.Objects['Javascript console']) {
     var jsConsole = Game.Objects['Javascript console'];
     var flagDefined = !!(Game.JNE && Game.JNE.enableJSMiniGame !== undefined);
-    // Force enabled when loading via console (main mod not loaded or not initialized)
-    var isConsoleLoading = !flagDefined;
+    var isConsoleLoading = !flagDefined || (Game.JNE && Game.JNE.enableJSMiniGame === false);
     var isEnabled = flagDefined ? !!Game.JNE.enableJSMiniGame : true;
 
     function ensureMinigameDiv() {
@@ -3433,13 +3444,18 @@ if (Game.Objects && Game.Objects['Javascript console']) {
         }
     }
 
-    if (isEnabled) {
+    if (isEnabled || isConsoleLoading) {
         try {
             if (!jsConsole.minigameLoaded) {
                 bootMinigame();
             } else if (jsConsole.minigameLoaded && !M.launched) {
                 M.launch();
                 M.launched = true;
+                
+                if (Game.JNE && Game.JNE.terminalSavedData) {
+                    M.load(Game.JNE.terminalSavedData);
+                }
+                
                 if (typeof M.createAchievements === 'function') {
                     M.createAchievements();
                 }
@@ -3458,4 +3474,5 @@ if (Game.Objects && Game.Objects['Javascript console']) {
         }
     }
 }
+})();
 

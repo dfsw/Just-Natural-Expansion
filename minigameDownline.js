@@ -1,4 +1,4 @@
-// Downline Minigame 1.0.0
+// Downline Minigame 1.0.1
 
 (function() {
 'use strict';
@@ -1384,7 +1384,7 @@ DownlineM.init = function(div) {
         desc: 'Pay content creators to pretend they discovered your game organically.',
         flavor: 'This is truly a product I use every day and I\'m not just saying that because they are paying me to. #NotSponsored).',
         unlock: { conditions: [{ stat: 'players', min: 250 }], tempConditions: [{ stat: 'hype', min: 150 }] },
-        effects: { players: 9, reputation: -3, hype: 1, referrals: 1 },
+        effects: { players: 9, reputation: -3, hype: 1, referrals: 2 },
         headline: '#NotSponsored cookie game videos garner nationwide attention' },
 
         { name: 'National TV spot', icon: [28,22], durationSec: 4 * 60 * 60, costCps: 120 * 60,
@@ -1749,7 +1749,6 @@ DownlineM.init = function(div) {
         unlock: { conditions: [{ stat: 'players', min: 250 }], tempConditions: [{ stat: 'reputation', min: 500 }] },
         effects: { players: 8, hype: 7, reputation: -7 },
         headline: 'Cookie Clicker found to be adding mystery chemicals to water supply' },
-
 
       { name: 'Revive Order of the Cookie Age Cult', icon: [3, 14], sheet: 'custom', durationSec: 12 * 60 * 60, costCps: 10 * 60 * 60,
         desc: 'Awaken the ancient order. They prove to be very enthusiastic, maybe too much, ok we should probably stop this.',
@@ -2552,7 +2551,7 @@ DownlineM.init = function(div) {
           '<div class="' + colorClass(G.releaseMetReferrals) + '">&bull; At least 300 Word of Mouth</div><br>' +
           '<div class="' + colorClass(releaseMetCurrentPlayers) + '">&bull; 1500+ current Players</div>' +
           '<div class="' + colorClass(G.reputation > 750) + '">&bull; A current Reputation of at least 750<br><br></div>' +
-          'Each time you build a fractal engine minigame the speed of the game will double and 10% of the current boost is added permanently until next ascension. ' +
+          'Each time you build a Fractal Engine Minigame the speed of the game will double and 10% of the current boost will be added permanently until next ascension. ' +
           '<span class="green"><br>Next release would add: +' + tenPct.toFixed(2) + '%</span>';
         if (G.prestige >= 1) {
           tooltipHtml += '<br><span class="green">Current speed boost: ' + prestigeSpeedMult + '×</span>';
@@ -2984,10 +2983,17 @@ DownlineM.init = function(div) {
         }
     });
 
-    var totBoost = getCurrentBoost() + (G.prestigeBoost || 0);
-    if (G.frozen) totBoost *= FROZEN_SPEED_FRAC;
-    DownlineM.effs = { cps: 1 + totBoost / 100 };
-    Game.recalculateGains = 1;
+    // Only set initial effects if not already set (prevent re-execution on script reload during toggle)
+    if (!DownlineM.effs || !DownlineM._initialEffsSet) {
+        var totBoost = getCurrentBoost() + (G.prestigeBoost || 0);
+        if (G.frozen) totBoost *= FROZEN_SPEED_FRAC;
+        DownlineM.effs = { cps: 1 + totBoost / 100 };
+        DownlineM._initialEffsSet = true;
+        Game.recalculateGains = 1;
+        console.log('[Downline] Initial effects set, CpS boost:', DownlineM.effs.cps);
+    } else {
+        console.log('[Downline] Effects already set, skipping initialization');
+    }
 
     DownlineM._buildSaveDataImpl = function () {
       var data = {
@@ -3437,41 +3443,40 @@ function initializeDownlineMinigame() {
     var fractalEngine = getFractalEngine();
     if (!fractalEngine) return;
     var flagDefined = !!(Game.JNE && Game.JNE.enableDownlineMinigame !== undefined);
-    var isConsoleLoading = !flagDefined;
+    var isConsoleLoading = !flagDefined || (Game.JNE && Game.JNE.enableDownlineMinigame === false);
     var isEnabled = flagDefined ? !!Game.JNE.enableDownlineMinigame : true;
 
     function ensureMinigameDiv() {
-        if (!fractalEngine.minigameDiv) {
+        if (fractalEngine.minigameDiv) return;
+        var existingDiv = l('rowSpecial' + fractalEngine.id);
+        if (existingDiv) {
+            fractalEngine.minigameDiv = existingDiv;
+        } else {
             fractalEngine.minigameDiv = document.createElement('div');
             fractalEngine.minigameDiv.id = 'rowSpecial' + fractalEngine.id;
             fractalEngine.minigameDiv.className = 'rowSpecial';
-            var rowEl = document.getElementById('row' + fractalEngine.id);
-            if (rowEl) {
-                rowEl.appendChild(fractalEngine.minigameDiv);
-            }
+            if (fractalEngine.l) fractalEngine.l.appendChild(fractalEngine.minigameDiv);
         }
     }
 
     function bootMinigame() {
         if (!fractalEngine) return;
+        if (!fractalEngine.minigameLoaded) {
+            fractalEngine.minigameLoaded = true;
+            fractalEngine.minigameName = fractalEngine.minigameName || 'Downline';
+            fractalEngine.minigameLoading = false;
+        }
 
         ensureMinigameDiv();
         DownlineM.launch();
         DownlineM.init(fractalEngine.minigameDiv);
 
-        if (Game.JNE.downlineSavedData) {
+        if (Game.JNE && Game.JNE.downlineSavedData) {
             DownlineM.load(Game.JNE.downlineSavedData);
         }
-  
-        fractalEngine.minigame = DownlineM;
 
-        if (!fractalEngine.minigameLoaded) {
-            fractalEngine.minigameLoading = false;
-            fractalEngine.minigameLoaded = true;
-            fractalEngine.minigameName = fractalEngine.minigameName || 'Downline';
-            if (typeof fractalEngine.refresh === 'function') {
-                fractalEngine.refresh();
-            }
+        if (!fractalEngine.minigame) {
+            fractalEngine.minigame = DownlineM;
         }
 
         if (isConsoleLoading && !fractalEngine.minigameUrl) {
@@ -3479,12 +3484,15 @@ function initializeDownlineMinigame() {
             fractalEngine.minigameIcon = [19, 11];
         }
 
-        if (isConsoleLoading && Game.ObjectsById && Game.ObjectsById[fractalEngine.id] && Game.ObjectsById[fractalEngine.id].draw) {
+        if (typeof fractalEngine.refresh === 'function') {
+            fractalEngine.refresh();
+        }
+        if (isConsoleLoading && Game.ObjectsById && Game.ObjectsById[fractalEngine.id] && typeof Game.ObjectsById[fractalEngine.id].draw === 'function') {
             Game.ObjectsById[fractalEngine.id].draw();
         }
     }
 
-    if (isEnabled) {
+    if (isEnabled || isConsoleLoading) {
         try {
             var minigameIsStub = !fractalEngine.minigame || !fractalEngine.minigame.init;
             if (!fractalEngine.minigameLoaded) {
@@ -3495,7 +3503,8 @@ function initializeDownlineMinigame() {
                 DownlineM.launch();
                 ensureMinigameDiv();
                 DownlineM.init(fractalEngine.minigameDiv);
-                if (Game.JNE.downlineSavedData) {
+                
+                if (Game.JNE && Game.JNE.downlineSavedData) {
                     DownlineM.load(Game.JNE.downlineSavedData);
                 }
             }
