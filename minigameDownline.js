@@ -1402,7 +1402,7 @@ DownlineM.init = function(div) {
         headline: 'Aggressive popup campaign sparks backlash, local player states "One more ad and I\'m going postal"' },
       
         { name: 'Direct mailing', icon: [7,16], sheet: 'custom', durationSec: 3 * 60 * 60, costCps: 36 * 60,
-        desc: 'Cost effective spam the old way right into the old mailbox.',
+        desc: 'Cost effective spam the old fashioned way right into the tin mailbox.',
         flavor: "Studies have shown that 93% of people don\'t even open the letter.",
         unlock: { conditions: [{ stat: 'players', min: 600 }], tempConditions: [{ stat: 'hype', min: 125 }] },
         effects: { players: 14, reputation: -2, hype: -2, referrals: -1 },
@@ -1492,14 +1492,14 @@ DownlineM.init = function(div) {
         flavor: 'Cookies now in Elvish, Klingon, Dothraki, Na\'vi, and Parseltongue',
         unlock: { conditions: [{ stat: 'players', min: 200 }, { stat: 'reputation', min: 400 }], tempConditions: [{ stat: 'hype', min: 150 }] },
         effects: { players: 2, reputation: 1, commitment: 1, hype: -2 },
-        headline: 'Cookie Clicker now runs in Elvish' },
+        headline: 'Cookie Clicker now runs in Elvish and Parseltongue, more critical langauges being added soon says developer' },
 
       { name: 'Add accessibility', icon: [28,26], durationSec: 1.5 * 60 * 60, costCps: 90 * 60,
         desc: 'Screen readers, contrast options, and input alternatives. The right thing to do.',
         flavor: 'Everyone should be able to click cookies. It\'s in the Constitution. Somewhere, after the part about not quartering soldiers I think.',
         unlock: { conditions: [{ stat: 'players', min: 50 }, { stat: 'reputation', min: 250 }], tempConditions: [{ stat: 'hype', min: 150 }] },
         effects: { reputation: 3, hype: -2, commitment: -1 },
-        headline: 'Cookie Clicker accessibility update praised — "finally I can play"' },
+        headline: 'Cookie Clicker accessibility update universally praised — "they really do care about the differently abled"' },
      
        { name: 'Port to new platform', icon: [5,0], durationSec: 8 * 60 * 60, costCps: 4 * 60 * 60,
         desc: 'Launch on a new system. Big player influx; existing community commitment dips due to fragmentation of gameplay.',
@@ -1512,7 +1512,7 @@ DownlineM.init = function(div) {
         desc: "Viral content. Low effort, high reach. The loss of Xennial players is more than made up for by the new zoomers.",
         flavor: "67 or whatever right?",
         unlock: { conditions: [{ stat: 'players', min: 20 }], tempConditions: [{ stat: 'hype', min: 75 }] },
-        effects: { players: 2, hype: 1, referrals: 1,  reputation: -2},
+        effects: { players: 3, hype: 2, referrals: 1,  reputation: -2},
         headline: "Cookie memes flood social media some call it spam others call it content" },
      
       { name: 'Reddit AMA', icon: [8,10], durationSec: 2 * 60 * 60, costCps: 45 * 60,
@@ -1866,11 +1866,13 @@ DownlineM.init = function(div) {
       for (var i = 0; i < STATE_NEWS.length; i++) {
         var s = STATE_NEWS[i];
         try { v = statValue(s.stat); } catch (e) { continue; }
-        if (typeof v !== 'number' || isNaN(v) || v < s.min || v > s.max) continue;
-        headline = s.headline;
-        if (headline && !seen.has(headline)) { 
-          seen.add(headline); 
-          items.push(headline);
+        if (typeof v !== 'number' || isNaN(v)) continue;
+        if (v >= s.min && v <= s.max) {
+          headline = s.headline;
+          if (headline && !seen.has(headline)) { 
+            seen.add(headline); 
+            items.push(headline);
+          }
         }
       }
       
@@ -1886,11 +1888,8 @@ DownlineM.init = function(div) {
         }
       }
       
-      if (items.length === 0 && STATE_NEWS.length > 0) {
-        headline = STATE_NEWS[0].headline;
-        if (headline) {
-          items.push(headline);
-        }
+      if (items.length === 0) {
+        items.push('Slow news day, eh?');
       }
       
       G.tickerPool = items;
@@ -1914,10 +1913,6 @@ DownlineM.init = function(div) {
       
       if (!G.tickerPool || G.tickerPool.length === 0) {
         refillTickerPool();
-      }
-      
-      if (!G.tickerPool || G.tickerPool.length === 0) {
-        return '';
       }
       
       var available = G.tickerPool.filter(function (h) { return !inStrip.has(h); });
@@ -2005,6 +2000,7 @@ DownlineM.init = function(div) {
           var text = getNextTickerItem(strip);
           if (text) {
             appendTickerSegment(strip, text);
+            void strip.offsetWidth;
           }
         }
         
@@ -2013,8 +2009,9 @@ DownlineM.init = function(div) {
           tickerScrollOffset += TICKER_PX_PER_SEC * dt * tickerSpeed;
           var first = strip.firstElementChild;
           while (first && tickerScrollOffset >= first.offsetWidth + TICKER_GAP) {
-            tickerScrollOffset -= first.offsetWidth + TICKER_GAP;
+            var widthToRemove = first.offsetWidth + TICKER_GAP;
             strip.removeChild(first);
+            tickerScrollOffset -= widthToRemove;
             first = strip.firstElementChild;
           }
           strip.style.transform = 'translateX(' + (-tickerScrollOffset) + 'px)';
@@ -2544,11 +2541,12 @@ DownlineM.init = function(div) {
         function colorClass(met) { return met ? 'green' : 'red'; }
         var prestigeSpeedMult = Math.pow(2, G.prestige);
         var tooltipHtml = 'Release Fractal Engine Minigame. Your progress in the minigame will be reset back to the beginning but you will earn fractal prestige points!<br><br>' +
-          'Requirements:<br>' +
+          'Unlocks At:<br>' +
           '<div class="' + colorClass(G.releaseMetPlayers) + '">&bull; At least 5000 Players</div>' +
           '<div class="' + colorClass(G.releaseMetHype) + '">&bull; At least 800 Hype</div>' +
           '<div class="' + colorClass(G.releaseMetCommitment) + '">&bull; At least 800 Commitment</div>' +
           '<div class="' + colorClass(G.releaseMetReferrals) + '">&bull; At least 300 Word of Mouth</div><br>' +
+          'Requires:<br>' +
           '<div class="' + colorClass(releaseMetCurrentPlayers) + '">&bull; 1500+ current Players</div>' +
           '<div class="' + colorClass(G.reputation > 750) + '">&bull; A current Reputation of at least 750<br><br></div>' +
           'Each time you build a Fractal Engine Minigame the speed of the game will double and 10% of the current boost will be added permanently until next ascension. ' +
@@ -2990,9 +2988,7 @@ DownlineM.init = function(div) {
         DownlineM.effs = { cps: 1 + totBoost / 100 };
         DownlineM._initialEffsSet = true;
         Game.recalculateGains = 1;
-        console.log('[Downline] Initial effects set, CpS boost:', DownlineM.effs.cps);
     } else {
-        console.log('[Downline] Effects already set, skipping initialization');
     }
 
     DownlineM._buildSaveDataImpl = function () {
