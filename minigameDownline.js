@@ -1839,14 +1839,17 @@ DownlineM.init = function(div) {
     var lastTickerRafTime = 0;
     var tickerJustReset = false;
     var tickerAnimationRunning = false;
+    var tickerRafId = 0;
+    var tickerRetryTimeout = 0;
     var tickerRetryCount = 0;
     var TICKER_MAX_RETRIES = 10;
+    var tickerGeneration = 0;
 
     function resetTickerPosition() {
       var strip = document.getElementById('downline-ticker-strip');
       tickerScrollOffset = 0;
-      lastTickerRafTime = 0;
       tickerJustReset = true;
+      lastTickerRafTime = 0;
       if (strip) strip.style.transform = 'translateX(0px)';
     }
 
@@ -1854,7 +1857,15 @@ DownlineM.init = function(div) {
       var strip = document.getElementById('downline-ticker-strip');
       if (strip) while (strip.firstChild) strip.removeChild(strip.firstChild);
       G.tickerPool = [];
+      // Cancel our own rAF
+      if (tickerRafId) { cancelAnimationFrame(tickerRafId); tickerRafId = 0; }
+      // Cancel any OTHER closure's rAF stored on the DOM element
+      if (strip && strip._tickerRafId) { cancelAnimationFrame(strip._tickerRafId); strip._tickerRafId = 0; }
+      // Bump generation so any stale loops from old closures self-terminate
+      if (strip) strip._tickerGen = (strip._tickerGen || 0) + 1;
+      if (tickerRetryTimeout) { clearTimeout(tickerRetryTimeout); tickerRetryTimeout = 0; }
       tickerAnimationRunning = false;
+      tickerRetryCount = 0;
     }
 
     function refillTickerPool() {
@@ -1941,25 +1952,17 @@ DownlineM.init = function(div) {
       strip.appendChild(seg);
       var measured = seg.getBoundingClientRect ? seg.getBoundingClientRect().width : seg.offsetWidth;
       seg.style.width = measured + 'px';
-      seg.style.flex = '0 0 ' + measured + 'px';
       seg._w = measured;
-      var cs = window.getComputedStyle ? getComputedStyle(seg) : null;
-      var mr = cs && cs.marginRight ? parseFloat(cs.marginRight) : 0;
-      seg._mr = isNaN(mr) ? 0 : mr;
+      seg._mr = TICKER_GAP;
     }
 
     function getStripTotalWidth(strip) {
-      if (!strip) return 0;
       var total = 0;
       for (var i = 0; i < strip.children.length; i++) {
-        var el = strip.children[i];
-        var w = (typeof el._w === 'number') ? el._w : (el.offsetWidth || 0);
-        var mr = (typeof el._mr === 'number') ? el._mr : TICKER_GAP;
+        var c = strip.children[i];
+        var w = (typeof c._w === 'number') ? c._w : c.offsetWidth;
+        var mr = (typeof c._mr === 'number') ? c._mr : TICKER_GAP;
         total += w + mr;
-      }
-      if (strip.children.length > 0) {
-        var last = strip.children[strip.children.length - 1];
-        total -= (typeof last._mr === 'number') ? last._mr : TICKER_GAP;
       }
       return total;
     }
@@ -1971,15 +1974,15 @@ DownlineM.init = function(div) {
       var parent = strip.parentElement;
       var visibleWidth = parent ? parent.clientWidth : 0;
       
-      // If visible width is 0, the element isn't rendered yet - defer population
       if (visibleWidth === 0) {
         if (tickerRetryCount < TICKER_MAX_RETRIES) {
           tickerRetryCount++;
-          setTimeout(function() {
+          tickerRetryTimeout = setTimeout(function() {
+            tickerRetryTimeout = 0;
             updateNewsTicker();
           }, 100);
         } else {
-          tickerRetryCount = 0; // Reset for future calls
+          tickerRetryCount = 0;
         }
         return;
       }
@@ -1989,69 +1992,96 @@ DownlineM.init = function(div) {
       while (getStripTotalWidth(strip) < visibleWidth) {
         var text = getNextTickerItem(strip);
         if (!text) break;
-        if (text) {
-          appendTickerSegment(strip, text);
-        }
+        appendTickerSegment(strip, text);
       }
       
       if (strip.children.length > 0 && !tickerAnimationRunning) {
+        // Claim generation — kills any stale loops from old closures
+        tickerGeneration = strip ? ((strip._tickerGen || 0) + 1) : 1;
+        if (strip) strip._tickerGen = tickerGeneration;
         tickerAnimationRunning = true;
-        requestAnimationFrame(tickerAnimationLoop);
+        lastTickerRafTime = 0;
+        tickerRafId = requestAnimationFrame(tickerAnimationLoop);
+        if (strip) strip._tickerRafId = tickerRafId;
       }
     }
 
     function tickerAnimationLoop(now) {
       now = now || performance.now();
       var strip = document.getElementById('downline-ticker-strip');
+      if (!strip) {
+        tickerAnimationRunning = false;
+        tickerRafId = 0;
+        return;
+      }
+
+      // Generation guard: if a newer closure has taken over, this loop must die
+      if (strip._tickerGen && strip._tickerGen !== tickerGeneration) {
+        tickerAnimationRunning = false;
+        tickerRafId = 0;
+        return;
+      }
+
       if (tickerJustReset) {
         tickerScrollOffset = 0;
         lastTickerRafTime = now;
         tickerJustReset = false;
-        if (strip) strip.style.transform = 'translateX(0px)';
-        requestAnimationFrame(tickerAnimationLoop);
+        strip.style.transform = 'translateX(0px)';
+        tickerRafId = requestAnimationFrame(tickerAnimationLoop);
+        strip._tickerRafId = tickerRafId;
         return;
       }
+
       if (lastTickerRafTime === 0) lastTickerRafTime = now;
       var dt = Math.min((now - lastTickerRafTime) / 1000, 0.2);
       lastTickerRafTime = now;
 
-      if (strip) {
-        var visibleWidth = strip.parentElement ? strip.parentElement.clientWidth : 0;
-        
-        if (strip.children.length > 0) {
-          var tickerSpeed = G.frozen ? 0.15 : (lumpBoostState.active ? 3.5 : 1);
-          tickerScrollOffset += TICKER_PX_PER_SEC * dt * tickerSpeed;
-          var first = strip.firstElementChild;
-          var gap = first ? (typeof first._mr === 'number' ? first._mr : TICKER_GAP) : TICKER_GAP;
-          var firstWidth = first ? ((typeof first._w === 'number') ? first._w : first.offsetWidth) : 0;
-          while (first && (tickerScrollOffset + TICKER_EPS) >= firstWidth + gap) {
-            var widthToRemove = firstWidth + gap;
+      var visibleWidth = strip.parentElement ? strip.parentElement.clientWidth : 0;
+
+      if (strip.children.length > 0) {
+        var tickerSpeed = G.frozen ? 0.15 : (lumpBoostState.active ? 3.5 : 1);
+        tickerScrollOffset += TICKER_PX_PER_SEC * dt * tickerSpeed;
+
+        // Remove first item when it has scrolled fully off-screen
+        var first = strip.firstElementChild;
+        if (first) {
+          var firstWidth = (typeof first._w === 'number') ? first._w : first.offsetWidth;
+          var gap = (typeof first._mr === 'number') ? first._mr : TICKER_GAP;
+          if ((tickerScrollOffset + TICKER_EPS) >= firstWidth + gap) {
+            // Measure the ACTUAL pixel shift using getBoundingClientRect
+            // Falls back to stored values if strip is not visible (getBoundingClientRect returns 0)
+            var second = strip.children[1];
+            var actualShift = firstWidth + gap;
+            if (second) {
+              var measured = second.getBoundingClientRect().left - first.getBoundingClientRect().left;
+              if (measured > 0) actualShift = measured;
+            }
             strip.removeChild(first);
-            tickerScrollOffset -= widthToRemove;
+            tickerScrollOffset -= actualShift;
             if (tickerScrollOffset < 0) tickerScrollOffset = 0;
-            first = strip.firstElementChild;
-            gap = first ? (typeof first._mr === 'number' ? first._mr : TICKER_GAP) : TICKER_GAP;
-            firstWidth = first ? ((typeof first._w === 'number') ? first._w : first.offsetWidth) : 0;
+            // Set transform IMMEDIATELY after removal — before any reflow-triggering
+            // operations (like appendTickerSegment's getBoundingClientRect) so the
+            // browser never composites the intermediate state
+            strip.style.transform = 'translate3d(' + (-tickerScrollOffset) + 'px,0,0)';
           }
         }
-        
-        var remaining = getStripTotalWidth(strip) - tickerScrollOffset;
-        if (visibleWidth > 0 && (strip.children.length === 0 || remaining <= visibleWidth * 1.5)) {
-          var text = getNextTickerItem(strip);
-          if (text) {
-            appendTickerSegment(strip, text);
-            void strip.offsetWidth;
-          }
-        }
-        
-        if (strip.children.length > 0) {
-          strip.style.transform = 'translate3d(' + (-tickerScrollOffset) + 'px,0,0)';
-        }
-        
-        requestAnimationFrame(tickerAnimationLoop);
-      } else {
-        tickerAnimationRunning = false;
       }
+
+      // Add new items when needed
+      var remaining = getStripTotalWidth(strip) - tickerScrollOffset;
+      while (visibleWidth > 0 && (strip.children.length === 0 || remaining <= visibleWidth * 1.5)) {
+        var text = getNextTickerItem(strip);
+        if (!text) break;
+        appendTickerSegment(strip, text);
+        remaining = getStripTotalWidth(strip) - tickerScrollOffset;
+      }
+
+      if (strip.children.length > 0) {
+        strip.style.transform = 'translate3d(' + (-tickerScrollOffset) + 'px,0,0)';
+      }
+
+      tickerRafId = requestAnimationFrame(tickerAnimationLoop);
+      strip._tickerRafId = tickerRafId;
     }
 
 
@@ -2060,11 +2090,11 @@ DownlineM.init = function(div) {
       if (!strip) return;
       var parent = strip.parentElement;
       var visibleWidth = parent ? parent.clientWidth : 0;
-      
-      if (strip.children.length === 0 || (visibleWidth > 0 && strip.offsetWidth < visibleWidth)) {
-        tickerScrollOffset = 0;
-        tickerJustReset = true;
-        }
+      var remaining = getStripTotalWidth(strip) - tickerScrollOffset;
+      if (visibleWidth > 0 && remaining < visibleWidth * 1.5) {
+        var text = getNextTickerItem(strip);
+        if (text) appendTickerSegment(strip, text);
+      }
     }
     window.addEventListener('resize', onTickerResize);
 
@@ -2985,8 +3015,14 @@ DownlineM.init = function(div) {
 
     function startTickerAnimationIfNeeded() {
       if (!tickerAnimationRunning) {
+        var strip = document.getElementById('downline-ticker-strip');
+        // Claim this generation — any old closure loops will see mismatch and exit
+        tickerGeneration = strip ? ((strip._tickerGen || 0) + 1) : 1;
+        if (strip) strip._tickerGen = tickerGeneration;
         tickerAnimationRunning = true;
-        requestAnimationFrame(tickerAnimationLoop);
+        lastTickerRafTime = 0;
+        tickerRafId = requestAnimationFrame(tickerAnimationLoop);
+        if (strip) strip._tickerRafId = tickerRafId;
       }
     }
 
@@ -3009,6 +3045,7 @@ DownlineM.init = function(div) {
       if (e.persisted) {
         clearTickerStripAndPool();
         resetTickerPosition();
+        updateNewsTicker();
         }
     });
 
@@ -3167,6 +3204,11 @@ DownlineM.init = function(div) {
       syncDebugLabels();
       DownlineM.updateLumpBoostState();
 
+      // Reset ticker cleanly after load — animation loop will populate items
+      clearTickerStripAndPool();
+      resetTickerPosition();
+      setTimeout(startTickerAnimationIfNeeded, 150);
+
       var fractalEngine = getFractalEngine();
       if (fractalEngine && data.isVisible) {
         setTimeout(function () {
@@ -3230,6 +3272,8 @@ DownlineM.init = function(div) {
         G.prestigeBoost = 0;
       }
       if (hard) G.releasesThisAscension = 0;
+      clearTickerStripAndPool();
+      resetTickerPosition();
       renderActiveSlots();
       if (activeCountEl) activeCountEl.textContent = 0;
       checkUnlocks();
