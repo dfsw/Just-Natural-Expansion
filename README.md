@@ -8,6 +8,7 @@
 * [Heavenly Upgrades](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#heavenly-upgrades)
 * [Mysteries of the Cookie Age](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#Mysteries-of-the-Cookie-Age)
 * [Javascript Console Minigame: Terminal](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#javascript-console-minigame-terminal)
+* [Fractal Engine Minigame: Downline](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#fractal-engine-minigame-downline)
 * [Changelog](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#changelog)
 
 **The Just Natural Expansion Mod** enhances the Cookie Clicker endgame without disrupting core gameplay, staying true to the spirit of the vanilla experience. It introduces new achievements, upgrades, goals, stories, puzzles, and minigames, all specifically designed for late-game progression, so early or mid-game players may not immediately notice many changes. 
@@ -162,12 +163,12 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 <tr>
 <td width="48"><a href="/assets/generated-icons/SheetVanilla1804.png"><img src="/assets/generated-icons/SheetVanilla1804.png" alt="Holiday Hoover" width="48" height="48"></a></td>
 <td><strong>Holiday Hoover</strong></td>
-<td>Collect all seasonal drops within <strong>60 minutes</strong> of an Ascension start</td>
+<td>Collect all seasonal drops within <strong>90 minutes</strong> of an Ascension start</td>
 </tr>
 <tr>
 <td width="48"><a href="/assets/generated-icons/SheetVanilla1709.png"><img src="/assets/generated-icons/SheetVanilla1709.png" alt="Merry Mayhem" width="48" height="48"></a></td>
 <td><strong>Merry Mayhem</strong></td>
-<td>Collect all seasonal drops within <strong>40 minutes</strong> of an Ascension start</td>
+<td>Collect all seasonal drops within <strong>60 minutes</strong> of an Ascension start</td>
 </tr>
 <tr>
 <td width="48"><a href="/assets/generated-icons/SheetCustom0009.png"><img src="/assets/generated-icons/SheetCustom0009.png" alt="Second Life, First Click" width="48" height="48"></a></td>
@@ -6118,10 +6119,10 @@ There are six new Achievements for working your way through *Mysteries of the Co
     <img src="https://img.youtube.com/vi/GRSchQBMG5A/0.jpg" alt="Terminal Minigame Demo" width="560"/>
   </a>
   <br>
-  <em>A brief demo of Terminal Minigame</em>
+  <em>A brief video demo of Terminal Minigame(Click to view on Youtube)</em>
 </p>
 
-Reaching Level 1 Javascript Consoles unlocks the Terminal minigame, the pinnacle of cookie automation technology. Inside, you'll piece together powerful functions to make your bakery run smoother than a perfectly buttered script. Choose from 10 unique functions, each with its own quirks and parameters. Every line of "code" takes up an execution slot, and leveling up your Consoles (up to 10) expands your capacity for cookie-fueled creativity.
+Reaching Level 1 Javascript Consoles unlocks the Terminal minigame, the pinnacle of cookie automation technology. Inside, you'll piece together powerful system functions to make your bakery run smoother than a perfectly buttered script. Choose from 10 unique functions, each with its own quirks and parameters. Every line of "code" takes up an execution slot, and leveling up your Consoles (up to 10) expands your capacity for cookie-fueled creativity.
 
 Write clean, think fast, flawless execution unleashes cookies straight from the mainframe, while a single bad call can send your setup crumbling. There’s no time to debug; only those who can see the logic behind the madness will prevail. After every run, the mainframe needs 8 hours to cool back down to operating temperatures.
 
@@ -6215,19 +6216,77 @@ sweet_Runtime_Swizzler();
 </tbody>
 </table>
 
+## Fractal Engine Minigame: Downline 
+
+<p align="center">
+  <a href="https://www.youtube.com/watch?v=_jxUNqp3s3E">
+    <img src="https://img.youtube.com/vi/_jxUNqp3s3E/0.jpg" alt="Downline Minigame Demo" width="560"/>
+  </a>
+  <br>
+  <em>A brief video demo of Downline Minigame (Click to view on Youtube)</em>
+</p>
+
+Reaching Level 1 Fractal Engines unlocks the Downline minigame, a cutting-edge idle clicker startup simulator poorly disguised as a very bad idea. Here, you are the Cookie Clicker CEO, armed with a stack of highly questionable growth strategies and a dream of total market domination. Build your audience from uncommitted dabblers all the way up to ride-or-die hardcore fanatics, all while juggling Hype, Commitment, Word of Mouth, and Global Reputation. Push too soft and nobody cares, not even your own mother. Push too hard and your game implodes in very public ways. That’s just business, cutthroat, unforgiving, filled with grandmas, and in a state constant balancing prone to collapse at even the slightest distraction.
+
+Fill your business plan with promotions, stunts, feature improvements, back alley deals, damage control, and executive decisions that would get any normal company shuttered and land you infront of a jury of your peers. If you can keep the numbers up for long enough, you’ll unlock the ultimate founder fantasy, releasing your own Fractal minigame and turning your success into a self-replicating chain of cookie-fueled entrepreneurship. It’s recursive, it’s irresponsible, and it’s beautiful.  
+
+### Downline Minigame Achievements
+
+<table>
+<thead>
+<tr>
+<th width="48">Icon</th>
+<th>Achievement</th>
+<th>Requirement</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td width="48"><a href="/assets/generated-icons/SheetCustom1809.png"><img src="/assets/generated-icons/SheetCustom1809.png" alt="Popularity factor" width="48" height="48"></a></td>
+<td><strong>Popularity factor</strong></td>
+<td>Have <strong>Hype</strong>, <strong>Commitment</strong>, <strong>Reputation</strong>, and <strong>Word of Mouth</strong> over 950 at once in the Downline minigame.</td>
+</tr>
+<tr>
+<td width="48"><a href="/assets/generated-icons/SheetCustom1810.png"><img src="/assets/generated-icons/SheetCustom1810.png" alt="Big tent factor" width="48" height="48"></a></td>
+<td><strong>Big tent factor</strong></td>
+<td>Have <strong>25,000 players</strong> at one time in the Downline minigame.</td>
+</tr>
+<tr>
+<td width="48"><a href="/assets/generated-icons/SheetCustom1808.png"><img src="/assets/generated-icons/SheetCustom1808.png" alt="Factorial factor" width="48" height="48"></a></td>
+<td><strong>Factorial factor</strong></td>
+<td>Release the <strong>Fractal Engine minigame</strong> 5 times in the Downline minigame in one ascension.</td>
+</tr>
+</tbody>
+</table>
 
 ## Changelog
 
+### **Major Version 0.4.0 - Downline a Fractal Engine Minigame**
+* Introducing a whole new minigame for Cookie Clicker! The [Fractal Engine Minigame: Downline](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#fractal-engine-minigame-downline) get to experience what its like to run your own version of Cookie Clicker, recruit players, release features, engage in shady marketing, and hype up your game to make it the best idle game ever. Unlocked at Level 1 Fractal Engines when Minigames are toggled on/off in the Options Menu. 
+
+### Version 0.3.7
+* Fixed a bug that could miscount total wrinklers and stock totals on ascension. 
+* Fixed modded kittens from not being able to be used in permanent upgrade slots.
+* The Holiday Hoover and Merry Mayhem achievements have been given more time to account for the vanilla game changes to drop rates for those achievements. 
+* Fixed a bug where vanilla pantheon gods would get stuck in slots after being unslotted following a custom god restoration.
+* getTimeMod now hooks in a more friendly way to other mods as per request from CursedSliver.
+* Various Mysteries of the Cookie Age puzzle fixes, tweaks, and improvements.
+* Mod save data is now much more compact and efficent 
+* You now have the option to set a different sound effect for Fortune Cookies appearing than you use for Golden Cookies when you own the Fortune Tolls for You heavenly upgrade. 
+* The Sugar Predictor heavenly upgrade now works much better after ascensions without needing to reload. It also works better before Bingo Center is purchased. 
+* Simplified logic and code in several areas, improved stability
+
 ### Version 0.3.6
+* Fixed a bug that could cause Heavenly Upgrade custom plant seeds unlock not to save properly. 
 * Fixed a regression that would cause Doordashing every day, Second day takeout, and Chinese leftovers to not reliably work as intended. 
 * Fixed a UI bug with Sugar Predictor when having more than 600 Grandmas owned on a lump that requires 600+. 
+* Fixed a bug that could cause sugar predictor to be inaccurate if a lump was harvested while computer was asleep. 
 * Tweaking Slot Machine Jackpot win rates and making the notification for them a bit more sticky.
 * Seasonal reindeer achievements are now more stable and reliable. 
-* Fixed a bug that prevented the item in the expanded (Heavenly upgrade/aura) 11th and 12th slots of the Terminal minigame from saving and restoring on load.
+* Fixed a bug that prevented the item in the expanded (Heavenly upgrade/aura) 11th and 12th slots of the terminal minigame from saving and restoring on load.
 * Updated Fortune Tolls For You heavenly upgrade to take advantage of the new ticker hook added with the last vanilla version update. 
-* Improved pantheon custom god save restortation logic to fix some funky behavior that was bothering mostly me.
-* Fixed a bug that could prevent seeds from the heavenly upgrades from restoring their unlock state due to a loading race condition. 
-* Various other small fixes.
+* Improved pantheon custom god save restortation logic to fix some funky behavior that was bothering mostly me. 
+* Various other small bugs and fixes.
 
 ### Version 0.3.5
 * Heavenly upgrade Mega Clicks can no longer consume RNG generation values.

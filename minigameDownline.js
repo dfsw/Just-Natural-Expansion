@@ -1834,6 +1834,7 @@ DownlineM.init = function(div) {
 
     var TICKER_PX_PER_SEC = 25;
     var TICKER_GAP = 16;
+    var TICKER_EPS = 0.25;
     var tickerScrollOffset = 0;
     var lastTickerRafTime = 0;
     var tickerJustReset = false;
@@ -1938,6 +1939,29 @@ DownlineM.init = function(div) {
       cookieWrap.appendChild(cookieIcon);
       seg.appendChild(cookieWrap);
       strip.appendChild(seg);
+      var measured = seg.getBoundingClientRect ? seg.getBoundingClientRect().width : seg.offsetWidth;
+      seg.style.width = measured + 'px';
+      seg.style.flex = '0 0 ' + measured + 'px';
+      seg._w = measured;
+      var cs = window.getComputedStyle ? getComputedStyle(seg) : null;
+      var mr = cs && cs.marginRight ? parseFloat(cs.marginRight) : 0;
+      seg._mr = isNaN(mr) ? 0 : mr;
+    }
+
+    function getStripTotalWidth(strip) {
+      if (!strip) return 0;
+      var total = 0;
+      for (var i = 0; i < strip.children.length; i++) {
+        var el = strip.children[i];
+        var w = (typeof el._w === 'number') ? el._w : (el.offsetWidth || 0);
+        var mr = (typeof el._mr === 'number') ? el._mr : TICKER_GAP;
+        total += w + mr;
+      }
+      if (strip.children.length > 0) {
+        var last = strip.children[strip.children.length - 1];
+        total -= (typeof last._mr === 'number') ? last._mr : TICKER_GAP;
+      }
+      return total;
     }
 
     function updateNewsTicker() {
@@ -1962,7 +1986,7 @@ DownlineM.init = function(div) {
       
       tickerRetryCount = 0;
       
-      while (strip.offsetWidth < visibleWidth) {
+      while (getStripTotalWidth(strip) < visibleWidth) {
         var text = getNextTickerItem(strip);
         if (!text) break;
         if (text) {
@@ -1998,15 +2022,21 @@ DownlineM.init = function(div) {
           var tickerSpeed = G.frozen ? 0.15 : (lumpBoostState.active ? 3.5 : 1);
           tickerScrollOffset += TICKER_PX_PER_SEC * dt * tickerSpeed;
           var first = strip.firstElementChild;
-          while (first && tickerScrollOffset >= first.offsetWidth + TICKER_GAP) {
-            var widthToRemove = first.offsetWidth + TICKER_GAP;
+          var gap = first ? (typeof first._mr === 'number' ? first._mr : TICKER_GAP) : TICKER_GAP;
+          var firstWidth = first ? ((typeof first._w === 'number') ? first._w : first.offsetWidth) : 0;
+          while (first && (tickerScrollOffset + TICKER_EPS) >= firstWidth + gap) {
+            var widthToRemove = firstWidth + gap;
             strip.removeChild(first);
             tickerScrollOffset -= widthToRemove;
+            if (tickerScrollOffset < 0) tickerScrollOffset = 0;
             first = strip.firstElementChild;
+            gap = first ? (typeof first._mr === 'number' ? first._mr : TICKER_GAP) : TICKER_GAP;
+            firstWidth = first ? ((typeof first._w === 'number') ? first._w : first.offsetWidth) : 0;
           }
         }
         
-        if (visibleWidth > 0 && (strip.children.length === 0 || strip.offsetWidth - tickerScrollOffset <= visibleWidth * 1.5)) {
+        var remaining = getStripTotalWidth(strip) - tickerScrollOffset;
+        if (visibleWidth > 0 && (strip.children.length === 0 || remaining <= visibleWidth * 1.5)) {
           var text = getNextTickerItem(strip);
           if (text) {
             appendTickerSegment(strip, text);
@@ -2015,7 +2045,7 @@ DownlineM.init = function(div) {
         }
         
         if (strip.children.length > 0) {
-          strip.style.transform = 'translateX(' + (-tickerScrollOffset) + 'px)';
+          strip.style.transform = 'translate3d(' + (-tickerScrollOffset) + 'px,0,0)';
         }
         
         requestAnimationFrame(tickerAnimationLoop);
