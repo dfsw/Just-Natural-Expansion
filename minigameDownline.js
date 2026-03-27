@@ -709,7 +709,7 @@ DownlineM.init = function(div) {
       <div class="downline-bars framed">
         <div class="subsection">
           <div class="title downline-status-title">Downline CpS + <span id="downline-status-boost" class="green">0.00%</span></div>
-          <div class="downline-bar downline-bar-players" data-name="Players" data-desc-html="Recruited players who are actively playing Cookie Clicker.&lt;br&gt;&lt;br&gt;&lt;div class='downline-tier-line'&gt;&lt;span class='downline-tier-dot' style='background:#2a8a2a'&gt;&lt;/span&gt;&lt;b&gt;Dabblers&lt;/b&gt; are new players who are trying out the game, they may not stay long if you cannot hold their interest but they may also go on to become more serious players.&lt;/div&gt;&lt;div class='downline-tier-line'&gt;&lt;span class='downline-tier-dot' style='background:#c9c920'&gt;&lt;/span&gt;&lt;b&gt;Casuals&lt;/b&gt; players have decided to give the game a chance and as long as it&amp;rsquo;s well maintained there is a decent chance they will stick around.&lt;/div&gt;&lt;div class='downline-tier-line'&gt;&lt;span class='downline-tier-dot' style='background:#c97620'&gt;&lt;/span&gt;&lt;b&gt;Habituals&lt;/b&gt; players have caught cookie fever and are playing regularly.&lt;/div&gt;&lt;div class='downline-tier-line'&gt;&lt;span class='downline-tier-dot' style='background:#c92a2a'&gt;&lt;/span&gt;&lt;b&gt;Devotees&lt;/b&gt; are players who are committed to 100%ing the game and can even recruit some friends to play with. With enough high enough commitment they can become fanatics.&lt;/div&gt;&lt;div class='downline-tier-line'&gt;&lt;span class='downline-tier-dot' style='background:#b07acc'&gt;&lt;/span&gt;&lt;b&gt;Fanatics&lt;/b&gt; are your most devoted players, they will actively recruit more players and generate the most CpS. However if the game goes downhill they may quit playing, if they do they will take many other players with them.&lt;/div&gt;">
+          <div class="downline-bar downline-bar-players" data-name="Players" data-desc-html="Recruited players who are actively playing Cookie Clicker.&lt;br&gt;&lt;br&gt;&lt;div class='downline-tier-line'&gt;&lt;span class='downline-tier-dot' style='background:#2a8a2a'&gt;&lt;/span&gt;&lt;b&gt;Dabblers&lt;/b&gt; are new players who are trying out the game, they may not stay long if you cannot hold their interest but they may also go on to become more serious players.&lt;/div&gt;&lt;div class='downline-tier-line'&gt;&lt;span class='downline-tier-dot' style='background:#c9c920'&gt;&lt;/span&gt;&lt;b&gt;Casuals&lt;/b&gt; players have decided to give the game a chance and as long as it&amp;rsquo;s well maintained there is a decent chance they will stick around.&lt;/div&gt;&lt;div class='downline-tier-line'&gt;&lt;span class='downline-tier-dot' style='background:#c97620'&gt;&lt;/span&gt;&lt;b&gt;Habituals&lt;/b&gt; have caught cookie fever and are playing regularly.&lt;/div&gt;&lt;div class='downline-tier-line'&gt;&lt;span class='downline-tier-dot' style='background:#c92a2a'&gt;&lt;/span&gt;&lt;b&gt;Devotees&lt;/b&gt; are players who are committed to 100%ing the game and can even recruit some friends to play with. With high enough commitment they can become fanatics.&lt;/div&gt;&lt;div class='downline-tier-line'&gt;&lt;span class='downline-tier-dot' style='background:#b07acc'&gt;&lt;/span&gt;&lt;b&gt;Fanatics&lt;/b&gt; are your most devoted players, they will actively recruit more players and generate the most CpS. However if the game goes downhill they may quit playing, if they do they will take many other players with them.&lt;/div&gt;">
             <div class="name" id="downline-bar-players-label">Players 0</div>
             <div class="downline-bar-track">
               <div class="downline-bar-fill" id="downline-bar-players-fill" style="width:0%">
@@ -1375,7 +1375,7 @@ DownlineM.init = function(div) {
         flavor: 'Traffic jams and idle games are a dangerous combo.',
         unlock: { conditions: [{ stat: 'players', min: 125 }] },
         effects: { players: 5, commitment: -2, hype: 1 },
-        headline: 'Delicious looking cookie billboards draw people to drive-throughs across the country' },
+        headline: 'Delicious looking billboards draw people to drive-thrus across the country looking for cookies in all the wrong places' },
       
         { name: 'Sponsor influencers', icon: [10,14], sheet: 'custom', durationSec: 5 * 60 * 60, costCps: 90 * 60,
         desc: 'Pay content creators to pretend they discovered your game organically.',
@@ -1436,7 +1436,7 @@ DownlineM.init = function(div) {
       { name: 'Add minigame', icon: [18,33], durationSec: 4 * 60 * 60, costCps: 150 * 60,
         desc: 'People love minigames! though we have found some people get confused by them and wander off to play Minecraft instead.',
         unique: true,
-        flavor: 'A You minigame sounds like an easy project, or at least it did...',
+        flavor: 'A You minigame sounds like an easy project, or at least it did... Betcha its done before dungeons though.',
         unlock: { conditions: [{ stat: 'hype', min: 100 }, { stat: 'commitment', min: 100 }], tempConditions: [{ stat: 'players', min: 100 }] },
         effects: { hype: 1, commitment: 1, players: -3, reputation: 1},
         headline: 'New minigame inside cookie game — Players clamor for game within a game concept' },
@@ -1510,7 +1510,7 @@ DownlineM.init = function(div) {
         flavor: "67 or whatever right?",
         unlock: { conditions: [{ stat: 'players', min: 20 }], tempConditions: [{ stat: 'hype', min: 75 }] },
         effects: { players: 3, hype: 2, referrals: 1,  reputation: -2},
-        headline: "Cookie memes flood social media some call it spam others call it content" },
+        headline: "Cookie memes flood social media some call it spam others call it high art" },
      
       { name: 'Reddit AMA', icon: [8,10], durationSec: 2 * 60 * 60, costCps: 45 * 60,
         desc: 'Answer questions from the community. Transparency builds trust. Things can go a bit sideways with these things though.',
@@ -1518,14 +1518,14 @@ DownlineM.init = function(div) {
         unique: true,
         unlock: { conditions: [{ stat: 'players', min: 50 }], tempConditions: [{ stat: 'reputation', min: 350 }] },
         effects: { hype: 1, reputation: 2, commitment: -2 },
-        headline: 'Developers answer thousands of questions on Reddit' },
+        headline: 'Developers answer thousands of questions on Reddit, mostly about when to expect dungeons and how to pronounce Orteil' },
 
         { name: 'Announce dungeons coming soon', icon: [13, 7], durationSec: 1 * 60 * 60, costCps: 12 * 60,
         desc: 'When hype begins to die off just announce Dungeons minigame is almost ready to release, the hype will overcome the eventual disappointment.',
         flavor: 'Soon\u2122. No, the other Soon. I wonder how much longer this joke can last.',
         unlock: { conditions: [{ stat: 'players', min: 50 }], tempConditions: [{ stat: 'reputation', min: 700 }] },
         effects: { hype: 3, commitment: -1, reputation: -1 },
-        headline: 'Dungeons teaser divides community — hype and skepticism' },
+        headline: 'Dungeons teaser divides community — hype and expected skepticism' },
 
       { name: 'Sponsor leaderboard contest', icon: [29,21], durationSec: 4 * 60 * 60, costCps: 80 * 60,
         desc: 'Competitive events that push players toward the good kind of fighting.',
@@ -1553,14 +1553,14 @@ DownlineM.init = function(div) {
         flavor: "Playing cookie clicker can add 5 years onto your life.",
         unlock: { conditions: [{ stat: 'players', min: 100 }, { stat: 'hype', min: 100 }] },
         effects: { players: 5, hype: 2, commitment: -2, boost: -3 },
-        headline: 'Viral campaign floods feeds — everywhere we look it\'s the same cookie spam' },
+        headline: 'Viral campaign floods feeds — everywhere we look it\'s the same cookie based spam' },
 
         { name: 'Start rumors about competitors', icon: [17,5], durationSec: 4 * 60 * 60, costCps: 40 * 60,
         desc: "Whisper campaigns against rival games.",
         flavor: 'All\'s fair in love and cookies.',
         unlock: { conditions: [{ stat: 'players', min: 150 }], tempConditions: [{ stat: 'hype', min: 150 }, { stat: 'referrals', min: 200 }] },
         effects: { hype: 7, commitment: 2, reputation: -3, referrals: -3},
-        headline: 'Rumors spread that Burger Clicker uses child labor and counterfeit pixels' },
+        headline: 'Rumors spread that Burger Tapper uses child labor and counterfeit pixels' },
 
         { name: 'Clickbait videos', icon: [1,33], durationSec: 3 * 60 * 60, costCps: 30 * 60,
         desc: "YOU WON'T BELIEVE what this cookie game does! (Number 7 will shock you)",
@@ -1574,7 +1574,7 @@ DownlineM.init = function(div) {
         flavor: 'Parental consent sold separately.',
         unlock: { conditions: [{ stat: 'players', min: 75 }] },
         effects: { referrals: 2, hype: 3, reputation: -2.5 },
-        headline: 'Cookie clubs spread to schools — parents ask questions but get few answers' },
+        headline: 'Cookie clubs spread inside of schools — parents ask questions but get few answers' },
 
         { name: 'Buy fake reviews', icon: [31,8], durationSec: 4 * 60 * 60, costCps: 28 * 60,
         desc: 'Five stars across the board. Suspiciously uniform praise.',
@@ -1588,35 +1588,35 @@ DownlineM.init = function(div) {
         flavor: '1 star, deleted. 1 star, deleted. 1 star, deleted. Feeling better yet?',
         unlock: { conditions: [{ stat: 'players', min: 100 }], tempConditions: [{ stat: 'reputation', min: 300 }] },
         effects: { hype: 4, reputation: -2 },
-        headline: 'Negative reviews vanish — "suspiciously positive" 5 star rating appears' },
+        headline: 'Critical reviews vanish overnight — "suspiciously positive" 5 star rating appears' },
 
       { name: 'Energy drink sponsorship', icon: [9,7], durationSec: 8 * 60 * 60, costCps: 60 * 60,
         desc: 'Brand deal with a caffeine giant.',
         flavor: 'Now with 200% of your daily sugar per serving, 4.5 servings per can.',
         unlock: { conditions: [{ stat: 'players', min: 150 }, { stat: 'hype', min: 100 }] },
         effects: { players: 6, commitment: 5, reputation: -3.5 },
-        headline: 'Energy drink and Cookie Clicker partnership rolls out to skeptics' },
+        headline: 'Energy drink and Cookie Clicker partnership rolls out to skeptical drinkers nationwide' },
 
         { name: 'Referral rewards program', icon: [16,24], sheet: 'custom', durationSec: 6 * 60 * 60, costCps: 90 * 60,
         desc: 'Paying players to find more players. No way this one can go wrong.',
         flavor: 'What\'s the worst thing that could happen?',
         unlock: { conditions: [{ stat: 'players', min: 150 }, { stat: 'reputation', min: 300 }], tempConditions: [{ stat: 'reputation', min: 750 }] },
         effects: { referrals: 8, reputation: -2, commitment: -1, hype: -1},
-        headline: 'Refer-a-friend rewards launch — "is it growth or bribery?" you decide' },
+        headline: 'Refer-a-friend rewards launch — "is it growth or bribery?" we tell you what to think tonight at 11' },
 
         { name: 'Player hypnosis', icon: [19,24], sheet: 'custom', durationSec: 3 * 60 * 60, costCps: 120 * 60,
         desc: 'Hypnosis really only works if you think it does, I wonder what percent of people believe in it.',
         flavor: "You are feeling sleepy so sleepy, no wait you are feeling clickly so clicky.",
         unlock: { conditions: [{ stat: 'players', min: 200 }, { stat: 'commitment', min: 100 }] },
         effects: { players: -2, commitment: 3, referrals: 3, reputation: -2 },
-        headline: 'Hypnosis campaign sparks ethical concerns' },
+        headline: 'Hypnosis campaign sparks ethical concerns but we are too sleepy to be alarmed' },
 
        { name: 'Loot boxes', icon: [18,24], sheet: 'custom', durationSec: 4 * 60 * 60, costCps: 120 * 60,
         desc: 'No one will admit to liking loot boxes but they sure do work.',
         flavor: "Sudo gambling now in Cookie Clicker",
         unlock: { conditions: [{ stat: 'players', min: 400 }, { stat: 'commitment', min: 250 }] },
         effects: { players: -3, referrals: 5, reputation: -2, boost: 2 },
-        headline: 'Loot boxes draw ire — some leave, others bring friends' },
+        headline: 'Loot boxes draw ire and lots of new income' },
 
         { name: 'Pay users to play', icon: [16,14], sheet: 'custom', durationSec: 8 * 60 * 60, costCps: 140 * 60,
         desc: 'Bribe players with real cookies. Wait, not those cookies.',
@@ -1646,7 +1646,7 @@ DownlineM.init = function(div) {
         unique: true,
         unlock: { conditions: [{ stat: 'players', min: 1000 }, { stat: 'reputation', min: 250 }] },
         effects: { reputation: -5, hype: 3, players: 5, boost: 4 },
-        headline: 'Private equity takes slice of Cookie Clicker' },
+        headline: 'Private equity takes big bite out of Cookie Clicker' },
 
         { name: 'Sell player data', icon: [29,6], durationSec: 6 * 60 * 60, costCps: 8 * 60 * 60,
         desc: 'Sell your users out and profit from their info.',
@@ -1654,7 +1654,7 @@ DownlineM.init = function(div) {
         unique: true,
         unlock: { tempConditions: [{ stat: 'players', min: 1000 }] },
         effects: { reputation: -3, commitment: -2, players: -4, boost: 10 },
-        headline: 'Data deal boosts margins — players and trust take a hit' },
+        headline: 'Is Cookie Clicker selling your personal information to Russian Hackers? Yes, yes they are' },
 
         { name: 'Tax evasion', icon: [4,33], durationSec: 8 * 60 * 60, costCps: 150 * 60,
         desc: 'Creative accounting keeps more cookies in the jar. We aren\'t going to be paying our fair share, that much is for sure.',
@@ -1677,7 +1677,7 @@ DownlineM.init = function(div) {
         flavor: 'Kompromat as far as the eye can see, don\'t worry about how we got it just worry about who we show it to.',
         unlock: { conditions: [{ stat: 'players', min: 300 }, { stat: 'reputation', max: 500 }] },
         effects: { reputation: -3, hype: 3, commitment: 3 },
-        headline: 'Cookie Clicker parent company accused of pressure tactics' },
+        headline: 'Cookie Clicker parent company accused of high pressure tactics and shady practices' },
 
       { name: 'Age gate verification', icon: [31, 15], durationSec: 2 * 60 * 60, costCps: 180 * 60,
         desc: 'Restrict access by age. Everyone hated that, except for the government but they don\'t click cookies anyways.',
@@ -1685,7 +1685,7 @@ DownlineM.init = function(div) {
         unlock: { conditions: [{ stat: 'players', min: 400 }, { stat: 'commitment', min: 150 }], tempConditions: [{ stat: 'commitment', min: 300 }] },
         unique: true,
         effects: { players: -14, reputation: -4, commitment: 7, referrals: 3 },
-        headline: 'Cookie Clicker adds age verification Government ID required from now on — JNews instant polling shows 3% favorability with 4% margin of error' },
+        headline: 'Cookie Clicker adds age verification, Government ID required from now on — JNews instant polling shows 3% favorability with 4% margin of error' },
 
         { name: 'Donating profits to charity', icon: [7,15], sheet: 'custom', durationSec: 5 * 60 * 60, costCps: 3 * 60 * 60,
         desc: 'Giving away the profits to charity, even if it is just lip service its effective.',
@@ -1753,7 +1753,7 @@ DownlineM.init = function(div) {
         unique: true,
         unlock: { conditions: [{ stat: 'players', min: 1000 }, { stat: 'fanatic', min: 10 }], tempConditions: [{ stat: 'hype', min: 300 }] },
         effects: { players: 115, referrals: 10, reputation: -22, hype: 8, commitment: 9 },
-        headline: 'Ancient Cookie Cult resurfaces — "these guys are everywhere maybe if we did some puzzles they would chill out"' },
+        headline: 'Ancient Cookie Cult resurfaces — "these guys are suddenly everywhere maybe if we did some puzzles they would chill out"' },
  
       { name: 'Cookie Clicker the Motion Picture', icon: [2,7], durationSec: 6 * 60 * 60, costCps: 5 * 60 * 60,
         desc: 'A cinematic masterpiece about clicking cookies. Fans rejoice everyone else cringes.',
@@ -1857,11 +1857,8 @@ DownlineM.init = function(div) {
       var strip = document.getElementById('downline-ticker-strip');
       if (strip) while (strip.firstChild) strip.removeChild(strip.firstChild);
       G.tickerPool = [];
-      // Cancel our own rAF
       if (tickerRafId) { cancelAnimationFrame(tickerRafId); tickerRafId = 0; }
-      // Cancel any OTHER closure's rAF stored on the DOM element
       if (strip && strip._tickerRafId) { cancelAnimationFrame(strip._tickerRafId); strip._tickerRafId = 0; }
-      // Bump generation so any stale loops from old closures self-terminate
       if (strip) strip._tickerGen = (strip._tickerGen || 0) + 1;
       if (tickerRetryTimeout) { clearTimeout(tickerRetryTimeout); tickerRetryTimeout = 0; }
       tickerAnimationRunning = false;
@@ -2059,9 +2056,6 @@ DownlineM.init = function(div) {
             strip.removeChild(first);
             tickerScrollOffset -= actualShift;
             if (tickerScrollOffset < 0) tickerScrollOffset = 0;
-            // Set transform IMMEDIATELY after removal — before any reflow-triggering
-            // operations (like appendTickerSegment's getBoundingClientRect) so the
-            // browser never composites the intermediate state
             strip.style.transform = 'translate3d(' + (-tickerScrollOffset) + 'px,0,0)';
           }
         }
@@ -3016,7 +3010,6 @@ DownlineM.init = function(div) {
     function startTickerAnimationIfNeeded() {
       if (!tickerAnimationRunning) {
         var strip = document.getElementById('downline-ticker-strip');
-        // Claim this generation — any old closure loops will see mismatch and exit
         tickerGeneration = strip ? ((strip._tickerGen || 0) + 1) : 1;
         if (strip) strip._tickerGen = tickerGeneration;
         tickerAnimationRunning = true;
