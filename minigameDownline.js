@@ -26,10 +26,31 @@ DownlineM.parent = Game.Objects && Game.Objects['Fractal engine'] ? Game.Objects
     l: null,
     refresh: function() {}
 };
-DownlineM.parent.minigame = DownlineM;
+
+// Preserve highest value before attaching minigame
+if (DownlineM.parent && DownlineM.parent.highest !== undefined) {
+    var preservedHighest = DownlineM.parent.highest;
+    DownlineM.parent.minigame = DownlineM;
+    // Restore if it got corrupted
+    if (typeof DownlineM.parent.highest !== 'number' || isNaN(DownlineM.parent.highest)) {
+        DownlineM.parent.highest = preservedHighest;
+    }
+} else {
+    DownlineM.parent.minigame = DownlineM;
+}
 
 function getFractalEngine() {
     return Game.Objects['Fractal engine'];
+}
+
+function ensureFractalEngineHighest() {
+    var fe = getFractalEngine();
+    if (!fe) return;
+    
+    // If highest is NaN or invalid, fix it
+    if (typeof fe.highest !== 'number' || isNaN(fe.highest)) {
+        fe.highest = fe.amount || 0;
+    }
 }
 
 var BAR_MAX = 1000;
@@ -66,6 +87,9 @@ DownlineM.launch = function() {
     var M = this;
     var fractalEngine = getFractalEngine();
     M.name = (fractalEngine && fractalEngine.minigameName) || 'Downline';
+    
+    // Ensure highest is not NaN
+    ensureFractalEngineHighest();
 };
 
 DownlineM.dragonBoostTooltip = function() {
@@ -3525,6 +3549,10 @@ function initializeDownlineMinigame() {
 
     function bootMinigame() {
         if (!fractalEngine) return;
+        
+        // Ensure highest is not NaN before initialization
+        ensureFractalEngineHighest();
+        
         if (!fractalEngine.minigameLoaded) {
             fractalEngine.minigameLoaded = true;
             fractalEngine.minigameName = fractalEngine.minigameName || 'Downline';
