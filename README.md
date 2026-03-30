@@ -6262,8 +6262,8 @@ Fill your business plan with promotions, stunts, feature improvements, back alle
 ## Changelog
 
 ### Version 0.4.1
-* Downline should now have better background support for continuing to run when the minigame is closed or the tab isnt frontmost. If the garden countinues to tick Downline should as well. 
-* Fixed a bug that caused some odd behaviors with panthelon god unslotting and worship swap consumption.  
+* Downline should now have better background support for continuing to run when the minigame is closed or the tab isnt frontmost. If the garden continues to tick Downline should as well. 
+* Fixed a bug that caused some odd behaviors with pantheon god unslotting and worship swap consumption.  
 * Updated some Cookie Age puzzle wording to clear up common sources of confusion.
 
 ### **Major Version 0.4.0 - Downline a Fractal Engine Minigame**
