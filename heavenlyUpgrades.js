@@ -1062,14 +1062,10 @@ var cpsModifiersRegistered = false;
             // Create god definition if it doesn't exist (regardless of upgrade ownership)
             if (!M.gods[key]) {
                 M.gods[key] = spirit;
-                M.godsById = [];
-                var n = 0;
-                for (var i in M.gods) {
-                    var god = M.gods[i];
-                    god.id = n;
-                    god.slot = -1;
-                    M.godsById[n++] = god;
-                }
+                var nextId = M.godsById.length;
+                spirit.id = nextId;
+                spirit.slot = -1;
+                M.godsById[nextId] = spirit;
                 
                 var me = M.gods[key], icon = me.icon || [0, 0], godDiv = document.createElement('div'), parentId = M.parent.id;
                 godDiv.className = 'ready templeGod templeGod' + (me.id % 4) + ' titleFont';
@@ -6283,24 +6279,40 @@ var cpsModifiersRegistered = false;
         
         if (saveData.pantheon) {
             var M = Game.Objects['Temple'] && Game.Objects['Temple'].minigame;
-            if (M && M.slot && M.slotGod && M.gods && M.godsById) {
+            if (M && M.slot && M.gods && M.godsById) {
                 if (saveData.pantheon.slots) {
                     for (var i = 0; i < Math.min(saveData.pantheon.slots.length, M.slot.length); i++) {
                         var savedSlot = saveData.pantheon.slots[i];
                         if (!savedSlot || savedSlot === -1) continue;
-                        var god = (typeof savedSlot === 'string' && M.gods[savedSlot]) || (typeof savedSlot === 'number' && M.godsById[savedSlot]);
+                        
+                        var god = null;
+                        if (typeof savedSlot === 'string' && M.gods[savedSlot]) {
+                            god = M.gods[savedSlot];
+                        } else if (typeof savedSlot === 'number' && M.godsById[savedSlot]) {
+                            god = M.godsById[savedSlot];
+                        }
+                        
                         if (!god) continue;
                         if (M.slot[i] !== -1) continue;
-                        if (god.slot === undefined) god.slot = -1;
-                        M.slotGod(god, i);
-                        var godDiv = l('templeGod' + god.id), slotDiv = l('templeSlot' + i);
+                        
+                        if (god.upgrade && !Game.Upgrades[god.upgrade]?.bought) continue;
+                        
+                        if (god.slot !== -1) {
+                            M.slot[god.slot] = -1;
+                        }
+                        M.slot[i] = god.id;
+                        god.slot = i;
+                        
+                        var godDiv = l('templeGod' + god.id);
+                        var slotDiv = l('templeSlot' + i);
                         if (godDiv && slotDiv && godDiv.parentNode !== slotDiv) {
                             slotDiv.appendChild(godDiv);
                         }
-                        godDiv.style.display = '';
+                        if (godDiv) godDiv.style.display = '';
                     }
+                    
+                    Game.recalculateGains = true;
                     if (M.draw) M.draw();
-                    if (M.buildPanel) M.buildPanel();
                 }
                 if (saveData.pantheon.procrastinationSlotTime) M._procrastinationSlotTime = saveData.pantheon.procrastinationSlotTime;
                 if (saveData.pantheon.selfishnessClickCount !== undefined) M._selfishnessClickCount = saveData.pantheon.selfishnessClickCount || 0;

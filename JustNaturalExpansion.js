@@ -5,7 +5,7 @@
     'use strict';
     
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.4.0';
+    var modVersion = '0.4.1';
     var debugMode = false; 
     
     function debugLog() {

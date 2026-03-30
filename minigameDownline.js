@@ -947,7 +947,7 @@ DownlineM.init = function(div) {
     var QUIT_CASCADE_DAB = [0, 0, 2, 15, 65];
     var QUIT_CASCADE_CAS = [0, 0, 0, 2, 8];
     var QUIT_CASCADE_HAB = [0, 0, 0, 0, 1];  
-    var QUIT_TICKER_NAMES = ['LeetGriffion', 'NyanDog', 'Lock8164', 'LuckyGlod', 'Ragoon', 'Lo the Cleric', 'Le Flower', 'HeavenDude', 'Phylexx', 'Dorky', 'CandidShadow', 'Infamous555'];
+    var QUIT_TICKER_NAMES = ['LeetGriffion', 'NyanDog', 'Lock8164', 'LuckyGlod', 'Ragoon', 'Lo the Cleric', 'Le Flower', 'HeavenDude_TX', 'Phylexx', 'Dorky', 'CandidShadow', 'Infamous555'];
     var QUIT_TICKER_HEADLINES = [
       function (name) { return name + ' says no more clicking for me it just isn\'t as fun as it used to be.'; },
       function (name) { return name + ' hangs up their clicking finger, several players follow them out the door.'; },
@@ -3318,7 +3318,7 @@ DownlineM.init = function(div) {
 
 DownlineM.logic = function() {
   var fractalEngine = getFractalEngine();
-  if (!fractalEngine || !fractalEngine.onMinigame) return;
+  if (!fractalEngine) return;
   if (DownlineM.gameTick) {
     if (Game.T % 5 === 0 && DownlineM.updateLumpBoostState) {
       DownlineM.updateLumpBoostState();
