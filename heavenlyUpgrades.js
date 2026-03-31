@@ -43,6 +43,11 @@
         return false;
     }
 
+    // Unified independent random function that doesn't consume seeded Math.random() values
+    function jneIndependentRandom() {
+        return crypto.getRandomValues(new Uint32Array(1))[0] / 4294967295;
+    }
+
     //condensed into unreadable mess to save space
     function runUpgradeSetups(forceAll) {
         if (!Game.JNE) Game.JNE = {};
@@ -726,22 +731,7 @@
         Game.Draw._jneCookieDisplayHooked = true;
     }
 
-function setupWholesaleDiscountClub() {
-    if (!Game.Upgrade || !Game.Upgrade.prototype) return;
-    if (Game.Upgrade.prototype.getPrice && Game.Upgrade.prototype.getPrice._jneWholesaleDiscountClubHooked) return;
-
-    var originalGetPrice = Game.Upgrade.prototype.getPrice;
-    Game.Upgrade.prototype.getPrice = function() {
-        var price = originalGetPrice.call(this);
-        if (this.pool !== 'prestige' && this.name !== 'Wholesale discount club' && Game.Has('Wholesale discount club')) {
-            price *= 0.9;
-        }
-        return price;
-    };
-    Game.Upgrade.prototype.getPrice._jneWholesaleDiscountClubHooked = true;
-}
-
-function setupGameEffModifiers() {
+    function setupGameEffModifiers() {
     if (!Game.eff || Game.eff._jneAllEffModifiersHooked) return;
     var originalEff = Game.eff;
     Game.eff = function(what) {
@@ -857,7 +847,7 @@ var cpsModifiersRegistered = false;
             Game.registerHook('click', function() {
                 if (Game.Has && Game.Has('Mega clicks')) {
                     var megaClickChance = Game.Has('Lucky mega clicks') ? 0.015 : 0.01;
-                    var isMegaClick = Math.random() < megaClickChance; 
+                    var isMegaClick = jneIndependentRandom() < megaClickChance; 
                     if (isMegaClick) {
                         var clickAmount = Game.computedMouseCps || 0;
                         var multiplier = Game.Has('Extreme mega clicks') ? 14 : 9;
@@ -1279,7 +1269,7 @@ var cpsModifiersRegistered = false;
                     if (arr.indexOf('multiply cookies') !== -1) {
                         var reduction = Game.Has('Even more unlucky luckier') ? 0.01 : Game.Has('Unlucky luckier') ? 0.05 : 0;
                     
-                    if (reduction > 0 && Math.random() < reduction) {
+                    if (reduction > 0 && jneIndependentRandom() < reduction) {
                         arr = arr.filter(function(item) {
                             return item !== 'multiply cookies';
                         });
@@ -1291,7 +1281,7 @@ var cpsModifiersRegistered = false;
                     if (arr.indexOf('ruin cookies') !== -1) {
                         var reduction = Game.Has('Flavor enhanced wrath') ? 0.01 : Game.Has('Slightly less bitter wrath') ? 0.05 : 0;
                     
-                    if (reduction > 0 && Math.random() < reduction) {
+                    if (reduction > 0 && jneIndependentRandom() < reduction) {
                         arr = arr.filter(function(item) {
                             return item !== 'ruin cookies';
                         });
@@ -2707,7 +2697,7 @@ var cpsModifiersRegistered = false;
                             var tile = M.plot[y][x];
                             if (tile && tile[0] > 0) {
                                 var me = M.plantsById[tile[0] - 1];
-                                if (me.key === 'sparklingSugarCane' && Math.random() < 0.95) {
+                                if (me.key === 'sparklingSugarCane' && jneIndependentRandom() < 0.95) {
                                     M.plot[y][x] = [0, 0];
                                     M.toRebuild = true;
                                 }
@@ -2760,7 +2750,7 @@ var cpsModifiersRegistered = false;
 
                     if (totalMult > 0) {
                         var chance = totalMult * 0.01;
-                        if (Math.random() < chance) {
+                        if (jneIndependentRandom() < chance) {
                             amount *= 2;
                             if (!silent) {
                                 Game.Notify('Sugar cane doubled your sugar lumps!', 'Your sparkling sugar cane plants triggered a lucky doubling!', [4, 24, getSpriteSheet('custom')], 6);
@@ -2849,7 +2839,7 @@ var cpsModifiersRegistered = false;
         var M = Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].minigame;
         if (!M || !M.castSpell || M._shinyWrinklerHooked) return;
         var originalCastSpell = M.castSpell;
-        M.castSpell = function(spell) {
+        M.castSpell = function(spell, obj) {
             var before = new Set();
             if (spell && spell.name === 'Resurrect Abomination') {
                 for (var i in Game.wrinklers) {
@@ -2857,13 +2847,13 @@ var cpsModifiersRegistered = false;
                     if (w && w.phase > 0) before.add(w);
                 }
             }
-            var result = originalCastSpell.call(this, spell);
+            var result = originalCastSpell.call(this, spell, obj);
             if (spell && spell.name === 'Resurrect Abomination' && result !== -1) {
                 var chance = 0, upgrade = null;
                 if (Game.Has('Alakazoodle evil noodle')) { chance = 0.03; upgrade = Game.Upgrades['Alakazoodle evil noodle']; }
                 else if (Game.Has('Abra-Ka-Wiggle')) { chance = 0.02; upgrade = Game.Upgrades['Abra-Ka-Wiggle']; }
                 else if (Game.Has('Skitter skatter skrum ahh')) { chance = 0.01; upgrade = Game.Upgrades['Skitter skatter skrum ahh']; }
-                if (chance > 0 && Math.random() < chance) {
+                if (chance > 0 && jneIndependentRandom() < chance) {
                     var found = false;
                     var check = function() {
                         if (found) return;
@@ -2894,9 +2884,18 @@ var cpsModifiersRegistered = false;
             new Game.buffType('midas curse', (t,p)=>({name:'Midas curse',desc:'Golden cookies appear 75% less often for the next '+Game.sayTime(t*Game.fps,-1)+'.',icon:[20,19,getSpriteSheet('custom')],time:t*Game.fps}));
         }
 
-        if (!Game.Has('Gilded allure')) return;
         var M = Game.Objects['Wizard tower']?.minigame;
-        if (!M || M._gildedAllureHooked || !M.spells || !M.spellsById || typeof l !== 'function' || !l('grimoireSpells')) return;
+        if (!M || !M.spells || !M.spellsById) return;
+        
+        // Set up GFD/FortuneCookie patches even if player doesn't have the upgrade yet
+        // This ensures predictions work correctly once they buy it
+        var hasUpgrade = Game.Has('Gilded allure');
+        
+        if (!hasUpgrade && M._gildedAllureHooked) return; // Don't need spell if no upgrade
+        if (hasUpgrade && M._gildedAllureHooked) return; // Already set up
+        if (!hasUpgrade) return; // Not ready yet
+        
+        if (typeof l !== 'function' || !l('grimoireSpells')) return;
         var me={name:loc("Gilded Allure"),desc:loc("Golden Cookies appear 30% more often for the next 10 minutes."),failDesc:loc("Golden Cookies appear 75% less often for the next hour."),icon:[20,19],customIconSheet:getSpriteSheet('custom'),costMin:15,costPercent:0.5,
             win:()=>{Game.killBuff('Gilded allure');Game.killBuff('Midas curse');Game.gainBuff('gilded allure',600,1);Game.Popup(loc("Golden allure!"),Game.mouseX,Game.mouseY);},
             fail:()=>{Game.killBuff('Gilded allure');Game.killBuff('Midas curse');Game.gainBuff('midas curse',3600,1);Game.Popup(loc("Backfire!")+'<br>'+loc("Midas curse!"),Game.mouseX,Game.mouseY);}};
@@ -2931,6 +2930,94 @@ var cpsModifiersRegistered = false;
                 }
                 return tooltipFunc;
             };
+        }
+        
+        // Various patches for other mods dealing with spell predictions, fortune cookie and Clairvoyance, planner is a stand alone so no issues there. 
+        var vanillaSpellCount = 8; 
+        
+        var patchFortuneCookie = function() {
+            if (typeof FortuneCookie === 'undefined') return;
+            if (!FortuneCookie.spellForecast) return;
+            if (FortuneCookie._gildedAllurePatched) return;
+            FortuneCookie._gildedAllurePatched = true;
+            
+            var originalSpellForecast = FortuneCookie.spellForecast;
+            FortuneCookie.spellForecast = function(spell) {
+                var M = Game.Objects['Wizard tower']?.minigame;
+                if (!M) return originalSpellForecast.apply(this, arguments);
+                
+                if (spell && spell.name === "Gambler's Fever Dream") {
+                    var originalSpellsById = M.spellsById;
+                    var originalSpells = M.spells;
+                    
+                    M.spellsById = originalSpellsById.slice(0, vanillaSpellCount);
+                    var filteredSpells = {};
+                    for (var key in originalSpells) {
+                        if (key !== 'gilded allure') {
+                            filteredSpells[key] = originalSpells[key];
+                        }
+                    }
+                    M.spells = filteredSpells;
+                    
+                    try {
+                        return originalSpellForecast.apply(this, arguments);
+                    } finally {
+                        M.spellsById = originalSpellsById;
+                        M.spells = originalSpells;
+                    }
+                }
+                return originalSpellForecast.apply(this, arguments);
+            };
+        };
+        
+        var patchGFDSpell = function() {
+            var gfd = M.spells["gambler's fever dream"];
+            
+            if (!gfd) {
+                for (var key in M.spells) {
+                    if (M.spells[key].name && M.spells[key].name.toLowerCase().includes('gambler')) {
+                        gfd = M.spells[key];
+                        break;
+                    }
+                }
+            }
+            
+            if (!gfd || gfd._gildedAllurePatched) return;
+            
+            gfd._gildedAllurePatched = true;
+            
+            var originalWin = gfd.win;
+            
+            gfd.win = function() {
+                // Only filter if gilded allure actually exists in the spell list
+                if (!M.spells['gilded allure']) {
+                    return originalWin.apply(this, arguments);
+                }
+                
+                var originalSpells = M.spells;
+                
+                var filteredSpells = {};
+                for (var key in originalSpells) {
+                    if (key !== 'gilded allure') {
+                        filteredSpells[key] = originalSpells[key];
+                    }
+                }
+                M.spells = filteredSpells;
+                
+                try {
+                    return originalWin.apply(this, arguments);
+                } finally {
+                    M.spells = originalSpells;
+                }
+            };
+        };
+        
+        patchGFDSpell();
+        patchFortuneCookie();
+        setTimeout(patchFortuneCookie, 10000);
+        
+        if (typeof CCSE !== 'undefined' && CCSE.postLoadHooks) {
+            CCSE.postLoadHooks.push(patchFortuneCookie);
         }
     }
 
@@ -4053,53 +4140,73 @@ var cpsModifiersRegistered = false;
     }
     
     function setupRetripledLuck() {
-        // wrap Game.shimmer and handle all double spawn logic here
-        if (Game.shimmer && !Game.shimmer._retripledLuckHooked) {
-            var originalShimmer = Game.shimmer;
-            Game.shimmer = function(type, options) {
-                var hasVanillaLuck = Game.Has('Distilled essence of redoubled luck');
-                var hasRetripledLuck = Game.Has('Distilled essence of retripled luck');
-                var shouldMaskVanilla = (type === 'golden' && (!options || !options._retripledLuckExtra) && hasVanillaLuck && hasRetripledLuck);
-                var originalHas = null;
-                if (shouldMaskVanilla) {
-                    originalHas = Game.Has;
-                    Game.Has = function(what) { //not patching the vanilla bug for cookie chains here, maybe we should though?
-                        if (what === 'Distilled essence of redoubled luck') return false;
-                        return originalHas.apply(this, arguments);
-                    };
+        // Match vanilla placement: doubling only in Game.updateShimmers for timer spawns (not spells, storm, FTHOF, etc.).
+        // Unlike vanilla, we skip doubling timer goldens while Game.shimmerTypes.golden.chain > 0 (cookie chain fix).
+        if (!Game.updateShimmers || Game.updateShimmers._jneRetripledUpdateShimmersHooked) return;
+        
+        if (Game.shimmer && !Game.shimmer._retripledLuckHooked && !Game._jneVanillaShimmerBeforeRetripled) {
+            Game._jneVanillaShimmerBeforeRetripled = Game.shimmer;
+        }
+        if (Game.shimmer && Game.shimmer._retripledLuckHooked && Game._jneVanillaShimmerBeforeRetripled) {
+            Game.shimmer = Game._jneVanillaShimmerBeforeRetripled;
+            Game.shimmer._retripledLuckHooked = false;
+        }
+        
+        var vanillaUpdateShimmers = Game.updateShimmers;
+        
+        function maybeDoubleTimerSpawn(i) {
+            var hasVanillaLuck = Game.Has('Distilled essence of redoubled luck');
+            var hasRetripledLuck = Game.Has('Distilled essence of retripled luck');
+            // cookie chain and break chain behavior — skip all doubling for timer goldens while chain depth > 0.
+            if (i === 'golden' && Game.shimmerTypes && Game.shimmerTypes['golden']) {
+                var gChain = Game.shimmerTypes['golden'].chain;
+                if (typeof gChain === 'number' && gChain > 0) return;
+            }
+            // Fish: never double here.
+            if (i === 'fish') return;
+            if (hasRetripledLuck) {
+                console.log('2% chance');
+
+                var chance =  0.02;
+                if (jneIndependentRandom() < chance) {
+                    var rExtra = new Game.shimmer(i, {_retripledLuckExtra: true});
+                    if (rExtra) rExtra.spawnLead = 1;
                 }
-                var shimmer;
-                try {
-                    shimmer = new originalShimmer(type, options);
-                } finally {
-                    if (shouldMaskVanilla) Game.Has = originalHas;
-                }
-                
-                // Don't double cookie chain cookies as it breaks chain mechanics, also fixes this from the vanilla upgrade
-                var isChainCookie = (type === 'golden' && Game.shimmerTypes && Game.shimmerTypes['golden'] && Game.shimmerTypes['golden'].chain > 0);
-                var shouldDouble = shimmer && type !== 'fish' && (!options || !options._retripledLuckExtra) && !isChainCookie; //fish double from their own seperate upgrade
-                
-                if (shouldDouble) {
-                    var chance = 0;
-                    if (hasVanillaLuck && hasRetripledLuck) {
-                        chance = 0.02; // Both upgrades: 2% total
-                    } else if (hasRetripledLuck) {
-                        chance = 0.01; // Retripled luck only: 1% this really isnt possible but it was useful for testing
-                    }
-                    
-                    if (chance > 0 && Math.random() < chance) {
-                        var extraOptions = options ? Object.assign({}, options, {_retripledLuckExtra: true}) : {_retripledLuckExtra: true};
-                        var extraShimmer = new originalShimmer(type, extraOptions);
-                        if (extraShimmer) {
-                            extraShimmer.spawnLead = 1;
+            } else if (hasVanillaLuck && Math.random() < 0.01) {
+                var vExtra = new Game.shimmer(i);
+                if (vExtra) vExtra.spawnLead = 1;
+            }
+        }
+        
+        Game.updateShimmers = function() {
+            for (var si in Game.shimmers) {
+                Game.shimmers[si].update();
+            }
+            
+            if (Game.hasBuff('Cookie storm') && Math.random() < 0.5) {
+                var stormShimmer = new Game.shimmer('golden', {type: 'cookie storm drop'}, 1);
+                stormShimmer.dur = Math.ceil(Math.random() * 4 + 1);
+                stormShimmer.life = Math.ceil(Game.fps * stormShimmer.dur);
+                stormShimmer.sizeMult = Math.random() * 0.75 + 0.25;
+            }
+            
+            for (var ti in Game.shimmerTypes) {
+                var me = Game.shimmerTypes[ti];
+                if (me.spawnsOnTimer && me.spawnConditions()) {
+                    if (!me.spawned) {
+                        me.time++;
+                        if (Math.random() < Math.pow(Math.max(0, (me.time - me.minTime) / (me.maxTime - me.minTime)), 5)) {
+                            var newShimmer = new Game.shimmer(ti);
+                            newShimmer.spawnLead = 1;
+                            maybeDoubleTimerSpawn(ti);
+                            me.spawned = 1;
                         }
                     }
                 }
-                
-                return shimmer;
-            };
-            Game.shimmer._retripledLuckHooked = true;
-        }
+            }
+        };
+        Game.updateShimmers._jneRetripledUpdateShimmersHooked = true;
+        Game.updateShimmers._jneWrappedVanillaUpdateShimmers = vanillaUpdateShimmers;
     }
     
     function setupGoldenStopwatch() {

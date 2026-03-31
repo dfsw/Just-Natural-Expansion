@@ -5,7 +5,7 @@
     'use strict';
     
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.4.1';
+    var modVersion = '0.4.2';
     var debugMode = false; 
     
     function debugLog() {
@@ -1413,6 +1413,16 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     enableCookieAgeAfterLoad();
                 }
             } else {
+                // This ensures progress is preserved when toggling off and can be restored when toggling back on
+                try {
+                    if (window.CookieAge && window.CookieAge.getSaveData) {
+                        if (!Game.JNE) Game.JNE = {};
+                        Game.JNE.cookieAgeSavedData = window.CookieAge.getSaveData();
+                    }
+                } catch (e) {
+                    errorLog('Failed to save Cookie Age data before disabling:', e);
+                }
+                
                 // Disable Cookie Age mod functionality
                 if (window.CookieAge && window.CookieAge.disable) {
                     window.CookieAge.disable();
@@ -11651,9 +11661,11 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
 
         flushPendingAchievementAwards();
         
-        // Apply Cookie Age save now that systems are initialized (only if enabled)
+        // Apply Cookie Age save now that systems are initialized
+        // CRITICAL: Always restore save data regardless of enabled state to prevent data loss
+        // The applySaveData function will handle the data appropriately whether enabled or not
         try {
-            if (Game.JNE && Game.JNE.cookieAgeSavedData && window.CookieAge && window.CookieAge.applySaveData && !!modSettings.enableCookieAge) {
+            if (Game.JNE && Game.JNE.cookieAgeSavedData && window.CookieAge && window.CookieAge.applySaveData) {
                 window.CookieAge.applySaveData(Game.JNE.cookieAgeSavedData);
                 Game.JNE.cookieAgeSavedData = null;
             }
@@ -12060,6 +12072,10 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 try {
                     if (typeof window !== 'undefined' && window.CookieAge && window.CookieAge.getSaveData) {
                         cookieAgeData = window.CookieAge.getSaveData();
+                    } else if (Game.JNE && Game.JNE.cookieAgeSavedData) {
+                        // Fallback: If Cookie Age script is not loaded but we have stashed save data
+                        // (e.g., user disabled Cookie Age and never re-enabled), use the stashed data
+                        cookieAgeData = Game.JNE.cookieAgeSavedData;
                     }
                 } catch (e) {
                     errorLog('mod.saveSystem.save: Error getting Cookie Age save data:', e);

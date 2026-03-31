@@ -27,7 +27,6 @@ DownlineM.parent = Game.Objects && Game.Objects['Fractal engine'] ? Game.Objects
     refresh: function() {}
 };
 
-// Preserve highest value before attaching minigame
 if (DownlineM.parent && DownlineM.parent.highest !== undefined) {
     var preservedHighest = DownlineM.parent.highest;
     DownlineM.parent.minigame = DownlineM;
@@ -47,7 +46,6 @@ function ensureFractalEngineHighest() {
     var fe = getFractalEngine();
     if (!fe) return;
     
-    // If highest is NaN or invalid, fix it
     if (typeof fe.highest !== 'number' || isNaN(fe.highest)) {
         fe.highest = fe.amount || 0;
     }
@@ -88,7 +86,6 @@ DownlineM.launch = function() {
     var fractalEngine = getFractalEngine();
     M.name = (fractalEngine && fractalEngine.minigameName) || 'Downline';
     
-    // Ensure highest is not NaN
     ensureFractalEngineHighest();
 };
 
@@ -3550,7 +3547,6 @@ function initializeDownlineMinigame() {
     function bootMinigame() {
         if (!fractalEngine) return;
         
-        // Ensure highest is not NaN before initialization
         ensureFractalEngineHighest();
         
         if (!fractalEngine.minigameLoaded) {

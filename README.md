@@ -6261,6 +6261,9 @@ Fill your business plan with promotions, stunts, feature improvements, back alle
 
 ## Changelog
 
+### Version 0.4.2
+* Fixed various and surprisingly widespread issues that crept in with the last major update that interfered with proper spell casting and prediction. Everything should be compatible with other mods and FTHOF Planners again. My bad.
+
 ### Version 0.4.1
 * Downline should now have better background support for continuing to run when the minigame is closed or the tab isnt frontmost. If the garden continues to tick Downline should as well. 
 * Fixed a bug that caused some odd behaviors with pantheon god unslotting and worship swap consumption.  
