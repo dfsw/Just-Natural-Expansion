@@ -4041,8 +4041,6 @@ var cpsModifiersRegistered = false;
     }
     
     function setupFortuneSoundSelector() {
-        if (!Game.Has('Fortune tolls for you')) return;
-        
         var selector = Game.Upgrades['Golden cookie sound selector'];
         if (!selector || selector._fortuneSoundAdded) return;
         
@@ -4061,26 +4059,30 @@ var cpsModifiersRegistered = false;
             return '<div style="text-align:center;">Golden cookie: <b>' + gcChoices[Game.chimeType].name + '</b><br>Fortune cookie: <b>' + gcChoices[fortuneIndex].name + '</b></div><div class="line"></div>' + this.ddesc;
         };
         
-        // Don't initialize fortuneChimeType here - let it be undefined until user makes a selection
-        if (!Game.playFortuneChime) {
-            Game.playFortuneChime = function() {
-                if (Game.fortuneChimeType === undefined) {
-                    // no selection yet play golden cookie sound
-                    Game.playGoldenCookieChime();
-                }
-                else if (Game.fortuneChimeType == 0) {
-                    // No sound selected
-                }
-                else if (Game.fortuneChimeType == 1) PlaySound('snd/chime.mp3');
-                else if (Game.fortuneChimeType == 2) PlaySound('snd/fortune.mp3');
-                else if (Game.fortuneChimeType == 3) PlaySound('snd/cymbalRev.mp3');
-                else if (Game.fortuneChimeType == 4) {
-                    Game.wrinklerSquishSound++;
-                    if (Game.wrinklerSquishSound > 4) Game.wrinklerSquishSound -= 4;
-                    PlaySound('snd/squeak' + Game.wrinklerSquishSound + '.mp3');
-                }
-            };
+        // CCSE compatibility: sync CCSE.config.chimeType with Game.chimeType on load
+        if (typeof CCSE !== 'undefined' && CCSE.config) {
+            var chimeNames = ['No sound', 'Chime', 'Fortune', 'Cymbal', 'Squeak'];
+            CCSE.config.chimeType = chimeNames[Game.chimeType] || 'No sound';
+            console.log('[Fortune Sound] Synced CCSE.config.chimeType to: ' + CCSE.config.chimeType);
         }
+        
+        Game.playFortuneChime = function() {
+            if (Game.fortuneChimeType === undefined) {
+                // no selection yet play golden cookie sound
+                if (Game.playGoldenCookieChime) Game.playGoldenCookieChime();
+            }
+            else if (Game.fortuneChimeType == 0) {
+                // No sound selected
+            }
+            else if (Game.fortuneChimeType == 1) PlaySound('snd/chime.mp3');
+            else if (Game.fortuneChimeType == 2) PlaySound('snd/fortune.mp3');
+            else if (Game.fortuneChimeType == 3) PlaySound('snd/cymbalRev.mp3');
+            else if (Game.fortuneChimeType == 4) {
+                Game.wrinklerSquishSound++;
+                if (Game.wrinklerSquishSound > 4) Game.wrinklerSquishSound -= 4;
+                PlaySound('snd/squeak' + Game.wrinklerSquishSound + '.mp3');
+            }
+        };
         
         var originalChoicesFunction = selector.choicesFunction;
         var originalChoicesPick = selector.choicesPick;
@@ -4134,6 +4136,11 @@ var cpsModifiersRegistered = false;
                 Game.playFortuneChime();
             } else {
                 Game.chimeType = id;
+                // CCSE compatibility: also update CCSE.config.chimeType
+                if (typeof CCSE !== 'undefined' && CCSE.config) {
+                    var chimeNames = ['No sound', 'Chime', 'Fortune', 'Cymbal', 'Squeak'];
+                    CCSE.config.chimeType = chimeNames[id] || 'No sound';
+                }
                 Game.playGoldenCookieChime();
             }
         };
@@ -4165,8 +4172,6 @@ var cpsModifiersRegistered = false;
             // Fish: never double here.
             if (i === 'fish') return;
             if (hasRetripledLuck) {
-                console.log('2% chance');
-
                 var chance =  0.02;
                 if (jneIndependentRandom() < chance) {
                     var rExtra = new Game.shimmer(i, {_retripledLuckExtra: true});
