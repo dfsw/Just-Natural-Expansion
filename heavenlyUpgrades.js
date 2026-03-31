@@ -6299,6 +6299,15 @@ var cpsModifiersRegistered = false;
                 }
             });
         }
+        
+        // Also restore donuts from boughtUpgrades array (new format)
+        if (saveData.boughtUpgrades && Array.isArray(saveData.boughtUpgrades)) {
+            DONUT_NAMES.forEach(function(name) {
+                if (saveData.boughtUpgrades.indexOf(name) !== -1 && Game.Upgrades[name]) {
+                    Game.Upgrades[name].bought = 1;
+                }
+            });
+        }
 
         // Apply settings
         if (saveData.settings && saveData.settings.cpsDisplayUnit) {
