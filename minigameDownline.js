@@ -1,4 +1,4 @@
-// Downline Minigame 1.0.1
+// Downline Minigame 1.0.2
 
 (function() {
 'use strict';
@@ -27,28 +27,19 @@ DownlineM.parent = Game.Objects && Game.Objects['Fractal engine'] ? Game.Objects
     refresh: function() {}
 };
 
-if (DownlineM.parent && DownlineM.parent.highest !== undefined) {
-    var preservedHighest = DownlineM.parent.highest;
+// Only assign minigame if we have the real building object
+if (Game.Objects && Game.Objects['Fractal engine']) {
     DownlineM.parent.minigame = DownlineM;
-    // Restore if it got corrupted
+    
+    // Ensure highest is never NaN (can happen if old saves have unencoded JSON with commas)
+    // This is a defensive fix for saves created before the encoding was added
     if (typeof DownlineM.parent.highest !== 'number' || isNaN(DownlineM.parent.highest)) {
-        DownlineM.parent.highest = preservedHighest;
+        DownlineM.parent.highest = DownlineM.parent.amount || 0;
     }
-} else {
-    DownlineM.parent.minigame = DownlineM;
 }
 
 function getFractalEngine() {
     return Game.Objects['Fractal engine'];
-}
-
-function ensureFractalEngineHighest() {
-    var fe = getFractalEngine();
-    if (!fe) return;
-    
-    if (typeof fe.highest !== 'number' || isNaN(fe.highest)) {
-        fe.highest = fe.amount || 0;
-    }
 }
 
 var BAR_MAX = 1000;
@@ -85,8 +76,6 @@ DownlineM.launch = function() {
     var M = this;
     var fractalEngine = getFractalEngine();
     M.name = (fractalEngine && fractalEngine.minigameName) || 'Downline';
-    
-    ensureFractalEngineHighest();
 };
 
 DownlineM.dragonBoostTooltip = function() {
@@ -2377,11 +2366,16 @@ DownlineM.init = function(div) {
     function addTooltipListeners(el) {
       if (Game.tooltip && Game.tooltip.draw) {
         el.addEventListener('mouseenter', function () {
+          var pinToEl = !!(el && el.classList && (el.classList.contains('downline-action-item') || el.classList.contains('downline-active-chip') || el.classList.contains('downline-release-wrap') || el.id === 'downline-release-btn'));
+          if (pinToEl && typeof Game.setOnCrate === 'function') Game.setOnCrate(el);
           Game.tooltip.dynamic = 1;
-          Game.tooltip.draw(el, function () { return buildDownlineTooltipHtml(el); }, 'bottom');
+          Game.tooltip.draw(el, function () { return buildDownlineTooltipHtml(el); }, pinToEl ? 'middle' : 'bottom');
           if (Game.tooltip.wobble) Game.tooltip.wobble();
         });
-        el.addEventListener('mouseleave', function () { Game.tooltip.shouldHide = 1; });
+        el.addEventListener('mouseleave', function () {
+          if (typeof Game.setOnCrate === 'function') Game.setOnCrate(0);
+          Game.tooltip.shouldHide = 1;
+        });
       }
     }
 
@@ -2616,7 +2610,11 @@ DownlineM.init = function(div) {
         var tenPct = currentBoost * 0.1;
         function colorClass(met) { return met ? 'green' : 'red'; }
         var prestigeSpeedMult = Math.pow(2, G.prestige);
-        var tooltipHtml = 'Release Fractal Engine Minigame. Your progress in the minigame will be reset back to the beginning but you will earn fractal prestige points!<br><br>' +
+        var tooltipHtml = '<b>Release Fractal Engine Minigame</b><div class="line"></div>' +
+          'Reset your Downline progress to earn <b>Fractal Prestige</b> and permanently increase your Downline speed until next ascension.<br><br>' +
+          '<span class="green">Next release would add: +' + tenPct.toFixed(2) + '%</span>' +
+          (G.prestige >= 1 ? ('<br><span class="green">Current speed boost: ' + prestigeSpeedMult + '×</span>') : '') +
+          '<br><br>' +
           'Unlocks At Peak Stats:<br>' +
           '<div class="' + colorClass(G.releaseMetPlayers) + '">&bull; At least 5000 Players</div>' +
           '<div class="' + colorClass(G.releaseMetHype) + '">&bull; At least 800 Hype</div>' +
@@ -2624,12 +2622,7 @@ DownlineM.init = function(div) {
           '<div class="' + colorClass(G.releaseMetReferrals) + '">&bull; At least 300 Word of Mouth</div><br>' +
           'Requires:<br>' +
           '<div class="' + colorClass(releaseMetCurrentPlayers) + '">&bull; 1500+ current Players</div>' +
-          '<div class="' + colorClass(G.reputation > 750) + '">&bull; A current Reputation of at least 750<br><br></div>' +
-          'Each time you build a Fractal Engine Minigame the speed of the game will double and 10% of the current boost will be added permanently until next ascension. ' +
-          '<span class="green"><br>Next release would add: +' + tenPct.toFixed(2) + '%</span>';
-        if (G.prestige >= 1) {
-          tooltipHtml += '<br><span class="green">Current speed boost: ' + prestigeSpeedMult + '×</span>';
-        }
+          '<div class="' + colorClass(G.reputation > 750) + '">&bull; A current Reputation of at least 750</div>';
         releaseWrap.setAttribute('data-desc-html', tooltipHtml);
         releaseWrap.removeAttribute('data-desc');
       }
@@ -3112,11 +3105,15 @@ DownlineM.init = function(div) {
       var saveString = '';
       try {
         saveString = JSON.stringify(payload);
+        // Encode to prevent commas from breaking vanilla's comma-separated save format
+        // Vanilla expects: amount,bought,totalCookies,level,minigameSave,muted,highest
+        // If minigameSave contains commas, it corrupts the field parsing
+        saveString = encodeURIComponent(saveString);
       } catch (e) {
         saveString = '';
       }
       if (window.DownlineMinigame && window.DownlineMinigame.writeCache) {
-        window.DownlineMinigame.writeCache(saveString);
+        window.DownlineMinigame.writeCache(decodeURIComponent(saveString));
       }
       return saveString;
     };
@@ -3128,7 +3125,15 @@ DownlineM.init = function(div) {
       }
       var data = null;
       try {
-        data = JSON.parse(str);
+        // Decode if the save was URL-encoded (to handle commas in vanilla save format)
+        var decoded = str;
+        try {
+          decoded = decodeURIComponent(str);
+        } catch (decodeErr) {
+          // If decode fails, try parsing the original string (backwards compatibility)
+          decoded = str;
+        }
+        data = JSON.parse(decoded);
       } catch (e) {
         DownlineM._resetImpl(false);
         return;
@@ -3547,8 +3552,6 @@ function initializeDownlineMinigame() {
     function bootMinigame() {
         if (!fractalEngine) return;
         
-        ensureFractalEngineHighest();
-        
         if (!fractalEngine.minigameLoaded) {
             fractalEngine.minigameLoaded = true;
             fractalEngine.minigameName = fractalEngine.minigameName || 'Downline';
@@ -3565,6 +3568,11 @@ function initializeDownlineMinigame() {
 
         if (!fractalEngine.minigame) {
             fractalEngine.minigame = DownlineM;
+        }
+        
+        // Ensure highest is never NaN (can happen if save data is missing the field)
+        if (typeof fractalEngine.highest !== 'number' || isNaN(fractalEngine.highest)) {
+            fractalEngine.highest = fractalEngine.amount || 0;
         }
 
         if (isConsoleLoading && !fractalEngine.minigameUrl) {

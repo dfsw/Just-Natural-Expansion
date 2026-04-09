@@ -5,7 +5,7 @@
     'use strict';
     
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.4.2';
+    var modVersion = '0.4.3';
     var debugMode = false; 
     
     function debugLog() {
@@ -2433,6 +2433,15 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                                     var tooltipElement = document.getElementById(tooltipIconId);
                                     if (tooltipElement && window.CookieAge.puzzleTooltips[tooltipIconId]) {
                                         Game.attachTooltip(tooltipElement, window.CookieAge.puzzleTooltips[tooltipIconId]);
+                                        // Pin tooltip to the icon bounds (vanilla crate behavior)
+                                        if (typeof Game.setOnCrate === 'function') {
+                                            tooltipElement.addEventListener('mouseenter', function(e) {
+                                                Game.setOnCrate(e.currentTarget);
+                                            });
+                                            tooltipElement.addEventListener('mouseleave', function() {
+                                                Game.setOnCrate(0);
+                                            });
+                                        }
                                         // Set dynamic flag on hover so tooltip can update
                                         var originalOnMouseOver = tooltipElement.onmouseover;
                                         tooltipElement.onmouseover = function(original, el) {
@@ -4986,6 +4995,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         // Step 2: Delete ALL mod upgrades from the game
         for (var i = 0; i < modUpgradeNames.length; i++) {
             var upgradeName = modUpgradeNames[i];
+            if (heavenlyGardenUpgradeNames.indexOf(upgradeName) !== -1) continue;
             if (Game.Upgrades[upgradeName]) {
                 delete Game.Upgrades[upgradeName];
             }
@@ -5021,6 +5031,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         var modUpgradeNames = getModUpgradeNames();
         for (var i = 0; i < modUpgradeNames.length; i++) {
             var upgradeName = modUpgradeNames[i];
+            if (heavenlyGardenUpgradeNames.indexOf(upgradeName) !== -1) continue;
             if (Game.Upgrades[upgradeName]) {
                 delete Game.Upgrades[upgradeName];
             }
@@ -11662,7 +11673,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         flushPendingAchievementAwards();
         
         // Apply Cookie Age save now that systems are initialized
-        // CRITICAL: Always restore save data regardless of enabled state to prevent data loss
         // The applySaveData function will handle the data appropriately whether enabled or not
         try {
             if (Game.JNE && Game.JNE.cookieAgeSavedData && window.CookieAge && window.CookieAge.applySaveData) {

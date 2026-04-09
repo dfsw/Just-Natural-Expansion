@@ -25,7 +25,7 @@ Big thanks to the amazing folks in the [Cookie Clicker Discord](https://discord.
 
 Thank you to the "beta" testers who were willing to help me balance and test, I have now struck a balance between people saying things are too hard and things are too easy, which I suspect is the sweet middle ground. 
 
-Special thanks to CursedSliver and The_1_Shadow for donating art to the mod, anyone who wants to improve and donate art is more than welcome as it is not my skillset.
+Special thanks to CursedSliver, The_1_Shadow, and Fractyl for donating art to the mod, anyone who wants to improve and donate art is more than welcome as it is not my skillset, all art is temporary until someone donates something improved. 
 
 #### Why This Mod Exists
 
@@ -84,7 +84,7 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 ## Achievements
 
 ### Challenge Achievements
-*Note: Yes, these challenges are all doable, and no, none of them are absurdly impossible (No [ECM Style](https://lookas123.github.io/ECM/) Here). But don’t expect a free ride. These achievements will not hold your hand, and they will not go easy on you. Think of them less as a grind and more as puzzles that demand clever planning, precise timing, and maybe a lucky cookie or a well-placed upgrade. This is late-game content meant to extend your playtime, not something to finish in a single week.*
+*Note: Yes, these challenges are all doable, and no, none of them are absurdly impossible (No [ECM Style](https://lookas123.github.io/ECM/) Here). But don’t expect a free ride. These achievements will not hold your hand, and they will not go easy on you. Think of them less as a grind and more as puzzles that demand clever planning, precise timing, and maybe a lucky cookie or a well-placed upgrade. This is late-game content meant to extend your playtime, not something to finish in a single week. Several people have now completed all challenge achievements!*
 
 ##### Requires Born Again Mode
 <table>
@@ -6260,6 +6260,14 @@ Fill your business plan with promotions, stunts, feature improvements, back alle
 </table>
 
 ## Changelog
+
+### Version 0.4.3
+* Tooltips should behave a little better in Downline Minigame and Mysteries of the Cookie Age statuses now. 
+* Fixed a bug in the heavenly ugrades which may have caused the consumable fortunes to be restored more often then they were suppose to. 
+* Fixed a bug that could have caused unexpected behavior when trying to edit a perm upgrade slot with Edible Pens. 
+* Fixed various heavenly upgrade garden plant issues, garden minigame sure is a royal pain to work with. 
+* A couple of updated icons thanks to Fractyl for the donation of improved art. 
+* Various other small bug fixes and improvements to stuff that probably only I noticed. 
 
 ### Version 0.4.2
 * Fixed various and surprisingly widespread issues that crept in with the last major update that interfered with proper spell casting and prediction. Everything should be compatible with other mods and FTHOF Planners again. My bad.

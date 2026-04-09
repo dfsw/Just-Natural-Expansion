@@ -3,7 +3,7 @@
     'use strict';
     
     const SIMPLE_MOD_NAME = 'Just Natural Expansion';
-    const MOD_HU_VERSION = '1.0.8';
+    const MOD_HU_VERSION = '1.0.9';
     var isInitialized = false;
     const MOD_ICON = [15, 7];
     const CUSTOM_SPRITE_SHEET_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
@@ -26,6 +26,7 @@
         if (sheetName === 'garden') return GARDEN_SPRITE_SHEET_URL;
         return '';
     }
+    
 
     function jneEvery(prop, ms) {
         var now = Date.now();
@@ -171,13 +172,36 @@
             if (!Game.JNE.heavenlyUpgradesSavedData) Game.JNE.heavenlyUpgradesSavedData = {};
             var now = jneEvery('_fortuneCookieRegenLastCheck', 60000);
             if (now) {
-                var interval = Game.Has('Doordashing every day') ? 24 * 60 * 60 * 1000 : (Game.Has('Second day takeout') ? 2 * 24 * 60 * 60 * 1000 : (Game.Has('Chinese leftovers') ? 3 * 24 * 60 * 60 * 1000 : null));
-                if (interval) {
-                    var lastReset = Game.JNE.heavenlyUpgradesSavedData.fortuneCookieLastResetTime;
-                    if (!lastReset || (now - lastReset >= interval)) {
+                // Use the shortest owned interval (1d/2d/3d)
+                var intervals = [];
+                if (Game.Has('Doordashing every day')) intervals.push(24 * 60 * 60 * 1000);
+                if (Game.Has('Second day takeout')) intervals.push(2 * 24 * 60 * 60 * 1000);
+                if (Game.Has('Chinese leftovers')) intervals.push(3 * 24 * 60 * 60 * 1000);
+                var interval = intervals.length ? Math.min.apply(null, intervals) : 0;
+                if (interval > 0) {
+                    var gcUsed = (Game.fortuneGC === 1);
+                    var cpsUsed = (Game.fortuneCPS === 1);
+                    var gcLastUseTime = Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastResetTime || 0;
+                    var cpsLastUseTime = Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastResetTime || 0;
+
+                    // Start each timer only once that specific fortune is used
+                    if (gcUsed && !gcLastUseTime) {
+                        Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastResetTime = now;
+                        gcLastUseTime = now;
+                    }
+                    if (cpsUsed && !cpsLastUseTime) {
+                        Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastResetTime = now;
+                        cpsLastUseTime = now;
+                    }
+
+                    // Reset each fortune independently once its own timer elapses
+                    if (gcLastUseTime && (now - gcLastUseTime >= interval)) {
                         Game.fortuneGC = 0;
+                        Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastResetTime = 0;
+                    }
+                    if (cpsLastUseTime && (now - cpsLastUseTime >= interval)) {
                         Game.fortuneCPS = 0;
-                        Game.JNE.heavenlyUpgradesSavedData.fortuneCookieLastResetTime = now;
+                        Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastResetTime = 0;
                     }
                 }
             }
@@ -542,13 +566,13 @@
             var upgrade = Game.Upgrades[slotNames[i]];
             if (upgrade && !upgrade._erasablePensModified) {
                 var originalActivate = upgrade.activateFunction;
-                upgrade.activateFunction = (function(slot) {
+                upgrade.activateFunction = (function(slot, originalActivateFn) {
                     return function() {
                         var savedOnAscend = Game.OnAscend;
                         try {
                             if (Game.OnAscend !== 1) Game.OnAscend = 1;
-                            if (originalActivate && typeof originalActivate === 'function') {
-                                originalActivate.call(this);
+                            if (originalActivateFn && typeof originalActivateFn === 'function') {
+                                originalActivateFn.call(this);
                             } else if (Game.AssignPermanentSlot) {
                                 Game.AssignPermanentSlot(slot);
                             }
@@ -556,7 +580,7 @@
                             Game.OnAscend = savedOnAscend;
                         }
                     };
-                })(i);
+                })(i, originalActivate);
                 upgrade._erasablePensModified = true;
             }
         }
@@ -1955,9 +1979,11 @@ var cpsModifiersRegistered = false;
         if (!M || !M.plants || !M.plantsById) {
             return;
         }
+
         
         
         if (M._gardenPlantsInjected) {
+            setupPlantHooks(M);
             return;
         }
         
@@ -2023,53 +2049,59 @@ var cpsModifiersRegistered = false;
             }
         }
 
-        M.plants['sparklingSugarCane'] = {
-            name: 'Sparkling sugar cane',
-            icon: 34,
-            cost: 8 * 60,
-            costM: 5000000000000,
-            ageTick: 0.75,
-            ageTickR: 0.5,
-            mature: 80,
-            unlocked: 0,
-            children: [],
-            effsStr: '<div class="green">&bull; sugar lumps have 1% chance to double when gained</div><div class="red">&bull; CpS -2%</div><div class="red">&bull; cannot handle cold climates; 95% chance to die when frozen</div>',
-            q: 'A tropical variant of sugar cane that produces exceptionally sweet crystals. Its delicate nature makes it vulnerable to cold, but the sugary bounty is worth the risk.'
-        };
+        if (!M.plants['sparklingSugarCane']) {
+            M.plants['sparklingSugarCane'] = {
+                name: 'Sparkling sugar cane',
+                icon: 34,
+                cost: 8 * 60,
+                costM: 5000000000000,
+                ageTick: 0.75,
+                ageTickR: 0.5,
+                mature: 80,
+                unlocked: 0,
+                children: [],
+                effsStr: '<div class="green">&bull; sugar lumps have 1% chance to double when gained</div><div class="red">&bull; CpS -2%</div><div class="red">&bull; cannot handle cold climates; 95% chance to die when frozen</div>',
+                q: 'A tropical variant of sugar cane that produces exceptionally sweet crystals. Its delicate nature makes it vulnerable to cold, but the sugary bounty is worth the risk.'
+            };
+        }
 
-        M.plants['krazyKudzu'] = {
-            name: 'Krazy kudzu',
-            icon: 35,
-            cost: 5 * 60,
-            costM: 1000000000000,
-            ageTick: 0.1,
-            ageTickR: 2.0,
-            mature: 8,
-            unlocked: 0,
-            children: [],
-            effsStr: '<div class="green">&bull; has 10% chance to spawn a golden cookie on decay</div><div class="red">&bull; golden cookie frequency -1%</div><div class="red">&bull; may overtake nearby plants</div>',
-            q: 'An invasive vine that grows with reckless abandon. Though it chokes out other plants, its flowers attract rare butterflies that some say bring good fortune.',
-            weed: true,
-            contam: 0.50,
-            detailsStr: 'Spreads aggressively and grows extraordinarily unpredictably.',
-            onDie: kudzuOnDie
-        };
+        if (!M.plants['krazyKudzu']) {
+            M.plants['krazyKudzu'] = {
+                name: 'Krazy kudzu',
+                icon: 35,
+                cost: 5 * 60,
+                costM: 1000000000000,
+                ageTick: 0.1,
+                ageTickR: 2.0,
+                mature: 8,
+                unlocked: 0,
+                children: [],
+                effsStr: '<div class="green">&bull; has 10% chance to spawn a golden cookie on decay</div><div class="red">&bull; golden cookie frequency -1%</div><div class="red">&bull; may overtake nearby plants</div>',
+                q: 'An invasive vine that grows with reckless abandon. Though it chokes out other plants, its flowers attract rare butterflies that some say bring good fortune.',
+                weed: true,
+                contam: 0.50,
+                detailsStr: 'Spreads aggressively and grows extraordinarily unpredictably.',
+                onDie: kudzuOnDie
+            };
+        }
 
-        M.plants['magicMushroom'] = {
-            name: 'Magic mushroom',
-            icon: 36,
-            cost: 10,
-            costM: 100000000,
-            ageTick: 2,
-            ageTickR: 0.2,
-            mature: 30,
-            unlocked: 0,
-            children: [],
-            effsStr: '<div class="green">&bull; your least productive building is 100% more effective</div><div class="red">&bull; golden cookie frequency -1%</div>',
-            q: 'A psychotropic fungus known for its peculiar effect on perception.',
-            fungus: true,
-            onHarvest: mushroomOnHarvest
-        };
+        if (!M.plants['magicMushroom']) {
+            M.plants['magicMushroom'] = {
+                name: 'Magic mushroom',
+                icon: 36,
+                cost: 10,
+                costM: 100000000,
+                ageTick: 2,
+                ageTickR: 0.2,
+                mature: 30,
+                unlocked: 0,
+                children: [],
+                effsStr: '<div class="green">&bull; your least productive building is 100% more effective</div><div class="red">&bull; golden cookie frequency -1%</div>',
+                q: 'A psychotropic fungus known for its peculiar effect on perception.',
+                fungus: true,
+                onHarvest: mushroomOnHarvest
+            };
+        }
         
         var nextId = M.plantsById.length;
         
@@ -2180,8 +2212,22 @@ var cpsModifiersRegistered = false;
             M._loadHooked = true;
             var origLoad = M.load;
             M.load = function(str) {
+                // Ensure custom plant definitions exist before decoding saved garden data.
+                if (!M.plants || !M.plantsById || !M.plants['sparklingSugarCane']) {
+                    M._gardenPlantsInjected = false;
+                    setupNewPlants();
+                }
+
                 origLoad.call(this, str);
+
+                // Load may replace minigame methods/state; force hook rebind pass.
+                M._iconFixSetup = false;
                 setupPlantHooks(M);
+
+                // Ensure custom effects are active immediately after loading a save.
+                if (M.computeEffs) M.computeEffs();
+                if (M.buildPlot) M.buildPlot();
+                if (M.buildPanel) M.buildPanel();
             };
         }
         
@@ -2194,16 +2240,20 @@ var cpsModifiersRegistered = false;
                     // DO NOT set _gardenPlantsInjected = false - it destroys our plants during save load
                     setupNewPlants();
                     M._gardenPlantsInjected = true;
+                } else {
+                    // Init can rebuild tooltip methods; ensure wrappers stay attached.
+                    M._iconFixSetup = false;
+                    setupPlantHooks(M);
                 }
             };
         }
     }
     
     function setupPlantHooks(M) {
-        if (!M || M._plantHooksSetup) {
+        if (!M) {
             return;
         }
-        M._plantHooksSetup = true;
+
 
         if (!M._iconFixSetup) {
             M._iconFixSetup = true;
@@ -2313,10 +2363,30 @@ var cpsModifiersRegistered = false;
                 var origDraw = M.draw;
                 M.draw = function() {
                     origDraw.call(this);
+                    var cur = M.cursorL || l('gardenCursor');
+                    if (!cur || cur.id !== 'gardenCursor') return;
+                    var customKeys = { sparklingSugarCane: 1, krazyKudzu: 1, magicMushroom: 1 };
+                    if (!M.cursor || M.seedSelected < 0) {
+                        cur.removeAttribute('data-custom-plant');
+                        cur.setAttribute('data-vanilla-plant', 'true');
+                        cur.style.removeProperty('background');
+                        return;
+                    }
+                    var seed = M.plantsById[M.seedSelected];
+                    var isCustomSeed = !!(seed && seed.key && customKeys[seed.key] && seed.icon >= 34 && seed.icon <= 36);
+                    if (isCustomSeed) {
+                        fixPlantIcon(cur, seed.icon, 0, seed.key);
+                    } else {
+                        cur.removeAttribute('data-custom-plant');
+                        cur.setAttribute('data-vanilla-plant', 'true');
+                        cur.style.removeProperty('background');
+                        var icon = [0, seed.icon];
+                        cur.style.backgroundPosition = (-icon[0] * 48) + 'px ' + (-icon[1] * 48) + 'px';
+                    }
                 };
             }
 
-            if (M.buildPanel) {
+            if (M.buildPanel && !M.buildPanel._jneCustomPlantWrapped) {
                 var orig = M.buildPanel;
                 M.buildPanel = function() {
                     orig.call(this);
@@ -2336,6 +2406,7 @@ var cpsModifiersRegistered = false;
                         }
                     }
                 };
+                M.buildPanel._jneCustomPlantWrapped = true;
             }
 
             if (M.buildPlot && !M._buildPlotHookedForData) {
@@ -2362,7 +2433,7 @@ var cpsModifiersRegistered = false;
                     }
                 };
             }
-            if (M.seedTooltip) {
+            if (M.seedTooltip && !M.seedTooltip._jneCustomPlantWrapped) {
                 var origSeedTooltip = M.seedTooltip;
                 M.seedTooltip = function(id) {
                     var func = origSeedTooltip.call(this, id);
@@ -2398,9 +2469,10 @@ var cpsModifiersRegistered = false;
                     }
                     return func;
                 };
+                M.seedTooltip._jneCustomPlantWrapped = true;
             }
             
-            if (M.tileTooltip) {
+            if (M.tileTooltip && !M.tileTooltip._jneCustomPlantWrapped) {
                 var origTileTooltip = M.tileTooltip;
                 M.tileTooltip = function(x, y) {
                     var func = origTileTooltip.call(this, x, y);
@@ -2440,9 +2512,10 @@ var cpsModifiersRegistered = false;
                     }
                     return func;
                 };
+                M.tileTooltip._jneCustomPlantWrapped = true;
             }
 
-            if (M.toolTooltip) {
+            if (M.toolTooltip && !M.toolTooltip._jneCustomPlantWrapped) {
                 var origToolTooltip = M.toolTooltip;
                 M.toolTooltip = function(id) {
                     var func = origToolTooltip.call(this, id);
@@ -2451,7 +2524,9 @@ var cpsModifiersRegistered = false;
                             var result = func();
                             
                             var tool = M.toolsById && M.toolsById[id];
-                            if (tool && tool.name && tool.name.indexOf('Garden information') !== -1 && result) {
+                            var hasGardenInfoAnchor = !!(result && result.indexOf('Combined effects of all your plants:') !== -1);
+                            var isGardenInfoTool = !!(tool && tool.name && tool.name.indexOf('Garden information') !== -1);
+                            if (result && (isGardenInfoTool || hasGardenInfoAnchor)) {
                                 var customInfo = '';
                                 
                                 if (M.effs && M.effs.magicMushroomMult > 0) {
@@ -2532,6 +2607,9 @@ var cpsModifiersRegistered = false;
                                 }
                                 
                                 if (customInfo) {
+                                    // Keep this insertion idempotent across repeated wrappers/redraws.
+                                    result = result.replace(/<!-- JNE_GARDEN_INFO_START -->[\s\S]*?<!-- JNE_GARDEN_INFO_END -->/g, '');
+                                    customInfo = '<!-- JNE_GARDEN_INFO_START -->' + customInfo + '<!-- JNE_GARDEN_INFO_END -->';
                                     result = result.replace(
                                         /(<div>Combined effects of all your plants:<\/div>)/,
                                         '$1' + customInfo
@@ -2544,11 +2622,11 @@ var cpsModifiersRegistered = false;
                     }
                     return func;
                 };
+                M.toolTooltip._jneCustomPlantWrapped = true;
             }
         }
         
-        if (M.getMuts && !M._newPlantMutsHooked) {
-            M._newPlantMutsHooked = true;
+        if (M.getMuts && !M.getMuts._jneNewPlantMutsWrapped) {
             var originalGetMuts = M.getMuts;
             M.getMuts = function(neighs, neighsM) {
                 var muts = originalGetMuts.call(this, neighs, neighsM);
@@ -2571,60 +2649,59 @@ var cpsModifiersRegistered = false;
 
                 return muts;
             };
+            M.getMuts._jneNewPlantMutsWrapped = true;
         }
 
-        if (M.computeEffs && !M._newPlantEffsHooked) {
-            M._newPlantEffsHooked = true;
+        if (M.computeEffs && !M.computeEffs._jneNewPlantEffsWrapped) {
             var originalComputeEffs = M.computeEffs;
             M.computeEffs = function() {
                 originalComputeEffs.call(this);
 
-                if (!M.freeze) {
-                    var soilMult = M.soilsById[M.soil].effMult;
-                    var magicMushroomMult = 0;
+                var soilMult = M.soilsById[M.soil].effMult;
+                var magicMushroomMult = 0;
 
-                    for (var y = 0; y < 6; y++) {
-                        for (var x = 0; x < 6; x++) {
-                            var tile = M.plot[y][x];
-                            if (tile[0] > 0) {
-                                var me = M.plantsById[tile[0] - 1];
-                                var name = me.key;
-                                var stage = 0;
-                                if (tile[1] >= me.mature) stage = 4;
-                                else if (tile[1] >= me.mature * 0.666) stage = 3;
-                                else if (tile[1] >= me.mature * 0.333) stage = 2;
-                                else stage = 1;
+                for (var y = 0; y < 6; y++) {
+                    for (var x = 0; x < 6; x++) {
+                        var tile = M.plot[y][x];
+                        if (tile[0] > 0) {
+                            var me = M.plantsById[tile[0] - 1];
+                            var name = me.key;
+                            var stage = 0;
+                            if (tile[1] >= me.mature) stage = 4;
+                            else if (tile[1] >= me.mature * 0.666) stage = 3;
+                            else if (tile[1] >= me.mature * 0.333) stage = 2;
+                            else stage = 1;
 
-                                var mult = soilMult;
-                                if (stage == 1) mult *= 0.1;
-                                else if (stage == 2) mult *= 0.25;
-                                else if (stage == 3) mult *= 0.5;
-                                else mult *= 1;
+                            var mult = soilMult;
+                            if (stage == 1) mult *= 0.1;
+                            else if (stage == 2) mult *= 0.25;
+                            else if (stage == 3) mult *= 0.5;
+                            else mult *= 1;
 
-                                mult *= M.plotBoost[y][x][1];
+                            mult *= M.plotBoost[y][x][1];
 
-                                if (name == 'sparklingSugarCane') {
-                                    M.effs.cps *= 1 - 0.02 * mult;
-                                }
-                                else if (name == 'krazyKudzu') {
-                                    M.effs.goldenCookieFreq *= 1 - 0.01 * mult;
-                                    if (M.effs.wrathCookieFreq !== undefined) M.effs.wrathCookieFreq *= 1 - 0.01 * mult;
-                                }
-                                else if (name == 'magicMushroom') {
-                                    M.effs.goldenCookieFreq *= 1 - 0.01 * mult;
-                                    if (M.effs.wrathCookieFreq !== undefined) M.effs.wrathCookieFreq *= 1 - 0.01 * mult;
-                                    magicMushroomMult += mult;
-                                }
+                            if (name == 'sparklingSugarCane') {
+                                M.effs.cps *= 1 - 0.02 * mult;
+                            }
+                            else if (name == 'krazyKudzu') {
+                                M.effs.goldenCookieFreq *= 1 - 0.01 * mult;
+                                if (M.effs.wrathCookieFreq !== undefined) M.effs.wrathCookieFreq *= 1 - 0.01 * mult;
+                            }
+                            else if (name == 'magicMushroom') {
+                                M.effs.goldenCookieFreq *= 1 - 0.01 * mult;
+                                if (M.effs.wrathCookieFreq !== undefined) M.effs.wrathCookieFreq *= 1 - 0.01 * mult;
+                                magicMushroomMult += mult;
                             }
                         }
                     }
-
-                    if (!M.effs.buildingBoosts) M.effs.buildingBoosts = {};
-                    M.effs.magicMushroomMult = magicMushroomMult;
                 }
+                
+                if (!M.effs.buildingBoosts) M.effs.buildingBoosts = {};
+                M.effs.magicMushroomMult = magicMushroomMult;
 
                 Game.recalculateGains = 1;
             };
+            M.computeEffs._jneNewPlantEffsWrapped = true;
         }
 
         if (!Game._magicMushroomHooked) {
@@ -6098,9 +6175,8 @@ var cpsModifiersRegistered = false;
             
             // Save timers
             if (!Game.JNE.heavenlyUpgradesSavedData) Game.JNE.heavenlyUpgradesSavedData = {};
-            if (Game.JNE.heavenlyUpgradesSavedData.fortuneCookieLastResetTime) {
-                saveData.timers.fortuneCookieLastResetTime = Game.JNE.heavenlyUpgradesSavedData.fortuneCookieLastResetTime;
-            }
+            if (Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastResetTime) saveData.timers.fortuneGCLastResetTime = Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastResetTime;
+            if (Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastResetTime) saveData.timers.fortuneCPSLastResetTime = Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastResetTime;
             
             saveData.stats.cookieFishCaught = Game.JNE.cookieFishCaught || 0;
             saveData.stats.bingoJackpotWins = Game.JNE.bingoJackpotWins || 0;
@@ -6182,6 +6258,11 @@ var cpsModifiersRegistered = false;
     function load(saveData) {
         if (!saveData || typeof saveData !== 'object') return;
         
+        // Ensure all heavenly upgrades exist before restoring them
+        if (typeof createUpgrades === 'function') {
+            createUpgrades();
+        }
+        
         //Check for duplicate loads FIRST before any state modifications
         if (!Game.JNE) Game.JNE = {};
         
@@ -6229,10 +6310,12 @@ var cpsModifiersRegistered = false;
         var restoredCount = 0;
         var notFoundCount = 0;
         
-        if (saveData.boughtUpgrades && Array.isArray(saveData.boughtUpgrades)) {
-            // New condensed format - array of upgrade names
-            for (var i = 0; i < saveData.boughtUpgrades.length; i++) {
-                var upgradeName = saveData.boughtUpgrades[i];
+        var ownedUpgradeNames = (saveData.boughtUpgrades && Array.isArray(saveData.boughtUpgrades)) ? saveData.boughtUpgrades :
+            ((saveData.h && Array.isArray(saveData.h)) ? saveData.h : null); // old compact format
+        if (ownedUpgradeNames) {
+            // Array format - upgrade names only
+            for (var i = 0; i < ownedUpgradeNames.length; i++) {
+                var upgradeName = ownedUpgradeNames[i];
                 var upgrade = Game.Upgrades[upgradeName];
                 if (upgrade) {
                     upgrade.bought = 1;
@@ -6309,6 +6392,7 @@ var cpsModifiersRegistered = false;
             });
         }
 
+
         // Apply settings
         if (saveData.settings && saveData.settings.cpsDisplayUnit) {
             if (!window.modSettings) window.modSettings = {};
@@ -6340,6 +6424,16 @@ var cpsModifiersRegistered = false;
                     Game.Unlock('Sugar trade');
                 }
             }
+        }
+
+        // Apply timers
+        if (!Game.JNE) Game.JNE = {};
+        if (!Game.JNE.heavenlyUpgradesSavedData) Game.JNE.heavenlyUpgradesSavedData = {};
+        var legacyFortuneTimer = (saveData.timers && saveData.timers.fortuneCookieLastResetTime) ? saveData.timers.fortuneCookieLastResetTime : 0;
+        Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastResetTime = (saveData.timers && saveData.timers.fortuneGCLastResetTime) ? saveData.timers.fortuneGCLastResetTime : legacyFortuneTimer;
+        Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastResetTime = (saveData.timers && saveData.timers.fortuneCPSLastResetTime) ? saveData.timers.fortuneCPSLastResetTime : legacyFortuneTimer;
+        if (Game.JNE.heavenlyUpgradesSavedData.fortuneCookieLastResetTime !== undefined) {
+            delete Game.JNE.heavenlyUpgradesSavedData.fortuneCookieLastResetTime;
         }
         
         // Clear loading flag 
@@ -6469,6 +6563,7 @@ var cpsModifiersRegistered = false;
                 }
                 if (saveData.garden.modPlants && saveData.garden.modPlants.length > 0) {
                     var customPlantKeys = ['sparklingSugarCane', 'krazyKudzu', 'magicMushroom'];
+                    var restoredCustomPlants = 0;
                     for (var j = 0; j < saveData.garden.modPlants.length; j++) {
                         var p = saveData.garden.modPlants[j];
                         var plant = M.plants[p.plantKey];
@@ -6485,10 +6580,12 @@ var cpsModifiersRegistered = false;
                                 if (isEmptyTile || hasCustomPlant) {
                                     tile[0] = plant.id + 1;
                                     if (p.age !== undefined) tile[1] = p.age;
+                                    restoredCustomPlants++;
                                 }
                             }
                         }
                     }
+                    if (M.computeEffs) M.computeEffs();
                     if (M.draw) M.draw();
                 }
                 if (M.buildPanel) M.buildPanel();
@@ -6497,6 +6594,8 @@ var cpsModifiersRegistered = false;
                 if (M.draw) M.draw();
             }
         }
+        
+
             
     }
     
