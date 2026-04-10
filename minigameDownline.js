@@ -1,4 +1,4 @@
-// Downline Minigame 1.0.2
+// Downline Minigame 1.0.3
 
 (function() {
 'use strict';
@@ -3622,10 +3622,13 @@ function initializeDownlineMinigame() {
         }
     }
 
-    if (fractalEngine.switchMinigame) {
-        var _origSwitchMinigame = fractalEngine.switchMinigame;
+    if (typeof fractalEngine.switchMinigame === 'function' && !fractalEngine._jneDownlineSwitchPatched) {
+        fractalEngine._jneDownlineSwitchOrig = fractalEngine.switchMinigame;
+        fractalEngine._origSwitchMinigame = fractalEngine.switchMinigame;
+        fractalEngine._jneDownlineSwitchPatched = true;
         fractalEngine.switchMinigame = function(on) {
-            var result = _origSwitchMinigame.apply(this, arguments);
+            var orig = this._jneDownlineSwitchOrig || this._origSwitchMinigame;
+            var result = (typeof orig === 'function') ? orig.apply(this, arguments) : undefined;
             var specialEl = document.getElementById('rowSpecial' + this.id);
             if (specialEl && this.onMinigame && specialEl.style.display === 'none') {
                 specialEl.style.display = '';

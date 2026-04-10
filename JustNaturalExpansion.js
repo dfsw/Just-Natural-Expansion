@@ -5,7 +5,7 @@
     'use strict';
     
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.4.3';
+    var modVersion = '0.4.4';
     var debugMode = false; 
     
     function debugLog() {
@@ -15,7 +15,7 @@
             console.log('[JNE Debug]', msg);
         } catch (e) {}
     }
-
+    
     function resetUnlockStateCache() {
         modUnlockStateCache = Object.create(null);
     }
@@ -450,29 +450,28 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         maxCombinedTotal: 0
     };
         
-    // Track if we've already captured values for this ascension
     var hasCapturedThisAscension = false;
     var lastAscensionCount = 0;
+    var trackedWrinklersPopped = 0;
+    var trackedStockMarketAssets = 0;
+    var isReincarnating = false;
     
-    // Modular lifetime capture system
     function initializeSessionBaselines() {
         sessionBaselines.cookieClicks = Game.cookieClicks || 0;
         sessionBaselines.reindeerClicked = Game.reindeerClicked || 0;
         sessionBaselines.wrinklersPopped = Game.wrinklersPopped || 0;
         sessionBaselines.pledges = Game.pledges || 0;
         sessionBaselines.stockMarketAssets = (Game.Objects['Bank'] && Game.Objects['Bank'].minigame ? Game.Objects['Bank'].minigame.profit || 0 : 0);
-        
-        // Reset deltas
+        trackedWrinklersPopped = Game.wrinklersPopped || 0;
+        trackedStockMarketAssets = (Game.Objects['Bank'] && Game.Objects['Bank'].minigame ? Game.Objects['Bank'].minigame.profit || 0 : 0);
         Object.keys(sessionDeltas).forEach(key => sessionDeltas[key] = 0);
     }
     
     function updateSessionDeltas() {
-        // Update deltas by comparing current values to baselines + already recorded deltas
         var currentCookieClicks = Game.cookieClicks || 0;
         var currentReindeerClicked = Game.reindeerClicked || 0;
         var currentPledges = Game.pledges || 0;
         var currentStockMarketAssets = (Game.Objects['Bank'] && Game.Objects['Bank'].minigame ? Game.Objects['Bank'].minigame.profit || 0 : 0);
-        
         sessionDeltas.cookieClicks = Math.max(0, currentCookieClicks - sessionBaselines.cookieClicks);
         sessionDeltas.reindeerClicked = Math.max(0, currentReindeerClicked - sessionBaselines.reindeerClicked);
         sessionDeltas.pledges = Math.max(0, currentPledges - sessionBaselines.pledges);
@@ -480,75 +479,44 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     }
     
     function captureLifetimeData() {
-        if (hasCapturedThisAscension) {
-            return;
-        }
-        
-        // Don't update deltas here as current values may already be reset to 0
+        if (hasCapturedThisAscension) return;
         var totalCookieClicks = sessionBaselines.cookieClicks;
         var totalReindeerClicked = sessionBaselines.reindeerClicked;
-        var totalWrinklersPopped = sessionBaselines.wrinklersPopped;
         var totalPledges = sessionBaselines.pledges;
-        var totalStockMarketAssets = sessionBaselines.stockMarketAssets;
-        
-        // Capture cookie fish from current session (tracked in Game.JNE)
         var currentCookieFish = (Game.JNE && Game.JNE.cookieFishCaught) ? Game.JNE.cookieFishCaught : 0;
         lifetimeData.cookieFishCaught = (lifetimeData.cookieFishCaught || 0) + currentCookieFish;
-        // Reset session counter after capturing
         if (Game.JNE) Game.JNE.cookieFishCaught = 0;
-        
-        // Capture bingo jackpot wins from current session (tracked in Game.JNE)
         var currentBingoJackpots = (Game.JNE && Game.JNE.bingoJackpotWins) ? Game.JNE.bingoJackpotWins : 0;
         lifetimeData.bingoJackpotWins = (lifetimeData.bingoJackpotWins || 0) + currentBingoJackpots;
-        // Reset session counter after capturing
         if (Game.JNE) Game.JNE.bingoJackpotWins = 0;
-         
-        // Add to lifetime data
         lifetimeData.totalCookieClicks += totalCookieClicks;
         lifetimeData.reindeerClicked += totalReindeerClicked;
-        lifetimeData.wrinklersPopped += totalWrinklersPopped;
         lifetimeData.pledges += totalPledges;
-        lifetimeData.stockMarketAssets += totalStockMarketAssets;
-        
-        // Mark as captured but don't reset session baselines yet
-        // Session baselines will be reset by handleCheck() when the game is ready
         hasCapturedThisAscension = true;
     }
     
-    // Handle check hook - monitor for ascension and capture values
     function handleCheck() {
-        // Capture lifetime data when ascension starts and game is ready
-        if (Game.OnAscend > 0 && !hasCapturedThisAscension) {
-            // Only capture if stock market is available (to ensure data is captured correctly)
-            var stockMarketReady = Game.Objects['Bank'] && Game.Objects['Bank'].minigame;
-            if (stockMarketReady) {
-                captureLifetimeData();
-                // Reset session baselines after capturing to prepare for new session
-                initializeSessionBaselines();
-            }
+        if (Game.OnAscend === 0 && !isReincarnating) {
+            trackedWrinklersPopped = Game.wrinklersPopped || 0;
+            trackedStockMarketAssets = (Game.Objects['Bank'] && Game.Objects['Bank'].minigame ? Game.Objects['Bank'].minigame.profit || 0 : 0);
         }
         
-        // Reset capture flag when we detect a new ascension cycle
         if (Game.resets !== lastAscensionCount) {
             hasCapturedThisAscension = false;
             lastAscensionCount = Game.resets || 0;
-            // Don't reset baselines here - wait until we capture the data
+            lifetimeData.wrinklersPopped = trackedWrinklersPopped + (lifetimeData.wrinklersPopped || 0);
+            lifetimeData.stockMarketAssets = trackedStockMarketAssets + (lifetimeData.stockMarketAssets || 0);
+            trackedWrinklersPopped = 0;
+            trackedStockMarketAssets = 0;
+            isReincarnating = false;
+            captureLifetimeData();
         }
     }
     
-    // Handle reincarnate (ascension) - reset run-specific data
     function handleReincarnate() {
-        
-        // Reset garden sacrifice timer on ascension to prevent save scumming
+        isReincarnating = true;
         lifetimeData.lastGardenSacrificeTime = 0;
-        
-        // Don't capture lifetime data here - let handleCheck() do it when the game is ready, This prevents issues with minigame data not being available yet
-        
-        // Reset the current run's max combined total
         currentRunData.maxCombinedTotal = 0;
-        
-        // Reset "this ascension" tracking variables
-        
         modTracking.templeSwapsTotal = 0;
         modTracking.soilChangesTotal = 0;
         // Reset soil baseline so first soil read after ascension does not count as a change
@@ -594,6 +562,8 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     
     // Handle reset - clear data on full reset
     function handleReset() {
+        // wrinklersPopped and stockMarketAssets are now captured in Game.Reset hook before vanilla reset
+        
         // Check if this is a full reset (not an ascension)
         if (!Game.OnAscend || Game.OnAscend === 0) {
             //  Don't reset achievements during save loading operations
@@ -643,8 +613,8 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             
     
         } else {
-            // This is an ascension - capture lifetime data as fallback
-            captureLifetimeData();
+            // Don't call initializeSessionBaselines here - it's called during reincarnation when Game values are already 0
+            // Tracked values are reset to 0 in handleCheck() after capturing during ascension
         }
     }
     
@@ -11615,6 +11585,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 
                 // Restore lifetime data from save data
                 if (modSaveData.lifetime) {
+                    
                     lifetimeData.reindeerClicked = modSaveData.lifetime.reindeerClicked || 0;
                     lifetimeData.stockMarketAssets = modSaveData.lifetime.stockMarketAssets || 0;
                     lifetimeData.shinyWrinklersPopped = modSaveData.lifetime.shinyWrinklersPopped || 0;
@@ -11623,10 +11594,11 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     lifetimeData.wrinklersPopped = modSaveData.lifetime.wrinklersPopped || 0;
                     lifetimeData.elderCovenantToggles = modSaveData.lifetime.elderCovenantToggles || 0;
                     lifetimeData.pledges = modSaveData.lifetime.pledges || 0;
-                                        lifetimeData.cookieFishCaught = modSaveData.lifetime.cookieFishCaught || 0;
+                    lifetimeData.cookieFishCaught = modSaveData.lifetime.cookieFishCaught || 0;
                     lifetimeData.bingoJackpotWins = modSaveData.lifetime.bingoJackpotWins || 0;
                     lifetimeData.lastGardenSacrificeTime = 0; // Reset on load to prevent save scumming
                     
+                     
                     // Restore god usage time
                     if (modSaveData.lifetime.godUsageTime) {
                         lifetimeData.godUsageTime = {};
@@ -11653,6 +11625,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         
         // Initialize session baselines with current game state
         initializeSessionBaselines();
+        lastAscensionCount = Game.resets || 0;
         
         // Register all hooks with centralized system
         registerAllHooks();

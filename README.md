@@ -6261,6 +6261,9 @@ Fill your business plan with promotions, stunts, feature improvements, back alle
 
 ## Changelog
 
+### Version 0.4.4
+* Due to some merging issues I undid a couple of previous fixes, this update restores those. 
+
 ### Version 0.4.3
 * Tooltips should behave a little better in Downline Minigame and Mysteries of the Cookie Age statuses now. 
 * Fixed a bug in the heavenly ugrades which may have caused the consumable fortunes to be restored more often then they were suppose to. 

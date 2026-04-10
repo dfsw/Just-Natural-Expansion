@@ -3,7 +3,7 @@
     'use strict';
     
     const SIMPLE_MOD_NAME = 'Just Natural Expansion';
-    const MOD_HU_VERSION = '1.0.9';
+    const MOD_HU_VERSION = '1.0.10';
     var isInitialized = false;
     const MOD_ICON = [15, 7];
     const CUSTOM_SPRITE_SHEET_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
@@ -150,15 +150,15 @@
                     Game.JNE.bingoJackpotWins = (Game.JNE.bingoJackpotWins || 0) + 1;
                     var bingoSlotsIcon = (Game.Upgrades && Game.Upgrades['Bingo center slots'] && Game.Upgrades['Bingo center slots'].icon) ? Game.Upgrades['Bingo center slots'].icon : [31, 12];
                     var roll = Math.random() * 100;
-                    if (roll < 70) {
+                    if (roll < 60) {
                         var exp = Math.floor(Math.log10(Game.cookiesPsRaw || 1));
                         var cookiesEarned = 7.77 * Math.pow(10, exp + 4);
                         Game.Earn(cookiesEarned);
                         new Game.Note('Jackpot!', 'A grandma has hit the jackpot in slots and earned <b>' + Beautify(cookiesEarned) + '</b> cookies!', bingoSlotsIcon, 43200);
-                    } else if (roll < 85) {
+                    } else if (roll < 80) {
                         new Game.shimmer('golden');
                         new Game.Note('Jackpot!', 'A grandma won a <b>golden cookie</b> while playing slots!', bingoSlotsIcon, 43200);
-                    } else if (roll < 98) {
+                    } else if (roll < 97) {
                         Game.Earn(Game.cookies * 0.1);
                         new Game.Note('Jackpot!', 'A grandma won the mega jackpot while playing slots and your cookie bank has been <b>increased by 10%!</b>', bingoSlotsIcon, 43200);
                     } else {
@@ -266,7 +266,7 @@
                 rigidel: detectRigidelSlot(),
                 dragonsCurve: detectDragonsCurve(),
                 realityBending: detectRealityBending(),
-                wrath: (typeof Game.elderWrath === 'number') ? Game.elderWrath : 0
+                wrath: normalizeElderWrathForPredictor()
             };
             
             var currentType = Game.predictLumpTypeWithState(Game.lumpT, current.grandmas, current.rigidel, current.dragonsCurve, current.realityBending, current.wrath);
@@ -442,10 +442,18 @@
             Game.sugarFrenzyLastUse = 0;
         };
 
+        var invalidateSugarLumpPredictorCache = function() {
+            if (typeof Game.calculateLumpPredictions !== 'function') return;
+            Game._lumpGameStatesLumpT = null;
+            Game._lumpPredictionCache = null;
+            Game._lastLumpPredictionState = null;
+            Game._lumpPredictionInProgress = false;
+            Game._lumpPredictionPending = false;
+        };
+
         Game.registerHook('reset', function(hard) {
             if (hard) return;
-            Game._sugarPredictorHooked = false;
-            Game._lastLumpPredictionState = null;
+            invalidateSugarLumpPredictorCache();
             resetSugarFrenzyIIState();
             ensureSugarTradeAvailable();
             Game.storeToRefresh = 1;
@@ -455,6 +463,7 @@
             setTimeout(function() {
                 // do not call runUpgradeSetups() here - it recreates all conditional upgrades with bought=0
                 // wiping save data before our load function can restore it. The check hook handles this.
+                invalidateSugarLumpPredictorCache();
                 resetSugarFrenzyIIState();
                 ensureSugarTradeAvailable();
                 
@@ -1840,6 +1849,7 @@ var cpsModifiersRegistered = false;
             if (!M.soils.aerated) {
                 M.soils.aerated = {
                     name: 'Aerated soil',
+                    key: 'aerated',
                     icon: 5,
                     customIcon: [15, 24],
                     customIconSheet: getSpriteSheet('custom'),
@@ -3659,6 +3669,15 @@ var cpsModifiersRegistered = false;
         return 0;
     };
 
+    var normalizeElderWrathForPredictor = function() {
+        var w = Game.elderWrath;
+        if (typeof w !== 'number' || w !== w) return 0;
+        w = w | 0;
+        if (w < 0) return 0;
+        if (w > 3) return 3;
+        return w;
+    };
+
     // Sugar Lump Prediction System
     function setupSugarPredictor() {
         if (!Game.Has('Sugar predictor') || Game._sugarPredictorHooked) return;
@@ -3850,7 +3869,8 @@ var cpsModifiersRegistered = false;
                     return {found: false, possibleElderWraths: [false, false, false, false]};
                 }
 
-                var res = Game.predictLumpTypesByWrathWithState(t, sol.grandmas, sol.rigidelSlot, sol.dragonsCurve, sol.realityBending);
+                var type1Chance = Game.Has('Sucralosia Inutilis') ? 0.15 : 0.1;
+                var res = Game.predictLumpTypesByWrathWithState(t, sol.grandmas, sol.rigidelSlot, sol.dragonsCurve, sol.realityBending, type1Chance);
                 var possibleWraths = [res[0] === type, res[1] === type, res[2] === type, res[3] === type];
                 sol.possibleElderWraths = possibleWraths;
                 return {found: true, solution: sol};
@@ -3928,8 +3948,9 @@ var cpsModifiersRegistered = false;
         Game.evaluateLumpSolutionMet = function(cur, sol) {
             if (!cur || !sol) return null;
             var possibleWraths = (sol.possibleElderWraths && Array.isArray(sol.possibleElderWraths)) ? sol.possibleElderWraths : [false, false, false, false];
-            var wrath = (typeof cur.wrath === 'number') ? cur.wrath : 0;
-            var grandmasMet = Math.floor(cur.grandmas) === Math.floor(sol.grandmas);
+            var w = cur.wrath;
+            var wrath = (typeof w !== 'number' || w !== w) ? 0 : Math.max(0, Math.min(3, w | 0));
+            var grandmasMet = (sol.grandmas >= 600) ? (Math.floor(cur.grandmas) >= 600) : (Math.floor(cur.grandmas) === Math.floor(sol.grandmas));
             var wrathMet = !!possibleWraths[wrath];
             var rigidelMet = (cur.rigidel === sol.rigidelSlot) && (sol.rigidelSlot === 0 || Game.BuildingsOwned % 10 === 0);
             var dcMet = (cur.dragonsCurve === sol.dragonsCurve);
@@ -3952,7 +3973,7 @@ var cpsModifiersRegistered = false;
             var curRigidel = detectRigidelSlot();
             var curDragonsCurve = detectDragonsCurve();
             var curRealityBending = detectRealityBending();
-            var curWrath = (typeof Game.elderWrath === 'number') ? Game.elderWrath : 0;
+            var curWrath = normalizeElderWrathForPredictor();
 
             var checkmark = function(met) {
                 if (!met) return '';
@@ -4022,7 +4043,7 @@ var cpsModifiersRegistered = false;
             Game.registerHook('logic', function() {
                 if (!Game.Has('Sugar predictor')) return;
 
-                var currentWrath = (typeof Game.elderWrath === 'number') ? Game.elderWrath : 0;
+                var currentWrath = normalizeElderWrathForPredictor();
 
                 var state = {
                     lumpT: Game.lumpT,
@@ -4067,52 +4088,40 @@ var cpsModifiersRegistered = false;
             Game._fortuneTollsInterval = 0;
         }
         
-        if (!Game._fortuneTollsTickerEffectHooked) {
-            var originalTickerEffect = Game.TickerEffect;
-            Object.defineProperty(Game, 'TickerEffect', {
-                get: function() {
-                    return this._tickerEffect;
-                },
-                set: function(value) {
-                    this._tickerEffect = value;
-                    if (!Game.Has || !Game.Has('Fortune tolls for you')) {
-                        Game._fortuneTollsLastTickerEffectKey = null;
-                        return;
-                    }
-
-                    var currentTickerEffect = value || this._tickerEffect;
-                    if (currentTickerEffect && currentTickerEffect.type === 'fortune') {
-                        var effectKey = null;
-                        var sub = currentTickerEffect.sub;
-                        if (sub === undefined || sub === null) {
-                            effectKey = 'fortune';
-                        } else if (typeof sub === 'string' || typeof sub === 'number') {
-                            effectKey = String(sub);
-                        } else if (typeof sub === 'object') {
-                            if (sub.name) effectKey = String(sub.name);
-                            else if (sub.id !== undefined) effectKey = String(sub.id);
-                            else {
-                                try { effectKey = JSON.stringify(sub); } catch (e) { effectKey = 'fortune'; }
-                            }
-                        } else {
-                            effectKey = 'fortune';
-                        }
-                        if (effectKey && effectKey !== Game._fortuneTollsLastTickerEffectKey) {
-                            if (Game.playFortuneChime) {
-                                try { Game.playFortuneChime(); } catch (e) {}
-                            } else if (typeof PlaySound === 'function') {
-                                try { PlaySound('snd/click3.mp3'); } catch (e) {}
-                            }
-                            Game._fortuneTollsLastTickerEffectKey = effectKey;
+        if (Game.registerHook && !Game._fortuneTollsTickerFinalHooked) {
+            Game.registerHook('tickerFinal', function(ticker) {
+                if (Game.Has('Fortune tolls for you') && Game.TickerEffect && Game.TickerEffect.type === 'fortune') {
+                    var currentTickerEffect = Game.TickerEffect;
+                    var effectKey = null;
+                    var sub = currentTickerEffect.sub;
+                    if (sub === undefined || sub === null) {
+                        effectKey = 'fortune';
+                    } else if (typeof sub === 'string' || typeof sub === 'number') {
+                        effectKey = String(sub);
+                    } else if (typeof sub === 'object') {
+                        if (sub.name) effectKey = String(sub.name);
+                        else if (sub.id !== undefined) effectKey = String(sub.id);
+                        else {
+                            try { effectKey = JSON.stringify(sub); } catch (e) { effectKey = 'fortune'; }
                         }
                     } else {
-                        Game._fortuneTollsLastTickerEffectKey = null;
+                        effectKey = 'fortune';
                     }
-                },
-                configurable: true
-            });
-            Game._tickerEffect = originalTickerEffect;
-            Game._fortuneTollsTickerEffectHooked = true;
+                    if (effectKey && effectKey !== Game._fortuneTollsLastTickerEffectKey) {
+                        if (Game.playFortuneChime) {
+                            try { Game.playFortuneChime(); } catch (e) {}
+                        } else if (typeof PlaySound === 'function') {
+                            try { PlaySound('snd/click3.mp3'); } catch (e) {}
+                        }
+                        Game._fortuneTollsLastTickerEffectKey = effectKey;
+                    }
+                } else {
+                    Game._fortuneTollsLastTickerEffectKey = null;
+                }
+
+                return ticker;
+            }, 'Fortune tolls chime');
+            Game._fortuneTollsTickerFinalHooked = true;
         }
         Game._fortuneTollsHooked = true;
     }
