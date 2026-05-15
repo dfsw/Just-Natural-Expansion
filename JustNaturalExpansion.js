@@ -676,9 +676,8 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         return buildingsSoldTotal;
     }
 
-    // Exact building counts for "The Final Countdown" challenge (20 down to 1)
+    // Exact building counts for "The Final Countdown" main and alt
     var FINAL_COUNTDOWN_REQUIRED_COUNTS = {'Cursor': 20, 'Grandma': 19, 'Farm': 18, 'Mine': 17, 'Factory': 16, 'Bank': 15, 'Temple': 14, 'Wizard tower': 13, 'Shipment': 12, 'Alchemy lab': 11, 'Portal': 10, 'Time machine': 9, 'Antimatter condenser': 8, 'Prism': 7, 'Chancemaker': 6, 'Fractal engine': 5, 'Javascript console': 4, 'Idleverse': 3, 'Cortex baker': 2, 'You': 1};
-    // Alternative building counts for "The Final Countdown" challenge (15 down to 1)
     var FINAL_COUNTDOWN_REQUIRED_COUNTS_ALT = {'Cursor': 15, 'Grandma': 14, 'Farm': 13, 'Mine': 12, 'Factory': 11, 'Bank': 10, 'Temple': 9, 'Wizard tower': 8, 'Shipment': 7, 'Alchemy lab': 6, 'Portal': 5, 'Time machine': 4, 'Antimatter condenser': 3, 'Prism': 2, 'Chancemaker': 1, 'Fractal engine': 0, 'Javascript console': 0, 'Idleverse': 0, 'Cortex baker': 0, 'You': 0};
     function checkFinalCountdownAchievement() {
         var allBuildingsCorrect = true;
@@ -2440,7 +2439,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             setPendingSave: function(v) { pendingDownlineMinigameSave = v; },
             scriptLoaded: false, isOpen: false, syncPending: false
         }
-        ,
+        // ,
         // {
         //     buildingName: 'Alchemy lab', minigameName: 'Potions Class',
         //     scriptUrl: potionsMinigameScriptUrl, scriptPattern: 'minigamePotions.js',
@@ -2540,7 +2539,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     }
 
     function _syncMinigame(cfg) {
-    //    if (!cfg) return;
+       if (!cfg) return;
         if (cfg.syncPending) return;
         cfg.syncPending = true;
         var b = Game.Objects && Game.Objects[cfg.buildingName];
@@ -2674,7 +2673,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
 
     // Generic get/set save helpers used by mod.saveSystem
     function _getMinigameSaveString(cfg) {
-     //   if (!cfg) return '';
+        if (!cfg) return '';
         try {
             var b = Game.Objects && Game.Objects[cfg.buildingName];
             if (b && b.minigameLoaded && b.minigame && typeof b.minigame.save === 'function') b.minigame.save();
@@ -2685,7 +2684,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     }
 
     function _setMinigameSave(cfg, s) {
-     //   if (!cfg) return;
+        if (!cfg) return;
         try {
             if (!Game.JNE) Game.JNE = {};
             Game.JNE[cfg.jneDataKey] = typeof s === 'string' ? s : '';
@@ -6022,13 +6021,11 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 debugLog('createCookieUpgrade_start', upgradeInfo.name, 'hasUpgrade=', Game.Upgrades && Game.Upgrades[upgradeInfo.name] ? 1 : 0, 'cookiePoolMatches=', cookiePoolMatches);
             }
 
-            var upgrade;
-            
             // Process icon to convert string sprite sheet names to URLs
             var processedIcon = processIcon(upgradeInfo.icon);
             
             // Create cookie upgrades using direct Game.Upgrade constructor - This avoids CCSE dependency issues
-            upgrade = new Game.Upgrade(upgradeInfo.name, upgradeInfo.desc, upgradeInfo.price, processedIcon);
+            var upgrade = new Game.Upgrade(upgradeInfo.name, upgradeInfo.desc, upgradeInfo.price, processedIcon);
             if (!upgrade) {
                 throw new Error('Failed to create cookie upgrade: ' + upgradeInfo.name);
             }
@@ -6133,9 +6130,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 Game.last.unlockCondition = upgradeInfo.unlockCondition;
                 // Force the upgrade to be locked initially
                 Game.last.unlocked = 0;
-                
-                // Start building upgrades as locked - our checkAndUnlockOrderUpgrades function will manage unlock state
-                Game.last.unlocked = 0;
             }
             
             Game.last.canBuy = function() {
@@ -6185,8 +6179,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     // Check upgrade unlock conditions
     function checkUpgradeUnlockConditions() {
         
-        // THROTTLING: Only run this check occasionally to prevent flickering
-        // Check if we've run this recently (within the last 1 second for responsive unlocking)
+        // Only run this check occasionally to prevent flickering
         if (checkUpgradeUnlockConditions.lastRun && 
             (Date.now() - checkUpgradeUnlockConditions.lastRun) < 1000) {
             return; // Skip if run too recently
@@ -6485,8 +6478,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             enableKittenUpgrades: !!modSettings.enableKittenUpgrades
         };
         
-
-        
         // Save the won state of each of our custom achievements
         var savedCount = 0;
         var wonCount = 0;
@@ -6781,7 +6772,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     lifetimeData.bingoJackpotWins = modSaveData.lifetime.bingoJackpotWins || 0;
                     lifetimeData.lastGardenSacrificeTime = 0; // Reset on load to prevent save scumming
                     
-                     
                     // Restore god usage time
                     if (modSaveData.lifetime.godUsageTime) {
                         lifetimeData.godUsageTime = {};
@@ -6960,7 +6950,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     // ============================================================================
     // SAVE DATA COMPRESSION FUNCTIONS
     // ============================================================================
-  
     function compressSaveData(saveObj) {
         try {
             var heavenlyUpgradesArray = [];
@@ -7191,7 +7180,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     achievementsData = { achievements: {} };
                 }
                 
-                // DEBUG: Log achievement data being saved
                 var wonAchievements = 0;
                 var totalAchievements = 0;
                 for (var achievementName in achievementsData) {
@@ -8008,7 +7996,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     }
                 }
                 
-                // All required achievements are unlocked and "Cheated cookies taste awful" is not unlocked
+                // we let the user have cheated cookies taste awful here even though the tooltip says they cant
                 return true;
             },
             [17, 5] // Custom icon
@@ -8033,7 +8021,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             }
             Game.AchievementsOwned = newAchievementsOwned;
         }
-    
     }
     
     function checkModAchievements() {
@@ -8069,7 +8056,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             }
         }
         
-            // Check garden seeds time achievement
+     // Check garden seeds time achievement at some point we should change this to count via ticks instead of calendar time
     if (Game.startDate) {
         var plantCount = countGardenPlants();
         
@@ -8396,13 +8383,11 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             return;
         }
         
-                  // Skip custom multiplier setup if building upgrades are disabled
-          if (!modSettings.enableBuildingUpgrades) {
-              return;
-          }
+        // Skip custom multiplier setup if building upgrades are disabled
+        if (!modSettings.enableBuildingUpgrades) {return;}
         
-        // Safety check: ensure Game and GetTieredCpsMult exist
-        if (!Game || !Game.GetTieredCpsMult) {
+        // ensure GetTieredCpsMult exist
+        if (!Game.GetTieredCpsMult) {
             console.warn('Game or GetTieredCpsMult not available, skipping custom multiplier setup');
             return;
         }
@@ -8425,7 +8410,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 return 1; // Return default multiplier if something is missing (no warning spam)
             }
             
-            var mult = 1; // Initialize with safe default
+            var mult = 1; // safe default
             
             try {
                 mult = Game.originalGetTieredCpsMult(me);
@@ -8492,7 +8477,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         }
     }
 
-    // Initialize building discounts when mod loads
+    // Initialize building discounts on slight delay
     setTimeout(function() {
         var grandmaDiscountUpgrades = ['Increased Social Security Checks', 'Off-Brand Eyeglasses', 'Plastic Walkers', 'Bulk Discount Hearing Aids', 'Generic Arthritis Medication', 'Wholesale Denture Adhesive'];
         applyBuildingDiscount('Grandma', grandmaDiscountUpgrades);
