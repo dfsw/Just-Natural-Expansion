@@ -1,5 +1,5 @@
 //Just Natural Expansion Terminal minigame
-//version 1.0.3
+//version 1.0.4
 (function() {
 'use strict';
 
@@ -34,7 +34,7 @@ M.launch = function () {
     M.name = M.parent.minigameName;
     M.maxSlots = 12; 
 
-    const TERMINAL_BACKGROUND_URL = 'https://raw.githubusercontent.com/dfsw/Cookies/main/TerminalBG.png';
+    const TERMINAL_BACKGROUND_URL = 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/TerminalBG.png';
     const TERMINAL_DIRECTIONAL_URL = 'https://raw.githubusercontent.com/dfsw/Cookies/main/directional.png';
     const DRAGON_AURA_BASE_OPTIONS = [
         { value: 0, label: 'No aura', icon: [0, 7] },
@@ -2728,6 +2728,7 @@ M.launch = function () {
             M.startExecutionCooldown();
             M.updateProgramsRunDisplay();
             checkAndAwardTerminalAchievements();
+            if (typeof M.onExecuteComplete === 'function') M.onExecuteComplete(queue.length);
             if (typeof M.showCurrentProgram === 'function') {
                 M.showCurrentProgram();
             }

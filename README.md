@@ -70,9 +70,16 @@ Unfortunately, CCSE uses code injection to make fundamental changes to the vanil
 
 I’ve tested compatibility with many popular [CCSE mods](https://klattmose.github.io/CookieClicker/). If you encounter specific incompatibilities, please let me know so I can look into possible workarounds.
 
-
-
 ## Changelog
+
+### Version 0.4.5
+* Fixed a bug in Downline that would pretty much always give a user 10 action slots regardless of building level.  
+* Downline now supports Reality Bending for a 1/10th Supreme Intellect bonus to its gameplay. 
+* Improvements to the Sugar Predictor heavenly upgrade with much appeciation for staticvariablejames research and feedback. It is now more accurate and supports Rigidel in more creative ways such as with supreme intellect. 
+* There was a bug that could cause disabling minigames to lose minigame specific achievement won states, this has been fixed. 
+* Cleaned up some code and improved stability in several places.
+* Fixed some heavenly upgrade wonkiness mostly around UI stuff but everything should be a bit better there now. 
+* Staging of functionality to implement future minigames.
 
 ### Version 0.4.4
 * Due to some merging issues I undid a couple of previous fixes, this update restores those fixes. 

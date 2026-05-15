@@ -1,4 +1,4 @@
-// Downline Minigame 1.0.3
+// Downline Minigame 1.0.4
 
 (function() {
 'use strict';
@@ -60,12 +60,13 @@ var G = {
     tickCount: 0, elapsedSec: 0, speed: 1,
     activeActions: [], unlocked: {},
     _supremeIntellectWasActive: false,
-    pendingNewPlayers: 0, fractalLevel: 20,
+    pendingNewPlayers: 0,
     tickerPool: [], prestige: 0,
     releasesThisAscension: 0,
     frozen: false,
     lumpSpeedBoostEnd: 0,
-    lastTickTime: 0
+    lastTickTime: 0,
+    actionDurationMult: 1
 };
 
 var lumpBoostState = {
@@ -79,8 +80,15 @@ DownlineM.launch = function() {
 };
 
 DownlineM.dragonBoostTooltip = function() {
-    var bonus = Game.hasAura('Supreme Intellect') ? 1 : 0;
-    return '<div style="width:280px;padding:8px;text-align:center;" id="tooltipDragonBoost"><b>Supreme Intellect</b><div class="line"></div>Downline actions last 10% longer.</div>';
+    var bonus = 0;
+    if (Game.hasAura('Supreme Intellect')) bonus += 1;
+    if (Game.hasAura('Reality Bending')) bonus += 0.1;
+    var bonusText = [];
+    if (bonus >= 1) bonusText.push('10% (Supreme Intellect)');
+    if (bonus >= 0.1 && bonus < 1) bonusText.push('1% (Reality Bending)');
+    if (bonus >= 1.1) bonusText = ['11% (Supreme Intellect + Reality Bending)'];
+    if (bonusText.length === 0) return '<div style="width:280px;padding:8px;text-align:center;" id="tooltipDragonBoost"><b>Dragon Aura Bonus</b><div class="line"></div>No aura bonus active for downline actions.</div>';
+    return '<div style="width:280px;padding:8px;text-align:center;" id="tooltipDragonBoost"><b>Dragon Aura Bonus</b><div class="line"></div>Downline actions last ' + bonusText[0] + ' longer.</div>';
 };
 
 function $(id) { return document.getElementById(id); }
@@ -101,10 +109,6 @@ function createIcon(col, row, sheet, cellSize) {
 }
 
 function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
-
-function getSupremeIntellectDurationMult() {
-    return Game.hasAura('Supreme Intellect') ? 1.1 : 1;
-}
 
 function formatNum(n) { return Math.floor(n).toLocaleString(); }
 
@@ -137,11 +141,12 @@ DownlineM.init = function(div) {
     if (!div) return;
     DownlineM.div = div;
 
+    const DOWNLINE_BACKGROUND_URL = 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/DownlineBG.png';
     var resPath = Game.resPath || 'https://orteil.dashnet.org/cookieclicker/';
     var cssContent = `
     .downline-row-visible .productDragonBoost { position: relative; z-index: 2; }
     #downline-bg {
-      background: url('${resPath}img/shadedBorders.png'), linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
+      background: url('${resPath}img/shadedBorders.png'), url('${DOWNLINE_BACKGROUND_URL}');
       background-size: 100% 100%, auto;
       background-repeat: no-repeat, repeat;
       position: absolute;
@@ -165,7 +170,7 @@ DownlineM.init = function(div) {
       overflow: hidden;
     }
     #downline-wrap .framed {
-      background: transparent;
+      background: linear-gradient(180deg, #1a1a1a 0%, #0d0d0d 100%);
       box-sizing: border-box;
     }
     #downline-wrap .titleFont { font-family: 'Merriweather', Georgia, serif; }
@@ -909,7 +914,12 @@ DownlineM.init = function(div) {
     function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
 
     function getSupremeIntellectDurationMult() {
-      return Game.hasAura('Supreme Intellect') ? 1.1 : 1;
+      var bonus = 0;
+      if (Game.hasAura('Supreme Intellect')) bonus += 1;
+      if (Game.hasAura('Reality Bending')) bonus += 0.1;
+      var mult = 1 + (bonus * 0.1);
+      if (G.actionDurationMult) mult *= G.actionDurationMult;
+      return mult;
     }
 
     function formatNum(n) { return Math.floor(n).toLocaleString(); }
@@ -971,10 +981,12 @@ DownlineM.init = function(div) {
     var BONUS_COMMIT_EXP = 0.8;
 
     function getMaxSlots(level) {
-      return Math.min(10, Math.max(1, level));
+      return level > 10 ? 10 : level;
     }
     function getEffectiveMaxSlots() {
-      var max = getMaxSlots(G.fractalLevel);
+      var fe = Game.Objects['Fractal engine'];
+      var level = fe ? fe.level : 1;
+      var max = getMaxSlots(level);
       return hasBoredomEffect('slots_half') ? Math.max(1, Math.ceil(max / 2)) : max;
     }
 
@@ -2237,7 +2249,9 @@ DownlineM.init = function(div) {
 
     function updateSlotAvailability() {
       var max = getEffectiveMaxSlots();
-      var baseMax = getMaxSlots(G.fractalLevel);
+      var fe = Game.Objects['Fractal engine'];
+      var level = fe ? fe.level : 1;
+      var baseMax = getMaxSlots(level);
       var isHalved = hasBoredomEffect('slots_half');
       var blockedCount = 0;
       activeList.querySelectorAll('.downline-active-slot').forEach(function (s, i) {
@@ -2355,9 +2369,6 @@ DownlineM.init = function(div) {
         var lumps = Game.lumps || 0;
         var costClass = lumps >= 1 ? 'price lump green' : 'price lump disabled red';
         html += 'Click to run the Downline at 10× speed for 30 minutes for <span class="' + costClass + '">' + lumpAmount + ' sugar lump</span>.';
-        if (lumps < 1) {
-          html += '<br><small class="red">(Need 1 sugar lump.)</small>';
-        }
       }
       html += '</div>';
       return html;
@@ -2448,6 +2459,7 @@ DownlineM.init = function(div) {
       var stateIndex = G.activeActions.length;
       chip.setAttribute('data-state-index', stateIndex);
       G.activeActions.push(state);
+      if (typeof DownlineM.onActionAdd === 'function') DownlineM.onActionAdd(1);
       if (def.headline) addHeadlineToTickerPool(def.headline);
 
       G.lastActions.unshift(name);
@@ -2676,17 +2688,6 @@ DownlineM.init = function(div) {
       if (!G.frozen) {
         G.unfrozenRawCpS = G.rawCpS;
       }
-      var debugLevelEl = document.getElementById('debug-fractal-level');
-      var debugLevelOverride = debugLevelEl && String(debugLevelEl.value).trim() !== '' && !isNaN(parseInt(debugLevelEl.value, 10));
-      if (debugLevelOverride) {
-        G.fractalLevel = clamp(parseInt(debugLevelEl.value, 10), 1, 20);
-      } else {
-        var fe = Game.Objects['Fractal engine'];
-        if (fe && fe.amount) {
-          G.fractalLevel = Math.min(20, Math.max(1, fe.amount));
-          if (debugLevelEl) debugLevelEl.value = G.fractalLevel;
-        }
-      }
       var lumpBoostActive = lumpBoostState.active;
       var effectiveSpeed = lumpBoostActive ? 10 : G.speed;
       var prestigeSpeedMult = Math.pow(2, G.prestige);
@@ -2698,26 +2699,24 @@ DownlineM.init = function(div) {
 
       updateBoredomEffects();
 
-      var hadSupremeIntellect = G._supremeIntellectWasActive === true;
-      var hasSupremeIntellectNow = Game.hasAura('Supreme Intellect');
-      if (hadSupremeIntellect && !hasSupremeIntellectNow) {
-        for (var si = 0; si < G.activeActions.length; si++) {
-          var act = G.activeActions[si];
-          act.totalSec = act.totalSec / 1.1;
-          act.remainSec = Math.max(0.001, Math.min(act.remainSec / 1.1, act.totalSec));
+      var auraBonusNow = 0;
+      if (Game.hasAura('Supreme Intellect')) auraBonusNow += 1;
+      if (Game.hasAura('Reality Bending')) auraBonusNow += 0.1;
+      var multNow = 1 + (auraBonusNow * 0.1);
+      
+      var auraBonusBefore = G._auraBonusWasActive || 0;
+      var multBefore = 1 + (auraBonusBefore * 0.1);
+
+      if (auraBonusBefore !== auraBonusNow) {
+        for (var i = 0; i < G.activeActions.length; i++) {
+          var act = G.activeActions[i];
+          act.totalSec = act.totalSec * (multNow / multBefore);
+          act.remainSec = Math.max(0.001, Math.min(act.remainSec * (multNow / multBefore), act.totalSec));
         }
-      } else if (!hadSupremeIntellect && hasSupremeIntellectNow) {
-        for (var sj = 0; sj < G.activeActions.length; sj++) {
-          var act2 = G.activeActions[sj];
-          act2.totalSec = act2.totalSec * 1.1;
-          act2.remainSec = act2.remainSec * 1.1;
-        }
-      }
-      if (hadSupremeIntellect !== hasSupremeIntellectNow) {
         var fractalEngine = getFractalEngine();
         if (fractalEngine && fractalEngine.refresh) fractalEngine.refresh();
       }
-      G._supremeIntellectWasActive = hasSupremeIntellectNow;
+      G._auraBonusWasActive = auraBonusNow;
 
       var expiredNames = [];
       var hadExpiration = false;
@@ -2953,8 +2952,7 @@ DownlineM.init = function(div) {
     $('debug-speed-1').classList.add('active');
 
     $('debug-fractal-level').addEventListener('input', function () {
-      var v = parseInt(this.value, 10);
-      if (!isNaN(v)) { G.fractalLevel = clamp(v, 1, 20); updateSlotAvailability(); }
+      updateSlotAvailability();
     });
 
     $('debug-apply-state').addEventListener('click', function () {
@@ -3276,7 +3274,6 @@ DownlineM.init = function(div) {
       G.activeActions = [];
       G.unlocked = {};
       G.pendingNewPlayers = 0;
-      G.fractalLevel = 20;
       G.tickerPool = [];
       G.frozen = false;
       G.lumpSpeedBoostEnd = 0;

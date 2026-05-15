@@ -3,7 +3,7 @@
     'use strict';
     
     const SIMPLE_MOD_NAME = 'Just Natural Expansion';
-    const MOD_HU_VERSION = '1.0.10';
+    const MOD_HU_VERSION = '1.0.11';
     var isInitialized = false;
     const MOD_ICON = [15, 7];
     const CUSTOM_SPRITE_SHEET_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
@@ -90,7 +90,10 @@
             var e = entries[i];
             // Toggles only recreate when forceAll=true (during save loads)
             var isToggle = (e.id === 'Toy box' || e.id === 'Pink stuff');
-            if (!e || e.ran) continue;
+            if (!e) continue;
+            // If ran but done() is now false, the setup was externally undone (e.g. donuts deleted by toggle) — allow re-run
+            if (e.ran && (!e.done || e.done())) continue;
+            if (e.ran) e.ran = false;
             try {
                 if (e.done && e.done()) { 
                     e.ran = true; 
@@ -127,11 +130,9 @@
             [['Fading payout', 'Lucky fading payout'], setupFadingPayout],
             [['All is well', 'Six bells'], setupTimedGoldenCookies],
             [['Weakest link', 'The next weakest link', 'No more weak links'], setupWeakestLink],
-            [['Turtles all the way down', 'Self employed realtor'], setupBuildingPriceModifications],
-            [['Wholesale discount club'], setupWholesaleDiscountClub],
+            [['Turtles all the way down'], setupBuildingPriceModifications],
             [['Cockroaches', 'Infestation', 'The prize at the bottom of the box', 'Double box prize', 'Mail in sweepstake winner'], setupWrinklerPopSpawn],
             [['Regifting'], setupRegifting],
-            [['Peaking under the tree'], setupPeakingUnderTheTree],
             [['Distilled essence of retripled luck'], setupRetripledLuck],
             [['Unlucky luckier', 'Even more unlucky luckier', 'Slightly less bitter wrath', 'Flavor enhanced wrath'], setupCookieReduction],
             [['Fish tank', 'Sunken treasure', 'Aquaculturist', 'Hatchery effect'], setupFishShimmers],
@@ -181,27 +182,27 @@
                 if (interval > 0) {
                     var gcUsed = (Game.fortuneGC === 1);
                     var cpsUsed = (Game.fortuneCPS === 1);
-                    var gcLastUseTime = Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastResetTime || 0;
-                    var cpsLastUseTime = Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastResetTime || 0;
+                    var gcLastUseTime = Game.JNE._fortuneGCTimer || 0;
+                    var cpsLastUseTime = Game.JNE._fortuneCPSTimer || 0;
 
                     // Start each timer only once that specific fortune is used
                     if (gcUsed && !gcLastUseTime) {
-                        Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastResetTime = now;
+                        Game.JNE._fortuneGCTimer = now;
                         gcLastUseTime = now;
                     }
                     if (cpsUsed && !cpsLastUseTime) {
-                        Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastResetTime = now;
+                        Game.JNE._fortuneCPSTimer = now;
                         cpsLastUseTime = now;
                     }
 
                     // Reset each fortune independently once its own timer elapses
                     if (gcLastUseTime && (now - gcLastUseTime >= interval)) {
                         Game.fortuneGC = 0;
-                        Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastResetTime = 0;
+                        Game.JNE._fortuneGCTimer = 0;
                     }
                     if (cpsLastUseTime && (now - cpsLastUseTime >= interval)) {
                         Game.fortuneCPS = 0;
-                        Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastResetTime = 0;
+                        Game.JNE._fortuneCPSTimer = 0;
                     }
                 }
             }
@@ -264,12 +265,14 @@
             var current = {
                 grandmas: Game.Objects['Grandma'].amount,
                 rigidel: detectRigidelSlot(),
-                dragonsCurve: detectDragonsCurve(),
-                realityBending: detectRealityBending(),
+                rigidelActive: detectRigidelActive(),
+                dragonsCurve: Game.hasAura('Dragon\'s Curve') ? 1 : 0,
+                realityBending: Game.hasAura('Reality Bending') ? 1 : 0,
+                supremeIntellect: Game.hasAura('Supreme Intellect') ? 1 : 0,
                 wrath: normalizeElderWrathForPredictor()
             };
-            
-            var currentType = Game.predictLumpTypeWithState(Game.lumpT, current.grandmas, current.rigidel, current.dragonsCurve, current.realityBending, current.wrath);
+
+            var currentType = Game.predictLumpTypeWithState(Game.lumpT, current.grandmas, current.rigidel, current.rigidelActive, current.dragonsCurve, current.realityBending, current.wrath, current.supremeIntellect);
             var icon = typeIcons[currentType];
 
             str += '<div class="line"></div>';
@@ -282,10 +285,9 @@
             if (showDebug) {
                 var auraMult = (Game.auraMult ? (Game.auraMult('Dragon\'s Curve') || 0) : 0);
                 var curveMultDerived = (current.dragonsCurve ? 1 : 0) + (current.realityBending ? 0.1 : 0);
-                var ripeAge = Game.calculateLumpRipeAgeWithState(current.grandmas, current.rigidel, current.dragonsCurve, current.realityBending);
-                var overripeAge = ripeAge + (Game.Has('Glucose-charged air') ? (3600000 / 2000) : 3600000);
-                var harvestTime = (Game.lumpT + overripeAge);
-                var byWrath = Game.predictLumpTypesByWrathWithState(Game.lumpT, current.grandmas, current.rigidel, current.dragonsCurve, current.realityBending);
+                var ripeAge = Game.lumpRipeAge;
+                var harvestTime = (Game.lumpT + Game.lumpOverripeAge);
+                var byWrath = Game.predictLumpTypesByWrathWithState(Game.lumpT, current.grandmas, current.rigidel, current.rigidelActive, current.dragonsCurve, current.realityBending, undefined, current.supremeIntellect);
                 var mod10 = (Game.BuildingsOwned || 0) % 10;
                 var tableSig = (Game._lumpGameStatesLumpT === Game.lumpT ? 'ok' : 'stale') +
                     ', upg=' + (Game.getLumpPredictorUpgradeSig ? Game.getLumpPredictorUpgradeSig() : '');
@@ -298,7 +300,7 @@
                     '</div>' +
                     '<div>lumpT: <b>' + Game.lumpT + '</b> | harvestTime: <b>' + harvestTime + '</b></div>' +
                     '<div>grandmas: <b>' + Math.floor(current.grandmas) + '</b> | wrath: <b>' + current.wrath + '</b> | buildingsmod: <b>' + mod10 + '</b></div>' +
-                    '<div>rigidel: <b>' + current.rigidel + '</b> | dc: <b>' + current.dragonsCurve + '</b> | rb: <b>' + current.realityBending + '</b></div>' +
+                    '<div>rigidel: <b>' + current.rigidel + '</b> | dc: <b>' + current.dragonsCurve + '</b> | rb: <b>' + current.realityBending + '</b> | si: <b>' + current.supremeIntellect + '</b></div>' +
                     '<div>curve: <b>' + curveMultDerived.toFixed(1) + '</b> | auraMult: <b>' + (auraMult + '').replace(/\.0+$/, '') + '</b></div>' +
                     '<div>ripeAge(ms): <b>' + Math.floor(ripeAge) + '</b></div>' +
                     '<div>tableSig: <b>' + tableSig + '</b></div>' +
@@ -321,17 +323,16 @@
                 var showGreen = allMet && isCurrentType;
 
                 if (showGreen) {
-                    str += '<div class="listing" style="padding:4px 6px;margin:4px 0px;border-radius:4px;background:#2e7d32;border:2px solid #4caf50;display:flex;align-items:center;justify-content:space-between;">';
+                    str += '<div class="listing" style="padding:4px 6px;margin:4px 0px;border-radius:4px;background:#2e7d32;border:2px solid #4caf50;display:flex;align-items:center;">';
                 } else {
-                    str += '<div class="listing" style="padding:4px 6px;margin:4px 0px;opacity:0.8;border-radius:4px;background:#333;display:flex;align-items:center;justify-content:space-between;">';
+                    str += '<div class="listing" style="padding:4px 6px;margin:4px 0px;opacity:0.8;border-radius:4px;background:#333;display:flex;align-items:center;">';
                 }
 
-                str += '<div style="display:flex;align-items:center;gap:6px;"><div style="display:inline-block;width:26px;height:24px;overflow:hidden;">' +
-                      '<div class="icon" style="background-position:-' + (icon[0]*48) + 'px -' + (icon[1]*48) + 'px;transform:scale(0.5);transform-origin:0 0;"></div></div>' +
-                      '<b' + (showGreen ? ' class="green"' : '') + '>' + typeNames[i + 1] + '</b></div>' +
-                      '<div style="display:flex;align-items:center;gap:4px;">' +
-                      (res.found ? Game.formatLumpSolution(res.solution) : '<span class="red">Not possible</span>') +
-                      '</div></div>';
+                str += '<div style="display:inline-block;width:26px;height:24px;overflow:hidden;flex-shrink:0;">'
+                      + '<div class="icon" style="background-position:-' + (icon[0]*48) + 'px -' + (icon[1]*48) + 'px;transform:scale(0.5);transform-origin:0 0;"></div></div>'
+                      + '<div style="display:flex;align-items:center;gap:10px;margin-left:8px;">'
+                      + (res.found ? Game.formatLumpSolution(res.solution) : '<span class="red">Not possible</span>')
+                      + '</div></div>';
             }
 
             return str;
@@ -688,11 +689,6 @@
         Game.modifyBuildingPrice = function(building, price) {
             var modifiedPrice = originalModifyBuildingPrice.call(this, building, price);
             
-            // Apply Self employed discount
-            if (Game.Has('Self employed realtor')) {
-                modifiedPrice *= 0.9;
-            }
-            
             // Apply Turtles discount (level-based max 25%)
             if (Game.Has('Turtles all the way down') && building && building.level !== undefined) {
                 var level = Math.min(building.level || 0, 25); // Cap at level 25
@@ -703,21 +699,6 @@
             return modifiedPrice;
         };
         Game._buildingPriceModificationsHooked = true;
-    }
-    
-    function setupWholesaleDiscountClub() {
-        if (!Game.Upgrade || !Game.Upgrade.prototype) return;
-        if (Game.Upgrade.prototype.getPrice && Game.Upgrade.prototype.getPrice._jneWholesaleDiscountClubHooked) return;
-        
-        var originalGetPrice = Game.Upgrade.prototype.getPrice;
-        Game.Upgrade.prototype.getPrice = function() {
-            var price = originalGetPrice.call(this);
-            if (this.pool !== 'prestige' && this.name !== 'Wholesale discount club' && Game.Has('Wholesale discount club')) {
-                price *= 0.9;
-            }
-            return price;
-        };
-        Game.Upgrade.prototype.getPrice._jneWholesaleDiscountClubHooked = true;
     }
     
     function setupCookieDisplayUnit() {
@@ -776,6 +757,12 @@
             } else if (what === 'wrinklerSpawn') {
                 if (Game.Has('Wide open door of hell')) val *= 1.2;
                 else if (Game.Has('Unlocked gates of hell')) val *= 1.1;
+            } else if (what === 'upgradeCost') {
+                if (Game.Has('Wholesale discount club')) val *= 0.9;
+            } else if (what === 'buildingCost') {
+                if (Game.Has('Self employed realtor')) val *= 0.9;
+            } else if (what === 'itemDrops') {
+                if (Game.Has('Peaking under the tree')) val *= 1.1;
             } else if (what === 'goldenCookieFreq' || what === 'wrathCookieFreq') {
                 if (Game.hasBuff('Gilded allure')) val *= 1.3;
                 if (Game.hasBuff('Midas curse')) val /= 4;
@@ -1196,13 +1183,12 @@ var cpsModifiersRegistered = false;
                     }
                 }
                 if (self && god.id === self.id) {
-                    var endBuffs = ['frenzy', 'lucky', 'blood frenzy', 'clot', 'click frenzy', 'cookie storm', 'building buff', 'dragon harvest', 'dragonflight'];
                     if (slot === -1 && prev !== -1) {
-                        for (var i in Game.buffs) if (Game.buffs[i]?.type && endBuffs.indexOf(Game.buffs[i].type.name) !== -1) Game.buffs[i].time = 0;
+                        for (var i in Game.buffs) if (Game.buffs[i]?.aura === 1) Game.buffs[i].time = 0;
                         M._selfishnessClickCount = 0;
                         Game.recalculateGains = true;
                     } else if (slot !== -1 && prev !== -1 && prev !== slot) {
-                        for (var i in Game.buffs) if (Game.buffs[i]?.type && endBuffs.indexOf(Game.buffs[i].type.name) !== -1) Game.buffs[i].time = 0;
+                        for (var i in Game.buffs) if (Game.buffs[i]?.aura === 1) Game.buffs[i].time = 0;
                         M._selfishnessClickCount = 0;
                     } else if (slot !== -1 && prev === -1) {
                         M._selfishnessClickCount = 0;
@@ -1503,20 +1489,6 @@ var cpsModifiersRegistered = false;
                 }
             };
         }
-    }
-    
-    function setupPeakingUnderTheTree() {
-        if (!Game.dropRateMult) return;
-        if (Game.dropRateMult._peakingUnderTheTreeHooked) return;
-        
-        var originalDropRateMult = Game.dropRateMult;
-        Game.dropRateMult = function() {
-            var mult = originalDropRateMult.call(this);
-             if (Game.Has('Peaking under the tree')) mult *= 1.1;
-            
-            return mult;
-        };
-        Game.dropRateMult._peakingUnderTheTreeHooked = true;
     }
     
     function setupWallstreetBets() {
@@ -2804,7 +2776,8 @@ var cpsModifiersRegistered = false;
         if (Game.harvestLumps && !Game._sugarCaneHooked) {
             Game._sugarCaneHooked = true;
             var originalHarvestLumps = Game.harvestLumps;
-            Game.harvestLumps = function(amount, silent) {
+            var sugarCaneHarvest = function(amount, silent) {
+                var orig = originalHarvestLumps || sugarCaneHarvest._orig;
                 var M = Game.Objects['Farm'] && Game.Objects['Farm'].minigame;
                 if (M && M.plants && M.plants['sparklingSugarCane'] && M.plot) {
                     var totalMult = 0;
@@ -2845,8 +2818,10 @@ var cpsModifiersRegistered = false;
                         }
                     }
                 }
-                return originalHarvestLumps.call(this, amount, silent);
+                return orig.call(this, amount, silent);
             };
+            sugarCaneHarvest._orig = originalHarvestLumps;
+            Game.harvestLumps = sugarCaneHarvest;
         }
 
         
@@ -3145,35 +3120,27 @@ var cpsModifiersRegistered = false;
     
     function setupBlackfridaySpecial() {
         if (Game.computeSeasonPrices && !Game.computeSeasonPrices._blackfridayHooked) {
-            var original = Game.computeSeasonPrices;
-
-            var wrapTriggerPriceFunc = function(trigger) {
-                if (!trigger || !trigger.priceFunc) return;
-
-                if (trigger.priceFunc === trigger._blackfridayWrappedFunc) return;
-
-                trigger._blackfridayOriginal = trigger.priceFunc;
-                trigger._blackfridayWrappedFunc = function() {
-                    var price = trigger._blackfridayOriginal.apply(this, arguments);
-                    return Game.Has('Blackfriday special') ? price * 0.75 : price;
-                };
-                trigger.priceFunc = trigger._blackfridayWrappedFunc;
-            };
-
-            Game.computeSeasonPrices = function() {
-                original.apply(this, arguments);
-                if (Game.seasons) {
-                    for (var i in Game.seasons) {
-                        var trigger = Game.seasons[i].triggerUpgrade;
-                        wrapTriggerPriceFunc(trigger);
-                    }
-                }
-            };
-            Game.computeSeasonPrices._blackfridayHooked = true;
-
-            try {
-                Game.computeSeasonPrices();
-            } catch (e) {}
+            var funcStr = Game.computeSeasonPrices.toString();
+            
+            // Check if our code is already present to prevent double injection
+            if (funcStr.indexOf("Game.Has('Blackfriday special')") !== -1) {
+                Game.computeSeasonPrices._blackfridayHooked = true;
+                return;
+            }
+            
+            // Inject Blackfriday check into the priceFunc
+            var injection = "if(Game.Has('Blackfriday special'))m*=0.75;";
+            var returnPattern = "return Game.seasonTriggerBasePrice+Game.unbuffedCps*60*Math.pow(1.5,Game.seasonUses)*m;";
+            
+            if (funcStr.indexOf(returnPattern) !== -1) {
+                funcStr = funcStr.replace(returnPattern, injection + returnPattern);
+                Game.computeSeasonPrices = eval('(' + funcStr + ')');
+                Game.computeSeasonPrices._blackfridayHooked = true;
+                
+                try {
+                    Game.computeSeasonPrices();
+                } catch (e) {}
+            }
         }
     }
     
@@ -3638,12 +3605,10 @@ var cpsModifiersRegistered = false;
             if (Game.RefreshStore) { Game.RefreshStore(); }
             if (Game.RebuildUpgrades) { Game.RebuildUpgrades(); }
         });
-        Game.Unlock('Sugar trade');
-    }
+    };
 
-    // Helper functions to detect current state 
     var detectRigidelSlot = function() {
-        if (Game.BuildingsOwned % 10 !== 0) return 0;
+        if (!Game.Objects['Temple'] || !Game.Objects['Temple'].minigame) return 0;
         if (Game.hasGod && typeof Game.hasGod === 'function') {
             try {
                 var slot = Game.hasGod('order');
@@ -3653,20 +3618,9 @@ var cpsModifiersRegistered = false;
         return 0;
     };
 
-    var detectDragonsCurve = function() {
-        if (Game.auraMult) {
-            var mult = Game.auraMult('Dragon\'s Curve');
-            return mult >= 1.0 ? 1 : 0;
-        }
-        return 0;
-    };
-
-    var detectRealityBending = function() {
-        if (Game.dragonAuras && (Game.dragonAura || Game.dragonAura2)) {
-            if (Game.dragonAura && Game.dragonAuras[Game.dragonAura] && Game.dragonAuras[Game.dragonAura].name === 'Reality Bending') return 1;
-            if (Game.dragonAura2 && Game.dragonAuras[Game.dragonAura2] && Game.dragonAuras[Game.dragonAura2].name === 'Reality Bending') return 1;
-        }
-        return 0;
+    var detectRigidelActive = function() {
+        if (!Game.Objects['Temple'] || !Game.Objects['Temple'].minigame) return 0;
+        return (Game.BuildingsOwned % 10 === 0) ? 1 : 0;
     };
 
     var normalizeElderWrathForPredictor = function() {
@@ -3685,6 +3639,17 @@ var cpsModifiersRegistered = false;
 
         if (Game._sugarPredictorDebug === undefined) Game._sugarPredictorDebug = false;
 
+        // Hook slotGod to refresh best-state finder when pantheon slots change
+        var PM = Game.Objects && Game.Objects['Temple'] && Game.Objects['Temple'].minigame;
+        if (PM && PM.slotGod && !PM._sugarPredictorSlotHooked) {
+            var origSlotGod = PM.slotGod;
+            PM.slotGod = function() {
+                origSlotGod.apply(this, arguments);
+                Game.calculateLumpPredictions();
+            };
+            PM._sugarPredictorSlotHooked = true;
+        }
+
         if (!Game.getLumpPredictorUpgradeSig) {
             Game.getLumpPredictorUpgradeSig = function() {
                 // Any change here MUST invalidate the precomputed table.
@@ -3702,58 +3667,59 @@ var cpsModifiersRegistered = false;
         Game._lumpPredictionCache = null;
 
         if (!Game._lumpGameStates) {
-            var total = 2 * 2 * 4 * (601 + 400 * 3);
-            Game._lumpGameStates = new Array(total);
-            var idx = 0;
+            var states = [];
             for (var dc = 0; dc < 2; dc++) {
                 for (var rb = 0; rb < 2; rb++) {
+                    var siAllowed = (dc && rb) ? 0 : 1;
                     for (var r = 0; r < 4; r++) {
-                        for (var w = 0; w < 4; w++) {
-                            var minG = (r === 0) ? 0 : 201;
-                            var maxG = 600;
-                            for (var g = minG; g <= maxG; g++) {
-                                Game._lumpGameStates[idx++] = {
-                                    elderWrath: w,
-                                    grandmas: g,
-                                    rigidelSlot: r,
-                                    dragonsCurve: dc,
-                                    realityBending: rb
-                                };
+                        for (var si = 0; si <= siAllowed; si++) {
+                            for (var active = 0; active < 2; active++) {
+                                if (r === 0 && active === 1) continue;
+                                for (var w = 0; w < 4; w++) {
+                                    var minG = (r === 0 || !active) ? 0 : 201;
+                                    for (var g = minG; g <= 600; g++) {
+                                        if (g === 0 && w > 0) continue;
+                                        states.push({
+                                            elderWrath: w, grandmas: g, rigidelSlot: r,
+                                            rigidelActive: active,
+                                            dragonsCurve: dc, realityBending: rb, supremeIntellect: si
+                                        });
+                                    }
+                                }
                             }
                         }
                     }
                 }
             }
-            if (idx !== total) Game._lumpGameStates.length = idx;
+            Game._lumpGameStates = states;
         }
 
-        Game.calculateLumpRipeAgeWithState = function(grandmas, rigidel, dragonsCurve, realityBending) {
+        Game.calculateLumpRipeAgeWithState = function(grandmas, rigidel, rigidelActive, dragonsCurve, realityBending, supremeIntellect) {
             var hour = 3600000;
             var age = hour * 23;
 
             if (Game.Has('Stevia Caelestis')) age -= hour;
             if (Game.Has('Sugar aging process')) age -= 6000 * Math.min(600, grandmas);
-            if (rigidel > 0) {
-                if (rigidel === 1) age -= hour;
-                else if (rigidel === 2) age -= hour * 2/3;
-                else if (rigidel === 3) age -= hour / 3;
-            }
+            if (rigidelActive && rigidel === 1) age -= hour;
+            else if (rigidelActive && rigidel === 2) age -= (hour/3)*2;
+            else if (rigidelActive && rigidel === 3) age -= hour/3;
             var curveMult = (dragonsCurve ? 1 : 0) + (realityBending ? 0.1 : 0);
             age /= 1 + curveMult * 0.05;
+            age += hour;
             if (Game.Has('Glucose-charged air')) age /= 2000;
             return age;
         };
 
-        Game.predictLumpTypesByWrathWithState = function(startTime, grandmas, rigidel, dragonsCurve, realityBending, type1Chance) {
-            var ripeAge = Game.calculateLumpRipeAgeWithState(grandmas, rigidel, dragonsCurve, realityBending);
-            var overripeExtra = Game.Has('Glucose-charged air') ? (3600000 / 2000) : 3600000;
-            var harvestTime = (startTime + ripeAge + overripeExtra);
+        Game.predictLumpTypesByWrathWithState = function(startTime, grandmas, rigidel, rigidelActive, dragonsCurve, realityBending, type1Chance, supremeIntellect) {
+            var harvestTime = startTime + Game.calculateLumpRipeAgeWithState(grandmas, rigidel, rigidelActive, dragonsCurve, realityBending, supremeIntellect);
             var oldRandom = Math.random;
             try {
                 Math.seedrandom(Game.seed + '/' + harvestTime);
                 var t0 = [0], t1 = [0], t2 = [0], t3 = [0];
                 var curveMult = (dragonsCurve ? 1 : 0) + (realityBending ? 0.1 : 0);
                 var loop = 1 + curveMult;
+                // Mirror vanilla's randomFloor exactly: always consumes one Math.random() call,
+                // even when loop is an integer. if ((loop%1)<Math.random()) floor else ceil
                 var loops = ((loop % 1) < Math.random()) ? Math.floor(loop) : Math.ceil(loop);
                 var chance1 = (type1Chance !== undefined) ? type1Chance : (Game.Has('Sucralosia Inutilis') ? 0.15 : 0.1);
 
@@ -3780,8 +3746,8 @@ var cpsModifiersRegistered = false;
             }
         };
 
-        Game.predictLumpTypeWithState = function(startTime, grandmas, rigidel, dragonsCurve, realityBending, wrath) {
-            var types = Game.predictLumpTypesByWrathWithState(startTime, grandmas, rigidel, dragonsCurve, realityBending);
+        Game.predictLumpTypeWithState = function(startTime, grandmas, rigidel, rigidelActive, dragonsCurve, realityBending, wrath, supremeIntellect) {
+            var types = Game.predictLumpTypesByWrathWithState(startTime, grandmas, rigidel, rigidelActive, dragonsCurve, realityBending, undefined, supremeIntellect);
             return types[wrath | 0] || 0;
         };
 
@@ -3790,31 +3756,17 @@ var cpsModifiersRegistered = false;
             Game._lumpGameStatesLumpT = startTime;
             Game._lumpGameStatesUpgradeSig = Game.getLumpPredictorUpgradeSig ? Game.getLumpPredictorUpgradeSig() : '';
             var type1Chance = Game.Has('Sucralosia Inutilis') ? 0.15 : 0.1;
-
             var index = 0;
             var chunkSize = 4000;
-
             var process = function() {
-                var processed = 0;
-                while (index < Game._lumpGameStates.length && processed < chunkSize) {
-                    var s0 = Game._lumpGameStates[index];
-                    var lenG = (s0.rigidelSlot === 0) ? 601 : 400;
-                    var end = index + lenG;
-                    for (var i = index; i < end; i++) {
-                        var s = Game._lumpGameStates[i];
-                        var res = Game.predictLumpTypesByWrathWithState(startTime, s.grandmas, s.rigidelSlot, s.dragonsCurve, s.realityBending, type1Chance);
-                        s.predictedType = res[0];
-                        Game._lumpGameStates[i + lenG].predictedType = res[1];
-                        Game._lumpGameStates[i + 2 * lenG].predictedType = res[2];
-                        Game._lumpGameStates[i + 3 * lenG].predictedType = res[3];
-                    }
-                    index += 4 * lenG;
-                    processed += lenG;
+                var end = Math.min(index + chunkSize, Game._lumpGameStates.length);
+                for (; index < end; index++) {
+                    var s = Game._lumpGameStates[index];
+                    var res = Game.predictLumpTypesByWrathWithState(startTime, s.grandmas, s.rigidelSlot, s.rigidelActive, s.dragonsCurve, s.realityBending, type1Chance, s.supremeIntellect || 0);
+                    s.predictedType = res[s.elderWrath];
                 }
                 if (index < Game._lumpGameStates.length) setTimeout(process, 0);
-                else {
-                    if (callback) callback();
-                }
+                else if (callback) callback();
             };
             process();
         };
@@ -3824,9 +3776,18 @@ var cpsModifiersRegistered = false;
             var current = {
                 grandmas: Game.Objects['Grandma'].amount,
                 rigidel: detectRigidelSlot(),
-                dragonsCurve: detectDragonsCurve(),
-                realityBending: detectRealityBending()
+                rigidelActive: detectRigidelActive(),
+                dragonsCurve: Game.hasAura('Dragon\'s Curve') ? 1 : 0,
+                realityBending: Game.hasAura('Reality Bending') ? 1 : 0,
+                supremeIntellect: Game.hasAura('Supreme Intellect') ? 1 : 0
             };
+
+            var physicalRigidelSlot = 0;
+            if (Game.hasGod && typeof Game.hasGod === 'function') {
+                try { physicalRigidelSlot = Game.hasGod('order') || 0; } catch (e) {}
+            }
+            var buildingsMod = Game.BuildingsOwned % 10;
+            var buildingsAdjustCost = Math.min(buildingsMod, 10 - buildingsMod);
 
             var best = [null, null, null, null, null];
             var bestPoints = [Infinity, Infinity, Infinity, Infinity, Infinity];
@@ -3835,19 +3796,31 @@ var cpsModifiersRegistered = false;
                 var s = Game._lumpGameStates[i];
                 var type = s.predictedType;
                 if (type < 1 || type > 4) continue;
+                if (s.grandmas === 0 && s.elderWrath > 0) continue;
 
-                var points = 0;
-                if (s.grandmas !== current.grandmas) {
-                    points += Math.abs(s.grandmas - current.grandmas);
-                }
-                if (s.dragonsCurve !== current.dragonsCurve) {
-                    points += 1000;
-                }
-                if (s.realityBending !== current.realityBending) {
-                    points += 1000;
-                }
-                if (s.rigidelSlot !== current.rigidel) {
-                    points += 2500;
+                var points = Math.abs(s.grandmas - current.grandmas);
+                if (s.dragonsCurve !== current.dragonsCurve) points += 1000;
+                if (s.realityBending !== current.realityBending) points += 1000;
+                if ((s.supremeIntellect || 0) !== current.supremeIntellect) points += 1000;
+                if (s.rigidelSlot !== current.rigidel || s.rigidelActive !== current.rigidelActive) {
+                    // Adding SI boosts Rigidel by one effective slot (hasGod returns Math.max(1, physIdx)
+                    // instead of physIdx+1). If the rigidel "change" is purely a consequence of
+                    // toggling SI, charge nothing extra beyond the SI aura cost already added above.
+                    var siBoostCoversRigidel = false;
+                    if (!current.supremeIntellect && (s.supremeIntellect || 0) === 1 &&
+                        current.rigidel > 0 && s.rigidelActive === current.rigidelActive) {
+                        // With no SI currently, current.rigidel == physicalSlotIdx+1, so physicalSlotIdx = current.rigidel-1
+                        if (s.rigidelSlot === Math.max(1, current.rigidel - 1)) siBoostCoversRigidel = true;
+                    }
+                    if (!siBoostCoversRigidel) {
+                        if (s.rigidelSlot === current.rigidel && s.rigidelActive && !current.rigidelActive && buildingsMod !== 0) {
+                            points += buildingsAdjustCost;
+                        } else if (s.rigidelSlot === 0 && current.rigidel > 0) {
+                            points += 1;
+                        } else {
+                            points += 2500;
+                        }
+                    }
                 }
 
                 if (points < bestPoints[type]) {
@@ -3855,8 +3828,10 @@ var cpsModifiersRegistered = false;
                     best[type] = {
                         grandmas: s.grandmas,
                         rigidelSlot: s.rigidelSlot,
+                        rigidelActive: s.rigidelActive,
                         dragonsCurve: s.dragonsCurve,
                         realityBending: s.realityBending,
+                        supremeIntellect: s.supremeIntellect || 0,
                         elderWrath: s.elderWrath,
                         points: points
                     };
@@ -3865,24 +3840,19 @@ var cpsModifiersRegistered = false;
 
             var makeRes = function(type) {
                 var sol = best[type];
-                if (!sol) {
-                    return {found: false, possibleElderWraths: [false, false, false, false]};
-                }
-
+                if (!sol) return {found: false, possibleElderWraths: [false, false, false, false]};
                 var type1Chance = Game.Has('Sucralosia Inutilis') ? 0.15 : 0.1;
-                var res = Game.predictLumpTypesByWrathWithState(t, sol.grandmas, sol.rigidelSlot, sol.dragonsCurve, sol.realityBending, type1Chance);
-                var possibleWraths = [res[0] === type, res[1] === type, res[2] === type, res[3] === type];
-                sol.possibleElderWraths = possibleWraths;
+                var res = Game.predictLumpTypesByWrathWithState(t, sol.grandmas, sol.rigidelSlot, sol.rigidelActive, sol.dragonsCurve, sol.realityBending, type1Chance, sol.supremeIntellect || 0);
+                sol.possibleElderWraths = [res[0] === type, res[1] === type, res[2] === type, res[3] === type];
                 return {found: true, solution: sol};
             };
 
-            var result = {
+            return {
                 bifurcated: makeRes(1),
                 golden: makeRes(2),
                 meaty: makeRes(3),
                 caramelized: makeRes(4)
             };
-            return result;
         };
 
         Game.calculateLumpPredictions = function(forceRecalculate) {
@@ -3924,8 +3894,7 @@ var cpsModifiersRegistered = false;
         };
 
         Game.makeElderWrathIcon = function(stage, faded, current) {
-            var pos = [0, -64, 0, -128, -64, -128, -128, -128][stage * 2] + 'px ' + 
-                      [0, -64, 0, -128, -64, -128, -128, -128][stage * 2 + 1] + 'px';
+            var pos = ['0px -64px', '0px -128px', '-64px -128px', '-128px -128px'][stage] || '0px -64px';
             var opacity = faded ? 'opacity:0.2;' : '';
             var border = current ? 'box-shadow:0 0 0 2px #fff inset;border-radius:2px;' : '';
             return '<div style="display:inline-block;width:24px;height:24px;vertical-align:middle;overflow:hidden;' + border + '">' +
@@ -3933,10 +3902,12 @@ var cpsModifiersRegistered = false;
                    'transform:scale(0.375);transform-origin:0 0;"></div></div>';
         };
 
-        Game.makeRigidelIcon = function(slot) {
+        Game.makeRigidelIcon = function(slot, active) {
             var positions = ['', '-1104px -720px', '-1128px -720px', '-1104px -744px'];
             var gemPos = slot === 0 ? '-1128px -744px' : positions[slot];
-            var opacity = slot === 0 ? 'opacity:0.2;' : '';
+            // Faded if: no slot, or slotted but explicitly inactive (active=false)
+            var notActive = (slot === 0) || (active === false);
+            var opacity = notActive ? 'opacity:0.25;' : '';
             return '<div style="height:48px;width:48px;position:relative;display:inline-block;vertical-align:middle;' + opacity + '">' +
                    '<div style="position:absolute;left:4px;top:0;transform:scale(0.8);transform-origin:0 0;width:48px;height:48px;">' +
                        '<div class="icon" style="background-position:-1056px -912px"></div>' +
@@ -3952,9 +3923,10 @@ var cpsModifiersRegistered = false;
             var wrath = (typeof w !== 'number' || w !== w) ? 0 : Math.max(0, Math.min(3, w | 0));
             var grandmasMet = (sol.grandmas >= 600) ? (Math.floor(cur.grandmas) >= 600) : (Math.floor(cur.grandmas) === Math.floor(sol.grandmas));
             var wrathMet = !!possibleWraths[wrath];
-            var rigidelMet = (cur.rigidel === sol.rigidelSlot) && (sol.rigidelSlot === 0 || Game.BuildingsOwned % 10 === 0);
+            var rigidelMet = (cur.rigidel === sol.rigidelSlot) && (cur.rigidelActive === sol.rigidelActive);
             var dcMet = (cur.dragonsCurve === sol.dragonsCurve);
             var rbMet = (cur.realityBending === (sol.realityBending || 0));
+            var siMet = ((cur.supremeIntellect || 0) === (sol.supremeIntellect || 0));
             return {
                 possibleWraths: possibleWraths,
                 grandmasMet: grandmasMet,
@@ -3962,7 +3934,8 @@ var cpsModifiersRegistered = false;
                 rigidelMet: rigidelMet,
                 dcMet: dcMet,
                 rbMet: rbMet,
-                allMet: (grandmasMet && wrathMet && rigidelMet && dcMet && rbMet)
+                siMet: siMet,
+                allMet: (grandmasMet && wrathMet && rigidelMet && dcMet && rbMet && siMet)
             };
         };
 
@@ -3971,8 +3944,10 @@ var cpsModifiersRegistered = false;
 
             var curGrandmas = Game.Objects['Grandma'] ? Game.Objects['Grandma'].amount : 0;
             var curRigidel = detectRigidelSlot();
-            var curDragonsCurve = detectDragonsCurve();
-            var curRealityBending = detectRealityBending();
+            var curRigidelActive = detectRigidelActive();
+            var curDragonsCurve = Game.hasAura('Dragon\'s Curve') ? 1 : 0;
+            var curRealityBending = Game.hasAura('Reality Bending') ? 1 : 0;
+            var curSupremeIntellect = Game.hasAura('Supreme Intellect') ? 1 : 0;
             var curWrath = normalizeElderWrathForPredictor();
 
             var checkmark = function(met) {
@@ -3988,8 +3963,10 @@ var cpsModifiersRegistered = false;
             var met = Game.evaluateLumpSolutionMet({
                 grandmas: curGrandmas,
                 rigidel: curRigidel,
+                rigidelActive: curRigidelActive,
                 dragonsCurve: curDragonsCurve,
                 realityBending: curRealityBending,
+                supremeIntellect: curSupremeIntellect,
                 wrath: curWrath
             }, sol);
 
@@ -3999,6 +3976,7 @@ var cpsModifiersRegistered = false;
             var rigidelMet = !!(met && met.rigidelMet);
             var dcMet = !!(met && met.dcMet);
             var rbMet = !!(met && met.rbMet);
+            var siMet = !!(met && met.siMet);
 
             var parts = [];
             
@@ -4023,16 +4001,30 @@ var cpsModifiersRegistered = false;
                 '</div>';
             parts.push(wrathGrid);
 
-            parts.push('<div style="position:relative;display:inline-block;vertical-align:middle;width:48px;height:48px;">' + 
-                Game.makeRigidelIcon(sol.rigidelSlot > 0 ? sol.rigidelSlot : 0) + 
-                checkmark(rigidelMet) + '</div>');
+            // Building adjustment needed when the slot already matches but active/inactive status doesn't.
+            // This covers both directions: need to ACTIVATE (buy buildings to reach %10==0) or
+            // DEACTIVATE (buy/sell a building to break %10==0).
+            var needsBuildingAdjustment = !rigidelMet && sol.rigidelSlot > 0 && sol.rigidelSlot === curRigidel;
+            var rigidelBadge = rigidelMet
+                ? checkmark(true)
+                : (needsBuildingAdjustment
+                    ? '<div style="position:absolute;bottom:-4px;right:-6px;width:15px;height:15px;border-radius:50%;background:#ffff00;display:flex;align-items:center;justify-content:center;z-index:10;"><span style="color:#000;font-size:11px;font-weight:bold;line-height:12px;">!</span></div>'
+                    : '');
+            // Icon opacity: faded when solution wants Rigidel slotted but INACTIVE
+            var solRigidelActiveFlag = sol.rigidelSlot > 0 ? (sol.rigidelActive ? true : false) : undefined;
+            parts.push('<div style="position:relative;display:inline-block;vertical-align:middle;width:48px;height:48px;">' +
+                Game.makeRigidelIcon(sol.rigidelSlot > 0 ? sol.rigidelSlot : 0, solRigidelActiveFlag) +
+                rigidelBadge + '</div>');
             
             var dcPos = [20 * 48, 25 * 48];
             var rbPos = [32 * 48, 25 * 48];
+            var siPos = [34 * 48, 25 * 48];
             var dcOpacity = sol.dragonsCurve === 0 ? 'opacity:0.2;' : '';
             var rbOpacity = (sol.realityBending || 0) === 0 ? 'opacity:0.2;' : '';
+            var siOpacity = (sol.supremeIntellect || 0) === 0 ? 'opacity:0.2;' : '';
             parts.push('<div style="position:relative;display:inline-block;vertical-align:middle;width:48px;height:48px;"><div class="icon" style="background-position:-' + dcPos[0] + 'px -' + dcPos[1] + 'px;' + dcOpacity + '"></div>' + checkmark(dcMet) + '</div>');
             parts.push('<div style="position:relative;display:inline-block;vertical-align:middle;width:48px;height:48px;"><div class="icon" style="background-position:-' + rbPos[0] + 'px -' + rbPos[1] + 'px;' + rbOpacity + '"></div>' + checkmark(rbMet) + '</div>');
+            parts.push('<div style="position:relative;display:inline-block;vertical-align:middle;width:48px;height:48px;"><div class="icon" style="background-position:-' + siPos[0] + 'px -' + siPos[1] + 'px;' + siOpacity + '"></div>' + checkmark(siMet) + '</div>');
 
             return parts.join(' ');
         };
@@ -4049,8 +4041,10 @@ var cpsModifiersRegistered = false;
                     lumpT: Game.lumpT,
                     grandmas: Game.Objects['Grandma'] ? Game.Objects['Grandma'].amount : 0,
                     rigidel: detectRigidelSlot(),
-                    dragonsCurve: detectDragonsCurve(),
-                    realityBending: detectRealityBending(),
+                    rigidelActive: detectRigidelActive(),
+                    dragonsCurve: Game.hasAura('Dragon\'s Curve') ? 1 : 0,
+                    realityBending: Game.hasAura('Reality Bending') ? 1 : 0,
+                    supremeIntellect: Game.hasAura('Supreme Intellect') ? 1 : 0,
                     wrath: currentWrath,
                     upgradeSig: Game.getLumpPredictorUpgradeSig ? Game.getLumpPredictorUpgradeSig() : ''
                 };
@@ -4061,8 +4055,10 @@ var cpsModifiersRegistered = false;
                 var otherChanged = !last ||
                     last.grandmas !== state.grandmas ||
                     last.rigidel !== state.rigidel ||
+                    last.rigidelActive !== state.rigidelActive ||
                     last.dragonsCurve !== state.dragonsCurve ||
                     last.realityBending !== state.realityBending ||
+                    last.supremeIntellect !== state.supremeIntellect ||
                     last.wrath !== state.wrath;
 
                 // Recalculate if lumpT changed OR any other state changed
@@ -4127,6 +4123,7 @@ var cpsModifiersRegistered = false;
     }
     
     function setupFortuneSoundSelector() {
+        if (!Game.Has('Fortune tolls for you')) return;
         var selector = Game.Upgrades['Golden cookie sound selector'];
         if (!selector || selector._fortuneSoundAdded) return;
         
@@ -4447,8 +4444,8 @@ var cpsModifiersRegistered = false;
                 for (var i in Game.buffs) {
                     var bf = Game.buffs[i];
                     var d = document.createElement('div');
-                    d.style.cssText = 'height:12px;margin:0 10px;position:relative;';
-                    d.innerHTML = '<span style="display:inline-block;text-align:right;width:117px;margin-right:5px;">' + bf.name + '</span><span id="Buff' + i + 'Bar" style="display:inline-block;height:10px;background:' + (colors[bf.name] || colors.default) + ';border-top-right-radius:10px;border-bottom-right-radius:10px;"></span><span id="Buff' + i + 'Time" style="margin-left:5px;"></span>';
+                    d.style.cssText = 'height:14px;margin:0 10px;position:relative;';
+                    d.innerHTML = '<span style="display:inline-block;text-align:right;width:117px;margin-right:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;vertical-align:top;line-height:14px;">' + bf.name + '</span><span id="Buff' + i + 'Bar" style="display:inline-block;height:10px;background:' + (colors[bf.name] || colors.default) + ';border-top-right-radius:10px;border-bottom-right-radius:10px;"></span><span id="Buff' + i + 'Time" style="margin-left:5px;"></span>';
                     tb.appendChild(d);
                     l('Buff' + i + 'Bar').style.width = Math.round(bf.time * w / bf.maxTime) + 'px';
                     l('Buff' + i + 'Time').textContent = Math.ceil(bf.time / Game.fps);
@@ -4634,6 +4631,29 @@ var cpsModifiersRegistered = false;
                 if (!Game.UpgradesByPool['cookie']) Game.UpgradesByPool['cookie'] = [];
                 if (Game.UpgradesByPool['cookie'].indexOf(upgrade) === -1) {
                     Game.UpgradesByPool['cookie'].push(upgrade);
+                }
+            }
+        }
+
+        // Restore bought states after re-creation
+        // Priority 1: pending restores stored by JNE right before it deleted the donuts
+        if (Game.JNE && Game.JNE._pendingDonutRestores) {
+            var pending = Game.JNE._pendingDonutRestores;
+            for (var j = 0; j < donuts.length; j++) {
+                var dname = donuts[j].name;
+                if (Game.Upgrades[dname] && pending[dname]) {
+                    Game.Upgrades[dname].bought = pending[dname];
+                }
+            }
+            Game.JNE._pendingDonutRestores = null;
+        }
+        // Priority 2: last heavenly save data (fallback for any remaining unrestored donuts)
+        var savedData = Game.JNE && Game.JNE.heavenlyUpgradesSavedData;
+        if (savedData && savedData.boughtUpgrades && Array.isArray(savedData.boughtUpgrades)) {
+            for (var k = 0; k < donuts.length; k++) {
+                var dname2 = donuts[k].name;
+                if (Game.Upgrades[dname2] && !Game.Upgrades[dname2].bought && savedData.boughtUpgrades.indexOf(dname2) !== -1) {
+                    Game.Upgrades[dname2].bought = 1;
                 }
             }
         }
@@ -6183,9 +6203,8 @@ var cpsModifiersRegistered = false;
             }
             
             // Save timers
-            if (!Game.JNE.heavenlyUpgradesSavedData) Game.JNE.heavenlyUpgradesSavedData = {};
-            if (Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastResetTime) saveData.timers.fortuneGCLastResetTime = Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastResetTime;
-            if (Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastResetTime) saveData.timers.fortuneCPSLastResetTime = Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastResetTime;
+            if (Game.JNE._fortuneGCTimer) saveData.timers.fortuneGCLastResetTime = Game.JNE._fortuneGCTimer;
+            if (Game.JNE._fortuneCPSTimer) saveData.timers.fortuneCPSLastResetTime = Game.JNE._fortuneCPSTimer;
             
             saveData.stats.cookieFishCaught = Game.JNE.cookieFishCaught || 0;
             saveData.stats.bingoJackpotWins = Game.JNE.bingoJackpotWins || 0;
@@ -6438,12 +6457,8 @@ var cpsModifiersRegistered = false;
         // Apply timers
         if (!Game.JNE) Game.JNE = {};
         if (!Game.JNE.heavenlyUpgradesSavedData) Game.JNE.heavenlyUpgradesSavedData = {};
-        var legacyFortuneTimer = (saveData.timers && saveData.timers.fortuneCookieLastResetTime) ? saveData.timers.fortuneCookieLastResetTime : 0;
-        Game.JNE.heavenlyUpgradesSavedData.fortuneGCLastResetTime = (saveData.timers && saveData.timers.fortuneGCLastResetTime) ? saveData.timers.fortuneGCLastResetTime : legacyFortuneTimer;
-        Game.JNE.heavenlyUpgradesSavedData.fortuneCPSLastResetTime = (saveData.timers && saveData.timers.fortuneCPSLastResetTime) ? saveData.timers.fortuneCPSLastResetTime : legacyFortuneTimer;
-        if (Game.JNE.heavenlyUpgradesSavedData.fortuneCookieLastResetTime !== undefined) {
-            delete Game.JNE.heavenlyUpgradesSavedData.fortuneCookieLastResetTime;
-        }
+        Game.JNE._fortuneGCTimer = (saveData.timers && saveData.timers.fortuneGCLastResetTime) ? saveData.timers.fortuneGCLastResetTime : 0;
+        Game.JNE._fortuneCPSTimer = (saveData.timers && saveData.timers.fortuneCPSLastResetTime) ? saveData.timers.fortuneCPSLastResetTime : 0;
         
         // Clear loading flag 
         if (Game.JNE) {
