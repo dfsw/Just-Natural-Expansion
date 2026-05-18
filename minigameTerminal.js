@@ -503,6 +503,14 @@ M.launch = function () {
         ];
     }
 
+    function getPotionSlotOptions() {
+        return [
+            { value: 0, label: 'Brew slot 1', icon: [0, 10] },
+            { value: 1, label: 'Brew slot 2', icon: [1, 10] },
+            { value: 2, label: 'Brew slot 3', icon: [2, 10] }
+        ];
+    }
+
     function getSugarFrenzyLumpCost() {
         var up = Game.Upgrades ? Game.Upgrades['Sugar frenzy'] : null;
         var cost = 1;
@@ -842,6 +850,35 @@ M.launch = function () {
         };
     }
 
+    function createBrewSlotProgram() {
+        return {
+            key: 'brewSlot',
+            name: 'Alchemy Buffer Consumer',
+            desc: 'Consume a potion from the Alchemy Lab minigame.',
+            icon: [0, 26, TERMINAL_CUSTOM_SPRITE_URL],
+            config: [
+                {
+                    id: 'slot',
+                    label: 'Slot',
+                    type: 'choice',
+                    display: 'iconCarousel',
+                    valueType: 'number',
+                    options: function () {
+                        return getPotionSlotOptions();
+                    },
+                    default: function () {
+                        return firstOptionValue(getPotionSlotOptions(), 0);
+                    }
+                }
+            ],
+            summarizeConfig: function (config) {
+                config = config || {};
+                var slotLabel = findOptionLabel(getPotionSlotOptions(), config.slot, 'Brew slot 1');
+                return 'Consume potion from ' + slotLabel;
+            }
+        };
+    }
+
     function createSwitchSeasonProgram() {
         return {
             key: 'switchSeason',
@@ -917,6 +954,7 @@ M.launch = function () {
             createAsyncSleepThreadProgram(),
             createClickProgram(),
             createLoanProgram(),
+            createBrewSlotProgram(),
             createSwitchSeasonProgram(),
             createSweetRuntimeSwizzleProgram()
         ];
@@ -1782,6 +1820,53 @@ M.launch = function () {
         market.toRedraw = Math.max(market.toRedraw || 0, 2);
         return ok('Activated ' + loanDisplay + '.');
     });
+
+    M.registerProgramHandler('brewSlot', function (config) {
+        config = config || {};
+        var potions = Game.Objects['Alchemy lab'].minigame;
+        if (!potions) return err('Alchemy Lab unavailable.');
+        var slotIndex = parseInt(config.slot, 10);
+        if (isNaN(slotIndex) || slotIndex < 0 || slotIndex > 2) return err('Invalid brew slot selection.');
+        if (!potions._usePotionSlot || typeof potions._usePotionSlot !== 'function') return err('Potion consumption function unavailable.');
+        
+        // Check if slot has a potion
+        if (!potions.G || !potions.G.slots) return err('Alchemy Lab state unavailable.');
+        var brew = potions.G.slots[slotIndex];
+        if (!brew) return err('No potion available, the slot was empty.');
+        
+        // Check if potion is ready
+        var remaining = brew.endTime - Date.now() / 1000;
+        if (remaining > 0) return err('Potion not ready yet, potion was still brewing.');
+        
+        var slotLabel = findOptionLabel(getPotionSlotOptions(), slotIndex, 'Brew slot 1');
+        potions._usePotionSlot(slotIndex);
+        return ok('Consumed potion from ' + slotLabel + '.');
+    });
+
+    M.brewSlot_Dispatch_Handler = function(slot) {
+        var potions = Game.Objects['Alchemy lab'].minigame;
+        if (!potions) return { success: false, message: 'Alchemy Lab unavailable.' };
+        var slotIndex = parseInt(slot, 10);
+        if (isNaN(slotIndex) || slotIndex < 0 || slotIndex > 2) return { success: false, message: 'Invalid brew slot selection.' };
+        if (!potions._usePotionSlot || typeof potions._usePotionSlot !== 'function') return { success: false, message: 'Potion consumption function unavailable.' };
+        
+        // Check if slot has a potion
+        if (!potions.G || !potions.G.slots) return { success: false, message: 'Alchemy Lab state unavailable.' };
+        var brew = potions.G.slots[slotIndex];
+        if (!brew) return { success: false, message: 'No potion available, the slot was empty.' };
+        
+        // Check if potion is ready
+        var remaining = brew.endTime - Date.now() / 1000;
+        if (remaining > 0) return { success: false, message: 'Potion not ready yet, potion was still brewing.' };
+        
+        potions._usePotionSlot(slotIndex);
+        var slotLabel = findOptionLabel(getPotionSlotOptions(), slotIndex, 'Brew slot 1');
+        return { success: true, message: 'Consumed potion from ' + slotLabel + '.' };
+    };
+
+    M.alchemy_Buffer_Consumer = function(slot) {
+        return M.brewSlot_Dispatch_Handler(slot);
+    };
 
     M.registerProgramHandler('asyncSleepThread', function (config) {
         config = config || {};

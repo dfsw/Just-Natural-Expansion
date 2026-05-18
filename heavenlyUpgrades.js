@@ -3639,7 +3639,7 @@ var cpsModifiersRegistered = false;
 
         if (Game._sugarPredictorDebug === undefined) Game._sugarPredictorDebug = false;
 
-        // Hook slotGod to refresh best-state finder when pantheon slots change
+        // pantheon slots change
         var PM = Game.Objects && Game.Objects['Temple'] && Game.Objects['Temple'].minigame;
         if (PM && PM.slotGod && !PM._sugarPredictorSlotHooked) {
             var origSlotGod = PM.slotGod;
@@ -3652,8 +3652,7 @@ var cpsModifiersRegistered = false;
 
         if (!Game.getLumpPredictorUpgradeSig) {
             Game.getLumpPredictorUpgradeSig = function() {
-                // Any change here MUST invalidate the precomputed table.
-                // Keep this limited to the exact inputs used by our timing/type RNG.
+                // changes here invalidate the precomputed table.
                 var h = function(name) { return Game.Has && Game.Has(name) ? 1 : 0; };
                 return [
                     h('Stevia Caelestis'),
@@ -3782,10 +3781,7 @@ var cpsModifiersRegistered = false;
                 supremeIntellect: Game.hasAura('Supreme Intellect') ? 1 : 0
             };
 
-            var physicalRigidelSlot = 0;
-            if (Game.hasGod && typeof Game.hasGod === 'function') {
-                try { physicalRigidelSlot = Game.hasGod('order') || 0; } catch (e) {}
-            }
+            var physicalRigidelSlot = Game.hasGod('order') || 0;
             var buildingsMod = Game.BuildingsOwned % 10;
             var buildingsAdjustCost = Math.min(buildingsMod, 10 - buildingsMod);
 
@@ -3905,7 +3901,6 @@ var cpsModifiersRegistered = false;
         Game.makeRigidelIcon = function(slot, active) {
             var positions = ['', '-1104px -720px', '-1128px -720px', '-1104px -744px'];
             var gemPos = slot === 0 ? '-1128px -744px' : positions[slot];
-            // Faded if: no slot, or slotted but explicitly inactive (active=false)
             var notActive = (slot === 0) || (active === false);
             var opacity = notActive ? 'opacity:0.25;' : '';
             return '<div style="height:48px;width:48px;position:relative;display:inline-block;vertical-align:middle;' + opacity + '">' +
@@ -4001,8 +3996,7 @@ var cpsModifiersRegistered = false;
                 '</div>';
             parts.push(wrathGrid);
 
-            // Building adjustment needed when the slot already matches but active/inactive status doesn't.
-            // This covers both directions: need to ACTIVATE (buy buildings to reach %10==0) or
+            // ACTIVATE (buy buildings to reach %10==0) or
             // DEACTIVATE (buy/sell a building to break %10==0).
             var needsBuildingAdjustment = !rigidelMet && sol.rigidelSlot > 0 && sol.rigidelSlot === curRigidel;
             var rigidelBadge = rigidelMet
@@ -6618,9 +6612,6 @@ var cpsModifiersRegistered = false;
                 if (M.draw) M.draw();
             }
         }
-        
-
-            
     }
     
     // Expose API

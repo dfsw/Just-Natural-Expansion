@@ -919,6 +919,11 @@ DownlineM.init = function(div) {
       if (Game.hasAura('Reality Bending')) bonus += 0.1;
       var mult = 1 + (bonus * 0.1);
       if (G.actionDurationMult) mult *= G.actionDurationMult;
+     
+      // Check for Breath of Growth buff (potions class)
+      if (Game.hasBuff('Breath of Growth')) {
+        mult *= 2;
+      }
       return mult;
     }
 
@@ -3316,6 +3321,16 @@ DownlineM.init = function(div) {
       G.lumpSpeedBoostEnd = Date.now() + 30 * 60 * 1000;
       DownlineM.updateLumpBoostState();
       if (PlaySound) PlaySound('snd/pop' + Math.floor(Math.random() * 3 + 1) + '.mp3', 0.75);
+    };
+    DownlineM.cancelRandomAction = function() {
+      if (G.activeActions.length > 0) {
+        var randomIndex = Math.floor(Math.random() * G.activeActions.length);
+        var action = G.activeActions[randomIndex];
+        G.activeActions.splice(randomIndex, 1);
+        renderActiveSlots();
+        return action;
+      }
+      return null;
     };
 
     if (DownlineM.createAchievements) DownlineM.createAchievements();
