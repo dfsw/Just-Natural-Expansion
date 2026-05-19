@@ -3054,8 +3054,8 @@ PotionsM._clearReagentHighlights = function() {
 PotionsM._getRandomPotion = function() {
     var allPotions = [];
     for (var i = 0; i < POTIONS.length; i++) {
-        // Exclude Elixir of Chaos from random selection maybe consider avoiding other selection potions
-        if (POTIONS[i].id !== 'elixir_of_chaos') {
+        // Exclude Elixir of Chaos, Unguent of Hades, and Tears of Landis from random selection also known as fun killers
+        if (POTIONS[i].id !== 'elixir_of_chaos' && POTIONS[i].id !== 'unguent_of_hades' && POTIONS[i].id !== 'tears_of_landis') {
             allPotions.push(POTIONS[i]);
         }
     }
@@ -3305,10 +3305,9 @@ PotionsM._startBrew = function() {
         
         var discoveryTime = 300;
         
-        // Apply Syrup of Insight misbrew to discovery time
+        // Apply Syrup of Insight misbrew to discovery time 
         if (Game.hasBuff('Syrup of Insight (misbrewed)')) {
-            var siBuff = Game.buffs['Syrup of Insight (misbrewed)'];
-            discoveryTime *= (siBuff.mult || 2.0);
+            discoveryTime *= 2;
         }
         
         // Override discovery time to 5 seconds in debug mode

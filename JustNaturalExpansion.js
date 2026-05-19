@@ -15,7 +15,7 @@
     
     function initializeMod() {
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.4.5';
+    var modVersion = '0.5.0';
     var debugMode = false; 
     
     function debugLog() {
@@ -1727,7 +1727,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                                 <a class="option" id="toggle-minigames" style="text-decoration:none;color:${modSettings.enableMinigames ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
                                     Minigames<br><b style="font-size:12px;">${modSettings.enableMinigames ? 'ON' : 'OFF'}</b>
                                 </a>
-                                <label>(Enables Terminal a Javascript Console minigame and Downline a Fractal Engine minigame.)</label>
+                                <label>(Enables minigames for JS Consoles, Fractal Engines, and Alchemy Labs.)</label>
                             </div>
                             <div class="listing">
                                 <a class="option" id="toggle-cookie-age" style="text-decoration:none;color:${modSettings.enableCookieAge ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
@@ -2438,18 +2438,17 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             getPendingSave: function() { return pendingDownlineMinigameSave; },
             setPendingSave: function(v) { pendingDownlineMinigameSave = v; },
             scriptLoaded: false, isOpen: false, syncPending: false
+        },
+        {
+            buildingName: 'Alchemy lab', minigameName: 'Potions Class',
+            scriptUrl: potionsMinigameScriptUrl, scriptPattern: 'minigamePotions.js',
+            globalMiniKey: 'PotionsM', globalInitKey: 'initializePotionsMinigame',
+            removeAchievementsKey: 'removePotionsAchievements',
+            jneDataKey: 'potionsSavedData', windowApiKey: 'PotionsMinigame',
+            getPendingSave: function() { return pendingPotionsMinigameSave; },
+            setPendingSave: function(v) { pendingPotionsMinigameSave = v; },
+            scriptLoaded: false, isOpen: false, syncPending: false
         }
-        // ,
-        // {
-        //     buildingName: 'Alchemy lab', minigameName: 'Potions Class',
-        //     scriptUrl: potionsMinigameScriptUrl, scriptPattern: 'minigamePotions.js',
-        //     globalMiniKey: 'PotionsM', globalInitKey: 'initializePotionsMinigame',
-        //     removeAchievementsKey: 'removePotionsAchievements',
-        //     jneDataKey: 'potionsSavedData', windowApiKey: 'PotionsMinigame',
-        //     getPendingSave: function() { return pendingPotionsMinigameSave; },
-        //     setPendingSave: function(v) { pendingPotionsMinigameSave = v; },
-        //     scriptLoaded: false, isOpen: false, syncPending: false
-        // }
     ];
 
     function _restoreMinigameOpenStates() {

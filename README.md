@@ -72,13 +72,18 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 
 ## Changelog
 
+### **Major Version 0.5.0 - Potions Class, an Alchemy Labs Minigame**
+* Introducing the third new Just Natural Expansion minigame! Enter the [Alchemy Labs Potions Class](https://github.com/dfsw/Just-Natural-Expansion/wiki/Alchemy-Labs-Minigame-Potion-Class) and learn to gather rare reagents, brew powerful potions, and discover dozens of strange new recipes. Search throughout the world for more than 20 exotic ingredients, experiment with unusual mixtures, and uncover an entirely new branch of cookie science. Potions Class unlocks at level 1 Alchemy Labs when minigames are enabled in the Options menu.
+
 ### Version 0.4.5
 * Fixed a bug in Downline that would pretty much always give a user 10 action slots regardless of building level.  
 * Downline now supports Reality Bending for a 1/10th Supreme Intellect bonus to its gameplay. 
+* Downline has a nice new shiny background image, it really ties the whole game together I think. 
 * Improvements to the Sugar Predictor heavenly upgrade with much appeciation for staticvariablejames research and feedback. It is now more accurate and supports Rigidel in more creative ways such as with supreme intellect. 
 * There was a bug that could cause disabling minigames to lose minigame specific achievement won states, this has been fixed. 
 * Cleaned up some code and improved stability in several places.
 * Fixed some heavenly upgrade wonkiness mostly around UI stuff but everything should be a bit better there now. 
+* Fixed a bug that could have resulted in lost mod saved data if the game crashed during loading, still please back up regularly. 
 * Staging of functionality to implement future minigames.
 
 ### Version 0.4.4
@@ -101,7 +106,7 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 * Updated some Cookie Age puzzle wording to clear up common sources of confusion.
 
 ### **Major Version 0.4.0 - Downline a Fractal Engine Minigame**
-* Introducing a whole new minigame for Cookie Clicker! The [Fractal Engine Minigame: Downline](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#fractal-engine-minigame-downline) get to experience what its like to run your own version of Cookie Clicker, recruit players, release features, engage in shady marketing, and hype up your game to make it the best idle game ever. Unlocked at Level 1 Fractal Engines when Minigames are toggled on/off in the Options Menu. 
+* Introducing a whole new minigame for Cookie Clicker! The [Fractal Engine Minigame: Downline](https://github.com/dfsw/Just-Natural-Expansion/wiki/Fractal-Engine-Minigame-Downline) get to experience what its like to run your own version of Cookie Clicker, recruit players, release features, engage in shady marketing, and hype up your game to make it the best idle game ever. Unlocked at Level 1 Fractal Engines when Minigames are toggled on/off in the Options Menu. 
 
 ### Version 0.3.7
 * Fixed a bug that could miscount total wrinklers and stock totals on ascension. 
@@ -176,7 +181,7 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 
 
 ### **Major Version 0.2.0 - Terminal a Javascript Console Minigame**
-* Introducing a whole new minigame for Cookie Clicker! The [Javascript Console Minigame: Terminal](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#javascript-console-minigame-terminal) allows the player to write programs for Cookie Clicker to automate actions and create perfect combos or crash the system and ruin their setups. Unlocked at Level 1 Javascript Consoles are toggled on/off in the Options Menu. 
+* Introducing a whole new minigame for Cookie Clicker! The [Javascript Console Minigame: Terminal](https://github.com/dfsw/Just-Natural-Expansion/wiki/Javascript-Console-Minigame-Terminal) allows the player to write programs for Cookie Clicker to automate actions and create perfect combos or crash the system and ruin their setups. Unlocked at Level 1 Javascript Consoles are toggled on/off in the Options Menu. 
 
 ### Version 0.1.2
 * Updated pricing on building upgrades.
@@ -188,7 +193,7 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 * Fixed a bug that could cause unbought upgrades to quickly flash for one frame as available for purchase even if they aren't, also the season cooldown bar doesn't blink every few seconds anymore as a byproduct of this fix. 
 
 ### **Major Version 0.1.0 - Mysteries of the Cookie Age**
-* [Mysteries of the Cookie Age](https://github.com/dfsw/Just-Natural-Expansion?tab=readme-ov-file#Mysteries-of-the-Cookie-Age) Expansion Patch. May you enjoy your puzzling.
+* [Mysteries of the Cookie Age](https://github.com/dfsw/Just-Natural-Expansion/wiki/Mysteries-of-the-Cookie-Age) Expansion Patch. May you enjoy your puzzling.
 * Fixed a bug that would prevent users from using Just Natural Expansion upgrades in Permanent Upgrade Slots. 
 * Made several fixes and improvements to the first run/install system to be a much more smooth experience.
 
