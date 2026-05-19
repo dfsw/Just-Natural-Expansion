@@ -74,6 +74,8 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 
 ### **Major Version 0.5.0 - Potions Class, an Alchemy Labs Minigame**
 * Introducing the third new Just Natural Expansion minigame! Enter the [Alchemy Labs Potions Class](https://github.com/dfsw/Just-Natural-Expansion/wiki/Alchemy-Labs-Minigame-Potion-Class) and learn to gather rare reagents, brew powerful potions, and discover dozens of strange new recipes. Search throughout the world for more than 20 exotic ingredients, experiment with unusual mixtures, and uncover an entirely new branch of cookie science. Potions Class unlocks at level 1 Alchemy Labs when minigames are enabled in the Options menu.
+* Terminal minigame support for Potions Class. 
+* For a certain Mysteries of the Cookie Age puzzle "heart" now accepts two different meanings, thank you for the feedback!
 
 ### Version 0.4.5
 * Fixed a bug in Downline that would pretty much always give a user 10 action slots regardless of building level.  
