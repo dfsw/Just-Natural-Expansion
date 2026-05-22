@@ -1,4 +1,4 @@
-// Potions Class Minigame 1.0.0
+// Potions Class Minigame 1.0.1
 
 (function() {
 'use strict';
@@ -2993,7 +2993,8 @@ PotionsM._onCookieClick = function() {
 PotionsM._addReagent = function(reagentId, amount, source) {
     if (PotionsM._loading) return;
     var current = G.reagents[reagentId] || 0;
-    if (current >= G.maxReagents) return; // Maxed out, suppress
+    var inBrew = G.selectedReagents.filter(function(r) { return r === reagentId; }).length;
+    if (current + inBrew >= G.maxReagents) return; // Maxed out (counting staged reagents), suppress
 
     G.reagents[reagentId] = current + amount;
     G.totalReagentsCollected = (G.totalReagentsCollected || 0) + amount;
@@ -3285,7 +3286,7 @@ PotionsM._startBrew = function() {
             return -1;
         });
         if (rIds.length === 3 && rIds[0] !== -1 && rIds[1] !== -1 && rIds[2] !== -1) {
-            if (TriedRecipes.isTried(G.triedRecipes, rIds[0], rIds[1], rIds[2])) {
+            if (!matchingPotion && TriedRecipes.isTried(G.triedRecipes, rIds[0], rIds[1], rIds[2])) {
                 var mixtureTier = PotionsM._calculateMixtureTier(G.selectedReagents);
                 var resultMessage = '';
                 if (mixtureTier === 'useless') {
@@ -3479,7 +3480,8 @@ PotionsM._completeDiscovery = function(slotIndex) {
         G.slots[slotIndex] = {
             potionId: matchingPotion.id,
             startTime: Date.now() / 1000,
-            endTime: Date.now() / 1000 - 1 // Already done
+            endTime: Date.now() / 1000 - 1, // Already done
+            reagents: brew.reagents // Preserved for save/load reconstruction
         };
     } else {
         var mixtureTier = PotionsM._calculateMixtureTier(brew.reagents);
@@ -4415,8 +4417,19 @@ window.potionsDebug = {
         PotionsM._buildCatalog();
         PotionsM._refreshSlots();
         PotionsM._renderSelectedReagents();
-        
+
         console.log('[Potions Debug] All reagents unlocked and filled to ' + G.maxReagents + '! Potions remain locked.');
+    },
+
+    unlockPotion: function(potionIdOrName) {
+        var potion = POTIONS.find(function(p) { return p.id === potionIdOrName || p.name === potionIdOrName; });
+        if (potion) {
+            potion.unlocked = true;
+            PotionsM._buildCatalog();
+            console.log('[Potions Debug] Unlocked potion: ' + potion.name);
+        } else {
+            console.log('[Potions Debug] Potion not found: ' + potionIdOrName);
+        }
     },
     
     removeAchievements: removePotionsAchievements,
