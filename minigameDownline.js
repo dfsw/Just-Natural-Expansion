@@ -786,7 +786,7 @@ DownlineM.init = function(div) {
             <div class="downline-active-slot"></div>
             <div class="downline-active-slot"></div>
           </div>
-          <p class="downline-active-slots-info" id="downline-active-slots-info" data-desc-html="Available action slots. One slot per fractal engine level, up to 10 slots."><span id="downline-active-count" class="green">0</span>/<span id="downline-active-max">7</span> slots used</p>
+          <p class="downline-active-slots-info" id="downline-active-slots-info" data-desc-html="Available action slots. One slot (min of 3 slots) per fractal engine level, up to 10 slots."><span id="downline-active-count" class="green">0</span>/<span id="downline-active-max">7</span> slots used</p>
         </div>
       </div>
         <div class="downline-boredom-under-slots">
