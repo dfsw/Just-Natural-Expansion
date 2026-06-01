@@ -15,7 +15,7 @@
     
     function initializeMod() {
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.5.1';
+    var modVersion = '0.5.2';
     var debugMode = false; 
     
     function debugLog() {
@@ -2846,6 +2846,50 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         return true;
     }
     
+    // Inject JNE modifications into the vanilla golden cookie popFunc. MUST run before any external script (HU, potions) wraps popFunc, so that  the eval operates on the vanilla source (which contains the local varseffectDurMod/mult and the regex anchors).
+    function injectGoldenPopFunc() {
+        if (!Game.shimmerTypes || !Game.shimmerTypes['golden']) return;
+        if (Game.shimmerTypes['golden']._effectInjected) return;
+
+        var originalPopFunc = Game.shimmerTypes['golden'].popFunc;
+        if (!originalPopFunc) return;
+
+        try {
+            var str = originalPopFunc.toString();
+
+            var wrathTracking = "//JUST NATURAL EXPANSION MODIFICATIONS FOLLOW\n" +
+                                 "if(me.wrath&&me.type!=='cookie storm drop'){if(!window.JNE_lifetimeData){window.JNE_lifetimeData={wrathCookiesClicked:0};}window.JNE_lifetimeData.wrathCookiesClicked++;}\n" +
+                                 "//END JUST NATURAL EXPANSION MODIFICATIONS\n";
+
+            var sweetSorcery = "//JUST NATURAL EXPANSION MODIFICATIONS FOLLOW\n" +
+                                "if(Game.Achievements['Sweet Sorcery']&&!Game.Achievements['Sweet Sorcery'].won){Game.Win('Sweet Sorcery');}\n" +
+                                "//END JUST NATURAL EXPANSION MODIFICATIONS\n";
+
+            var effectDurMod = "//JUST NATURAL EXPANSION MODIFICATIONS FOLLOW\n" +
+                                "if(Game.Has('Order of the Shining Spoon')){effectDurMod*=1.05;}\n" +
+                                "if(Game.Has('Order of the Cookie Eclipse')){effectDurMod*=1.05;}\n" +
+                                "if(Game.Has('Order of the Eternal Cookie')){effectDurMod*=1.05;}\n" +
+                                "//END JUST NATURAL EXPANSION MODIFICATIONS\n";
+
+            var mult = "//JUST NATURAL EXPANSION MODIFICATIONS FOLLOW\n" +
+                        "if(Game.Has('Order of the Shining Spoon')){mult*=1.05;}\n" +
+                        "if(Game.Has('Order of the Cookie Eclipse')){mult*=1.05;}\n" +
+                        "if(Game.Has('Order of the Eternal Cookie')){mult*=1.05;}\n" +
+                        "//END JUST NATURAL EXPANSION MODIFICATIONS\n";
+
+            str = str.replace(/(if\s*\(me\.wrath\)\s*Game\.Win\s*\(\s*['"]Wrath cookie['"]\s*\)\s*;)/, "$1\n" + wrathTracking);
+            str = str.replace(/(Game\.gainLumps\s*\(\s*1\s*\)\s*;)/, "$1\n" + sweetSorcery);
+            str = str.replace(/var effectDurMod=1;/, "var effectDurMod=1;\n" + effectDurMod);
+            str = str.replace(/var mult=1;/, "var mult=1;\n" + mult);
+
+            Game.shimmerTypes['golden'].popFunc = eval('(' + str + ')');
+            window.JNE_lifetimeData = lifetimeData;
+            Game.shimmerTypes['golden']._effectInjected = true;
+        } catch (error) {
+            console.error('JNE: Error injecting popFunc modifications:', error);
+        }
+    }
+
     // Global flag to prevent hooks from being registered multiple times
     var hooksRegistered = false;
     
@@ -3328,46 +3372,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             }
         }, 'Track garden soil type changes');
         // Golden cookie effect modification + wrath/achievement tracking
-        if (Game.shimmerTypes && Game.shimmerTypes['golden']) {
-            var originalPopFunc = Game.shimmerTypes['golden'].popFunc;
-            
-            if (originalPopFunc && !Game.shimmerTypes['golden']._effectInjected) {
-                try {
-                    let str = originalPopFunc.toString();
-                    
-                    const wrathTracking = "//JUST NATURAL EXPANSION MODIFICATIONS FOLLOW\n" +
-                                         "if(me.wrath&&me.type!=='cookie storm drop'){if(!window.JNE_lifetimeData){window.JNE_lifetimeData={wrathCookiesClicked:0};}window.JNE_lifetimeData.wrathCookiesClicked++;}\n" +
-                                         "//END JUST NATURAL EXPANSION MODIFICATIONS\n";
-                    
-                    const sweetSorcery = "//JUST NATURAL EXPANSION MODIFICATIONS FOLLOW\n" +
-                                        "if(Game.Achievements['Sweet Sorcery']&&!Game.Achievements['Sweet Sorcery'].won){Game.Win('Sweet Sorcery');}\n" +
-                                        "//END JUST NATURAL EXPANSION MODIFICATIONS\n";
-                    
-                    const effectDurMod = "//JUST NATURAL EXPANSION MODIFICATIONS FOLLOW\n" +
-                                        "if(Game.Has('Order of the Shining Spoon')){effectDurMod*=1.05;}\n" +
-                                        "if(Game.Has('Order of the Cookie Eclipse')){effectDurMod*=1.05;}\n" +
-                                        "if(Game.Has('Order of the Eternal Cookie')){effectDurMod*=1.05;}\n" +
-                                        "//END JUST NATURAL EXPANSION MODIFICATIONS\n";
-                    
-                    const mult = "//JUST NATURAL EXPANSION MODIFICATIONS FOLLOW\n" +
-                                "if(Game.Has('Order of the Shining Spoon')){mult*=1.05;}\n" +
-                                "if(Game.Has('Order of the Cookie Eclipse')){mult*=1.05;}\n" +
-                                "if(Game.Has('Order of the Eternal Cookie')){mult*=1.05;}\n" +
-                                "//END JUST NATURAL EXPANSION MODIFICATIONS\n";
-                    
-                    str = str.replace(/(if\s*\(me\.wrath\)\s*Game\.Win\s*\(\s*['"]Wrath cookie['"]\s*\)\s*;)/, "$1\n" + wrathTracking);
-                    str = str.replace(/(Game\.gainLumps\s*\(\s*1\s*\)\s*;)/, "$1\n" + sweetSorcery);
-                    str = str.replace(/var effectDurMod=1;/, "var effectDurMod=1;\n" + effectDurMod);
-                    str = str.replace(/var mult=1;/, "var mult=1;\n" + mult);
-                    
-                    Game.shimmerTypes['golden'].popFunc = eval('(' + str + ')');
-                    window.JNE_lifetimeData = lifetimeData;
-                    Game.shimmerTypes['golden']._effectInjected = true;
-                } catch (error) {
-                    console.error('JNE: Error injecting popFunc modifications:', error);
-                }
-            }
-        }
+        injectGoldenPopFunc();
         
         if (Game.Upgrades && Game.Upgrades['Elder Covenant']) {
             var originalElderCovenantFunc = Game.Upgrades['Elder Covenant'].buy;
@@ -7089,6 +7094,9 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         version: modVersion,
         
         init: function() {
+            // Inject into the vanilla golden popFunc NOW, before HU/potions scripts load
+            // and wrap it. This guarantees the eval operates on the vanilla function.
+            injectGoldenPopFunc();
 
             modSaveData = { upgrades: {} };
             setTerminalMinigameSave('');
