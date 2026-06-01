@@ -72,7 +72,7 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 
 ## Changelog
 
-### Version 0.5.1
+### Version 0.5.2
 * Fix a bug in Potions Class that could allow you to get a 6th reagent if you had unused items in the brew area. 
 * Fixed a bug in Potions Class that could forget a discovered potion if a save was reloaded while it was in a use to discover state. 
 * Tweaked multiple reagent drop rates, mostly to be more generous.   
