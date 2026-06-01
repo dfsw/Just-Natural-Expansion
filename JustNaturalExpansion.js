@@ -15,7 +15,7 @@
     
     function initializeMod() {
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.5.0';
+    var modVersion = '0.5.1';
     var debugMode = false; 
     
     function debugLog() {
@@ -28,6 +28,17 @@
     
     function resetUnlockStateCache() {
         modUnlockStateCache = Object.create(null);
+    }
+
+    function recalculateUpgradesOwned() {
+        // Recalculate Game.UpgradesOwned to include mod upgrades
+        Game.UpgradesOwned = 0;
+        for (var i in Game.UpgradesById) {
+            var me = Game.UpgradesById[i];
+            if (me.bought && Game.CountsAsUpgradeOwned(me.pool)) {
+                Game.UpgradesOwned++;
+            }
+        }
     }
 
     function applyUnlockState(upgradeName, shouldUnlock, changeList, reason) {
@@ -549,11 +560,12 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         
         modUpgradeNames.forEach(name => {
             if (Game.Upgrades[name]) {
+                var upgrade = Game.Upgrades[name];
+                if (upgrade.pool === 'prestige') return;
                 // Don't reset bought status for upgrades in permanent slots
-                // Vanilla has already restored them via .earn() before this hook runs
-                var isInPermanentSlot = permanentUpgradeIds[Game.Upgrades[name].id];
+                var isInPermanentSlot = permanentUpgradeIds[upgrade.id];
                 if (!isInPermanentSlot) {
-                    Game.Upgrades[name].bought = 0;
+                    upgrade.bought = 0;
                 }
             }
         });
@@ -1029,6 +1041,9 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         // Use full rebuild to ensure deterministic CPS
         recreateUpgradesFromSaveOnly();
         
+        // Recalculate Game.UpgradesOwned to include mod upgrades
+        recalculateUpgradesOwned();
+        
         // Set up custom building multipliers if building upgrades are enabled
         if (modSettings.enableBuildingUpgrades) {
             addCustomBuildingMultipliers();
@@ -1441,7 +1456,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 };
                 
                 if (!heavenlyUpgradesScriptLoaded) {
-                    var scriptUrl = heavenlyUpgradesScriptUrl + '?v=' + Date.now();
+                    var scriptUrl = heavenlyUpgradesScriptUrl + '?v=' + modVersion;
                     var existingScript = document.querySelector('script[src*="heavenlyUpgrades.js"]');
                     
                     if (!existingScript) {
@@ -1691,7 +1706,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                             <div class="title">${modName} v${modVersion}</div>
                               <div style="margin:10px 0px;color:#ccc;font-size:11px;line-height:1.3;">
 							    The <span style="font-weight:bold;">Just Natural Expansion Mod</span> expands Cookie Clicker's endgame while keeping the core game intact. It adds new upgrades, achievements, minigames, and even an occult puzzle mystery thriller, all designed not to break the vanilla feel and cadence of the game. Every feature can be toggled on or off for leaderboard safe play or tailored to your own style.
-							    <br><br><a href=" https://discord.gg/vTyR5vWhQR" target="_blank" rel="noopener noreferrer" style="color:#03adfc;font-weight:bold;">Join the official JNE Discord</a> to discuss with other players, get hints to puzzles, hear news and see sneak peeks from the developer.<br> 
+							    <br><br><a href=" https://discord.gg/vTyR5vWhQR" target="_blank" rel="noopener noreferrer" style="color:#03adfc;font-weight:bold;">Join the Just Natural Expansion Discord</a> to discuss with other players, get hints to puzzles, hear news and see sneak peeks from the developer.<br> 
 							</div>
                             <div class="listing">
                                 <a class="option" id="toggle-shadow-achievements" style="text-decoration:none;color:${modSettings.shadowAchievements ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
@@ -2728,6 +2743,11 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         try {
             if (!Game.JNE) Game.JNE = {};
             
+            // Prevent corruption during active restoration - preserve existing data
+            if (Game.JNE._isRestoringData) {
+                return; // Don't overwrite during restoration
+            }
+            
             // Preserve existing data if we're not getting valid new data
             var existingData = Game.JNE.heavenlyUpgradesSavedData;
             
@@ -2786,7 +2806,8 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             Game.loadLumps._lumpPatchApplied = true;
         }
 
-        if (Game.harvestLumps && !Game.harvestLumps._lumpPatchApplied) {
+        if (Game.harvestLumps && !Game._jneLumpDiscrepancyPatched) {
+            Game._jneLumpDiscrepancyPatched = true;
             var originalHarvestLumps = Game.harvestLumps;
             Game.harvestLumps = function() {
                 var oldLumpT = Game.lumpT;
@@ -2889,18 +2910,9 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 Game.shimmerTypes['reindeer'].popFunc = function(me) {
                     originalReindeerPop.call(this, me);
                     
-                    if (me.spawnLead) {
-                        var seasonMap = {
-                            'valentines': "Cupid's Reindeer",
-                            'fools': 'Business Reindeer',
-                            'easter': 'Bundeer',
-                            'halloween': 'Ghost Reindeer'
-                        };
-                        
-                        var achName = seasonMap[Game.season];
-                        if (achName && Game.Achievements[achName] && !Game.Achievements[achName].won) {
-                            markAchievementWon(achName);
-                        }
+                    var season = Game.season;
+                    if (seasonalReindeerData[season] && !seasonalReindeerData[season].popped) {
+                        seasonalReindeerData[season].popped = true;
                     }
                 };
                 Game.shimmerTypes['reindeer']._seasonalReindeerHooked = true;
@@ -2981,7 +2993,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                         "if(Game.Has('Order of the Eternal Cookie')){m*=0.95;}\n" +
                         "if(Game.hasBuff('positive feedback loop')){m*=0.9;}\n" +
                         "//Selfishness god spawn rate increases\n" +
-                        "if(!Game.OnAscend && Game.AscendTimer === 0 && Game.hasGod && Game.Objects['Temple'] && Game.Objects['Temple'].minigame && Game.Objects['Temple'].minigame.gods['selfishness']){\n" +
+                        "if(!Game.OnAscend && Game.AscendTimer === 0 && Game.hasGod && Game.Objects['Temple'] && Game.Objects['Temple'].minigame && Game.Objects['Temple'].minigame.gods && Game.Objects['Temple'].minigame.gods['selfishness']){\n" +
                         "    var level = Game.hasGod('selfishness');\n" +
                         "    if(level === 1){m*=0.5;}\n" +      // twice as often = half the time
                         "    else if(level === 2){m*=0.667;}\n" + // 50% more often = 2/3 the time  
@@ -4598,13 +4610,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         }
         
         // Step 2: Delete ALL mod upgrades from the game
-        // Before deleting, snapshot donut bought states so heavenlyUpgrades.js can restore them after re-creation
-        if (Game.JNE) {
-            Game.JNE._pendingDonutRestores = {};
-            heavenlyDonutUpgradeNames.forEach(function(name) {
-                if (Game.Upgrades[name]) Game.JNE._pendingDonutRestores[name] = Game.Upgrades[name].bought || 0;
-            });
-        }
         for (var i = 0; i < modUpgradeNames.length; i++) {
             var upgradeName = modUpgradeNames[i];
             if (heavenlyGardenUpgradeNames.indexOf(upgradeName) !== -1) continue;
@@ -4640,13 +4645,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         removeModCookieUpgradesFromPool();
         removeModKittenUpgradesFromPool();
         // Step 1: Delete ALL mod upgrades from the game
-        // Before deleting, snapshot donut bought states so heavenlyUpgrades.js can restore them after re-creation
-        if (Game.JNE) {
-            Game.JNE._pendingDonutRestores = {};
-            heavenlyDonutUpgradeNames.forEach(function(name) {
-                if (Game.Upgrades[name]) Game.JNE._pendingDonutRestores[name] = Game.Upgrades[name].bought || 0;
-            });
-        }
         var modUpgradeNames = getModUpgradeNames();
         for (var i = 0; i < modUpgradeNames.length; i++) {
             var upgradeName = modUpgradeNames[i];
@@ -4671,6 +4669,15 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
 
         restoreModPermanentSlots();
         resetUnlockStateCache();
+
+        // If the HU module is already loaded (in-session reload), restore donuts synchronously
+        // right now so there is zero transient window where donuts don't exist in Game.Upgrades.
+        // On a fresh page load the module isn't loaded yet, so this no-ops and the normal
+        // deferred path (setupBoxOfDonuts via runUpgradeSetups) handles it instead.
+        if (Game.JNE && Game.JNE.HeavenlyUpgrades &&
+            typeof Game.JNE.HeavenlyUpgrades.restoreDonutsNow === 'function') {
+            Game.JNE.HeavenlyUpgrades.restoreDonutsNow();
+        }
     }
 
     function createKittenUpgradesIndependently() {
@@ -5389,18 +5396,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     function getCurrentSeason() {
         return Game.season || '';
     }
-    
-    function mapSeasonToReindeerAchievement(season) {
-        switch (season) {
-            case 'valentines': return "Cupid's Reindeer";
-            case 'fools': return 'Business Reindeer';
-            case 'easter': return 'Bundeer';
-            case 'halloween': return 'Ghost Reindeer';
-            default: return null;
-        }
-    }
-    
-    
+
     // Create seasonal reindeer achievements
     function createSeasonalReindeerAchievements() {
         var vanilla = findLastVanillaAchievement("Eldeer");
@@ -5637,7 +5633,10 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     if (Game.cookies >= this.price) {
                         Game.cookies -= this.price;
                         this.bought = 1;
-                        // Game.recalculateGains = 1; // commented; core may already handle after purchase
+                        if (Game.CountsAsUpgradeOwned(this.pool)) {
+                            Game.UpgradesOwned = (Game.UpgradesOwned || 0) + 1;
+                        }
+                        Game.recalculateGains = 1;
                         
                         // Trigger a save to persist the purchase
                         if (Game.Write) {
@@ -7103,7 +7102,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             
             this.initializeMod();
             Game.Win('Third-party');
-            
+
             // If load() never runs (no save data yet), perform first-run initialization
             setTimeout(function() {
                 if (!modLoadInvoked) {
@@ -7511,13 +7510,28 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                         // This prevents welcome audio from playing even if the setting isn't in the save yet
                         Game.JNE.enableCookieAgeFromSave = true;
                     }
-                    
+
+                    // Settings are now known — kick off the HU script fetch immediately so the
+                    // CDN latency runs in parallel with recreateUpgradesFromSaveOnly() and the
+                    // 100ms continueModInitialization delay instead of starting after them.
+                    if (modSettings.enableHeavenlyUpgrades && !heavenlyUpgradesScriptLoaded &&
+                        !document.querySelector('script[src*="heavenlyUpgrades.js"]')) {
+                        var earlyScript = document.createElement('script');
+                        earlyScript.src = heavenlyUpgradesScriptUrl + '?v=' + modVersion;
+                        earlyScript.async = true;
+                        earlyScript.onload = function() { heavenlyUpgradesScriptLoaded = true; };
+                        document.head.appendChild(earlyScript);
+                    }
+
                     // Suppress CPS recalculation during upgrade recreation to prevent spikes
                     var previousRecalculateGains = Game.recalculateGains;
                     Game.recalculateGains = 0;
                     
                     //Delete everything and recreate from save data only
                     recreateUpgradesFromSaveOnly();
+                    
+                    // Recalculate Game.UpgradesOwned to include mod upgrades
+                    recalculateUpgradesOwned();
                     
                     // Restore recalculate flag and force one clean calculation after everything is stable
                     Game.recalculateGains = previousRecalculateGains;
@@ -7917,9 +7931,9 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 
                 // Create production achievements for tiers 4, 5, and 6
                 var tiers = [
-                    { name: ach.tier4Name, desc: ach.tier4Desc, spriteY: 21, orderOffset: 0.00001, thresholdOffset: 20 },
-                    { name: ach.tier5Name, desc: ach.tier5Desc, spriteY: 22, orderOffset: 0.00002, thresholdOffset: 29 },
-                    { name: ach.tier6Name, desc: ach.tier6Desc, spriteY: 23, orderOffset: 0.00003, thresholdOffset: 32 }
+                    { name: ach.tier4Name, desc: ach.tier4Desc, spriteY: 21, orderOffset: 0.00001, thresholdOffset: 17 },
+                    { name: ach.tier5Name, desc: ach.tier5Desc, spriteY: 22, orderOffset: 0.00002, thresholdOffset: 20 },
+                    { name: ach.tier6Name, desc: ach.tier6Desc, spriteY: 23, orderOffset: 0.00003, thresholdOffset: 23 }
                 ];
                 
                 tiers.forEach(function(tier) {
@@ -7943,22 +7957,18 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         var beyondLeaderboardAchievement = createAchievement(
             'Beyond the Leaderboard',
             'Just Natural Expansion has been used outside of Leaderboard/Competition mode.',
-            [26, 30], // Custom icon
-            10000.25, // Order as requested
+            [26, 30], 
+            10000.25, 
             function() {
-                // Award this achievement if the mod has been used with shadow achievements disabled
-                return false; // This will be manually awarded when appropriate
+                return false; 
             },
-            [26, 30] // Custom icon
+            [26, 30] 
         );
         
-        // Force this achievement into the shadow pool with correct order
         if (beyondLeaderboardAchievement) {
             beyondLeaderboardAchievement.pool = 'shadow';
-            beyondLeaderboardAchievement.order = 10000.25;
         }
         
-        // Create "In the Shadows" achievement - requires all vanilla shadow achievements except "Cheated cookies taste awful"
         createAchievement(
             'In the Shadows',
             'Unlock all vanilla shadow achievements, except that one.<q>You know the one I meant.</q>',
@@ -7966,7 +7976,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             400000.2, // Order as requested
             function() {
     
-                // List of required vanilla shadow achievements (using regular hyphens, not en dashes)
+                // List of required vanilla shadow achievements (using regular hyphens because that broke things and took forever to find)
                 var requiredAchievements = [
                     'Four-leaf cookie',
                     'Seven horseshoes', 

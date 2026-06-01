@@ -1,6 +1,7 @@
 // Just Natural Expansion - Heavenly Upgrades
 (function() {
     'use strict';
+    var _huT0 = Date.now();
     
     const SIMPLE_MOD_NAME = 'Just Natural Expansion';
     const MOD_HU_VERSION = '1.0.11';
@@ -59,7 +60,7 @@
                 { id: 'Fortune sound selector', owned: function() { return Game.Has('Fortune tolls for you'); }, ready: function() { return !!Game.Upgrades && !!Game.Upgrades['Golden cookie sound selector']; }, done: function() { var up = Game.Upgrades && Game.Upgrades['Golden cookie sound selector']; return !!(up && up._fortuneSoundAdded); }, setup: setupFortuneSoundSelector },
                 { id: 'Sugar for sugar trading', owned: function() { return Game.Has('Sugar for sugar trading'); }, ready: function() { return !!Game.Upgrade && !!Game.Upgrades; }, done: function() { return !!(Game.Upgrades && Game.Upgrades['Sugar trade']); }, setup: setupSugarForSugarTrading },
                 { id: 'Wallstreet bets', owned: function() { return Game.Has('Wallstreet bets'); }, ready: function() { return !!(Game.Objects && Game.Objects['Bank'] && Game.Objects['Bank'].minigame); }, done: function() { var M = Game.Objects && Game.Objects['Bank'] && Game.Objects['Bank'].minigame; return !!(M && M.getGoodMaxStock && M.getGoodMaxStock._wallstreetBetsHooked); }, setup: setupWallstreetBets },
-                { id: 'Box of overpriced donuts', owned: function() { return Game.Has('Box of overpriced donuts'); }, ready: function() { return !!Game.Upgrade && !!Game.Upgrades; }, done: function() { return !!(Game.Upgrades && Game.Upgrades['Maple frosted donut']); }, setup: setupBoxOfDonuts },
+                { id: 'Box of overpriced donuts', owned: function() { return (Game.JNE && Game.JNE.heavenlyUpgradesSavedData && Game.JNE.heavenlyUpgradesSavedData.boughtUpgrades && Game.JNE.heavenlyUpgradesSavedData.boughtUpgrades.indexOf('Box of overpriced donuts') !== -1) || Game.Has('Box of overpriced donuts'); }, ready: function() { return !!Game.Upgrade && !!Game.Upgrades; }, done: function() { return !!(Game.Upgrades && Game.Upgrades['Maple frosted donut']); }, setup: setupBoxOfDonuts },
                 { id: 'Toy box', owned: function() { return Game.Has('Toy box'); }, ready: function() { return !!Game.Upgrades && !!Game.Upgrades['Toy box']; }, done: function() { return false; }, setup: createToyBoxToggle },
                 { id: 'Pink stuff', owned: function() { return Game.Has('Pink stuff'); }, ready: function() { return !!Game.Upgrades && !!Game.Upgrades['Pink stuff']; }, done: function() { return false; }, setup: createPinkStuffToggle },
                 { id: 'Magic mushroom drops', owned: function() { return Game.Has('Magic mushroom'); }, ready: function() { return !!Game.Upgrade && !!Game.Upgrades; }, done: function() { return !!Game._magicMushroomDropsHooked; }, setup: setupMagicMushroomDrops },
@@ -356,7 +357,7 @@
         return;
     }
     
-    setTimeout(initializeHeavenlyUpgrades, 50);
+    setTimeout(initializeHeavenlyUpgrades, 0);
 
     function initializeHeavenlyUpgrades() {
         if (isInitialized || !Game.Upgrade || !Game.UpgradesById) {
@@ -391,8 +392,9 @@
         
         
         // If loading into an existing game, check for existing save data and restore it
-        if (Game.JNE.heavenlyUpgradesSavedData) {
-            load(Game.JNE.heavenlyUpgradesSavedData);
+        var _huSaved = Game.JNE.heavenlyUpgradesSavedData;
+        if (_huSaved) {
+            load(_huSaved);
         }
         
         //  garden plant unlock check
@@ -457,6 +459,12 @@
             invalidateSugarLumpPredictorCache();
             resetSugarFrenzyIIState();
             ensureSugarTradeAvailable();
+            // Reset Morroween slot time and Slogreth on ascension
+            if (Game.Objects['Temple'] && Game.Objects['Temple'].minigame) {
+                var M = Game.Objects['Temple'].minigame;
+                M._procrastinationSlotTime = null;
+                M._selfishnessClickCount = 0;
+            }
             Game.storeToRefresh = 1;
         }, 'JNE ascension state reset');
 
@@ -905,7 +913,7 @@ var cpsModifiersRegistered = false;
                             }
                         }
                     }
-                    if (hasShiny) mult *= 5.0;
+                    if (hasShiny) mult *= 3.0;
                 }
                 var p = base * mult;
                 if (Math.random() < p) me.type = 1;
@@ -1203,7 +1211,7 @@ var cpsModifiersRegistered = false;
         if (st && !st._hooked) {
             var o = st.popFunc;
             st.popFunc = function(me) {
-                if (M.gods['selfishness'] && Game.hasGod('selfishness') && me && me.type === 'golden') {
+                if (M.gods && M.gods['selfishness'] && Game.hasGod('selfishness') && me && me.type === 'golden') {
                     if (me.force === 'cookie storm drop' || (me.forceObj && me.forceObj.type === 'cookie storm drop')) {
                         return o.apply(this, arguments);
                     }
@@ -1222,7 +1230,7 @@ var cpsModifiersRegistered = false;
             var originalSpawnConditions = st.spawnConditions;
             st.spawnConditions = function() {
                 if (!originalSpawnConditions || !originalSpawnConditions()) return false;
-                if (M.gods['selfishness'] && Game.hasGod('selfishness')) {
+                if (M.gods && M.gods['selfishness'] && Game.hasGod('selfishness')) {
                     var l = Game.hasGod('selfishness');
                     if (l) {
                         var r = Math.min((M._selfishnessClickCount || 0) * [0, 0.03, 0.02, 0.01][l], 1);
@@ -2818,6 +2826,11 @@ var cpsModifiersRegistered = false;
                         }
                     }
                 }
+                if (!orig || typeof orig !== 'function') {
+                    var fallback = (Game.harvestLumps !== sugarCaneHarvest) ? Game.harvestLumps : null;
+                    if (fallback && typeof fallback === 'function') return fallback.call(this, amount, silent);
+                    return;
+                }
                 return orig.call(this, amount, silent);
             };
             sugarCaneHarvest._orig = originalHarvestLumps;
@@ -3620,6 +3633,8 @@ var cpsModifiersRegistered = false;
 
     var detectRigidelActive = function() {
         if (!Game.Objects['Temple'] || !Game.Objects['Temple'].minigame) return 0;
+        var slot = detectRigidelSlot();
+        if (slot === 0) return 0; // Rigidel cannot be active when not slotted
         return (Game.BuildingsOwned % 10 === 0) ? 1 : 0;
     };
 
@@ -4573,7 +4588,6 @@ var cpsModifiersRegistered = false;
     }
     
     function setupBoxOfDonuts() {
-        
         var basePrice = Math.pow(10, 75);
         var donuts = [
             {name: 'Maple frosted donut', desc: 'Popular both inside of Canada and outside, a delicious treat covered in sweet maple syrup flavored frosting, taste more like autumn than pumpkin spice.', icon: [6, 25, getSpriteSheet('custom')]},
@@ -4609,8 +4623,12 @@ var cpsModifiersRegistered = false;
             upgrade._heavenlyUpgrade = true; // Mark as our upgrade for save/load
             upgrade.ddesc = prodDesc;
             upgrade.bought = 0; // Default state - load() will set from save data
-            
-            if (Game.UnlockAt) {
+
+            // Unlock immediately if box is in save data, otherwise use UnlockAt
+            var _huBoxOwned = (Game.JNE && Game.JNE.heavenlyUpgradesSavedData && Game.JNE.heavenlyUpgradesSavedData.boughtUpgrades && Game.JNE.heavenlyUpgradesSavedData.boughtUpgrades.indexOf('Box of overpriced donuts') !== -1) || Game.Has('Box of overpriced donuts');
+            if (_huBoxOwned) {
+                Game.Unlock(donuts[i].name);
+            } else if (Game.UnlockAt) {
                 var toPush = {cookies: price / 20, name: donuts[i].name, require: 'Box of overpriced donuts'};
                 Game.UnlockAt.push(toPush);
             }
@@ -4629,19 +4647,7 @@ var cpsModifiersRegistered = false;
             }
         }
 
-        // Restore bought states after re-creation
-        // Priority 1: pending restores stored by JNE right before it deleted the donuts
-        if (Game.JNE && Game.JNE._pendingDonutRestores) {
-            var pending = Game.JNE._pendingDonutRestores;
-            for (var j = 0; j < donuts.length; j++) {
-                var dname = donuts[j].name;
-                if (Game.Upgrades[dname] && pending[dname]) {
-                    Game.Upgrades[dname].bought = pending[dname];
-                }
-            }
-            Game.JNE._pendingDonutRestores = null;
-        }
-        // Priority 2: last heavenly save data (fallback for any remaining unrestored donuts)
+        // Restore bought states from the incoming save data after creation
         var savedData = Game.JNE && Game.JNE.heavenlyUpgradesSavedData;
         if (savedData && savedData.boughtUpgrades && Array.isArray(savedData.boughtUpgrades)) {
             for (var k = 0; k < donuts.length; k++) {
@@ -5798,8 +5804,8 @@ var cpsModifiersRegistered = false;
         
         createHeavenlyUpgrade({
             name: 'Slimy pheromones',
-            desc: 'If you have a shiny wrinkler on your cookie, you are <b>5x</b> as likely to attract another.',
-            ddesc: 'If you have a shiny wrinkler on your cookie, you are <b>5x</b> as likely to attract another.<q>Here we find a rare shiny wrinkler, its skin catching the light in a way its species has no right to. Naturally, this peculiarity attracts the rest, who approach like scientists inspecting a colleague who has made a questionable life choice.</q>',
+            desc: 'If you have a shiny wrinkler on your cookie, you are <b>3x</b> as likely to attract another.',
+            ddesc: 'If you have a shiny wrinkler on your cookie, you are <b>3x</b> as likely to attract another.<q>Here we find a rare shiny wrinkler, its skin catching the light in a way its species has no right to. Naturally, this peculiarity attracts the rest, who approach like scientists inspecting a colleague who has made a questionable life choice.</q>',
             price: 5000e15,
             icon: [30, 5],
             posX: -2609,
@@ -6047,7 +6053,7 @@ var cpsModifiersRegistered = false;
     function getSaveData() {
         //Don't save while we're restoring data - prevents corruption
         if (Game.JNE._isRestoringData) {
-            return Game.JNE._lastValidSaveData || {};
+            return Game.JNE._lastValidSaveData || Game.JNE.heavenlyUpgradesSavedData || {};
         }
         
         try {
@@ -6092,9 +6098,17 @@ var cpsModifiersRegistered = false;
             });
             
             var donutsSaved = 0;
+            // If a donut doesnt exist in Game.Upgrades (transient deletion during a reload),
+            // fall back to heavenlyUpgradesSavedData which was populated from the incoming save
+            // by setHeavenlyUpgradesSave before any deletions happened.
+            var _savedHU = Game.JNE.heavenlyUpgradesSavedData;
             DONUT_NAMES.forEach(function(name) {
                 var upgrade = Game.Upgrades[name];
                 if (upgrade && upgrade.bought) {
+                    saveData.boughtUpgrades.push(name);
+                    donutsSaved++;
+                } else if (!upgrade && _savedHU && Array.isArray(_savedHU.boughtUpgrades) &&
+                           _savedHU.boughtUpgrades.indexOf(name) !== -1) {
                     saveData.boughtUpgrades.push(name);
                     donutsSaved++;
                 }
@@ -6279,13 +6293,15 @@ var cpsModifiersRegistered = false;
     // Load function - apply save data and restore all states
     function load(saveData) {
         if (!saveData || typeof saveData !== 'object') return;
-        
+        // Every save written includes at least a `version` field, so the absence of version + boughtUpgrades + upgrades reliably identifies an empty placeholder that should be ignored.
+        if (!saveData.version && !saveData.boughtUpgrades && !saveData.upgrades) return;
+
         // Ensure all heavenly upgrades exist before restoring them
         if (typeof createUpgrades === 'function') {
             createUpgrades();
         }
         
-        //Check for duplicate loads FIRST before any state modifications
+        //Check for duplicate loads before any state modifications
         if (!Game.JNE) Game.JNE = {};
         
         //Set loading flag to prevent auto-saves during restoration
@@ -6301,6 +6317,7 @@ var cpsModifiersRegistered = false;
             return;
         }
 
+        try {
         // Track this load to prevent duplicates
         Game.JNE._lastLoadData = JSON.stringify(saveData);
         Game.JNE._lastLoadTime = Date.now();
@@ -6404,7 +6421,7 @@ var cpsModifiersRegistered = false;
                 }
             });
         }
-        
+
         // Also restore donuts from boughtUpgrades array (new format)
         if (saveData.boughtUpgrades && Array.isArray(saveData.boughtUpgrades)) {
             DONUT_NAMES.forEach(function(name) {
@@ -6454,22 +6471,19 @@ var cpsModifiersRegistered = false;
         Game.JNE._fortuneGCTimer = (saveData.timers && saveData.timers.fortuneGCLastResetTime) ? saveData.timers.fortuneGCLastResetTime : 0;
         Game.JNE._fortuneCPSTimer = (saveData.timers && saveData.timers.fortuneCPSLastResetTime) ? saveData.timers.fortuneCPSLastResetTime : 0;
         
-        // Clear loading flag 
-        if (Game.JNE) {
-            Game.JNE._isRestoringData = false;
-        }
+        // Trigger immediate visual refresh so all restored upgrades (donuts, etc.) appear
+        Game.storeToRefresh = 1;
+        Game.upgradesToRebuild = 1;
+
+        // Update toggle states and cache restored data immediately 
+        updateAllToggleStates();
         
-        // Update toggle states and cache restored data on next tick (allows UI to refresh)
-        setTimeout(function() {
-            updateAllToggleStates();
-            
-            // Cache the fully restored state
-            if (Game.JNE) {
-                var restoredData = getSaveData();
-                Game.JNE._lastValidSaveData = restoredData;
-                Game.JNE.heavenlyUpgradesSavedData = restoredData;
-            }
-        }, 50);
+        // Cache the fully restored state immediately
+        if (Game.JNE) {
+            var restoredData = getSaveData();
+            Game.JNE._lastValidSaveData = restoredData;
+            Game.JNE.heavenlyUpgradesSavedData = restoredData;
+        }
         
         // Ensure farm drops are created before restoring them
         if (typeof setupMagicMushroomDrops === 'function') {
@@ -6612,8 +6626,42 @@ var cpsModifiersRegistered = false;
                 if (M.draw) M.draw();
             }
         }
+        } catch (err) {
+            console.error('[Heavenly Upgrades] load() encountered an error:', err);
+        } finally {
+            if (Game.JNE) Game.JNE._isRestoringData = false;
+        }
     }
     
+    // Synchronously create and restore donuts from heavenlyUpgradesSavedData.
+    // Called by JNE's recreateUpgradesFromSaveOnly() when the HU module is already loaded,
+    // so donuts are never in a transient deleted state when a save fires.
+    function restoreDonutsNow() {
+        var savedData = Game.JNE && Game.JNE.heavenlyUpgradesSavedData;
+        if (!savedData || !Array.isArray(savedData.boughtUpgrades)) return;
+
+        // Create donuts if they don't exist yet by running the setup entry.
+        if (Game.JNE._upgradeSetups) {
+            for (var i = 0; i < Game.JNE._upgradeSetups.length; i++) {
+                var entry = Game.JNE._upgradeSetups[i];
+                if (entry && entry.id === 'Box of overpriced donuts') {
+                    entry.ran = false;
+                    if (typeof entry.setup === 'function') entry.setup();
+                    entry.ran = true;
+                    break;
+                }
+            }
+        }
+
+        // Apply the definitive state from the incoming save
+        var boughtSet = savedData.boughtUpgrades;
+        DONUT_NAMES.forEach(function(name) {
+            if (Game.Upgrades[name]) {
+                Game.Upgrades[name].bought = (boughtSet.indexOf(name) !== -1) ? 1 : 0;
+            }
+        });
+    }
+
     // Expose API
     if (typeof Game !== 'undefined') {
         if (!Game.JNE) Game.JNE = {};
@@ -6623,11 +6671,13 @@ var cpsModifiersRegistered = false;
                 version: MOD_HU_VERSION,
                 initialized: function() { return isInitialized; },
                 getSaveData: getSaveData,
-                load: load
+                load: load,
+                restoreDonutsNow: restoreDonutsNow
             };
         } else {
             Game.JNE.HeavenlyUpgrades.getSaveData = getSaveData;
             Game.JNE.HeavenlyUpgrades.load = load;
+            Game.JNE.HeavenlyUpgrades.restoreDonutsNow = restoreDonutsNow;
         }
     }
 })();

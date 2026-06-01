@@ -72,6 +72,7 @@ var G = {
 var lumpBoostState = {
     active: false
 };
+var _barDeltaHype = 0, _barDeltaCommit = 0, _barDeltaRef = 0, _barDeltaRep = 0, _barDeltaRealDt = 1, _barSpeedMult = 1;
 
 DownlineM.launch = function() {
     var M = this;
@@ -84,11 +85,11 @@ DownlineM.dragonBoostTooltip = function() {
     if (Game.hasAura('Supreme Intellect')) bonus += 1;
     if (Game.hasAura('Reality Bending')) bonus += 0.1;
     var bonusText = [];
-    if (bonus >= 1) bonusText.push('10% (Supreme Intellect)');
+    if (bonus >= 1) bonusText.push('10%');
     if (bonus >= 0.1 && bonus < 1) bonusText.push('1% (Reality Bending)');
-    if (bonus >= 1.1) bonusText = ['11% (Supreme Intellect + Reality Bending)'];
-    if (bonusText.length === 0) return '<div style="width:280px;padding:8px;text-align:center;" id="tooltipDragonBoost"><b>Dragon Aura Bonus</b><div class="line"></div>No aura bonus active for downline actions.</div>';
-    return '<div style="width:280px;padding:8px;text-align:center;" id="tooltipDragonBoost"><b>Dragon Aura Bonus</b><div class="line"></div>Downline actions last ' + bonusText[0] + ' longer.</div>';
+    if (bonus >= 1.1) bonusText = ['11%'];
+    if (bonusText.length === 0) return '<div style="width:280px;padding:8px;text-align:center;" id="tooltipDragonBoost"><b>Supreme Intellect</b><div class="line"></div>No aura bonus active for downline actions.</div>';
+    return '<div style="width:280px;padding:8px;text-align:center;" id="tooltipDragonBoost"><b>Supreme Intellect</b><div class="line"></div>Downline actions last ' + bonusText[0] + ' longer.</div>';
 };
 
 function $(id) { return document.getElementById(id); }
@@ -122,7 +123,7 @@ function formatDuration(sec) {
     if (sec <= 0) return 'Instant';
     if (sec < 60) return sec + ' sec';
     if (sec < 3600) return Math.round(sec / 60) + ' min';
-    if (sec < 86400) { var h = sec / 3600; return (h % 1 ? h.toFixed(1) : h) + ' hour' + (h >= 2 ? 's' : ''); }
+    if (sec < 86400) { var h = sec / 3600; return (h % 1 ? h.toFixed(1) : h) + ' hour' + (h > 1 ? 's' : ''); }
     var d = Math.round(sec / 86400); return d + ' day' + (d > 1 ? 's' : '');
 }
 
@@ -221,6 +222,22 @@ DownlineM.init = function(div) {
       font-size: 12px;
       color: #ccc;
       margin-bottom: 4px;
+    }
+    .downline-bar-namerow {
+      display: flex;
+      align-items: center;
+      margin-bottom: 4px;
+    }
+    .downline-bar-namerow .name {
+      margin-bottom: 0;
+      flex: 1;
+    }
+    .downline-bar-chevrons {
+      display: flex;
+      align-items: center;
+      gap: 0;
+      flex-shrink: 0;
+      line-height: 1;
     }
     .downline-bar-track {
       position: relative;
@@ -738,17 +755,17 @@ DownlineM.init = function(div) {
               </div>
             </div>
           </div>
-          <div class="downline-bar downline-bar-hype" data-name="Hype" data-desc="How hyped your players are right now. The more hyped players are about the game, the more likely they are to play for longer hours earning more CpS and to a lesser extent spread the word to friends, and move up to higher-tier player types.">            <div class="name" id="downline-bar-hype-label">Hype</div>
+          <div class="downline-bar downline-bar-hype" data-name="Hype" data-desc="How hyped your players are right now. The more hyped players are about the game, the more likely they are to play for longer hours earning more CpS and to a lesser extent spread the word to friends, and move up to higher-tier player types."><div class="downline-bar-namerow"><div class="name" id="downline-bar-hype-label">Hype</div><span id="downline-chevrons-hype" class="downline-bar-chevrons"></span></div>
             <div class="downline-bar-track"><div class="downline-bar-fill" id="downline-bar-hype-fill"></div><div class="downline-bar-cap" id="downline-bar-hype-cap"></div></div>
           </div>
-          <div class="downline-bar downline-bar-commitment" data-name="Commitment" data-desc="How committed your players are to the game. Commitment affects not only the odds of a player not quitting each day they play but also how likely they are to move up into higher tiers of player types. To a lesser extent committed players will play more each day earning more CpS.">            <div class="name" id="downline-bar-commitment-label">Commitment</div>
+          <div class="downline-bar downline-bar-commitment" data-name="Commitment" data-desc="How committed your players are to the game. Commitment affects not only the odds of a player not quitting each day they play but also how likely they are to move up into higher tiers of player types. To a lesser extent committed players will play more each day earning more CpS."><div class="downline-bar-namerow"><div class="name" id="downline-bar-commitment-label">Commitment</div><span id="downline-chevrons-commitment" class="downline-bar-chevrons"></span></div>
             <div class="downline-bar-track"><div class="downline-bar-fill" id="downline-bar-commitment-fill"></div><div class="downline-bar-cap" id="downline-bar-commitment-cap"></div></div>
           </div>
           <div class="downline-bar downline-bar-referrals" data-name="Word of Mouth" data-desc="The strength of your player referrals. Players will continually invite new players to the game, the higher tier of player the more effective they are at finding friends to play with. The strength of your word of mouth bar multiplies how effective each player is at recruiting on their own. This is represented by how many new players join per minute based on total player referrals.">
-            <div class="name" id="downline-bar-referrals-label">Word of Mouth</div>
+            <div class="downline-bar-namerow"><div class="name" id="downline-bar-referrals-label">Word of Mouth</div><span id="downline-chevrons-referrals" class="downline-bar-chevrons"></span></div>
             <div class="downline-bar-track"><div class="downline-bar-fill" id="downline-bar-referrals-fill"></div></div>
           </div>
-          <div class="downline-bar downline-bar-reputation" data-name="Reputation" data-desc="The overall reputation of Cookie Clicker. Many actions provide fast gains but damage the public's perception; if the public has a low opinion of the game, players will leave, hype will drop, commitment will fall, and word of mouth will become less effective. Reputation slowly recovers over time, but the damage done can be immediate and devastating. Even a modest drop in reputation will be felt across all metrics.">            <div class="name" id="downline-bar-reputation-label">Reputation</div>
+          <div class="downline-bar downline-bar-reputation" data-name="Reputation" data-desc="The overall reputation of Cookie Clicker. Many actions provide fast gains but damage the public's perception; if the public has a low opinion of the game, players will leave, hype will drop, commitment will fall, and word of mouth will become less effective. Reputation slowly recovers over time, but the damage done can be immediate and devastating. Even a modest drop in reputation will be felt across all metrics."><div class="downline-bar-namerow"><div class="name" id="downline-bar-reputation-label">Reputation</div><span id="downline-chevrons-reputation" class="downline-bar-chevrons"></span></div>
             <div class="downline-bar-track"><div class="downline-bar-fill" id="downline-bar-reputation-fill"></div></div>
           </div>
         </div>
@@ -937,7 +954,7 @@ DownlineM.init = function(div) {
       if (sec <= 0) return 'Instant';
       if (sec < 60) return sec + ' sec';
       if (sec < 3600) return Math.round(sec / 60) + ' min';
-      if (sec < 86400) { var h = sec / 3600; return (h % 1 ? h.toFixed(1) : h) + ' hour' + (h >= 2 ? 's' : ''); }
+      if (sec < 86400) { var h = sec / 3600; return (h % 1 ? h.toFixed(1) : h) + ' hour' + (h > 1 ? 's' : ''); }
       var d = Math.round(sec / 86400); return d + ' day' + (d > 1 ? 's' : '');
     }
     function formatRemaining(sec) {
@@ -986,7 +1003,8 @@ DownlineM.init = function(div) {
     var BONUS_COMMIT_EXP = 0.8;
 
     function getMaxSlots(level) {
-      return level > 10 ? 10 : level;
+      if (level > 10) return 10;
+      return Math.max(3, level);
     }
     function getEffectiveMaxSlots() {
       var fe = Game.Objects['Fractal engine'];
@@ -2237,7 +2255,7 @@ DownlineM.init = function(div) {
         if (!action) return '';
         var left = Math.max(0, action.remainSec);
         var lumpBoostActive = lumpBoostState.active;
-        var effectiveSpeedMult = (lumpBoostActive ? 10 : G.speed) * Math.pow(2, G.prestige);
+        var effectiveSpeedMult = (lumpBoostActive ? 10 : G.speed) * Math.pow(1.5, G.prestige);
         var combinedMult = effectiveSpeedMult * (G.frozen ? FROZEN_SPEED_FRAC : 1);
         var displaySec = combinedMult > 0 ? left / combinedMult : left;
         var boostLabel = '';
@@ -2569,6 +2587,45 @@ DownlineM.init = function(div) {
       var boost = (rawBoost * repBoostMult) + actionBoostBonus;
       return hasBoredomEffect('boost_third_less') ? boost * (2 / 3) : boost;
     }
+    function computeBarRates() {
+      var perMin = _barDeltaRealDt > 0 ? 60 / _barDeltaRealDt : 0;
+      var mult = _barSpeedMult > 0 ? _barSpeedMult : 1;
+      return {
+        hype:       (_barDeltaHype   / mult) * perMin,
+        commitment: (_barDeltaCommit / mult) * perMin,
+        referrals:  (_barDeltaRef    / mult) * perMin,
+        reputation: (_barDeltaRep    / mult) * perMin
+      };
+    }
+
+    function makeChevronSVG(dir) {
+      var stroke = 'rgba(70, 70, 70)';
+      var path = dir > 0 ? 'M1,0.7 L4.5,2.5 L1,4.3' : 'M4.5,0.7 L1,2.5 L4.5,4.3';
+      return '<svg width="6" height="5" viewBox="0 0 6 5" xmlns="http://www.w3.org/2000/svg" style="display:inline-block;vertical-align:middle;margin-left:-1px;margin-top:2px"><path d="' + path + '" stroke="' + stroke + '" stroke-width="1.3" fill="none" stroke-linecap="round" stroke-linejoin="round"/></svg>';
+    }
+
+    function makeChevronHTML(rate) {
+      var abs = Math.abs(rate);
+      if (abs <= 0.5) return '';
+      var count = abs < 2 ? 1 : abs < 5 ? 2 : 3;
+      var dir = rate > 0 ? 1 : -1;
+      var html = '';
+      for (var i = 0; i < count; i++) html += makeChevronSVG(dir);
+      return html;
+    }
+
+    function updateBarChevrons() {
+      var rates = computeBarRates();
+      var ch = $('downline-chevrons-hype');
+      var cc = $('downline-chevrons-commitment');
+      var cr = $('downline-chevrons-referrals');
+      var crp = $('downline-chevrons-reputation');
+      if (ch)  ch.innerHTML  = makeChevronHTML(rates.hype);
+      if (cc)  cc.innerHTML  = makeChevronHTML(rates.commitment);
+      if (cr)  cr.innerHTML  = makeChevronHTML(rates.referrals);
+      if (crp) crp.innerHTML = makeChevronHTML(rates.reputation);
+    }
+
     function updateUI() {
       var debugEl = $('downline-debug');
       if (debugEl) debugEl.style.display = Game.downlineDebug ? 'block' : 'none';
@@ -2626,11 +2683,11 @@ DownlineM.init = function(div) {
         var currentBoost = getCurrentBoost();
         var tenPct = currentBoost * 0.1;
         function colorClass(met) { return met ? 'green' : 'red'; }
-        var prestigeSpeedMult = Math.pow(2, G.prestige);
+        var prestigeSpeedMult = Math.pow(1.5, G.prestige);
         var tooltipHtml = '<b>Release Fractal Engine Minigame</b><div class="line"></div>' +
           'Reset your Downline progress to earn <b>Fractal Prestige</b> and permanently increase your Downline speed until next ascension.<br><br>' +
           '<span class="green">Next release would add: +' + tenPct.toFixed(2) + '%</span>' +
-          (G.prestige >= 1 ? ('<br><span class="green">Current speed boost: ' + prestigeSpeedMult + '×</span>') : '') +
+          (G.prestige >= 1 ? ('<br><span class="green">Current speed boost: ' + prestigeSpeedMult.toFixed(3) + '×</span>') : '') +
           '<br><br>' +
           'Unlocks At Peak Stats:<br>' +
           '<div class="' + colorClass(G.releaseMetPlayers) + '">&bull; At least 5000 Players</div>' +
@@ -2678,6 +2735,7 @@ DownlineM.init = function(div) {
       syncDebugLabels();
       updateSlotAvailability();
 
+      updateBarChevrons();
       checkUnlocks();
     }
 
@@ -2695,7 +2753,7 @@ DownlineM.init = function(div) {
       }
       var lumpBoostActive = lumpBoostState.active;
       var effectiveSpeed = lumpBoostActive ? 10 : G.speed;
-      var prestigeSpeedMult = Math.pow(2, G.prestige);
+      var prestigeSpeedMult = Math.pow(1.5, G.prestige);
       var dt = realDt * effectiveSpeed * prestigeSpeedMult;
       if (G.frozen) dt *= FROZEN_SPEED_FRAC;
       if (dt > 0) {
@@ -2722,6 +2780,8 @@ DownlineM.init = function(div) {
         if (fractalEngine && fractalEngine.refresh) fractalEngine.refresh();
       }
       G._auraBonusWasActive = auraBonusNow;
+
+      var _snapHype = G.hype, _snapCommit = G.commitment, _snapRef = G.referrals, _snapRep = G.reputation;
 
       var expiredNames = [];
       var hadExpiration = false;
@@ -2756,6 +2816,14 @@ DownlineM.init = function(div) {
       applyQuits(dt);
       applyDecay(dt);
       clampAll();
+      if (realDt > 0) {
+        _barDeltaHype   = G.hype       - _snapHype;
+        _barDeltaCommit = G.commitment - _snapCommit;
+        _barDeltaRef    = G.referrals  - _snapRef;
+        _barDeltaRep    = G.reputation - _snapRep;
+        _barDeltaRealDt = realDt;
+        _barSpeedMult = effectiveSpeed * prestigeSpeedMult * (G.frozen ? FROZEN_SPEED_FRAC : 1);
+      }
       updateUI();
 
       var baseSpeedLabel = G.speed === 0 ? 'PAUSED' : (lumpBoostActive ? '10× (lump)' : G.speed + 'x');
@@ -2918,7 +2986,7 @@ DownlineM.init = function(div) {
     }
     function downlineShowReleasePrompt() {
       Game.Prompt(
-        '<h3>Release Fractal Engine Minigame</h3><div class="block"><div class="line"></div>Are you sure you want to release the Fractal Engine Minigame? You will lose all your Downline Minigame progress but the game will run twice as fast and you will gain 10% of your boost permanently until your next ascension.</div>',
+        '<h3>Release Fractal Engine Minigame</h3><div class="block"><div class="line"></div>Are you sure you want to release the Fractal Engine Minigame? You will lose all your Downline Minigame progress but the game will run 50% faster and you will gain 10% of your boost permanently until your next ascension.</div>',
         [['Release!', 'Game.ClosePrompt();window.DownlineMinigame.downlineDoRelease();'], 'No']
       );
     }
@@ -3300,6 +3368,7 @@ DownlineM.init = function(div) {
       checkUnlocks();
       updateUI();
       syncDebugLabels();
+      setTimeout(startTickerAnimationIfNeeded, 150);
     };
 
     DownlineM.getAchievementState = function () {

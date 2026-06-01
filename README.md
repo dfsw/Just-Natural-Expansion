@@ -72,6 +72,24 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 
 ## Changelog
 
+### Version 0.5.1
+* Fix a bug in Potions Class that could allow you to get a 6th reagent if you had unused items in the brew area. 
+* Fixed a bug in Potions Class that could forget a discovered potion if a save was reloaded while it was in a use to discover state. 
+* Tweaked multiple reagent drop rates, mostly to be more generous.   
+* Tweaked some potion brew times, this wasn't as generous. 
+* Drop conditions for Pure Cane Sugar reagent have been updated.
+* Total potions consumed now appears in the Potions Class UI.
+* Unknown potions you can make with current reagents label now properly understands discovered but unused potions.
+* Essence of Cheer potion is now more neat and interesting. 
+* Extract of Cadence is now a bit less overpowered, but still crazy strong. 
+* Fixed a bug with Reduction of Silica causing terminal cooldown to be cancelled instead of reduced.
+* Slimy pheromones (heavenly upgrade) has been slightly nerfed. 
+* Downline prestige speed up has toned down a little. 
+* Downline now shows bar directional hint indicators to give an idea of the rise/fall
+* Fixed a bug that could forget the purchased status on plant heavenly upgrades. 
+* Fixed an ascension related exploit for Morroween.
+* Additional bug fixes and stability improvements.
+
 ### **Major Version 0.5.0 - Potions Class, an Alchemy Labs Minigame**
 * Introducing the third new Just Natural Expansion minigame! Enter the [Alchemy Labs Potions Class](https://github.com/dfsw/Just-Natural-Expansion/wiki/Alchemy-Labs-Minigame-Potion-Class) and learn to gather rare reagents, brew powerful potions, and discover dozens of strange new recipes. Search throughout the world for more than 20 exotic ingredients, experiment with unusual mixtures, and uncover an entirely new branch of cookie science. Potions Class unlocks at level 1 Alchemy Labs when minigames are enabled in the Options menu.
 * Terminal minigame support for Potions Class. 

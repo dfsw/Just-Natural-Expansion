@@ -335,8 +335,8 @@ var POTIONS = [
         name: "Extract of Cadence",
         icon: [9, 26, 'custom'],
         desc: "Time stretches and pulls upon consumption, also provides a mildly trippy feel in which walls are known to melt. Overall worth it though.",
-        effect: "All existing buffs last 1 minute longer.",
-        brewTime: 60*50,
+        effect: "All existing buff durations are tripled up to a maximum of 1 minute longer.",
+        brewTime: 60*90,
         misbrew: "All existing buff durations are halved.",
         reagents: { culture_of_time: 1, magical_infusion: 1, golden_flour: 1 },
     },
@@ -389,7 +389,7 @@ var POTIONS = [
         icon: [10, 7, 'main'],
         desc: "Every sip is a surprise.",
         effect: "A completely random potion effect with half the normal misbrew chance. This may trigger a potion you have not yet discovered.",
-        brewTime: 60*50,
+        brewTime: 60*30,
         misbrewChance: 0.1,
         misbrew: "A random negative potion effect.",
         reagents: { magical_blight: 1, captured_auroras: 1, fungus_culture: 1 },
@@ -453,7 +453,7 @@ var POTIONS = [
         name: "Essence of Cheer",
         icon: [16, 26, 'custom'],
         desc: "Festive warmth bottled up, taste just like eggnog with nutmeg.",
-        effect: "Changing seasons is 80% cheaper for the next minute.",
+        effect: "Changing seasons is 80% cheaper for the next minute, and 5 seasons previously switched this ascension are forgotten.",
         brewTime: 60*60*1,
         duration: 60,
         misbrew: "Changing seasons is 300% more expensive for the next 30 minutes.",
@@ -592,7 +592,7 @@ var REAGENTS = [
         icon: [17, 16, 'custom'],
         flavor: "Captured Auroras!? At this time of year, at this time of day, in this part of the country, localized entirely within your vial!? May I see them?",
         gather: "Swap dragon auras for a chance to capture an aurora.",
-        dropChance: 0.35,
+        dropChance: 0.38,
     },
     {
         id: 'divine_extraction',
@@ -600,7 +600,7 @@ var REAGENTS = [
         icon: [14, 12, 'custom'],
         flavor: "The holy residue of celestial paperwork.",
         gather: "Swap gods in the Pantheon for a chance to capture some divine extraction.",
-        dropChance: 0.40,
+        dropChance: 0.43,
     },
     {
         id: 'rabbit_feet',
@@ -608,7 +608,7 @@ var REAGENTS = [
         icon: [13, 25, 'custom'],
         flavor: "Lucky for you, unlucky for at least one rabbit.",
         gather: "Collected by clicking on rabbit cookies during Easter.",
-        dropChance: 0.10,
+        dropChance: 0.15,
     },
     {
         id: 'cats_whiskers',
@@ -616,7 +616,7 @@ var REAGENTS = [
         icon: [32, 3, 'main'],
         flavor: "Nine lives worth of mystical sensitivity, compressed into a tight bundle of strands.",
         gather: "Found on some spooky kitten cookies during the Halloween season.",
-        dropChance: 0.10,
+        dropChance: 0.15,
     },
     {
         id: 'culture_of_time',
@@ -624,15 +624,15 @@ var REAGENTS = [
         icon: [16, 6, 'main'],
         flavor: "Aged for several seconds over many years, or for several years in a few seconds. It's getting really hard to keep track.",
         gather: "Culture of time is found by advancing through seasons, naturally or artificially. It may also randomly appear as time passes.",
-        dropChance: 0.20, //also randomly 1 in 60000 seconds or so. 
+        dropChance: 0.25, //also randomly 1 in 60000 seconds or so. 
     },
     {
         id: 'pure_cane_sugar',
         name: "Pure Cane Sugar",
         icon: [29, 16, 'main'],
         flavor: "Crystalline sweetness harvested from the source. Pure and unrefined.",
-        gather: "Gain sugar lumps through any manner for a chance to find pure cane sugar.",
-        dropChance: 0.75,
+        gather: "Gain or spend sugar lumps through any manner for a chance to find pure cane sugar.",
+        dropChance: 0.65,
     },
     {
         id: 'reindeer_fur',
@@ -656,7 +656,7 @@ var REAGENTS = [
         icon: [15, 8, 'main'],
         flavor: "Formerly part of a wrinkler, currently part of alchemy, which is like science.",
         gather: "Each wrinkler popped has a chance to leave behind a sample of, well lets just say \'goo\'.",
-        dropChance: 0.07,
+        dropChance: 0.08,
     },
     {
         id: 'wrath_sugar',
@@ -680,7 +680,7 @@ var REAGENTS = [
         icon: [14, 16, 'custom'],
         flavor: "By Merlin's shiny beard!",
         gather: "Successfully cast spells in Grimoire for a chance to harvest magical infusion.",
-        dropChance: 0.15,
+        dropChance: 0.18,
     },
     {
         id: 'terra',
@@ -696,7 +696,7 @@ var REAGENTS = [
         icon: [4, 13, 'garden'],
         flavor: "Pressed petals from the garden's most benevolent blooms.",
         gather: "Found by harvesting mature Shimmerlily, Nursetulip, Chimrose, Everdaisy, or any clover variant in the Garden.",
-        dropChance: 0.05,
+        dropChance: 0.07,
     },
     {
         id: 'roots',
@@ -704,7 +704,7 @@ var REAGENTS = [
         icon: [0, 19, 'garden'],
         flavor: "Gnarled tubers that pulse with subterranean cookie energy.",
         gather: "Found by harvesting mature Cocoroots, Queenbeets, or Duketater in the Garden.",
-        dropChance: 0.08,
+        dropChance: 0.11,
     },
     {
         id: 'fungus_culture',
@@ -712,7 +712,7 @@ var REAGENTS = [
         icon: [14, 24, 'custom'],
         flavor: "It has opinions now, rudimentary as they might be.",
         gather: "Found by harvesting any mature fungus in the Garden.",
-        dropChance: 0.025,
+        dropChance: 0.03,
     },
     {
         id: 'immortal_essence',
@@ -1044,6 +1044,7 @@ function updatePotionEffects() {
     def('essence_of_cheer',
         function(p) {
             Game.killBuff('Essence of Cheer (misbrewed)'); Game.gainBuff('Essence of Cheer', 60, 0.2);
+            Game.seasonUses = Math.max(0, (Game.seasonUses || 0) - 5);
             Game.Notify(p.name + ' consumed', 'Changing seasons is 80% cheaper for the next minute.', getIconArray(p), 6);
         },
         function(p) {
@@ -1100,13 +1101,19 @@ function updatePotionEffects() {
     );
     def('extract_of_cadence',
         function(p) {
-            var affected = 0;
-            for (var i in Game.buffs) { var buff = Game.buffs[i]; if (buff && buff.time > 0) { buff.time += Game.fps * 60; buff.maxTime += Game.fps * 60; affected++; } }
-            Game.Notify(p.name + ' consumed', '1 minute added to buffs.', getIconArray(p), 6);
+            for (var i in Game.buffs) { 
+                var buff = Game.buffs[i]; 
+                if (buff && buff.time > 0) { 
+                    var originalTime = buff.maxTime;
+                    var extension = Math.min(originalTime * 2, Game.fps * 60);
+                    buff.time += extension;
+                    buff.maxTime += extension;
+                } 
+            }
+            Game.Notify(p.name + ' consumed', 'Buffs extended.', getIconArray(p), 6);
         },
         function(p) {
-            var affected = 0;
-            for (var i in Game.buffs) { var buff = Game.buffs[i]; if (buff && buff.time > 0) { buff.time = Math.floor(buff.time / 2); affected++; } }
+            for (var i in Game.buffs) { var buff = Game.buffs[i]; if (buff && buff.time > 0) { buff.time = Math.floor(buff.time / 2); } }
             Game.Notify(p.name + ' misbrewed', 'Halved remaining duration of buffs.', getIconArray(p), 6);
         }
     );
@@ -1119,17 +1126,32 @@ function updatePotionEffects() {
             var TM = Game.Objects['Javascript console'] && Game.Objects['Javascript console'].minigame;
             if (TM) {
                 if (TM.executionCooldownStart && TM.getExecutionCooldownRemaining() > 0) {
-                    TM.executionCooldownStart -= 7200000;
-                    if (TM.executionCooldownStart > Date.now()) { TM.updateCooldownDisplay(); Game.Notify(p.name + ' consumed', 'Removed 2 hours from terminal cooldown.', getIconArray(p), 6); }
-                    else { TM.executionCooldownStart = 0; TM.updateCooldownDisplay(); Game.Notify(p.name + ' consumed', 'Terminal cooldown cleared!', getIconArray(p), 6); }
+                    var duration = TM.executionCooldownDuration - (Game.Has('Water cooled processors') ? 1000 * 60 * 60 : 0);
+                    var currentEnd = TM.executionCooldownStart + duration;
+                    var newEnd = currentEnd - 7200000;
+                    if (newEnd > Date.now()) {
+                        TM.executionCooldownStart = newEnd - duration;
+                        TM.updateCooldownDisplay();
+                        Game.Notify(p.name + ' consumed', 'Removed 2 hours from terminal cooldown.', getIconArray(p), 6);
+                    } else {
+                        TM.executionCooldownStart = 0;
+                        TM.updateCooldownDisplay();
+                        Game.Notify(p.name + ' consumed', 'Terminal cooldown reduced!', getIconArray(p), 6);
+                    }
                 } else { Game.Notify(p.name + ' consumed', 'No terminal cooldown to reduce.', getIconArray(p), 6); }
             } else { Game.Notify(p.name + ' consumed', 'Terminal minigame not available.', getIconArray(p), 6); }
         },
         function(p) {
             var TM = Game.Objects['Javascript console'] && Game.Objects['Javascript console'].minigame;
             if (TM) {
-                if (TM.executionCooldownStart && TM.getExecutionCooldownRemaining() > 0) { TM.executionCooldownStart += 14400000; TM.updateCooldownDisplay(); Game.Notify(p.name + ' misbrewed', 'Added 4 hours to terminal cooldown.', getIconArray(p), 6); }
-                else { Game.Notify(p.name + ' misbrewed', 'No terminal cooldown to extend.', getIconArray(p), 6); }
+                if (TM.executionCooldownStart && TM.getExecutionCooldownRemaining() > 0) {
+                    var duration = TM.executionCooldownDuration - (Game.Has('Water cooled processors') ? 1000 * 60 * 60 : 0);
+                    var currentEnd = TM.executionCooldownStart + duration;
+                    var newEnd = currentEnd + 14400000;
+                    TM.executionCooldownStart = newEnd - duration;
+                    TM.updateCooldownDisplay();
+                    Game.Notify(p.name + ' misbrewed', 'Added 4 hours to terminal cooldown.', getIconArray(p), 6);
+                } else { Game.Notify(p.name + ' misbrewed', 'No terminal cooldown to extend.', getIconArray(p), 6); }
             } else { Game.Notify(p.name + ' misbrewed', 'Terminal minigame not available.', getIconArray(p), 6); }
         }
     );
@@ -1457,7 +1479,8 @@ var G = {
     highlightTimeout: null,        // timeout ID for clearing highlights
     unlockedReagents: {},         // reagentId >> true, permanently unlocked once first awarded
     totalReagentsCollected: 0,    // total reagents collected
-    totalPotionsBrewed: 0,        // total successful potions brewed 
+    totalPotionsBrewed: 0,        // total successful potions brewed across all ascensions
+    potionsBrewed: 0,             // potions brewed this ascension
     totalFailedDiscoveries: 0,    // total failed discoveries 
     debugMode: false              // debug mode flag 
 };
@@ -1503,11 +1526,13 @@ var PotionsM = {};
 window.PotionsM = PotionsM; // expose so persistent check hook can find current instance after reloads
 PotionsM._loading = false;
 PotionsM._loadTimer = null;
+PotionsM._potionsBrewedL = null;
 PotionsM._syncBaselines = function(target) {
     var P = target || PotionsM;
     P._lastWrinklersPopped  = Game.wrinklersPopped  || 0;
     P._lastReindeerClicked  = Game.reindeerClicked  || 0;
     P._lastLumpsTotal       = Game.lumpsTotal       || 0;
+    P._lastLumps            = Game.lumps            || 0;
     P._lastSeason           = Game.season           || '';
     P._lastDragonAura       = Game.dragonAura       || 0;
     P._lastDragonAura2      = Game.dragonAura2      || 0;
@@ -1518,6 +1543,13 @@ PotionsM._syncBaselines = function(target) {
     if (FM) P._lastGardenSoil = FM.soil || 0;
     var MM = Game.Objects['Bank']  && Game.Objects['Bank'].minigame;
     if (MM) P._lastBrokers = MM.brokers || 0;
+};
+
+PotionsM.updatePotionsBrewedDisplay = function() {
+    if (!PotionsM._potionsBrewedL) return;
+    var current = (typeof Beautify === 'function') ? Beautify(G.potionsBrewed) : '' + G.potionsBrewed;
+    var total = (typeof Beautify === 'function') ? Beautify(G.totalPotionsBrewed) : '' + G.totalPotionsBrewed;
+    PotionsM._potionsBrewedL.textContent = 'Potions consumed: ' + current + ' (total: ' + total + ')';
 };
 // Clear minigame hook flags so they re-register on each script reload
 Game._potionsGardenHooked = false;
@@ -1666,7 +1698,7 @@ function getDiscoverablePotionsCount() {
     var count = 0;
     for (var i = 0; i < POTIONS.length; i++) {
         var p = POTIONS[i];
-        if (!p.unlocked) {
+        if (!p.unlocked && !p.discovered) {
             var canBrew = true;
             for (var reagentId in p.reagents) {
                 var required = p.reagents[reagentId];
@@ -1730,10 +1762,10 @@ createPotionBuffType('Serum of Progress (misbrewed)', 'serum_of_progress', true,
 createPotionBuffType('Concoction of the Mason', 'concoction_of_the_mason', false, { onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
 createPotionBuffType('Concoction of the Mason (misbrewed)', 'concoction_of_the_mason', true, { onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
 
-createPotionBuffType('Arcana of the Finger', 'arcana_of_the_finger', false);
-createPotionBuffType('Arcana of the Finger (misbrewed)', 'arcana_of_the_finger', true);
-createPotionBuffType('Mercury of Age', 'mercury_of_age', false);
-createPotionBuffType('Mercury of Age (misbrewed)', 'mercury_of_age', true);
+createPotionBuffType('Arcana of the Finger', 'arcana_of_the_finger', false, { onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
+createPotionBuffType('Arcana of the Finger (misbrewed)', 'arcana_of_the_finger', true, { onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
+createPotionBuffType('Mercury of Age', 'mercury_of_age', false, { onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
+createPotionBuffType('Mercury of Age (misbrewed)', 'mercury_of_age', true, { onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
 
 createPotionBuffType('Suspension of Hallucinogenic', 'suspension_of_hallucinogenic', false, {
     customDesc: function(potion, mult, time, isMisbrewed) {
@@ -1750,18 +1782,18 @@ createPotionBuffType('Suspension of Hallucinogenic (misbrewed)', 'suspension_of_
     extraProps: { buildingName: null }
 });
 
-createPotionBuffType('Bloom of Industry', 'bloom_of_industry', false);
-createPotionBuffType('Bloom of Industry (misbrewed)', 'bloom_of_industry', true);
+createPotionBuffType('Bloom of Industry', 'bloom_of_industry', false, { onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
+createPotionBuffType('Bloom of Industry (misbrewed)', 'bloom_of_industry', true, { onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
 
-createPotionBuffType('Tincture of Purpose', 'tincture_of_purpose', false, { powerProp: 'multCpS' });
-createPotionBuffType('Tincture of Purpose (misbrewed)', 'tincture_of_purpose', true, { powerProp: 'multCpS' });
+createPotionBuffType('Tincture of Purpose', 'tincture_of_purpose', false, { powerProp: 'multCpS', onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
+createPotionBuffType('Tincture of Purpose (misbrewed)', 'tincture_of_purpose', true, { powerProp: 'multCpS', onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
 createPotionBuffType('Ambrosia of the Leech', 'ambrosia_of_the_leech', false);
 createPotionBuffType('Nectar of Summoning', 'nectar_of_summoning', false);
 createPotionBuffType('Nectar of Summoning (misbrewed)', 'nectar_of_summoning', true);
 createPotionBuffType('Philter of Worms (misbrewed)', 'philter_of_worms', true);
 createPotionBuffType('Emulsion of Sinful Greed', 'emulsion_of_sinful_greed', false, { powerProp: 'mult' });
-createPotionBuffType('Vitae of the Mother', 'vitae_of_the_mother', false);
-createPotionBuffType('Vitae of the Mother (misbrewed)', 'vitae_of_the_mother', true);
+createPotionBuffType('Vitae of the Mother', 'vitae_of_the_mother', false, { onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
+createPotionBuffType('Vitae of the Mother (misbrewed)', 'vitae_of_the_mother', true, { onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
 createPotionBuffType('Infusion of Chance', 'infusion_of_chance', false);
 createPotionBuffType('Infusion of Chance (misbrewed)', 'infusion_of_chance', true);
 
@@ -1784,8 +1816,8 @@ createPotionBuffType('Poison of the Matriarchs (misbrewed)', 'poison_of_the_matr
 createPotionBuffType('Salve of Fortune', 'salve_of_fortune', false);
 createPotionBuffType('Toxin of Elders', 'toxin_of_elders', false, { onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
 createPotionBuffType('Toxin of Elders (misbrewed)', 'toxin_of_elders', true, { onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
-createPotionBuffType('Ether of Serendipity', 'ether_of_serendipity', false, { powerProp: 'multCpS' });
-createPotionBuffType('Ether of Serendipity (misbrewed)', 'ether_of_serendipity', true, { powerProp: 'multCpS' });
+createPotionBuffType('Ether of Serendipity', 'ether_of_serendipity', false, { powerProp: 'multCpS', onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
+createPotionBuffType('Ether of Serendipity (misbrewed)', 'ether_of_serendipity', true, { powerProp: 'multCpS', onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
 createPotionBuffType('Corruption of Sin', 'corruption_of_sin', false, { onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
 createPotionBuffType('Corruption of Sin (misbrewed)', 'corruption_of_sin', true, { onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
 createPotionBuffType('Vapor of Luck', 'vapor_of_luck', false, { noPower: true, onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
@@ -2066,13 +2098,25 @@ PotionsM._registerHooks = function() {
             }
             
             // Sugar lumps harvested pure_cane_sugar
-            var lumps = Game.lumpsTotal || 0;
-            var lumpsDelta = lumps - PotionsM._lastLumpsTotal;
-            if (lumpsDelta > 0) {
-                for (var k = 0; k < lumpsDelta; k++) {
+            var lumpsTotal = Game.lumpsTotal || 0;
+            var lumpsTotalDelta = lumpsTotal - PotionsM._lastLumpsTotal;
+            if (lumpsTotalDelta > 0) {
+                for (var k = 0; k < lumpsTotalDelta; k++) {
                     if (PotionsM.reagentRoll('pure_cane_sugar')) PotionsM._addReagent('pure_cane_sugar', 1, 'lump');
                 }
-                PotionsM._lastLumpsTotal = lumps;
+                PotionsM._lastLumpsTotal = lumpsTotal;
+            }
+            
+            // Sugar lumps spent pure_cane_sugar
+            var lumps = Game.lumps || 0;
+            var lumpsDelta = lumps - PotionsM._lastLumps;
+            if (lumpsDelta < 0) {
+                for (var k = 0; k < Math.abs(lumpsDelta); k++) {
+                    if (PotionsM.reagentRoll('pure_cane_sugar')) PotionsM._addReagent('pure_cane_sugar', 1, 'lump');
+                }
+                PotionsM._lastLumps = lumps;
+            } else {
+                PotionsM._lastLumps = lumps;
             }
             
             // Season change  culture_of_time
@@ -2155,7 +2199,7 @@ PotionsM._registerHooks = function() {
     if (!Game._potionsCultureOfTimeHooked) {
         Game.registerHook('check', function() {
             if (PotionsM._loading) return;
-            if (Math.random() < 1/10000) {
+            if (Math.random() < 1/7500) {
                 PotionsM._addReagent('culture_of_time', 1, 'random');
             }
         });
@@ -2540,7 +2584,7 @@ PotionsM.init = function(div) {
     /* === sections === */
     '.potions-slots-section,.potions-reagents-section{flex:1;display:flex;flex-direction:column;}','.potions-brew-slots{display:flex;flex-wrap:nowrap;gap:6px;align-items:center;justify-content:center;min-width:198px;}','.potions-brew-content{display:flex;gap:0;align-items:stretch;min-height:104px;}','.potions-brew-half{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:4px;}','.potions-brew-selection{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:6px;width:100%;}','.potions-selected-reagents{display:flex;gap:6px;align-items:center;justify-content:center;}','.potions-selected-reagent{cursor:pointer;display:inline-block;width:40px;height:40px;position:relative;}','.potions-selected-reagent-icon,.potions-catalog-seed-icon,.potions-reagent-item-icon{pointer-events:none;display:inline-block;position:absolute;left:-4px;top:-4px;width:48px;height:48px;background-repeat:no-repeat;}','.potions-reagent-slot-outline{display:inline-block;width:40px;height:40px;border:2px dashed rgba(255,255,255,0.25);border-radius:4px;box-sizing:border-box;}','@container potions-wrap (max-width:400px){.potions-brew-content{flex-direction:column;}}',
     /*=== Brew tiles ===*/
-    '.potions-brew-tile{box-shadow:4px 4px 4px #000;cursor:pointer;position:relative;color:#f33;opacity:0.8;text-shadow:0 0 4px #000,0 0 6px #000;font-weight:bold;font-size:12px;flex-shrink:0;width:60px;height:74px;background:url(' + spellBG + ');}','.potions-brew-tile.ready{color:rgba(255,255,255,0.8);opacity:1;} .potions-brew-tile.ready:hover{color:#fff;}','.potions-brew-tile:hover{box-shadow:6px 6px 6px 2px #000;z-index:1000000001;top:-1px;} .potions-brew-tile:active{top:1px;}','.potions-brew-tile0{background-position:0 0;} .potions-brew-tile0:hover,.potions-brew-tile0.hovered{background-position:0 -74px;} .potions-brew-tile0:active{background-position:0 74px;}','.potions-brew-tile1{background-position:-60px 0;} .potions-brew-tile1:hover,.potions-brew-tile1.hovered{background-position:-60px -74px;} .potions-brew-tile1:active{background-position:-60px 74px;}','.potions-brew-tile2{background-position:-120px 0;} .potions-brew-tile2:hover,.potions-brew-tile2.hovered{background-position:-120px -74px;} .potions-brew-tile2:active{background-position:-120px 74px;}','.potions-brew-tile.hovered{box-shadow:6px 6px 6px 2px #000;z-index:1000000001;top:-1px;}','.potions-brew-tile-content{width:60px;height:74px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;}','.potions-tile-icon{pointer-events:none;width:48px;height:48px;opacity:0.8;background-repeat:no-repeat;position:relative;z-index:1;}','.potions-brew-tile.ready .potions-tile-icon{opacity:1;} .potions-brew-tile.ready:hover .potions-tile-icon{animation:bounce 0.8s;}','.noFancy .potions-brew-tile.ready:hover .potions-tile-icon{animation:none;}','.potions-brewing-overlay{position:absolute;inset:0;width:60px;height:74px;pointer-events:none;background:url(' + Game.resPath + 'img/pieFill.png) no-repeat;background-size:1080px 592px;opacity:0.6;z-index:2;}','.potions-slots-hint{font-size:10px;color:rgba(255,255,255,0.35);text-align:center;margin-top:4px;font-style:italic;}',
+    '.potions-brew-tile{box-shadow:4px 4px 4px #000;cursor:pointer;position:relative;color:#f33;opacity:0.8;text-shadow:0 0 4px #000,0 0 6px #000;font-weight:bold;font-size:12px;flex-shrink:0;width:60px;height:74px;background:url(' + spellBG + ');}','.potions-brew-tile.ready{color:rgba(255,255,255,0.8);opacity:1;} .potions-brew-tile.ready:hover{color:#fff;}','.potions-brew-tile:hover{box-shadow:6px 6px 6px 2px #000;z-index:1000000001;top:-1px;} .potions-brew-tile:active{top:1px;}','.potions-brew-tile0{background-position:0 0;} .potions-brew-tile0:hover,.potions-brew-tile0.hovered{background-position:0 -74px;} .potions-brew-tile0:active{background-position:0 74px;}','.potions-brew-tile1{background-position:-60px 0;} .potions-brew-tile1:hover,.potions-brew-tile1.hovered{background-position:-60px -74px;} .potions-brew-tile1:active{background-position:-60px 74px;}','.potions-brew-tile2{background-position:-120px 0;} .potions-brew-tile2:hover,.potions-brew-tile2.hovered{background-position:-120px -74px;} .potions-brew-tile2:active{background-position:-120px 74px;}','.potions-brew-tile.hovered{box-shadow:6px 6px 6px 2px #000;z-index:1000000001;top:-1px;}','.potions-brew-tile-content{width:60px;height:74px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;}','.potions-tile-icon{pointer-events:none;width:48px;height:48px;opacity:0.8;background-repeat:no-repeat;position:relative;z-index:1;}','.potions-brew-tile.ready .potions-tile-icon{opacity:1;} .potions-brew-tile.ready:hover .potions-tile-icon{animation:bounce 0.8s;}','.noFancy .potions-brew-tile.ready:hover .potions-tile-icon{animation:none;}','.potions-brewing-overlay{position:absolute;inset:0;width:60px;height:74px;pointer-events:none;background:url(' + Game.resPath + 'img/pieFill.png) no-repeat;background-size:1080px 592px;opacity:0.6;z-index:2;}','.potions-slots-hint{font-size:10px;color:rgba(255,255,255,0.35);text-align:center;margin-top:4px;font-style:italic;}','#potionsPotionsBrewed{margin:14px auto 0;text-align:center;font-size:11px;color:rgba(255,255,255,0.75);text-shadow:-1px 1px 0px #000;}',
     /* === catalog column === */
     '.potions-mid-col{flex:1;min-width:180px;display:flex;flex-direction:column;}','.potions-catalog-seed,.potions-reagent-item{cursor:pointer;display:inline-block;width:40px;height:40px;position:relative;margin:1px 8px 8px 1px;}','.potions-catalog-seed.undiscovered{opacity:0;pointer-events:none;cursor:default;}','.potions-catalog-seed:hover .potions-catalog-seed-icon{animation:bounce 0.8s;z-index:1000000001;} .potions-catalog-seed:active .potions-catalog-seed-icon{animation:pucker 0.2s;}','.noFancy .potions-catalog-seed:hover .potions-catalog-seed-icon,.noFancy .potions-catalog-seed:active .potions-catalog-seed-icon,.noFancy .potions-reagent-item:hover .potions-reagent-item-icon,.noFancy .potions-reagent-item:active .potions-reagent-item-icon{animation:none;}','.potions-catalog-seed.on:before{pointer-events:none;content:\'\';display:block;position:absolute;left:-10px;top:-10px;width:60px;height:60px;background:url(' + resPath + 'img/selectTarget.png);animation:wobble 0.2s ease-out;z-index:10;}',
     /* === reagents column === */
@@ -2559,12 +2603,14 @@ PotionsM.init = function(div) {
         slotsHtml += '<div class="potions-brew-tile potions-brew-tile' + si + '" id="potionsSlot' + si + '"><div class="potions-brew-tile-content" id="potionsSlotContent' + si + '"></div></div>';
     }
 
-    div.innerHTML = '<div id="potions-bg"></div><div id="potions-wrap"><div class="potions-main"><div class="potions-slots-section"><div class="potions-brew-content"><div class="potions-brew-half"><div class="potions-brew-slots" id="potions-brew-slots">' + slotsHtml + '</div></div><div class="potions-brew-half"><div class="potions-brew-selection"><div class="potions-selected-reagents" id="potions-selected-reagents"></div><div class="potions-brew-actions" id="potions-brew-actions"></div></div></div></div></div><div class="potions-reagents-section framed"><div id="potions-reagents-label" class="title gardenPanelLabel">Reagents Discovered (' + getReagentUnlockedCount() + '/' + REAGENTS.length + ')</div><div class="line"></div><div id="potions-reagents-list"></div><div id="potions-discoverable-label" style="margin-top:-10px;text-align:center;font-size:11px;opacity:0.8;"></div></div><div class="potions-mid-col"><div class="potions-catalog-section framed"><div id="potions-catalog-label" class="title gardenPanelLabel">Potions Book</div><div class="line"></div><div id="potions-catalog-grid"></div></div></div></div></div>';
+    div.innerHTML = '<div id="potions-bg"></div><div id="potions-wrap"><div class="potions-main"><div class="potions-slots-section"><div class="potions-brew-content"><div class="potions-brew-half"><div class="potions-brew-slots" id="potions-brew-slots">' + slotsHtml + '</div><div id="potionsPotionsBrewed"></div></div><div class="potions-brew-half"><div class="potions-brew-selection"><div class="potions-selected-reagents" id="potions-selected-reagents"></div><div class="potions-brew-actions" id="potions-brew-actions"></div></div></div></div></div><div class="potions-reagents-section framed"><div id="potions-reagents-label" class="title gardenPanelLabel">Reagents Discovered (' + getReagentUnlockedCount() + '/' + REAGENTS.length + ')</div><div class="line"></div><div id="potions-reagents-list"></div><div id="potions-discoverable-label" style="margin-top:-10px;text-align:center;font-size:11px;opacity:0.8;"></div></div><div class="potions-mid-col"><div class="potions-catalog-section framed"><div id="potions-catalog-label" class="title gardenPanelLabel">Potions Book</div><div class="line"></div><div id="potions-catalog-grid"></div></div></div></div></div>';
 
     PotionsM._buildCatalog();
     PotionsM._buildReagents();
     PotionsM._refreshSlots();
     PotionsM._renderSelectedReagents();
+    PotionsM._potionsBrewedL = l('potionsPotionsBrewed');
+    PotionsM.updatePotionsBrewedDisplay();
 
     // Add click handlers and tooltips to slots
     for (var si = 0; si < 3; si++) {
@@ -2912,6 +2958,12 @@ PotionsM._usePotionSlot = function(slotIndex) {
     PotionsM._refreshSlots();
     PotionsM._renderSelectedReagents();
     if (p.discovered && !p.unlocked) { p.unlocked = true; PotionsM._buildCatalog(); }
+    
+    // Track potions brewed (both successful and misbrewed)
+    G.totalPotionsBrewed = (G.totalPotionsBrewed || 0) + 1;
+    G.potionsBrewed = (G.potionsBrewed || 0) + 1;
+    PotionsM.updatePotionsBrewedDisplay();
+    
     var misbrewChance = PotionsM._getMisbrewChance(p);
     var didMisbrew = (G.debugMode && Game.keys[16]) || Math.random() < misbrewChance;
     if (didMisbrew && p.misbrew) {
@@ -2923,8 +2975,6 @@ PotionsM._usePotionSlot = function(slotIndex) {
         else Game.Notify(p.name + ' misbrewed', p.misbrew, getIconArray(p), 6);
     } else {
         PlaySound('snd/upgrade.mp3');
-        // Track successful potions brewed for achievement
-        G.totalPotionsBrewed = (G.totalPotionsBrewed || 0) + 1;
         if (p.doEffect && typeof p.doEffect === 'function') {
             try { p.doEffect(p, slotIndex); }
             catch(e) { console.error('Error in doEffect for ' + p.id + ':', e); Game.Notify(p.name + ' consumed', p.effect, getIconArray(p), 6); }
@@ -2961,12 +3011,10 @@ PotionsM.reagentRoll = function(reagentId) {
         dropChance *= (1 + (auraBonus * 0.1));
     }
     // Apply Ointment of Plenty buffs
-    var oplenty = Game.buffs['Ointment of Plenty'];
-    var oplentyMis = Game.buffs['Ointment of Plenty (misbrewed)'];
-    if (oplenty && oplenty.mult) {
-        dropChance *= oplenty.mult;
-    } else if (oplentyMis && oplentyMis.mult) {
-        dropChance *= oplentyMis.mult;
+    if (Game.buffs['Ointment of Plenty']) {
+        dropChance *= 2;
+    } else if (Game.buffs['Ointment of Plenty (misbrewed)']) {
+        dropChance *= 0.5;
     }
     return PotionsM._random() < dropChance;
 };
@@ -3684,7 +3732,7 @@ PotionsM._buildSaveDataImpl = function() {
 
     // rn/pn: record how many reagents/potions exist at save time.
     // On load, if counts differ a new ingredient/potion was added — safe to ignore extras.
-    return { v: 1, rn: REAGENTS.length, pn: POTIONS.length, r: r, p: p, s: s, b: b, x: x, tb: G.totalPotionsBrewed || 0, tr: G.totalReagentsCollected || 0, fd: G.totalFailedDiscoveries || 0, aw: aw };
+    return { v: 1, rn: REAGENTS.length, pn: POTIONS.length, r: r, p: p, s: s, b: b, x: x, tb: G.totalPotionsBrewed || 0, pb: G.potionsBrewed || 0, tr: G.totalReagentsCollected || 0, fd: G.totalFailedDiscoveries || 0, aw: aw };
 };
 
 PotionsM._saveImpl = function() {
@@ -3791,6 +3839,7 @@ PotionsM._loadImpl = function(str) {
 
     // Totals
     G.totalPotionsBrewed     = data.tb || 0;
+    G.potionsBrewed         = data.pb || 0;
     G.totalReagentsCollected = data.tr || 0;
     G.totalFailedDiscoveries     = data.fd || 0;
 
@@ -3819,6 +3868,7 @@ PotionsM._loadImpl = function(str) {
     PotionsM._buildReagents();
     PotionsM._buildCatalog();
     if (PotionsM._updateEffs) PotionsM._updateEffs();
+    PotionsM.updatePotionsBrewedDisplay();
     
     scheduleUnlock();
 };
@@ -3899,6 +3949,7 @@ PotionsM._resetImpl = function(hard, _calledFromLoad) {
         G.selectedReagents = [];
         G.highlightedReagents = [];
         G.highlightEndTime = 0;
+        G.potionsBrewed = 0;
         for (var i = 0; i < REAGENTS.length; i++) {
             G.reagents[REAGENTS[i].id] = 0;
         }
@@ -3909,6 +3960,7 @@ PotionsM._resetImpl = function(hard, _calledFromLoad) {
     PotionsM._buildReagents();
     PotionsM._buildCatalog();
     if (PotionsM._updateEffs) PotionsM._updateEffs();
+    PotionsM.updatePotionsBrewedDisplay();
     
 };
 
