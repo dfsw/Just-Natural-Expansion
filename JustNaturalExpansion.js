@@ -655,7 +655,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     }
     
     function getLifetimeWrinklers() {
-        // Use Game.wrinklersPopped for current session + lifetime data for previous ascensions
         return (Game.wrinklersPopped || 0) + (lifetimeData.wrinklersPopped || 0);
     }
     
@@ -664,13 +663,11 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     }
     
     function getLifetimeCookieFish() {
-        // Combine current session (Game.JNE) with lifetime data (previous sessions)
         var currentSession = (Game.JNE && Game.JNE.cookieFishCaught) ? Game.JNE.cookieFishCaught : 0;
         return currentSession + (lifetimeData.cookieFishCaught || 0);
     }
     
     function getLifetimeBingoJackpotWins() {
-        // Combine current session (Game.JNE) with lifetime data (previous sessions)
         var currentSession = (Game.JNE && Game.JNE.bingoJackpotWins) ? Game.JNE.bingoJackpotWins : 0;
         return currentSession + (lifetimeData.bingoJackpotWins || 0);
     }
@@ -2743,7 +2740,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         try {
             if (!Game.JNE) Game.JNE = {};
             
-            // Prevent corruption during active restoration - preserve existing data
             if (Game.JNE._isRestoringData) {
                 return; // Don't overwrite during restoration
             }
@@ -4670,10 +4666,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         restoreModPermanentSlots();
         resetUnlockStateCache();
 
-        // If the HU module is already loaded (in-session reload), restore donuts synchronously
-        // right now so there is zero transient window where donuts don't exist in Game.Upgrades.
-        // On a fresh page load the module isn't loaded yet, so this no-ops and the normal
-        // deferred path (setupBoxOfDonuts via runUpgradeSetups) handles it instead.
+        // If the HU module is already loaded  restore donuts synchronously On a fresh page load the module isn't loaded yet, so this no-ops and the normal deferred path (setupBoxOfDonuts via runUpgradeSetups) handles it instead.
         if (Game.JNE && Game.JNE.HeavenlyUpgrades &&
             typeof Game.JNE.HeavenlyUpgrades.restoreDonutsNow === 'function') {
             Game.JNE.HeavenlyUpgrades.restoreDonutsNow();
@@ -7511,9 +7504,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                         Game.JNE.enableCookieAgeFromSave = true;
                     }
 
-                    // Settings are now known — kick off the HU script fetch immediately so the
-                    // CDN latency runs in parallel with recreateUpgradesFromSaveOnly() and the
-                    // 100ms continueModInitialization delay instead of starting after them.
                     if (modSettings.enableHeavenlyUpgrades && !heavenlyUpgradesScriptLoaded &&
                         !document.querySelector('script[src*="heavenlyUpgrades.js"]')) {
                         var earlyScript = document.createElement('script');
