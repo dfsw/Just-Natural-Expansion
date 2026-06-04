@@ -74,6 +74,9 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 
 ### Version 0.5.3
 * Updated the logic of how aerated soil works to make it more inline with the intention of the upgrade. 
+* Fixed a whole bunch of issues that could be caused by rapid save scumming before the mod had fully had a chance to load. 
+* Fixed a bug that would prevent plant all from working after loading a new save. 
+* Spell Slinger achievement now properly awards again.
 
 
 ### Version 0.5.2
