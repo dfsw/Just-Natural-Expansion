@@ -72,22 +72,29 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 
 ## Changelog
 
+### Version 0.5.3
+* Updated the logic of how aerated soil works to make it more inline with the intention of the upgrade. 
+
+
 ### Version 0.5.2
-* Fix a bug in Potions Class that could allow you to get a 6th reagent if you had unused items in the brew area. 
-* Fixed a bug in Potions Class that could forget a discovered potion if a save was reloaded while it was in a use to discover state. 
-* Tweaked multiple reagent drop rates, mostly to be more generous.   
-* Tweaked some potion brew times, this wasn't as generous. 
-* Drop conditions for Pure Cane Sugar reagent have been updated.
-* Total potions consumed now appears in the Potions Class UI.
-* Unknown potions you can make with current reagents label now properly understands discovered but unused potions.
-* Essence of Cheer potion is now more neat and interesting. 
-* Extract of Cadence is now a bit less overpowered, but still crazy strong. 
-* Fixed a bug with Reduction of Silica causing terminal cooldown to be cancelled instead of reduced.
-* Slimy pheromones (heavenly upgrade) has been slightly nerfed. 
-* Downline prestige speed up has toned down a little. 
-* Downline now shows bar directional hint indicators to give an idea of the rise/fall
-* Fixed a bug that could forget the purchased status on plant heavenly upgrades. 
-* Fixed an ascension related exploit for Morroween.
+* Fixed a bug in Potions Class that could allow you to get a 6th reagent if you had unused items in the brew area.
+* Fixed a bug in Potions Class that could forget a discovered potion if a save was reloaded while it was in a "use to discover" state.
+* Tweaked multiple reagent drop rates, mostly to be more generous.
+* Tweaked some potion brew times; this wasn't as generous.
+* Drop conditions for the Pure Cane Sugar reagent have been updated.
+* The total number of potions consumed now appears in the Potions Class UI.
+* The "unknown potions you can make with current reagents" label now properly understands discovered but unused potions.
+* Essence of Cheer potion is now neater and more interesting.
+* Extract of Cadence is now a bit less overpowered, but still crazy strong.
+* Fixed a bug with Reduction of Silica that caused terminal cooldown to be cancelled instead of reduced.
+* Slimy Pheromones heavenly upgrade has been slightly nerfed.
+* Downline prestige speed-up has been toned down a little.
+* Downline now shows bar direction hint indicators to give an idea of rise/fall.
+* Downline now provides 1 action slot per level up to level 10, with a minimum of 3 slots.
+* Fixed a bug that could forget the purchased status of plant heavenly upgrades.
+* Fixed an ascension-related exploit for Morroween.
+* Fixed a bug that could prevent some reindeer-related achievements from being awarded.
+* Mod upgrades now count toward vanilla "total number of upgrades owned" achievements.
 * Additional bug fixes and stability improvements.
 
 ### **Major Version 0.5.0 - Potions Class, an Alchemy Labs Minigame**
