@@ -4,7 +4,7 @@
     var _huT0 = Date.now();
     
     const SIMPLE_MOD_NAME = 'Just Natural Expansion';
-    const MOD_HU_VERSION = '1.0.12';
+    const MOD_HU_VERSION = '1.0.13';
     var isInitialized = false;
     const MOD_ICON = [15, 7];
     const CUSTOM_SPRITE_SHEET_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
@@ -1837,7 +1837,7 @@ var cpsModifiersRegistered = false;
                     effMult: 1,
                     weedMult: 1.25,
                     req: 500,
-                    effsStr: '<div class="gray">&bull; tick every <b>'+Game.sayTime(10*60*Game.fps)+'</b></div><div class="green">&bull; plant aging variance -50%</div><div class="red">&bull; weed growth <b>+25%</b></div>',
+                    effsStr: '<div class="gray">&bull; tick every <b>'+Game.sayTime(10*60*Game.fps)+'</b></div><div class="green">&bull; plant aging variance reduced</div><div class="red">&bull; weed growth <b>+25%</b></div>',
                     q: 'Soil enriched with tiny air pockets that help regulate plant growth patterns. Plants grow more predictably while maintaining steady development.'
                 };
             }
@@ -1912,21 +1912,46 @@ var cpsModifiersRegistered = false;
         if (Game.Has('Aerated soil') && !M._aeratedSoilHooked) {
             M._aeratedSoilHooked = true;
             if (!M._originalLogic) M._originalLogic = M.logic;
-            var originalAgeTickRs = {};
-            for (var i in M.plants) {
-                if (M.plants[i].ageTickR !== undefined) originalAgeTickRs[i] = M.plants[i].ageTickR;
-            }
             M.logic = function() {
-                var shouldReduceVariance = isAeratedSelected() && !M.freeze && Date.now() >= M.nextStep;
-                if (shouldReduceVariance) {
-                    for (var i in originalAgeTickRs) M.plants[i].ageTickR = originalAgeTickRs[i] * 0.5;
-                    try {
-                        M._originalLogic.call(this);
-                    } finally {
-                        for (var i in originalAgeTickRs) M.plants[i].ageTickR = originalAgeTickRs[i];
+                var isAerated = isAeratedSelected() && !M.freeze && Date.now() >= M.nextStep;
+                if (isAerated) {
+                    if (!M._fracAge) M._fracAge = {};
+                    M.computeBoostPlot();
+                    var dragonBoost = 1 + 0.05 * Game.auraMult('Supreme Intellect');
+                    for (var y = 0; y < 6; y++) for (var x = 0; x < 6; x++) {
+                        var tile = M.plot[y][x], k = y + '_' + x;
+                        if (!tile || tile[0] <= 0) { M._fracAge[k] = 0; continue; }
+                        var me = M.plantsById[tile[0] - 1];
+                        M._fracAge[k] = (M._fracAge[k] || 0) + (me.ageTick + me.ageTickR * Math.random()) * M.plotBoost[y][x][0] * dragonBoost;
+                        tile[1] += Math.floor(M._fracAge[k]);
+                        M._fracAge[k] %= 1;
                     }
+                    for (var i in M.plants) { M.plants[i]._at = M.plants[i].ageTick; M.plants[i]._atr = M.plants[i].ageTickR; M.plants[i].ageTick = 0; M.plants[i].ageTickR = 0; }
+                    try { M._originalLogic.call(this); }
+                    finally { for (var i in M.plants) { M.plants[i].ageTick = M.plants[i]._at; M.plants[i].ageTickR = M.plants[i]._atr; } }
                 } else {
                     M._originalLogic.call(this);
+                }
+            };
+            
+            // Hook draw to fix dying transparency 
+            if (!M._originalDraw) M._originalDraw = M.draw;
+            M.draw = function() {
+                M._originalDraw.call(this);
+                if (isAeratedSelected() && M._fracAge) {
+                    for (var y = 0; y < 6; y++) for (var x = 0; x < 6; x++) {
+                        var tile = M.plot[y][x];
+                        if (!tile || tile[0] <= 0) continue;
+                        var me = M.plantsById[tile[0] - 1];
+                        var iconL = l('gardenTileIcon-' + x + '-' + y);
+                        if (iconL) {
+                            // Use saved _at/_atr values since ageTick/ageTickR are zeroed during logic
+                            var at = me._at !== undefined ? me._at : me.ageTick;
+                            var atr = me._atr !== undefined ? me._atr : me.ageTickR;
+                            var dying = ((tile[1] + Math.ceil(at + atr)) >= 100 ? 1 : 0);
+                            iconL.style.opacity = (dying ? 0.5 : 1);
+                        }
+                    }
                 }
             };
         }
@@ -4195,7 +4220,7 @@ var cpsModifiersRegistered = false;
             for (var i = 0; i < gcChoices.length; i++) {
                 var choice = gcChoices[i];
                 var selected = (Game.chimeType === choice.id);
-                str += '<div class="crate noFrame enabled' + (selected ? ' highlighted' : '') + '" style="opacity:1;float:none;display:inline-block;background-position:' + (-choice.icon[0] * 48) + 'px ' + (-choice.icon[1] * 48) + 'px;" ' + Game.clickStr + '="Game.UpgradesById[' + selector.id + '].choicesPick(' + choice.id + ');Game.choiceSelectorOn=-1;Game.UpgradesById[' + selector.id + '].buy();"></div>';
+                str += '<div class="crate noFrame enabled' + (selected ? ' highlighted' : '') + '" style="opacity:1;float:none;display:inline-block;background-position:' + (-choice.icon[0] * 48) + 'px ' + (-choice.icon[1] * 48) + 'px;" ' + Game.clickStr + '="Game.UpgradesById[' + this.id + '].choicesPick(' + choice.id + ');Game.choiceSelectorOn=-1;Game.UpgradesById[' + this.id + '].buy();"></div>';
             }
             
             str += '<div class="line"></div>';
@@ -4214,7 +4239,7 @@ var cpsModifiersRegistered = false;
             for (var i = 0; i < fortuneChoices.length; i++) {
                 var choice = fortuneChoices[i];
                 var selected = (Game.fortuneChimeType === (choice.id - 100));
-                str += '<div class="crate noFrame enabled' + (selected ? ' highlighted' : '') + '" style="opacity:1;float:none;display:inline-block;background-position:' + (-choice.icon[0] * 48) + 'px ' + (-choice.icon[1] * 48) + 'px;" ' + Game.clickStr + '="Game.UpgradesById[' + selector.id + '].choicesPick(' + choice.id + ');Game.choiceSelectorOn=-1;Game.UpgradesById[' + selector.id + '].buy();"></div>';
+                str += '<div class="crate noFrame enabled' + (selected ? ' highlighted' : '') + '" style="opacity:1;float:none;display:inline-block;background-position:' + (-choice.icon[0] * 48) + 'px ' + (-choice.icon[1] * 48) + 'px;" ' + Game.clickStr + '="Game.UpgradesById[' + this.id + '].choicesPick(' + choice.id + ');Game.choiceSelectorOn=-1;Game.UpgradesById[' + this.id + '].buy();"></div>';
             }
             
             return str;
