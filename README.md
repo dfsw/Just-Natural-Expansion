@@ -72,6 +72,14 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 
 ## Changelog
 
+### Version 0.5.4
+* Lunar New Year! Come celebrate with Just Natural Expansion with this brand new holiday season just released. Find your lucky year and collect lanterns and blessings, may your path be prosperous this year. 
+* Support for new season through terminal, cookie age, etc. 
+* Downline prestiage releases are now sped up in the golden ratio, which honestly makes more sense than what we were doing before. 
+* Fixed a bug that would cause Cookie Monster to enter an infinite loop when using potions that touched the Effs array. 
+* Option O loading should no longer break some Grimoire related heavenly upgrades
+* Additional bug fixes, stability improvements, and general code cleanup and simplification.
+
 ### Version 0.5.3
 * Updated the logic of how aerated soil works to make it more inline with the intention of the upgrade. 
 * Fixed a whole bunch of issues that could be caused by rapid save scumming before the mod had fully had a chance to load. 

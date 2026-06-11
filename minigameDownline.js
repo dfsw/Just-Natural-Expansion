@@ -1,9 +1,9 @@
-// Downline Minigame 1.0.4
+// Downline Minigame 
 
 (function() {
 'use strict';
 
-var DOWNLINE_CUSTOM_SPRITE_URL = 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/updatedSpriteSheet.png';
+const DOWNLINE_VERSION = '1.0.5';
 
 var downlineAchievementNames = [
     'Popularity factor',
@@ -66,12 +66,22 @@ var G = {
     frozen: false,
     lumpSpeedBoostEnd: 0,
     lastTickTime: 0,
-    actionDurationMult: 1
+    actionDurationMult: 1,
+    lastPivotTime: 0
 };
 
 var lumpBoostState = {
     active: false
 };
+
+function getPrestigeSpeedMult(prestige) {
+    if (prestige <= 0) return 1;
+    var fib = [1, 2];
+    for (var i = 2; i <= prestige; i++) {
+        fib[i] = fib[i-1] + fib[i-2];
+    }
+    return fib[prestige];
+}
 var _barDeltaHype = 0, _barDeltaCommit = 0, _barDeltaRef = 0, _barDeltaRep = 0, _barDeltaRealDt = 1, _barSpeedMult = 1;
 
 DownlineM.launch = function() {
@@ -96,7 +106,7 @@ function $(id) { return document.getElementById(id); }
 
 var SHEETS = {
     main: 'https://orteil.dashnet.org/cookieclicker/img/icons.png',
-    custom: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/updatedSpriteSheet.png',
+    custom: 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png',
     garden: 'https://orteil.dashnet.org/cookieclicker/img/gardenPlants.png'
 };
 
@@ -913,21 +923,6 @@ DownlineM.init = function(div) {
     div.innerHTML = htmlContent;
     var debugElInit = document.getElementById('downline-debug');
     if (debugElInit) debugElInit.style.display = Game.downlineDebug ? 'block' : 'none';
-   
-
-    var SHEETS = {
-      main:   'https://orteil.dashnet.org/cookieclicker/img/icons.png',
-      custom: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/updatedSpriteSheet.png',
-      garden: 'https://orteil.dashnet.org/cookieclicker/img/gardenPlants.png'
-    };
-    function createIcon(col, row, sheet, cellSize) {
-      cellSize = cellSize || 48;
-      var el = document.createElement('span');
-      el.className = 'downline-icon';
-      el.style.backgroundImage = 'url(' + (SHEETS[sheet || 'main'] || SHEETS.main) + ')';
-      el.style.backgroundPosition = (-col * cellSize) + 'px ' + (-row * cellSize) + 'px';
-      return el;
-    }
     function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
 
     function getSupremeIntellectDurationMult() {
@@ -1529,7 +1524,7 @@ DownlineM.init = function(div) {
         effects: { players: -2, reputation: -1, commitment: -2, hype: 6 },
         headline: 'Cookie Clicker "exploit" patches divide community' },
 
-        { name: 'Localize content', icon: [17,16], sheet: 'custom', durationSec: 2 * 60 * 60, costCps: 75 * 60,
+        { name: 'Localize content', icon: [6, 15], sheet: 'custom', durationSec: 2 * 60 * 60, costCps: 75 * 60,
         desc: 'Translate the game into new languages.',
         flavor: 'Cookies now in Elvish, Klingon, Dothraki, Na\'vi, and Parseltongue',
         unlock: { conditions: [{ stat: 'players', min: 200 }, { stat: 'reputation', min: 400 }], tempConditions: [{ stat: 'hype', min: 150 }] },
@@ -1809,7 +1804,7 @@ DownlineM.init = function(div) {
         headline: 'Cookie Clicker the Motion Picture premieres to packed theaters — finishes to half empty theaters' },
 
       { name: 'Pivot!', icon: [15,17], sheet: 'custom', durationSec: 0, costCps: 24 * 60 * 60,
-        desc: 'Immediately stop all actions.',
+        desc: 'Immediately stop all actions, may be used once every hour.',
         flavor: 'Wait this isn\'t really working. CHANGE EVERYTHING RIGHT NOW!',
         unlock: { conditions: [{ stat: 'players', min: 250 }]},
         special: 'pivot',
@@ -2249,13 +2244,24 @@ DownlineM.init = function(div) {
           parts.push('<div class="effects">' + lines.map(function (l) { return '<div class="' + (l.positive ? 'green' : 'red') + '">&bull; ' + escapeTooltipHtml(l.text) + '</div>'; }).join('') + '</div>');
         }
       }
+      if (def && def.special === 'pivot') {
+        var now = Date.now();
+        var cooldownMs = 60 * 60 * 1000; 
+        var cooldownRemaining = 0;
+        if (G.lastPivotTime && now - G.lastPivotTime < cooldownMs) {
+          cooldownRemaining = cooldownMs - (now - G.lastPivotTime);
+        }
+        if (cooldownRemaining > 0) {
+          parts.push('<div class="cooldown"><span class="red">Cooldown remaining: ' + escapeTooltipHtml(formatRemaining(cooldownRemaining / 1000)) + '</span></div>');
+        }
+      }
       if (isChip) {
         var stateIndex = parseInt(el.getAttribute('data-state-index'), 10);
         var action = !isNaN(stateIndex) && G.activeActions[stateIndex];
         if (!action) return '';
         var left = Math.max(0, action.remainSec);
         var lumpBoostActive = lumpBoostState.active;
-        var effectiveSpeedMult = (lumpBoostActive ? 10 : G.speed) * Math.pow(1.5, G.prestige);
+        var effectiveSpeedMult = (lumpBoostActive ? 10 : G.speed) * getPrestigeSpeedMult(G.prestige);
         var combinedMult = effectiveSpeedMult * (G.frozen ? FROZEN_SPEED_FRAC : 1);
         var displaySec = combinedMult > 0 ? left / combinedMult : left;
         var boostLabel = '';
@@ -2452,6 +2458,12 @@ DownlineM.init = function(div) {
       var name = link.getAttribute('data-name'), def = ACTIONS[name];
       if (!def || !def.isUsable()) return;
       if (def.special === 'pivot') {
+        var now = Date.now();
+        var cooldownMs = 60 * 60 * 1000; 
+        if (G.lastPivotTime && now - G.lastPivotTime < cooldownMs) {
+          return; // Cooldown active
+        }
+        G.lastPivotTime = now;
         G.activeActions.length = 0; renderActiveSlots(); activeCountEl.textContent = 0; return;
       }
       if (def.special === 'rebrand') {
@@ -2683,11 +2695,12 @@ DownlineM.init = function(div) {
         var currentBoost = getCurrentBoost();
         var tenPct = currentBoost * 0.1;
         function colorClass(met) { return met ? 'green' : 'red'; }
-        var prestigeSpeedMult = Math.pow(1.5, G.prestige);
+        var prestigeSpeedMult = getPrestigeSpeedMult(G.prestige);
         var tooltipHtml = '<b>Release Fractal Engine Minigame</b><div class="line"></div>' +
           'Reset your Downline progress to earn <b>Fractal Prestige</b> and permanently increase your Downline speed until next ascension.<br><br>' +
+          'Speed increases each release following the golden ratio.<br><br>' +
           '<span class="green">Next release would add: +' + tenPct.toFixed(2) + '%</span>' +
-          (G.prestige >= 1 ? ('<br><span class="green">Current speed boost: ' + prestigeSpeedMult.toFixed(3) + '×</span>') : '') +
+          (G.prestige >= 1 ? ('<br><span class="green">Current speed boost: ' + prestigeSpeedMult + '×</span>') : '') +
           '<br><br>' +
           'Unlocks At Peak Stats:<br>' +
           '<div class="' + colorClass(G.releaseMetPlayers) + '">&bull; At least 5000 Players</div>' +
@@ -2753,7 +2766,7 @@ DownlineM.init = function(div) {
       }
       var lumpBoostActive = lumpBoostState.active;
       var effectiveSpeed = lumpBoostActive ? 10 : G.speed;
-      var prestigeSpeedMult = Math.pow(1.5, G.prestige);
+      var prestigeSpeedMult = getPrestigeSpeedMult(G.prestige);
       var dt = realDt * effectiveSpeed * prestigeSpeedMult;
       if (G.frozen) dt *= FROZEN_SPEED_FRAC;
       if (dt > 0) {
@@ -2986,7 +2999,7 @@ DownlineM.init = function(div) {
     }
     function downlineShowReleasePrompt() {
       Game.Prompt(
-        '<h3>Release Fractal Engine Minigame</h3><div class="block"><div class="line"></div>Are you sure you want to release the Fractal Engine Minigame? You will lose all your Downline Minigame progress but the game will run 50% faster and you will gain 10% of your boost permanently until your next ascension.</div>',
+        '<h3>Release Fractal Engine Minigame</h3><div class="block"><div class="line"></div>Are you sure you want to release the Fractal Engine Minigame? You will lose all your Downline Minigame progress but the game will run at ' + getPrestigeSpeedMult(G.prestige + 1) + '× speed and you will gain 10% of your boost permanently until your next ascension.</div>',
         [['Release!', 'Game.ClosePrompt();window.DownlineMinigame.downlineDoRelease();'], 'No']
       );
     }
@@ -3160,6 +3173,7 @@ DownlineM.init = function(div) {
         pendingNewPlayers: G.pendingNewPlayers || 0,
         frozen: !!G.frozen,
         lumpSpeedBoostEnd: G.lumpSpeedBoostEnd || 0,
+        lastPivotTime: G.lastPivotTime || 0,
         activeActions: G.activeActions.map(function (a) {
           return { name: a.name, totalSec: a.totalSec, remainSec: a.remainSec };
         })
@@ -3259,6 +3273,9 @@ DownlineM.init = function(div) {
       G.frozen = !!data.frozen;
       if (typeof data.lumpSpeedBoostEnd === 'number') {
         G.lumpSpeedBoostEnd = data.lumpSpeedBoostEnd;
+      }
+      if (typeof data.lastPivotTime === 'number') {
+        G.lastPivotTime = data.lastPivotTime;
       }
 
       G.activeActions = [];
@@ -3490,19 +3507,19 @@ function createDownlineAchievements() {
       {
         name: 'Popularity factor',
         desc: 'Have <b>Hype</b>, <b>Commitment</b>, <b>Reputation</b>, and <b>Word of Mouth</b> over 950 at once in the Downline minigame.<q>You haven\'t been this popular since you got 13 votes for class treasurer in 10th grade, but this time you did better than 7th place.</q>',
-        icon: [18, 9, DOWNLINE_CUSTOM_SPRITE_URL],
+        icon: [18, 9, SHEETS.custom],
         order: baseOrder + 0.1
     },
     {
         name: 'Factorial factor',
         desc: 'Release the <b>Fractal Engine minigame</b> 5 times in the Downline minigame in one ascension.<q>Buckle your seatbelts we are going full recursive on this one.</q>',
-        icon: [18, 8, DOWNLINE_CUSTOM_SPRITE_URL],
+        icon: [18, 8, SHEETS.custom],
         order: baseOrder + 0.3
     },
     {
         name: 'Big tent factor',
         desc: 'Have <b>25,000 players</b> at one time in the Downline minigame.<q>You have more friends than Tila Tequila had on Facebook in 2006, but all of yours are recruiting their own friends to play Cookie Clicker; it’s a veritable pyramid scheme in here.</q>',
-        icon: [18, 10, DOWNLINE_CUSTOM_SPRITE_URL],
+        icon: [18, 10, SHEETS.custom],
         order: baseOrder + 0.2
     }
     ];
@@ -3767,7 +3784,7 @@ for (var key in publicAPI) {
 }
 
 Object.defineProperty(window, 'DownlineMinigame', {
-  value: Object.freeze(publicAPI),
+  value: Object.assign({ VERSION: DOWNLINE_VERSION }, Object.freeze(publicAPI)),
   writable: false,
   enumerable: false,
   configurable: true

@@ -1,7 +1,8 @@
-//Just Natural Expansion Terminal minigame
-//version 1.0.4
+//Terminal minigame
 (function() {
 'use strict';
+
+const TERMINAL_VERSION = '1.0.5';
 
 var M = {};
 M.parent = Game.Objects && Game.Objects['Javascript console'] ? Game.Objects['Javascript console'] : {
@@ -490,17 +491,21 @@ M.launch = function () {
     }
 
     function getSwitchTargetOptions() {
-        return [
+        var options = [
             { value: 'golden', label: 'Golden switch', icon: [21, 10] },
             { value: 'veil', label: 'Shimmering veil', icon: [9, 10] },
             { value: 'covenant', label: 'Elder covenant', icon: [8, 9] },
             { value: 'pledge', label: 'Elder pledge', icon: [9, 9] },
+            { value: 'season:christmas', label: 'Christmas season', icon: [12, 10] },
+            { value: 'season:halloween', label: 'Halloween season', icon: [13, 8] },
             { value: 'season:valentines', label: "Valentine's Day season", icon: [20, 3] },
             { value: 'season:business', label: 'Business Day season', icon: [17, 6] },
-            { value: 'season:easter', label: 'Easter season', icon: [0, 12] },
-            { value: 'season:halloween', label: 'Halloween season', icon: [13, 8] },
-            { value: 'season:christmas', label: 'Christmas season', icon: [12, 10] }
+            { value: 'season:easter', label: 'Easter season', icon: [0, 12] }
         ];
+        if (Game.JNE && Game.JNE.enableExtraSeasons) {
+            options.push({ value: 'season:lunarnewyear', label: 'Lunar New Year season', icon: [9, 12, TERMINAL_CUSTOM_SPRITE_URL] });
+        }
+        return options;
     }
 
     function getPotionSlotOptions() {
@@ -3437,6 +3442,7 @@ if (typeof window !== 'undefined') {
     
     var existingAPI = window.TerminalMinigame || {};
     window.TerminalMinigame = M;
+    window.TerminalMinigame.VERSION = TERMINAL_VERSION;
     
     if (typeof existingAPI.getSaveData === 'function') {
         window.TerminalMinigame.getSaveData = existingAPI.getSaveData;

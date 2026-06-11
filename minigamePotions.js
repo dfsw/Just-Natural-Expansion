@@ -1,7 +1,9 @@
-// Potions Class Minigame 1.0.1
+// Potions Class Minigame
 
 (function() {
 'use strict';
+
+const POTIONS_VERSION = '1.0.4';
 
 var POTIONS_CUSTOM_SPRITE_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
 
@@ -464,10 +466,10 @@ var POTIONS = [
         name: "Decoction of Winter",
         icon: [21, 26, 'custom'],
         desc: "Winter is coming. What a waste that whole thing ended up being. Is this a good platform to rant about an old TV show on? I don\'t really care if it is or not, I am still bitter and pissed off about the whole thing.",
-        effect: "Reindeer are 25% more common for the next hour.",
+        effect: "Reindeer and lanterns are 25% more common for the next hour.",
         brewTime: 60*15,
         duration: 3600,
-        misbrew: "Reindeer do not spawn for the next hour.",
+        misbrew: "Reindeer and lanterns do not spawn for the next hour.",
         reagents: { reindeer_fur: 1, culture_of_time: 1, captured_auroras: 1 },
     },
     {
@@ -485,10 +487,10 @@ var POTIONS = [
         name: "Whisper of Boreas",
         icon: [19, 26, 'custom'],
         desc: "The North remembers. Okay, thats my seconds Game of Thrones reference in this minigame, I\'m done I promise.",
-        effect: "Reindeer gains are increased by 20% for 30 minutes.",
+        effect: "Reindeer and lantern gains are increased by 20% for 30 minutes.",
         brewTime: 60*45,
         duration: 1800,
-        misbrew: "Reindeer gains are reduced by 50% for an hour.",
+        misbrew: "Reindeer and lantern gains are reduced by 50% for an hour.",
         reagents: { reindeer_fur: 1, flower_petals: 1, roots: 1 },
     },
     {
@@ -600,7 +602,7 @@ var REAGENTS = [
         icon: [14, 12, 'custom'],
         flavor: "The holy residue of celestial paperwork.",
         gather: "Swap gods in the Pantheon for a chance to capture some divine extraction.",
-        dropChance: 0.43,
+        dropChance: 0.38,
     },
     {
         id: 'rabbit_feet',
@@ -895,7 +897,14 @@ function updatePotionEffects() {
             Game.gainBuff('Suspension of Hallucinogenic', 900, 2.0, 0);
             _suspBuildingKey = null;
             var buff = Game.buffs['Suspension of Hallucinogenic'];
-            if (buff) buff.buildingName = rb;
+            if (buff) {
+                Object.defineProperty(buff, 'buildingName', {
+                    value: rb,
+                    writable: true,
+                    enumerable: false,
+                    configurable: true
+                });
+            }
             Game.Notify(p.name + ' consumed', bn + ' effectiveness doubled for the next 15 minutes.', getIconArray(p), 6);
         },
         function(p) {
@@ -907,7 +916,14 @@ function updatePotionEffects() {
             Game.gainBuff('Suspension of Hallucinogenic (misbrewed)', 3600, 0.5, 0);
             _suspBuildingKey = null;
             var buff = Game.buffs['Suspension of Hallucinogenic (misbrewed)'];
-            if (buff) buff.buildingName = rb;
+            if (buff) {
+                Object.defineProperty(buff, 'buildingName', {
+                    value: rb,
+                    writable: true,
+                    enumerable: false,
+                    configurable: true
+                });
+            }
             Game.Notify(p.name + ' misbrewed', 'The effectiveness of ' + bn + ' is reduced by half for the next hour.', getIconArray(p), 6);
         }
     );
@@ -993,8 +1009,8 @@ function updatePotionEffects() {
         }
     );
     def('decoction_of_winter',
-        function(p) { Game.killBuff('Decoction of Winter (misbrewed)'); Game.gainBuff('Decoction of Winter', 3600, 1.25); Game.Notify(p.name + ' consumed', 'Reindeer are 25% more common for the next hour.', getIconArray(p), 6); },
-        function(p) { Game.killBuff('Decoction of Winter'); Game.gainBuff('Decoction of Winter (misbrewed)', 3600, 0); Game.Notify(p.name + ' misbrewed', 'Reindeer do not spawn for the next hour.', getIconArray(p), 6); }
+        function(p) { Game.killBuff('Decoction of Winter (misbrewed)'); Game.gainBuff('Decoction of Winter', 3600, 1.25); Game.Notify(p.name + ' consumed', 'Reindeer and lanterns are 25% more common for the next hour.', getIconArray(p), 6); },
+        function(p) { Game.killBuff('Decoction of Winter'); Game.gainBuff('Decoction of Winter (misbrewed)', 3600, 0); Game.Notify(p.name + ' misbrewed', 'Reindeer and lanterns do not spawn for the next hour.', getIconArray(p), 6); }
     );
     def('blood_of_the_craftsman',
         function(p) {
@@ -1233,8 +1249,8 @@ function updatePotionEffects() {
         function(p) { Game.killBuff('Ember of Dragon Fire'); Game.gainBuff('Ember of Dragon Fire (misbrewed)', 3600, 0.7); updatePotionEffects(); Game.Notify(p.name + ' misbrewed', 'Golden cookie gains reduced by 30% for 30 minutes.', getIconArray(p), 6); }
     );
     def('whisper_of_boreas',
-        function(p) { Game.killBuff('Whisper of Boreas (misbrewed)'); Game.gainBuff('Whisper of Boreas', 1800, 1.2); updatePotionEffects(); Game.Notify(p.name + ' consumed', 'Reindeer gains increased by 20% for 30 minutes.', getIconArray(p), 6); },
-        function(p) { Game.killBuff('Whisper of Boreas'); Game.gainBuff('Whisper of Boreas (misbrewed)', 3600, 0.5); updatePotionEffects(); Game.Notify(p.name + ' misbrewed', 'Reindeer gains reduced by 50% for an hour.', getIconArray(p), 6); }
+        function(p) { Game.killBuff('Whisper of Boreas (misbrewed)'); Game.gainBuff('Whisper of Boreas', 1800, 1.2); updatePotionEffects(); Game.Notify(p.name + ' consumed', 'Reindeer and lantern gains increased by 20% for 30 minutes.', getIconArray(p), 6); },
+        function(p) { Game.killBuff('Whisper of Boreas'); Game.gainBuff('Whisper of Boreas (misbrewed)', 3600, 0.5); updatePotionEffects(); Game.Notify(p.name + ' misbrewed', 'Reindeer and lantern gains reduced by 50% for an hour.', getIconArray(p), 6); }
     );
     def('breath_of_growth',
         function(p) {
@@ -1746,8 +1762,14 @@ function createPotionBuffType(buffName, potionId, isMisbrewed, options) {
             base[k] = extraProps[k];
         }
         // If arg1 is provided and extraProps has buildingName, use arg1 as buildingName
+        // Make it non-enumerable to prevent conflicts with other mods that iterate over buff properties
         if (arg1 && extraProps.buildingName !== undefined) {
-            base.buildingName = arg1;
+            Object.defineProperty(base, 'buildingName', {
+                value: arg1,
+                writable: true,
+                enumerable: false,
+                configurable: true
+            });
         }
         return base;
     });
@@ -1801,10 +1823,15 @@ createPotionBuffType('Decoction of Winter', 'decoction_of_winter', false);
 createPotionBuffType('Decoction of Winter (misbrewed)', 'decoction_of_winter', true, {
     onDie: function() {
         if (PotionsM._updateEffs) PotionsM._updateEffs();
-        // vanilla really doesnt like shimmer timers to be set to infinite so in order to break it we just force spawn a reindeer onDie. 
+        // vanilla really doesnt like shimmer timers to be set to infinite so in order to break it we just force spawn a reindeer onDie.
         if (Game.shimmerTypes && Game.shimmerTypes['reindeer'] && Game.season === 'christmas') {
             var newShimmer = new Game.shimmer('reindeer');
             newShimmer.spawnLead = 1;
+        }
+        // Also force spawn a lantern if in Lunar New Year season
+        if (Game.shimmerTypes && Game.shimmerTypes['lantern'] && Game.season === 'lunarnewyear') {
+            var newLantern = new Game.shimmer('lantern');
+            newLantern.spawnLead = 1;
         }
     }
 });
@@ -1931,9 +1958,8 @@ PotionsM._registerHooks = function() {
     
     // Hook into Game.magicCpS
     if (!Game._potionsMagicCpSHooked) {
-        var originalMagicCpS = Game.magicCpS;
-        Game.magicCpS = function(what) {
-            var mult = originalMagicCpS.call(this, what);
+        var wrapper = function(what) {
+            var mult = wrapper._original.call(this, what);
 
             var bloomBuff = Game.hasBuff('Bloom of Industry');
             if (bloomBuff) {
@@ -1955,118 +1981,14 @@ PotionsM._registerHooks = function() {
 
             return mult;
         };
+        wrapper._original = Game.magicCpS;
+        Game.magicCpS = wrapper;
         Game._potionsMagicCpSHooked = true;
     }
 
-    // Hook into golden cookie popFunc 
-    if (!Game._potionsGoldenCookieHooked && Game.shimmerTypes && Game.shimmerTypes['golden']) {
-        var originalPopFunc = Game.shimmerTypes['golden'].popFunc;
-        Game.shimmerTypes['golden'].popFunc = function(me) {
-            // Handle Cordial of Tyche effects
-            var tycheBuff = Game.hasBuff('Cordial of Tyche');
-            var tycheCurse = Game.hasBuff('Cordial of Tyche (misbrewed)');
-
-            // Skip Cordial of Tyche modification for wrath cookies, no active buff, or prediction mode (heavenly upgrade GC predictor)
-            var shouldModifyTyche = tycheBuff || tycheCurse;
-            if (shouldModifyTyche && (me.wrath > 0 || me._predictionMode)) {
-                shouldModifyTyche = false;
-            }
-
-            // Handle Cordial of Tyche and Vapor of Luck misbrew - modify GC effect pool
-            var vaporLuckCurse = Game.hasBuff('Vapor of Luck (misbrewed)') && me.wrath === 0 && !me._predictionMode;
-            var shouldModifyEffects = shouldModifyTyche || vaporLuckCurse;
-            var originalChoose = window.choose;
-            if (shouldModifyEffects) {
-                window.choose = function(arr) {
-                    window.choose = originalChoose;
-
-                    // Tyche buff: 30% chance to remove frenzy/lucky 
-                    if (tycheBuff && Math.random() < 0.3) {
-                        var frenzyCount = 0;
-                        var multiplyCount = 0;
-                        for (var i = 0; i < arr.length; i++) {
-                            if (arr[i] === 'frenzy') frenzyCount++;
-                            if (arr[i] === 'multiply cookies') multiplyCount++;
-                        }
-                        if (arr.length - frenzyCount - multiplyCount >= 1) {
-                            var fi = arr.indexOf('frenzy');
-                            while (fi != -1) { arr.splice(fi, 1); fi = arr.indexOf('frenzy'); }
-                            var mi = arr.indexOf('multiply cookies');
-                            while (mi != -1) { arr.splice(mi, 1); mi = arr.indexOf('multiply cookies'); }
-                        }
-                    }
-
-                    // Tyche curse: 30% chance to add frenzy/lucky
-                    if (tycheCurse && Math.random() < 0.3) {
-                        if (arr.indexOf('frenzy') != -1) arr.push('frenzy');
-                        if (arr.indexOf('multiply cookies') != -1) arr.push('multiply cookies');
-                    }
-
-                    // Vapor of Luck misbrew: 50% chance to add frenzy/lucky
-                    if (vaporLuckCurse && Math.random() < 0.5) {
-                        if (arr.indexOf('frenzy') != -1) arr.push('frenzy');
-                        if (arr.indexOf('multiply cookies') != -1) arr.push('multiply cookies');
-                    }
-
-                    return originalChoose(arr);
-                };
-            }
-
-            // Handle Corruption of Sin - reduce Ruin penalty
-            var corruptionBuff = Game.hasBuff('Corruption of Sin');
-            var corruptionCurse = Game.hasBuff('Corruption of Sin (misbrewed)');
-            var originalSpend = Game.Spend;
-            var originalPopup = Game.Popup;
-            if (corruptionBuff || corruptionCurse) {
-                var power = corruptionBuff ? 0.5 : 1.5; // 50% reduction for positive, 50% increase for misbrewed
-                Game.Spend = function(amount) {
-                    var expectedRuin = Math.min(Game.cookies * 0.05, Game.cookiesPs * 60 * 10) + 13;
-                    if (Math.abs(amount - expectedRuin) < 1) {
-                        amount = amount * power;
-                    }
-                    originalSpend.call(this, amount);
-                };
-                Game.Popup = function(text, x, y) {
-                    if (text && text.indexOf('Ruin!') !== -1) {
-                        // Extract the lost amount from the popup and reduce it
-                        var match = text.match(/Lost\s+([\d.eE+]+)/);
-                        if (match) {
-                            var originalAmount = parseFloat(match[1]);
-                            var newAmount = originalAmount * power;
-                            text = text.replace(match[1], Beautify(newAmount));
-                        }
-                    }
-                    originalPopup.call(this, text, x, y);
-                };
-            }
-
-            var result = originalPopFunc.call(this, me);
-
-            // Restore 
-            Game.Spend = originalSpend;
-            Game.Popup = originalPopup;
-
-            // Restore choose 
-            if (window.choose !== originalChoose) window.choose = originalChoose;
-
-            // Handle reagent drops (from _onShimmerPop)
-            if (!me._predictionMode) {
-                var isWrath = me.wrath > 0;
-                var season = Game.season || '';
-                var candidates = [];
-
-                if (isWrath && (G.reagents['wrath_sugar'] || 0) < 5)                  candidates.push('wrath_sugar');
-                if (!isWrath && (G.reagents['golden_flour'] || 0) < 5)                 candidates.push('golden_flour');
-                if (season === 'easter' && (G.reagents['rabbit_feet'] || 0) < 5)      candidates.push('rabbit_feet');
-                if (season === 'halloween' && (G.reagents['cats_whiskers'] || 0) < 5)   candidates.push('cats_whiskers');
-
-                if (candidates.length > 0) PotionsM.reagentRollOne(candidates, 'shimmer');
-            }
-
-            return result;
-        };
-        Game._potionsGoldenCookieHooked = true;
-    }
+    // Golden cookie modifications are now handled centrally in JustNaturalExpansion.js
+    // via injectGoldenPopFunc(). The central wrapper checks for potion buffs and applies
+    // effects conditionally. No direct popFunc wrapping needed here.
     
     // Consolidated logic hooks
     if (!Game._potionsLogicHookRegistered) {
@@ -2144,15 +2066,13 @@ PotionsM._registerHooks = function() {
             
             // Pantheon spirit swap divine_extraction
             var PM = Game.Objects['Temple'] && Game.Objects['Temple'].minigame;
-            if (PM && PM.slot) {
-                var changed = false;
+            if (PM && PM.slot && Array.isArray(PM.slot) && PM.slot.length >= 3) {
                 for (var s = 0; s < 3; s++) {
-                    if (PM.slot[s] !== PotionsM._lastPantheonSlots[s]) { changed = true; break; }
+                    if (PM.slot[s] !== PotionsM._lastPantheonSlots[s]) {
+                        if (PotionsM.reagentRoll('divine_extraction')) PotionsM._addReagent('divine_extraction', 1, 'pantheon');
+                    }
                 }
-                if (changed) {
-                    if (PotionsM.reagentRoll('divine_extraction')) PotionsM._addReagent('divine_extraction', 1, 'pantheon');
-                    PotionsM._lastPantheonSlots = [PM.slot[0], PM.slot[1], PM.slot[2]];
-                }
+                PotionsM._lastPantheonSlots = [PM.slot[0], PM.slot[1], PM.slot[2]];
             }
         });
         Game._potionsLogicHookRegistered = true;
@@ -2324,11 +2244,10 @@ PotionsM._hookGarden = function() {
         Game._potionsGardenHooked = true;
         return;
     }
-    var origHarvest = FM.harvest;
-    FM.harvest = function(x, y, manual) {
+    var wrapper = function(x, y, manual) {
         var PM = FM.harvest._potionsM || PotionsM;
         var tile = FM.plot[y][x];
-        var result = origHarvest.apply(this, arguments);
+        var result = wrapper._original.apply(this, arguments);
         if (PM._loading) return result;
         if (result && tile[0] > 0) {
             var me = FM.plantsById[tile[0] - 1];
@@ -2346,8 +2265,10 @@ PotionsM._hookGarden = function() {
         }
         return result;
     };
-    
-    // Track soil changes for terra 
+    wrapper._original = FM.harvest;
+    FM.harvest = wrapper;
+
+    // Track soil changes for terra
     PotionsM._lastGardenSoil = FM.soil || 0;
     Game.registerHook('logic', function() {
         if (PotionsM._loading) return;
@@ -2379,12 +2300,11 @@ PotionsM._hookMarket = function() {
         return;
     }
 
-    var origBuy = MM.buyGood;
-    MM.buyGood = function(id, n) {
+    var wrapperBuy = function(id, n) {
         var PM = MM.buyGood._potionsM || PotionsM;
         var me = MM.goodsById[id];
         var before = me ? me.stock : 0;
-        var result = origBuy.apply(this, arguments);
+        var result = wrapperBuy._original.apply(this, arguments);
         if (PM._loading) return result;
         if (result && me) {
             var shares = me.stock - before;
@@ -2394,13 +2314,16 @@ PotionsM._hookMarket = function() {
         }
         return result;
     };
+    wrapperBuy._original = MM.buyGood;
+    wrapperBuy._potionsHooked = true;
+    wrapperBuy._potionsM = PotionsM;
+    MM.buyGood = wrapperBuy;
 
-    var origSell = MM.sellGood;
-    MM.sellGood = function(id, n) {
+    var wrapperSell = function(id, n) {
         var PM = MM.sellGood._potionsM || PotionsM;
         var me = MM.goodsById[id];
         var before = me ? me.stock : 0;
-        var result = origSell.apply(this, arguments);
+        var result = wrapperSell._original.apply(this, arguments);
         if (PM._loading) return result;
         if (result && me) {
             var shares = before - me.stock;
@@ -2410,6 +2333,9 @@ PotionsM._hookMarket = function() {
         }
         return result;
     };
+    wrapperSell._original = MM.sellGood;
+    wrapperSell._potionsM = PotionsM;
+    MM.sellGood = wrapperSell;
 
     // Track broker hires via logic hook delta — 1000 rolls per broker hired
     PotionsM._lastBrokers = MM.brokers || 0;
@@ -2444,11 +2370,9 @@ PotionsM._hookGrimoire = function() {
         return;
     }
     
-    var orig = GM.castSpell;
-    PotionsM._grimoireLastFail = null;
-    GM.castSpell = function(spell, obj) {
+    var wrapper = function(spell, obj) {
         var PM = GM.castSpell._potionsM || PotionsM;
-        if (!Game._potionsGrimoireReady) return orig.apply(this, arguments);
+        if (!Game._potionsGrimoireReady) return wrapper._original.apply(this, arguments);
         // Detect misbrew by temporarily wrapping spell.fail and spell.win
         var origFail = spell.fail;
         var origWin  = spell.win;
@@ -2459,7 +2383,7 @@ PotionsM._hookGrimoire = function() {
         if (origWin) {
             spell.win  = function() { PM._grimoireLastFail = false; return origWin.apply(this, arguments); };
         }
-        var result = orig.apply(this, arguments);
+        var result = wrapper._original.apply(this, arguments);
         if (origFail) spell.fail = origFail;
         if (origWin)  spell.win  = origWin;
         if (PM._loading) return result;
@@ -2472,14 +2396,16 @@ PotionsM._hookGrimoire = function() {
         }
         return result;
     };
+    wrapper._original = GM.castSpell;
+    PotionsM._grimoireLastFail = null;
+    GM.castSpell = wrapper;
     GM.castSpell._potionsHooked = true;
     GM.castSpell._potionsM = PotionsM;
     Game._potionsGrimoireHooked = true;
 
     // Hook into grimoire logic to modify mana regen for Balm of Merlin
     if (GM.logic && !Game._potionsGrimoireLogicHooked) {
-        var origLogic = GM.logic;
-        GM.logic = function() {
+        var wrapper2 = function() {
             var balmBuff = Game.hasBuff('Balm of Merlin');
             var balmCurse = Game.hasBuff('Balm of Merlin (misbrewed)');
             var multiplier = balmBuff ? 2 : (balmCurse ? 0.5 : 1);
@@ -2493,6 +2419,7 @@ PotionsM._hookGrimoire = function() {
             GM.magicPS=Math.max(0.002,Math.pow(GM.magic/Math.max(GM.magicM,100),0.5))*0.002;
             GM.magicPS += wizardlyBonus; // Add heavenlyUpgrades bonus first
             GM.magicPS *= multiplier; // Then apply Balm of Merlin multiplier
+
             GM.magic+=GM.magicPS;
             GM.magic=Math.min(GM.magic,GM.magicM);
 
@@ -2508,6 +2435,8 @@ PotionsM._hookGrimoire = function() {
                 }
             }
         };
+        wrapper2._original = GM.logic;
+        GM.logic = wrapper2;
         Game._potionsGrimoireLogicHooked = true;
     }
 
@@ -2525,9 +2454,8 @@ PotionsM._hookWrinklerSpawn = function() {
         return;
     }
 
-    var originalSpawn = Game.SpawnWrinkler;
-    Game.SpawnWrinkler = function() {
-        var me = originalSpawn.apply(this, arguments);
+    var wrapper = function() {
+        var me = wrapper._original.apply(this, arguments);
         if (me && me.type === 0 && Game.buffs['Emulsion of Sinful Greed']) {
             var base = 0.0001;
             var mult = 1;
@@ -2551,8 +2479,10 @@ PotionsM._hookWrinklerSpawn = function() {
         }
         return me;
     };
-    Game.SpawnWrinkler._potionsHooked = true;
-    Game.SpawnWrinkler._potionsM = PotionsM;
+    wrapper._original = Game.SpawnWrinkler;
+    wrapper._potionsHooked = true;
+    wrapper._potionsM = PotionsM;
+    Game.SpawnWrinkler = wrapper;
     Game._potionsWrinklerSpawnHooked = true;
 };
 
@@ -3580,45 +3510,53 @@ PotionsM.logic = function() {
 };
 
 PotionsM._updateEffs = function() {
+    // Guard against recursive calls that can cause exponential setTimeout loops with CookieMonster
+    if (PotionsM._updatingEffs) return;
+    PotionsM._updatingEffs = true;
+
     var effs = {};
     var changed = false;
     var b;
-    
-    if ((b = Game.hasBuff('Serum of Progress'))) { effs.upgradeCost = (effs.upgradeCost || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Serum of Progress (misbrewed)'))) { effs.upgradeCost = (effs.upgradeCost || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Concoction of the Mason'))) { effs.buildingCost = (effs.buildingCost || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Concoction of the Mason (misbrewed)'))) { effs.buildingCost = (effs.buildingCost || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Arcana of the Finger'))) { effs.cursorCps = (effs.cursorCps || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Arcana of the Finger (misbrewed)'))) { effs.cursorCps = (effs.cursorCps || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Mercury of Age'))) { effs.grandmaCps = (effs.grandmaCps || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Mercury of Age (misbrewed)'))) { effs.grandmaCps = (effs.grandmaCps || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Ambrosia of the Leech'))) { effs.wrinklerEat = (effs.wrinklerEat || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Ambrosia of the Leech (misbrewed)'))) { effs.wrinklerEat = (effs.wrinklerEat || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Nectar of Summoning'))) { effs.wrinklerSpawn = (effs.wrinklerSpawn || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Nectar of Summoning (misbrewed)'))) { effs.wrinklerSpawn = (effs.wrinklerSpawn || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Philter of Worms (misbrewed)'))) { effs.wrinklerSpawn = (effs.wrinklerSpawn || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Vitae of the Mother'))) { effs.milk = (effs.milk || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Vitae of the Mother (misbrewed)'))) { effs.milk = (effs.milk || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Infusion of Chance'))) { effs.itemDrops = (effs.itemDrops || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Infusion of Chance (misbrewed)'))) { effs.itemDrops = (effs.itemDrops || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Decoction of Winter'))) { effs.reindeerFreq = (effs.reindeerFreq || 1) * b.power; effs.reindeerGain = (effs.reindeerGain || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Decoction of Winter (misbrewed)'))) { effs.reindeerFreq = 0; changed = true; }
-    if ((b = Game.hasBuff('Tonic of Ebisu'))) { effs.goldenCookieFreq = (effs.goldenCookieFreq || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Tonic of Ebisu (misbrewed)'))) { effs.goldenCookieFreq = (effs.goldenCookieFreq || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Distillate of Kala'))) { effs.goldenCookieEffDur = (effs.goldenCookieEffDur || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Distillate of Kala (misbrewed)'))) { effs.goldenCookieEffDur = (effs.goldenCookieEffDur || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Poison of the Matriarchs (misbrewed)'))) { effs.goldenCookieFreq = (effs.goldenCookieFreq || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Toxin of Elders'))) { effs.wrathCookieFreq = (effs.wrathCookieFreq || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Toxin of Elders (misbrewed)'))) { effs.wrathCookieFreq = (effs.wrathCookieFreq || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Venom of the Basilisk'))) { effs.wrinklerPop = (effs.wrinklerPop || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Ember of Dragon Fire'))) { effs.goldenCookieGain = (effs.goldenCookieGain || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Ember of Dragon Fire (misbrewed)'))) { effs.goldenCookieGain = (effs.goldenCookieGain || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Whisper of Boreas'))) { effs.reindeerGain = (effs.reindeerGain || 1) * b.power; changed = true; }
-    if ((b = Game.hasBuff('Whisper of Boreas (misbrewed)'))) { effs.reindeerGain = (effs.reindeerGain || 1) * b.power; changed = true; }
-    
-    PotionsM.effs = effs;
-    if (changed) {
-        Game.recalculateGains = 1;
+
+    try {
+        if ((b = Game.hasBuff('Serum of Progress'))) { effs.upgradeCost = (effs.upgradeCost || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Serum of Progress (misbrewed)'))) { effs.upgradeCost = (effs.upgradeCost || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Concoction of the Mason'))) { effs.buildingCost = (effs.buildingCost || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Concoction of the Mason (misbrewed)'))) { effs.buildingCost = (effs.buildingCost || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Arcana of the Finger'))) { effs.cursorCps = (effs.cursorCps || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Arcana of the Finger (misbrewed)'))) { effs.cursorCps = (effs.cursorCps || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Mercury of Age'))) { effs.grandmaCps = (effs.grandmaCps || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Mercury of Age (misbrewed)'))) { effs.grandmaCps = (effs.grandmaCps || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Ambrosia of the Leech'))) { effs.wrinklerEat = (effs.wrinklerEat || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Ambrosia of the Leech (misbrewed)'))) { effs.wrinklerEat = (effs.wrinklerEat || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Nectar of Summoning'))) { effs.wrinklerSpawn = (effs.wrinklerSpawn || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Nectar of Summoning (misbrewed)'))) { effs.wrinklerSpawn = (effs.wrinklerSpawn || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Philter of Worms (misbrewed)'))) { effs.wrinklerSpawn = (effs.wrinklerSpawn || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Vitae of the Mother'))) { effs.milk = (effs.milk || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Vitae of the Mother (misbrewed)'))) { effs.milk = (effs.milk || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Infusion of Chance'))) { effs.itemDrops = (effs.itemDrops || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Infusion of Chance (misbrewed)'))) { effs.itemDrops = (effs.itemDrops || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Decoction of Winter'))) { effs.reindeerFreq = (effs.reindeerFreq || 1) * b.power; effs.reindeerGain = (effs.reindeerGain || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Decoction of Winter (misbrewed)'))) { effs.reindeerFreq = 0; changed = true; }
+        if ((b = Game.hasBuff('Tonic of Ebisu'))) { effs.goldenCookieFreq = (effs.goldenCookieFreq || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Tonic of Ebisu (misbrewed)'))) { effs.goldenCookieFreq = (effs.goldenCookieFreq || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Distillate of Kala'))) { effs.goldenCookieEffDur = (effs.goldenCookieEffDur || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Distillate of Kala (misbrewed)'))) { effs.goldenCookieEffDur = (effs.goldenCookieEffDur || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Poison of the Matriarchs (misbrewed)'))) { effs.goldenCookieFreq = (effs.goldenCookieFreq || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Toxin of Elders'))) { effs.wrathCookieFreq = (effs.wrathCookieFreq || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Toxin of Elders (misbrewed)'))) { effs.wrathCookieFreq = (effs.wrathCookieFreq || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Venom of the Basilisk'))) { effs.wrinklerPop = (effs.wrinklerPop || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Ember of Dragon Fire'))) { effs.goldenCookieGain = (effs.goldenCookieGain || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Ember of Dragon Fire (misbrewed)'))) { effs.goldenCookieGain = (effs.goldenCookieGain || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Whisper of Boreas'))) { effs.reindeerGain = (effs.reindeerGain || 1) * b.power; changed = true; }
+        if ((b = Game.hasBuff('Whisper of Boreas (misbrewed)'))) { effs.reindeerGain = (effs.reindeerGain || 1) * b.power; changed = true; }
+
+        PotionsM.effs = effs;
+        if (changed) {
+            Game.recalculateGains = 1;
+        }
+    } finally {
+        PotionsM._updatingEffs = false;
     }
 };
 
@@ -3732,7 +3670,10 @@ PotionsM._buildSaveDataImpl = function() {
 
     // rn/pn: record how many reagents/potions exist at save time.
     // On load, if counts differ a new ingredient/potion was added — safe to ignore extras.
-    return { v: 1, rn: REAGENTS.length, pn: POTIONS.length, r: r, p: p, s: s, b: b, x: x, tb: G.totalPotionsBrewed || 0, pb: G.potionsBrewed || 0, tr: G.totalReagentsCollected || 0, fd: G.totalFailedDiscoveries || 0, aw: aw };
+    // Save onMinigame state (0 = closed, 1 = open)
+    var alchemyLab = Game.Objects && Game.Objects['Alchemy lab'];
+    var isOpen = alchemyLab && alchemyLab.onMinigame ? 1 : 0;
+    return { v: 1, rn: REAGENTS.length, pn: POTIONS.length, r: r, p: p, s: s, b: b, x: x, tb: G.totalPotionsBrewed || 0, pb: G.potionsBrewed || 0, tr: G.totalReagentsCollected || 0, fd: G.totalFailedDiscoveries || 0, aw: aw, o: isOpen };
 };
 
 PotionsM._saveImpl = function() {
@@ -3870,6 +3811,21 @@ PotionsM._loadImpl = function(str) {
     if (PotionsM._updateEffs) PotionsM._updateEffs();
     PotionsM.updatePotionsBrewedDisplay();
     
+    // Restore minigame open/close state
+    var shouldOpen = data.o === 1 || (data.o === undefined && Game.JNE && Game.JNE.potionsSavedDataIsOpen === true);
+    if (shouldOpen) {
+        setTimeout(function() {
+            var lab = Game.Objects && Game.Objects['Alchemy lab'];
+            if (lab && !lab.onMinigame) {
+                if (typeof lab.switchMinigame === 'function') {
+                    lab.switchMinigame(true);
+                } else {
+                    lab.onMinigame = 1;
+                }
+            }
+        }, 50);
+    }
+    
     scheduleUnlock();
 };
 
@@ -3893,7 +3849,12 @@ PotionsM._restorePendingBuffs = function() {
             if (restored) {
                 restored.maxTime = maxSeconds * (Game.fps || 30);
                 if (bd.bn && (bd.n === 'Suspension of Hallucinogenic' || bd.n === 'Suspension of Hallucinogenic (misbrewed)')) {
-                    restored.buildingName = bd.bn;
+                    Object.defineProperty(restored, 'buildingName', {
+                        value: bd.bn,
+                        writable: true,
+                        enumerable: false,
+                        configurable: true
+                    });
                 }
                 // Apply Venom multiplier on load (modifies wrinkler.sucked directly)
                 if (bd.n === 'Venom of the Basilisk' && Game.wrinklers) {
@@ -4008,21 +3969,9 @@ function initializePotionsMinigame() {
         ensureMinigameDiv();
         PotionsM.launch();
         PotionsM.init(alchemyLab.minigameDiv);
+        // Load saved data (includes restoring onMinigame state in _loadImpl)
         if (Game.JNE && Game.JNE.potionsSavedData) PotionsM.load(Game.JNE.potionsSavedData);
         
-        // Restore saved open/close state (delayed to ensure building is ready)
-        var savedIsOpen = Game.JNE && Game.JNE.potionsSavedDataIsOpen;
-        if (typeof savedIsOpen === 'boolean') {
-            setTimeout(function() {
-                if (savedIsOpen) {
-                    if (typeof alchemyLab.switchMinigame === 'function') alchemyLab.switchMinigame(true);
-                    else alchemyLab.onMinigame = 1;
-                } else {
-                    if (typeof alchemyLab.switchMinigame === 'function') alchemyLab.switchMinigame(false);
-                    else alchemyLab.onMinigame = 0;
-                }
-            }, 500);
-        }
         if (typeof PotionsM.createAchievements === 'function') PotionsM.createAchievements();
         if (!alchemyLab.minigame) alchemyLab.minigame = PotionsM;
         if (!alchemyLab.minigameUrl) {
@@ -4045,6 +3994,7 @@ function initializePotionsMinigame() {
                 PotionsM.launch();
                 ensureMinigameDiv();
                 PotionsM.init(alchemyLab.minigameDiv);
+                // Load saved data (includes restoring onMinigame state in _loadImpl)
                 if (Game.JNE && Game.JNE.potionsSavedData) PotionsM.load(Game.JNE.potionsSavedData);
             }
         } catch (e) {
@@ -4111,7 +4061,7 @@ for (var key in publicAPI) {
 }
 
 Object.defineProperty(window, 'PotionsMinigame', {
-    value: Object.freeze(publicAPI),
+    value: Object.assign({ VERSION: POTIONS_VERSION }, Object.freeze(publicAPI)),
     writable: false, enumerable: false, configurable: true
 });
 Object.defineProperty(window, 'removePotionsAchievements', {

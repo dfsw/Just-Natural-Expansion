@@ -3890,121 +3890,122 @@ window.JNEData = {
             cursor: {
                 names: ["Carpal diem", "Hand over fist", "Finger guns", "Thumbs up, buttercup", "Pointer sisters", "Knuckle sandwich", "Phalanx formation", "Manual override", "Clickbaiter-in-chief", "With flying digits", "Palm before the storm"],
                 thresholds: [1100, 1150, 1250, 1300, 1400, 1450, 1550, 1600, 1700, 1750, 1850],
-                vanillaTarget: "A round of applause",
-                customIcons: [[0, 0, 'custom'], [0, 1, 'custom'], [0, 2, 'custom'], [0, 3, 'custom'], [0, 4, 'custom'], [0, 5, 'custom'], [0, 6, 'custom'], [0, 7, 'custom'], [0, 8, 'custom'], [0, 9, 'custom'], [0, 10, 'custom']]            },
+                customIcons: [[0, 0, 'custom'], [0, 1, 'custom'], [0, 2, 'custom'], [0, 3, 'custom'], [0, 4, 'custom'], [0, 5, 'custom'], [0, 6, 'custom'], [0, 7, 'custom'], [0, 8, 'custom'], [0, 9, 'custom'], [0, 10, 'custom']],
+                orders: [1050.652, 1050.662, 1050.672, 1050.682, 1050.692, 1050.702, 1050.712, 1050.722, 1050.732, 1050.742, 1050.752]
+            },
             'grandma': {
                 names: ["All rise for Nana", "The crinkle collective", "Okay elder", "Wrinkle monarchy", "The wrinkling hour", "Matriarchal meltdown", "Cookies before crones", "Dust to crust", "Bingo bloodbath", "Supreme doughmother", "The last custodian"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
-                vanillaTarget: "And now you're even older",
-                customIcons: [[1, 0, 'custom'], [1, 1, 'custom'], [1, 2, 'custom'], [1, 3, 'custom'], [1, 4, 'custom'], [1, 5, 'custom'], [1, 6, 'custom'], [1, 7, 'custom'], [1, 8, 'custom'], [1, 9, 'custom'], [1, 10, 'custom']]
+                customIcons: [[1, 0, 'custom'], [1, 1, 'custom'], [1, 2, 'custom'], [1, 3, 'custom'], [1, 4, 'custom'], [1, 5, 'custom'], [1, 6, 'custom'], [1, 7, 'custom'], [1, 8, 'custom'], [1, 9, 'custom'], [1, 10, 'custom']],
+                orders: [1100.628, 1100.638, 1100.648, 1100.658, 1100.668, 1100.678, 1100.688, 1100.698, 1100.708, 1100.718, 1100.728]
             },
             'farm': {
                 names: ["Little house on the dairy", "The plow thickens", "Cabbage patch dynasty", "Grazing amazement", "Field of creams", "Barn to be wild", "Crops and robbers", "Shoveling it in", "Seed syndicate", "Harvest high table", "Emperor of dirt"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
-                vanillaTarget: "Au naturel",
-                customIcons: [[2, 0, 'custom'], [2, 1, 'custom'], [2, 2, 'custom'], [2, 3, 'custom'], [2, 4, 'custom'], [2, 5, 'custom'], [2, 6, 'custom'], [2, 7, 'custom'], [2, 8, 'custom'], [2, 9, 'custom'], [2, 10, 'custom']]
+                customIcons: [[2, 0, 'custom'], [2, 1, 'custom'], [2, 2, 'custom'], [2, 3, 'custom'], [2, 4, 'custom'], [2, 5, 'custom'], [2, 6, 'custom'], [2, 7, 'custom'], [2, 8, 'custom'], [2, 9, 'custom'], [2, 10, 'custom']],
+                orders: [1200.629, 1200.639, 1200.649, 1200.659, 1200.669, 1200.679, 1200.689, 1200.699, 1200.709, 1200.719, 1200.729]
             },
             'mine': {
                 names: ["Shafted", "Shiny object syndrome", "Ore what?", "Rubble without a cause", "Tunnel visionaries", "Stalag-might", "Pyrite and prejudice", "Bedrock 'n roll", "Mantle management", "Hollow crown jewels", "Emperor of ore"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
-                vanillaTarget: "Dirt-rich",
-                customIcons: [[3, 0, 'custom'], [3, 1, 'custom'], [3, 2, 'custom'], [3, 3, 'custom'], [3, 4, 'custom'], [3, 5, 'custom'], [3, 6, 'custom'], [3, 7, 'custom'], [3, 8, 'custom'], [3, 9, 'custom'], [3, 10, 'custom']]
+                customIcons: [[3, 0, 'custom'], [3, 1, 'custom'], [3, 2, 'custom'], [3, 3, 'custom'], [3, 4, 'custom'], [3, 5, 'custom'], [3, 6, 'custom'], [3, 7, 'custom'], [3, 8, 'custom'], [3, 9, 'custom'], [3, 10, 'custom']],
+                orders: [1300.630, 1300.640, 1300.650, 1300.660, 1300.670, 1300.680, 1300.690, 1300.700, 1300.710, 1300.720, 1300.730]
             },
             'factory': {
                 names: ["Assembly required", "Quality unassured", "Error 404-manpower not found", "Spare parts department", "Conveyor belters", "Planned obsolescence", "Punch-card prophets", "Rust in peace", "Algorithm and blues", "Profit motive engine", "Lord of the assembly"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
-                vanillaTarget: "Bots build bots",
-                customIcons: [[4, 0, 'custom'], [4, 1, 'custom'], [4, 2, 'custom'], [4, 3, 'custom'], [4, 4, 'custom'], [4, 5, 'custom'], [4, 6, 'custom'], [4, 7, 'custom'], [4, 8, 'custom'], [4, 9, 'custom'], [4, 10, 'custom']]
+                customIcons: [[4, 0, 'custom'], [4, 1, 'custom'], [4, 2, 'custom'], [4, 3, 'custom'], [4, 4, 'custom'], [4, 5, 'custom'], [4, 6, 'custom'], [4, 7, 'custom'], [4, 8, 'custom'], [4, 9, 'custom'], [4, 10, 'custom']],
+                orders: [1400.631, 1400.641, 1400.651, 1400.661, 1400.671, 1400.681, 1400.691, 1400.701, 1400.711, 1400.721, 1400.731]
             },
             'bank': {
                 names: ["Petty cash splash", "The Invisible Hand That Feeds", "Under-mattress banking", "Interest-ing times", "Fee-fi-fo-fund", "Liquidity theater", "Risk appetite: unlimited", "Quantitative cheesing", "Number go up economics", "Sovereign cookie fund", "Seigniorage supreme"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
-                vanillaTarget: "Getting that bag",
-                customIcons: [[13, 0, 'custom'], [13, 1, 'custom'], [13, 2, 'custom'], [13, 3, 'custom'], [13, 4, 'custom'], [13, 5, 'custom'], [13, 6, 'custom'], [13, 7, 'custom'], [13, 8, 'custom'], [13, 9, 'custom'], [13, 10, 'custom']]
+                customIcons: [[13, 0, 'custom'], [13, 1, 'custom'], [13, 2, 'custom'], [13, 3, 'custom'], [13, 4, 'custom'], [13, 5, 'custom'], [13, 6, 'custom'], [13, 7, 'custom'], [13, 8, 'custom'], [13, 9, 'custom'], [13, 10, 'custom']],
+                orders: [1425.632, 1425.642, 1425.652, 1425.662, 1425.672, 1425.682, 1425.692, 1425.702, 1425.712, 1425.722, 1425.732]
             },
             'temple': {
                 names: ["Monk mode", "Ritual and error", "Chant and deliver", "Incensed and consecrated", "Shrine of the times", "Hallowed be thy grain", "Relic and roll", "Pilgrimage of crumbs", "The cookie pantheon", "Tithes and cookies", "Om-nom-nipotent"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
-                vanillaTarget: "The leader is good, the leader is great",
-                customIcons: [[14, 0, 'custom'], [14, 1, 'custom'], [14, 2, 'custom'], [14, 3, 'custom'], [14, 4, 'custom'], [14, 5, 'custom'], [14, 6, 'custom'], [14, 7, 'custom'], [14, 8, 'custom'], [14, 9, 'custom'], [14, 10, 'custom']]
+                customIcons: [[14, 0, 'custom'], [14, 1, 'custom'], [14, 2, 'custom'], [14, 3, 'custom'], [14, 4, 'custom'], [14, 5, 'custom'], [14, 6, 'custom'], [14, 7, 'custom'], [14, 8, 'custom'], [14, 9, 'custom'], [14, 10, 'custom']],
+                orders: [1450.633, 1450.643, 1450.653, 1450.663, 1450.673, 1450.683, 1450.693, 1450.703, 1450.713, 1450.723, 1450.733]
             },
             'wizard tower': {
                 names: ["Is this your cardamom?", "Rabbit optional, hat mandatory", "Wand and done", "Critical spellcheck failed", "Tome Raider", "Prestidigitation station", "Counterspell culture", "Glitter is a material component", "Evocation nation", "Sphere of influence", "The Last Archmage"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
-                vanillaTarget: "You don't think they could've used... it couldn't have been ma-",
-                customIcons: [[15, 0, 'custom'], [15, 1, 'custom'], [15, 2, 'custom'], [15, 3, 'custom'], [15, 4, 'custom'], [15, 5, 'custom'], [15, 6, 'custom'], [15, 7, 'custom'], [15, 8, 'custom'], [15, 9, 'custom'], [15, 10, 'custom']]
+                customIcons: [[15, 0, 'custom'], [15, 1, 'custom'], [15, 2, 'custom'], [15, 3, 'custom'], [15, 4, 'custom'], [15, 5, 'custom'], [15, 6, 'custom'], [15, 7, 'custom'], [15, 8, 'custom'], [15, 9, 'custom'], [15, 10, 'custom']],
+                orders: [1475.634, 1475.644, 1475.654, 1475.664, 1475.674, 1475.684, 1475.694, 1475.704, 1475.714, 1475.724, 1475.734]
             },
             'shipment': {
                 names: ["Door-to-airlock", "Contents may shift in zero-G", "Fragile: vacuum inside", "Cosmic courier service", "Porch pirates of Andromeda", "Tracking number: ∞", "Relativistic courier", "Orbital rendezvous only", "Return to sender: event horizon", "Address: Unknown Quadrant", "Postmaster Galactic"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
-                vanillaTarget: "Signed, sealed, delivered",
-                customIcons: [[5, 0, 'custom'], [5, 1, 'custom'], [5, 2, 'custom'], [5, 3, 'custom'], [5, 4, 'custom'], [5, 5, 'custom'], [5, 6, 'custom'], [5, 7, 'custom'], [5, 8, 'custom'], [5, 9, 'custom'], [5, 10, 'custom']]
+                customIcons: [[5, 0, 'custom'], [5, 1, 'custom'], [5, 2, 'custom'], [5, 3, 'custom'], [5, 4, 'custom'], [5, 5, 'custom'], [5, 6, 'custom'], [5, 7, 'custom'], [5, 8, 'custom'], [5, 9, 'custom'], [5, 10, 'custom']],
+                orders: [1500.635, 1500.645, 1500.655, 1500.665, 1500.675, 1500.685, 1500.695, 1500.705, 1500.715, 1500.725, 1500.735]
             },
             'alchemy lab': {
                 names: ["Stir-crazy crucible", "Flask dance", "Beaker than fiction", "Alloy-oop", "Distill my beating heart", "Lead Zeppelin", "Hg Wells", "Fe-fi-fo-fum", "Breaking bread with Walter White", "Prima materia manager", "The Philosopher's Scone"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
-                vanillaTarget: "Sugar, spice, and everything nice",
-                customIcons: [[6, 0, 'custom'], [6, 1, 'custom'], [6, 2, 'custom'], [6, 3, 'custom'], [6, 4, 'custom'], [6, 5, 'custom'], [6, 6, 'custom'], [6, 7, 'custom'], [6, 8, 'custom'], [6, 9, 'custom'], [6, 10, 'custom']]
+                customIcons: [[6, 0, 'custom'], [6, 1, 'custom'], [6, 2, 'custom'], [6, 3, 'custom'], [6, 4, 'custom'], [6, 5, 'custom'], [6, 6, 'custom'], [6, 7, 'custom'], [6, 8, 'custom'], [6, 9, 'custom'], [6, 10, 'custom']],
+                orders: [1600.636, 1600.646, 1600.656, 1600.666, 1600.676, 1600.686, 1600.696, 1600.706, 1600.716, 1600.726, 1600.736]
             },
             'portal': {
                 names: ["Open sesameseed", "Mind the rift", "Doorway to s'moreway", "Contents may phase in transit", "Wormhole warranty voided", "Glitch in the Crumbatrix", "Second pantry to the right", "Liminal sprinkles", "Please do not feed the void", "Echoes from the other oven", "Out past the exit sign"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
-                vanillaTarget: "Not even remotely close to Kansas anymore",
-                customIcons: [[7, 0, 'custom'], [7, 1, 'custom'], [7, 2, 'custom'], [7, 3, 'custom'], [7, 4, 'custom'], [7, 5, 'custom'], [7, 6, 'custom'], [7, 7, 'custom'], [7, 8, 'custom'], [7, 9, 'custom'], [7, 10, 'custom']]
+                customIcons: [[7, 0, 'custom'], [7, 1, 'custom'], [7, 2, 'custom'], [7, 3, 'custom'], [7, 4, 'custom'], [7, 5, 'custom'], [7, 6, 'custom'], [7, 7, 'custom'], [7, 8, 'custom'], [7, 9, 'custom'], [7, 10, 'custom']],
+                orders: [1700.637, 1700.647, 1700.657, 1700.667, 1700.677, 1700.687, 1700.697, 1700.707, 1700.717, 1700.727, 1700.737]
             },
             'time machine': {
                 names: ["Yeasterday", "Tick-tock, bake o'clock", "Back to the batter", "Déjà chewed", "Borrowed thyme", "Second breakfast paradox", "Next week's news, fresh today", "Live, die, bake, repeat", "Entropy-proof frosting", "Past the last tick", "Emperor of when"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
-                vanillaTarget: "I only meant to stay a while",
-                customIcons: [[8, 0, 'custom'], [8, 1, 'custom'], [8, 2, 'custom'], [8, 3, 'custom'], [8, 4, 'custom'], [8, 5, 'custom'], [8, 6, 'custom'], [8, 7, 'custom'], [8, 8, 'custom'], [8, 9, 'custom'], [8, 10, 'custom']]
+                customIcons: [[8, 0, 'custom'], [8, 1, 'custom'], [8, 2, 'custom'], [8, 3, 'custom'], [8, 4, 'custom'], [8, 5, 'custom'], [8, 6, 'custom'], [8, 7, 'custom'], [8, 8, 'custom'], [8, 9, 'custom'], [8, 10, 'custom']],
+                orders: [1800.638, 1800.648, 1800.658, 1800.668, 1800.678, 1800.688, 1800.698, 1800.708, 1800.718, 1800.728, 1800.738]
             },
             'antimatter condenser': {
                 names: ["Up and atom!", "Boson buddies", "Schrödinger's snack", "Quantum foam party", "Twenty years away (always)", "Higgs and kisses", "Zero-point frosting", "Some like it dark (matter)", "Vacuum energy bar", "Singularity of flavor", "Emperor of mass"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
-                vanillaTarget: "Not 20 years away forever",
-                customIcons: [[11, 0, 'custom'], [11, 1, 'custom'], [11, 2, 'custom'], [11, 3, 'custom'], [11, 4, 'custom'], [11, 5, 'custom'], [11, 6, 'custom'], [11, 7, 'custom'], [11, 8, 'custom'], [11, 9, 'custom'], [11, 10, 'custom']]
+                customIcons: [[11, 0, 'custom'], [11, 1, 'custom'], [11, 2, 'custom'], [11, 3, 'custom'], [11, 4, 'custom'], [11, 5, 'custom'], [11, 6, 'custom'], [11, 7, 'custom'], [11, 8, 'custom'], [11, 9, 'custom'], [11, 10, 'custom']],
+                orders: [1900.639, 1900.649, 1900.659, 1900.669, 1900.679, 1900.689, 1900.699, 1900.709, 1900.719, 1900.729, 1900.739]
             },
             'prism': {
                 names: ["Light reading", "Refraction action", "Snacktrum of light", "My cones and rods", "Prism break", "Prism prelate", "Glare force one", "Hues Your Own Adventure", "Devour the spectrum", "Crown of rainbows", "Radiant consummation"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
-                vanillaTarget: "Bright side of the Moon",
-                customIcons: [[12, 0, 'custom'], [12, 1, 'custom'], [12, 2, 'custom'], [12, 3, 'custom'], [12, 4, 'custom'], [12, 5, 'custom'], [12, 6, 'custom'], [12, 7, 'custom'], [12, 8, 'custom'], [12, 9, 'custom'], [12, 10, 'custom']]
+                customIcons: [[12, 0, 'custom'], [12, 1, 'custom'], [12, 2, 'custom'], [12, 3, 'custom'], [12, 4, 'custom'], [12, 5, 'custom'], [12, 6, 'custom'], [12, 7, 'custom'], [12, 8, 'custom'], [12, 9, 'custom'], [12, 10, 'custom']],
+                orders: [2000.640, 2000.650, 2000.660, 2000.670, 2000.680, 2000.690, 2000.700, 2000.710, 2000.720, 2000.730, 2000.740]
             },
             'chancemaker': {
                 names: ["Beginner's lucked-in", "Risk it for the biscuit", "Roll, baby, roll", "Luck be a ladyfinger", "RNG on the range", "Monte Carlo kitchen", "Gambler's fallacy, baker's edition", "Schrödinger's jackpot", "RNGesus take the wheel", "Hand of Fate: Full House", "RNG seed of fortune"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
-                vanillaTarget: "Riding the Mersenne twister",
-                customIcons: [[17, 0, 'custom'], [17, 1, 'custom'], [17, 2, 'custom'], [17, 3, 'custom'], [17, 4, 'custom'], [17, 5, 'custom'], [17, 6, 'custom'], [17, 7, 'custom'], [17, 8, 'custom'], [17, 9, 'custom'], [17, 10, 'custom']]
+                customIcons: [[17, 0, 'custom'], [17, 1, 'custom'], [17, 2, 'custom'], [17, 3, 'custom'], [17, 4, 'custom'], [17, 5, 'custom'], [17, 6, 'custom'], [17, 7, 'custom'], [17, 8, 'custom'], [17, 9, 'custom'], [17, 10, 'custom']],
+                orders: [2100.641, 2100.651, 2100.661, 2100.671, 2100.681, 2100.691, 2100.701, 2100.711, 2100.721, 2100.731, 2100.741]
             },
             'fractal engine': {
                 names: ["Copy-paste-ry", "Again, but smaller", "Edge-case frosting", "Mandelbread set", "Strange attractor, stranger baker", "Recursive taste test", "Zoom & enhance & enhance", "The limit does not exist", "Halting? Never heard of it", "The set contains you", "Emperor of self-similarity"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
-                vanillaTarget: "Divide and conquer",
-                customIcons: [[18, 0, 'custom'], [18, 1, 'custom'], [18, 2, 'custom'], [18, 3, 'custom'], [18, 4, 'custom'], [18, 5, 'custom'], [18, 6, 'custom'], [18, 7, 'custom'], [18, 8, 'custom'], [18, 9, 'custom'], [18, 10, 'custom']]
+                customIcons: [[18, 0, 'custom'], [18, 1, 'custom'], [18, 2, 'custom'], [18, 3, 'custom'], [18, 4, 'custom'], [18, 5, 'custom'], [18, 6, 'custom'], [18, 7, 'custom'], [18, 8, 'custom'], [18, 9, 'custom'], [18, 10, 'custom']],
+                orders: [2200.642, 2200.652, 2200.662, 2200.672, 2200.682, 2200.692, 2200.702, 2200.712, 2200.722, 2200.732, 2200.742]
             },
             'javascript console': {
                 names: ["F12, open sesame", "console.log('crumbs')", "Semicolons optional, sprinkles mandatory", "Undefined is not a function (nor a cookie)", "await fresh_from_oven()", "Event loop-de-loop", "Regexorcism", "Infinite scroll of dough", "Unhandled promise confection", "Single-threaded, single-minded", "Emperor of Runtime"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
-                vanillaTarget: "Pebcakes",
-                customIcons: [[19, 0, 'custom'], [19, 1, 'custom'], [19, 2, 'custom'], [19, 3, 'custom'], [19, 4, 'custom'], [19, 5, 'custom'], [19, 6, 'custom'], [19, 7, 'custom'], [19, 8, 'custom'], [19, 9, 'custom'], [19, 10, 'custom']]
+                customIcons: [[19, 0, 'custom'], [19, 1, 'custom'], [19, 2, 'custom'], [19, 3, 'custom'], [19, 4, 'custom'], [19, 5, 'custom'], [19, 6, 'custom'], [19, 7, 'custom'], [19, 8, 'custom'], [19, 9, 'custom'], [19, 10, 'custom']],
+                orders: [2300.643, 2300.653, 2300.663, 2300.673, 2300.683, 2300.693, 2300.703, 2300.713, 2300.723, 2300.733, 2300.743]
             },
             'idleverse': {
                 names: ["Pick-a-verse, any verse", "Open in new universe", "Meanwhile, in a parallel tab", "Idle hands, infinite plans", "Press any world to continue", "NPC in someone else's save", "Cookie of Theseus", "Crossover episode", "Cosmic load balancer", "Prime instance", "The bakery at the end of everything"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
-                vanillaTarget: "Greener on the other sides",
-                customIcons: [[20, 0, 'custom'], [20, 1, 'custom'], [20, 2, 'custom'], [20, 3, 'custom'], [20, 4, 'custom'], [20, 5, 'custom'], [20, 6, 'custom'], [20, 7, 'custom'], [20, 8, 'custom'], [20, 9, 'custom'], [20, 10, 'custom']]
+                customIcons: [[20, 0, 'custom'], [20, 1, 'custom'], [20, 2, 'custom'], [20, 3, 'custom'], [20, 4, 'custom'], [20, 5, 'custom'], [20, 6, 'custom'], [20, 7, 'custom'], [20, 8, 'custom'], [20, 9, 'custom'], [20, 10, 'custom']],
+                orders: [2400.644, 2400.654, 2400.664, 2400.674, 2400.684, 2400.694, 2400.704, 2400.714, 2400.724, 2400.734, 2400.744]
             },
             'cortex baker': {
                 names: ["Gray matter batter", "Outside the cookie box", "Prefrontal glaze", "Snap, crackle, synapse", "Temporal batch processing", "Cogito, ergo crumb", "Galaxy brain, local oven", "The bicameral ovens", "Theory of crumb", "Lobe service", "Mind the monarch"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
-                vanillaTarget: "Where is my mind",
-                customIcons: [[21, 0, 'custom'], [21, 1, 'custom'], [21, 2, 'custom'], [21, 3, 'custom'], [21, 4, 'custom'], [21, 5, 'custom'], [21, 6, 'custom'], [21, 7, 'custom'], [21, 8, 'custom'], [21, 9, 'custom'], [21, 10, 'custom']]
+                customIcons: [[21, 0, 'custom'], [21, 1, 'custom'], [21, 2, 'custom'], [21, 3, 'custom'], [21, 4, 'custom'], [21, 5, 'custom'], [21, 6, 'custom'], [21, 7, 'custom'], [21, 8, 'custom'], [21, 9, 'custom'], [21, 10, 'custom']],
+                orders: [2500.645, 2500.655, 2500.665, 2500.675, 2500.685, 2500.695, 2500.705, 2500.715, 2500.725, 2500.735, 2500.745]
             },
             'You': {
                 names: ["Me, myself, and Icing", "Copy of a copy", "Echo chamber", "Self checkout", "You v2.0", "You v2.0.1 emergency hot fix", "Me, Inc.", "Council of Me", "I, Legion", "The one true you", "Sovereign of the self"],
                 thresholds: [750, 800, 850, 900, 950, 1000, 1050, 1100, 1150, 1200, 1250],
-                vanillaTarget: "Introspection",
-                customIcons: [[22, 0, 'custom'], [22, 1, 'custom'], [22, 2, 'custom'], [22, 3, 'custom'], [22, 4, 'custom'], [22, 5, 'custom'], [22, 6, 'custom'], [22, 7, 'custom'], [22, 8, 'custom'], [22, 9, 'custom'], [22, 10, 'custom']]
+                customIcons: [[22, 0, 'custom'], [22, 1, 'custom'], [22, 2, 'custom'], [22, 3, 'custom'], [22, 4, 'custom'], [22, 5, 'custom'], [22, 6, 'custom'], [22, 7, 'custom'], [22, 8, 'custom'], [22, 9, 'custom'], [22, 10, 'custom']],
+                orders: [2600.646, 2600.656, 2600.666, 2600.676, 2600.686, 2600.696, 2600.706, 2600.716, 2600.726, 2600.736, 2600.746]
             }
         },
         other: {
@@ -4012,128 +4013,128 @@ window.JNEData = {
                 names: ["Beyond the speed of dough", "Speed of sound", "Speed of light", "Faster than light", "Speed of thought", "Faster than speed of thought", "Plaid", "Somehow faster than plaid", "Transcending the very concept of speed itself"],
     thresholds: [1e57, 1e58, 1e59, 1e60, 1e61, 1e62, 1e63, 1e64, 1e65],
                 descs: ["Bake <b>1 octodecillion</b> per second.", "Bake <b>10 octodecillion</b> per second.", "Bake <b>100 octodecillion</b> per second.", "Bake <b>1 novemdecillion</b> per second.", "Bake <b>10 novemdecillion</b> per second.", "Bake <b>100 novemdecillion</b> per second.", "Bake <b>1 vigintillion</b> per second.<q>They've gone to plaid!</q>", "Bake <b>10 vigintillion</b> per second.<q>Ah, buckle this! LUDICROUS SPEED! GO!</q>", "Bake <b>100 vigintillion</b> per second.<q>Everything else is frozen, we’re breaking physics, so, uh... should we actually do something with that?</q>"],
-                vanillaTarget: "Speed's the name of the game (no it's not it's called Cookie Clicker)",
-                customIcons: [[0, 12, 'custom'], [1, 12, 'custom'], [2, 12, 'custom'], [3, 12, 'custom'], [4, 12, 'custom'], [5, 12, 'custom'], [6, 12, 'custom'], [7, 12, 'custom'], [8, 12, 'custom']]
+                customIcons: [[0, 12, 'custom'], [1, 12, 'custom'], [2, 12, 'custom'], [3, 12, 'custom'], [4, 12, 'custom'], [5, 12, 'custom'], [6, 12, 'custom'], [7, 12, 'custom'], [8, 12, 'custom']],
+                orders: [200.48, 200.49, 200.50, 200.51, 200.52, 200.53, 200.54, 200.55, 200.56]
             },
             click: {
                 names: ["Clickbait & Switch", "Click to the Future", "Clickety Clique", "Clickonomicon", "Clicks and Stones", "Click It Till You Make It", "One Does Not Simply Click Once", "Lord of the Clicks", "Click of the Titans"],
                 thresholds: [1e63, 1e69, 1e75, 1e81, 1e87, 1e93, 1e99, 1e105, "clickOfTitans"],
                 descs: ["Make <b>1 vigintillion</b> from clicking.<q>Tired finger yet?</q>", "Make <b>1 duovigintillion</b> from clicking.", "Make <b>1 quattuorvigintillion</b> from clicking.", "Make <b>1 sexvigintillion</b> from clicking.", "Make <b>1 octovigintillion</b> from clicking.", "Make <b>1 trigintillion</b> from clicking.", "Make <b>1 duotrigintillion</b> from clicking.", "Make <b>1 quattuortrigintillion</b> from clicking.", "Generate <b>1 year of raw CpS</b> in a single cookie click.<q>One click to rule them all!</q>"],
-                vanillaTarget: "What's not clicking",
-                customIcons: [[9, 0, 'custom'], [9, 1, 'custom'], [9, 2, 'custom'], [9, 3, 'custom'], [9, 4, 'custom'], [9, 5, 'custom'], [9, 6, 'custom'], [9, 7, 'custom'], [9, 8, 'custom']]
+                customIcons: [[9, 0, 'custom'], [9, 1, 'custom'], [9, 2, 'custom'], [9, 3, 'custom'], [9, 4, 'custom'], [9, 5, 'custom'], [9, 6, 'custom'], [9, 7, 'custom'], [9, 8, 'custom']],
+                orders: [1000.650, 1000.660, 1000.670, 1000.680, 1000.690, 1000.700, 1000.710, 1000.720, 7004]
             },
             wrinkler: {
                 names: ["Wrinkler annihilator", "Wrinkler eradicator", "Wrinkler extinction event", "Wrinkler apocalypse", "Wrinkler armageddon"],
                 thresholds: [666, 2666, 6666, 16666, 26666],
                 descs: ["Burst <b>666 wrinklers</b> across all ascensions.<q>Pop goes the creepy.</q>", "Burst <b>2,666 wrinklers</b> across all ascensions.<q>That wasn't cream filling.</q>", "Burst <b>6,666 wrinklers</b> across all ascensions.<q>If it wrinkles, you pop it.</q>", "Burst <b>16,666 wrinklers</b> across all ascensions.<q>So much juice. So little remorse.</q>", "Burst <b>26,666 wrinklers</b> across all ascensions.<q>One squish closer to immortality.</q>"],
-                vanillaTarget: "Moistburster",
-                customIcons: [[21, 16, 'custom'], [21, 17, 'custom'], [21, 18, 'custom'], [22, 19, 'custom'], [22, 18, 'custom']]            },
+                customIcons: [[21, 16, 'custom'], [21, 17, 'custom'], [21, 18, 'custom'], [22, 19, 'custom'], [22, 18, 'custom']],
+                orders: [21000.117, 21000.127, 21000.137, 21000.147, 21000.157]
+            },
             goldenWrinkler: {
                 names: ["Golden wrinkler"],
                 thresholds: [210000000], // 6.66 years in seconds (6.66 * 365.25 * 24 * 60 * 60)
                 descs: ["Burst a wrinkler worth <b>6.66 years of CpS</b>.<q>That's not cream filling, that's a retirement fund!</q>"],
-                vanillaTarget: "Moistburster",
-                customIcons: [[23, 19, 'custom']]
+                customIcons: [[23, 19, 'custom']],
+                orders: [21000.168]
             },
             shinyWrinkler: {
                 names: ["Rare specimen collector", "Endangered species hunter", "Extinction event architect"],
                 thresholds: [2, 5, 10],
                 descs: ["Burst <b>2 shiny wrinklers</b> across all ascensions.<q>You're a monster, do you know that?</q>", "Burst <b>5 shiny wrinklers</b> across all ascensions.<q>You really have to stop here, there aren\'t many of these left in the world.</q>", "Burst <b>10 shiny wrinklers</b> across all ascensions.<q>People like you are evil, no one will ever see another one of these, you ruined it for everyone.</q>"],
-                vanillaTarget: "Last Chance to See",
-                customIcons: [[21, 13, 'custom'], [21, 14, 'custom'], [21, 15, 'custom']]
+                customIcons: [[21, 13, 'custom'], [21, 14, 'custom'], [21, 15, 'custom']],
+                orders: [35000.272, 35000.282, 35000.292]
             },
             reindeer: {
                 names: ["Reindeer destroyer", "Reindeer obliterator", "Reindeer extinction event", "Reindeer apocalypse"],
                 thresholds: [500, 1000, 2000, 5000],
                 descs: ["Pop <b>500 reindeer</b> across all ascensions.<q>You are become Claus, destroyer of hooves.</q>", "Pop <b>1,000 reindeer</b> across all ascensions.<q>That one had a red nose…</q>", "Pop <b>2,000 reindeer</b> across all ascensions.<q>Comet, Vixen, Toasted.</q>", "Pop <b>5,000 reindeer</b> across all ascensions.<q>Legends say the sky still smells like cinnamon and regret.</q>"],
-                vanillaTarget: "Reindeer sleigher",
-                customIcons: [[19, 17, 'custom'], [19, 16, 'custom'], [19, 15, 'custom'], [19, 14, 'custom']]
+                customIcons: [[19, 17, 'custom'], [19, 16, 'custom'], [19, 15, 'custom'], [19, 14, 'custom']],
+                orders: [22100.124, 22100.134, 22100.144, 22100.154]
             },
             goldenCookies: {
                 names: ["Find a penny, pick it up", "Four-leaf overkill", "Rabbit's footnote", "Knock on wood", "Jackpot jubilee", "Black cat's seventh paw"],
                 thresholds: [17777, 37777, 47777, 57777, 67777, 77777],
                 descs: ["Click <b>17,777 golden cookies</b> across all ascensions.<q>A copper start for a golden habit. Heads you click, tails you click anyway.</q>", "Click <b>37,777 golden cookies</b> across all ascensions.<q>One clover is luck; an entire lawn is a logistics problem. You industrialized superstition.</q>", "Click <b>47,777 golden cookies</b> across all ascensions.<q>Citation needed: 'luck significantly increased.' Footnote: the hare disagrees; the stats don't.</q>", "Click <b>57,777 golden cookies</b> across all ascensions.<q>Knock knock. Who's there? Luck. Luck who? Luck you're not superstitious... or are you?</q>", "Click <b>67,777 golden cookies</b> across all ascensions.<q>House edge? You are the house. Confetti budget exceeded; no one complained.</q>", "Click <b>77,777 golden cookies</b> across all ascensions.<q>Golden luck, plan a trip to Las Vegas and cash in on it.</q>"],
-                vanillaTarget: "Black cat's paw",
-                customIcons: [[0, 13, 'custom'],  [1, 13, 'custom'],  [2, 13, 'custom'],  [3, 13, 'custom'],[4, 13, 'custom'], [5, 13, 'custom']]
+                customIcons: [[0, 13, 'custom'],  [1, 13, 'custom'],  [2, 13, 'custom'],  [3, 13, 'custom'],[4, 13, 'custom'], [5, 13, 'custom']],
+                orders: [10000.095, 10000.105, 10000.115, 10000.125, 10000.135, 10000.145]
             },
             spell: {
                 names: ["Archwizard", "Spellmaster", "Cookieomancer", "Spell lord", "Magic emperor", "Sweet Sorcery"],
                 thresholds: [1999, 2999, 3999, 4999, 9999, "freeSugarLump"],
                 descs: ["Cast <b>1,999</b> spells across all ascensions.<q>Zim zam zap!</q>", "Cast <b>2,999</b> spells across all ascensions.<q>Pew pew pew!</q>", "Cast <b>3,999</b> spells across all ascensions.", "Cast <b>4,999</b> spells across all ascensions.", "Cast <b>9,999</b> spells across all ascensions.<q>Yea well, how many backfired?</q>", "Get the <b>Free Sugar Lump</b> outcome from a magically spawned golden cookie.<q>Sweet sorcery indeed!</q>"],
-                vanillaTarget: "A wizard is you",
-                customIcons: [[22, 12], [20, 14, 'custom'], [20, 13, 'custom'], [28, 12], [27, 12], [20, 15, 'custom']]
+                customIcons: [[22, 12], [20, 14, 'custom'], [20, 13, 'custom'], [28, 12], [27, 12], [20, 15, 'custom']],
+                orders: [61495.333, 61495.343, 61495.353, 61495.363, 61495.373, 61496.004]
             },
             templeSwaps: {
                 names: ["Faithless Loyalty", "God of All Gods"],
             thresholds: [100, 86400], // 100 temple swaps, 24 hours (86400 seconds) per god
             descs: ["Swap gods in the Pantheon <b>100 times</b> in one ascension.<q>You know you can\'t just pick a religion to suit your mood for the day right?</q>", "Use each pantheon god for at least <b>24 hours</b> total across all ascensions.<q>Variety is the spice of divine life.</q>"],
-            vanillaTarget: "A wizard is you",
-            customIcons: [[21, 18], [22, 18]]
+            customIcons: [[21, 18], [22, 18]],
+            orders: [61490, 61490.01]
         },
             gardenHarvest: {
                 names: ["Greener, aching thumb", "Greenest, aching thumb", "Photosynthetic prodigy", "Garden master", "Plant whisperer"],
                 thresholds: [2000, 3000, 5000, 7500, 10000],
                 descs: ["Harvest <b>2,000</b> mature garden plants across all ascensions.<q>Pluck pluck pluck, all day every day.</q>", "Harvest <b>3,000</b> mature garden plants across all ascensions.", "Harvest <b>5,000</b> mature garden plants across all ascensions.", "Harvest <b>7,500</b> mature garden plants across all ascensions.", "Harvest <b>10,000</b> mature garden plants across all ascensions.<q>The plants fear you when your shadow casts over them.</q>"],
-                vanillaTarget: "Green, aching thumb",
-                // Use the Spiced Cookies pattern: [x, y, spriteSheetURL]
-                customIcons: [[4, 2, 'gardenPlants'], [4, 10, 'gardenPlants'], [4, 17, 'gardenPlants'], [4, 18, 'gardenPlants'], [4, 19, 'gardenPlants']]
+                customIcons: [[4, 2, 'gardenPlants'], [4, 10, 'gardenPlants'], [4, 17, 'gardenPlants'], [4, 18, 'gardenPlants'], [4, 19, 'gardenPlants']],
+                orders: [61515.3791, 61515.3792, 61515.3793, 61515.3794, 61515.3795]
             },
             cookiesAscension: {
                 names: ["The Doughpocalypse", "The Flour Flood", "The Ovenverse", "The Crumb Crusade", "The Final Batch", "The Ultimate Ascension", "The Transcendent Rise"],
                 thresholds: [1e73, 1e75, 1e77, 1e79, 1e81, 1e83, 1e85],
                 descs: ["Bake <b>10 trevigintillion</b> cookies in one ascension.<q>Did you know it went higher? Neat.</q>", "Bake <b>1 quattuorvigintillion</b> cookies in one ascension.", "Bake <b>100 quattuorvigintillion</b> cookies in one ascension.", "Bake <b>10 quinvigintillion</b> cookies in one ascension.", "Bake <b>1 sexvigintillion</b> cookies in one ascension.", "Bake <b>100 sexvigintillion</b> cookies in one ascension.<q>I don't think you should be here.</q>", "Bake <b>10 septenvigintillion</b> cookies in one ascension.<q>Okay for real, it doesn't go any higher.</q>"],
-                vanillaTarget: "And a little extra",
-                customIcons: [[0, 12, 'custom'], [1, 12, 'custom'], [2, 12, 'custom'], [3, 12, 'custom'], [4, 12, 'custom'], [5, 12, 'custom'], [6, 12, 'custom'], [7, 12, 'custom'], [8, 12, 'custom']]
+                customIcons: [[0, 12, 'custom'], [1, 12, 'custom'], [2, 12, 'custom'], [3, 12, 'custom'], [4, 12, 'custom'], [5, 12, 'custom'], [6, 12, 'custom'], [7, 12, 'custom'], [8, 12, 'custom']],
+                orders: [100.48, 100.49, 100.50, 100.51, 100.52, 100.53, 100.54]
             },
             forfeited: {
                 names: ["Dante's unwaking dream", "The abyss gazes back", "Charon's final toll", "Cerberus's third head", "Minos's eternal judgment", "The river Styx flows backward", "Ixion's wheel spins faster", "Sisyphus's boulder crumbles", "Tantalus's eternal thirst", "The ninth circle's center", "Lucifer's frozen tears", "Beyond the void's edge", "The final descent's end"],
                 thresholds: [1e60, 1e63, 1e66, 1e69, 1e72, 1e75, 1e78, 1e81, 1e84, 1e87, 1e90, 1e93, 1e96],
                 descs: ["Forfeit <b>1 novemdecillion</b> cookies total across all ascensions.", "Forfeit <b>1 vigintillion</b> cookies total across all ascensions.", "Forfeit <b>1 unvigintillion</b> cookies total across all ascensions.", "Forfeit <b>1 duovigintillion</b> cookies total across all ascensions.", "Forfeit <b>1 trevigintillion</b> cookies total across all ascensions.", "Forfeit <b>1 quattuorvigintillion</b> cookies total across all ascensions.", "Forfeit <b>1 quinvigintillion</b> cookies total across all ascensions.", "Forfeit <b>1 sexvigintillion</b> cookies total across all ascensions.", "Forfeit <b>1 septenvigintillion</b> cookies total across all ascensions.", "Forfeit <b>1 octovigintillion</b> cookies total across all ascensions.", "Forfeit <b>1 novemvigintillion</b> cookies total across all ascensions.", "Forfeit <b>1 trigintillion</b> cookies total across all ascensions.", "Forfeit <b>1 untrigintillion</b> cookies total across all ascensions."],
-                vanillaTarget: "No more room in hell",
-                customIcons: [[0, 11], [1, 11], [2, 11], [3, 11], [4, 11], [5, 11], [6, 11], [7, 11], [8, 11], [9, 11], [10, 11], [11, 11], [12, 11]]
+                customIcons: [[0, 11], [1, 11], [2, 11], [3, 11], [4, 11], [5, 11], [6, 11], [7, 11], [8, 11], [9, 11], [10, 11], [11, 11], [12, 11]],
+                orders: [30050.606, 30050.616, 30050.626, 30050.636, 30050.646, 30050.656, 30050.666, 30050.676, 30050.686, 30050.696, 30050.706, 30050.716, 30050.726]
             },
             totalBuildings: {
                 names: ["Building behemoth", "Construction colossus", "Architectural apex"],
                 thresholds: [15000, 20000, 25000],
                 descs: ["Own <b>15,000 buildings</b>.<q>You have more real estate than sense.</q>", "Own <b>20,000 buildings</b>.<q>That's not a skyline. That's a warning sign.</q>", "Own <b>25,000 buildings</b>.<q>Your shadow blocks out the sun, and the competition.</q>"],
-                vanillaTarget: "Myriad",
-                customIcons: [[22, 12, 'custom'], [22, 13, 'custom'], [22, 14, 'custom']]
+                customIcons: [[22, 12, 'custom'], [22, 13, 'custom'], [22, 14, 'custom']],
+                orders: [5000.591, 5000.601, 5000.611]
             },
             buildingsSold: {
                 names: ["Asset Liquidator", "Flip City", "Ghost Town Tycoon"],
                 thresholds: [25000, 50000, 100000],
                 descs: ["Sell <b>25,000 buildings</b> in one ascension.<q>A thousand dreams bulldozed for a golden cookie.</q>", "Sell <b>50,000 buildings</b> in one ascension.<q>Your economic model is just 'wreck and repeat.'</q>", "Sell <b>100,000 buildings</b> in one ascension.<q>You called it 'liquidating assets.' They called it 'eviction.'</q>"],
-                vanillaTarget: "Myriad",
-                customIcons: [[28, 26], [15, 9], [32, 33]]
+                customIcons: [[28, 26], [15, 9], [32, 33]],
+                orders: [5001.1, 5001.11, 5001.12]
             },
             everything: {
                 names: ["Septcentennial and a half", "Octcentennial", "Octcentennial and a half", "Nonacentennial", "Nonacentennial and a half", "Millennial"],
                 thresholds: [750, 800, 850, 900, 950, 1000],
                 descs: ["Have at least <b>750 of everything</b>.", "Have at least <b>800 of everything</b>.", "Have at least <b>850 of everything</b>.", "Have at least <b>900 of everything</b>.", "Have at least <b>950 of everything</b>.", "Have at least <b>1,000 of everything</b>."],
-                vanillaTarget: "Septcentennial",
-                customIcons: [[16, 12, 'custom'], [17, 12, 'custom'], [18, 12, 'custom'], [19, 12, 'custom'], [20, 12, 'custom'], [21, 12, 'custom']]
+                customIcons: [[16, 12, 'custom'], [17, 12, 'custom'], [18, 12, 'custom'], [19, 12, 'custom'], [20, 12, 'custom'], [21, 12, 'custom']],
+                orders: [7002.609, 7002.619, 7002.629, 7002.639, 7002.649, 7002.659]
             },
           
             seedlog: {
                 names: ["Seedless to eternity", "Seedless to infinity", "Seedless to beyond"],
                 thresholds: [5, 10, 25],
                 descs: ["Convert a complete seed log into sugar lumps by sacrificing your garden to the sugar hornets <b>5 times</b>.<q>Fertilizer? Nah, I prefer fire.</q>", "Convert a complete seed log into sugar lumps by sacrificing your garden to the sugar hornets <b>10 times</b>.<q>Sugar hornets are pleased.</q>", "Convert a complete seed log into sugar lumps by sacrificing your garden to the sugar hornets <b>25 times</b>.<q>How many times must you kill Eden?</q>"],
-                vanillaTarget: "Seedless to nay",
-                customIcons: [[0, 34, 'gardenPlants'], [1, 34, 'gardenPlants'], [2, 34, 'gardenPlants']]
+                customIcons: [[0, 34, 'gardenPlants'], [1, 34, 'gardenPlants'], [2, 34, 'gardenPlants']],
+                orders: [61515.38201, 61515.38202, 61515.38203]
             },
             allKittensOwned: {
                 names: ["Kitten jamboree", "Kitten Fiesta"],
                 thresholds: [18, 29],
                 descs: ["Own all <b>18 original kittens</b>.<q>Kittens stacked on kittens until total kitten collapse is imminent.</q>", "Own all <b>18 original kittens</b> and all <b>11 expansion kittens</b> at once.<q>Okay that's really just too many cats.</q>"],
-                vanillaTarget: "Jellicles",
-                customIcons: [[18, 14], [18, 13]]
+                customIcons: [[18, 14], [18, 13]],
+                orders: [10000.475, 10000.485]
             },
             reincarnate: {
                 names: ["Ascension master", "Ascension legend", "Ascension deity"],
                 thresholds: [250, 500, 999],
                 descs: ["Ascend <b>250 times</b>.", "Ascend <b>500 times</b>.", "Ascend <b>999 times</b>."],
-                vanillaTarget: "Reincarnation",
-                customIcons: [[17, 16, 'custom'], [17, 15, 'custom'], [17, 14, 'custom']]
+                customIcons: [[17, 16, 'custom'], [17, 15, 'custom'], [17, 14, 'custom']],
+                orders: [30000.216, 30000.226, 30000.236]
             },
             stockmarket: {
                 names: ["Doughfolio Debut", "Crumb Fund Manager", "Biscuit Market Baron", "Fortune Cookie Tycoon", "Dough Jones Legend", "The Dough Jones Plunge"],
@@ -4146,214 +4147,214 @@ window.JNEData = {
                     "Have <b>$1 billion in stock market profits</b> across all ascensions.<q>The index now tracks you. Analysts recommend: dunk.</q>",
                     "Have <b>$1 million in stock market losses</b> in one ascension.<q>This is why you diversify. Probably.</q>"
                 ],
-                vanillaTarget: "Liquid assets",
-                customIcons: [[17, 6], [26, 7], [33, 33], [28, 29], [31, 8], [15, 8]]
+                customIcons: [[17, 6], [26, 7], [33, 33], [28, 29], [31, 8], [15, 8]],
+                orders: [61616.547, 61616.557, 61616.567, 61616.577, 61616.587, 61616.597]
             },
             seasonalReindeer: {
                 names: ["Cupid's Reindeer", "Business Reindeer", "Bundeer", "Ghost Reindeer"],
                 thresholds: [1, 1, 1, 1],
                 descs: ["Pop a reindeer during <b>Valentine's Day season.</b><q>Love is fleeting. So was that reindeer.</q>", "Pop a reindeer during <b>Business Day season.</b><q>His KPI was 'don't get popped.'</q>", "Pop a reindeer during <b>Easter season.</b><q>Wrong holiday, right target.</q>", "Pop a reindeer during <b>Halloween season.</b><q>Was that ectoplasm or caramel?</q>"],
-                vanillaTarget: "Eldeer",
-                customIcons: [[18, 16, 'custom'], [18, 15, 'custom'], [18, 14, 'custom'], [18, 17, 'custom']]
+                customIcons: [[18, 16, 'custom'], [18, 15, 'custom'], [18, 14, 'custom'], [18, 17, 'custom']],
+                orders: [22100.275, 22100.285, 22100.295, 22100.305]
             },
             gardenSeedsTime: {
                 names: ["I feel the need for seed"],
                 thresholds: [5 * 24 * 60 * 60 * 1000], // 5 days in milliseconds
                 descs: ["Unlock all garden seeds within <b>5 days</b> of your last garden sacrifice. Look this one is tricky, if you reload or load a save the 5 day timer is invalidated, so you can\'t load in a completed garden."],
-                vanillaTarget: "Green, aching thumb",
-                customIcons: [[25, 15]]
+                customIcons: [[25, 15]],
+                orders: [61515.430]
             },
             seasonalDropsTime: {
                 names: ["Holiday Hoover", "Merry Mayhem"],
                 thresholds: [90 * 60 * 1000, 60 * 60 * 1000], // 90 minutes and 60 minutes in milliseconds
                 descs: ["Collect all seasonal drops within <b>90 minutes</b> of an Ascension start.<q>Santa is watching and he thinks you need to chill out.</q>", "Collect all seasonal drops within <b>60 minutes</b> of an Ascension start.<q>See it is possible, ye of little faith.</q>"],
-                vanillaTarget: "Hide & seek champion",
-                customIcons: [[18, 4], [17, 9]]
+                customIcons: [[18, 4], [17, 9]],
+                orders: [22400.179, 22400.189]
             },
                     hardercorest: {
             names: ["Hardercorest"],
             thresholds: [3e9], // 3 billion cookies
             descs: ["Bake <b>3 billion cookies</b> with no cookie clicks and no upgrades bought in Born Again mode.<q>Do you hate me or yourself after that one?</q>"],
-            vanillaTarget: "Hardcore",
-            customIcons: [[13, 6]]
+            customIcons: [[13, 6]],
+            orders: [30500.102]
         },
                     hardercorester: {
             names: ["Hardercorest-er"],
             thresholds: [1e9], // 1 billion cookies
             descs: ["Bake <b>1 billion cookies</b> with no more than 20 clicks, no more than 20 buildings (no selling), and no more than 20 upgrades in Born Again mode.<q>Bet you thought that wouldn't be as bad as it was eh?</q>"],
-            vanillaTarget: "Hardcore",
-            customIcons: [[14, 6]]
+            customIcons: [[14, 6]],
+            orders: [30500.112]
         },
         allBuildingsLevel10: {
             names: ["Have your sugar and eat it too"],
-            thresholds: [10], // Level 10
+            thresholds: [10], // Level 10,
             descs: ["Have every building reach <b>level 10</b>."],
-            vanillaTarget: "You win a cookie",
-            customIcons: [[26, 27]]
+            customIcons: [[26, 27]],
+            orders: [400000.143]
         },
         sugarLumps: {
             names: ["Sweet Child of Mine"],
             thresholds: [100], // 100 sugar lumps
             descs: ["Own <b>100 sugar lumps</b> at once."],
-            vanillaTarget: "Maillard reaction",
-            customIcons: [[29, 16]]
+            customIcons: [[29, 16]],
+            orders: [21100.406]
         },
         seasonSwitches: {
             names: ["Calendar Abuser"],
             thresholds: [50], // 50 season switches
             descs: ["Switch seasons <b>50 times</b> in one ascension.<q>What month even is it?</q>"],
-            vanillaTarget: "Maillard reaction",
-            customIcons: [[16, 6]]
+            customIcons: [[16, 6]],
+            orders: [21100.416]
         },
         vanillaAchievements: {
             names: ["Vanilla Star"],
             thresholds: [622], // All 622 vanilla achievements
             descs: ["Own all <b>622 original achievements.</b><q>Wow congratulations 100% achievements! Now just 459 more to go.</q>"],
-            vanillaTarget: "You win a cookie",
-            customIcons: [[22, 7]]
+            customIcons: [[22, 7]],
+            orders: [400000.143]
         },
         botanicalPerfection: {
             names: ["Botanical Perfection", "Duketater Salad"],
             thresholds: [34, 12], // All 34 plant types, 12 duketaters
             descs: ["Have one of every type of plant in the mature stage at once.<q>I have become the plants now, I am the master of the garden, bow before my hoe.</q>", "Harvest <b>12 mature Duketaters</b> simultaneously.<q>Timing your salad is everything otherwise the mayo goes bad and you kill all your friends.</q>"],
-            vanillaTarget: "Keeper of the conservatory",
-            customIcons: [[27, 15], [0, 19, 'gardenPlants']]
+            customIcons: [[27, 15], [0, 19, 'gardenPlants']],
+            orders: [61515.431, 61515.440]
         },
 
         soilChanges: {
             names: ["Fifty Shades of Clay"],
             thresholds: [100], // 100 soil changes
             descs: ["Change the soil type of your Garden <b>100 times</b> in one ascension.<q>This is not how gardening works.</q>"],
-            vanillaTarget: "Seedless to nay",
-            customIcons: [[3, 34, 'gardenPlants']]
+            customIcons: [[3, 34, 'gardenPlants']],
+            orders: [61515.433]
         },
         tickerClicks: {
             names: ["News ticker addict"],
             thresholds: [1000], // 1000 ticker clicks
             descs: ["Click on the news ticker <b>1,000 times</b> in one ascension.<q>Hey dummy you are clicking on the wrong thing.</q>"],
-            vanillaTarget: "Stifling the press",
-            customIcons: [[10, 12, 'custom']]
+            customIcons: [[10, 12, 'custom']],
+            orders: [11000.548]
 
         },
         wrathCookies: {
             names: ["Warm-Up Ritual", "Deal of the Slightly Damned", "Baker of the Beast"],
             thresholds: [66, 666, 6666], // Wrath cookie clicks
             descs: ["Click <b>66 wrath cookies</b> across all ascensions.", "Click <b>666 wrath cookies</b> across all ascensions.", "Click <b>6,666 wrath cookies</b> across all ascensions."],
-            vanillaTarget: "Wrath cookie",
-            customIcons: [[20, 18, 'custom'], [20, 17, 'custom'], [20, 16, 'custom']]
+            customIcons: [[20, 18, 'custom'], [20, 17, 'custom'], [20, 16, 'custom']],
+            orders: [19990.605, 19990.615, 19990.625]
         },
         goldenCookieTime: {
             names: ["Second Life, First Click"],
             thresholds: [120 * 1000], // 120 seconds in milliseconds
             descs: ["Click a golden cookie within <b>120 seconds</b> of ascending."],
-            vanillaTarget: "Fading luck",
-            customIcons: [[0, 9, 'custom']]
+            customIcons: [[0, 9, 'custom']],
+            orders: [10000.274]
         },
         wrinklerTime: {
             names: ["Wrinkler Rush"],
             thresholds: [930 * 1000], // 930 seconds (15 minutes 30 seconds) in milliseconds
             descs: ["Pop a wrinkler within <b>15 minutes and 30 seconds</b> of ascending.<q>The Grandmatriarchs barely had time to wake up!</q>"],
-            vanillaTarget: "Moistburster",
-            customIcons: [[23, 18, 'custom']]
+            customIcons: [[23, 18, 'custom']],
+            orders: [21000.170]
         },
         wrinklerBankDouble: {
             names: ["Wrinkler Windfall"],
             thresholds: [6], // 6x bank value (sextupled)
             descs: ["Sextuple your bank with a single wrinkler pop.<q>Talk about a return on investment!</q>"],
-            vanillaTarget: "Moistburster",
-            customIcons: [[21, 19, 'custom']]
+            customIcons: [[21, 19, 'custom']],
+            orders: [21000.169]
         },
         hardcoreNoHeavenly: {
             names: ["We don't need no heavenly chips"],
             thresholds: [333], // 333 of every building
             descs: ["Own at least <b>333 of every building type</b>, without owning the 'Heavenly chip secret' upgrade.<q>Well that was a little different wasn't it?</q>"],
-            vanillaTarget: "Hardcore",
-            customIcons: [[12, 7]]
+            customIcons: [[12, 7]],
+            orders: [30500.102]
         },
         hardcoreFinalCountdown: {
             names: ["The Final Countdown"],
             thresholds: [1], // Just a placeholder, we'll check exact counts in the requirement function
             descs: ["Own exactly 15 Cursors, 14 Grandmas, 13 Farms, yada yada yada, down to 1 Chancemaker. No selling or sacrificing any buildings. Must be earned in Born Again mode.<q>Is that song stuck in your head now, it\'s pretty catchy.</q>"],
-            vanillaTarget: "Hardcore",
-            customIcons: [[13, 7]]
+            customIcons: [[13, 7]],
+            orders: [30500.102]
         },
         hardcoreNoKittens: {
             names: ["Really more of a dog person"],
             thresholds: [1e9], // 1 billion cookies per second
             descs: ["Bake <b>1 billion cookies per second</b> without buying any kitten upgrades in Born Again mode.<q>Turns out cookies taste just fine without cat hair in them.</q>"],
-            vanillaTarget: "Hardcore",
-            customIcons: [[14, 7]]
+            customIcons: [[14, 7]],
+            orders: [30500.102]
         },
         hardcoreNoGoldenCookies: {
             names: ["Gilded Restraint"],
             thresholds: [1e12], // 1 trillion cookies
             descs: ["Bake <b>1 trillion cookies</b> without ever clicking a golden cookie, must be done in Born Again mode.<q>Patience is its own buff.</q>"],
-            vanillaTarget: "Hardcore",
-            customIcons: [[23, 9, 'custom']]
+            customIcons: [[23, 9, 'custom']],
+            orders: [30500.102]
         },
         hardcoreCursorsAndGrandmas: {
             names: ["Back to Basic Bakers"],
             thresholds: [1e6], // 1 million cookies per second
             descs: ["Reach <b>1 million cookies per second</b> using only Cursors and Grandmas (no other buildings), must be done in Born Again mode.<q>Turns out Grandma really is the backbone of the empire.</q>"],
-            vanillaTarget: "Hardcore",
-            customIcons: [[23, 10, 'custom']]
+            customIcons: [[23, 10, 'custom']],
+            orders: [30500.102]
         },
         hardcoreModestPortfolio: {
             names: ["Modest Portfolio"],
             thresholds: [1e15], // 1 quadrillion cookies
             descs: ["Reach <b>1 quadrillion cookies</b> without ever owning more than 10 of any building type (no selling), must be done in Born Again mode.<q>Breadth over depth.</q>"],
-            vanillaTarget: "Hardcore",
-            customIcons: [[23, 11, 'custom']]
+            customIcons: [[23, 11, 'custom']],
+            orders: [30500.102]
         },
         hardcoreDifficultDecisions: {
             names: ["Difficult Decisions"],
             thresholds: [1e9], // 1 billion cookies
             descs: ["Bake <b>1 billion cookies</b> without ever having more than <b>25 combined upgrades or buildings</b> at any given time, must be done in Born Again mode.<q>Some decisions leave no right answer, only consequences.</q>"],
-            vanillaTarget: "Hardcore",
-            customIcons: [[23, 3, 'custom']]
+            customIcons: [[23, 3, 'custom']],
+            orders: [30500.102]
         },
         hardcoreLaidInPlainSight: {
             names: ["Laid in Plain Sight"],
             thresholds: [10], // 10 cookies per second
             descs: ["Bake <b>10 cookies per second</b> without purchasing any buildings, must be done in Born Again mode.<q>Eggsactly where you weren't looking!</q>"],
-            vanillaTarget: "Hardcore",
-            customIcons: [[23, 4, 'custom']]
+            customIcons: [[23, 4, 'custom']],
+            orders: [30500.102]
         },
         hardcorePrecisionNerd: {
             names: ["Precision Nerd"],
             thresholds: [1234567890], // Exactly 1,234,567,890 cookies
             descs: ["Have exactly <b>1234567890 cookies</b> in your bank and hold it for <b>60 seconds</b>.<q>Last night's 'Itchy & Scratchy' was, without a doubt, the worst episode ever. Rest assured I was on the Internet within minutes registering my disgust throughout the world.</q>"],
-            vanillaTarget: "Hardcore",
-            customIcons: [[23, 5, 'custom']]
+            customIcons: [[23, 5, 'custom']],
+            orders: [30500.102]
         },
         hardcoreTreadingWater: {
             names: ["Treading water"],
             thresholds: [0], // Dummy threshold, actual logic handled in requirement function
             descs: ["Have a CPS of 0 while owning more than 1000 buildings with no active buffs, debuffs, or help from Solgreth<q>Sometimes it really feels like you are just not being very productive here.</q>"],
-            vanillaTarget: "Hardcore",
-            customIcons: [[23, 12, 'custom']]
+            customIcons: [[23, 12, 'custom']],
+            orders: [30500.102]
         },
         hardcoreBouncingLastCheque: {
             names: ["Bouncing the last cheque"],
             thresholds: [0], // Dummy threshold, actual logic handled in requirement function
             descs: ["Reach less than 10 cookies in your bank after having at least 1 million cookies.<q>The very last cheque I write in my life I want to bounce.</q>"],
-            vanillaTarget: "Hardcore",
-            customIcons: [[23, 14, 'custom']]
+            customIcons: [[23, 14, 'custom']],
+            orders: [30500.102]
         },
         hardcoreMassiveInheritance: {
             names: ["Massive Inheritance"],
             thresholds: [0],
             descs: ["Have a bank of at least <b>1 Novemdecillion cookies</b> within 10 minutes of ascending.<q>Well, look at you, a Heavenly Chips trust fund baby. Ever thought about earning your keep like the rest of us?</q>"],
-            vanillaTarget: "Hardcore",
-            customIcons: [[23, 13, 'custom']]
+            customIcons: [[23, 13, 'custom']],
+            orders: [30500.102]
         },
         
         theFinalChallenger: {
             names: ["The Final Challenger"],
             thresholds: [10], // 10 out of 17 challenge achievements
             descs: ["Win <b>10</b> of the Just Natural Expansion <b>Challenge Achievements</b>.<q>You didn't just rise to the challenge… you baked it into a 12-layer cake.</q>"],
-            vanillaTarget: "Hardcore",
-            customIcons: [[14, 12, 'custom']]
+            customIcons: [[14, 12, 'custom']],
+            orders: [30501]
         },
         
         // Stock market achievements
@@ -4361,43 +4362,43 @@ window.JNEData = {
             names: ["Broiler room"],
             thresholds: [100], // 100 stockbrokers
             descs: ["Hire at least <b>100</b> stockbrokers in the Stock Market.<q>And there is no such thing as a no sale call. A sale is made on every call you make. Either you sell the client some stock or he sells you a reason he can't. Either way a sale is made, who's gonna close? You or him?</q>"],
-            vanillaTarget: "Buy buy buy",
-            customIcons: [[23, 1, 'custom']]
+            customIcons: [[23, 1, 'custom']],
+            orders: [61616.358]
         },
         cookieClicks: {
             names: ["Buff Finger"],
             thresholds: [250000], // 250,000 cookie clicks
             descs: ["Click the cookie <b>250,000 times</b> across all ascensions.<q>I bet your index finger is bigger than the others now.</q>"],
-            vanillaTarget: "The elder scrolls",
-            customIcons: [[12, 30]]
+            customIcons: [[12, 30]],
+            orders: [7003]
         },
         pledges: {
             names: ["Deep elder nap"],
             thresholds: [666], // 666 pledges
             descs: ["Quash the grandmatriarchs one way or another <b>666 times</b> across all ascensions.<q>Those grandmatriarchs are really out, I can hear them snoring from the next town over.</q>"],
-            vanillaTarget: "Elder slumber",
-            customIcons: [[2, 9]]
+            customIcons: [[2, 9]],
+            orders: [20000.090]
         },
         buffs: {
             names: ["Trifecta Combo", "Combo Initiate", "Combo God", "Combo Hacker", "Frenzy frenzy", "Double Dragon Clicker", "Frenzy Marathon", "Hogwarts Graduate", "Hogwarts Dropout", "Spell Slinger"],
             thresholds: [3, 6, 9, 12, 0, 0, 0, 0, 0, 0], // 3, 6, 9, 12 buffs active, frenzy frenzy, double dragon, frenzy marathon, wizard achievements, and spell slinger (handled separately)
             descs: ["Have <b>3 buffs</b> active at once.<q>Hey that was pretty neat!</q>", "Have <b>6 buffs</b> active at once.<q>Okay that was downright impressive clicking.</q>", "Have <b>9 buffs</b> active at once.<q>I can't even follow what you did there but it looked really cool.</q>", "Have <b>12 buffs</b> active at once.<q>I don't believe you, but for like real congrats if you did that.</q>", "Have all three frenzy buffs active at once.<q>Like pizza pizza but with more wrath.</q>", "Have a dragon flight and a click frenzy active at the same time.<q>Double the dragons, double the clicking!</q>", "Have a frenzy buff with a total duration of at least 10 minutes.<q>Who needs coffee when you have this much energy?</q>", "Have <b>3 positive Grimoire spell effects</b> active at once.<q>Merlin would be proud of your spellcraft!</q>", "Have <b>3 negative Grimoire spell effects</b> active at once.<q>The Sorting Hat made a terrible mistake!</q>", "Cast <b>10 spells</b> within a 10-second window.<q>Speed casting at its finest!</q>"],
-            vanillaTarget: "Here be dragon",
-            customIcons: [[25, 36], [26, 11], [22, 11], [23, 11], [23, 2, 'custom'], [30, 12], [22, 13], [30, 20], [31, 20], [32, 4]]
+            customIcons: [[25, 36], [26, 11], [22, 11], [23, 11], [23, 2, 'custom'], [30, 12], [22, 13], [30, 20], [31, 20], [32, 4]],
+            orders: [25000.232, 25000.242, 25000.252, 25000.262, 25000.272, 25000.282, 25000.292, 25000.302, 25000.312, 25000.322]
         },
         prestigeUpgrades: {
             names: ["Beyond Prestige"],
             thresholds: [129], // All 129 prestige upgrades
             descs: ["Own all <b>129</b> original heavenly upgrades.<q>Prestige is just a stepping stone to whatever the hell this is.</q>"],
-            vanillaTarget: "All the stars in heaven",
-            customIcons: [[20, 7]]
+            customIcons: [[20, 7]],
+            orders: [6001.598]
         },
         completionism: {
             names: ["Bearer of the Cookie Sigil"],
             thresholds: ["orderEternalCookie"],
             descs: ["Fully initiate into the Great Orders of the Cookie Age. Owning this achievement causes research to go <b>25%</b> faster, and random drops to appear <b>10%</b> more often.<q>A golden cookie sigil is forever affixed to your lapel, you refuse to elaborate further, if someone says the words strawberry milk and peanut butter cookies you immediately leave the room.</q>"],
-            vanillaTarget: "Third-party",
-            customIcons: [[19, 13, 'custom']]
+            customIcons: [[19, 13, 'custom']],
+            orders: [400000.3]
         }
         }
     },
@@ -4478,26 +4479,26 @@ window.JNEData = {
         "Economies of selves": "Clones cooperate, margins explode. HR insists you can't unionize with yourself."
     },
     productionAchievements: [
-        { building: 'Cursor', name: 'Click (starring Adam Sandler)', tier4Name: 'Click II: the sequel', tier5Name: 'Click III: we couldn\'t get Adam Sandler so it stars Jerry Seinfeld for some reason', tier6Name: 'Click IV: 3% fresh on rotten tomatoes', tier4Desc: 'Make <b>100 quindecillion cookies</b> just from cursors.', tier5Desc: 'Make <b>100 sexdecillion cookies</b> just from cursors.', tier6Desc: 'Make <b>100 septendecillion cookies</b> just from cursors.', mult: 7, vanillaTarget: 'Click (starring Adam Sandler)' },
-        { building: 'Grandma', name: 'Frantiquities', tier4Name: 'Scone with the wind', tier5Name: 'The flour of youth', tier6Name: 'Bake-ageddon', tier4Desc: 'Make <b>100 quindecillion cookies</b> just from grandmas.', tier5Desc: 'Make <b>100 sexdecillion cookies</b> just from grandmas.', tier6Desc: 'Make <b>100 septendecillion cookies</b> just from grandmas.', mult: 6, vanillaTarget: 'Frantiquities' },
-        { building: 'Farm', name: 'Overgrowth', tier4Name: 'Rake in the greens', tier5Name: 'The great threshering', tier6Name: 'Bushels of burden', tier4Desc: 'Make <b>1 quattuordecillion cookies</b> just from farms.', tier5Desc: 'Make <b>1 quindecillion cookies</b> just from farms.', tier6Desc: 'Make <b>1 sexdecillion cookies</b> just from farms.', mult: 0, vanillaTarget: 'Overgrowth' },
-        { building: 'Mine', name: 'Sedimentalism', tier4Name: 'Ore d\'oeuvres', tier5Name: 'Seismic yield', tier6Name: 'Billionaire\'s bedrock', tier4Desc: 'Make <b>10 quattuordecillion cookies</b> just from mines.', tier5Desc: 'Make <b>10 quindecillion cookies</b> just from mines.', tier6Desc: 'Make <b>10 sexdecillion cookies</b> just from mines.', mult: 0, vanillaTarget: 'Sedimentalism' },
-        { building: 'Factory', name: 'Labor of love', tier4Name: 'Sweatshop symphony', tier5Name: 'Cookieconomics 101', tier6Name: 'Mass production messiah', tier4Desc: 'Make <b>100 quattuordecillion cookies</b> just from factories.', tier5Desc: 'Make <b>100 quindecillion cookies</b> just from factories.', tier6Desc: 'Make <b>100 sexdecillion cookies</b> just from factories.', mult: 0, vanillaTarget: 'Labor of love' },
-        { building: 'Bank', name: 'Reverse funnel system', tier4Name: 'Compound interest, compounded', tier5Name: 'Arbitrage avalanche', tier6Name: 'Ponzi à la mode', tier4Desc: 'Make <b>1 quindecillion cookies</b> just from banks.', tier5Desc: 'Make <b>1 sexdecillion cookies</b> just from banks.', tier6Desc: 'Make <b>1 septendecillion cookies</b> just from banks.', mult: 0, vanillaTarget: 'Reverse funnel system' },
-        { building: 'Temple', name: 'Thus spoke you', tier4Name: 'Temple treasury overflow', tier5Name: 'Pantheon payout', tier6Name: 'Sacred surplus', tier4Desc: 'Make <b>10 quindecillion cookies</b> just from temples.', tier5Desc: 'Make <b>10 sexdecillion cookies</b> just from temples.', tier6Desc: 'Make <b>10 septendecillion cookies</b> just from temples.', mult: 0, vanillaTarget: 'Thus spoke you' },
-        { building: 'Wizard tower', name: 'Manafest destiny', tier4Name: 'Rabbits per minute', tier5Name: 'Hocus bonus', tier6Name: 'Magic dividends', tier4Desc: 'Make <b>100 quindecillion cookies</b> just from wizard towers.', tier5Desc: 'Make <b>100 sexdecillion cookies</b> just from wizard towers.', tier6Desc: 'Make <b>100 septendecillion cookies</b> just from wizard towers.', mult: 0, vanillaTarget: 'Manafest destiny' },
-        { building: 'Shipment', name: 'Neither snow nor rain nor heat nor gloom of night', tier4Name: 'Cargo cult classic', tier5Name: 'Universal basic shipping', tier6Name: 'Comet-to-consumer', tier4Desc: 'Make <b>1 sexdecillion cookies</b> just from shipments.', tier5Desc: 'Make <b>1 septendecillion cookies</b> just from shipments.', tier6Desc: 'Make <b>1 octodecillion cookies</b> just from shipments.', mult: 0, vanillaTarget: 'Neither snow nor rain nor heat nor gloom of night' },
-        { building: 'Alchemy lab', name: 'I\'ve got the Midas touch', tier4Name: 'Lead into bread', tier5Name: 'Philosopher\'s yield', tier6Name: 'Auronomical returns', tier4Desc: 'Make <b>10 sexdecillion cookies</b> just from alchemy labs.', tier5Desc: 'Make <b>10 septendecillion cookies</b> just from alchemy labs.', tier6Desc: 'Make <b>10 octodecillion cookies</b> just from alchemy labs.', mult: 0, vanillaTarget: 'I\'ve got the Midas touch' },
-        { building: 'Portal', name: 'Which eternal lie', tier4Name: 'Spacetime surcharge', tier5Name: 'Interdimensional yield farming', tier6Name: 'Event-horizon markup', tier4Desc: 'Make <b>100 sexdecillion cookies</b> just from portals.', tier5Desc: 'Make <b>100 septendecillion cookies</b> just from portals.', tier6Desc: 'Make <b>100 octodecillion cookies</b> just from portals.', mult: 0, vanillaTarget: 'Which eternal lie' },
-        { building: 'Time machine', name: 'D&eacute;j&agrave; vu', tier4Name: 'Future Profits, Past Tense', tier5Name: 'Infinite Loop, Infinite Loot', tier6Name: 'Back Pay from the Big Bang', tier4Desc: 'Make <b>1 septendecillion cookies</b> just from time machines.', tier5Desc: 'Make <b>1 octodecillion cookies</b> just from time machines.', tier6Desc: 'Make <b>1 novemdecillion cookies</b> just from time machines.', mult: 0, vanillaTarget: 'D&eacute;j&agrave; vu' },
-        { building: 'Antimatter condenser', name: 'Powers of Ten', tier4Name: 'Pair production payout', tier5Name: 'Cross-section surplus', tier6Name: 'Powers of crumbs', tier4Desc: 'Make <b>10 septendecillion cookies</b> just from antimatter condensers.', tier5Desc: 'Make <b>10 octodecillion cookies</b> just from antimatter condensers.', tier6Desc: 'Make <b>10 novemdecillion cookies</b> just from antimatter condensers.', mult: 0, vanillaTarget: 'Powers of Ten' },
-        { building: 'Prism', name: 'Now the dark days are gone', tier4Name: 'Photons pay dividends', tier5Name: 'Spectral surplus', tier6Name: 'Dawn of plenty', tier4Desc: 'Make <b>100 septendecillion cookies</b> just from prisms.', tier5Desc: 'Make <b>100 octodecillion cookies</b> just from prisms.', tier6Desc: 'Make <b>100 novemdecillion cookies</b> just from prisms.', mult: 0, vanillaTarget: 'Now the dark days are gone' },
-        { building: 'Chancemaker', name: 'Murphy\'s wild guess', tier4Name: 'Against all odds & ends', tier5Name: 'Monte Carlo windfall', tier6Name: 'Fate-backed securities', tier4Desc: 'Make <b>1 octodecillion cookies</b> just from chancemakers.', tier5Desc: 'Make <b>1 novemdecillion cookies</b> just from chancemakers.', tier6Desc: 'Make <b>1 vigintillion cookies</b> just from chancemakers.', mult: 0, vanillaTarget: 'Murphy\'s wild guess' },
-        { building: 'Fractal engine', name: 'We must go deeper', tier4Name: 'Infinite series surplus', tier5Name: 'Geometric mean feast', tier6Name: 'Fractal jackpot', tier4Desc: 'Make <b>10 octodecillion cookies</b> just from fractal engines.', tier5Desc: 'Make <b>10 novemdecillion cookies</b> just from fractal engines.', tier6Desc: 'Make <b>10 vigintillion cookies</b> just from fractal engines.', mult: 0, vanillaTarget: 'We must go deeper' },
-        { building: 'Javascript console', name: 'First-class citizen', tier4Name: 'Cookies per second()++', tier5Name: 'Promise.all(paydays)', tier6Name: 'Async and ye shall receive', tier4Desc: 'Make <b>100 octodecillion cookies</b> just from javascript consoles.', tier5Desc: 'Make <b>100 novemdecillion cookies</b> just from javascript consoles.', tier6Desc: 'Make <b>100 vigintillion cookies</b> just from javascript consoles.', mult: 0, vanillaTarget: 'First-class citizen' },
-        { building: 'Idleverse', name: 'Earth-616', tier4Name: 'Crossover dividends', tier5Name: 'Many-Worlds ROI', tier6Name: 'Continuity bonus', tier4Desc: 'Make <b>1 novemdecillion cookies</b> just from idleverses.', tier5Desc: 'Make <b>1 vigintillion cookies</b> just from idleverses.', tier6Desc: 'Make <b>1 unvigintillion cookies</b> just from idleverses.', mult: 0, vanillaTarget: 'Earth-616' },
-        { building: 'Cortex baker', name: 'Unthinkable', tier4Name: 'Brainstorm dividend', tier5Name: 'Thought economy boom', tier6Name: 'Neural net worth', tier4Desc: 'Make <b>10 novemdecillion cookies</b> just from cortex bakers.', tier5Desc: 'Make <b>10 vigintillion cookies</b> just from cortex bakers.', tier6Desc: 'Make <b>10 unvigintillion cookies</b> just from cortex bakers.', mult: 0, vanillaTarget: 'Unthinkable' },
-        { building: 'You', name: 'That\'s all you', tier4Name: 'Personal growth', tier5Name: 'Economies of selves', tier6Name: 'Self-sustaining singularity', tier4Desc: 'Make <b>100 novemdecillion cookies</b> just from You.', tier5Desc: 'Make <b>100 vigintillion cookies</b> just from You.', tier6Desc: 'Make <b>100 unvigintillion cookies</b> just from You.', mult: 0, vanillaTarget: 'That\'s all you' }
+        { building: 'Cursor', name: 'Click (starring Adam Sandler)', tier4Name: 'Click II: the sequel', tier5Name: 'Click III: we couldn\'t get Adam Sandler so it stars Jerry Seinfeld for some reason', tier6Name: 'Click IV: 3% fresh on rotten tomatoes', tier4Desc: 'Make <b>100 quindecillion cookies</b> just from cursors.', tier5Desc: 'Make <b>100 sexdecillion cookies</b> just from cursors.', tier6Desc: 'Make <b>100 septendecillion cookies</b> just from cursors.', mult: 7, tier4Order: 1070.29301, tier5Order: 1070.29302, tier6Order: 1070.29303 },
+        { building: 'Grandma', name: 'Frantiquities', tier4Name: 'Scone with the wind', tier5Name: 'The flour of youth', tier6Name: 'Bake-ageddon', tier4Desc: 'Make <b>100 quindecillion cookies</b> just from grandmas.', tier5Desc: 'Make <b>100 sexdecillion cookies</b> just from grandmas.', tier6Desc: 'Make <b>100 septendecillion cookies</b> just from grandmas.', mult: 6, tier4Order: 1120.29401, tier5Order: 1120.29402, tier6Order: 1120.29403 },
+        { building: 'Farm', name: 'Overgrowth', tier4Name: 'Rake in the greens', tier5Name: 'The great threshering', tier6Name: 'Bushels of burden', tier4Desc: 'Make <b>1 quattuordecillion cookies</b> just from farms.', tier5Desc: 'Make <b>1 quindecillion cookies</b> just from farms.', tier6Desc: 'Make <b>1 sexdecillion cookies</b> just from farms.', mult: 0, tier4Order: 1220.29501, tier5Order: 1220.29502, tier6Order: 1220.29503 },
+        { building: 'Mine', name: 'Sedimentalism', tier4Name: 'Ore d\'oeuvres', tier5Name: 'Seismic yield', tier6Name: 'Billionaire\'s bedrock', tier4Desc: 'Make <b>10 quattuordecillion cookies</b> just from mines.', tier5Desc: 'Make <b>10 quindecillion cookies</b> just from mines.', tier6Desc: 'Make <b>10 sexdecillion cookies</b> just from mines.', mult: 0, tier4Order: 1320.29601, tier5Order: 1320.29602, tier6Order: 1320.29603 },
+        { building: 'Factory', name: 'Labor of love', tier4Name: 'Sweatshop symphony', tier5Name: 'Cookieconomics 101', tier6Name: 'Mass production messiah', tier4Desc: 'Make <b>100 quattuordecillion cookies</b> just from factories.', tier5Desc: 'Make <b>100 quindecillion cookies</b> just from factories.', tier6Desc: 'Make <b>100 sexdecillion cookies</b> just from factories.', mult: 0, tier4Order: 1420.29701, tier5Order: 1420.29702, tier6Order: 1420.29703 },
+        { building: 'Bank', name: 'Reverse funnel system', tier4Name: 'Compound interest, compounded', tier5Name: 'Arbitrage avalanche', tier6Name: 'Ponzi à la mode', tier4Desc: 'Make <b>1 quindecillion cookies</b> just from banks.', tier5Desc: 'Make <b>1 sexdecillion cookies</b> just from banks.', tier6Desc: 'Make <b>1 septendecillion cookies</b> just from banks.', mult: 0, tier4Order: 1445.29801, tier5Order: 1445.29802, tier6Order: 1445.29803 },
+        { building: 'Temple', name: 'Thus spoke you', tier4Name: 'Temple treasury overflow', tier5Name: 'Pantheon payout', tier6Name: 'Sacred surplus', tier4Desc: 'Make <b>10 quindecillion cookies</b> just from temples.', tier5Desc: 'Make <b>10 sexdecillion cookies</b> just from temples.', tier6Desc: 'Make <b>10 septendecillion cookies</b> just from temples.', mult: 0, tier4Order: 1470.29901, tier5Order: 1470.29902, tier6Order: 1470.29903 },
+        { building: 'Wizard tower', name: 'Manafest destiny', tier4Name: 'Rabbits per minute', tier5Name: 'Hocus bonus', tier6Name: 'Magic dividends', tier4Desc: 'Make <b>100 quindecillion cookies</b> just from wizard towers.', tier5Desc: 'Make <b>100 sexdecillion cookies</b> just from wizard towers.', tier6Desc: 'Make <b>100 septendecillion cookies</b> just from wizard towers.', mult: 0, tier4Order: 1495.30001, tier5Order: 1495.30002, tier6Order: 1495.30003 },
+        { building: 'Shipment', name: 'Neither snow nor rain nor heat nor gloom of night', tier4Name: 'Cargo cult classic', tier5Name: 'Universal basic shipping', tier6Name: 'Comet-to-consumer', tier4Desc: 'Make <b>1 sexdecillion cookies</b> just from shipments.', tier5Desc: 'Make <b>1 septendecillion cookies</b> just from shipments.', tier6Desc: 'Make <b>1 octodecillion cookies</b> just from shipments.', mult: 0, tier4Order: 1520.30101, tier5Order: 1520.30102, tier6Order: 1520.30103 },
+        { building: 'Alchemy lab', name: 'I\'ve got the Midas touch', tier4Name: 'Lead into bread', tier5Name: 'Philosopher\'s yield', tier6Name: 'Auronomical returns', tier4Desc: 'Make <b>10 sexdecillion cookies</b> just from alchemy labs.', tier5Desc: 'Make <b>10 septendecillion cookies</b> just from alchemy labs.', tier6Desc: 'Make <b>10 octodecillion cookies</b> just from alchemy labs.', mult: 0, tier4Order: 1620.30201, tier5Order: 1620.30202, tier6Order: 1620.30203 },
+        { building: 'Portal', name: 'Which eternal lie', tier4Name: 'Spacetime surcharge', tier5Name: 'Interdimensional yield farming', tier6Name: 'Event-horizon markup', tier4Desc: 'Make <b>100 sexdecillion cookies</b> just from portals.', tier5Desc: 'Make <b>100 septendecillion cookies</b> just from portals.', tier6Desc: 'Make <b>100 octodecillion cookies</b> just from portals.', mult: 0, tier4Order: 1720.30301, tier5Order: 1720.30302, tier6Order: 1720.30303 },
+        { building: 'Time machine', name: 'D&eacute;j&agrave; vu', tier4Name: 'Future Profits, Past Tense', tier5Name: 'Infinite Loop, Infinite Loot', tier6Name: 'Back Pay from the Big Bang', tier4Desc: 'Make <b>1 septendecillion cookies</b> just from time machines.', tier5Desc: 'Make <b>1 octodecillion cookies</b> just from time machines.', tier6Desc: 'Make <b>1 novemdecillion cookies</b> just from time machines.', mult: 0, tier4Order: 1820.30401, tier5Order: 1820.30402, tier6Order: 1820.30403 },
+        { building: 'Antimatter condenser', name: 'Powers of Ten', tier4Name: 'Pair production payout', tier5Name: 'Cross-section surplus', tier6Name: 'Powers of crumbs', tier4Desc: 'Make <b>10 septendecillion cookies</b> just from antimatter condensers.', tier5Desc: 'Make <b>10 octodecillion cookies</b> just from antimatter condensers.', tier6Desc: 'Make <b>10 novemdecillion cookies</b> just from antimatter condensers.', mult: 0, tier4Order: 1920.30501, tier5Order: 1920.30502, tier6Order: 1920.30503 },
+        { building: 'Prism', name: 'Now the dark days are gone', tier4Name: 'Photons pay dividends', tier5Name: 'Spectral surplus', tier6Name: 'Dawn of plenty', tier4Desc: 'Make <b>100 septendecillion cookies</b> just from prisms.', tier5Desc: 'Make <b>100 octodecillion cookies</b> just from prisms.', tier6Desc: 'Make <b>100 novemdecillion cookies</b> just from prisms.', mult: 0, tier4Order: 2020.30601, tier5Order: 2020.30602, tier6Order: 2020.30603 },
+        { building: 'Chancemaker', name: 'Murphy\'s wild guess', tier4Name: 'Against all odds & ends', tier5Name: 'Monte Carlo windfall', tier6Name: 'Fate-backed securities', tier4Desc: 'Make <b>1 octodecillion cookies</b> just from chancemakers.', tier5Desc: 'Make <b>1 novemdecillion cookies</b> just from chancemakers.', tier6Desc: 'Make <b>1 vigintillion cookies</b> just from chancemakers.', mult: 0, tier4Order: 2120.33501, tier5Order: 2120.33502, tier6Order: 2120.33503 },
+        { building: 'Fractal engine', name: 'We must go deeper', tier4Name: 'Infinite series surplus', tier5Name: 'Geometric mean feast', tier6Name: 'Fractal jackpot', tier4Desc: 'Make <b>10 octodecillion cookies</b> just from fractal engines.', tier5Desc: 'Make <b>10 novemdecillion cookies</b> just from fractal engines.', tier6Desc: 'Make <b>10 vigintillion cookies</b> just from fractal engines.', mult: 0, tier4Order: 2220.42601, tier5Order: 2220.42602, tier6Order: 2220.42603 },
+        { building: 'Javascript console', name: 'First-class citizen', tier4Name: 'Cookies per second()++', tier5Name: 'Promise.all(paydays)', tier6Name: 'Async and ye shall receive', tier4Desc: 'Make <b>100 octodecillion cookies</b> just from javascript consoles.', tier5Desc: 'Make <b>100 novemdecillion cookies</b> just from javascript consoles.', tier6Desc: 'Make <b>100 vigintillion cookies</b> just from javascript consoles.', mult: 0, tier4Order: 2320.44601, tier5Order: 2320.44602, tier6Order: 2320.44603 },
+        { building: 'Idleverse', name: 'Earth-616', tier4Name: 'Crossover dividends', tier5Name: 'Many-Worlds ROI', tier6Name: 'Continuity bonus', tier4Desc: 'Make <b>1 novemdecillion cookies</b> just from idleverses.', tier5Desc: 'Make <b>1 vigintillion cookies</b> just from idleverses.', tier6Desc: 'Make <b>1 unvigintillion cookies</b> just from idleverses.', mult: 0, tier4Order: 2420.52401, tier5Order: 2420.52402, tier6Order: 2420.52403 },
+        { building: 'Cortex baker', name: 'Unthinkable', tier4Name: 'Brainstorm dividend', tier5Name: 'Thought economy boom', tier6Name: 'Neural net worth', tier4Desc: 'Make <b>10 novemdecillion cookies</b> just from cortex bakers.', tier5Desc: 'Make <b>10 vigintillion cookies</b> just from cortex bakers.', tier6Desc: 'Make <b>10 unvigintillion cookies</b> just from cortex bakers.', mult: 0, tier4Order: 2520.55401, tier5Order: 2520.55402, tier6Order: 2520.55403 },
+        { building: 'You', name: 'That\'s all you', tier4Name: 'Personal growth', tier5Name: 'Economies of selves', tier6Name: 'Self-sustaining singularity', tier4Desc: 'Make <b>100 novemdecillion cookies</b> just from You.', tier5Desc: 'Make <b>100 vigintillion cookies</b> just from You.', tier6Desc: 'Make <b>100 unvigintillion cookies</b> just from You.', mult: 0, tier4Order: 2620.61601, tier5Order: 2620.61602, tier6Order: 2620.61603 }
     ],
     vanillaThresholds: {
         'Cursor': 33,
@@ -4522,25 +4523,25 @@ window.JNEData = {
         'You': 45
     },
     levelAchievements: [
-        { building: 'Cursor', level10: 'Freaky jazz hands', level15: 'Rowdy shadow puppets', level20: 'Frantic finger guns' },
-        { building: 'Grandma', level10: 'Methuselah', level15: 'Loaf & behold', level20: 'Forbidden fruitcake' },
-        { building: 'Farm', level10: 'Huge tracts of land', level15: 'Huge-er tracts of land', level20: 'Hoedown showdown' },
-        { building: 'Mine', level10: 'D-d-d-d-deeper', level15: 'Cave-in king', level20: 'Digging destiny' },
-        { building: 'Factory', level10: 'Patently genius', level15: 'Boilerplate overlord', level20: 'Cookie standard time' },
-        { building: 'Bank', level10: 'A capital idea', level15: 'Credit conjurer', level20: 'Master of the Mint' },
-        { building: 'Temple', level10: 'It belongs in a bakery', level15: 'Acolyte ascendant', level20: 'Grand hierophant' },
-        { building: 'Wizard tower', level10: 'Motormouth', level15: 'Archmage of Meringue', level20: 'Chronomancer emeritus' },
-        { building: 'Shipment', level10: 'Been there done that', level15: 'Quartermaster of Orbits', level20: 'Docking director' },
-        { building: 'Alchemy lab', level10: 'Phlogisticated substances', level15: 'Retort wrangler', level20: 'Circle of Quintessence' },
-        { building: 'Portal', level10: 'Bizarro world', level15: 'Non-Euclidean doorman', level20: 'Warden of Elsewhere' },
-        { building: 'Time machine', level10: 'The long now', level15: 'Minute handler', level20: 'Chronarch supreme' },
-        { building: 'Antimatter condenser', level10: 'Chubby hadrons', level15: 'Quark wrangler', level20: 'Symmetry breaker' },
-        { building: 'Prism', level10: 'Palettable', level15: 'Master of refraction', level20: 'Keeper of the seven hues' },
-        { building: 'Chancemaker', level10: 'Let\'s leaf it at that', level15: 'Seedkeeper of Fortune', level20: 'Master of Maybe' },
-        { building: 'Fractal engine', level10: 'Sierpinski rhomboids', level15: 'Archfractal', level20: 'Lord of Infinite Detail' },
-        { building: 'Javascript console', level10: 'Alexandria', level15: 'Stack tracer', level20: 'Event-loop overlord' },
-        { building: 'Idleverse', level10: 'Strange topologies', level15: 'Canon custodian', level20: 'Keeper of the Uncountable' },
-        { building: 'Cortex baker', level10: 'Gifted', level15: 'Chief Thinker Officer', level20: 'Mind over batter' },
-        { building: 'You', level10: 'Self-improvement', level15: 'Identity custodian', level20: 'First Person Plural' }
+        { building: 'Cursor', level10: 'Freaky jazz hands', level15: 'Rowdy shadow puppets', level15Order: 1070.317, level20: 'Frantic finger guns', level20Order: 1070.327 },
+        { building: 'Grandma', level10: 'Methuselah', level15: 'Loaf & behold', level15Order: 1120.318, level20: 'Forbidden fruitcake', level20Order: 1120.328 },
+        { building: 'Farm', level10: 'Huge tracts of land', level15: 'Huge-er tracts of land', level15Order: 1220.319, level20: 'Hoedown showdown', level20Order: 1220.329 },
+        { building: 'Mine', level10: 'D-d-d-d-deeper', level15: 'Cave-in king', level15Order: 1320.32, level20: 'Digging destiny', level20Order: 1320.33 },
+        { building: 'Factory', level10: 'Patently genius', level15: 'Boilerplate overlord', level15Order: 1420.321, level20: 'Cookie standard time', level20Order: 1420.331 },
+        { building: 'Bank', level10: 'A capital idea', level15: 'Credit conjurer', level15Order: 1445.322, level20: 'Master of the Mint', level20Order: 1445.332 },
+        { building: 'Temple', level10: 'It belongs in a bakery', level15: 'Acolyte ascendant', level15Order: 1470.323, level20: 'Grand hierophant', level20Order: 1470.333 },
+        { building: 'Wizard tower', level10: 'Motormouth', level15: 'Archmage of Meringue', level15Order: 1495.324, level20: 'Chronomancer emeritus', level20Order: 1495.334 },
+        { building: 'Shipment', level10: 'Been there done that', level15: 'Quartermaster of Orbits', level15Order: 1520.325, level20: 'Docking director', level20Order: 1520.335 },
+        { building: 'Alchemy lab', level10: 'Phlogisticated substances', level15: 'Retort wrangler', level15Order: 1620.326, level20: 'Circle of Quintessence', level20Order: 1620.336 },
+        { building: 'Portal', level10: 'Bizarro world', level15: 'Non-Euclidean doorman', level15Order: 1720.327, level20: 'Warden of Elsewhere', level20Order: 1720.337 },
+        { building: 'Time machine', level10: 'The long now', level15: 'Minute handler', level15Order: 1820.328, level20: 'Chronarch supreme', level20Order: 1820.338 },
+        { building: 'Antimatter condenser', level10: 'Chubby hadrons', level15: 'Quark wrangler', level15Order: 1920.329, level20: 'Symmetry breaker', level20Order: 1920.339 },
+        { building: 'Prism', level10: 'Palettable', level15: 'Master of refraction', level15Order: 2020.33, level20: 'Keeper of the seven hues', level20Order: 2020.34 },
+        { building: 'Chancemaker', level10: 'Let\'s leaf it at that', level15: 'Seedkeeper of Fortune', level15Order: 2120.346, level20: 'Master of Maybe', level20Order: 2120.356 },
+        { building: 'Fractal engine', level10: 'Sierpinski rhomboids', level15: 'Archfractal', level15Order: 2220.437, level20: 'Lord of Infinite Detail', level20Order: 2220.447 },
+        { building: 'Javascript console', level10: 'Alexandria', level15: 'Stack tracer', level15Order: 2320.457, level20: 'Event-loop overlord', level20Order: 2320.467 },
+        { building: 'Idleverse', level10: 'Strange topologies', level15: 'Canon custodian', level15Order: 2420.535, level20: 'Keeper of the Uncountable', level20Order: 2420.545 },
+        { building: 'Cortex baker', level10: 'Gifted', level15: 'Chief Thinker Officer', level15Order: 2520.565, level20: 'Mind over batter', level20Order: 2520.575 },
+        { building: 'You', level10: 'Self-improvement', level15: 'Identity custodian', level15Order: 2620.627, level20: 'First Person Plural', level20Order: 2620.637 }
     ]
 };
