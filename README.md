@@ -75,7 +75,7 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 ### Version 0.5.4
 * Lunar New Year! Come celebrate with Just Natural Expansion with this brand new holiday season just released. Find your lucky year and collect lanterns and blessings, may your path be prosperous this year. 
 * Support for new season through terminal, cookie age, etc. 
-* Downline prestiage releases are now sped up in the golden ratio, which honestly makes more sense than what we were doing before. 
+* Downline prestige releases are now sped up in the golden ratio, which honestly makes more sense than what we were doing before. 
 * Fixed a bug that would cause Cookie Monster to enter an infinite loop when using potions that touched the Effs array. 
 * Option O loading should no longer break some Grimoire related heavenly upgrades
 * Additional bug fixes, stability improvements, and general code cleanup and simplification.
