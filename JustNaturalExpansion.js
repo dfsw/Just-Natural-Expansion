@@ -337,6 +337,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             lanternsClicked: 0,
             zodiacVisited: '000000000000'
         };
+        window.JNE_lifetimeData = lifetimeData;
         
         // Reset session tracking variables
         sessionBaselines = {
@@ -631,6 +632,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 pledges: 0,
                 godUsageTime: {}
             };
+            window.JNE_lifetimeData = lifetimeData;
             
             // Reset achievements to unwon state - only for genuine user resets
             modAchievementNames.forEach(name => {
@@ -3218,8 +3220,10 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
 
             // === CLEANUP + REAGENT DROPS ===
             var endMod = "//JNE_CLEANUP\n" +
-                "if(typeof _jneOrigSpend!=='undefined')Game.Spend=_jneOrigSpend;" +
-                "if(typeof _jneOrigPopup!=='undefined')Game.Popup=_jneOrigPopup;" +
+                "var _jneOrigSpend=typeof _jneOrigSpend!=='undefined'?_jneOrigSpend:null;" +
+                "var _jneOrigPopup=typeof _jneOrigPopup!=='undefined'?_jneOrigPopup:null;" +
+                "if(_jneOrigSpend)Game.Spend=_jneOrigSpend;" +
+                "if(_jneOrigPopup)Game.Popup=_jneOrigPopup;" +
                 "if(typeof PotionsM!=='undefined'&&PotionsM&&PotionsM.reagentRollOne&&PotionsM.G&&PotionsM.G.reagents&&!me._predictionMode){" +
                     "var _jneIsWrath=me.wrath>0;" +
                     "var _jneSeason=Game.season||'';" +
@@ -3239,7 +3243,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             
             // Inject at function start after opening brace
             // Match vanilla format: function(me)\n\t\t\t\t{
-            var funcStartRegex = /function\(me\)\s*\n\s*\{/;
+            var funcStartRegex = /function\(me\)\s*[\n\r\s]*\{/;
             str = str.replace(funcStartRegex, "function(me){\n" + selfishnessMod + wrathMod + stormDevotionMod + predictorMod + potionsMod);
             
             // Inject zodiacGC after var list=[] (exact vanilla pattern)
@@ -8228,8 +8232,9 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                         wrinklersPopped: 0,
                         elderCovenantToggles: 0,
                         pledges: 0,
-                                                godUsageTime: {}
+                        godUsageTime: {}
                     };
+                    window.JNE_lifetimeData = lifetimeData;
                     
                     // Reset mod tracking data to default state first
                     modTracking = {
