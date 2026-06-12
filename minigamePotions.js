@@ -3,7 +3,7 @@
 (function() {
 'use strict';
 
-const POTIONS_VERSION = '1.0.4';
+const POTIONS_VERSION = '1.0.5';
 
 var POTIONS_CUSTOM_SPRITE_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
 
@@ -3551,8 +3551,27 @@ PotionsM._updateEffs = function() {
         if ((b = Game.hasBuff('Whisper of Boreas'))) { effs.reindeerGain = (effs.reindeerGain || 1) * b.power; changed = true; }
         if ((b = Game.hasBuff('Whisper of Boreas (misbrewed)'))) { effs.reindeerGain = (effs.reindeerGain || 1) * b.power; changed = true; }
 
-        PotionsM.effs = effs;
-        if (changed) {
+        // Only update effs and trigger recalculation if values actually changed
+        var actuallyChanged = false;
+        var oldEffs = PotionsM.effs || {};
+        for (var key in effs) {
+            if (oldEffs[key] !== effs[key]) {
+                actuallyChanged = true;
+                break;
+            }
+        }
+        // Check if any keys were removed
+        if (!actuallyChanged) {
+            for (var key in oldEffs) {
+                if (!(key in effs)) {
+                    actuallyChanged = true;
+                    break;
+                }
+            }
+        }
+
+        if (actuallyChanged) {
+            PotionsM.effs = effs;
             Game.recalculateGains = 1;
         }
     } finally {

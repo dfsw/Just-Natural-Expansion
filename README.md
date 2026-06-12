@@ -72,13 +72,21 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 
 ## Changelog
 
+### Version 0.5.5
+* Fixed some bugs with lantern count displays in stats. 
+* The data file is never cached anymore, because that was stupid and painted me into a corner. 
+* Refactoring how building upgrades work to make the mod more compatible with Cookie Monster Mod.  
+
 ### Version 0.5.4
 * Lunar New Year! Come celebrate with Just Natural Expansion with this brand new holiday season just released. Find your lucky year and collect lanterns and blessings, may your path be prosperous this year. 
-* Support for new season through terminal, cookie age, etc. 
-* Downline prestige releases are now sped up in the golden ratio, which honestly makes more sense than what we were doing before. 
+* Support for new season through terminal, cookie age, potions class, etc. 
 * Fixed a bug that would cause Cookie Monster to enter an infinite loop when using potions that touched the Effs array. 
 * Option O loading should no longer break some Grimoire related heavenly upgrades
-* Additional bug fixes, stability improvements, and general code cleanup and simplification.
+* Minor tweaks to Potions Class Reagent drop conditions/rates for balance. 
+* Pivot! in Downline may now only be used once an hour. 
+* Downline prestiage releases are now sped up in the golden ratio, which honestly makes more sense than what we were doing before. 
+* Additional bug fixes, stability improvements, and general code cleanup and 
+simplification.
 
 ### Version 0.5.3
 * Updated the logic of how aerated soil works to make it more inline with the intention of the upgrade. 

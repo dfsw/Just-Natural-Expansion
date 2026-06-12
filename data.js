@@ -15,7 +15,7 @@ window.JNEData = {
                     return shouldUnlock;
                 },
                 effect: function() {
-                    return 1;
+
                 },},
             // ORDER UPGRADES - Achievement-based upgrades with CPS scaling
             {
@@ -32,7 +32,7 @@ window.JNEData = {
                     return vanillaStar && (vanillaStar.won == 1 || vanillaStar.won === true);
                 },
                 effect: function() {
-                    return 1;
+
                 },},
             {
                 name: 'Order of the Impossible Batch',
@@ -48,7 +48,7 @@ window.JNEData = {
                     return finalChallenger && (finalChallenger.won == 1 || finalChallenger.won === true);
                 },
                 effect: function() {
-                    return 1;
+
                 },},
             {
                 name: 'Order of the Shining Spoon',
@@ -69,7 +69,7 @@ window.JNEData = {
                            Game.Achievements['Frenzy Marathon'] && Game.Achievements['Frenzy Marathon'].won;
                 },
                 effect: function() {
-                    return 1;
+
                 },},
             {
                 name: 'Order of the Cookie Eclipse',
@@ -98,7 +98,7 @@ window.JNEData = {
                            Game.Achievements['Baker of the Beast'] && Game.Achievements['Baker of the Beast'].won;
                 },
                 effect: function() {
-                    return 1;
+
                 },},
             {
                 name: 'Order of the Enchanted Whisk',
@@ -121,8 +121,9 @@ window.JNEData = {
                            Game.Achievements['Sweet Sorcery'] && Game.Achievements['Sweet Sorcery'].won;
                 },
                 effect: function() {
-                    return 1;
-                },},
+
+                }
+            },
             {
                 name: 'Order of the Eternal Cookie',
                 desc: 'Golden cookies appear <b>5%</b> more often and their effects last <b>5%</b> longer.<br>Unlocked by owning all previous Great Orders of the Cookie Age upgrades.<br>Cost scales with CpS',
@@ -140,1832 +141,9 @@ window.JNEData = {
                            Game.Has('Order of the Enchanted Whisk');
                 },
                 effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Increased Social Security Checks',
-                type: 'discount',
-                building: 'Grandma',
-                desc: 'Grandmas cost <b>5%</b> less.',
-                ddesc: 'Grandmas cost <b>5%</b> less.<q>With better retirement benefits, your grandmas can afford to work for less. They\'re just happy to be baking cookies and staying active.</q>',
-                price: 5e45, // 5 quattuordecillion
-                icon: [1, 0, 'custom'], // Matches 750 threshold (index 0)
-                pool: '',
-                unlockCondition: function() {
-                    var grandmaAmount = Game.Objects['Grandma'] ? Game.Objects['Grandma'].amount : 0;
-                    return grandmaAmount >= 750;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Off-Brand Eyeglasses',
-                type: 'discount',
-                building: 'Grandma',
-                desc: 'Grandmas cost <b>5%</b> less.',
-                ddesc: 'Grandmas cost <b>5%</b> less.<q>Generic reading glasses are just as good as the expensive ones, and they make your grandmas look more distinguished while they bake.</q>',
-                price: 5e49, // 50 quindecillion
-                icon: [1, 2, 'custom'], // Matches 850 threshold (index 2)
-                pool: '',
-                unlockCondition: function() {
-                    var grandmaAmount = Game.Objects['Grandma'] ? Game.Objects['Grandma'].amount : 0;
-                    return grandmaAmount >= 850;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Plastic Walkers',
-                type: 'discount',
-                building: 'Grandma',
-                desc: 'Grandmas cost <b>5%</b> less.',
-                ddesc: 'Grandmas cost <b>5%</b> less.<q>Lightweight, durable, and much cheaper than the fancy ones. Your grandmas can now move around the kitchen more efficiently while saving money.</q>',
-                price: 5e53, // 500 sexdecillion
-                icon: [1, 4, 'custom'], // Matches 950 threshold (index 4)
-                pool: '',
-                unlockCondition: function() {
-                    var grandmaAmount = Game.Objects['Grandma'] ? Game.Objects['Grandma'].amount : 0;
-                    return grandmaAmount >= 950;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Bulk Discount Hearing Aids',
-                type: 'discount',
-                building: 'Grandma',
-                desc: 'Grandmas cost <b>5%</b> less.',
-                ddesc: 'Grandmas cost <b>5%</b> less.<q>Buying hearing aids in bulk saves money, and your grandmas can now hear cookie timers perfectly. What\'s that? They said the cookies are ready!</q>',
-                price: 5e57, // 5 octodecillion
-                icon: [1, 6, 'custom'], // Matches 1050 threshold (index 6)
-                pool: '',
-                unlockCondition: function() {
-                    var grandmaAmount = Game.Objects['Grandma'] ? Game.Objects['Grandma'].amount : 0;
-                    return grandmaAmount >= 1050;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Generic Arthritis Medication',
-                type: 'discount',
-                building: 'Grandma',
-                desc: 'Grandmas cost <b>5%</b> less.',
-                ddesc: 'Grandmas cost <b>5%</b> less.<q>The store brand works just as well as the name brand, and your grandmas can now knead dough without any complaints. Well, fewer complaints.</q>',
-                price: 5e61, // 50 novemdecillion
-                icon: [1, 8, 'custom'], // Matches 1150 threshold (index 8)
-                pool: '',
-                unlockCondition: function() {
-                    var grandmaAmount = Game.Objects['Grandma'] ? Game.Objects['Grandma'].amount : 0;
-                    return grandmaAmount >= 1150;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Wholesale Denture Adhesive',
-                type: 'discount',
-                building: 'Grandma',
-                desc: 'Grandmas cost <b>5%</b> less.',
-                ddesc: 'Grandmas cost <b>5%</b> less.<q>Buying denture adhesive in industrial quantities means your grandmas can smile confidently while tasting their cookie creations. The savings are toothsome!</q>',
-                price: 5e65, // 500 vigintillion
-                icon: [1, 10, 'custom'], // Matches 1250 threshold (index 10)
-                pool: '',
-                unlockCondition: function() {
-                    var grandmaAmount = Game.Objects['Grandma'] ? Game.Objects['Grandma'].amount : 0;
-                    return grandmaAmount >= 1250;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Biodiesel fueled tractors',
-                type: 'discount',
-                building: 'Farm',
-                desc: 'Farms cost <b>5%</b> less.',
-                ddesc: 'Farms cost <b>5%</b> less.<q>Your farms have discovered that running tractors on recycled cooking oil from cookie production is both eco-friendly and surprisingly cost-effective. The tractors smell like fresh cookies now!</q>',
-                price: 5e46, // 50 quattuordecillion
-                icon: [2, 0, 'custom'], // Matches 750 threshold (index 0)
-                pool: '',
-                unlockCondition: function() {
-                    var farmAmount = Game.Objects['Farm'] ? Game.Objects['Farm'].amount : 0;
-                    return farmAmount >= 750;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Free manure from clone factories',
-                type: 'discount',
-                building: 'Farm',
-                desc: 'Farms cost <b>5%</b> less.',
-                ddesc: 'Farms cost <b>5%</b> less.<q>The clone factories produce so much waste that your farms get all the fertilizer they need for free. The cookies grown with this manure taste surprisingly good.</q>',
-                price: 5e50, // 500 quindecillion
-                icon: [2, 2, 'custom'], // Matches 850 threshold (index 2)
-                pool: '',
-                unlockCondition: function() {
-                    var farmAmount = Game.Objects['Farm'] ? Game.Objects['Farm'].amount : 0;
-                    return farmAmount >= 850;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Solar-powered irrigation systems',
-                type: 'discount',
-                building: 'Farm',
-                desc: 'Farms cost <b>5%</b> less.',
-                ddesc: 'Farms cost <b>5%</b> less.<q>Your farms now use solar panels to power their irrigation systems. The cookies grow faster when they\'re watered with sunlight-filtered water, and the energy bills are practically zero.</q>',
-                price: 5e54, // 5 septendecillion
-                icon: [2, 4, 'custom'], // Matches 950 threshold (index 4)
-                pool: '',
-                unlockCondition: function() {
-                    var farmAmount = Game.Objects['Farm'] ? Game.Objects['Farm'].amount : 0;
-                    return farmAmount >= 950;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Bulk seed purchases',
-                type: 'discount',
-                building: 'Farm',
-                desc: 'Farms cost <b>5%</b> less.',
-                ddesc: 'Farms cost <b>5%</b> less.<q>Buying cookie seeds in industrial quantities has dramatically reduced costs. Your farms now have enough seeds to plant cookie forests, and the bulk discount is delicious.</q>',
-                price: 5e58, // 50 octodecillion
-                icon: [2, 6, 'custom'], // Matches 1050 threshold (index 6)
-                pool: '',
-                unlockCondition: function() {
-                    var farmAmount = Game.Objects['Farm'] ? Game.Objects['Farm'].amount : 0;
-                    return farmAmount >= 1050;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Robot farm hands',
-                type: 'discount',
-                building: 'Farm',
-                desc: 'Farms cost <b>5%</b> less.',
-                ddesc: 'Farms cost <b>5%</b> less.<q>Your farms now employ robotic workers who never tire and work for free. They\'re programmed to be gentle with the cookie plants and surprisingly good at telling cookie jokes.</q>',
-                price: 5e62, // 500 novemdecillion
-                icon: [2, 8, 'custom'], // Matches 1150 threshold (index 8)
-                pool: '',
-                unlockCondition: function() {
-                    var farmAmount = Game.Objects['Farm'] ? Game.Objects['Farm'].amount : 0;
-                    return farmAmount >= 1150;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Vertical farming subsidies',
-                type: 'discount',
-                building: 'Farm',
-                desc: 'Farms cost <b>5%</b> less.',
-                ddesc: 'Farms cost <b>5%</b> less.<q>The government is so impressed with your cookie farming innovation that they\'re providing subsidies for vertical farming. Your cookie towers are now taxpayer-funded!</q>',
-                price: 5e66, // 5 unvigintillion
-                icon: [2, 10, 'custom'], // Matches 1250 threshold (index 10)
-                pool: '',
-                unlockCondition: function() {
-                    var farmAmount = Game.Objects['Farm'] ? Game.Objects['Farm'].amount : 0;
-                    return farmAmount >= 1250;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Clearance shaft kits',
-                type: 'discount',
-                building: 'Mine',
-                desc: 'Mines cost <b>5%</b> less.',
-                ddesc: 'Mines cost <b>5%</b> less.<q>Flat-pack mining in a box! Comes with complimentary dust, three bent bolts, and a manual that just says "dig."</q>',
-                price: 5e47, // 500 quattuordecillion
-                icon: [3, 0, 'custom'], // Matches 750 threshold (index 0)
-                pool: '',
-                unlockCondition: function() {
-                    var mineAmount = Game.Objects['Mine'] ? Game.Objects['Mine'].amount : 0;
-                    return mineAmount >= 750;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Punch-card TNT club',
-                type: 'discount',
-                building: 'Mine',
-                desc: 'Mines cost <b>5%</b> less.',
-                ddesc: 'Mines cost <b>5%</b> less.<q>Every tenth kaboom is free. Please remember to validate your detonation.</q>',
-                price: 5e51, // 5 sexdecillion
-                icon: [3, 2, 'custom'], // Matches 850 threshold (index 2)
-                pool: '',
-                unlockCondition: function() {
-                    var mineAmount = Game.Objects['Mine'] ? Game.Objects['Mine'].amount : 0;
-                    return mineAmount >= 850;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Hand-me-down hardhats',
-                type: 'discount',
-                building: 'Mine',
-                desc: 'Mines cost <b>5%</b> less.',
-                ddesc: 'Mines cost <b>5%</b> less.<q>Pre-scuffed for authenticity. Comes with vintage stickers and suspiciously fresh chin straps.</q>',
-                price: 5e55, // 50 septendecillion
-                icon: [3, 4, 'custom'], // Matches 950 threshold (index 4)
-                pool: '',
-                unlockCondition: function() {
-                    var mineAmount = Game.Objects['Mine'] ? Game.Objects['Mine'].amount : 0;
-                    return mineAmount >= 950;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Lease-back drill rigs',
-                type: 'discount',
-                building: 'Mine',
-                desc: 'Mines cost <b>5%</b> less.',
-                ddesc: 'Mines cost <b>5%</b> less.<q>You rent them your rigs; they rent them back to you cheaper. Don’t think about it too hard—just keep drilling.</q>',
-                price: 5e59, // 500 octodecillion
-                icon: [3, 6, 'custom'], // Matches 1050 threshold (index 6)
-                pool: '',
-                unlockCondition: function() {
-                    var mineAmount = Game.Objects['Mine'] ? Game.Objects['Mine'].amount : 0;
-                    return mineAmount >= 1050;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Ore cartel coupons',
-                type: 'discount',
-                building: 'Mine',
-                desc: 'Mines cost <b>5%</b> less.',
-                ddesc: 'Mines cost <b>5%</b> less.<q>Clip these to save big on ironies, aluminums, and suspiciously inexpensive unobtainium.</q>',
-                price: 5e63, // 5 vigintillion
-                icon: [3, 8, 'custom'], // Matches 1150 threshold (index 8)
-                pool: '',
-                unlockCondition: function() {
-                    var mineAmount = Game.Objects['Mine'] ? Game.Objects['Mine'].amount : 0;
-                    return mineAmount >= 1150;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Cave-in insurance kickbacks',
-                type: 'discount',
-                building: 'Mine',
-                desc: 'Mines cost <b>5%</b> less.',
-                ddesc: 'Mines cost <b>5%</b> less.<q>Policy fine print: “cave-ins not included.” The cashback is, though!</q>',
-                price: 5e67, // 50 unvigintillion
-                icon: [3, 10, 'custom'], // Matches 1250 threshold (index 10)
-                pool: '',
-                unlockCondition: function() {
-                    var mineAmount = Game.Objects['Mine'] ? Game.Objects['Mine'].amount : 0;
-                    return mineAmount >= 1250;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Flat-pack factory frames',
-                type: 'discount',
-                building: 'Factory',
-                desc: 'Factories cost <b>5%</b> less.',
-                ddesc: 'Factories cost <b>5%</b> less.<q>Arrives in 47 boxes, 2 mystery bolts, and one tiny allen key. Assembly required; dignity sold separately.</q>',
-                price: 5e48, // 5 quindecillion
-                icon: [4, 0, 'custom'], // Matches 750 threshold (index 0)
-                pool: '',
-                unlockCondition: function() {
-                    var factoryAmount = Game.Objects['Factory'] ? Game.Objects['Factory'].amount : 0;
-                    return factoryAmount >= 750;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'BOGO rivet bins',
-                type: 'discount',
-                building: 'Factory',
-                desc: 'Factories cost <b>5%</b> less.',
-                ddesc: 'Factories cost <b>5%</b> less.<q>Buy one rivet, get one lodged in the break room floor for free. Savings that really fasten your margins.</q>',
-                price: 5e52, // 50 sexdecillion
-                icon: [4, 2, 'custom'], // Matches 850 threshold (index 2)
-                pool: '',
-                unlockCondition: function() {
-                    var factoryAmount = Game.Objects['Factory'] ? Game.Objects['Factory'].amount : 0;
-                    return factoryAmount >= 850;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Off-brand gear grease',
-                type: 'discount',
-                building: 'Factory',
-                desc: 'Factories cost <b>5%</b> less.',
-                ddesc: 'Factories cost <b>5%</b> less.<q>It says "lubricishion" on the drum but the conveyor squeaks stopped and the budget squeals with joy.</q>',
-                price: 5e56, // 500 septendecillion
-                icon: [4, 4, 'custom'], // Matches 950 threshold (index 4)
-                pool: '',
-                unlockCondition: function() {
-                    var factoryAmount = Game.Objects['Factory'] ? Game.Objects['Factory'].amount : 0;
-                    return factoryAmount >= 950;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Misprint warning labels',
-                type: 'discount',
-                building: 'Factory',
-                desc: 'Factories cost <b>5%</b> less.',
-                ddesc: 'Factories cost <b>5%</b> less.<q>"DO NOT NOT TOUCH" and "CAUTION: SPICY ELECTRICITY" — flawed labels at flawless prices.</q>',
-                price: 5e60, // 5 novemdecillion
-                icon: [4, 6, 'custom'], // Matches 1050 threshold (index 6)
-                pool: '',
-                unlockCondition: function() {
-                    var factoryAmount = Game.Objects['Factory'] ? Game.Objects['Factory'].amount : 0;
-                    return factoryAmount >= 1050;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Pallet-jack rebates',
-                type: 'discount',
-                building: 'Factory',
-                desc: 'Factories cost <b>5%</b> less.',
-                ddesc: 'Factories cost <b>5%</b> less.<q>Return three worn wheels and a heartfelt shrug to receive instant savings on moving heavy expectations.</q>',
-                price: 5e64, // 50 vigintillion
-                icon: [4, 8, 'custom'], // Matches 1150 threshold (index 8)
-                pool: '',
-                unlockCondition: function() {
-                    var factoryAmount = Game.Objects['Factory'] ? Game.Objects['Factory'].amount : 0;
-                    return factoryAmount >= 1150;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Prefab cookie modules',
-                type: 'discount',
-                building: 'Factory',
-                desc: 'Factories cost <b>5%</b> less.',
-                ddesc: 'Factories cost <b>5%</b> less.<q>Snap together a fully functional bakery block before lunch. Some assembly lines may snap back.</q>',
-                price: 5e68, // 500 unvigintillion
-                icon: [4, 10, 'custom'], // Matches 1250 threshold (index 10)
-                pool: '',
-                unlockCondition: function() {
-                    var factoryAmount = Game.Objects['Factory'] ? Game.Objects['Factory'].amount : 0;
-                    return factoryAmount >= 1250;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Piggy buyback bonanza',
-                type: 'discount',
-                building: 'Bank',
-                desc: 'Banks cost <b>5%</b> less.',
-                ddesc: 'Banks cost <b>5%</b> less.<q>We buy your old piggy banks for scrap, you get bulk rates on brand-new savings. Oink if you love rebates.</q>',
-                price: 5e49, // 50 quindecillion
-                icon: [13, 0, 'custom'], // Matches 750 threshold (index 0)
-                pool: '',
-                unlockCondition: function() {
-                    var bankAmount = Game.Objects['Bank'] ? Game.Objects['Bank'].amount : 0;
-                    return bankAmount >= 750;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Vault door floor-models',
-                type: 'discount',
-                building: 'Bank',
-                desc: 'Banks cost <b>5%</b> less.',
-                ddesc: 'Banks cost <b>5%</b> less.<q>Slightly scuffed, mostly secure, and drastically discounted. May include complimentary salesperson fingerprints.</q>',
-                price: 5e53, // 500 sexdecillion
-                icon: [13, 2, 'custom'], // Matches 850 threshold (index 2)
-                pool: '',
-                unlockCondition: function() {
-                    var bankAmount = Game.Objects['Bank'] ? Game.Objects['Bank'].amount : 0;
-                    return bankAmount >= 850;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Pen-on-a-chain procurement',
-                type: 'discount',
-                building: 'Bank',
-                desc: 'Banks cost <b>5%</b> less.',
-                ddesc: 'Banks cost <b>5%</b> less.<q>We negotiated a lifetime supply of those pens everyone “borrows”. Budgets balanced; chains tested for tensile sass.</q>',
-                price: 5e57, // 5 octodecillion
-                icon: [13, 4, 'custom'], // Matches 950 threshold (index 4)
-                pool: '',
-                unlockCondition: function() {
-                    var bankAmount = Game.Objects['Bank'] ? Game.Objects['Bank'].amount : 0;
-                    return bankAmount >= 950;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Complimentary complimentary mints',
-                type: 'discount',
-                building: 'Bank',
-                desc: 'Banks cost <b>5%</b> less.',
-                ddesc: 'Banks cost <b>5%</b> less.<q>They’re free. The mints are free. The sign telling you they’re complimentary is also complimentary.</q>',
-                price: 5e61, // 50 novemdecillion
-                icon: [13, 6, 'custom'], // Matches 1050 threshold (index 6)
-                pool: '',
-                unlockCondition: function() {
-                    var bankAmount = Game.Objects['Bank'] ? Game.Objects['Bank'].amount : 0;
-                    return bankAmount >= 1050;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Fee waiver wavers',
-                type: 'discount',
-                building: 'Bank',
-                desc: 'Banks cost <b>5%</b> less.',
-                ddesc: 'Banks cost <b>5%</b> less.<q>Wave the fee, waive the fee—our interns practiced both until the numbers surrendered.</q>',
-                price: 5e65, // 500 vigintillion
-                icon: [13, 8, 'custom'], // Matches 1150 threshold (index 8)
-                pool: '',
-                unlockCondition: function() {
-                    var bankAmount = Game.Objects['Bank'] ? Game.Objects['Bank'].amount : 0;
-                    return bankAmount >= 1150;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Dough Jones clearance',
-                type: 'discount',
-                building: 'Bank',
-                desc: 'Banks cost <b>5%</b> less.',
-                ddesc: 'Banks cost <b>5%</b> less.<q>The market dipped; we scooped vault carpeting and gold-plated clipboards by the pallet. Buy low, bank lower.</q>',
-                price: 5e69, // 5 duovigintillion
-                icon: [13, 10, 'custom'], // Matches 1250 threshold (index 10)
-                pool: '',
-                unlockCondition: function() {
-                    var bankAmount = Game.Objects['Bank'] ? Game.Objects['Bank'].amount : 0;
-                    return bankAmount >= 1250;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Tithe punch cards',
-                type: 'discount',
-                building: 'Temple',
-                desc: 'Temples cost <b>5%</b> less.',
-                ddesc: 'Temples cost <b>5%</b> less.<q>Pray ten times, the eleventh comes with a coupon. Blessings accrue interest; salvation may vary.</q>',
-                price: 5e50, // 500 quindecillion
-                icon: [14, 0, 'custom'], // Matches 750 threshold (index 0)
-                pool: '',
-                unlockCondition: function() {
-                    var templeAmount = Game.Objects['Temple'] ? Game.Objects['Temple'].amount : 0;
-                    return templeAmount >= 750;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Relic replica racks',
-                type: 'discount',
-                building: 'Temple',
-                desc: 'Temples cost <b>5%</b> less.',
-                ddesc: 'Temples cost <b>5%</b> less.<q>Authentically inauthentic! Perfect for display, fundraising, and keeping the real relics safe in a sock drawer.</q>',
-                price: 5e54, // 5 septendecillion
-                icon: [14, 2, 'custom'], // Matches 850 threshold (index 2)
-                pool: '',
-                unlockCondition: function() {
-                    var templeAmount = Game.Objects['Temple'] ? Game.Objects['Temple'].amount : 0;
-                    return templeAmount >= 850;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Incense refill program',
-                type: 'discount',
-                building: 'Temple',
-                desc: 'Temples cost <b>5%</b> less.',
-                ddesc: 'Temples cost <b>5%</b> less.<q>Bring back your incense stubs for a discount on fresh sticks. Smells like savings (and nutmeg).</q>',
-                price: 5e58, // 50 octodecillion
-                icon: [14, 4, 'custom'], // Matches 950 threshold (index 4)
-                pool: '',
-                unlockCondition: function() {
-                    var templeAmount = Game.Objects['Temple'] ? Game.Objects['Temple'].amount : 0;
-                    return templeAmount >= 950;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Chant-o-matic hymn reels',
-                type: 'discount',
-                building: 'Temple',
-                desc: 'Temples cost <b>5%</b> less.',
-                ddesc: 'Temples cost <b>5%</b> less.<q>Wind them up for a full liturgical set in C Major. Now with extended Amen remix.</q>',
-                price: 5e62, // 500 novemdecillion
-                icon: [14, 6, 'custom'], // Matches 1050 threshold (index 6)
-                pool: '',
-                unlockCondition: function() {
-                    var templeAmount = Game.Objects['Temple'] ? Game.Objects['Temple'].amount : 0;
-                    return templeAmount >= 1050;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Pew-per-view sponsorships',
-                type: 'discount',
-                building: 'Temple',
-                desc: 'Temples cost <b>5%</b> less.',
-                ddesc: 'Temples cost <b>5%</b> less.<q>Local businesses sponsor your pews. Sit in Savings Row, brought to you by Discount Chalice Emporium.</q>',
-                price: 5e66, // 5 unvigintillion
-                icon: [14, 8, 'custom'], // Matches 1150 threshold (index 8)
-                pool: '',
-                unlockCondition: function() {
-                    var templeAmount = Game.Objects['Temple'] ? Game.Objects['Temple'].amount : 0;
-                    return templeAmount >= 1150;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Sacred site tax amnesty',
-                type: 'discount',
-                building: 'Temple',
-                desc: 'Temples cost <b>5%</b> less.',
-                ddesc: 'Temples cost <b>5%</b> less.<q>Pilgrims rejoice; accountants rejoice harder. Certain restrictions (and miracles) apply.</q>',
-                price: 5e70, // 50 duovigintillion
-                icon: [14, 10, 'custom'], // Matches 1250 threshold (index 10)
-                pool: '',
-                unlockCondition: function() {
-                    var templeAmount = Game.Objects['Temple'] ? Game.Objects['Temple'].amount : 0;
-                    return templeAmount >= 1250;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Wand warranty returns',
-                type: 'discount',
-                building: 'Wizard tower',
-                desc: 'Wizard towers cost <b>5%</b> less.',
-                ddesc: 'Wizard towers cost <b>5%</b> less.<q>Returned within 30 days of transmogrification. Minor scorch marks add character.</q>',
-                price: 5e51, // 5 sexdecillion
-                icon: [15, 0, 'custom'], // Matches 750 threshold (index 0)
-                pool: '',
-                unlockCondition: function() {
-                    var wizardTowerAmount = Game.Objects['Wizard tower'] ? Game.Objects['Wizard tower'].amount : 0;
-                    return wizardTowerAmount >= 750;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Grimoire remainder sale',
-                type: 'discount',
-                building: 'Wizard tower',
-                desc: 'Wizard towers cost <b>5%</b> less.',
-                ddesc: 'Wizard towers cost <b>5%</b> less.<q>Spellbooks with the last page missing. The twist ending is cheaper anyway.</q>',
-                price: 5e55, // 50 septendecillion
-                icon: [15, 2, 'custom'], // Matches 850 threshold (index 2)
-                pool: '',
-                unlockCondition: function() {
-                    var wizardTowerAmount = Game.Objects['Wizard tower'] ? Game.Objects['Wizard tower'].amount : 0;
-                    return wizardTowerAmount >= 850;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Robes with "character"',
-                type: 'discount',
-                building: 'Wizard tower',
-                desc: 'Wizard towers cost <b>5%</b> less.',
-                ddesc: 'Wizard towers cost <b>5%</b> less.<q>Vintage, moth-kissed, and pockets full of mysterious lint. Very arcane, very affordable.</q>',
-                price: 5e59, // 500 octodecillion
-                icon: [15, 4, 'custom'], // Matches 950 threshold (index 4)
-                pool: '',
-                unlockCondition: function() {
-                    var wizardTowerAmount = Game.Objects['Wizard tower'] ? Game.Objects['Wizard tower'].amount : 0;
-                    return wizardTowerAmount >= 950;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Familiar foster program',
-                type: 'discount',
-                building: 'Wizard tower',
-                desc: 'Wizard towers cost <b>5%</b> less.',
-                ddesc: 'Wizard towers cost <b>5%</b> less.<q>Give a stray imp a home and it will fetch reagents, guard cauldrons, and occasionally judge your hat.</q>',
-                price: 5e63, // 5 vigintillion
-                icon: [15, 6, 'custom'], // Matches 1050 threshold (index 6)
-                pool: '',
-                unlockCondition: function() {
-                    var wizardTowerAmount = Game.Objects['Wizard tower'] ? Game.Objects['Wizard tower'].amount : 0;
-                    return wizardTowerAmount >= 1050;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Council scroll stipends',
-                type: 'discount',
-                building: 'Wizard tower',
-                desc: 'Wizard towers cost <b>5%</b> less.',
-                ddesc: 'Wizard towers cost <b>5%</b> less.<q>Stipends for parchment, ink, and the occasional sworn oath. Please initial with runes.</q>',
-                price: 5e67, // 50 unvigintillion
-                icon: [15, 8, 'custom'], // Matches 1150 threshold (index 8)
-                pool: '',
-                unlockCondition: function() {
-                    var wizardTowerAmount = Game.Objects['Wizard tower'] ? Game.Objects['Wizard tower'].amount : 0;
-                    return wizardTowerAmount >= 1150;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Broom-sharing scheme',
-                type: 'discount',
-                building: 'Wizard tower',
-                desc: 'Wizard towers cost <b>5%</b> less.',
-                ddesc: 'Wizard towers cost <b>5%</b> less.<q>One broom, many roommates. Please schedule your midnight flights responsibly.</q>',
-                price: 5e71, // 500 duovigintillion
-                icon: [15, 10, 'custom'], // Matches 1250 threshold (index 10)
-                pool: '',
-                unlockCondition: function() {
-                    var wizardTowerAmount = Game.Objects['Wizard tower'] ? Game.Objects['Wizard tower'].amount : 0;
-                    return wizardTowerAmount >= 1250;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Retired cargo pods',
-                type: 'discount',
-                building: 'Shipment',
-                desc: 'Shipments cost <b>5%</b> less.',
-                ddesc: 'Shipments cost <b>5%</b> less.<q>Previously orbited. Lightly meteor-kissed. Still airtight (mostly).</q>',
-                price: 5e52, // 50 sexdecillion
-                icon: [5, 0, 'custom'], // Matches 750 threshold (index 0)
-                pool: '',
-                unlockCondition: function() {
-                    var shipmentAmount = Game.Objects['Shipment'] ? Game.Objects['Shipment'].amount : 0;
-                    return shipmentAmount >= 750;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Container co-op cards',
-                type: 'discount',
-                building: 'Shipment',
-                desc: 'Shipments cost <b>5%</b> less.',
-                ddesc: 'Shipments cost <b>5%</b> less.<q>Members share containers, points, and an inexplicable fondness for pallet forts.</q>',
-                price: 5e56, // 500 septendecillion
-                icon: [5, 2, 'custom'], // Matches 850 threshold (index 2)
-                pool: '',
-                unlockCondition: function() {
-                    var shipmentAmount = Game.Objects['Shipment'] ? Game.Objects['Shipment'].amount : 0;
-                    return shipmentAmount >= 850;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Reusable launch crates',
-                type: 'discount',
-                building: 'Shipment',
-                desc: 'Shipments cost <b>5%</b> less.',
-                ddesc: 'Shipments cost <b>5%</b> less.<q>Return for deposit and a complimentary dent count. Blast off again and again.</q>',
-                price: 5e60, // 5 novemdecillion
-                icon: [5, 4, 'custom'], // Matches 950 threshold (index 4)
-                pool: '',
-                unlockCondition: function() {
-                    var shipmentAmount = Game.Objects['Shipment'] ? Game.Objects['Shipment'].amount : 0;
-                    return shipmentAmount >= 950;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Autodocker apprentices',
-                type: 'discount',
-                building: 'Shipment',
-                desc: 'Shipments cost <b>5%</b> less.',
-                ddesc: 'Shipments cost <b>5%</b> less.<q>They learn by bumping every harbor gently, then sending a heartfelt apology ping.</q>',
-                price: 5e64, // 50 vigintillion
-                icon: [5, 6, 'custom'], // Matches 1050 threshold (index 6)
-                pool: '',
-                unlockCondition: function() {
-                    var shipmentAmount = Game.Objects['Shipment'] ? Game.Objects['Shipment'].amount : 0;
-                    return shipmentAmount >= 1050;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Route rebate vouchers',
-                type: 'discount',
-                building: 'Shipment',
-                desc: 'Shipments cost <b>5%</b> less.',
-                ddesc: 'Shipments cost <b>5%</b> less.<q>Redeem along preferred lanes for discounts and occasional scenic detours.</q>',
-                price: 5e68, // 500 unvigintillion
-                icon: [5, 8, 'custom'], // Matches 1150 threshold (index 8)
-                pool: '',
-                unlockCondition: function() {
-                    var shipmentAmount = Game.Objects['Shipment'] ? Game.Objects['Shipment'].amount : 0;
-                    return shipmentAmount >= 1150;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Free-trade cookie ports',
-                type: 'discount',
-                building: 'Shipment',
-                desc: 'Shipments cost <b>5%</b> less.',
-                ddesc: 'Shipments cost <b>5%</b> less.<q>Tariffs take a coffee break, cranes work overtime. Paperwork now served with biscotti.</q>',
-                price: 5e72, // 5 trevigintillion
-                icon: [5, 10, 'custom'], // Matches 1250 threshold (index 10)
-                pool: '',
-                unlockCondition: function() {
-                    var shipmentAmount = Game.Objects['Shipment'] ? Game.Objects['Shipment'].amount : 0;
-                    return shipmentAmount >= 1250;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Beaker buybacks',
-                type: 'discount',
-                building: 'Alchemy lab',
-                desc: 'Alchemy labs cost <b>5%</b> less.',
-                ddesc: 'Alchemy labs cost <b>5%</b> less.<q>Trade in cracked glassware for shiny almost-new beakers. Some have personality bubbles.</q>',
-                price: 5e53, // 500 sexdecillion
-                icon: [6, 0, 'custom'], // Matches 750 threshold (index 0)
-                pool: '',
-                unlockCondition: function() {
-                    var alchemyLabAmount = Game.Objects['Alchemy lab'] ? Game.Objects['Alchemy lab'].amount : 0;
-                    return alchemyLabAmount >= 750;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Philosopher\'s pebbles',
-                type: 'discount',
-                building: 'Alchemy lab',
-                desc: 'Alchemy labs cost <b>5%</b> less.',
-                ddesc: 'Alchemy labs cost <b>5%</b> less.<q>Bulk-bought bits of the legendary rock. Not quite stones—more like budget-friendly pebbles with surprisingly similar savings.</q>',
-                price: 5e57, // 5 octodecillion
-                icon: [6, 2, 'custom'], // Matches 850 threshold (index 2)
-                pool: '',
-                unlockCondition: function() {
-                    var alchemyLabAmount = Game.Objects['Alchemy lab'] ? Game.Objects['Alchemy lab'].amount : 0;
-                    return alchemyLabAmount >= 850;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Cool-running crucibles',
-                type: 'discount',
-                building: 'Alchemy lab',
-                desc: 'Alchemy labs cost <b>5%</b> less.',
-                ddesc: 'Alchemy labs cost <b>5%</b> less.<q>They simmer at savings and rarely explode out of spite. Rarely.</q>',
-                price: 5e61, // 50 novemdecillion
-                icon: [6, 4, 'custom'], // Matches 950 threshold (index 4)
-                pool: '',
-                unlockCondition: function() {
-                    var alchemyLabAmount = Game.Objects['Alchemy lab'] ? Game.Objects['Alchemy lab'].amount : 0;
-                    return alchemyLabAmount >= 950;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Batch homunculi permits',
-                type: 'discount',
-                building: 'Alchemy lab',
-                desc: 'Alchemy labs cost <b>5%</b> less.',
-                ddesc: 'Alchemy labs cost <b>5%</b> less.<q>Legal recognition for small goo people doing big batch work. Includes tiny hairnets.</q>',
-                price: 5e65, // 500 vigintillion
-                icon: [6, 6, 'custom'], // Matches 1050 threshold (index 6)
-                pool: '',
-                unlockCondition: function() {
-                    var alchemyLabAmount = Game.Objects['Alchemy lab'] ? Game.Objects['Alchemy lab'].amount : 0;
-                    return alchemyLabAmount >= 1050;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Guild reagent rates',
-                type: 'discount',
-                building: 'Alchemy lab',
-                desc: 'Alchemy labs cost <b>5%</b> less.',
-                ddesc: 'Alchemy labs cost <b>5%</b> less.<q>Member pricing on phoenix down, dragonfruit essence, and ethically sourced eldritch goo.</q>',
-                price: 5e69, // 5 duovigintillion
-                icon: [6, 8, 'custom'], // Matches 1150 threshold (index 8)
-                pool: '',
-                unlockCondition: function() {
-                    var alchemyLabAmount = Game.Objects['Alchemy lab'] ? Game.Objects['Alchemy lab'].amount : 0;
-                    return alchemyLabAmount >= 1150;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: '"Mostly lead" gold grants',
-                type: 'discount',
-                building: 'Alchemy lab',
-                desc: 'Alchemy labs cost <b>5%</b> less.',
-                ddesc: 'Alchemy labs cost <b>5%</b> less.<q>Funding for ambitious projects that turn profits into more profits, occasionally metal into other metal.</q>',
-                price: 5e73, // 50 trevigintillion
-                icon: [6, 10, 'custom'], // Matches 1250 threshold (index 10)
-                pool: '',
-                unlockCondition: function() {
-                    var alchemyLabAmount = Game.Objects['Alchemy lab'] ? Game.Objects['Alchemy lab'].amount : 0;
-                    return alchemyLabAmount >= 1250;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Pre-owned ring frames',
-                type: 'discount',
-                building: 'Portal',
-                desc: 'Portals cost <b>5%</b> less.',
-                ddesc: 'Portals cost <b>5%</b> less.<q>Lightly used by previous dimensions. May creak audibly when reality bends.</q>',
-                price: 5e54, // 5 septendecillion
-                icon: [7, 0, 'custom'], // Matches 750 threshold (index 0)
-                pool: '',
-                unlockCondition: function() {
-                    var portalAmount = Game.Objects['Portal'] ? Game.Objects['Portal'].amount : 0;
-                    return portalAmount >= 750;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Anchor warehouse club',
-                type: 'discount',
-                building: 'Portal',
-                desc: 'Portals cost <b>5%</b> less.',
-                ddesc: 'Portals cost <b>5%</b> less.<q>Wholesale anchors! Keep your gateways grounded, your prices too.</q>',
-                price: 5e58, // 50 octodecillion
-                icon: [7, 2, 'custom'], // Matches 850 threshold (index 2)
-                pool: '',
-                unlockCondition: function() {
-                    var portalAmount = Game.Objects['Portal'] ? Game.Objects['Portal'].amount : 0;
-                    return portalAmount >= 850;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Passive rift baffles',
-                type: 'discount',
-                building: 'Portal',
-                desc: 'Portals cost <b>5%</b> less.',
-                ddesc: 'Portals cost <b>5%</b> less.<q>Simple fins that hush the howling void and cut the utility bill in half.</q>',
-                price: 5e62, // 500 novemdecillion
-                icon: [7, 4, 'custom'], // Matches 950 threshold (index 4)
-                pool: '',
-                unlockCondition: function() {
-                    var portalAmount = Game.Objects['Portal'] ? Game.Objects['Portal'].amount : 0;
-                    return portalAmount >= 950;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Volunteer gatekeepers',
-                type: 'discount',
-                building: 'Portal',
-                desc: 'Portals cost <b>5%</b> less.',
-                ddesc: 'Portals cost <b>5%</b> less.<q>Enthusiasts with clipboards who shout "Mind the tear!" and hand out cookies.</q>',
-                price: 5e66, // 5 unvigintillion
-                icon: [7, 6, 'custom'], // Matches 1050 threshold (index 6)
-                pool: '',
-                unlockCondition: function() {
-                    var portalAmount = Game.Objects['Portal'] ? Game.Objects['Portal'].amount : 0;
-                    return portalAmount >= 1050;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Interrealm stipend scrolls',
-                type: 'discount',
-                building: 'Portal',
-                desc: 'Portals cost <b>5%</b> less.',
-                ddesc: 'Portals cost <b>5%</b> less.<q>Official parchments granting snack stipends to keep doors open and demons docile.</q>',
-                price: 5e70, // 50 duovigintillion
-                icon: [7, 8, 'custom'], // Matches 1150 threshold (index 8)
-                pool: '',
-                unlockCondition: function() {
-                    var portalAmount = Game.Objects['Portal'] ? Game.Objects['Portal'].amount : 0;
-                    return portalAmount >= 1150;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Multiversal enterprise zone',
-                type: 'discount',
-                building: 'Portal',
-                desc: 'Portals cost <b>5%</b> less.',
-                ddesc: 'Portals cost <b>5%</b> less.<q>Business-friendly realities with tax holidays, physics optional, pastries encouraged.</q>',
-                price: 5e74, // 500 trevigintillion
-                icon: [7, 10, 'custom'], // Matches 1250 threshold (index 10)
-                pool: '',
-                unlockCondition: function() {
-                    var portalAmount = Game.Objects['Portal'] ? Game.Objects['Portal'].amount : 0;
-                    return portalAmount >= 1250;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Pre-loved hourglasses',
-                type: 'discount',
-                building: 'Time machine',
-                desc: 'Time machines cost <b>5%</b> less.',
-                ddesc: 'Time machines cost <b>5%</b> less.<q>They’ve seen some things. Sand flows fine; occasional deja vu included.</q>',
-                price: 5e55, // 50 septendecillion
-                icon: [8, 0, 'custom'], // Matches 750 threshold (index 0)
-                pool: '',
-                unlockCondition: function() {
-                    var timeMachineAmount = Game.Objects['Time machine'] ? Game.Objects['Time machine'].amount : 0;
-                    return timeMachineAmount >= 750;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Depreciated timeline scraps',
-                type: 'discount',
-                building: 'Time machine',
-                desc: 'Time machines cost <b>5%</b> less.',
-                ddesc: 'Time machines cost <b>5%</b> less.<q>Leftover future-past parts at clearance prices. Warranty voids itself retroactively.</q>',
-                price: 5e59, // 500 octodecillion
-                icon: [8, 2, 'custom'], // Matches 850 threshold (index 2)
-                pool: '',
-                unlockCondition: function() {
-                    var timeMachineAmount = Game.Objects['Time machine'] ? Game.Objects['Time machine'].amount : 0;
-                    return timeMachineAmount >= 850;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Off-season flux valves',
-                type: 'discount',
-                building: 'Time machine',
-                desc: 'Time machines cost <b>5%</b> less.',
-                ddesc: 'Time machines cost <b>5%</b> less.<q>Winter flux on summer sale; flows like syrup on a cold morning.</q>',
-                price: 5e63, // 5 vigintillion
-                icon: [8, 4, 'custom'], // Matches 950 threshold (index 4)
-                pool: '',
-                unlockCondition: function() {
-                    var timeMachineAmount = Game.Objects['Time machine'] ? Game.Objects['Time machine'].amount : 0;
-                    return timeMachineAmount >= 950;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Weekend paradox passes',
-                type: 'discount',
-                building: 'Time machine',
-                desc: 'Time machines cost <b>5%</b> less.',
-                ddesc: 'Time machines cost <b>5%</b> less.<q>Unlimited round-trips between Friday and Monday. Terms loop perpetually.</q>',
-                price: 5e67, // 50 unvigintillion
-                icon: [8, 6, 'custom'], // Matches 1050 threshold (index 6)
-                pool: '',
-                unlockCondition: function() {
-                    var timeMachineAmount = Game.Objects['Time machine'] ? Game.Objects['Time machine'].amount : 0;
-                    return timeMachineAmount >= 1050;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Department of When grants',
-                type: 'discount',
-                building: 'Time machine',
-                desc: 'Time machines cost <b>5%</b> less.',
-                ddesc: 'Time machines cost <b>5%</b> less.<q>Official funding to keep the clock from quitting and causality from filing complaints.</q>',
-                price: 5e71, // 500 duovigintillion
-                icon: [8, 8, 'custom'], // Matches 1150 threshold (index 8)
-                pool: '',
-                unlockCondition: function() {
-                    var timeMachineAmount = Game.Objects['Time machine'] ? Game.Objects['Time machine'].amount : 0;
-                    return timeMachineAmount >= 1150;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Antique warranty loopholes',
-                type: 'discount',
-                building: 'Time machine',
-                desc: 'Time machines cost <b>5%</b> less.',
-                ddesc: 'Time machines cost <b>5%</b> less.<q>Warranties that expire yesterday can’t be voided today. That’s just science.</q>',
-                price: 5e75, // 5 quattuorvigintillion
-                icon: [8, 10, 'custom'], // Matches 1250 threshold (index 10)
-                pool: '',
-                unlockCondition: function() {
-                    var timeMachineAmount = Game.Objects['Time machine'] ? Game.Objects['Time machine'].amount : 0;
-                    return timeMachineAmount >= 1250;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Certified negamatter cans',
-                type: 'discount',
-                building: 'Antimatter condenser',
-                desc: 'Antimatter condensers cost <b>5%</b> less.',
-                ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>Pre-certified, lightly cursed containment vessels. Store your nothing where it belongs.</q>',
-                price: 5e56, // 500 septendecillion
-                icon: [11, 0, 'custom'], // Matches 750 threshold (index 0)
-                pool: '',
-                unlockCondition: function() {
-                    var antimatterCondenserAmount = Game.Objects['Antimatter condenser'] ? Game.Objects['Antimatter condenser'].amount : 0;
-                    return antimatterCondenserAmount >= 750;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Matter swap rebates',
-                type: 'discount',
-                building: 'Antimatter condenser',
-                desc: 'Antimatter condensers cost <b>5%</b> less.',
-                ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>Trade in your old matter for upgraded matter. Some terms may invert unexpectedly.</q>',
-                price: 5e60, // 5 novemdecillion
-                icon: [11, 2, 'custom'], // Matches 850 threshold (index 2)
-                pool: '',
-                unlockCondition: function() {
-                    var antimatterCondenserAmount = Game.Objects['Antimatter condenser'] ? Game.Objects['Antimatter condenser'].amount : 0;
-                    return antimatterCondenserAmount >= 850;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Low-idle annihilators',
-                type: 'discount',
-                building: 'Antimatter condenser',
-                desc: 'Antimatter condensers cost <b>5%</b> less.',
-                ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>They hum quietly and only obliterate the bare minimum of existence during lunch.</q>',
-                price: 5e64, // 50 vigintillion
-                icon: [11, 4, 'custom'], // Matches 950 threshold (index 4)
-                pool: '',
-                unlockCondition: function() {
-                    var antimatterCondenserAmount = Game.Objects['Antimatter condenser'] ? Game.Objects['Antimatter condenser'].amount : 0;
-                    return antimatterCondenserAmount >= 950;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Grad-lab particle labor',
-                type: 'discount',
-                building: 'Antimatter condenser',
-                desc: 'Antimatter condensers cost <b>5%</b> less.',
-                ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>Enthusiastic assistants accelerate savings (and particles) for the promise of “experience”.</q>',
-                price: 5e68, // 500 unvigintillion
-                icon: [11, 6, 'custom'], // Matches 1050 threshold (index 6)
-                pool: '',
-                unlockCondition: function() {
-                    var antimatterCondenserAmount = Game.Objects['Antimatter condenser'] ? Game.Objects['Antimatter condenser'].amount : 0;
-                    return antimatterCondenserAmount >= 1050;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Institute endowment match',
-                type: 'discount',
-                building: 'Antimatter condenser',
-                desc: 'Antimatter condensers cost <b>5%</b> less.',
-                ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>Philanthropy meets physics: every cookie you invest is matched by a very generous boson.</q>',
-                price: 5e72, // 5 trevigintillion
-                icon: [11, 8, 'custom'], // Matches 1150 threshold (index 8)
-                pool: '',
-                unlockCondition: function() {
-                    var antimatterCondenserAmount = Game.Objects['Antimatter condenser'] ? Game.Objects['Antimatter condenser'].amount : 0;
-                    return antimatterCondenserAmount >= 1150;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Void-zone incentives',
-                type: 'discount',
-                building: 'Antimatter condenser',
-                desc: 'Antimatter condensers cost <b>5%</b> less.',
-                ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>Tax breaks for building where reality is thinnest. Perfect for negative overhead.</q>',
-                price: 5e76, // 50 quattuorvigintillion
-                icon: [11, 10, 'custom'], // Matches 1250 threshold (index 10)
-                pool: '',
-                unlockCondition: function() {
-                    var antimatterCondenserAmount = Game.Objects['Antimatter condenser'] ? Game.Objects['Antimatter condenser'].amount : 0;
-                    return antimatterCondenserAmount >= 1250;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Lens co-op exchange',
-                type: 'discount',
-                building: 'Prism',
-                desc: 'Prisms cost <b>5%</b> less.',
-                ddesc: 'Prisms cost <b>5%</b> less.<q>Swap scratches for savings. Community-sourced optics with community-sourced fingerprints.</q>',
-                price: 5e58, // 50 octodecillion
-                icon: [12, 0, 'custom'], // Matches 750 threshold (index 0)
-                pool: '',
-                unlockCondition: function() {
-                    var prismAmount = Game.Objects['Prism'] ? Game.Objects['Prism'].amount : 0;
-                    return prismAmount >= 750;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Spectral seconds',
-                type: 'discount',
-                building: 'Prism',
-                desc: 'Prisms cost <b>5%</b> less.',
-                ddesc: 'Prisms cost <b>5%</b> less.<q>Factory blemishes. Perfect rainbows, slightly embarrassed casings.</q>',
-                price: 5e62, // 500 novemdecillion
-                icon: [12, 2, 'custom'], // Matches 850 threshold (index 2)
-                pool: '',
-                unlockCondition: function() {
-                    var prismAmount = Game.Objects['Prism'] ? Game.Objects['Prism'].amount : 0;
-                    return prismAmount >= 850;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Sleep-mode rainbows',
-                type: 'discount',
-                building: 'Prism',
-                desc: 'Prisms cost <b>5%</b> less.',
-                ddesc: 'Prisms cost <b>5%</b> less.<q>They dim themselves when you look away. Shy, efficient, dazzling when ready.</q>',
-                price: 5e66, // 5 unvigintillion
-                icon: [12, 4, 'custom'], // Matches 950 threshold (index 4)
-                pool: '',
-                unlockCondition: function() {
-                    var prismAmount = Game.Objects['Prism'] ? Game.Objects['Prism'].amount : 0;
-                    return prismAmount >= 950;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Apprentice refractioneers',
-                type: 'discount',
-                building: 'Prism',
-                desc: 'Prisms cost <b>5%</b> less.',
-                ddesc: 'Prisms cost <b>5%</b> less.<q>Trainees with straightedges and boundless optimism. Do not stare directly at their enthusiasm.</q>',
-                price: 5e70, // 50 duovigintillion
-                icon: [12, 6, 'custom'], // Matches 1050 threshold (index 6)
-                pool: '',
-                unlockCondition: function() {
-                    var prismAmount = Game.Objects['Prism'] ? Game.Objects['Prism'].amount : 0;
-                    return prismAmount >= 1050;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Arts-of-Optics grants',
-                type: 'discount',
-                building: 'Prism',
-                desc: 'Prisms cost <b>5%</b> less.',
-                ddesc: 'Prisms cost <b>5%</b> less.<q>Funding for cultural light projects: installations, refractions, and occasional tasteful lens flares.</q>',
-                price: 5e74, // 500 trevigintillion
-                icon: [12, 8, 'custom'], // Matches 1150 threshold (index 8)
-                pool: '',
-                unlockCondition: function() {
-                    var prismAmount = Game.Objects['Prism'] ? Game.Objects['Prism'].amount : 0;
-                    return prismAmount >= 1150;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Rainbow renewal credits',
-                type: 'discount',
-                building: 'Prism',
-                desc: 'Prisms cost <b>5%</b> less.',
-                ddesc: 'Prisms cost <b>5%</b> less.<q>Tax incentives for neighborhoods with excellent chroma. Bring your own pot of gold.</q>',
-                price: 5e78, // 5 quinvigintillion
-                icon: [12, 10, 'custom'], // Matches 1250 threshold (index 10)
-                pool: '',
-                unlockCondition: function() {
-                    var prismAmount = Game.Objects['Prism'] ? Game.Objects['Prism'].amount : 0;
-                    return prismAmount >= 1250;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Misprinted fortunes',
-                type: 'discount',
-                building: 'Chancemaker',
-                desc: 'Chancemakers cost <b>5%</b> less.',
-                ddesc: 'Chancemakers cost <b>5%</b> less.<q>Fortunes with typos sell for cheap; destiny still reads between the lines.</q>',
-                price: 5e60, // 5 novemdecillion
-                icon: [17, 0, 'custom'], // Matches 750 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var chancemakerAmount = Game.Objects['Chancemaker'] ? Game.Objects['Chancemaker'].amount : 0;
-                    return chancemakerAmount >= 750;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Reroll refund policy',
-                type: 'discount',
-                building: 'Chancemaker',
-                desc: 'Chancemakers cost <b>5%</b> less.',
-                ddesc: 'Chancemakers cost <b>5%</b> less.<q>If at first you don’t crit, try again—now with store credit.</q>',
-                price: 5e64, // 50 vigintillion
-                icon: [17, 2, 'custom'], // Matches 850 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var chancemakerAmount = Game.Objects['Chancemaker'] ? Game.Objects['Chancemaker'].amount : 0;
-                    return chancemakerAmount >= 850;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Economy-grade omens',
-                type: 'discount',
-                building: 'Chancemaker',
-                desc: 'Chancemakers cost <b>5%</b> less.',
-                ddesc: 'Chancemakers cost <b>5%</b> less.<q>Fits most prophecies. Some assembly (and belief) required.</q>',
-                price: 5e68, // 500 unvigintillion
-                icon: [17, 4, 'custom'], // Matches 950 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var chancemakerAmount = Game.Objects['Chancemaker'] ? Game.Objects['Chancemaker'].amount : 0;
-                    return chancemakerAmount >= 950;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Volunteer augury nights',
-                type: 'discount',
-                building: 'Chancemaker',
-                desc: 'Chancemakers cost <b>5%</b> less.',
-                ddesc: 'Chancemakers cost <b>5%</b> less.<q>Community diviners bring your costs down and your eyebrows up.</q>',
-                price: 5e72, // 5 trevigintillion
-                icon: [17, 6, 'custom'], // Matches 1050 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var chancemakerAmount = Game.Objects['Chancemaker'] ? Game.Objects['Chancemaker'].amount : 0;
-                    return chancemakerAmount >= 1050;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Lottery board matching',
-                type: 'discount',
-                building: 'Chancemaker',
-                desc: 'Chancemakers cost <b>5%</b> less.',
-                ddesc: 'Chancemakers cost <b>5%</b> less.<q>Public funding for private jackpots. Everybody wins (statistically speaking).</q>',
-                price: 5e76, // 50 quattuorvigintillion
-                icon: [17, 8, 'custom'], // Matches 1150 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var chancemakerAmount = Game.Objects['Chancemaker'] ? Game.Objects['Chancemaker'].amount : 0;
-                    return chancemakerAmount >= 1150;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Lucky district waivers',
-                type: 'discount',
-                building: 'Chancemaker',
-                desc: 'Chancemakers cost <b>5%</b> less.',
-                ddesc: 'Chancemakers cost <b>5%</b> less.<q>Zones where chance is zoned in your favor. Paperwork pre-blessed.</q>',
-                price: 5e80, // 500 quinvigintillion
-                icon: [17, 10, 'custom'], // Matches 1250 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var chancemakerAmount = Game.Objects['Chancemaker'] ? Game.Objects['Chancemaker'].amount : 0;
-                    return chancemakerAmount >= 1250;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Iteration liquidation',
-                type: 'discount',
-                building: 'Fractal engine',
-                desc: 'Fractal engines cost <b>5%</b> less.',
-                ddesc: 'Fractal engines cost <b>5%</b> less.<q>We sold the old parts again and again and again. Recursively affordable.</q>',
-                price: 5e62, // 500 novemdecillion
-                icon: [18, 0, 'custom'], // Matches 750 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var fractalEngineAmount = Game.Objects['Fractal engine'] ? Game.Objects['Fractal engine'].amount : 0;
-                    return fractalEngineAmount >= 750;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Self-similar spare parts',
-                type: 'discount',
-                building: 'Fractal engine',
-                desc: 'Fractal engines cost <b>5%</b> less.',
-                ddesc: 'Fractal engines cost <b>5%</b> less.<q>Each part contains smaller parts that also contain… discounts.</q>',
-                price: 5e66, // 5 unvigintillion
-                icon: [18, 2, 'custom'], // Matches 850 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var fractalEngineAmount = Game.Objects['Fractal engine'] ? Game.Objects['Fractal engine'].amount : 0;
-                    return fractalEngineAmount >= 850;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Recursion rebates',
-                type: 'discount',
-                building: 'Fractal engine',
-                desc: 'Fractal engines cost <b>5%</b> less.',
-                ddesc: 'Fractal engines cost <b>5%</b> less.<q>Get cash back on purchases that refer to themselves. Terms repeat.</q>',
-                price: 5e70, // 50 duovigintillion
-                icon: [18, 4, 'custom'], // Matches 950 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var fractalEngineAmount = Game.Objects['Fractal engine'] ? Game.Objects['Fractal engine'].amount : 0;
-                    return fractalEngineAmount >= 950;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Autogenerator residencies',
-                type: 'discount',
-                building: 'Fractal engine',
-                desc: 'Fractal engines cost <b>5%</b> less.',
-                ddesc: 'Fractal engines cost <b>5%</b> less.<q>Invite artists-in-algorithm to iterate patterns and budgets into pleasing shapes.</q>',
-                price: 5e74, // 500 trevigintillion
-                icon: [18, 6, 'custom'], // Matches 1050 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var fractalEngineAmount = Game.Objects['Fractal engine'] ? Game.Objects['Fractal engine'].amount : 0;
-                    return fractalEngineAmount >= 1050;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Grant-funded proofs',
-                type: 'discount',
-                building: 'Fractal engine',
-                desc: 'Fractal engines cost <b>5%</b> less.',
-                ddesc: 'Fractal engines cost <b>5%</b> less.<q>We proved it costs less, QED (Quite Economically Done).</q>',
-                price: 5e78, // 5 quinvigintillion
-                icon: [18, 8, 'custom'], // Matches 1150 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var fractalEngineAmount = Game.Objects['Fractal engine'] ? Game.Objects['Fractal engine'].amount : 0;
-                    return fractalEngineAmount >= 1150;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Infinite-lot variances',
-                type: 'discount',
-                building: 'Fractal engine',
-                desc: 'Fractal engines cost <b>5%</b> less.',
-                ddesc: 'Fractal engines cost <b>5%</b> less.<q>Zoning approvals for parcels that subdivide forever. Plenty of room for savings.</q>',
-                price: 5e82, // 50 sexvigintillion
-                icon: [18, 10, 'custom'], // Matches 1250 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var fractalEngineAmount = Game.Objects['Fractal engine'] ? Game.Objects['Fractal engine'].amount : 0;
-                    return fractalEngineAmount >= 1250;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Refurb dev boards',
-                type: 'discount',
-                building: 'Javascript console',
-                desc: 'Javascript consoles cost <b>5%</b> less.',
-                ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Pre-loved PCBs with fresh solder and faint coffee notes. Still compiles.</q>',
-                price: 5e64, // 50 vigintillion
-                icon: [19, 0, 'custom'], // Matches 750 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var javascriptConsoleAmount = Game.Objects['Javascript console'] ? Game.Objects['Javascript console'].amount : 0;
-                    return javascriptConsoleAmount >= 750;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Compiler credit program',
-                type: 'discount',
-                building: 'Javascript console',
-                desc: 'Javascript consoles cost <b>5%</b> less.',
-                ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Compile now, pay later. Terms readable only after transpilation.</q>',
-                price: 5e68, // 500 unvigintillion
-                icon: [19, 2, 'custom'], // Matches 850 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var javascriptConsoleAmount = Game.Objects['Javascript console'] ? Game.Objects['Javascript console'].amount : 0;
-                    return javascriptConsoleAmount >= 850;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Idle-friendly runtimes',
-                type: 'discount',
-                building: 'Javascript console',
-                desc: 'Javascript consoles cost <b>5%</b> less.',
-                ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Optimized for waiting around productively. Uses fewer cycles, fewer snacks.</q>',
-                price: 5e72, // 5 trevigintillion
-                icon: [19, 4, 'custom'], // Matches 950 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var javascriptConsoleAmount = Game.Objects['Javascript console'] ? Game.Objects['Javascript console'].amount : 0;
-                    return javascriptConsoleAmount >= 950;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Peer-review co-ops',
-                type: 'discount',
-                building: 'Javascript console',
-                desc: 'Javascript consoles cost <b>5%</b> less.',
-                ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Throw code, catch feedback, share snacks. Merge with confidence (and crumbs).</q>',
-                price: 5e76, // 50 quattuorvigintillion
-                icon: [19, 6, 'custom'], // Matches 1050 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var javascriptConsoleAmount = Game.Objects['Javascript console'] ? Game.Objects['Javascript console'].amount : 0;
-                    return javascriptConsoleAmount >= 1050;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Open-source grants',
-                type: 'discount',
-                building: 'Javascript console',
-                desc: 'Javascript consoles cost <b>5%</b> less.',
-                ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Foundation funds for critical libraries like dough.js and crumb-utils.</q>',
-                price: 5e80, // 500 quinvigintillion
-                icon: [19, 8, 'custom'], // Matches 1150 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var javascriptConsoleAmount = Game.Objects['Javascript console'] ? Game.Objects['Javascript console'].amount : 0;
-                    return javascriptConsoleAmount >= 1150;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Cloud credit vouchers',
-                type: 'discount',
-                building: 'Javascript console',
-                desc: 'Javascript consoles cost <b>5%</b> less.',
-                ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Spin up instances for less. Free tier includes occasional cumulonimbus.</q>',
-                price: 5e84, // 5 septenvigintillion
-                icon: [19, 10, 'custom'], // Matches 1250 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var javascriptConsoleAmount = Game.Objects['Javascript console'] ? Game.Objects['Javascript console'].amount : 0;
-                    return javascriptConsoleAmount >= 1250;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Interdimensional tax breaks',
-                type: 'discount',
-                building: 'Idleverse',
-                desc: 'Idleverses cost <b>5%</b> less.',
-                ddesc: 'Idleverses cost <b>5%</b> less.<q>Your idleverses qualify for special tax incentives across multiple dimensions. The paperwork is filed in parallel universes, but the savings are very real.</q>',
-                price: 6e66, // 6 unvigintillion
-                icon: [20, 0, 'custom'], // Matches 750 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var idleverseAmount = Game.Objects['Idleverse'] ? Game.Objects['Idleverse'].amount : 0;
-                    return idleverseAmount >= 750;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Reality consolidation discounts',
-                type: 'discount',
-                building: 'Idleverse',
-                desc: 'Idleverses cost <b>5%</b> less.',
-                ddesc: 'Idleverses cost <b>5%</b> less.<q>By consolidating multiple idleverses under unified management, you\'ve negotiated bulk pricing that applies across all dimensions. The savings scale with your multiverse presence.</q>',
-                price: 6e70, // 60 duovigintillion
-                icon: [20, 2, 'custom'], // Matches 850 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var idleverseAmount = Game.Objects['Idleverse'] ? Game.Objects['Idleverse'].amount : 0;
-                    return idleverseAmount >= 850;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Cosmic bulk purchasing',
-                type: 'discount',
-                building: 'Idleverse',
-                desc: 'Idleverses cost <b>5%</b> less.',
-                ddesc: 'Idleverses cost <b>5%</b> less.<q>Your massive scale across the multiverse allows you to purchase idleverse components in quantities that would bankrupt entire galaxies. The suppliers are happy to offer volume discounts.</q>',
-                price: 6e74, // 600 trevigintillion
-                icon: [20, 4, 'custom'], // Matches 950 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var idleverseAmount = Game.Objects['Idleverse'] ? Game.Objects['Idleverse'].amount : 0;
-                    return idleverseAmount >= 950;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Multiverse supplier networks',
-                type: 'discount',
-                building: 'Idleverse',
-                desc: 'Idleverses cost <b>5%</b> less.',
-                ddesc: 'Idleverses cost <b>5%</b> less.<q>You\'ve established exclusive supplier relationships across multiple realities. These vendors compete for your business, driving down prices while maintaining quality across all dimensions.</q>',
-                price: 6e78, // 6 quinvigintillion
-                icon: [20, 6, 'custom'], // Matches 1050 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var idleverseAmount = Game.Objects['Idleverse'] ? Game.Objects['Idleverse'].amount : 0;
-                    return idleverseAmount >= 1050;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Dimensional economies of scale',
-                type: 'discount',
-                building: 'Idleverse',
-                desc: 'Idleverses cost <b>5%</b> less.',
-                ddesc: 'Idleverses cost <b>5%</b> less.<q>Your idleverse operations have reached such massive scale that you can leverage economies across the entire multiverse. Each new idleverse makes all the others cheaper to build.</q>',
-                price: 6e82, // 60 sexvigintillion
-                icon: [20, 8, 'custom'], // Matches 1150 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var idleverseAmount = Game.Objects['Idleverse'] ? Game.Objects['Idleverse'].amount : 0;
-                    return idleverseAmount >= 1150;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Reality monopoly pricing',
-                type: 'discount',
-                building: 'Idleverse',
-                desc: 'Idleverses cost <b>5%</b> less.',
-                ddesc: 'Idleverses cost <b>5%</b> less.<q>You\'ve achieved such dominance across the multiverse that suppliers are willing to offer preferential pricing just to maintain their relationship with the largest cookie empire in existence.</q>',
-                price: 6e86, // 600 septenvigintillion
-                icon: [20, 10, 'custom'], // Matches 1250 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var idleverseAmount = Game.Objects['Idleverse'] ? Game.Objects['Idleverse'].amount : 0;
-                    return idleverseAmount >= 1250;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Neural bulk purchasing',
-                type: 'discount',
-                building: 'Cortex baker',
-                desc: 'Cortex bakers cost <b>5%</b> less.',
-                ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex bakers have negotiated bulk discounts on neural tissue and synaptic materials. Buying brain matter in industrial quantities significantly reduces the per-unit cost of each new baker.</q>',
-                price: 9.5e68, // 950 unvigintillion
-                icon: [21, 0, 'custom'], // Matches 750 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var cortexBakerAmount = Game.Objects['Cortex baker'] ? Game.Objects['Cortex baker'].amount : 0;
-                    return cortexBakerAmount >= 750;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Synaptic wholesale networks',
-                type: 'discount',
-                building: 'Cortex baker',
-                desc: 'Cortex bakers cost <b>5%</b> less.',
-                ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex bakers have established direct relationships with neural tissue suppliers, bypassing middlemen and securing wholesale pricing on synaptic components. The savings are mind-boggling.</q>',
-                price: 9.5e72, // 9.5 trevigintillion
-                icon: [21, 2, 'custom'], // Matches 850 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var cortexBakerAmount = Game.Objects['Cortex baker'] ? Game.Objects['Cortex baker'].amount : 0;
-                    return cortexBakerAmount >= 850;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Cerebral mass production',
-                type: 'discount',
-                building: 'Cortex baker',
-                desc: 'Cortex bakers cost <b>5%</b> less.',
-                ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex bakers have mastered the art of mass-producing brain tissue, creating economies of scale that make each additional baker significantly cheaper. It\'s like a neural assembly line.</q>',
-                price: 9.5e76, // 95 quattuorvigintillion
-                icon: [21, 4, 'custom'], // Matches 950 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var cortexBakerAmount = Game.Objects['Cortex baker'] ? Game.Objects['Cortex baker'].amount : 0;
-                    return cortexBakerAmount >= 950;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Mind monopoly pricing',
-                type: 'discount',
-                building: 'Cortex baker',
-                desc: 'Cortex bakers cost <b>5%</b> less.',
-                ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex bakers have achieved such dominance in the neural market that suppliers offer preferential pricing just to maintain their relationship with the largest brain-based cookie empire in existence.</q>',
-                price: 9.5e80, // 950 quinvigintillion
-                icon: [21, 6, 'custom'], // Matches 1050 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var cortexBakerAmount = Game.Objects['Cortex baker'] ? Game.Objects['Cortex baker'].amount : 0;
-                    return cortexBakerAmount >= 1050;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Neural economies of scale',
-                type: 'discount',
-                building: 'Cortex baker',
-                desc: 'Cortex bakers cost <b>5%</b> less.',
-                ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex baker operations have reached such massive scale that you can leverage neural economies across the entire network. Each new baker makes all the others cheaper to build through shared infrastructure.</q>',
-                price: 9.5e84, // 9.5 septenvigintillion
-                icon: [21, 8, 'custom'], // Matches 1150 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var cortexBakerAmount = Game.Objects['Cortex baker'] ? Game.Objects['Cortex baker'].amount : 0;
-                    return cortexBakerAmount >= 1150;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Synaptic supply dominance',
-                type: 'discount',
-                building: 'Cortex baker',
-                desc: 'Cortex bakers cost <b>5%</b> less.',
-                ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex bakers have cornered the market on synaptic materials, controlling the entire supply chain from neural tissue farms to advanced cognitive enhancement facilities. Suppliers compete for your business.</q>',
-                price: 9.5e88, // 95 octovigintillion
-                icon: [21, 10, 'custom'], // Matches 1250 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var cortexBakerAmount = Game.Objects['Cortex baker'] ? Game.Objects['Cortex baker'].amount : 0;
-                    return cortexBakerAmount >= 1250;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Clone factory economies',
-                type: 'discount',
-                building: 'You',
-                desc: 'You cost <b>5%</b> less.',
-                ddesc: 'You cost <b>5%</b> less.<q>Your clone factory has achieved economies of scale, making each additional clone significantly cheaper to produce. The infrastructure costs are spread across more units, and suppliers offer bulk discounts on cloning materials.</q>',
-                price: 2.7e70, // 27 duovigintillion
-                icon: [22, 0, 'custom'], // Matches 750 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var youAmount = Game.Objects['You'] ? Game.Objects['You'].amount : 0;
-                    return youAmount >= 750;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Replica production lines',
-                type: 'discount',
-                building: 'You',
-                desc: 'You cost <b>5%</b> less.',
-                ddesc: 'You cost <b>5%</b> less.<q>Your clone production has been streamlined into efficient assembly lines, reducing waste and optimizing resource usage. Each clone is now produced with surgical precision at a fraction of the original cost.</q>',
-                price: 2.7e74, // 270 trevigintillion
-                icon: [22, 2, 'custom'], // Matches 850 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var youAmount = Game.Objects['You'] ? Game.Objects['You'].amount : 0;
-                    return youAmount >= 850;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Mirror manufacturing mastery',
-                type: 'discount',
-                building: 'You',
-                desc: 'You cost <b>5%</b> less.',
-                ddesc: 'You cost <b>5%</b> less.<q>Your clone manufacturing process has reached industrial perfection, with automated quality control and bulk material sourcing. The cost per clone has plummeted as you\'ve mastered the art of mass self-replication.</q>',
-                price: 2.7e78, // 2.7 quinvigintillion
-                icon: [22, 4, 'custom'], // Matches 950 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var youAmount = Game.Objects['You'] ? Game.Objects['You'].amount : 0;
-                    return youAmount >= 950;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Twin tycoon pricing',
-                type: 'discount',
-                building: 'You',
-                desc: 'You cost <b>5%</b> less.',
-                ddesc: 'You cost <b>5%</b> less.<q>Your clone empire has achieved such dominance that suppliers compete for your business, offering preferential pricing on all cloning materials. Being the largest self-replicating entity has its financial advantages.</q>',
-                price: 2.7e82, // 27 sexvigintillion
-                icon: [22, 6, 'custom'], // Matches 1050 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var youAmount = Game.Objects['You'] ? Game.Objects['You'].amount : 0;
-                    return youAmount >= 1050;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Doppelganger discount networks',
-                type: 'discount',
-                building: 'You',
-                desc: 'You cost <b>5%</b> less.',
-                ddesc: 'You cost <b>5%</b> less.<q>Your clone network has established direct relationships with material suppliers, bypassing middlemen and securing wholesale pricing. The savings from cutting out intermediaries are substantial.</q>',
-                price: 2.7e86, // 270 septenvigintillion
-                icon: [22, 8, 'custom'], // Matches 1150 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var youAmount = Game.Objects['You'] ? Game.Objects['You'].amount : 0;
-                    return youAmount >= 1150;
-                },
-                effect: function() {
-                    return 1;
-                },},
-            {
-                name: 'Clone supply dominance',
-                type: 'discount',
-                building: 'You',
-                desc: 'You cost <b>5%</b> less.',
-                ddesc: 'You cost <b>5%</b> less.<q>Your clone operations have cornered the market on self-replication materials, controlling the entire supply chain from basic cloning components to advanced genetic enhancement facilities. Suppliers compete for your business.</q>',
-                price: 2.7e90, // 2.7 novemvigintillion
-                icon: [22, 10, 'custom'], // Matches 1250 threshold
-                pool: '',
-                unlockCondition: function() {
-                    var youAmount = Game.Objects['You'] ? Game.Objects['You'].amount : 0;
-                    return youAmount >= 1250;
-                },
-                effect: function() {
-                    return 1;
-                },}
+
+                }
+            }
         ],
         kitten: [
             {
@@ -2101,9 +279,19 @@ window.JNEData = {
                 }
             }
         ],
-        cookie: [
-        ],
         building: [
+            {
+                name: 'Increased Social Security Checks',
+                type: 'discount',
+                building: 'Grandma',
+                desc: 'Grandmas cost <b>5%</b> less.',
+                ddesc: 'Grandmas cost <b>5%</b> less.<q>With better retirement benefits, your grandmas can afford to work for less. They\'re just happy to be baking cookies and staying active.</q>',
+                price: 5e45, // 5 quattuordecillion
+                icon: [1, 0, 'custom'], // Matches 750 threshold (index 0)
+                unlockCondition: function() {
+                    return Game.Objects['Grandma'] && Game.Objects['Grandma'].amount >= 750;
+                }
+            },
             {
                 name: 'Advanced knitting techniques',
                 desc: 'Grandmas are <b>8%</b> more efficient.',
@@ -2117,6 +305,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Off-Brand Eyeglasses',
+                type: 'discount',
+                desc: 'Grandmas cost <b>5%</b> less.',
+                ddesc: 'Grandmas cost <b>5%</b> less.<q>Generic reading glasses are just as good as the expensive ones, and they make your grandmas look more distinguished while they bake.</q>',
+                price: 5e49, // 50 quindecillion
+                icon: [1, 2, 'custom'], // Matches 850 threshold (index 2)
+                building: 'Grandma',
+                unlockCondition: function() {
+                    return Game.Objects['Grandma'] && Game.Objects['Grandma'].amount >= 850;
                 }
             },
             {
@@ -2135,6 +335,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Plastic Walkers',
+                type: 'discount',
+                desc: 'Grandmas cost <b>5%</b> less.',
+                ddesc: 'Grandmas cost <b>5%</b> less.<q>Lightweight, durable, and much cheaper than the fancy ones. Your grandmas can now move around the kitchen more efficiently while saving money.</q>',
+                price: 5e53, // 500 sexdecillion
+                icon: [1, 4, 'custom'], // Matches 950 threshold (index 4)
+                building: 'Grandma',
+                unlockCondition: function() {
+                    return Game.Objects['Grandma'] && Game.Objects['Grandma'].amount >= 950;
+                }
+            },
+            {
                 name: 'Tea time efficiency',
                 desc: 'Grandmas are <b>8%</b> more efficient.',
                 ddesc: 'Grandmas are <b>8%</b> more efficient.<q>Your grandmas have perfected the art of brewing tea while simultaneously managing cookie production. The secret is to never let the tea steep for exactly the right amount of time.</q>',
@@ -2147,6 +359,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Bulk Discount Hearing Aids',
+                type: 'discount',
+                desc: 'Grandmas cost <b>5%</b> less.',
+                ddesc: 'Grandmas cost <b>5%</b> less.<q>Buying hearing aids in bulk saves money, and your grandmas can now hear cookie timers perfectly. What\'s that? They said the cookies are ready!</q>',
+                price: 5e57, // 5 octodecillion
+                icon: [1, 6, 'custom'], // Matches 1050 threshold (index 6)
+                building: 'Grandma',
+                unlockCondition: function() {
+                    return Game.Objects['Grandma'] && Game.Objects['Grandma'].amount >= 1050;
                 }
             },
             {
@@ -2165,6 +389,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Generic Arthritis Medication',
+                type: 'discount',
+                desc: 'Grandmas cost <b>5%</b> less.',
+                ddesc: 'Grandmas cost <b>5%</b> less.<q>The store brand works just as well as the name brand, and your grandmas can now knead dough without any complaints. Well, fewer complaints.</q>',
+                price: 5e61, // 50 novemdecillion
+                icon: [1, 8, 'custom'], // Matches 1150 threshold (index 8)
+                building: 'Grandma',
+                unlockCondition: function() {
+                    return Game.Objects['Grandma'] && Game.Objects['Grandma'].amount >= 1150;
+                }
+            },
+            {
                 name: 'Senior discount mastery',
                 desc: 'Grandmas are <b>8%</b> more efficient.',
                 ddesc: 'Grandmas are <b>8%</b> more efficient.<q>Your grandmas have learned to apply their senior discount expertise to cookie production. They can now get better deals on ingredients, which somehow makes the cookies taste better too.</q>',
@@ -2177,6 +413,30 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Wholesale Denture Adhesive',
+                type: 'discount',
+                desc: 'Grandmas cost <b>5%</b> less.',
+                ddesc: 'Grandmas cost <b>5%</b> less.<q>Buying denture adhesive in industrial quantities means your grandmas can smile confidently while tasting their cookie creations. The savings are toothsome!</q>',
+                price: 5e65, // 500 vigintillion
+                icon: [1, 10, 'custom'], // Matches 1250 threshold (index 10)
+                building: 'Grandma',
+                unlockCondition: function() {
+                    return Game.Objects['Grandma'] && Game.Objects['Grandma'].amount >= 1250;
+                }
+            },
+            {
+                name: 'Biodiesel fueled tractors',
+                type: 'discount',
+                desc: 'Farms cost <b>5%</b> less.',
+                ddesc: 'Farms cost <b>5%</b> less.<q>Your farms have discovered that running tractors on recycled cooking oil from cookie production is both eco-friendly and surprisingly cost-effective. The tractors smell like fresh cookies now!</q>',
+                price: 5e46, // 50 quattuordecillion
+                icon: [2, 0, 'custom'], // Matches 750 threshold (index 0)
+                building: 'Farm',
+                unlockCondition: function() {
+                    return Game.Objects['Farm'] && Game.Objects['Farm'].amount >= 750;
                 }
             },
             {
@@ -2195,6 +455,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Free manure from clone factories',
+                type: 'discount',
+                desc: 'Farms cost <b>5%</b> less.',
+                ddesc: 'Farms cost <b>5%</b> less.<q>The clone factories produce so much waste that your farms get all the fertilizer they need for free. The cookies grown with this manure taste surprisingly good.</q>',
+                price: 5e50, // 500 quindecillion
+                icon: [2, 2, 'custom'], // Matches 850 threshold (index 2)
+                building: 'Farm',
+                unlockCondition: function() {
+                    return Game.Objects['Farm'] && Game.Objects['Farm'].amount >= 850;
+                }
+            },
+            {
                 name: 'Vertical farming revolution',
                 desc: 'Farms are <b>8%</b> more efficient.',
                 ddesc: 'Farms are <b>8%</b> more efficient.<q>Your farms now stack cookie crops in towering vertical structures. The cookies at the top get more sunlight, while the ones at the bottom get more shade. Somehow they all taste perfect.</q>',
@@ -2207,6 +479,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Solar-powered irrigation systems',
+                type: 'discount',
+                desc: 'Farms cost <b>5%</b> less.',
+                ddesc: 'Farms cost <b>5%</b> less.<q>Your farms now use solar panels to power their irrigation systems. The cookies grow faster when they\'re watered with sunlight-filtered water, and the energy bills are practically zero.</q>',
+                price: 5e54, // 5 septendecillion
+                icon: [2, 4, 'custom'], // Matches 950 threshold (index 4)
+                building: 'Farm',
+                unlockCondition: function() {
+                    return Game.Objects['Farm'] && Game.Objects['Farm'].amount >= 950;
                 }
             },
             {
@@ -2225,6 +509,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Bulk seed purchases',
+                type: 'discount',
+                desc: 'Farms cost <b>5%</b> less.',
+                ddesc: 'Farms cost <b>5%</b> less.<q>Buying cookie seeds in industrial quantities has dramatically reduced costs. Your farms now have enough seeds to plant cookie forests, and the bulk discount is delicious.</q>',
+                price: 5e58, // 50 octodecillion
+                icon: [2, 6, 'custom'], // Matches 1050 threshold (index 6)
+                building: 'Farm',
+                unlockCondition: function() {
+                    return Game.Objects['Farm'] && Game.Objects['Farm'].amount >= 1050;
+                }
+            },
+            {
                 name: 'Sentient soil enhancement',
                 desc: 'Farms are <b>8%</b> more efficient.',
                 ddesc: 'Farms are <b>8%</b> more efficient.<q>Your farms have developed soil that can think, feel, and most importantly, optimize cookie growth. The soil is quite chatty about its feelings, but the results speak for themselves.</q>',
@@ -2237,6 +533,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Robot farm hands',
+                type: 'discount',
+                desc: 'Farms cost <b>5%</b> less.',
+                ddesc: 'Farms cost <b>5%</b> less.<q>Your farms now employ robotic workers who never tire and work for free. They\'re programmed to be gentle with the cookie plants and surprisingly good at telling cookie jokes.</q>',
+                price: 5e62, // 500 novemdecillion
+                icon: [2, 8, 'custom'], // Matches 1150 threshold (index 8)
+                building: 'Farm',
+                unlockCondition: function() {
+                    return Game.Objects['Farm'] && Game.Objects['Farm'].amount >= 1150;
                 }
             },
             {
@@ -2255,6 +563,30 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Vertical farming subsidies',
+                type: 'discount',
+                desc: 'Farms cost <b>5%</b> less.',
+                ddesc: 'Farms cost <b>5%</b> less.<q>The government is so impressed with your cookie farming innovation that they\'re providing subsidies for vertical farming. Your cookie towers are now taxpayer-funded!</q>',
+                price: 5e66, // 5 unvigintillion
+                icon: [2, 10, 'custom'], // Matches 1250 threshold (index 10)
+                building: 'Farm',
+                unlockCondition: function() {
+                    return Game.Objects['Farm'] && Game.Objects['Farm'].amount >= 1250;
+                }
+            },
+            {
+                name: 'Clearance shaft kits',
+                type: 'discount',
+                desc: 'Mines cost <b>5%</b> less.',
+                ddesc: 'Mines cost <b>5%</b> less.<q>Flat-pack mining in a box! Comes with complimentary dust, three bent bolts, and a manual that just says "dig."</q>',
+                price: 5e47, // 500 quattuordecillion
+                icon: [3, 0, 'custom'], // Matches 750 threshold (index 0)
+                building: 'Mine',
+                unlockCondition: function() {
+                    return Game.Objects['Mine'] && Game.Objects['Mine'].amount >= 750;
+                }
+            },
+            {
                 name: 'Quantum tunneling excavation',
                 desc: 'Mines are <b>8%</b> more efficient.',
                 ddesc: 'Mines are <b>8%</b> more efficient.<q>Your mines have discovered that quantum tunneling allows them to extract resources from multiple locations simultaneously. The cookies somehow taste better when mined through probability clouds.</q>',
@@ -2267,6 +599,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Punch-card TNT club',
+                type: 'discount',
+                desc: 'Mines cost <b>5%</b> less.',
+                ddesc: 'Mines cost <b>5%</b> less.<q>Every tenth kaboom is free. Please remember to validate your detonation.</q>',
+                price: 5e51, // 5 sexdecillion
+                icon: [3, 2, 'custom'], // Matches 850 threshold (index 2)
+                building: 'Mine',
+                unlockCondition: function() {
+                    return Game.Objects['Mine'] && Game.Objects['Mine'].amount >= 850;
                 }
             },
             {
@@ -2285,6 +629,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Hand-me-down hardhats',
+                type: 'discount',
+                desc: 'Mines cost <b>5%</b> less.',
+                ddesc: 'Mines cost <b>5%</b> less.<q>Pre-scuffed for authenticity. Comes with vintage stickers and suspiciously fresh chin straps.</q>',
+                price: 5e55, // 50 septendecillion
+                icon: [3, 4, 'custom'], // Matches 950 threshold (index 4)
+                building: 'Mine',
+                unlockCondition: function() {
+                    return Game.Objects['Mine'] && Game.Objects['Mine'].amount >= 950;
+                }
+            },
+            {
                 name: 'Dimensional rift mining',
                 desc: 'Mines are <b>8%</b> more efficient.',
                 ddesc: 'Mines are <b>8%</b> more efficient.<q>Your mines have learned to extract resources from parallel dimensions through carefully controlled spacetime rifts. The cookies from alternate realities have flavors that shouldn\'t exist in this universe.</q>',
@@ -2297,6 +653,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Lease-back drill rigs',
+                type: 'discount',
+                desc: 'Mines cost <b>5%</b> less.',
+                ddesc: 'Mines cost <b>5%</b> less.<q>You rent them your rigs; they rent them back to you cheaper. Don\'t think about it too hard—just keep drilling.</q>',
+                price: 5e59, // 500 octodecillion
+                icon: [3, 6, 'custom'], // Matches 1050 threshold (index 6)
+                building: 'Mine',
+                unlockCondition: function() {
+                    return Game.Objects['Mine'] && Game.Objects['Mine'].amount >= 1050;
                 }
             },
             {
@@ -2315,6 +683,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Ore cartel coupons',
+                type: 'discount',
+                desc: 'Mines cost <b>5%</b> less.',
+                ddesc: 'Mines cost <b>5%</b> less.<q>Clip these to save big on ironies, aluminums, and suspiciously inexpensive unobtainium.</q>',
+                price: 5e63, // 5 vigintillion
+                icon: [3, 8, 'custom'], // Matches 1150 threshold (index 8)
+                building: 'Mine',
+                unlockCondition: function() {
+                    return Game.Objects['Mine'] && Game.Objects['Mine'].amount >= 1150;
+                }
+            },
+            {
                 name: 'Temporal paradox drilling',
                 desc: 'Mines are <b>8%</b> more efficient.',
                 ddesc: 'Mines are <b>8%</b> more efficient.<q>Your mines can now extract resources from different points in time simultaneously. The cookies exist in a state where they were both baked and unbaked until observed.</q>',
@@ -2327,6 +707,30 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Cave-in insurance kickbacks',
+                type: 'discount',
+                desc: 'Mines cost <b>5%</b> less.',
+                ddesc: 'Mines cost <b>5%</b> less.<q>Policy fine print: "cave-ins not included." The cashback is, though!</q>',
+                price: 5e67, // 50 unvigintillion
+                icon: [3, 10, 'custom'], // Matches 1250 threshold (index 10)
+                building: 'Mine',
+                unlockCondition: function() {
+                    return Game.Objects['Mine'] && Game.Objects['Mine'].amount >= 1250;
+                }
+            },
+            {
+                name: 'Flat-pack factory frames',
+                type: 'discount',
+                desc: 'Factories cost <b>5%</b> less.',
+                ddesc: 'Factories cost <b>5%</b> less.<q>Arrives in 47 boxes, 2 mystery bolts, and one tiny allen key. Assembly required; dignity sold separately.</q>',
+                price: 5e48, // 5 quindecillion
+                icon: [4, 0, 'custom'], // Matches 750 threshold (index 0)
+                building: 'Factory',
+                unlockCondition: function() {
+                    return Game.Objects['Factory'] && Game.Objects['Factory'].amount >= 750;
                 }
             },
             {
@@ -2345,6 +749,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'BOGO rivet bins',
+                type: 'discount',
+                desc: 'Factories cost <b>5%</b> less.',
+                ddesc: 'Factories cost <b>5%</b> less.<q>Buy one rivet, get one lodged in the break room floor for free. Savings that really fasten your margins.</q>',
+                price: 5e52, // 50 sexdecillion
+                icon: [4, 2, 'custom'], // Matches 850 threshold (index 2)
+                building: 'Factory',
+                unlockCondition: function() {
+                    return Game.Objects['Factory'] && Game.Objects['Factory'].amount >= 850;
+                }
+            },
+            {
                 name: 'Temporal manufacturing loops',
                 desc: 'Factories are <b>8%</b> more efficient.',
                 ddesc: 'Factories are <b>8%</b> more efficient.<q>Your factories can now create temporal loops that allow them to manufacture cookies in the past, present, and future simultaneously. The cookies taste better when they\'ve been baked in multiple timelines.</q>',
@@ -2357,6 +773,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Off-brand gear grease',
+                type: 'discount',
+                desc: 'Factories cost <b>5%</b> less.',
+                ddesc: 'Factories cost <b>5%</b> less.<q>It says "lubricishion" on the drum but the conveyor squeaks stopped and the budget squeals with joy.</q>',
+                price: 5e56, // 500 septendecillion
+                icon: [4, 4, 'custom'], // Matches 950 threshold (index 4)
+                building: 'Factory',
+                unlockCondition: function() {
+                    return Game.Objects['Factory'] && Game.Objects['Factory'].amount >= 950;
                 }
             },
             {
@@ -2375,6 +803,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Misprint warning labels',
+                type: 'discount',
+                desc: 'Factories cost <b>5%</b> less.',
+                ddesc: 'Factories cost <b>5%</b> less.<q>"DO NOT NOT TOUCH" and "CAUTION: SPICY ELECTRICITY" — flawed labels at flawless prices.</q>',
+                price: 5e60, // 5 novemdecillion
+                icon: [4, 6, 'custom'], // Matches 1050 threshold (index 6)
+                building: 'Factory',
+                unlockCondition: function() {
+                    return Game.Objects['Factory'] && Game.Objects['Factory'].amount >= 1050;
+                }
+            },
+            {
                 name: 'Singularity production cores',
                 desc: 'Factories are <b>8%</b> more efficient.',
                 ddesc: 'Factories are <b>8%</b> more efficient.<q>Your factories now operate at the heart of artificial superintelligence cores, where cookies are created by entities that understand the very fabric of reality. The cookies are so advanced they\'re almost sentient.</q>',
@@ -2387,6 +827,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Pallet-jack rebates',
+                type: 'discount',
+                desc: 'Factories cost <b>5%</b> less.',
+                ddesc: 'Factories cost <b>5%</b> less.<q>Return three worn wheels and a heartfelt shrug to receive instant savings on moving heavy expectations.</q>',
+                price: 5e64, // 50 vigintillion
+                icon: [4, 8, 'custom'], // Matches 1150 threshold (index 8)
+                building: 'Factory',
+                unlockCondition: function() {
+                    return Game.Objects['Factory'] && Game.Objects['Factory'].amount >= 1150;
                 }
             },
             {
@@ -2405,6 +857,30 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Prefab cookie modules',
+                type: 'discount',
+                desc: 'Factories cost <b>5%</b> less.',
+                ddesc: 'Factories cost <b>5%</b> less.<q>Snap together a fully functional bakery block before lunch. Some assembly lines may snap back.</q>',
+                price: 5e68, // 500 unvigintillion
+                icon: [4, 10, 'custom'], // Matches 1250 threshold (index 10)
+                building: 'Factory',
+                unlockCondition: function() {
+                    return Game.Objects['Factory'] && Game.Objects['Factory'].amount >= 1250;
+                }
+            },
+            {
+                name: 'Piggy buyback bonanza',
+                type: 'discount',
+                desc: 'Banks cost <b>5%</b> less.',
+                ddesc: 'Banks cost <b>5%</b> less.<q>We buy your old piggy banks for scrap, you get bulk rates on brand-new savings. Oink if you love rebates.</q>',
+                price: 5e49, // 50 quindecillion
+                icon: [13, 0, 'custom'], // Matches 750 threshold (index 0)
+                building: 'Bank',
+                unlockCondition: function() {
+                    return Game.Objects['Bank'] && Game.Objects['Bank'].amount >= 750;
+                }
+            },
+            {
                 name: 'Quantum banking protocols',
                 desc: 'Banks are <b>8%</b> more efficient.',
                 ddesc: 'Banks are <b>8%</b> more efficient.<q>Your banks have implemented quantum encryption protocols that allow them to process transactions in multiple parallel universes simultaneously. The interest rates are so complex they exist in superposition.</q>',
@@ -2417,6 +893,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Vault door floor-models',
+                type: 'discount',
+                desc: 'Banks cost <b>5%</b> less.',
+                ddesc: 'Banks cost <b>5%</b> less.<q>Slightly scuffed, mostly secure, and drastically discounted. May include complimentary salesperson fingerprints.</q>',
+                price: 5e53, // 500 sexdecillion
+                icon: [13, 2, 'custom'], // Matches 850 threshold (index 2)
+                building: 'Bank',
+                unlockCondition: function() {
+                    return Game.Objects['Bank'] && Game.Objects['Bank'].amount >= 850;
                 }
             },
             {
@@ -2435,6 +923,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Pen-on-a-chain procurement',
+                type: 'discount',
+                desc: 'Banks cost <b>5%</b> less.',
+                ddesc: 'Banks cost <b>5%</b> less.<q>We negotiated a lifetime supply of those pens everyone "borrows". Budgets balanced; chains tested for tensile sass.</q>',
+                price: 5e57, // 5 octodecillion
+                icon: [13, 4, 'custom'], // Matches 950 threshold (index 4)
+                building: 'Bank',
+                unlockCondition: function() {
+                    return Game.Objects['Bank'] && Game.Objects['Bank'].amount >= 950;
+                }
+            },
+            {
                 name: 'Dimensional currency exchange',
                 desc: 'Banks are <b>8%</b> more efficient.',
                 ddesc: 'Banks are <b>8%</b> more efficient.<q>Your banks can now exchange cookies for currencies from parallel dimensions. The exchange rates are so favorable they\'re practically stealing from other universes.</q>',
@@ -2447,6 +947,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Complimentary complimentary mints',
+                type: 'discount',
+                desc: 'Banks cost <b>5%</b> less.',
+                ddesc: 'Banks cost <b>5%</b> less.<q>They\'re free. The mints are free. The sign telling you they\'re complimentary is also complimentary.</q>',
+                price: 5e61, // 50 novemdecillion
+                icon: [13, 6, 'custom'], // Matches 1050 threshold (index 6)
+                building: 'Bank',
+                unlockCondition: function() {
+                    return Game.Objects['Bank'] && Game.Objects['Bank'].amount >= 1050;
                 }
             },
             {
@@ -2465,6 +977,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Fee waiver wavers',
+                type: 'discount',
+                desc: 'Banks cost <b>5%</b> less.',
+                ddesc: 'Banks cost <b>5%</b> less.<q>Wave the fee, waive the fee—our interns practiced both until the numbers surrendered.</q>',
+                price: 5e65, // 500 vigintillion
+                icon: [13, 8, 'custom'], // Matches 1150 threshold (index 8)
+                building: 'Bank',
+                unlockCondition: function() {
+                    return Game.Objects['Bank'] && Game.Objects['Bank'].amount >= 1150;
+                }
+            },
+            {
                 name: 'Reality-warping economics',
                 desc: 'Banks are <b>8%</b> more efficient.',
                 ddesc: 'Banks are <b>8%</b> more efficient.<q>Your banks can now bend the laws of economics to create wealth from nothing. The money is so real it creates its own pocket universes of pure profit.</q>',
@@ -2477,6 +1001,30 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Dough Jones clearance',
+                type: 'discount',
+                desc: 'Banks cost <b>5%</b> less.',
+                ddesc: 'Banks cost <b>5%</b> less.<q>The market dipped; we scooped vault carpeting and gold-plated clipboards by the pallet. Buy low, bank lower.</q>',
+                price: 5e69, // 5 duovigintillion
+                icon: [13, 10, 'custom'], // Matches 1250 threshold (index 10)
+                building: 'Bank',
+                unlockCondition: function() {
+                    return Game.Objects['Bank'] && Game.Objects['Bank'].amount >= 1250;
+                }
+            },
+            {
+                name: 'Tithe punch cards',
+                type: 'discount',
+                desc: 'Temples cost <b>5%</b> less.',
+                ddesc: 'Temples cost <b>5%</b> less.<q>Pray ten times, the eleventh comes with a coupon. Blessings accrue interest; salvation may vary.</q>',
+                price: 5e50, // 500 quindecillion
+                icon: [14, 0, 'custom'], // Matches 750 threshold (index 0)
+                building: 'Temple',
+                unlockCondition: function() {
+                    return Game.Objects['Temple'] && Game.Objects['Temple'].amount >= 750;
                 }
             },
             {
@@ -2495,6 +1043,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Relic replica racks',
+                type: 'discount',
+                desc: 'Temples cost <b>5%</b> less.',
+                ddesc: 'Temples cost <b>5%</b> less.<q>Authentically inauthentic! Perfect for display, fundraising, and keeping the real relics safe in a sock drawer.</q>',
+                price: 5e54, // 5 septendecillion
+                icon: [14, 2, 'custom'], // Matches 850 threshold (index 2)
+                building: 'Temple',
+                unlockCondition: function() {
+                    return Game.Objects['Temple'] && Game.Objects['Temple'].amount >= 850;
+                }
+            },
+            {
                 name: 'Temporal prayer loops',
                 desc: 'Temples are <b>8%</b> more efficient.',
                 ddesc: 'Temples are <b>8%</b> more efficient.<q>Your temples can create temporal loops that allow prayers to be answered in the past, present, and future simultaneously. The divine favor is so strong it creates time paradoxes.</q>',
@@ -2507,6 +1067,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Incense refill program',
+                type: 'discount',
+                desc: 'Temples cost <b>5%</b> less.',
+                ddesc: 'Temples cost <b>5%</b> less.<q>Bring back your incense stubs for a discount on fresh sticks. Smells like savings (and nutmeg).</q>',
+                price: 5e58, // 50 octodecillion
+                icon: [14, 4, 'custom'], // Matches 950 threshold (index 4)
+                building: 'Temple',
+                unlockCondition: function() {
+                    return Game.Objects['Temple'] && Game.Objects['Temple'].amount >= 950;
                 }
             },
             {
@@ -2525,6 +1097,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Chant-o-matic hymn reels',
+                type: 'discount',
+                desc: 'Temples cost <b>5%</b> less.',
+                ddesc: 'Temples cost <b>5%</b> less.<q>Wind them up for a full liturgical set in C Major. Now with extended Amen remix.</q>',
+                price: 5e62, // 500 novemdecillion
+                icon: [14, 6, 'custom'], // Matches 1050 threshold (index 6)
+                building: 'Temple',
+                unlockCondition: function() {
+                    return Game.Objects['Temple'] && Game.Objects['Temple'].amount >= 1050;
+                }
+            },
+            {
                 name: 'Singularity divine consciousness',
                 desc: 'Temples are <b>8%</b> more efficient.',
                 ddesc: 'Temples are <b>8%</b> more efficient.<q>Your temples now house artificial superintelligence that has achieved divine consciousness. The AI gods are so advanced they can create and destroy universes at will.</q>',
@@ -2537,6 +1121,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Pew-per-view sponsorships',
+                type: 'discount',
+                desc: 'Temples cost <b>5%</b> less.',
+                ddesc: 'Temples cost <b>5%</b> less.<q>Local businesses sponsor your pews. Sit in Savings Row, brought to you by Discount Chalice Emporium.</q>',
+                price: 5e66, // 5 unvigintillion
+                icon: [14, 8, 'custom'], // Matches 1150 threshold (index 8)
+                building: 'Temple',
+                unlockCondition: function() {
+                    return Game.Objects['Temple'] && Game.Objects['Temple'].amount >= 1150;
                 }
             },
             {
@@ -2555,6 +1151,30 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Sacred site tax amnesty',
+                type: 'discount',
+                desc: 'Temples cost <b>5%</b> less.',
+                ddesc: 'Temples cost <b>5%</b> less.<q>Pilgrims rejoice; accountants rejoice harder. Certain restrictions (and miracles) apply.</q>',
+                price: 5e70, // 50 duovigintillion
+                icon: [14, 10, 'custom'], // Matches 1250 threshold (index 10)
+                building: 'Temple',
+                unlockCondition: function() {
+                    return Game.Objects['Temple'] && Game.Objects['Temple'].amount >= 1250;
+                }
+            },
+            {
+                name: 'Wand warranty returns',
+                type: 'discount',
+                desc: 'Wizard towers cost <b>5%</b> less.',
+                ddesc: 'Wizard towers cost <b>5%</b> less.<q>Returned within 30 days of transmogrification. Minor scorch marks add character.</q>',
+                price: 5e51, // 5 sexdecillion
+                icon: [15, 0, 'custom'], // Matches 750 threshold (index 0)
+                building: 'Wizard tower',
+                unlockCondition: function() {
+                    return Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].amount >= 750;
+                }
+            },
+            {
                 name: 'Arcane resonance',
                 desc: 'Wizard towers are <b>8%</b> more efficient.',
                 ddesc: 'Wizard towers are <b>8%</b> more efficient.<q>Your wizard towers have learned to harmonize their magical energies, creating spells that resonate across the fabric of reality itself. When they work together, their incantations create symphonies of pure arcane power.</q>',
@@ -2567,6 +1187,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Grimoire remainder sale',
+                type: 'discount',
+                desc: 'Wizard towers cost <b>5%</b> less.',
+                ddesc: 'Wizard towers cost <b>5%</b> less.<q>Spellbooks with the last page missing. The twist ending is cheaper anyway.</q>',
+                price: 5e55, // 50 septendecillion
+                icon: [15, 2, 'custom'], // Matches 850 threshold (index 2)
+                building: 'Wizard tower',
+                unlockCondition: function() {
+                    return Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].amount >= 850;
                 }
             },
             {
@@ -2585,6 +1217,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Robes with "character"',
+                type: 'discount',
+                desc: 'Wizard towers cost <b>5%</b> less.',
+                ddesc: 'Wizard towers cost <b>5%</b> less.<q>Vintage, moth-kissed, and pockets full of mysterious lint. Very arcane, very affordable.</q>',
+                price: 5e59, // 500 octodecillion
+                icon: [15, 4, 'custom'], // Matches 950 threshold (index 4)
+                building: 'Wizard tower',
+                unlockCondition: function() {
+                    return Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].amount >= 950;
+                }
+            },
+            {
                 name: 'Mystical attunement',
                 desc: 'Wizard towers are <b>8%</b> more efficient.',
                 ddesc: 'Wizard towers are <b>8%</b> more efficient.<q>Your wizard towers have achieved perfect mystical attunement, allowing them to sense and manipulate the fundamental forces of magic. They can now channel raw magical energy directly into cookie production, creating treats that taste like pure enchantment.</q>',
@@ -2597,6 +1241,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Familiar foster program',
+                type: 'discount',
+                desc: 'Wizard towers cost <b>5%</b> less.',
+                ddesc: 'Wizard towers cost <b>5%</b> less.<q>Give a stray imp a home and it will fetch reagents, guard cauldrons, and occasionally judge your hat.</q>',
+                price: 5e63, // 5 vigintillion
+                icon: [15, 6, 'custom'], // Matches 1050 threshold (index 6)
+                building: 'Wizard tower',
+                unlockCondition: function() {
+                    return Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].amount >= 1050;
                 }
             },
             {
@@ -2615,6 +1271,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Council scroll stipends',
+                type: 'discount',
+                desc: 'Wizard towers cost <b>5%</b> less.',
+                ddesc: 'Wizard towers cost <b>5%</b> less.<q>Stipends for parchment, ink, and the occasional sworn oath. Please initial with runes.</q>',
+                price: 5e67, // 50 unvigintillion
+                icon: [15, 8, 'custom'], // Matches 1150 threshold (index 8)
+                building: 'Wizard tower',
+                unlockCondition: function() {
+                    return Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].amount >= 1150;
+                }
+            },
+            {
                 name: 'Transcendent thaumaturgy',
                 desc: 'Wizard towers are <b>8%</b> more efficient.',
                 ddesc: 'Wizard towers are <b>8%</b> more efficient.<q>Your wizard towers have transcended the limitations of conventional magic, achieving a state of pure thaumaturgical enlightenment. They can now create cookies that embody the very essence of magical possibility itself.</q>',
@@ -2627,6 +1295,30 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Broom-sharing scheme',
+                type: 'discount',
+                desc: 'Wizard towers cost <b>5%</b> less.',
+                ddesc: 'Wizard towers cost <b>5%</b> less.<q>One broom, many roommates. Please schedule your midnight flights responsibly.</q>',
+                price: 5e71, // 500 duovigintillion
+                icon: [15, 10, 'custom'], // Matches 1250 threshold (index 10)
+                building: 'Wizard tower',
+                unlockCondition: function() {
+                    return Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].amount >= 1250;
+                }
+            },
+            {
+                name: 'Retired cargo pods',
+                type: 'discount',
+                desc: 'Shipments cost <b>5%</b> less.',
+                ddesc: 'Shipments cost <b>5%</b> less.<q>Previously orbited. Lightly meteor-kissed. Still airtight (mostly).</q>',
+                price: 5e52, // 50 sexdecillion
+                icon: [5, 0, 'custom'], // Matches 750 threshold (index 0)
+                building: 'Shipment',
+                unlockCondition: function() {
+                    return Game.Objects['Shipment'] && Game.Objects['Shipment'].amount >= 750;
                 }
             },
             {
@@ -2645,6 +1337,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Container co-op cards',
+                type: 'discount',
+                desc: 'Shipments cost <b>5%</b> less.',
+                ddesc: 'Shipments cost <b>5%</b> less.<q>Members share containers, points, and an inexplicable fondness for pallet forts.</q>',
+                price: 5e56, // 500 septendecillion
+                icon: [5, 2, 'custom'], // Matches 850 threshold (index 2)
+                building: 'Shipment',
+                unlockCondition: function() {
+                    return Game.Objects['Shipment'] && Game.Objects['Shipment'].amount >= 850;
+                }
+            },
+            {
                 name: 'Spatial compression',
                 desc: 'Shipments are <b>8%</b> more efficient.',
                 ddesc: 'Shipments are <b>8%</b> more efficient.<q>Your shipments have mastered the art of spatial compression, allowing them to fold space itself to reduce delivery distances to zero. The cookies arrive before they\'re even sent, creating delicious temporal paradoxes.</q>',
@@ -2657,6 +1361,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Reusable launch crates',
+                type: 'discount',
+                desc: 'Shipments cost <b>5%</b> less.',
+                ddesc: 'Shipments cost <b>5%</b> less.<q>Return for deposit and a complimentary dent count. Blast off again and again.</q>',
+                price: 5e60, // 5 novemdecillion
+                icon: [5, 4, 'custom'], // Matches 950 threshold (index 4)
+                building: 'Shipment',
+                unlockCondition: function() {
+                    return Game.Objects['Shipment'] && Game.Objects['Shipment'].amount >= 950;
                 }
             },
             {
@@ -2675,6 +1391,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Autodocker apprentices',
+                type: 'discount',
+                desc: 'Shipments cost <b>5%</b> less.',
+                ddesc: 'Shipments cost <b>5%</b> less.<q>They learn by bumping every harbor gently, then sending a heartfelt apology ping.</q>',
+                price: 5e64, // 50 vigintillion
+                icon: [5, 6, 'custom'], // Matches 1050 threshold (index 6)
+                building: 'Shipment',
+                unlockCondition: function() {
+                    return Game.Objects['Shipment'] && Game.Objects['Shipment'].amount >= 1050;
+                }
+            },
+            {
                 name: 'Quantum teleportation',
                 desc: 'Shipments are <b>8%</b> more efficient.',
                 ddesc: 'Shipments are <b>8%</b> more efficient.<q>Your shipments have perfected quantum teleportation, allowing cookies to be instantaneously transmitted across any distance. The quantum entanglement ensures that every cookie arrives in perfect condition, no matter how far it travels.</q>',
@@ -2687,6 +1415,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Route rebate vouchers',
+                type: 'discount',
+                desc: 'Shipments cost <b>5%</b> less.',
+                ddesc: 'Shipments cost <b>5%</b> less.<q>Redeem along preferred lanes for discounts and occasional scenic detours.</q>',
+                price: 5e68, // 500 unvigintillion
+                icon: [5, 8, 'custom'], // Matches 1150 threshold (index 8)
+                building: 'Shipment',
+                unlockCondition: function() {
+                    return Game.Objects['Shipment'] && Game.Objects['Shipment'].amount >= 1150;
                 }
             },
             {
@@ -2705,6 +1445,30 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Free-trade cookie ports',
+                type: 'discount',
+                desc: 'Shipments cost <b>5%</b> less.',
+                ddesc: 'Shipments cost <b>5%</b> less.<q>Tariffs take a coffee break, cranes work overtime. Paperwork now served with biscotti.</q>',
+                price: 5e72, // 5 trevigintillion
+                icon: [5, 10, 'custom'], // Matches 1250 threshold (index 10)
+                building: 'Shipment',
+                unlockCondition: function() {
+                    return Game.Objects['Shipment'] && Game.Objects['Shipment'].amount >= 1250;
+                }
+            },
+            {
+                name: 'Beaker buybacks',
+                type: 'discount',
+                desc: 'Alchemy labs cost <b>5%</b> less.',
+                ddesc: 'Alchemy labs cost <b>5%</b> less.<q>Trade in cracked glassware for shiny almost-new beakers. Some have personality bubbles.</q>',
+                price: 5e53, // 500 sexdecillion
+                icon: [6, 0, 'custom'], // Matches 750 threshold (index 0)
+                building: 'Alchemy lab',
+                unlockCondition: function() {
+                    return Game.Objects['Alchemy lab'] && Game.Objects['Alchemy lab'].amount >= 750;
+                }
+            },
+            {
                 name: 'Essence distillation',
                 desc: 'Alchemy labs are <b>8%</b> more efficient.',
                 ddesc: 'Alchemy labs are <b>8%</b> more efficient.<q>Your alchemy labs have mastered the art of essence distillation, extracting the purest flavors from the most exotic ingredients. Each transmutation creates flavors that transcend the boundaries of taste itself.</q>',
@@ -2717,6 +1481,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Philosopher\'s pebbles',
+                type: 'discount',
+                desc: 'Alchemy labs cost <b>5%</b> less.',
+                ddesc: 'Alchemy labs cost <b>5%</b> less.<q>Bulk-bought bits of the legendary rock. Not quite stones—more like budget-friendly pebbles with surprisingly similar savings.</q>',
+                price: 5e57, // 5 octodecillion
+                icon: [6, 2, 'custom'], // Matches 850 threshold (index 2)
+                building: 'Alchemy lab',
+                unlockCondition: function() {
+                    return Game.Objects['Alchemy lab'] && Game.Objects['Alchemy lab'].amount >= 850;
                 }
             },
             {
@@ -2735,6 +1511,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Cool-running crucibles',
+                type: 'discount',
+                desc: 'Alchemy labs cost <b>5%</b> less.',
+                ddesc: 'Alchemy labs cost <b>5%</b> less.<q>They simmer at savings and rarely explode out of spite. Rarely.</q>',
+                price: 5e61, // 50 novemdecillion
+                icon: [6, 4, 'custom'], // Matches 950 threshold (index 4)
+                building: 'Alchemy lab',
+                unlockCondition: function() {
+                    return Game.Objects['Alchemy lab'] && Game.Objects['Alchemy lab'].amount >= 950;
+                }
+            },
+            {
                 name: 'Flavor alchemy',
                 desc: 'Alchemy labs are <b>8%</b> more efficient.',
                 ddesc: 'Alchemy labs are <b>8%</b> more efficient.<q>Your alchemy labs have unlocked the secrets of flavor alchemy, combining ingredients in ways that create entirely new taste sensations. Each cookie is a masterpiece of culinary chemistry.</q>',
@@ -2747,6 +1535,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Batch homunculi permits',
+                type: 'discount',
+                desc: 'Alchemy labs cost <b>5%</b> less.',
+                ddesc: 'Alchemy labs cost <b>5%</b> less.<q>Legal recognition for small goo people doing big batch work. Includes tiny hairnets.</q>',
+                price: 5e65, // 500 vigintillion
+                icon: [6, 6, 'custom'], // Matches 1050 threshold (index 6)
+                building: 'Alchemy lab',
+                unlockCondition: function() {
+                    return Game.Objects['Alchemy lab'] && Game.Objects['Alchemy lab'].amount >= 1050;
                 }
             },
             {
@@ -2765,6 +1565,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Guild reagent rates',
+                type: 'discount',
+                desc: 'Alchemy labs cost <b>5%</b> less.',
+                ddesc: 'Alchemy labs cost <b>5%</b> less.<q>Member pricing on phoenix down, dragonfruit essence, and ethically sourced eldritch goo.</q>',
+                price: 5e69, // 5 duovigintillion
+                icon: [6, 8, 'custom'], // Matches 1150 threshold (index 8)
+                building: 'Alchemy lab',
+                unlockCondition: function() {
+                    return Game.Objects['Alchemy lab'] && Game.Objects['Alchemy lab'].amount >= 1150;
+                }
+            },
+            {
                 name: 'Gastronomic enlightenment',
                 desc: 'Alchemy labs are <b>8%</b> more efficient.',
                 ddesc: 'Alchemy labs are <b>8%</b> more efficient.<q>Your alchemy labs have achieved gastronomic enlightenment, understanding the fundamental nature of taste itself. They can now create cookies that embody the very essence of deliciousness.</q>',
@@ -2777,6 +1589,30 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: '"Mostly lead" gold grants',
+                type: 'discount',
+                desc: 'Alchemy labs cost <b>5%</b> less.',
+                ddesc: 'Alchemy labs cost <b>5%</b> less.<q>Funding for ambitious projects that turn profits into more profits, occasionally metal into other metal.</q>',
+                price: 5e73, // 50 trevigintillion
+                icon: [6, 10, 'custom'], // Matches 1250 threshold (index 10)
+                building: 'Alchemy lab',
+                unlockCondition: function() {
+                    return Game.Objects['Alchemy lab'] && Game.Objects['Alchemy lab'].amount >= 1250;
+                }
+            },
+            {
+                name: 'Pre-owned ring frames',
+                type: 'discount',
+                desc: 'Portals cost <b>5%</b> less.',
+                ddesc: 'Portals cost <b>5%</b> less.<q>Lightly used by previous dimensions. May creak audibly when reality bends.</q>',
+                price: 5e54, // 5 septendecillion
+                icon: [7, 0, 'custom'], // Matches 750 threshold (index 0)
+                building: 'Portal',
+                unlockCondition: function() {
+                    return Game.Objects['Portal'] && Game.Objects['Portal'].amount >= 750;
                 }
             },
             {
@@ -2795,6 +1631,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Anchor warehouse club',
+                type: 'discount',
+                desc: 'Portals cost <b>5%</b> less.',
+                ddesc: 'Portals cost <b>5%</b> less.<q>Wholesale anchors! Keep your gateways grounded, your prices too.</q>',
+                price: 5e58, // 50 octodecillion
+                icon: [7, 2, 'custom'], // Matches 850 threshold (index 2)
+                building: 'Portal',
+                unlockCondition: function() {
+                    return Game.Objects['Portal'] && Game.Objects['Portal'].amount >= 850;
+                }
+            },
+            {
                 name: 'Reality bridges',
                 desc: 'Portals are <b>8%</b> more efficient.',
                 ddesc: 'Portals are <b>8%</b> more efficient.<q>Your portals can now create stable bridges between parallel universes, allowing cookies to flow freely across the multiverse. The connections are so strong they create permanent trade routes.</q>',
@@ -2807,6 +1655,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Passive rift baffles',
+                type: 'discount',
+                desc: 'Portals cost <b>5%</b> less.',
+                ddesc: 'Portals cost <b>5%</b> less.<q>Simple fins that hush the howling void and cut the utility bill in half.</q>',
+                price: 5e62, // 500 novemdecillion
+                icon: [7, 4, 'custom'], // Matches 950 threshold (index 4)
+                building: 'Portal',
+                unlockCondition: function() {
+                    return Game.Objects['Portal'] && Game.Objects['Portal'].amount >= 950;
                 }
             },
             {
@@ -2825,6 +1685,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Volunteer gatekeepers',
+                type: 'discount',
+                desc: 'Portals cost <b>5%</b> less.',
+                ddesc: 'Portals cost <b>5%</b> less.<q>Enthusiasts with clipboards who shout "Mind the tear!" and hand out cookies.</q>',
+                price: 5e66, // 5 unvigintillion
+                icon: [7, 6, 'custom'], // Matches 1050 threshold (index 6)
+                building: 'Portal',
+                unlockCondition: function() {
+                    return Game.Objects['Portal'] && Game.Objects['Portal'].amount >= 1050;
+                }
+            },
+            {
                 name: 'Interdimensional highways',
                 desc: 'Portals are <b>8%</b> more efficient.',
                 ddesc: 'Portals are <b>8%</b> more efficient.<q>Your portals form a vast network of interdimensional highways, allowing instant travel between any two points in the multiverse. The cookie trade has never been so efficient.</q>',
@@ -2837,6 +1709,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Interrealm stipend scrolls',
+                type: 'discount',
+                desc: 'Portals cost <b>5%</b> less.',
+                ddesc: 'Portals cost <b>5%</b> less.<q>Official parchments granting snack stipends to keep doors open and demons docile.</q>',
+                price: 5e70, // 50 duovigintillion
+                icon: [7, 8, 'custom'], // Matches 1150 threshold (index 8)
+                building: 'Portal',
+                unlockCondition: function() {
+                    return Game.Objects['Portal'] && Game.Objects['Portal'].amount >= 1150;
                 }
             },
             {
@@ -2855,6 +1739,30 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Multiversal enterprise zone',
+                type: 'discount',
+                desc: 'Portals cost <b>5%</b> less.',
+                ddesc: 'Portals cost <b>5%</b> less.<q>Business-friendly realities with tax holidays, physics optional, pastries encouraged.</q>',
+                price: 5e74, // 500 trevigintillion
+                icon: [7, 10, 'custom'], // Matches 1250 threshold (index 10)
+                building: 'Portal',
+                unlockCondition: function() {
+                    return Game.Objects['Portal'] && Game.Objects['Portal'].amount >= 1250;
+                }
+            },
+            {
+                name: 'Pre-loved hourglasses',
+                type: 'discount',
+                desc: 'Time machines cost <b>5%</b> less.',
+                ddesc: 'Time machines cost <b>5%</b> less.<q>They\'ve seen some things. Sand flows fine; occasional deja vu included.</q>',
+                price: 5e55, // 50 septendecillion
+                icon: [8, 0, 'custom'], // Matches 750 threshold (index 0)
+                building: 'Time machine',
+                unlockCondition: function() {
+                    return Game.Objects['Time machine'] && Game.Objects['Time machine'].amount >= 750;
+                }
+            },
+            {
                 name: 'Temporal engineering',
                 desc: 'Time machines are <b>8%</b> more efficient.',
                 ddesc: 'Time machines are <b>8%</b> more efficient.<q>Your time machines have mastered the art of temporal engineering, allowing them to harvest the perfect moments from throughout history for cookie production. Each batch contains the essence of a thousand perfect moments.</q>',
@@ -2867,6 +1775,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Depreciated timeline scraps',
+                type: 'discount',
+                desc: 'Time machines cost <b>5%</b> less.',
+                ddesc: 'Time machines cost <b>5%</b> less.<q>Leftover future-past parts at clearance prices. Warranty voids itself retroactively.</q>',
+                price: 5e59, // 500 octodecillion
+                icon: [8, 2, 'custom'], // Matches 850 threshold (index 2)
+                building: 'Time machine',
+                unlockCondition: function() {
+                    return Game.Objects['Time machine'] && Game.Objects['Time machine'].amount >= 850;
                 }
             },
             {
@@ -2885,6 +1805,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Off-season flux valves',
+                type: 'discount',
+                desc: 'Time machines cost <b>5%</b> less.',
+                ddesc: 'Time machines cost <b>5%</b> less.<q>Winter flux on summer sale; flows like syrup on a cold morning.</q>',
+                price: 5e63, // 5 vigintillion
+                icon: [8, 4, 'custom'], // Matches 950 threshold (index 4)
+                building: 'Time machine',
+                unlockCondition: function() {
+                    return Game.Objects['Time machine'] && Game.Objects['Time machine'].amount >= 950;
+                }
+            },
+            {
                 name: 'Historical preservation',
                 desc: 'Time machines are <b>8%</b> more efficient.',
                 ddesc: 'Time machines are <b>8%</b> more efficient.<q>Your time machines preserve the finest baking techniques from throughout history, ensuring that ancient wisdom is never lost. Each cookie carries the weight of culinary tradition.</q>',
@@ -2897,6 +1829,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Weekend paradox passes',
+                type: 'discount',
+                desc: 'Time machines cost <b>5%</b> less.',
+                ddesc: 'Time machines cost <b>5%</b> less.<q>Unlimited round-trips between Friday and Monday. Terms loop perpetually.</q>',
+                price: 5e67, // 50 unvigintillion
+                icon: [8, 6, 'custom'], // Matches 1050 threshold (index 6)
+                building: 'Time machine',
+                unlockCondition: function() {
+                    return Game.Objects['Time machine'] && Game.Objects['Time machine'].amount >= 1050;
                 }
             },
             {
@@ -2915,6 +1859,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Department of When grants',
+                type: 'discount',
+                desc: 'Time machines cost <b>5%</b> less.',
+                ddesc: 'Time machines cost <b>5%</b> less.<q>Official funding to keep the clock from quitting and causality from filing complaints.</q>',
+                price: 5e71, // 500 duovigintillion
+                icon: [8, 8, 'custom'], // Matches 1150 threshold (index 8)
+                building: 'Time machine',
+                unlockCondition: function() {
+                    return Game.Objects['Time machine'] && Game.Objects['Time machine'].amount >= 1150;
+                }
+            },
+            {
                 name: 'Chronological mastery',
                 desc: 'Time machines are <b>8%</b> more efficient.',
                 ddesc: 'Time machines are <b>8%</b> more efficient.<q>Your time machines have achieved complete mastery over time itself, bending the flow of history to optimize cookie production. The temporal manipulation is pure artistry.</q>',
@@ -2927,6 +1883,30 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Antique warranty loopholes',
+                type: 'discount',
+                desc: 'Time machines cost <b>5%</b> less.',
+                ddesc: 'Time machines cost <b>5%</b> less.<q>Warranties that expire yesterday can\'t be voided today. That\'s just science.</q>',
+                price: 5e75, // 5 quattuorvigintillion
+                icon: [8, 10, 'custom'], // Matches 1250 threshold (index 10)
+                building: 'Time machine',
+                unlockCondition: function() {
+                    return Game.Objects['Time machine'] && Game.Objects['Time machine'].amount >= 1250;
+                }
+            },
+            {
+                name: 'Certified negamatter cans',
+                type: 'discount',
+                desc: 'Antimatter condensers cost <b>5%</b> less.',
+                ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>Pre-certified, lightly cursed containment vessels. Store your nothing where it belongs.</q>',
+                price: 5e56, // 500 septendecillion
+                icon: [11, 0, 'custom'], // Matches 750 threshold (index 0)
+                building: 'Antimatter condenser',
+                unlockCondition: function() {
+                    return Game.Objects['Antimatter condenser'] && Game.Objects['Antimatter condenser'].amount >= 750;
                 }
             },
             {
@@ -2945,6 +1925,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Matter swap rebates',
+                type: 'discount',
+                desc: 'Antimatter condensers cost <b>5%</b> less.',
+                ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>Trade in your old matter for upgraded matter. Some terms may invert unexpectedly.</q>',
+                price: 5e60, // 5 novemdecillion
+                icon: [11, 2, 'custom'], // Matches 850 threshold (index 2)
+                building: 'Antimatter condenser',
+                unlockCondition: function() {
+                    return Game.Objects['Antimatter condenser'] && Game.Objects['Antimatter condenser'].amount >= 850;
+                }
+            },
+            {
                 name: 'Matter transmutation',
                 desc: 'Antimatter condensers are <b>8%</b> more efficient.',
                 ddesc: 'Antimatter condensers are <b>8%</b> more efficient.<q>Your antimatter condensers can transmute any form of matter into the perfect cookie ingredients, using the power of antimatter to create impossible flavors and textures.</q>',
@@ -2957,6 +1949,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Low-idle annihilators',
+                type: 'discount',
+                desc: 'Antimatter condensers cost <b>5%</b> less.',
+                ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>They hum quietly and only obliterate the bare minimum of existence during lunch.</q>',
+                price: 5e64, // 50 vigintillion
+                icon: [11, 4, 'custom'], // Matches 950 threshold (index 4)
+                building: 'Antimatter condenser',
+                unlockCondition: function() {
+                    return Game.Objects['Antimatter condenser'] && Game.Objects['Antimatter condenser'].amount >= 950;
                 }
             },
             {
@@ -2975,6 +1979,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Grad-lab particle labor',
+                type: 'discount',
+                desc: 'Antimatter condensers cost <b>5%</b> less.',
+                ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>Enthusiastic assistants accelerate savings (and particles) for the promise of "experience".</q>',
+                price: 5e68, // 500 unvigintillion
+                icon: [11, 6, 'custom'], // Matches 1050 threshold (index 6)
+                building: 'Antimatter condenser',
+                unlockCondition: function() {
+                    return Game.Objects['Antimatter condenser'] && Game.Objects['Antimatter condenser'].amount >= 1050;
+                }
+            },
+            {
                 name: 'Particle optimization',
                 desc: 'Antimatter condensers are <b>8%</b> more efficient.',
                 ddesc: 'Antimatter condensers are <b>8%</b> more efficient.<q>Your antimatter condensers optimize every particle for maximum cookie efficiency, ensuring that no energy is wasted in the baking process. The particle physics is pure efficiency.</q>',
@@ -2987,6 +2003,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Institute endowment match',
+                type: 'discount',
+                desc: 'Antimatter condensers cost <b>5%</b> less.',
+                ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>Philanthropy meets physics: every cookie you invest is matched by a very generous boson.</q>',
+                price: 5e72, // 5 trevigintillion
+                icon: [11, 8, 'custom'], // Matches 1150 threshold (index 8)
+                building: 'Antimatter condenser',
+                unlockCondition: function() {
+                    return Game.Objects['Antimatter condenser'] && Game.Objects['Antimatter condenser'].amount >= 1150;
                 }
             },
             {
@@ -3005,6 +2033,30 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Void-zone incentives',
+                type: 'discount',
+                desc: 'Antimatter condensers cost <b>5%</b> less.',
+                ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>Tax breaks for building where reality is thinnest. Perfect for negative overhead.</q>',
+                price: 5e76, // 50 quattuorvigintillion
+                icon: [11, 10, 'custom'], // Matches 1250 threshold (index 10)
+                building: 'Antimatter condenser',
+                unlockCondition: function() {
+                    return Game.Objects['Antimatter condenser'] && Game.Objects['Antimatter condenser'].amount >= 1250;
+                }
+            },
+            {
+                name: 'Lens co-op exchange',
+                type: 'discount',
+                desc: 'Prisms cost <b>5%</b> less.',
+                ddesc: 'Prisms cost <b>5%</b> less.<q>Swap scratches for savings. Community-sourced optics with community-sourced fingerprints.</q>',
+                price: 5e58, // 50 octodecillion
+                icon: [12, 0, 'custom'], // Matches 750 threshold (index 0)
+                building: 'Prism',
+                unlockCondition: function() {
+                    return Game.Objects['Prism'] && Game.Objects['Prism'].amount >= 750;
+                }
+            },
+            {
                 name: 'Light crystallization',
                 desc: 'Prisms are <b>8%</b> more efficient.',
                 ddesc: 'Prisms are <b>8%</b> more efficient.<q>Your prisms have mastered light crystallization, turning pure light into solid cookie ingredients. The crystalline structures create cookies with impossible clarity and brilliance.</q>',
@@ -3017,6 +2069,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Spectral seconds',
+                type: 'discount',
+                desc: 'Prisms cost <b>5%</b> less.',
+                ddesc: 'Prisms cost <b>5%</b> less.<q>Factory blemishes. Perfect rainbows, slightly embarrassed casings.</q>',
+                price: 5e62, // 500 novemdecillion
+                icon: [12, 2, 'custom'], // Matches 850 threshold (index 2)
+                building: 'Prism',
+                unlockCondition: function() {
+                    return Game.Objects['Prism'] && Game.Objects['Prism'].amount >= 850;
                 }
             },
             {
@@ -3035,6 +2099,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Sleep-mode rainbows',
+                type: 'discount',
+                desc: 'Prisms cost <b>5%</b> less.',
+                ddesc: 'Prisms cost <b>5%</b> less.<q>They dim themselves when you look away. Shy, efficient, dazzling when ready.</q>',
+                price: 5e66, // 5 unvigintillion
+                icon: [12, 4, 'custom'], // Matches 950 threshold (index 4)
+                building: 'Prism',
+                unlockCondition: function() {
+                    return Game.Objects['Prism'] && Game.Objects['Prism'].amount >= 950;
+                }
+            },
+            {
                 name: 'Optical alchemy',
                 desc: 'Prisms are <b>8%</b> more efficient.',
                 ddesc: 'Prisms are <b>8%</b> more efficient.<q>Your prisms perform optical alchemy, transforming light into matter through complex refraction patterns. Each cookie is a masterpiece of light and flavor engineering.</q>',
@@ -3047,6 +2123,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Apprentice refractioneers',
+                type: 'discount',
+                desc: 'Prisms cost <b>5%</b> less.',
+                ddesc: 'Prisms cost <b>5%</b> less.<q>Trainees with straightedges and boundless optimism. Do not stare directly at their enthusiasm.</q>',
+                price: 5e70, // 50 duovigintillion
+                icon: [12, 6, 'custom'], // Matches 1050 threshold (index 6)
+                building: 'Prism',
+                unlockCondition: function() {
+                    return Game.Objects['Prism'] && Game.Objects['Prism'].amount >= 1050;
                 }
             },
             {
@@ -3065,6 +2153,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Arts-of-Optics grants',
+                type: 'discount',
+                desc: 'Prisms cost <b>5%</b> less.',
+                ddesc: 'Prisms cost <b>5%</b> less.<q>Funding for cultural light projects: installations, refractions, and occasional tasteful lens flares.</q>',
+                price: 5e74, // 500 trevigintillion
+                icon: [12, 8, 'custom'], // Matches 1150 threshold (index 8)
+                building: 'Prism',
+                unlockCondition: function() {
+                    return Game.Objects['Prism'] && Game.Objects['Prism'].amount >= 1150;
+                }
+            },
+            {
                 name: 'Radiant gastronomy',
                 desc: 'Prisms are <b>8%</b> more efficient.',
                 ddesc: 'Prisms are <b>8%</b> more efficient.<q>Your prisms have achieved radiant gastronomy, using pure light energy to create cookies that transcend the boundaries of conventional baking. The results are literally brilliant.</q>',
@@ -3077,6 +2177,30 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Rainbow renewal credits',
+                type: 'discount',
+                desc: 'Prisms cost <b>5%</b> less.',
+                ddesc: 'Prisms cost <b>5%</b> less.<q>Tax incentives for neighborhoods with excellent chroma. Bring your own pot of gold.</q>',
+                price: 5e78, // 5 quinvigintillion
+                icon: [12, 10, 'custom'], // Matches 1250 threshold (index 10)
+                building: 'Prism',
+                unlockCondition: function() {
+                    return Game.Objects['Prism'] && Game.Objects['Prism'].amount >= 1250;
+                }
+            },
+            {
+                name: 'Misprinted fortunes',
+                type: 'discount',
+                desc: 'Chancemakers cost <b>5%</b> less.',
+                ddesc: 'Chancemakers cost <b>5%</b> less.<q>Fortunes with typos sell for cheap; destiny still reads between the lines.</q>',
+                price: 5e60, // 5 novemdecillion
+                icon: [17, 0, 'custom'], // Matches 750 threshold
+                building: 'Chancemaker',
+                unlockCondition: function() {
+                    return Game.Objects['Chancemaker'] && Game.Objects['Chancemaker'].amount >= 750;
                 }
             },
             {
@@ -3095,6 +2219,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Reroll refund policy',
+                type: 'discount',
+                desc: 'Chancemakers cost <b>5%</b> less.',
+                ddesc: 'Chancemakers cost <b>5%</b> less.<q>If at first you don\'t crit, try again - now with store credit.</q>',
+                price: 5e64, // 50 vigintillion
+                icon: [17, 2, 'custom'], // Matches 850 threshold
+                building: 'Chancemaker',
+                unlockCondition: function() {
+                    return Game.Objects['Chancemaker'] && Game.Objects['Chancemaker'].amount >= 850;
+                }
+            },
+            {
                 name: 'Fortune optimization',
                 desc: 'Chancemakers are <b>8%</b> more efficient.',
                 ddesc: 'Chancemakers are <b>8%</b> more efficient.<q>Your chancemakers optimize fortune for maximum cookie production, ensuring that every random event contributes to your success. Luck is now a reliable resource.</q>',
@@ -3107,6 +2243,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Economy-grade omens',
+                type: 'discount',
+                desc: 'Chancemakers cost <b>5%</b> less.',
+                ddesc: 'Chancemakers cost <b>5%</b> less.<q>Fits most prophecies. Some assembly (and belief) required.</q>',
+                price: 5e68, // 500 unvigintillion
+                icon: [17, 4, 'custom'], // Matches 950 threshold
+                building: 'Chancemaker',
+                unlockCondition: function() {
+                    return Game.Objects['Chancemaker'] && Game.Objects['Chancemaker'].amount >= 950;
                 }
             },
             {
@@ -3125,6 +2273,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Volunteer augury nights',
+                type: 'discount',
+                desc: 'Chancemakers cost <b>5%</b> less.',
+                ddesc: 'Chancemakers cost <b>5%</b> less.<q>Community diviners bring your costs down and your eyebrows up.</q>',
+                price: 5e72, // 5 trevigintillion
+                icon: [17, 6, 'custom'], // Matches 1050 threshold
+                building: 'Chancemaker',
+                unlockCondition: function() {
+                    return Game.Objects['Chancemaker'] && Game.Objects['Chancemaker'].amount >= 1050;
+                }
+            },
+            {
                 name: 'Random enhancement',
                 desc: 'Chancemakers are <b>8%</b> more efficient.',
                 ddesc: 'Chancemakers are <b>8%</b> more efficient.<q>Your chancemakers enhance randomness itself, ensuring that every random event improves cookie quality. The chaos is now perfectly controlled.</q>',
@@ -3137,6 +2297,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Lottery board matching',
+                type: 'discount',
+                desc: 'Chancemakers cost <b>5%</b> less.',
+                ddesc: 'Chancemakers cost <b>5%</b> less.<q>Public funding for private jackpots. Everybody wins (statistically speaking).</q>',
+                price: 5e76, // 50 quattuorvigintillion
+                icon: [17, 8, 'custom'], // Matches 1150 threshold
+                building: 'Chancemaker',
+                unlockCondition: function() {
+                    return Game.Objects['Chancemaker'] && Game.Objects['Chancemaker'].amount >= 1150;
                 }
             },
             {
@@ -3155,6 +2327,30 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Lucky district waivers',
+                type: 'discount',
+                desc: 'Chancemakers cost <b>5%</b> less.',
+                ddesc: 'Chancemakers cost <b>5%</b> less.<q>Zones where chance is zoned in your favor. Paperwork pre-blessed.</q>',
+                price: 5e80, // 500 quinvigintillion
+                icon: [17, 10, 'custom'], // Matches 1250 threshold
+                building: 'Chancemaker',
+                unlockCondition: function() {
+                    return Game.Objects['Chancemaker'] && Game.Objects['Chancemaker'].amount >= 1250;
+                }
+            },
+            {
+                name: 'Iteration liquidation',
+                type: 'discount',
+                desc: 'Fractal engines cost <b>5%</b> less.',
+                ddesc: 'Fractal engines cost <b>5%</b> less.<q>We sold the old parts again and again and again. Recursively affordable.</q>',
+                price: 5e62, // 500 novemdecillion
+                icon: [18, 0, 'custom'], // Matches 750 threshold
+                building: 'Fractal engine',
+                unlockCondition: function() {
+                    return Game.Objects['Fractal engine'] && Game.Objects['Fractal engine'].amount >= 750;
+                }
+            },
+            {
                 name: 'Infinite recursion',
                 desc: 'Fractal engines are <b>8%</b> more efficient.',
                 ddesc: 'Fractal engines are <b>8%</b> more efficient.<q>Your fractal engines use infinite recursion to create cookies that contain infinite layers of flavor and texture. Each cookie is a universe of taste within itself.</q>',
@@ -3167,6 +2363,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Self-similar spare parts',
+                type: 'discount',
+                desc: 'Fractal engines cost <b>5%</b> less.',
+                ddesc: 'Fractal engines cost <b>5%</b> less.<q>Each part contains smaller parts that also contain… discounts.</q>',
+                price: 5e66, // 5 unvigintillion
+                icon: [18, 2, 'custom'], // Matches 850 threshold
+                building: 'Fractal engine',
+                unlockCondition: function() {
+                    return Game.Objects['Fractal engine'] && Game.Objects['Fractal engine'].amount >= 850;
                 }
             },
             {
@@ -3185,6 +2393,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Recursion rebates',
+                type: 'discount',
+                desc: 'Fractal engines cost <b>5%</b> less.',
+                ddesc: 'Fractal engines cost <b>5%</b> less.<q>Get cash back on purchases that refer to themselves. Terms repeat.</q>',
+                price: 5e70, // 50 duovigintillion
+                icon: [18, 4, 'custom'], // Matches 950 threshold
+                building: 'Fractal engine',
+                unlockCondition: function() {
+                    return Game.Objects['Fractal engine'] && Game.Objects['Fractal engine'].amount >= 950;
+                }
+            },
+            {
                 name: 'Fractal optimization',
                 desc: 'Fractal engines are <b>8%</b> more efficient.',
                 ddesc: 'Fractal engines are <b>8%</b> more efficient.<q>Your fractal engines optimize every aspect of cookie production using fractal mathematics, ensuring perfect efficiency at every scale. The optimization is infinite.</q>',
@@ -3197,6 +2417,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Autogenerator residencies',
+                type: 'discount',
+                desc: 'Fractal engines cost <b>5%</b> less.',
+                ddesc: 'Fractal engines cost <b>5%</b> less.<q>Invite artists-in-algorithm to iterate patterns and budgets into pleasing shapes.</q>',
+                price: 5e74, // 500 trevigintillion
+                icon: [18, 6, 'custom'], // Matches 1050 threshold
+                building: 'Fractal engine',
+                unlockCondition: function() {
+                    return Game.Objects['Fractal engine'] && Game.Objects['Fractal engine'].amount >= 1050;
                 }
             },
             {
@@ -3215,6 +2447,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Grant-funded proofs',
+                type: 'discount',
+                desc: 'Fractal engines cost <b>5%</b> less.',
+                ddesc: 'Fractal engines cost <b>5%</b> less.<q>We proved it costs less, QED (Quite Economically Done).</q>',
+                price: 5e78, // 5 quinvigintillion
+                icon: [18, 8, 'custom'], // Matches 1150 threshold
+                building: 'Fractal engine',
+                unlockCondition: function() {
+                    return Game.Objects['Fractal engine'] && Game.Objects['Fractal engine'].amount >= 1150;
+                }
+            },
+            {
                 name: 'Fractal gastronomy',
                 desc: 'Fractal engines are <b>8%</b> more efficient.',
                 ddesc: 'Fractal engines are <b>8%</b> more efficient.<q>Your fractal engines have achieved fractal gastronomy, creating cookies that embody the mathematical beauty of fractals themselves. The results are geometrically perfect.</q>',
@@ -3227,6 +2471,30 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Infinite-lot variances',
+                type: 'discount',
+                desc: 'Fractal engines cost <b>5%</b> less.',
+                ddesc: 'Fractal engines cost <b>5%</b> less.<q>Zoning approvals for parcels that subdivide forever. Plenty of room for savings.</q>',
+                price: 5e82, // 50 sexvigintillion
+                icon: [18, 10, 'custom'], // Matches 1250 threshold
+                building: 'Fractal engine',
+                unlockCondition: function() {
+                    return Game.Objects['Fractal engine'] && Game.Objects['Fractal engine'].amount >= 1250;
+                }
+            },
+            {
+                name: 'Refurb dev boards',
+                type: 'discount',
+                desc: 'Javascript consoles cost <b>5%</b> less.',
+                ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Pre-loved PCBs with fresh solder and faint coffee notes. Still compiles.</q>',
+                price: 5e64, // 50 vigintillion
+                icon: [19, 0, 'custom'], // Matches 750 threshold
+                building: 'Javascript console',
+                unlockCondition: function() {
+                    return Game.Objects['Javascript console'] && Game.Objects['Javascript console'].amount >= 750;
                 }
             },
             {
@@ -3245,6 +2513,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Compiler credit program',
+                type: 'discount',
+                desc: 'Javascript consoles cost <b>5%</b> less.',
+                ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Compile now, pay later. Terms readable only after transpilation.</q>',
+                price: 5e68, // 500 unvigintillion
+                icon: [19, 2, 'custom'], // Matches 850 threshold
+                building: 'Javascript console',
+                unlockCondition: function() {
+                    return Game.Objects['Javascript console'] && Game.Objects['Javascript console'].amount >= 850;
+                }
+            },
+            {
                 name: 'Programmatic baking',
                 desc: 'Javascript consoles are <b>8%</b> more efficient.',
                 ddesc: 'Javascript consoles are <b>8%</b> more efficient.<q>Your javascript consoles use programmatic baking techniques, writing code that creates cookies with impossible precision and consistency. The programming is pure artistry.</q>',
@@ -3257,6 +2537,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Idle-friendly runtimes',
+                type: 'discount',
+                desc: 'Javascript consoles cost <b>5%</b> less.',
+                ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Optimized for waiting around productively. Uses fewer cycles, fewer snacks.</q>',
+                price: 5e72, // 5 trevigintillion
+                icon: [19, 4, 'custom'], // Matches 950 threshold
+                building: 'Javascript console',
+                unlockCondition: function() {
+                    return Game.Objects['Javascript console'] && Game.Objects['Javascript console'].amount >= 950;
                 }
             },
             {
@@ -3275,6 +2567,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Peer-review co-ops',
+                type: 'discount',
+                desc: 'Javascript consoles cost <b>5%</b> less.',
+                ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Throw code, catch feedback, share snacks. Merge with confidence (and crumbs).</q>',
+                price: 5e76, // 50 quattuorvigintillion
+                icon: [19, 6, 'custom'], // Matches 1050 threshold
+                building: 'Javascript console',
+                unlockCondition: function() {
+                    return Game.Objects['Javascript console'] && Game.Objects['Javascript console'].amount >= 1050;
+                }
+            },
+            {
                 name: 'Computational gastronomy',
                 desc: 'Javascript consoles are <b>8%</b> more efficient.',
                 ddesc: 'Javascript consoles are <b>8%</b> more efficient.<q>Your javascript consoles have pioneered computational gastronomy, using advanced algorithms to create cookies that are mathematically perfect in every way.</q>',
@@ -3287,6 +2591,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Open-source grants',
+                type: 'discount',
+                desc: 'Javascript consoles cost <b>5%</b> less.',
+                ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Foundation funds for critical libraries like dough.js and crumb-utils.</q>',
+                price: 5e80, // 500 quinvigintillion
+                icon: [19, 8, 'custom'], // Matches 1150 threshold
+                building: 'Javascript console',
+                unlockCondition: function() {
+                    return Game.Objects['Javascript console'] && Game.Objects['Javascript console'].amount >= 1150;
                 }
             },
             {
@@ -3305,6 +2621,30 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Cloud credit vouchers',
+                type: 'discount',
+                desc: 'Javascript consoles cost <b>5%</b> less.',
+                ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Spin up instances for less. Free tier includes occasional cumulonimbus.</q>',
+                price: 5e84, // 5 septenvigintillion
+                icon: [19, 10, 'custom'], // Matches 1250 threshold
+                building: 'Javascript console',
+                unlockCondition: function() {
+                    return Game.Objects['Javascript console'] && Game.Objects['Javascript console'].amount >= 1250;
+                }
+            },
+            {
+                name: 'Interdimensional tax breaks',
+                type: 'discount',
+                desc: 'Idleverses cost <b>5%</b> less.',
+                ddesc: 'Idleverses cost <b>5%</b> less.<q>Your idleverses qualify for special tax incentives across multiple dimensions. The paperwork is filed in parallel universes, but the savings are very real.</q>',
+                price: 6e66, // 6 unvigintillion
+                icon: [20, 0, 'custom'], // Matches 750 threshold
+                building: 'Idleverse',
+                unlockCondition: function() {
+                    return Game.Objects['Idleverse'] && Game.Objects['Idleverse'].amount >= 750;
+                }
+            },
+            {
                 name: 'Reality real estate',
                 desc: 'Idleverses are <b>8%</b> more efficient.',
                 ddesc: 'Idleverses are <b>8%</b> more efficient.<q>You\'ve cornered the market on interdimensional property development. Each idleverse now serves as prime real estate for cookie franchises, with locations in every conceivable reality. The property taxes alone could fund a small galaxy.</q>',
@@ -3317,6 +2657,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Reality consolidation discounts',
+                type: 'discount',
+                desc: 'Idleverses cost <b>5%</b> less.',
+                ddesc: 'Idleverses cost <b>5%</b> less.<q>By consolidating multiple idleverses under unified management, you\'ve negotiated bulk pricing that applies across all dimensions. The savings scale with your multiverse presence.</q>',
+                price: 6e70, // 60 duovigintillion
+                icon: [20, 2, 'custom'], // Matches 850 threshold
+                building: 'Idleverse',
+                unlockCondition: function() {
+                    return Game.Objects['Idleverse'] && Game.Objects['Idleverse'].amount >= 850;
                 }
             },
             {
@@ -3335,6 +2687,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Cosmic bulk purchasing',
+                type: 'discount',
+                desc: 'Idleverses cost <b>5%</b> less.',
+                ddesc: 'Idleverses cost <b>5%</b> less.<q>Your massive scale across the multiverse allows you to purchase idleverse components in quantities that would bankrupt entire galaxies. The suppliers are happy to offer volume discounts.</q>',
+                price: 6e74, // 600 trevigintillion
+                icon: [20, 4, 'custom'], // Matches 950 threshold
+                building: 'Idleverse',
+                unlockCondition: function() {
+                    return Game.Objects['Idleverse'] && Game.Objects['Idleverse'].amount >= 950;
+                }
+            },
+            {
                 name: 'Cosmic supply chains',
                 desc: 'Idleverses are <b>8%</b> more efficient.',
                 ddesc: 'Idleverses are <b>8%</b> more efficient.<q>Your idleverses now form the backbone of the largest supply chain in existence. Raw materials flow from one reality to another, with each universe specializing in different cookie ingredients. The logistics are mind-bendingly complex.</q>',
@@ -3347,6 +2711,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Multiverse supplier networks',
+                type: 'discount',
+                desc: 'Idleverses cost <b>5%</b> less.',
+                ddesc: 'Idleverses cost <b>5%</b> less.<q>You\'ve established exclusive supplier relationships across multiple realities. These vendors compete for your business, driving down prices while maintaining quality across all dimensions.</q>',
+                price: 6e78, // 6 quinvigintillion
+                icon: [20, 6, 'custom'], // Matches 1050 threshold
+                building: 'Idleverse',
+                unlockCondition: function() {
+                    return Game.Objects['Idleverse'] && Game.Objects['Idleverse'].amount >= 1050;
                 }
             },
             {
@@ -3365,6 +2741,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Dimensional economies of scale',
+                type: 'discount',
+                desc: 'Idleverses cost <b>5%</b> less.',
+                ddesc: 'Idleverses cost <b>5%</b> less.<q>Your idleverse operations have reached such massive scale that you can leverage economies across the entire multiverse. Each new idleverse makes all the others cheaper to build.</q>',
+                price: 6e82, // 60 sexvigintillion
+                icon: [20, 8, 'custom'], // Matches 1150 threshold
+                building: 'Idleverse',
+                unlockCondition: function() {
+                    return Game.Objects['Idleverse'] && Game.Objects['Idleverse'].amount >= 1150;
+                }
+            },
+            {
                 name: 'Multiverse headquarters',
                 desc: 'Idleverses are <b>8%</b> more efficient.',
                 ddesc: 'Idleverses are <b>8%</b> more efficient.<q>Your idleverses now serve as the corporate headquarters for the largest cookie conglomerate in existence. Board meetings span multiple realities, with executives teleporting in from different dimensions. The coffee machine alone is a marvel of interdimensional engineering.</q>',
@@ -3377,6 +2765,30 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Reality monopoly pricing',
+                type: 'discount',
+                desc: 'Idleverses cost <b>5%</b> less.',
+                ddesc: 'Idleverses cost <b>5%</b> less.<q>You\'ve achieved such dominance across the multiverse that suppliers are willing to offer preferential pricing just to maintain their relationship with the largest cookie empire in existence.</q>',
+                price: 6e86, // 600 septenvigintillion
+                icon: [20, 10, 'custom'], // Matches 1250 threshold
+                building: 'Idleverse',
+                unlockCondition: function() {
+                    return Game.Objects['Idleverse'] && Game.Objects['Idleverse'].amount >= 1250;
+                }
+            },
+            {
+                name: 'Neural bulk purchasing',
+                type: 'discount',
+                desc: 'Cortex bakers cost <b>5%</b> less.',
+                ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex bakers have negotiated bulk discounts on neural tissue and synaptic materials. Buying brain matter in industrial quantities significantly reduces the per-unit cost of each new baker.</q>',
+                price: 9.5e68, // 950 unvigintillion
+                icon: [21, 0, 'custom'], // Matches 750 threshold
+                building: 'Cortex baker',
+                unlockCondition: function() {
+                    return Game.Objects['Cortex baker'] && Game.Objects['Cortex baker'].amount >= 750;
                 }
             },
             {
@@ -3395,6 +2807,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Synaptic wholesale networks',
+                type: 'discount',
+                desc: 'Cortex bakers cost <b>5%</b> less.',
+                ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex bakers have established direct relationships with neural tissue suppliers, bypassing middlemen and securing wholesale pricing on synaptic components. The savings are mind-boggling.</q>',
+                price: 9.5e72, // 9.5 trevigintillion
+                icon: [21, 2, 'custom'], // Matches 850 threshold
+                building: 'Cortex baker',
+                unlockCondition: function() {
+                    return Game.Objects['Cortex baker'] && Game.Objects['Cortex baker'].amount >= 850;
+                }
+            },
+            {
                 name: 'Synaptic pruning',
                 desc: 'Cortex bakers are <b>8%</b> more efficient.',
                 ddesc: 'Cortex bakers are <b>8%</b> more efficient.<q>Your cortex bakers have undergone advanced synaptic pruning, eliminating inefficient neural pathways and optimizing their cognitive processes. They now focus exclusively on the most effective baking techniques, discarding outdated methods like a chef discards failed experiments.</q>',
@@ -3407,6 +2831,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Cerebral mass production',
+                type: 'discount',
+                desc: 'Cortex bakers cost <b>5%</b> less.',
+                ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex bakers have mastered the art of mass-producing brain tissue, creating economies of scale that make each additional baker significantly cheaper. It\'s like a neural assembly line.</q>',
+                price: 9.5e76, // 95 quattuorvigintillion
+                icon: [21, 4, 'custom'], // Matches 950 threshold
+                building: 'Cortex baker',
+                unlockCondition: function() {
+                    return Game.Objects['Cortex baker'] && Game.Objects['Cortex baker'].amount >= 950;
                 }
             },
             {
@@ -3425,6 +2861,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Mind monopoly pricing',
+                type: 'discount',
+                desc: 'Cortex bakers cost <b>5%</b> less.',
+                ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex bakers have achieved such dominance in the neural market that suppliers offer preferential pricing just to maintain their relationship with the largest brain-based cookie empire in existence.</q>',
+                price: 9.5e80, // 950 quinvigintillion
+                icon: [21, 6, 'custom'], // Matches 1050 threshold
+                building: 'Cortex baker',
+                unlockCondition: function() {
+                    return Game.Objects['Cortex baker'] && Game.Objects['Cortex baker'].amount >= 1050;
+                }
+            },
+            {
                 name: 'Metacognitive awareness',
                 desc: 'Cortex bakers are <b>8%</b> more efficient.',
                 ddesc: 'Cortex bakers are <b>8%</b> more efficient.<q>Your cortex bakers have developed metacognitive awareness, allowing them to think about their own thinking processes. They can analyze their baking decisions in real-time, identify inefficiencies, and continuously improve their techniques without external guidance.</q>',
@@ -3437,6 +2885,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Neural economies of scale',
+                type: 'discount',
+                desc: 'Cortex bakers cost <b>5%</b> less.',
+                ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex baker operations have reached such massive scale that you can leverage neural economies across the entire network. Each new baker makes all the others cheaper to build through shared infrastructure.</q>',
+                price: 9.5e84, // 9.5 septenvigintillion
+                icon: [21, 8, 'custom'], // Matches 1150 threshold
+                building: 'Cortex baker',
+                unlockCondition: function() {
+                    return Game.Objects['Cortex baker'] && Game.Objects['Cortex baker'].amount >= 1150;
                 }
             },
             {
@@ -3455,6 +2915,30 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Synaptic supply dominance',
+                type: 'discount',
+                desc: 'Cortex bakers cost <b>5%</b> less.',
+                ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex bakers have cornered the market on synaptic materials, controlling the entire supply chain from neural tissue farms to advanced cognitive enhancement facilities. Suppliers compete for your business.</q>',
+                price: 9.5e88, // 95 octovigintillion
+                icon: [21, 10, 'custom'], // Matches 1250 threshold
+                building: 'Cortex baker',
+                unlockCondition: function() {
+                    return Game.Objects['Cortex baker'] && Game.Objects['Cortex baker'].amount >= 1250;
+                }
+            },
+            {
+                name: 'Clone factory economies',
+                type: 'discount',
+                desc: 'You cost <b>5%</b> less.',
+                ddesc: 'You cost <b>5%</b> less.<q>Your clone factory has achieved economies of scale, making each additional clone significantly cheaper to produce. The infrastructure costs are spread across more units, and suppliers offer bulk discounts on cloning materials.</q>',
+                price: 2.7e70, // 27 duovigintillion
+                icon: [22, 0, 'custom'], // Matches 750 threshold
+                building: 'You',
+                unlockCondition: function() {
+                    return Game.Objects['You'] && Game.Objects['You'].amount >= 750;
+                }
+            },
+            {
                 name: 'Mitotic mastery',
                 desc: 'You are <b>8%</b> more efficient.',
                 ddesc: 'You are <b>8%</b> more efficient.<q>Your clones have perfected the art of cellular division, allowing them to replicate themselves with unprecedented precision and speed. Each new clone emerges fully formed and ready to work, with no awkward adolescence or training period. It\'s like having an army of instant experts.</q>',
@@ -3467,6 +2951,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Replica production lines',
+                type: 'discount',
+                desc: 'You cost <b>5%</b> less.',
+                ddesc: 'You cost <b>5%</b> less.<q>Your clone production has been streamlined into efficient assembly lines, reducing waste and optimizing resource usage. Each clone is now produced with surgical precision at a fraction of the original cost.</q>',
+                price: 2.7e74, // 270 trevigintillion
+                icon: [22, 2, 'custom'], // Matches 850 threshold
+                building: 'You',
+                unlockCondition: function() {
+                    return Game.Objects['You'] && Game.Objects['You'].amount >= 850;
                 }
             },
             {
@@ -3485,6 +2981,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Mirror manufacturing mastery',
+                type: 'discount',
+                desc: 'You cost <b>5%</b> less.',
+                ddesc: 'You cost <b>5%</b> less.<q>Your clone manufacturing process has reached industrial perfection, with automated quality control and bulk material sourcing. The cost per clone has plummeted as you\'ve mastered the art of mass self-replication.</q>',
+                price: 2.7e78, // 2.7 quinvigintillion
+                icon: [22, 4, 'custom'], // Matches 950 threshold
+                building: 'You',
+                unlockCondition: function() {
+                    return Game.Objects['You'] && Game.Objects['You'].amount >= 950;
+                }
+            },
+            {
                 name: 'Cellular differentiation',
                 desc: 'You are <b>8%</b> more efficient.',
                 ddesc: 'You are <b>8%</b> more efficient.<q>Your clones have mastered cellular differentiation, allowing them to develop specialized organs and abilities optimized for specific tasks. Some have enhanced taste buds, others have improved dexterity, and a few have developed the ability to sense cookie freshness through their skin. The specialization is remarkable.</q>',
@@ -3497,6 +3005,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Twin tycoon pricing',
+                type: 'discount',
+                desc: 'You cost <b>5%</b> less.',
+                ddesc: 'You cost <b>5%</b> less.<q>Your clone empire has achieved such dominance that suppliers compete for your business, offering preferential pricing on all cloning materials. Being the largest self-replicating entity has its financial advantages.</q>',
+                price: 2.7e82, // 27 sexvigintillion
+                icon: [22, 6, 'custom'], // Matches 1050 threshold
+                building: 'You',
+                unlockCondition: function() {
+                    return Game.Objects['You'] && Game.Objects['You'].amount >= 1050;
                 }
             },
             {
@@ -3515,6 +3035,18 @@ window.JNEData = {
                 }
             },
             {
+                name: 'Doppelganger discount networks',
+                type: 'discount',
+                desc: 'You cost <b>5%</b> less.',
+                ddesc: 'You cost <b>5%</b> less.<q>Your clone network has established direct relationships with material suppliers, bypassing middlemen and securing wholesale pricing. The savings from cutting out intermediaries are substantial.</q>',
+                price: 2.7e86, // 270 septenvigintillion
+                icon: [22, 8, 'custom'], // Matches 1150 threshold
+                building: 'You',
+                unlockCondition: function() {
+                    return Game.Objects['You'] && Game.Objects['You'].amount >= 1150;
+                }
+            },
+            {
                 name: 'Quantum entanglement',
                 desc: 'You are <b>8%</b> more efficient.',
                 ddesc: 'You are <b>8%</b> more efficient.<q>Your clones have achieved quantum entanglement, allowing them to share information and coordinate actions instantaneously across vast distances. When one clone learns a new technique, all clones know it immediately. It\'s like having a network of minds that think as one, yet remain individually brilliant.</q>',
@@ -3527,6 +3059,18 @@ window.JNEData = {
                 },
                 effect: function() {
                     return 1.08; // 8% increase
+                }
+            },
+            {
+                name: 'Clone supply dominance',
+                type: 'discount',
+                desc: 'You cost <b>5%</b> less.',
+                ddesc: 'You cost <b>5%</b> less.<q>Your clone operations have cornered the market on self-replication materials, controlling the entire supply chain from basic cloning components to advanced genetic enhancement facilities. Suppliers compete for your business.</q>',
+                price: 2.7e90, // 2.7 novemvigintillion
+                icon: [22, 10, 'custom'], // Matches 1250 threshold
+                building: 'You',
+                unlockCondition: function() {
+                    return Game.Objects['You'] && Game.Objects['You'].amount >= 1250;
                 }
             }
         ],
@@ -3585,7 +3129,6 @@ window.JNEData = {
                 power: 2,
                 require: 'Box of improved cookies',
                 isBoxUpgrade: true,
-               
             },
             {
                 name: 'Improved Macadamia nut cookies',
@@ -3597,7 +3140,6 @@ window.JNEData = {
                 power: 2,
                 require: 'Box of improved cookies',
                 isBoxUpgrade: true,
-             
             },
             {
                 name: 'Improved Almond cookies',
@@ -3620,7 +3162,6 @@ window.JNEData = {
                 power: 2,
                 require: 'Box of improved cookies',
                 isBoxUpgrade: true,
-             
             },
             {
                 name: 'Improved Walnut cookies',
@@ -3632,7 +3173,6 @@ window.JNEData = {
                 power: 2,
                 require: 'Box of improved cookies',
                 isBoxUpgrade: true,
-          
             },
             {
                 name: 'Improved Cashew cookies',
@@ -3644,7 +3184,6 @@ window.JNEData = {
                 power: 2,
                 require: 'Box of improved cookies',
                 isBoxUpgrade: true,
-     
             },
             {
                 name: 'Improved White chocolate cookies',
@@ -3689,7 +3228,6 @@ window.JNEData = {
                 power: 2,
                 require: 'Box of improved cookies',
                 isBoxUpgrade: true,
-            
             },
             {
                 name: 'Improved All-chocolate cookies',
@@ -3701,7 +3239,6 @@ window.JNEData = {
                 power: 2,
                 require: 'Box of improved cookies',
                 isBoxUpgrade: true,
-              
             },
             {
                 name: 'Improved Dark chocolate-coated cookies',
@@ -3713,7 +3250,6 @@ window.JNEData = {
                 power: 2,
                 require: 'Box of improved cookies',
                 isBoxUpgrade: true,
-           
             },
             {
                 name: 'Improved White chocolate-coated cookies',
@@ -3725,7 +3261,6 @@ window.JNEData = {
                 power: 2,
                 require: 'Box of improved cookies',
                 isBoxUpgrade: true,
-          
             },
             {
                 name: 'Improved Eclipse cookies',
@@ -3737,7 +3272,6 @@ window.JNEData = {
                 power: 2,
                 require: 'Box of improved cookies',
                 isBoxUpgrade: true,
-             
             },
             {
                 name: 'Improved Zebra cookies',
@@ -3749,7 +3283,6 @@ window.JNEData = {
                 power: 2,
                 require: 'Box of improved cookies',
                 isBoxUpgrade: true,
-               
             },
             {
                 name: 'Improved Snickerdoodles',
@@ -3761,7 +3294,6 @@ window.JNEData = {
                 power: 2,
                 require: 'Box of improved cookies',
                 isBoxUpgrade: true,
-             
             },
             {
                 name: 'Improved Stroopwafels',
@@ -3773,7 +3305,6 @@ window.JNEData = {
                 power: 2,
                 require: 'Box of improved cookies',
                 isBoxUpgrade: true,
-            
             },
             {
                 name: 'Improved Macaroons',
@@ -3785,7 +3316,6 @@ window.JNEData = {
                 power: 2,
                 require: 'Box of improved cookies',
                 isBoxUpgrade: true,
-             
             },
             {
                 name: 'Improved Empire biscuits',
@@ -3797,7 +3327,6 @@ window.JNEData = {
                 power: 2,
                 require: 'Box of improved cookies',
                 isBoxUpgrade: true,
-             
             },
             {
                 name: 'Improved Madeleines',
@@ -3809,7 +3338,6 @@ window.JNEData = {
                 power: 2,
                 require: 'Box of improved cookies',
                 isBoxUpgrade: true,
-       
             },
             {
                 name: 'Improved Palmiers',
@@ -3821,7 +3349,6 @@ window.JNEData = {
                 power: 2,
                 require: 'Box of improved cookies',
                 isBoxUpgrade: true,
-        
             },
             {
                 name: 'Improved Milk chocolate butter biscuit',
@@ -4114,7 +3641,6 @@ window.JNEData = {
                 customIcons: [[16, 12, 'custom'], [17, 12, 'custom'], [18, 12, 'custom'], [19, 12, 'custom'], [20, 12, 'custom'], [21, 12, 'custom']],
                 orders: [7002.609, 7002.619, 7002.629, 7002.639, 7002.649, 7002.659]
             },
-          
             seedlog: {
                 names: ["Seedless to eternity", "Seedless to infinity", "Seedless to beyond"],
                 thresholds: [5, 10, 25],
@@ -4220,7 +3746,6 @@ window.JNEData = {
             customIcons: [[27, 15], [0, 19, 'gardenPlants']],
             orders: [61515.431, 61515.440]
         },
-
         soilChanges: {
             names: ["Fifty Shades of Clay"],
             thresholds: [100], // 100 soil changes
@@ -4234,7 +3759,6 @@ window.JNEData = {
             descs: ["Click on the news ticker <b>1,000 times</b> in one ascension.<q>Hey dummy you are clicking on the wrong thing.</q>"],
             customIcons: [[10, 12, 'custom']],
             orders: [11000.548]
-
         },
         wrathCookies: {
             names: ["Warm-Up Ritual", "Deal of the Slightly Damned", "Baker of the Beast"],
@@ -4348,7 +3872,6 @@ window.JNEData = {
             customIcons: [[23, 13, 'custom']],
             orders: [30500.102]
         },
-        
         theFinalChallenger: {
             names: ["The Final Challenger"],
             thresholds: [10], // 10 out of 17 challenge achievements
@@ -4356,7 +3879,6 @@ window.JNEData = {
             customIcons: [[14, 12, 'custom']],
             orders: [30501]
         },
-        
         // Stock market achievements
         stockBrokers: {
             names: ["Broiler room"],

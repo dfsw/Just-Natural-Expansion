@@ -1,4 +1,4 @@
-// Just Natural Expansion v0.5.4 - Cookie Clicker Mod
+// Just Natural Expansion
 
 (function() 
 {
@@ -9,8 +9,8 @@
     // off loaded the static data for upgrades, achievements, etc
     var script = document.createElement('script');
     script.src = BETA_MODE 
-        ? 'https://cdn.jsdelivr.net/gh/dfsw/Cookies@beta/Beta/data.js?v=1'
-        : 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/data.js';
+            ? 'https://cdn.jsdelivr.net/gh/dfsw/Cookies@beta/Beta/data.js?v=' + Date.now()
+        : 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/data.js?v=' + Date.now();
     script.onload = function() {
         // Continue initialization after data.js is loaded
         initializeMod();
@@ -23,7 +23,7 @@
     
     function initializeMod() {
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.5.4';
+    var modVersion = '0.5.5';
     var debugMode = false; 
     
     function debugLog() {
@@ -147,6 +147,8 @@ var downlineMinigameLoadedOnce = false;
 
 var pendingPotionsMinigameSave = '';
 var potionsMinigameLoadedOnce = false;
+
+var buildingDiscountData = {}; // Store discount upgrade names by building name
 var cookieAgeScriptLoaded = false;
 var heavenlyUpgradesScriptLoaded = false;
 var modInitialized = false; // Track if mod has finished initializing
@@ -609,6 +611,18 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         });
 
         resetUnlockStateCache();
+        
+        // Trigger CookieMonster to refresh its cached data after ascension reset
+        setTimeout(function() {
+            if (typeof CM !== 'undefined' && CM.Sim && typeof CM.Sim.CopyData === 'function') {
+                try {
+                    CM.Sim.CopyData();
+                    console.log('JNE: CookieMonster data refreshed after ascension');
+                } catch (e) {
+                    // Silent fail - CookieMonster may not be loaded
+                }
+            }
+        }, 100);
     }
     
     // Handle reset - clear data on full reset
@@ -657,6 +671,17 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
 
             resetUnlockStateCache();
             
+            // Trigger CookieMonster to refresh its cached data after full reset
+            setTimeout(function() {
+                if (typeof CM !== 'undefined' && CM.Sim && typeof CM.Sim.CopyData === 'function') {
+                    try {
+                        CM.Sim.CopyData();
+                        console.log('JNE: CookieMonster data refreshed after full reset');
+                    } catch (e) {
+                        // Silent fail - CookieMonster may not be loaded
+                    }
+                }
+            }, 100);
     
         } else {
             // Don't call initializeSessionBaselines here - it's called during reincarnation when Game values are already 0
@@ -2228,7 +2253,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                         var totalLanterns = currentSessionLanterns + lifetimeLanterns;
                         if (totalLanterns > 0) {
                             var zodiacCount = getZodiacVisitCount();
-                            var lanternDisplayValue = lifetimeLanterns > 0 
+                            var lanternDisplayValue = lifetimeLanterns > 0
                                 ? `${currentSessionLanterns} (all time: ${totalLanterns})`
                                 : currentSessionLanterns.toString();
                             lifetimeStatsHTML += `<div class="listing"><b>Lanterns collected:</b> ${lanternDisplayValue}</div>`;
@@ -4432,21 +4457,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                         }
                     }
                 
-        // ===== BUILDING DISCOUNT UPGRADES =====
-                // Create building discount upgrades from generic section
-                if (modSettings.enableBuildingUpgrades && upgradeData.generic && Array.isArray(upgradeData.generic)) {
-                    for (var i = 0; i < upgradeData.generic.length; i++) {
-                        var upgradeInfo = upgradeData.generic[i];
-                        if (upgradeInfo.type === 'discount') {
-                    try {
-                            createGenericUpgrade(upgradeInfo);
-                    } catch (e) {
-                        console.error('Failed to create discount upgrade:', upgradeInfo.name, e);
-                        }
-                    }
-                }
-            }
-            
         // ===== BOX OF IMPROVED COOKIES SETUP =====
             //  Ensure "Box of improved cookies" is fully registered before creating cookie upgrades
                 if (modSettings.enableCookieUpgrades && Game.Upgrades['Box of improved cookies']) {
@@ -6845,6 +6855,16 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         }
         
         try {
+            // Add default effect and pool for discount upgrades
+            if (upgradeInfo.type === 'discount') {
+                if (!upgradeInfo.effect) {
+                    upgradeInfo.effect = function() { return 1; };
+                }
+                if (!upgradeInfo.pool) {
+                    upgradeInfo.pool = '';
+                }
+            }
+            
             // Process icon to convert string sprite sheet names to URLs
             var processedIcon = processIcon(upgradeInfo.icon);
             
@@ -6891,6 +6911,14 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             // Ensure the price is set correctly
             if (Game.last) {
                 Game.last.price = upgradeInfo.price;
+            }
+            
+            // For discount upgrades, add buyFunction to refresh store after purchase
+            if (upgradeInfo.type === 'discount' && Game.last) {
+                Game.last.buyFunction = function() {
+                    Game.storeToRefresh = 1;
+                    Game.RecalculateUpgrades();
+                };
             }
         } catch (e) {
             console.error('Error creating building upgrade:', upgradeInfo.name, e);
@@ -7508,6 +7536,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     modTracking.godUsageTime = modSaveData.modTracking.godUsageTime || {};
                     modTracking.currentSlottedGods = modSaveData.modTracking.currentSlottedGods || {};
                     modTracking.lanternsClicked = modSaveData.modTracking.lanternsClicked || 0;
+                    modTracking.currentZodiacStartTime = modSaveData.modTracking.currentZodiacStartTime || 0;
                     // Clear spell cast times on load to prevent save-scumming the Spell Slinger achievement
                     modTracking.spellCastTimes = [];
                     debugLog('continueModInitialization: restored tracking variables from save data');
@@ -7726,6 +7755,19 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     return newsItems;
                 });
             }
+            
+            // Trigger CookieMonster to refresh its cached data after save load completes
+            // This ensures CM's upgrade/achievement caches are synchronized with our loaded data
+            setTimeout(function() {
+                if (typeof CM !== 'undefined' && CM.Sim && typeof CM.Sim.CopyData === 'function') {
+                    try {
+                        CM.Sim.CopyData();
+                        console.log('JNE: CookieMonster data refreshed after save load');
+                    } catch (e) {
+                        // Silent fail - CookieMonster may not be loaded
+                    }
+                }
+            }, 3500); // Slightly after the 3000ms ticker hook delay
         }, 3000); // Give extra time for everything to settle
         
     }
@@ -7947,6 +7989,19 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     return result;
                 };
             }
+
+            // Trigger CookieMonster to refresh its cached data after our mod finishes loading
+            // This prevents conflicts where CM's cached upgrade/achievement references become stale
+            setTimeout(function() {
+                if (typeof CM !== 'undefined' && CM.Sim && typeof CM.Sim.CopyData === 'function') {
+                    try {
+                        CM.Sim.CopyData();
+                        console.log('JNE: CookieMonster data refreshed after mod initialization');
+                    } catch (e) {
+                        // Silent fail - CookieMonster may not be loaded
+                    }
+                }
+            }, 1500); // Delay to ensure all async initialization is complete
         },
   
         // save() is called automatically by the game when saving
@@ -7995,7 +8050,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     godUsageTime: lifetimeData.godUsageTime || {},
                     cookieFishCaught: lifetimeData.cookieFishCaught || 0,
                     bingoJackpotWins: lifetimeData.bingoJackpotWins || 0,
-                    lanternsClicked: (lifetimeData.lanternsClicked || 0) + (modTracking.lanternsClicked || 0),
+                    lanternsClicked: lifetimeData.lanternsClicked || 0,
                     zodiacVisited: lifetimeData.zodiacVisited || '000000000000'
                 };
                 
@@ -8068,7 +8123,8 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                         soilChangesTotal: modTracking.soilChangesTotal || 0,
                         godUsageTime: modTracking.godUsageTime || {},
                         currentSlottedGods: modTracking.currentSlottedGods || {},
-                        lanternsClicked: modTracking.lanternsClicked || 0
+                        lanternsClicked: modTracking.lanternsClicked || 0,
+                        currentZodiacStartTime: modTracking.currentZodiacStartTime || 0
                     },
                     // Persist Cookie Age progress regardless of toggle state
                     cookieAge: cookieAgeData,
@@ -9058,158 +9114,99 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         }
     }, 500);
 
-    // Add custom multiplier to the tiered CpS calculation
     function addCustomBuildingMultipliers() {
-        // Prevent multiple calls
-        if (Game.customMultipliersSetup) {
-            return;
+        if (Game.customMultipliersSetup) return;
+        if (!modSettings.enableBuildingUpgrades) return;
+        if (!Game.Objects || Object.keys(Game.Objects).length === 0) return;
+
+        if (!Game.originalMagicCpS) {
+            Game.originalMagicCpS = Game.magicCpS;
         }
-        
-        // Skip custom multiplier setup if building upgrades are disabled
-        if (!modSettings.enableBuildingUpgrades) {return;}
-        
-        // ensure GetTieredCpsMult exist
-        if (!Game.GetTieredCpsMult) {
-            console.warn('Game or GetTieredCpsMult not available, skipping custom multiplier setup');
-            return;
-        }
-        
-        // Additional safety check: ensure buildings are initialized
-        if (!Game.Objects || Object.keys(Game.Objects).length === 0) {
-            console.warn('Game.Objects not available, skipping custom multiplier setup');
-            return;
-        }
-        
-        if (!Game.originalGetTieredCpsMult) {
-            Game.originalGetTieredCpsMult = Game.GetTieredCpsMult;
-        }
-        
-        // Override with our version that includes custom multipliers
-        Game.GetTieredCpsMult = function(me) {
-            // Safety check: ensure we have a valid building and original function
-            if (!me || !me.name || !Game.originalGetTieredCpsMult) {
-                return 1; // Return default multiplier if something is missing 
-            }
-            
-            var mult = 1; 
-            
-            try {
-                mult = Game.originalGetTieredCpsMult(me);
-                
-                // Safety check: ensure we got a valid number back
-                if (typeof mult !== 'number' || isNaN(mult) || !isFinite(mult)) {
-                    mult = 1; 
-                }
-            } catch (e) {
-                mult = 1;
-            }
-            
-            // Add our custom multipliers for all buildings
+
+        Game.magicCpS = function(what) {
+            var mult = Game.originalMagicCpS(what);
             if (upgradeData.building) {
                 for (var i = 0; i < upgradeData.building.length; i++) {
                     var upgradeInfo = upgradeData.building[i];
-                    if (upgradeInfo && upgradeInfo.building === me.name && Game.Upgrades[upgradeInfo.name] && Game.Upgrades[upgradeInfo.name].bought) {
-                        mult *= 1.08; // Stack multiplicatively
+                    if (upgradeInfo && upgradeInfo.building === what &&
+                        Game.Upgrades[upgradeInfo.name] && Game.Upgrades[upgradeInfo.name].bought) {
+                        mult *= 1.08;
                     }
                 }
             }
-            
-            // Final safety check: ensure we return a valid number
-            if (typeof mult !== 'number' || isNaN(mult) || !isFinite(mult)) {
-                mult = 1;
-            }
-            
             return mult;
         };
-        
-        // Mark as setup to prevent multiple calls
+
         Game.customMultipliersSetup = true;
     }
 
     // Apply building discount based on owned upgrades
     function applyBuildingDiscount(buildingName, discountUpgrades) {
-        if (Game.Objects[buildingName]) {
-            const originalModifyBuildingPrice = Game.modifyBuildingPrice;
-            Game.modifyBuildingPrice = function(building, price) {
-                price = originalModifyBuildingPrice.call(this, building, price);
+        // Store discount upgrade names for this building
+        buildingDiscountData[buildingName] = discountUpgrades;
+    }
+    
+    function setupBuildingDiscountWrapper() {
+        // Only wrap once
+        if (Game._jneModifyBuildingPriceWrapped) return;
+        Game._jneModifyBuildingPriceWrapped = true;
+        
+        const originalModifyBuildingPrice = Game.modifyBuildingPrice;
+        Game.modifyBuildingPrice = function(building, price) {
+            price = originalModifyBuildingPrice.call(this, building, price);
+            
+            var buildingKey = building.name;
+            if (!buildingDiscountData[buildingKey]) {
+                buildingKey = building.id;
+            }
+            
+            if (buildingDiscountData[buildingKey]) {
+                var discountMultiplier = 1.0;
+                var discountUpgrades = buildingDiscountData[buildingKey];
                 
-                if (building.name === buildingName) {
-                    var discountMultiplier = 1.0;
-                    
-                    // Check each discount upgrade for this building
-                    for (var i = 0; i < discountUpgrades.length; i++) {
-                        var upgradeName = discountUpgrades[i];
-                        if (Game.Upgrades[upgradeName] && Game.Upgrades[upgradeName].bought) {
-                            discountMultiplier *= 0.95; // Apply 5% discount cumulatively
-                        }
+                // Check each discount upgrade for this building
+                for (var i = 0; i < discountUpgrades.length; i++) {
+                    var upgradeName = discountUpgrades[i];
+                    if (Game.Upgrades[upgradeName] && Game.Upgrades[upgradeName].bought) {
+                        discountMultiplier *= 0.95; // Apply 5% discount cumulatively
                     }
-                    price *= discountMultiplier;
                 }
-                return price;
-            };
-
-             Game.storeToRefresh = 1
-        }
+                price *= discountMultiplier;
+            }
+            return price;
+        };
+        
+        Game.storeToRefresh = 1;
     }
 
     // Initialize building discounts on slight delay
     setTimeout(function() {
-        var grandmaDiscountUpgrades = ['Increased Social Security Checks', 'Off-Brand Eyeglasses', 'Plastic Walkers', 'Bulk Discount Hearing Aids', 'Generic Arthritis Medication', 'Wholesale Denture Adhesive'];
-        applyBuildingDiscount('Grandma', grandmaDiscountUpgrades);
-        
-        var farmDiscountUpgrades = ['Biodiesel fueled tractors', 'Free manure from clone factories', 'Solar-powered irrigation systems', 'Bulk seed purchases', 'Robot farm hands', 'Vertical farming subsidies'];
-        applyBuildingDiscount('Farm', farmDiscountUpgrades);
-        
-        var mineDiscountUpgrades = ['Clearance shaft kits', 'Punch-card TNT club', 'Hand-me-down hardhats', 'Lease-back drill rigs', 'Ore cartel coupons', 'Cave-in insurance kickbacks'];
-        applyBuildingDiscount('Mine', mineDiscountUpgrades);
-        
-        var factoryDiscountUpgrades = ['Flat-pack factory frames', 'BOGO rivet bins', 'Off-brand gear grease', 'Misprint warning labels', 'Pallet-jack rebates', 'Prefab cookie modules'];
-        applyBuildingDiscount('Factory', factoryDiscountUpgrades);
-        
-        var bankDiscountUpgrades = ['Piggy buyback bonanza', 'Vault door floor-models', 'Pen-on-a-chain procurement', 'Complimentary complimentary mints', 'Fee waiver wavers', 'Dough Jones clearance'];
-        applyBuildingDiscount('Bank', bankDiscountUpgrades);
-        
-        var templeDiscountUpgrades = ['Tithe punch cards', 'Relic replica racks', 'Incense refill program', 'Chant-o-matic hymn reels', 'Pew-per-view sponsorships', 'Sacred site tax amnesty'];
-        applyBuildingDiscount('Temple', templeDiscountUpgrades);
-        
-        var wizardTowerDiscountUpgrades = ['Wand warranty returns', 'Grimoire remainder sale', 'Robes with “character”', 'Familiar foster program', 'Council scroll stipends', 'Broom-sharing scheme'];
-        applyBuildingDiscount('Wizard tower', wizardTowerDiscountUpgrades);
-        
-        var shipmentDiscountUpgrades = ['Retired cargo pods', 'Container co-op cards', 'Reusable launch crates', 'Autodocker apprentices', 'Route rebate vouchers', 'Free-trade cookie ports'];
-        applyBuildingDiscount('Shipment', shipmentDiscountUpgrades);
-        
-        var alchemyLabDiscountUpgrades = ['Beaker buybacks', 'Philosopher\'s pebbles', 'Cool-running crucibles', 'Batch homunculi permits', 'Guild reagent rates', '“Mostly lead” gold grants'];
-        applyBuildingDiscount('Alchemy lab', alchemyLabDiscountUpgrades);
-        
-        var portalDiscountUpgrades = ['Pre-owned ring frames', 'Anchor warehouse club', 'Passive rift baffles', 'Volunteer gatekeepers', 'Interrealm stipend scrolls', 'Multiversal enterprise zone'];
-        applyBuildingDiscount('Portal', portalDiscountUpgrades);
-        
-        var timeMachineDiscountUpgrades = ['Pre-loved hourglasses', 'Depreciated timeline scraps', 'Off-season flux valves', 'Weekend paradox passes', 'Department of When grants', 'Antique warranty loopholes'];
-        applyBuildingDiscount('Time machine', timeMachineDiscountUpgrades);
-        
-        var antimatterCondenserDiscountUpgrades = ['Certified negamatter cans', 'Matter swap rebates', 'Low-idle annihilators', 'Grad-lab particle labor', 'Institute endowment match', 'Void-zone incentives'];
-        applyBuildingDiscount('Antimatter condenser', antimatterCondenserDiscountUpgrades);
-        
-        var prismDiscountUpgrades = ['Lens co-op exchange', 'Spectral seconds', 'Sleep-mode rainbows', 'Apprentice refractioneers', 'Arts-of-Optics grants', 'Rainbow renewal credits'];
-        applyBuildingDiscount('Prism', prismDiscountUpgrades);
-        
-        var chancemakerDiscountUpgrades = ['Misprinted fortunes', 'Reroll refund policy', 'Economy-grade omens', 'Volunteer augury nights', 'Lottery board matching', 'Lucky district waivers'];
-        applyBuildingDiscount('Chancemaker', chancemakerDiscountUpgrades);
-        
-        var fractalEngineDiscountUpgrades = ['Iteration liquidation', 'Self-similar spare parts', 'Recursion rebates', 'Autogenerator residencies', 'Grant-funded proofs', 'Infinite-lot variances'];
-        applyBuildingDiscount('Fractal engine', fractalEngineDiscountUpgrades);
-        
-        var javascriptConsoleDiscountUpgrades = ['Refurb dev boards', 'Compiler credit program', 'Idle-friendly runtimes', 'Peer-review co-ops', 'Open-source grants', 'Cloud credit vouchers'];
-        applyBuildingDiscount('Javascript console', javascriptConsoleDiscountUpgrades);
-        
-        var idleverseDiscountUpgrades = ['Interdimensional tax breaks', 'Reality consolidation discounts', 'Cosmic bulk purchasing', 'Multiverse supplier networks', 'Dimensional economies of scale', 'Reality monopoly pricing'];
-        applyBuildingDiscount('Idleverse', idleverseDiscountUpgrades);
-        
-        var cortexBakerDiscountUpgrades = ['Neural bulk purchasing', 'Synaptic wholesale networks', 'Cerebral mass production', 'Mind monopoly pricing', 'Neural economies of scale', 'Synaptic supply dominance'];
-        applyBuildingDiscount('Cortex baker', cortexBakerDiscountUpgrades);
-        
-        var youDiscountUpgrades = ['Clone factory economies', 'Replica production lines', 'Mirror manufacturing mastery', 'Twin tycoon pricing', 'Doppelganger discount networks', 'Clone supply dominance'];
-        applyBuildingDiscount('You', youDiscountUpgrades);
+        // Dynamically extract discount upgrades from data.js
+        if (window.JNEData && window.JNEData.upgradeData && window.JNEData.upgradeData.building) {
+            var buildingDiscounts = {};
+            
+            // Group discount upgrades by building
+            for (var i = 0; i < window.JNEData.upgradeData.building.length; i++) {
+                var upgrade = window.JNEData.upgradeData.building[i];
+                if (upgrade.type === 'discount' && upgrade.building) {
+                    var buildingName = upgrade.building;
+                    if (!buildingDiscounts[buildingName]) {
+                        buildingDiscounts[buildingName] = [];
+                    }
+                    buildingDiscounts[buildingName].push(upgrade.name);
+                }
+            }
+            
+            // Store discount data for each building
+            for (var buildingName in buildingDiscounts) {
+                if (buildingDiscounts.hasOwnProperty(buildingName)) {
+                    applyBuildingDiscount(buildingName, buildingDiscounts[buildingName]);
+                }
+            }
+            
+            // Setup the wrapper once after all data is populated
+            setupBuildingDiscountWrapper();
+        }
     }, 1000);
 
     // Ensure event system is available for any integrations

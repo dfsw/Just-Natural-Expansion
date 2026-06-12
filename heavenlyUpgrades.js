@@ -1645,19 +1645,18 @@
             ];
             
             if (!Game._weakestLinkCache) Game._weakestLinkCache = { assignments: {}, lastRecalc: 0 };
-            
-            var previousGetTieredCpsMult = Game.GetTieredCpsMult;
-            Game.GetTieredCpsMult = function(me) {
-                if (!me || !me.name) return previousGetTieredCpsMult ? previousGetTieredCpsMult(me) : 1;
-                var mult = previousGetTieredCpsMult ? previousGetTieredCpsMult(me) : 1;
-                
+
+            var previousMagicCpS = Game.magicCpS;
+            Game.magicCpS = function(what) {
+                var mult = previousMagicCpS(what);
+
                 var owned = upgrades.filter(function(u) { return Game.Has(u.name); });
                 if (owned.length > 0) {
                     var cache = Game._weakestLinkCache;
                     if (!cache.assignments['Weakest link'] || (Date.now() - cache.lastRecalc) > 1000) {
                         var oldAssignments = {};
                         for (var k in cache.assignments) oldAssignments[k] = cache.assignments[k];
-                        
+
                         var buildings = [];
                         for (var i = 0; i < Game.ObjectsById.length; i++) {
                             var b = Game.ObjectsById[i];
@@ -1677,12 +1676,12 @@
                                 buildings.push({ name: b.name, cps: cps });
                             }
                         }
-                        
+
                         buildings.sort(function(a, b) { return a.cps - b.cps; });
                         cache.assignments = {};
                         var used = [];
                         owned.sort(function(a, b) { return a.rank - b.rank; });
-                        
+
                         for (var i = 0; i < owned.length && i < buildings.length; i++) {
                             var idx = owned[i].rank - 1;
                             var found = null;
@@ -1703,16 +1702,16 @@
                         }
                         cache.lastRecalc = Date.now();
                     }
-                    
+
                     for (var i = 0; i < owned.length; i++) {
                         var a = cache.assignments[owned[i].name];
-                        if (a && a.buildingName === me.name) {
+                        if (a && a.buildingName === what) {
                             mult *= owned[i].mult;
                             break;
                         }
                     }
                 }
-                
+
                 return mult;
             };
             Game._jneWeakestLinkHooked = true;
@@ -2823,10 +2822,9 @@
 
             if (!Game._magicMushroomHooked) {
                 Game._magicMushroomHooked = true;
-                var previousGetTieredCpsMult = Game.GetTieredCpsMult;
-                Game.GetTieredCpsMult = function(me) {
-                    if (!me || !me.name) return previousGetTieredCpsMult ? previousGetTieredCpsMult(me) : 1;
-                    var mult = previousGetTieredCpsMult ? previousGetTieredCpsMult(me) : 1;
+                var previousMagicCpS = Game.magicCpS;
+                Game.magicCpS = function(what) {
+                    var mult = previousMagicCpS(what);
 
                     var M = Game.Objects['Farm'] && Game.Objects['Farm'].minigame;
                     if (M && M.effs && M.effs.magicMushroomMult > 0) {
@@ -2835,12 +2833,12 @@
 
                         if (!cache.magicMushroomAssignment || (Date.now() - cache.lastRecalc) > 1000) {
                             var buildings = [];
-                            
+
                             for (var i = 0; i < Game.ObjectsById.length; i++) {
                                 var b = Game.ObjectsById[i];
                                 if (b && b.amount > 0) {
                                     var cps = (b.storedTotalCps || 0) * (Game.globalCpsMult || 1);
-                                    
+
                                     if (cache.assignments) {
                                         for (var k in cache.assignments) {
                                             if (cache.assignments[k].buildingName === b.name) {
@@ -2854,11 +2852,11 @@
                                             }
                                         }
                                     }
-                                    
+
                                     if (cache.magicMushroomAssignment === b.name) {
                                         cps /= (1 + M.effs.magicMushroomMult);
                                     }
-                                    
+
                                     buildings.push({ name: b.name, cps: cps });
                                 }
                             }
@@ -2869,7 +2867,7 @@
                             }
                         }
 
-                        if (cache.magicMushroomAssignment === me.name) {
+                        if (cache.magicMushroomAssignment === what) {
                             mult *= 1 + M.effs.magicMushroomMult;
                         }
                     }
