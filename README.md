@@ -70,7 +70,14 @@ Unfortunately, CCSE uses code injection to make fundamental changes to the vanil
 
 I’ve tested compatibility with many popular [CCSE mods](https://klattmose.github.io/CookieClicker/). If you encounter specific incompatibilities, please let me know so I can look into possible workarounds.
 
-## Changelog
+## Changelog    
+
+### Version 0.5.6
+* Fixed a potential crash if a saved game was loaded while lunar new year season had expired without the mod installed.
+* Cleaned up and redid some icons that had been bothering me for a while.
+* Slightly increased the drop rate for Dragon Harvest and Flight in Lunar New Year.
+* Fixed the ordering of some achievments that got messed up in some migration a while back. 
+* Minor bug fixes and improvements. 
 
 ### Version 0.5.5
 * Fixed some bugs with lantern count displays in stats. 

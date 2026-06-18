@@ -3,7 +3,7 @@
 (function() {
 'use strict';
 
-const POTIONS_VERSION = '1.0.5';
+const POTIONS_VERSION = '1.0.6';
 
 var POTIONS_CUSTOM_SPRITE_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
 
@@ -3829,7 +3829,7 @@ PotionsM._loadImpl = function(str) {
     PotionsM._buildCatalog();
     if (PotionsM._updateEffs) PotionsM._updateEffs();
     PotionsM.updatePotionsBrewedDisplay();
-    
+
     // Restore minigame open/close state
     var shouldOpen = data.o === 1 || (data.o === undefined && Game.JNE && Game.JNE.potionsSavedDataIsOpen === true);
     if (shouldOpen) {
@@ -3844,7 +3844,9 @@ PotionsM._loadImpl = function(str) {
             }
         }, 50);
     }
-    
+
+    PotionsM._restorePendingBuffs();
+
     scheduleUnlock();
 };
 

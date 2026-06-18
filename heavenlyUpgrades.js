@@ -4,7 +4,7 @@
         var _huT0 = Date.now();
         
         const SIMPLE_MOD_NAME = 'Just Natural Expansion';
-        const MOD_HU_VERSION = '1.0.15';
+        const MOD_HU_VERSION = '1.0.16';
         var isInitialized = false;
         const MOD_ICON = [15, 7];
         const CUSTOM_SPRITE_SHEET_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
@@ -870,7 +870,10 @@
                 var alreadyApplying = !!Game._jneApplyingBuffModifiers;
                 if (!alreadyApplying) Game._jneApplyingBuffModifiers = true;
                 try {
-                    if (!alreadyApplying) {
+                    var isLoanInterest = (type === 'loan 1 interest' || type === 'loan 2 interest' || type === 'loan 3 interest');
+                    // Only apply duration modifiers when buff is freshly created, not during save load Also skip if buff already exists (prevents re-applying when onDie recreates)
+                    var buffExists = Game.buffs && Game.buffs[type];
+                    if (!alreadyApplying && !Game.JNE._isRestoringData && !buffExists) {
                         // Frenziered elders - elder frenzy (blood frenzy) buffs last 25% longer
                         if (type === 'blood frenzy' && Game.Has && Game.Has('Frenziered elders')) {
                             time = Math.ceil(time * 1.25);
@@ -880,8 +883,7 @@
                             time = Math.ceil(time * 1.1);
                         }
                         // Creative tax evasion - loan interest buffs last 10% less long
-                        if ((type === 'loan 1 interest' || type === 'loan 2 interest' || type === 'loan 3 interest') && 
-                            Game.Has && Game.Has('Creative tax evasion')) {
+                        if (isLoanInterest && Game.Has && Game.Has('Creative tax evasion')) {
                             time = time * 0.9;
                         }
                     }
@@ -1856,6 +1858,7 @@
                     var savedSoil = savedData && savedData.garden && savedData.garden.soil;
                     if (savedSoil !== undefined && Game.Has('Aerated soil') && M.soils.aerated && M.soilsById[savedSoil]) {
                         M.soil = savedSoil;
+                        if (M.buildPanel && l('gardenSoils')) M.buildPanel();
                     }
                 };
             }
@@ -1897,22 +1900,18 @@
                 }
             }
             
-            if (Game.Has('Aerated soil') && l('gardenSoils')) {
-                if (M.buildPanel && !M._aeratedSoilIconHooked) {
-                    M._aeratedSoilIconHooked = true;
-                    var originalBuildPanel = M.buildPanel;
-                    M.buildPanel = function() {
-                        originalBuildPanel.call(this);
-
-                        if (M.soils.aerated && M.soils.aerated.customIcon && l('gardenSoilIcon-' + M.soils.aerated.id)) {
-                            var iconEl = l('gardenSoilIcon-' + M.soils.aerated.id);
-                            if (iconEl) {
-                                iconEl.style.backgroundImage = 'url(\'' + M.soils.aerated.customIconSheet + '\')';
-                                iconEl.style.backgroundPosition = (-M.soils.aerated.customIcon[0] * 48) + 'px ' + (-M.soils.aerated.customIcon[1] * 48) + 'px';
-                            }
-                        }
-                    };
+            if (Game.Has('Aerated soil')) {
+                if (M.soils.aerated && !document.getElementById('aeratedSoilCSS')) {
+                    var aeratedStyle = document.createElement('style');
+                    aeratedStyle.id = 'aeratedSoilCSS';
+                    var aeratedId = M.soils.aerated.id;
+                    var customSheet = getSpriteSheet('custom');
+                    var bgPos = (-M.soils.aerated.customIcon[0] * 48) + 'px ' + (-M.soils.aerated.customIcon[1] * 48) + 'px';
+                    aeratedStyle.textContent = '#gardenSoilIcon-' + aeratedId + ' { background-image: url(\'' + customSheet + '\') !important; background-position: ' + bgPos + ' !important; }';
+                    document.head.appendChild(aeratedStyle);
                 }
+            }
+            if (Game.Has('Aerated soil') && l('gardenSoils')) {
                 if (M.soilTooltip && !M._aeratedSoilTooltipHooked) {
                     M._aeratedSoilTooltipHooked = true;
                     var originalSoilTooltip = M.soilTooltip;
@@ -6518,7 +6517,22 @@
                     Game.Loader.Replace('perfectCookie.png', Game.CookiesByChoice[saveData.bigCookieImage].pic);
                 }
             }
-            
+
+            // Restore  buffs
+            if (saveData.buffs && Array.isArray(saveData.buffs) && Game.gainBuff) {
+                if (typeof setupCustomBuffTypes === 'function') setupCustomBuffTypes();
+                for (var i = 0; i < saveData.buffs.length; i++) {
+                    var savedBuff = saveData.buffs[i];
+                    if (savedBuff && savedBuff.type && savedBuff.time !== undefined) {
+                        try {
+                            Game.gainBuff(savedBuff.type, savedBuff.time, savedBuff.power || 1);
+                        } catch (e) {
+                            console.error('[Heavenly Upgrades] Failed to restore buff:', savedBuff.type, e);
+                        }
+                    }
+                }
+            }
+
             if (saveData.pantheon) {
                 var M = Game.Objects['Temple'] && Game.Objects['Temple'].minigame;
                 if (M && M.slot && M.gods && M.godsById) {
@@ -6718,12 +6732,14 @@
                     initialized: function() { return isInitialized; },
                     getSaveData: getSaveData,
                     load: load,
-                    restoreDonutsNow: restoreDonutsNow
+                    restoreDonutsNow: restoreDonutsNow,
+                    setupBuffModifiers: setupBuffModifiers
                 };
             } else {
                 Game.JNE.HeavenlyUpgrades.getSaveData = getSaveData;
                 Game.JNE.HeavenlyUpgrades.load = load;
                 Game.JNE.HeavenlyUpgrades.restoreDonutsNow = restoreDonutsNow;
+                Game.JNE.HeavenlyUpgrades.setupBuffModifiers = setupBuffModifiers;
             }
         }
     })();
