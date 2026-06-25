@@ -23,7 +23,7 @@
     
     function initializeMod() {
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.5.6';
+    var modVersion = '0.5.7';
     var debugMode = false; 
     
     function debugLog() {
@@ -3240,12 +3240,12 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             var predictorMod = "//JNE_PREDICTOR\n" +
                 "if(me._predictionMode){" +
                     "var _savedLast=this.last,_savedChain=this.chain,_savedTotal=this.totalFromChain;" +
-                    "var _origs={gainBuff:Game.gainBuff,Earn:Game.Earn,Spend:Game.Spend,Popup:Game.Popup,SparkleAt:Game.SparkleAt,DropEgg:Game.DropEgg,Win:Game.Win,Unlock:Game.Unlock,gainLumps:Game.gainLumps,killBuff:Game.killBuff,useSwap:Game.useSwap,PlaySound:typeof PlaySound==='function'?PlaySound:null};" +
+                    "var _origs={gainBuff:Game.gainBuff,Earn:Game.Earn,Spend:Game.Spend,Popup:Game.Popup,SparkleAt:Game.SparkleAt,DropEgg:Game.DropEgg,Win:Game.Win,Unlock:Game.Unlock,gainLumps:Game.gainLumps,killBuff:Game.killBuff,useSwap:Game.useSwap,forceUnslotGod:Game.forceUnslotGod,PlaySound:typeof PlaySound==='function'?PlaySound:null};" +
                     "var _noop=function(){};var _noopNull=function(){return null;};" +
-                    "Game.gainBuff=_noopNull;Game.Earn=_noop;Game.Spend=_noop;Game.Popup=_noop;Game.SparkleAt=_noop;Game.DropEgg=_noop;Game.Win=_noop;Game.Unlock=_noop;Game.gainLumps=_noop;Game.killBuff=_noop;if(Game.useSwap)Game.useSwap=_noop;if(_origs.PlaySound)window.PlaySound=_noop;" +
+                    "Game.gainBuff=_noopNull;Game.Earn=_noop;Game.Spend=_noop;Game.Popup=_noop;Game.SparkleAt=_noop;Game.DropEgg=_noop;Game.Win=_noop;Game.Unlock=_noop;Game.gainLumps=_noop;Game.killBuff=_noop;if(Game.useSwap)Game.useSwap=_noop;if(Game.forceUnslotGod)Game.forceUnslotGod=_noop;if(_origs.PlaySound)window.PlaySound=_noop;" +
                     "var _captured=null;" +
                     "try{Game.shimmerTypes['golden']._jneOrigPopFunc.call(this,me);_captured=this.last||null;}catch(e){console.error('[JNE] Prediction error:',e);}finally{" +
-                        "Game.gainBuff=_origs.gainBuff;Game.Earn=_origs.Earn;Game.Spend=_origs.Spend;Game.Popup=_origs.Popup;Game.SparkleAt=_origs.SparkleAt;Game.DropEgg=_origs.DropEgg;Game.Win=_origs.Win;Game.Unlock=_origs.Unlock;Game.gainLumps=_origs.gainLumps;Game.killBuff=_origs.killBuff;if(Game.useSwap)Game.useSwap=_origs.useSwap;if(_origs.PlaySound)window.PlaySound=_origs.PlaySound;" +
+                        "Game.gainBuff=_origs.gainBuff;Game.Earn=_origs.Earn;Game.Spend=_origs.Spend;Game.Popup=_origs.Popup;Game.SparkleAt=_origs.SparkleAt;Game.DropEgg=_origs.DropEgg;Game.Win=_origs.Win;Game.Unlock=_origs.Unlock;Game.gainLumps=_origs.gainLumps;Game.killBuff=_origs.killBuff;if(Game.useSwap)Game.useSwap=_origs.useSwap;if(Game.forceUnslotGod)Game.forceUnslotGod=_origs.forceUnslotGod;if(_origs.PlaySound)window.PlaySound=_origs.PlaySound;" +
                         "this.last=_savedLast;this.chain=_savedChain;this.totalFromChain=_savedTotal;" +
                     "}" +
                     "me._predictedChoice=_captured;return;" +
@@ -5637,6 +5637,14 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                                 
                                 // Get the tracked time for this god (default to 0 if never used)
                                 var godTime = modTracking.godUsageTime[godName] || 0;
+                                
+                                // Add current slot time if this god is currently slotted
+                                if (modTracking.currentSlottedGods && modTracking.currentSlottedGods[godName]) {
+                                    var slotStartTime = modTracking.currentSlottedGods[godName];
+                                    if (typeof slotStartTime === 'number' && slotStartTime > 0) {
+                                        godTime += Date.now() - slotStartTime;
+                                    }
+                                }
                                 
                                 if (godTime < requiredTime) {
                                     allGodsUsed = false;

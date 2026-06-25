@@ -4,7 +4,7 @@
         var _huT0 = Date.now();
         
         const SIMPLE_MOD_NAME = 'Just Natural Expansion';
-        const MOD_HU_VERSION = '1.0.16';
+        const MOD_HU_VERSION = '1.0.17';
         var isInitialized = false;
         const MOD_ICON = [15, 7];
         const CUSTOM_SPRITE_SHEET_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
@@ -3096,6 +3096,31 @@
             if (!hasUpgrade) return; // Not ready yet
             
             if (typeof l !== 'function' || !l('grimoireSpells')) return;
+            
+            // Remove any existing gilded allure spell to prevent duplicates on save load
+            if (M.spells['gilded allure']) {
+                delete M.spells['gilded allure'];
+            }
+            // Remove from spellsById array
+            for (var i = 0; i < M.spellsById.length; i++) {
+                if (M.spellsById[i] && (M.spellsById[i].name === loc("Gilded Allure") || M.spellsById[i].name === "Gilded Allure")) {
+                    M.spellsById[i] = null;
+                }
+            }
+            // Remove existing DOM element
+            var existingSpellEl = l('grimoireSpells').querySelector('[id^="grimoireSpell"]');
+            if (existingSpellEl) {
+                for (var i = 0; i < M.spellsById.length; i++) {
+                    var el = l('grimoireSpell' + i);
+                    if (el) {
+                        var tooltip = el.getAttribute('onmouseover') || el.getAttribute('data-tooltip');
+                        if (tooltip && (tooltip.includes('Gilded Allure') || tooltip.includes('gilded allure'))) {
+                            el.remove();
+                        }
+                    }
+                }
+            }
+            
             var me={name:loc("Gilded Allure"),desc:loc("Golden Cookies appear 30% more often for the next 10 minutes."),failDesc:loc("Golden Cookies appear 75% less often for the next hour."),icon:[20,19],customIconSheet:getSpriteSheet('custom'),costMin:15,costPercent:0.5,
                 win:()=>{Game.killBuff('Gilded allure');Game.killBuff('Midas curse');Game.gainBuff('gilded allure',600,1);Game.Popup(loc("Golden allure!"),Game.mouseX,Game.mouseY);},
                 fail:()=>{Game.killBuff('Gilded allure');Game.killBuff('Midas curse');Game.gainBuff('midas curse',3600,1);Game.Popup(loc("Backfire!")+'<br>'+loc("Midas curse!"),Game.mouseX,Game.mouseY);}};
@@ -3568,15 +3593,17 @@
             button.canBuyFunc = function() {
                 return Game.lumps >= 1 && this.bought === 0;
             };
-            button.clickFunction = Game.spendLump(1, "summon a golden cookie", function() {
-                button.buy(1);
-                new Game.shimmer('golden');
-                Game.Notify("Sugar trade", "Summoned a golden cookie.", [21, 17]);
-                Game.storeToRefresh = 1;
-                Game.upgradesToRebuild = 1;
-                if (Game.RefreshStore) { Game.RefreshStore(); }
-                if (Game.RebuildUpgrades) { Game.RebuildUpgrades(); }
-            });
+            button.displayFuncWhenOwned = function() {
+                return '<div style="text-align:center;"><b>Already used this ascension</b></div>';
+            };
+            button.clickFunction = function() {
+                if (this.bought === 1) return;
+                Game.Prompt('<id SugarTradePrompt><h3>Activate the sugar trade?</h3><div class="block">' +
+                    'Spend 1 sugar lump to summon a golden cookie.</div>', [
+                    ['Activate', 'Game.ClosePrompt();Game.lumps-=1;Game.Upgrades["Sugar trade"].buy(1);new Game.shimmer("golden");Game.Notify("Sugar trade","Summoned a golden cookie.",[21,17]);Game.storeToRefresh=1;Game.upgradesToRebuild=1;if(Game.RefreshStore)Game.RefreshStore();if(Game.RebuildUpgrades)Game.RebuildUpgrades();'],
+                    'Cancel'
+                ]);
+            };
         };
 
         var detectRigidelSlot = function() {

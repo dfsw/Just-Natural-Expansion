@@ -3,7 +3,7 @@
 (function() {
 'use strict';
 
-const DOWNLINE_VERSION = '1.0.5';
+const DOWNLINE_VERSION = '1.0.6';
 
 var downlineAchievementNames = [
     'Popularity factor',
@@ -383,6 +383,7 @@ DownlineM.init = function(div) {
       transform-origin: top left;
     }
     .downline-boredom-icon-box.hidden { display: none !important; }
+    .downline-boredom-icon-box.faded { opacity: 0.3; }
     .downline-actions-library-inner {
       flex: 1 1 auto;
       min-height: 0;
@@ -467,7 +468,6 @@ DownlineM.init = function(div) {
       flex-shrink: 0;
     }
     .downline-action-item:hover {
-      border-color: #e2dd48;
       background: rgba(0,0,0,0.6);
     }
 
@@ -1038,6 +1038,33 @@ DownlineM.init = function(div) {
     };
     function hasBoredomEffect(id) {
       return G.activeBoredomEffects && G.activeBoredomEffects.indexOf(id) >= 0;
+    }
+    function getActionCount(name, simulateAdd) {
+      simulateAdd = simulateAdd !== undefined ? simulateAdd : false;
+      var count = 0;
+      for (var i = 0; i < G.lastActions.length; i++) if (G.lastActions[i] === name) count++;
+      return simulateAdd ? count + 1 : count;
+    }
+    function calculateBoredomDelta(name, simulateAdd) {
+      var count = getActionCount(name, simulateAdd);
+      if (count >= 2) return count > 6 ? 3 : (count >= 3 ? 2 : 1);
+      var inLookback = false;
+      for (var j = 1; j <= LAST_ACTIONS_CAP && j < G.lastActions.length; j++) { if (G.lastActions[j] === name) { inLookback = true; break; } }
+      return inLookback ? 0 : -1;
+    }
+    function getBoredomBorderColor(name, simulateAdd) {
+      var count = getActionCount(name, simulateAdd);
+      if (count == 0) return '#e2dd48';
+      var t = Math.min(1, count / 7);
+      return 'rgb(' + Math.round(226 + 6 * t) + ',' + Math.round(221 - 125 * t) + ',' + Math.round(72 - 8 * t) + ')';
+    }
+    function refreshHoverStates() {
+      if (!actionsListEl) return;
+      actionsListEl.querySelectorAll('.downline-action-item:hover').forEach(function (el) {
+        var name = el.getAttribute('data-name');
+        if (!name) return;
+        el.style.borderColor = getBoredomBorderColor(name, true);
+      });
     }
     function updateBoredomEffects() {
       var b = Math.min(BOREDOM_MAX, Math.max(0, G.boredom));
@@ -2340,13 +2367,18 @@ DownlineM.init = function(div) {
     function updateBoredomUI() {
       if (!boredomWrapEl || !boredomIconsEl) return;
       var b = Math.min(BOREDOM_MAX, Math.max(0, G.boredom));
-      var showWrap = b >= 20;
+      var showWrap = b >= 15;
       boredomWrapEl.classList.toggle('hidden', !showWrap);
       if (!showWrap) return;
       var filled = Math.min(5, Math.floor(b / 20));
       for (var i = 0; i < boredomIconsEl.children.length; i++) {
         var box = boredomIconsEl.children[i];
-        box.classList.toggle('hidden', i >= filled);
+        box.classList.remove('faded', 'hidden');
+        if (i === 0 && b >= 15 && b < 20) {
+          box.classList.add('faded');
+        } else if (i >= filled) {
+          box.classList.add('hidden');
+        }
       }
       var seen = {};
       var activeNames = [];
@@ -2356,13 +2388,17 @@ DownlineM.init = function(div) {
           if (!seen[id]) { seen[id] = true; activeNames.push(BOREDOM_EFFECT_NAMES[id] || id); }
         }
       }
-      var now = Date.now();
-      var nextHourMs = (Math.floor(now / 3600000) + 1) * 3600000;
-      var secsToReshuffle = Math.max(1, Math.min(3600, (nextHourMs - now) / 1000));
-      var reshuffleLine = 'Debuffs reshuffle at the top of each hour (next in ' + formatDuration(secsToReshuffle) + ').';
-      var html = 'Your player base is becoming bored by your lack of diversity. Boredom can be lowered by using new and different actions, repeating the same actions (even when not sequential) will continue to raise the boredom level. The higher the players\' boredom, the more negative effects you will experience.<br><br><b>Active effects:</b><br>' +
-        (activeNames.length ? activeNames.map(function (n) { return '<div class="red">&bull; ' + n + '</div>'; }).join('') : '<span class="red">(none this hour)</span>') +
-        '<br>' + reshuffleLine;
+      var hasEffects = activeNames.length > 0 || b >= 20;
+      var html = 'Your player base is becoming bored by your lack of diversity. Boredom can be lowered by using new and different actions, repeating the same actions (even when not sequential) will continue to raise the boredom level. The higher the players\' boredom, the more negative effects you will experience.';
+      if (hasEffects) {
+        html += '<br><br><b>Active effects:</b><br>' +
+          (activeNames.length ? activeNames.map(function (n) { return '<div class="red">&bull; ' + n + '</div>'; }).join('') : '<span class="red">(none this hour)</span>');
+        var now = Date.now();
+        var nextHourMs = (Math.floor(now / 3600000) + 1) * 3600000;
+        var secsToReshuffle = Math.max(1, Math.min(3600, (nextHourMs - now) / 1000));
+        var reshuffleLine = 'Debuffs reshuffle at the top of each hour (next in ' + formatDuration(secsToReshuffle) + ').';
+        html += '<br>' + reshuffleLine;
+      }
       boredomWrapEl.setAttribute('data-desc-html', html);
       boredomWrapEl.removeAttribute('data-desc');
     }
@@ -2499,18 +2535,15 @@ DownlineM.init = function(div) {
 
       G.lastActions.unshift(name);
       if (G.lastActions.length > LAST_ACTIONS_CAP) G.lastActions.length = LAST_ACTIONS_CAP;
-      var countOfName = 0;
-      for (var i = 0; i < G.lastActions.length; i++) if (G.lastActions[i] === name) countOfName++;
-      if (countOfName >= 2) {
-        var boredomDelta = countOfName > 6 ? 3 : (countOfName >= 3 ? 2 : 1);
+      var boredomDelta = calculateBoredomDelta(name);
+      if (boredomDelta > 0) {
         G.boredom = Math.min(BOREDOM_MAX, G.boredom + boredomDelta);
-      } else {
-        var inLookback = false;
-        for (var j = 1; j <= LAST_ACTIONS_CAP && j < G.lastActions.length; j++) { if (G.lastActions[j] === name) { inLookback = true; break; } }
-        if (!inLookback) G.boredom = Math.max(0, G.boredom - 1);
+      } else if (boredomDelta < 0) {
+        G.boredom = Math.max(0, G.boredom + boredomDelta);
       }
+      refreshHoverStates();
       Game.recalculateGains = 1;
-      renderActiveSlots(); 
+      renderActiveSlots();
       activeCountEl.textContent = G.activeActions.length;
       addTooltipListeners(chip);
     }
@@ -2858,9 +2891,17 @@ DownlineM.init = function(div) {
       }
     }
 
-
-    actionsListEl.querySelectorAll('.downline-action-item').forEach(function (el) {
-      el.addEventListener('click', addActionToCurrent); addTooltipListeners(el);
+    document.querySelectorAll('#downline-actions-list .downline-action-item').forEach(function (el) {
+      el.addEventListener('click', addActionToCurrent);
+      addTooltipListeners(el);
+      el.addEventListener('mouseenter', function() {
+        var name = el.getAttribute('data-name');
+        if (!name) return;
+        el.style.borderColor = getBoredomBorderColor(name, true);
+      });
+      el.addEventListener('mouseleave', function() {
+        el.style.borderColor = '';
+      });
     });
     document.querySelectorAll('.downline-bar[data-name]').forEach(addTooltipListeners);
     if (boredomWrapEl) addTooltipListeners(boredomWrapEl);

@@ -3,7 +3,7 @@
 (function() {
 'use strict';
 
-const POTIONS_VERSION = '1.0.6';
+const POTIONS_VERSION = '1.0.7';
 
 var POTIONS_CUSTOM_SPRITE_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
 
@@ -1381,8 +1381,19 @@ function updatePotionEffects() {
                 if (r.unlocked && count < 5) candidates.push(r.id);
             }
             var gained = 0;
+            var allowDuplicates = false;
             for (var i = 0; i < 5; i++) {
-                if (candidates.length === 0) break;
+                if (candidates.length === 0) {
+                    if (allowDuplicates) break;
+                    allowDuplicates = true;
+                    candidates = [];
+                    for (var j = 0; j < REAGENTS.length; j++) {
+                        var r = REAGENTS[j];
+                        var count = G.reagents[r.id] || 0;
+                        if (r.unlocked && count < G.maxReagents) candidates.push(r.id);
+                    }
+                    if (candidates.length === 0) break;
+                }
                 var idx = Math.floor(Math.random() * candidates.length);
                 var rid = candidates[idx];
                 var current = G.reagents[rid] || 0;
@@ -1390,7 +1401,9 @@ function updatePotionEffects() {
                     G.reagents[rid] = current + 1;
                     gained++;
                 }
-                candidates.splice(idx, 1);
+                if (!allowDuplicates) {
+                    candidates.splice(idx, 1);
+                }
             }
             Game.Notify(p.name + ' consumed', 'Gained ' + gained + ' random reagent(s).', getIconArray(p), 6);
             PotionsM._buildReagents();
@@ -3845,8 +3858,6 @@ PotionsM._loadImpl = function(str) {
         }, 50);
     }
 
-    PotionsM._restorePendingBuffs();
-
     scheduleUnlock();
 };
 
@@ -3990,11 +4001,11 @@ function initializePotionsMinigame() {
         ensureMinigameDiv();
         PotionsM.launch();
         PotionsM.init(alchemyLab.minigameDiv);
+        if (!alchemyLab.minigame) alchemyLab.minigame = PotionsM;
         // Load saved data (includes restoring onMinigame state in _loadImpl)
         if (Game.JNE && Game.JNE.potionsSavedData) PotionsM.load(Game.JNE.potionsSavedData);
-        
+
         if (typeof PotionsM.createAchievements === 'function') PotionsM.createAchievements();
-        if (!alchemyLab.minigame) alchemyLab.minigame = PotionsM;
         if (!alchemyLab.minigameUrl) {
             alchemyLab.minigameUrl = 'potions';
             alchemyLab.minigameIcon = [6, 0];
@@ -4015,6 +4026,7 @@ function initializePotionsMinigame() {
                 PotionsM.launch();
                 ensureMinigameDiv();
                 PotionsM.init(alchemyLab.minigameDiv);
+                if (!alchemyLab.minigame) alchemyLab.minigame = PotionsM;
                 // Load saved data (includes restoring onMinigame state in _loadImpl)
                 if (Game.JNE && Game.JNE.potionsSavedData) PotionsM.load(Game.JNE.potionsSavedData);
             }
@@ -4068,6 +4080,7 @@ var publicAPI = {
         if (!Game.JNE) Game.JNE = {};
         Game.JNE.potionsSavedData = s;
         PotionsM._loadImpl(s);
+        PotionsM._restorePendingBuffs();
     },
     writeCache: function(s) {
         if (typeof s !== 'string') s = '';

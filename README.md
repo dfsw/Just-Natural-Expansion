@@ -72,6 +72,16 @@ I’ve tested compatibility with many popular [CCSE mods](https://klattmose.gith
 
 ## Changelog    
 
+### Version 0.5.7
+* Fixed a bug with God of All Gods that would only track the time a god was slotted when they became unslotted. 
+* Eagled eyed Downline players may find its now slightly easier to see how much boredom an action is creating. 
+* Updated the wording on a couple of early Mysteries of the Cookie Age puzzles to hopefully fix up some common snags people were having. 
+* Fixed a bug when buying buildings in order to sell them in certain puzzles that would result in a win not being registered under specific conditions. 
+* Holobore was not told what the Golden Cookie Predictor was and as such he reacted poorly to it, we have put him through a weekend seminar on it and he now behaves much better. 
+* Solvent of Substitution is smarter about awarding reagents. 
+* Minor bug fixes and improvements. 
+
+
 ### Version 0.5.6
 * Fixed a potential crash if a saved game was loaded while lunar new year season had expired without the mod installed.
 * Cleaned up and redid some icons that had been bothering me for a while.
