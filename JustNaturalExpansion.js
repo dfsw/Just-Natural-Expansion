@@ -23,7 +23,7 @@
     
     function initializeMod() {
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.5.7';
+    var modVersion = '0.5.8';
     var debugMode = false; 
     
     function debugLog() {
@@ -509,6 +509,9 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     var isReincarnating = false;
     
     function initializeSessionBaselines() {
+        if (!Game.JNE) Game.JNE = {};
+        Game.JNE.bingoJackpotWins = Game.JNE.bingoJackpotWins || 0;
+        Game.JNE.cookieFishCaught = Game.JNE.cookieFishCaught || 0;
         sessionBaselines.cookieClicks = Game.cookieClicks || 0;
         sessionBaselines.reindeerClicked = Game.reindeerClicked || 0;
         sessionBaselines.wrinklersPopped = Game.wrinklersPopped || 0;
@@ -2937,10 +2940,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     function setHeavenlyUpgradesSave(serializedState) {
         try {
             if (!Game.JNE) Game.JNE = {};
-            
-            if (Game.JNE._isRestoringData) {
-                return; // Don't overwrite during restoration
-            }
             
             // Preserve existing data if we're not getting valid new data
             var existingData = Game.JNE.heavenlyUpgradesSavedData;
@@ -7783,7 +7782,10 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 } catch (e) {}
             }
             
-            if (huData && huData.upgrades) {
+            if (huData && huData.boughtUpgrades && Array.isArray(huData.boughtUpgrades)) {
+                heavenlyUpgradesArray = huData.boughtUpgrades;
+            } else if (huData && huData.upgrades) {
+                // Legacy object format support
                 heavenlyUpgradesArray = Object.keys(huData.upgrades)
                     .filter(function(k) { return huData.upgrades[k].bought; });
             }
@@ -7864,6 +7866,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             }
             
             if (data.h && Array.isArray(data.h)) {
+                if (!heavenlyUpgradesObj.upgrades) heavenlyUpgradesObj.upgrades = {};
                 data.h.forEach(function(name) {
                     heavenlyUpgradesObj.upgrades[name] = {bought: 1};
                 });

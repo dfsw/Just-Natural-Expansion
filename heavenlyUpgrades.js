@@ -4,7 +4,7 @@
         var _huT0 = Date.now();
         
         const SIMPLE_MOD_NAME = 'Just Natural Expansion';
-        const MOD_HU_VERSION = '1.0.17';
+        const MOD_HU_VERSION = '1.0.18';
         var isInitialized = false;
         const MOD_ICON = [15, 7];
         const CUSTOM_SPRITE_SHEET_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
@@ -148,24 +148,43 @@
                 var now = jneEvery('_jneBingoCenterSlotsLast', 60000); ///60000 
                 if (now && Game.OnAscend !== 1 && Game.Has('Bingo center/Research facility') && Game.Objects['Grandma']) {
                     var grandmas = Game.Objects['Grandma'].amount;
-                    if (grandmas > 0 && Math.random() < grandmas / 2000000) { //one in 2 million per grandma per minute
+                    if (grandmas > 0 && Math.random() < Math.sqrt(grandmas * 500) / 2000000) { //square root scaling for diminishing returns
                         Game.JNE.bingoJackpotWins = (Game.JNE.bingoJackpotWins || 0) + 1;
+                        if (!Game.JNE.ascensionSpecialJackpots) Game.JNE.ascensionSpecialJackpots = 0;
                         var bingoSlotsIcon = (Game.Upgrades && Game.Upgrades['Bingo center slots'] && Game.Upgrades['Bingo center slots'].icon) ? Game.Upgrades['Bingo center slots'].icon : [31, 12];
                         var roll = Math.random() * 100;
-                        if (roll < 60) {
-                            var exp = Math.floor(Math.log10(Game.cookiesPsRaw || 1));
-                            var cookiesEarned = 7.77 * Math.pow(10, exp + 4);
-                            Game.Earn(cookiesEarned);
-                            new Game.Note('Jackpot!', 'A grandma has hit the jackpot in slots and earned <b>' + Beautify(cookiesEarned) + '</b> cookies!', bingoSlotsIcon, 43200);
-                        } else if (roll < 80) {
-                            new Game.shimmer('golden');
-                            new Game.Note('Jackpot!', 'A grandma won a <b>golden cookie</b> while playing slots!', bingoSlotsIcon, 43200);
-                        } else if (roll < 97) {
-                            Game.Earn(Game.cookies * 0.1);
-                            new Game.Note('Jackpot!', 'A grandma won the mega jackpot while playing slots and your cookie bank has been <b>increased by 10%!</b>', bingoSlotsIcon, 43200);
+                        var specialJackpotsRemaining = 3 - (Game.JNE.ascensionSpecialJackpots || 0);
+                        
+                        if (specialJackpotsRemaining <= 0) {
+                            // Only normal jackpots available after cap reached
+                            if (roll < 75) {
+                                var exp = Math.floor(Math.log10(Game.cookiesPsRaw || 1));
+                                var cookiesEarned = 7.77 * Math.pow(10, exp + 5);
+                                Game.Earn(cookiesEarned);
+                                new Game.Note('Jackpot!', 'A grandma has hit the jackpot in slots and earned <b>' + Beautify(cookiesEarned) + '</b> cookies!', bingoSlotsIcon, 43200);
+                            } else {
+                                new Game.shimmer('golden');
+                                new Game.Note('Jackpot!', 'A grandma won a <b>golden cookie</b> while playing slots!', bingoSlotsIcon, 43200);
+                            }
                         } else {
-                            Game.gainLumps(1);
-                            new Game.Note('Jackpot!', 'A grandma hit the mega sugar jackpot in slots and won a <b>free sugar lump!</b>', bingoSlotsIcon, 43200);
+                            // All jackpots available
+                            if (roll < 60) {
+                                var exp = Math.floor(Math.log10(Game.cookiesPsRaw || 1));
+                                var cookiesEarned = 7.77 * Math.pow(10, exp + 5);
+                                Game.Earn(cookiesEarned);
+                                new Game.Note('Jackpot!', 'A grandma has hit the jackpot in slots and earned <b>' + Beautify(cookiesEarned) + '</b> cookies!', bingoSlotsIcon, 43200);
+                            } else if (roll < 80) {
+                                new Game.shimmer('golden');
+                                new Game.Note('Jackpot!', 'A grandma won a <b>golden cookie</b> while playing slots!', bingoSlotsIcon, 43200);
+                            } else if (roll < 97) {
+                                Game.Earn(Game.cookies * 0.1);
+                                Game.JNE.ascensionSpecialJackpots++;
+                                new Game.Note('Jackpot!', 'A grandma won the mega jackpot while playing slots and your cookie bank has been <b>increased by 10%!</b>', bingoSlotsIcon, 43200);
+                            } else {
+                                Game.gainLumps(1);
+                                Game.JNE.ascensionSpecialJackpots++;
+                                new Game.Note('Jackpot!', 'A grandma hit the mega sugar jackpot in slots and won a <b>free sugar lump!</b>', bingoSlotsIcon, 43200);
+                            }
                         }
                     }
                 }
@@ -488,6 +507,8 @@
                     M._procrastinationSlotTime = null;
                     M._selfishnessClickCount = 0;
                 }
+                // Reset special jackpot counter on ascension
+                if (Game.JNE) Game.JNE.ascensionSpecialJackpots = 0;
                 Game.storeToRefresh = 1;
             }, 'JNE ascension state reset');
 
@@ -2108,7 +2129,7 @@
                     mature: 80,
                     unlocked: 0,
                     children: [],
-                    effsStr: '<div class="green">&bull; sugar lumps have 1% chance to double when gained</div><div class="red">&bull; CpS -2%</div><div class="red">&bull; cannot handle cold climates; 95% chance to die when frozen</div>',
+                    effsStr: '<div class="green">&bull; sugar lumps have 1% chance to double when they are <b>harvested</b></div><div class="red">&bull; CpS -2%</div><div class="red">&bull; cannot handle cold climates; 95% chance to die when frozen</div>',
                     q: 'A tropical variant of sugar cane that produces exceptionally sweet crystals. Its delicate nature makes it vulnerable to cold, but the sugary bounty is worth the risk.'
                 };
             }
@@ -6205,6 +6226,7 @@
                 
                 saveData.stats.cookieFishCaught = Game.JNE.cookieFishCaught || 0;
                 saveData.stats.bingoJackpotWins = Game.JNE.bingoJackpotWins || 0;
+                saveData.stats.ascensionSpecialJackpots = Game.JNE.ascensionSpecialJackpots || 0;
                 
                 // Save farm drop cookies state
                 saveData.farmDropCookies = {};
@@ -6317,6 +6339,34 @@
             // Track this load to prevent duplicates
             Game.JNE._lastLoadData = JSON.stringify(saveData);
             Game.JNE._lastLoadTime = Date.now();
+
+            // Migration: If save file has incomplete heavenly upgrades due to the save bug,
+            // preserve any upgrades that are marked as bought in memory but not in the save
+            var ownedUpgradeNames = (saveData.boughtUpgrades && Array.isArray(saveData.boughtUpgrades)) ? saveData.boughtUpgrades :
+                ((saveData.h && Array.isArray(saveData.h)) ? saveData.h : null);
+            if (ownedUpgradeNames) {
+                var saveBoughtSet = {};
+                for (var i = 0; i < ownedUpgradeNames.length; i++) {
+                    saveBoughtSet[ownedUpgradeNames[i]] = true;
+                }
+                // Check if memory has more heavenly upgrades bought than the save
+                var memoryBoughtCount = 0;
+                var memoryNotInSave = [];
+                for (var name in Game.Upgrades) {
+                    var upgrade = Game.Upgrades[name];
+                    if (upgrade && upgrade._heavenlyUpgrade && upgrade.bought && !saveBoughtSet[name]) {
+                        memoryNotInSave.push(name);
+                        memoryBoughtCount++;
+                    }
+                }
+                // If memory has upgrades not in save, add them to save data (migration from buggy saves)
+                if (memoryBoughtCount > 0) {
+                    if (!saveData.boughtUpgrades) saveData.boughtUpgrades = [];
+                    for (var i = 0; i < memoryNotInSave.length; i++) {
+                        saveData.boughtUpgrades.push(memoryNotInSave[i]);
+                    }
+                }
+            }
 
             // Reset setup function 'ran' flags so vanilla-deleted upgrades/plants can be recreated
             if (Game.JNE._upgradeSetups) {
@@ -6535,6 +6585,7 @@
             if (saveData.stats) {
                 if (saveData.stats.cookieFishCaught !== undefined) Game.JNE.cookieFishCaught = saveData.stats.cookieFishCaught || 0;
                 if (saveData.stats.bingoJackpotWins !== undefined) Game.JNE.bingoJackpotWins = saveData.stats.bingoJackpotWins || 0;
+                if (saveData.stats.ascensionSpecialJackpots !== undefined) Game.JNE.ascensionSpecialJackpots = saveData.stats.ascensionSpecialJackpots || 0;
             }
             
             // Apply big cookie image
