@@ -3770,7 +3770,7 @@ window.JNEData = {
         goldenCookieTime: {
             names: ["Second Life, First Click"],
             thresholds: [120 * 1000], // 120 seconds in milliseconds
-            descs: ["Click a golden cookie within <b>120 seconds</b> of ascending."],
+            descs: ["Click a naturally spawning golden cookie within <b>120 seconds</b> of ascending."],
             customIcons: [[0, 9, 'custom']],
             orders: [10000.274]
         },
