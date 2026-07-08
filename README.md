@@ -16,16 +16,6 @@ Thank you to the "beta" testers who were willing to help me balance and test, I 
 
 Special thanks to CursedSliver, The_1_Shadow, and Fractyl for donating art to the mod, anyone who wants to improve and donate art is more than welcome as it is not my skillset, all art is temporary until someone donates something improved. 
 
-#### Why This Mod Exists
-
-When I reached the late game of Cookie Clicker, I felt a real sense of loss. I was running out of meaningful goals. I looked for mods that could extend the experience without radically changing the core gameplay.
-
-Most of what I found didn’t fit. Many end-game mods added flashy new buildings or mechanics that didn’t feel true to vanilla and often weren’t balanced. Others offered extremely difficult, sometimes nearly impossible, achievements. Those were closer to what I wanted, but I wasn’t looking for “impossible.” I wanted more of what made the base game fun.
-
-So I set out to imagine what Cookie Clicker would feel like if it simply lasted longer with deeper goals to chase. Achievements are challenging but not unreasonable, designed for active players who like having long-term targets. Nothing breaks the existing formula (though I had to heavily nerf the new kittens to keep them balanced). The intent was always to extend the game, not reinvent it. Do not expect to knock out these features in a few days. Many require weeks of planning and patience. The idea is to add lasting goals, not hand out free milk and CpS.
-
-I hope this mod hits that mark and gives you years more clicking, planning, and cookie glory. If not, I’ll still enjoy it myself, since I built what I wanted to play. If you do find something broken or unreasonable, reach out on Discord (User: DFSW). I am always happy to discuss and evaluate.
-
 ## Installation Directions
 
 Installing mods and add-ons for Cookie Clicker can feel intimidating if you’ve never done it before. To get some background, check out this [guide from the wiki](https://cookieclicker.fandom.com/wiki/Add-Ons) Below, you’ll find specific instructions to help you get everything set up.
@@ -59,18 +49,32 @@ The mobile version of Cookie Clicker does not support mods at this time.
 #### Compatibility Notes
 - **CCSE Compatible**: Works with Cookie Clicker Script Extender
 - **CCMM Compatible**: Works with Cookie Clicker Mod Manager
-- **Load Order**: For best compatibility, load CCSE first, then this mod
-- **Browser Support**: Works in all modern browsers 
-
-#### Mod Compatibility
-
-Just Natural Expansion uses Cookie Clicker’s documented API layer to extend the core game. As a result, Just Natural Expansion should remain functional for years to come—even if I get hit by a bus. However this API is fairly limited, so many modders rely on [CCSE](https://klattmose.github.io/CookieClicker/CCSE-POCs/). 
-
-Unfortunately, CCSE uses code injection to make fundamental changes to the vanilla game’s source code, which breaks the built-in modding API in a handful of places. To address this, I’ve written a CCSE Bridge that allows CCSE mods and Just Natural Expansion to run together. The catch: **CCSE must be loaded before** Just Natural Expansion, so make sure JNE is last in your load order. Other modders are welcome to use my bridge code (located in the same repo) if they prefer a more vanilla mod approach. 
-
-I’ve tested compatibility with many popular [CCSE mods](https://klattmose.github.io/CookieClicker/). If you encounter specific incompatibilities, please let me know so I can look into possible workarounds.
+- **Cookie Monster Compatible**: In order to get Cookie Monster cost calculations to reflect correctly please load it first. 
+- **Spell Planners**: Just Natural Expansion should work with all spell planners, if you find any exceptions please report them.
+- **Load Order**: For best compatibility, load other mods first
 
 ## Changelog    
+
+**Major Version 0.6.0 - Potions, Balance, and Bugs!**
+* Potions Lab now has its own Prestige system, accessible after unlocking all potions, if you can find the slightly hidden access. There’s a lot more to discover, and even more alchemy fun awaits.
+* Refactored a bunch of stuff to hopefully make compatibility with other mods more stable, so we see fewer crashes, lockups, and performance issues. It is still recommended to load Just Natural Expansion last in your mod list if you are running multiple mods. While this makes things more stable, it touches a lot of different code points. I believe I have tested thoroughly, but please report anything that is not working right.
+* Fixed a bug with Balm of Merlin not applying correctly.
+* Updated the tooltip for Sparkling Sugar Cane and made it a little less cheeseable.
+* Fixed some potential exploit mechanics around the Bingo Center Slot Machines that CursedSliver ruined for everyone.
+* Hopefully, the bug where Guilded Allure shows up twice on reload has been fixed, though it has always been kind of a pain to reproduce exactly how to get it to break for testing.
+* Downline Rebranding has had its requirements reduced. There’s really no reason Rebranding has requirements other than to hide the action until the player has started a run.
+* Minor Downline balance tweaks.
+* Multiple fixes and improvements to running in Born Again mode.
+* The building upgrades that provide cost discounts are now more powerful. The vanilla game is very stingy with handing out building discounts, so I have always been very careful about providing discounts that are too powerful here.
+* The building upgrades that provide efficiency boosts are now more powerful as well. These should have been more powerful from the start.
+* Removed some mod achievements that weren’t really useful or fun, such as ascending X times or cursor ownership. Also added a couple of new ones.
+* Revised Make X from Clicking achievements to be more in line with expected game progression. This means you may be awarded some achievements as soon as the new version loads.
+* Seasonal Reindeer achievements have been combined into a single achievement for finding a reindeer in all non-Christmas seasons. If you have already earned any of these achievements, your progress is remembered.
+* Minor bug fixes, improvements, and balance tweaks.
+* Remember to back up your save frequently!
+
+### Version 0.5.8
+* Fix for data loss issue with heavenly upgrades. If you lost purchase status for heavenly upgrades ping DFSW on discord and I can restore them for you. Sorry about that!
 
 ### Version 0.5.7
 * Fixed a bug with God of All Gods that would only track the time a god was slotted when they became unslotted. 

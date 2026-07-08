@@ -4,7 +4,7 @@
         var _huT0 = Date.now();
         
         const SIMPLE_MOD_NAME = 'Just Natural Expansion';
-        const MOD_HU_VERSION = '1.0.18';
+        const MOD_HU_VERSION = '1.0.20';
         var isInitialized = false;
         const MOD_ICON = [15, 7];
         const CUSTOM_SPRITE_SHEET_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
@@ -15,6 +15,7 @@
             { name: 'The next weakest link', mult: 12 },
             { name: 'No more weak links', mult: 8 }
         ];
+        Game.jneWeakestLinkUpgrades = WEAKEST_LINK_UPGRADES;
 
         function isModPlant(plantKey) {
             if (!plantKey) return false;
@@ -28,7 +29,6 @@
             return '';
         }
         
-
         function jneEvery(prop, ms) {
             var now = Date.now();
             if (!Game[prop] || (now - Game[prop]) >= ms) {
@@ -59,7 +59,7 @@
                     { id: 'Sugar frenzy II', owned: function() { return Game.Has('Sugar frenzy II'); }, ready: function() { return !!Game.Upgrades && !!Game.Upgrades['Sugar frenzy']; }, done: function() { var up = Game.Upgrades && Game.Upgrades['Sugar frenzy']; return !!(up && up._sugarFrenzyII); }, setup: setupSugarFrenzyII },
                     { id: 'Fortune sound selector', owned: function() { return Game.Has('Fortune tolls for you'); }, ready: function() { return !!Game.Upgrades && !!Game.Upgrades['Golden cookie sound selector']; }, done: function() { var up = Game.Upgrades && Game.Upgrades['Golden cookie sound selector']; return !!(up && up._fortuneSoundAdded); }, setup: setupFortuneSoundSelector },
                     { id: 'Sugar for sugar trading', owned: function() { return Game.Has('Sugar for sugar trading'); }, ready: function() { return !!Game.Upgrade && !!Game.Upgrades; }, done: function() { return !!(Game.Upgrades && Game.Upgrades['Sugar trade']); }, setup: setupSugarForSugarTrading },
-                    { id: 'Wallstreet bets', owned: function() { return Game.Has('Wallstreet bets'); }, ready: function() { return !!(Game.Objects && Game.Objects['Bank'] && Game.Objects['Bank'].minigame); }, done: function() { var M = Game.Objects && Game.Objects['Bank'] && Game.Objects['Bank'].minigame; return !!(M && M.getGoodMaxStock && M.getGoodMaxStock._wallstreetBetsHooked); }, setup: setupWallstreetBets },
+                    { id: 'Wallstreet bets', owned: function() { return Game.Has('Wallstreet bets'); }, ready: function() { var bank = Game.Objects && Game.Objects['Bank']; return !!(bank && bank.minigameLoaded && bank.minigame); }, done: function() { var M = Game.Objects && Game.Objects['Bank'] && Game.Objects['Bank'].minigame; return !!(M && M.getGoodMaxStock && M.getGoodMaxStock._wallstreetBetsHooked); }, setup: setupWallstreetBets },
                     { id: 'Box of overpriced donuts', owned: function() { return (Game.JNE && Game.JNE.heavenlyUpgradesSavedData && Game.JNE.heavenlyUpgradesSavedData.boughtUpgrades && Game.JNE.heavenlyUpgradesSavedData.boughtUpgrades.indexOf('Box of overpriced donuts') !== -1) || Game.Has('Box of overpriced donuts'); }, ready: function() { return !!Game.Upgrade && !!Game.Upgrades; }, done: function() { return !!(Game.Upgrades && Game.Upgrades['Maple frosted donut']); }, setup: setupBoxOfDonuts },
                     { id: 'Toy box', owned: function() { return Game.Has('Toy box'); }, ready: function() { return !!Game.Upgrades && !!Game.Upgrades['Toy box']; }, done: function() { return false; }, setup: createToyBoxToggle },
                     { id: 'Pink stuff', owned: function() { return Game.Has('Pink stuff'); }, ready: function() { return !!Game.Upgrades && !!Game.Upgrades['Pink stuff']; }, done: function() { return false; }, setup: createPinkStuffToggle },
@@ -67,9 +67,9 @@
                     { id: 'Sugar predictor', owned: function() { return Game.Has('Sugar predictor'); }, ready: function() { return !!Game.registerHook; }, done: function() { return !!Game._sugarPredictorHooked; }, setup: setupSugarPredictor },
                     { id: 'Lump tooltip enhancements', owned: function() { return Game.Has('Sugar insight') || Game.Has('Sugar predictor'); }, ready: function() { if (!Game.lumpTooltip) return false; if (Game.Has('Sugar predictor')) return !!Game._sugarPredictorHooked || typeof Game.getLumpPredictions === 'function'; return true; }, done: function() { return !!Game._lumpTooltipHooked; }, setup: setupLumpTooltipEnhancements },
                     { id: 'Big cookie image selector unlock', owned: function() { return Game.Has('Big cookie image selector'); }, ready: function() { return !!Game.Upgrades && !!Game.Upgrades['Cookie image selector']; }, done: function() { var up = Game.Upgrades && Game.Upgrades['Cookie image selector']; return !!(up && up.unlocked); }, setup: unlockBigCookieImageSelector },
-                    { id: 'Garden save hook immediate', owned: function() { return true; }, ready: function() { var M = Game.Objects && Game.Objects['Farm'] && Game.Objects['Farm'].minigame; return !!(M && M.save && M.plantsById); }, done: function() { var M = Game.Objects && Game.Objects['Farm'] && Game.Objects['Farm'].minigame; return !!(M && M.save && M.save._heavenlyUpgradesHooked); }, setup: setupGardenSaveHookImmediate },
-                    { id: 'Aerated soil', owned: function() { return Game.Has('Aerated soil'); }, ready: function() { var M = Game.Objects && Game.Objects['Farm'] && Game.Objects['Farm'].minigame; return !!(M && M.soils && M.plants && (typeof l === 'function')); }, done: function() { var M = Game.Objects && Game.Objects['Farm'] && Game.Objects['Farm'].minigame; return !!(M && M._aeratedSoilHooked && M.soils && M.soils.aerated); }, setup: setupAeratedSoil },
-                    { id: 'Heavenly plant unlocks', owned: function() { return true; }, ready: function() { var M = Game.Objects && Game.Objects['Farm'] && Game.Objects['Farm'].minigame; return !!(M && M.getUnlockedN && M.plants); }, done: function() { var M = Game.Objects && Game.Objects['Farm'] && Game.Objects['Farm'].minigame; return !!(M && M._heavenlyPlantUnlocksHooked); }, setup: setupHeavenlyPlantUnlocks },
+                    { id: 'Garden save hook immediate', owned: function() { return true; }, ready: function() { var farm = Game.Objects && Game.Objects['Farm']; var M = farm && farm.minigame; return !!(farm && farm.minigameLoaded && M && M.save && M.plantsById); }, done: function() { var M = Game.Objects && Game.Objects['Farm'] && Game.Objects['Farm'].minigame; return !!(M && M.save && M.save._heavenlyUpgradesHooked); }, setup: setupGardenSaveHookImmediate },
+                    { id: 'Aerated soil', owned: function() { return Game.Has('Aerated soil'); }, ready: function() { var farm = Game.Objects && Game.Objects['Farm']; var M = farm && farm.minigame; return !!(farm && farm.minigameLoaded && M && M.soils && M.plants && (typeof l === 'function')); }, done: function() { var M = Game.Objects && Game.Objects['Farm'] && Game.Objects['Farm'].minigame; return !!(M && M._aeratedSoilHooked && M.soils && M.soils.aerated); }, setup: setupAeratedSoil },
+                    { id: 'Heavenly plant unlocks', owned: function() { return true; }, ready: function() { var farm = Game.Objects && Game.Objects['Farm']; var M = farm && farm.minigame; return !!(farm && farm.minigameLoaded && M && M.getUnlockedN && M.plants); }, done: function() { var M = Game.Objects && Game.Objects['Farm'] && Game.Objects['Farm'].minigame; return !!(M && M._heavenlyPlantUnlocksHooked); }, setup: setupHeavenlyPlantUnlocks },
                     { id: 'Garden new plants', owned: function() { return true; }, ready: function() { var farm = Game.Objects && Game.Objects['Farm']; var M = farm && farm.minigame; return !!(M && M.plants && M.plantsById && M.plants['bakerWheat']); }, done: function() { var farm = Game.Objects && Game.Objects['Farm']; var M = farm && farm.minigame; return !!(M && M._gardenPlantsInjected); }, setup: setupNewPlants },
                     { id: 'Plant all', owned: function() { return Game.Has('Plant all'); }, ready: function() { var farm = Game.Objects && Game.Objects['Farm']; var M = farm && farm.minigame; return !!(farm && farm.minigameLoaded && M && M.clickTile && M.useTool && M.plantsById); }, done: function() { var farm = Game.Objects && Game.Objects['Farm']; var M = farm && farm.minigame; return !!(M && M.clickTile && M.clickTile._jnePlantAllHooked); }, setup: setupPlantAll },
                     { id: 'Soil inspector', owned: function() { return Game.Has('Soil inspector'); }, ready: function() { var farm = Game.Objects && Game.Objects['Farm']; var M = farm && farm.minigame; return !!(farm && farm.minigameLoaded && M && M.tileTooltip && M.getMuts && M.getTile && M.plants && M.plantsById && M.soilsById && M.plotBoost); }, done: function() { var farm = Game.Objects && Game.Objects['Farm']; var M = farm && farm.minigame; return !!(M && M._soilInspectorHooked); }, setup: setupSoilInspector },
@@ -78,11 +78,11 @@
                     { id: 'Cookie display unit', owned: function() { return true; }, ready: function() { return !!Game.Draw; }, done: function() { return !!(Game.Draw && Game.Draw._jneCookieDisplayHooked); }, setup: setupCookieDisplayUnit },
                     { id: 'Shiny wrinklers spawn', owned: function() { return true; }, ready: function() { return !!Game.SpawnWrinkler; }, done: function() { return !!(Game.SpawnWrinkler && Game.SpawnWrinkler._jneShinyHooked); }, setup: setupShinyWrinklers },
                     { id: 'Improved cookie chains', owned: function() { return Game.Has('Improved cookie chains'); }, ready: function() { return true; }, done: function() { return !!Game._improvedChainsHandled; }, setup: function() { /* Handled in JustNaturalExpansion.js */ } },
-                    { id: 'Pantheon spirit effects', owned: function() { return true; }, ready: function() { var M = Game.Objects && Game.Objects['Temple'] && Game.Objects['Temple'].minigame; var st = Game.shimmerTypes && Game.shimmerTypes.golden; return !!(M && M.slotGod && st && st.popFunc && st.spawnConditions); }, done: function() { var M = Game.Objects && Game.Objects['Temple'] && Game.Objects['Temple'].minigame; return !!(M && M._spiritEffectsSetup); }, setup: setupPantheonSpiritEffects },
-                    { id: 'Cyclius swatch', owned: function() { return Game.Has('Cyclius swatch'); }, ready: function() { var M = Game.Objects && Game.Objects['Temple'] && Game.Objects['Temple'].minigame; return !!(Game.registerHook && M && M.gods && M.gods['ages']); }, done: function() { return !!Game._cycliusSwatchHooked; }, setup: setupCycliusSwatch },
-                    { id: 'Shiny wrinkler spell', owned: function() { return Game.Has('Skitter skatter skrum ahh') || Game.Has('Abra-Ka-Wiggle') || Game.Has('Alakazoodle evil noodle'); }, ready: function() { var M = Game.Objects && Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].minigame; return !!(M && M.castSpell); }, done: function() { var M = Game.Objects && Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].minigame; return !!(M && M._shinyWrinklerHooked); }, setup: setupShinyWrinklerSpell },
-                    { id: 'Gilded allure spell', owned: function() { return Game.Has('Gilded allure'); }, ready: function() { var M = Game.Objects && Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].minigame; return !!(M && M.spells && M.spellsById && typeof l === 'function' && l('grimoireSpells')); }, done: function() { var M = Game.Objects && Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].minigame; return !!(M && M._gildedAllureHooked); }, setup: setupGildedAllureSpell },
-                    { id: 'Wizardly accomplishments', owned: function() { return Game.Has('Wizardly accomplishments'); }, ready: function() { var M = Game.Objects && Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].minigame; return !!(M && M.spells && typeof l === 'function'); }, done: function() { var M = Game.Objects && Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].minigame; return !!(M && M._wizardlyAccomplishmentsHooked); }, setup: setupWizardlyAccomplishments },
+                    { id: 'Pantheon spirit effects', owned: function() { return true; }, ready: function() { var temple = Game.Objects && Game.Objects['Temple']; var M = temple && temple.minigame; var st = Game.shimmerTypes && Game.shimmerTypes.golden; return !!(temple && temple.minigameLoaded && M && M.slotGod && st && st.popFunc && st.spawnConditions); }, done: function() { var M = Game.Objects && Game.Objects['Temple'] && Game.Objects['Temple'].minigame; return !!(M && M._spiritEffectsSetup); }, setup: setupPantheonSpiritEffects },
+                    { id: 'Cyclius swatch', owned: function() { return Game.Has('Cyclius swatch'); }, ready: function() { var temple = Game.Objects && Game.Objects['Temple']; var M = temple && temple.minigame; return !!(temple && temple.minigameLoaded && Game.registerHook && M && M.gods && M.gods['ages']); }, done: function() { return !!Game._cycliusSwatchHooked; }, setup: setupCycliusSwatch },
+                    { id: 'Shiny wrinkler spell', owned: function() { return Game.Has('Skitter skatter skrum ahh') || Game.Has('Abra-Ka-Wiggle') || Game.Has('Alakazoodle evil noodle'); }, ready: function() { var tower = Game.Objects && Game.Objects['Wizard tower']; return !!(tower && tower.minigameLoaded && tower.minigame && tower.minigame.castSpell); }, done: function() { var M = Game.Objects && Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].minigame; return !!(M && M._shinyWrinklerHooked); }, setup: setupShinyWrinklerSpell },
+                    { id: 'Gilded allure spell', owned: function() { return Game.Has('Gilded allure'); }, ready: function() { var tower = Game.Objects && Game.Objects['Wizard tower']; return !!(tower && tower.minigameLoaded && tower.minigame && tower.minigame.spells && tower.minigame.spellsById && typeof l === 'function' && l('grimoireSpells')); }, done: function() { var M = Game.Objects && Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].minigame; return !!(M && M._gildedAllureHooked); }, setup: setupGildedAllureSpell },
+                    { id: 'Wizardly accomplishments', owned: function() { return Game.Has('Wizardly accomplishments'); }, ready: function() { var tower = Game.Objects && Game.Objects['Wizard tower']; return !!(tower && tower.minigameLoaded && tower.minigame && tower.minigame.spells && typeof l === 'function'); }, done: function() { var M = Game.Objects && Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].minigame; return !!(M && M._wizardlyAccomplishmentsHooked); }, setup: setupWizardlyAccomplishments },
                     { id: 'Golden stopwatch', owned: function() { return Game.Has('Golden stopwatch'); }, ready: function() { return !!(Game.registerHook && Game.LeftBackground && typeof l === 'function' && l('backgroundLeftCanvas')); }, done: function() { return !!(Game.UpdateSpecial && Game.UpdateSpecial._goldenStopwatchHooked); }, setup: setupGoldenStopwatch }
                 ];
             }
@@ -96,13 +96,17 @@
                 if (e.ran && (!e.done || e.done())) continue;
                 if (e.ran) e.ran = false;
                 try {
-                    if (e.done && e.done()) { 
-                        e.ran = true; 
-                        continue; 
+                    if (e.done && e.done()) {
+                        e.ran = true;
+                        continue;
                     }
                     // Skip ownership check if forceAll is true (during init/load)
                     if (!forceAll && e.owned && !e.owned()) continue;
                     if (e.ready && !e.ready()) continue;
+
+                    // Skip effect setups in Born Again mode (upgrades remain owned but have no effect)
+                    // Allow basic initialization (Custom buff types, Garden save hook, etc.) to run
+                    if (Game.ascensionMode == 1 && !isToggle && e.id !== 'Custom buff types' && e.id !== 'Garden save hook immediate' && e.id !== 'Heavenly plant unlocks' && e.id !== 'Garden new plants') continue;
 
                     if (e.setup) e.setup();
                     if (!e.done || e.done()) e.ran = true;
@@ -112,8 +116,8 @@
             }
 
             if (!Game._jneSeasonTooltipsHooked && typeof LocalizeUpgradesAndAchievs === 'function') {
-                var orig = LocalizeUpgradesAndAchievs;
-                LocalizeUpgradesAndAchievs = function() { orig.apply(this, arguments); updateSeasonDescs(); };
+                window._jneOriginalLocalizeUpgradesAndAchievs = LocalizeUpgradesAndAchievs;
+                LocalizeUpgradesAndAchievs = function() { window._jneOriginalLocalizeUpgradesAndAchievs.apply(this, arguments); updateSeasonDescs(); };
                 Game._jneSeasonTooltipsHooked = true;
             }
             if (Game.Upgrades) updateSeasonDescs();
@@ -141,8 +145,13 @@
                 [['Frenziered elders', 'Godzmak\'s Headstart', 'Creative tax evasion'], setupBuffModifiers],
                 [['Mega clicks', 'Lucky mega clicks', 'Extreme mega clicks'], setupMegaClicks]
             ];
-            for (var i = 0; i < ownedSetups.length; i++) {
-                if (jneHasAny(ownedSetups[i][0])) ownedSetups[i][1]();
+            // Skip all owned setup functions in Born Again mode (upgrades remain owned but have no effect)
+            if (Game.ascensionMode != 1) {
+                for (var i = 0; i < ownedSetups.length; i++) {
+                    if (jneHasAny(ownedSetups[i][0])) {
+                        ownedSetups[i][1]();
+                    }
+                }
             }
             if (Game.Has('Bingo center slots')) {
                 var now = jneEvery('_jneBingoCenterSlotsLast', 60000); ///60000 
@@ -245,12 +254,12 @@
             if (!Game.lumpTooltip || Game._lumpTooltipHooked || (!Game.Has('Sugar insight') && !Game.Has('Sugar predictor'))) return;
             if (Game.Has('Sugar predictor') && !Game._sugarPredictorHooked && typeof Game.getLumpPredictions !== 'function') return;
 
-            var origTooltip = Game.lumpTooltip;
-            var typeIcons = [[29, 14], [29, 15], [29, 16], [29, 17], [29, 27]];
-            var typeNames = ['Normal', 'Bifurcated', 'Golden', 'Meaty', 'Caramelized'];
-            var keys = ['bifurcated', 'golden', 'meaty', 'caramelized'];
+            if (!Game._jneOriginalLumpTooltip) Game._jneOriginalLumpTooltip = Game.lumpTooltip;
             Game.lumpTooltip = function() {
-                var str = origTooltip.call(this);
+                var typeIcons = [[29, 14], [29, 15], [29, 16], [29, 17], [29, 27]];
+                var typeNames = ['Normal', 'Bifurcated', 'Golden', 'Meaty', 'Caramelized'];
+                var keys = ['bifurcated', 'golden', 'meaty', 'caramelized'];
+                var str = Game._jneOriginalLumpTooltip.call(this);
                 var helpStart = str.indexOf('&bull;');
                 if (helpStart !== -1) {
                     var helpEnd = str.indexOf('</div>', helpStart);
@@ -284,12 +293,12 @@
 
                 var current = {
                     grandmas: Game.Objects['Grandma'].amount,
-                    rigidel: detectRigidelSlot(),
-                    rigidelActive: detectRigidelActive(),
+                    rigidel: Game.jneDetectRigidelSlot(),
+                    rigidelActive: Game.jneDetectRigidelActive(),
                     dragonsCurve: Game.hasAura('Dragon\'s Curve') ? 1 : 0,
                     realityBending: Game.hasAura('Reality Bending') ? 1 : 0,
                     supremeIntellect: Game.hasAura('Supreme Intellect') ? 1 : 0,
-                    wrath: normalizeElderWrathForPredictor()
+                    wrath: Game.jneNormalizeElderWrathForPredictor()
                 };
 
                 var currentType = Game.predictLumpTypeWithState(Game.lumpT, current.grandmas, current.rigidel, current.rigidelActive, current.dragonsCurve, current.realityBending, current.wrath, current.supremeIntellect);
@@ -409,7 +418,6 @@
             // Create pantheon gods NOW so they exist when save data is loaded
             addNewPantheonSpirits();
             
-            
             // If loading into an existing game, check for existing save data and restore it
             var _huSaved = Game.JNE.heavenlyUpgradesSavedData;
             if (_huSaved) {
@@ -441,9 +449,10 @@
                     // Also hook M.init to rebuild when garden is opened
                     if (checkCount === 0 && M.init && !M._jneInitHookedForRebuild) {
                         M._jneInitHookedForRebuild = true;
-                        var origInit = M.init;
+                        if (!M._jneOriginalInitForRebuild) M._jneOriginalInitForRebuild = M.init;
                         M.init = function(div) {
-                            var result = origInit.call(this, div);
+                            var M = Game.Objects['Farm'].minigame;
+                            var result = M._jneOriginalInitForRebuild.call(this, div);
                             // Ensure aerated soil exists (AFTER origInit so l('gardenSoils') is defined)
                             if (Game.Has('Aerated soil') && M.soils) {
                                 setupAeratedSoil();
@@ -561,7 +570,7 @@
             Game._jneOverheadItemsSetup = true;
             if (!Game._achievementWinCallbacks) Game._achievementWinCallbacks = [];
             if (!Game._achievementWinExtended) {
-                var originalWin = Game.Win;
+                if (!Game._jneOriginalWin) Game._jneOriginalWin = Game.Win;
                 Game.Win = function(what) {
                     var wasWon = false;
                     var achievement = null;
@@ -569,7 +578,7 @@
                         achievement = Game.Achievements[what];
                         wasWon = achievement.won === 1;
                     }
-                    var result = originalWin.apply(this, arguments);
+                    var result = Game._jneOriginalWin.apply(this, arguments);
                     if (achievement && !wasWon && achievement.won === 1) {
                         for (var i = 0; i < Game._achievementWinCallbacks.length; i++) {
                             try {
@@ -627,22 +636,21 @@
             for (var i = 0; i < slotNames.length; i++) {
                 var upgrade = Game.Upgrades[slotNames[i]];
                 if (upgrade && !upgrade._erasablePensModified) {
-                    var originalActivate = upgrade.activateFunction;
-                    upgrade.activateFunction = (function(slot, originalActivateFn) {
-                        return function() {
-                            var savedOnAscend = Game.OnAscend;
-                            try {
-                                if (Game.OnAscend !== 1) Game.OnAscend = 1;
-                                if (originalActivateFn && typeof originalActivateFn === 'function') {
-                                    originalActivateFn.call(this);
-                                } else if (Game.AssignPermanentSlot) {
-                                    Game.AssignPermanentSlot(slot);
-                                }
-                            } finally {
-                                Game.OnAscend = savedOnAscend;
+                    if (!upgrade._jneOriginalActivateFunction) upgrade._jneOriginalActivateFunction = upgrade.activateFunction;
+                    upgrade._jneErasablePensSlot = i;
+                    upgrade.activateFunction = function() {
+                        var savedOnAscend = Game.OnAscend;
+                        try {
+                            if (Game.OnAscend !== 1) Game.OnAscend = 1;
+                            if (this._jneOriginalActivateFunction && typeof this._jneOriginalActivateFunction === 'function') {
+                                this._jneOriginalActivateFunction.call(this);
+                            } else if (Game.AssignPermanentSlot) {
+                                Game.AssignPermanentSlot(this._jneErasablePensSlot);
                             }
-                        };
-                    })(i, originalActivate);
+                        } finally {
+                            Game.OnAscend = savedOnAscend;
+                        }
+                    };
                     upgrade._erasablePensModified = true;
                 }
             }
@@ -650,9 +658,9 @@
         
         if (Game.UpdateMenu && !Game.UpdateMenu._erasablePensHooked) {
             Game.UpdateMenu._erasablePensHooked = true;
-            var originalUpdateMenu = Game.UpdateMenu;
+            if (!Game._jneOriginalUpdateMenuHU) Game._jneOriginalUpdateMenuHU = Game.UpdateMenu;
             Game.UpdateMenu = function() {
-                var result = originalUpdateMenu.apply(this, arguments);
+                var result = Game._jneOriginalUpdateMenuHU.apply(this, arguments);
                 if (Game.Has('Erasable pens')) {
                     setTimeout(function() {
                         var slotNames = ['Permanent upgrade slot I', 'Permanent upgrade slot II', 'Permanent upgrade slot III', 'Permanent upgrade slot IV', 'Permanent upgrade slot V'];
@@ -706,9 +714,9 @@
         
         function setupSeasonalDuration() {
             if (Game.getSeasonDuration && !Game.getSeasonDuration._heavenlyUpgradesHooked) {
-                var originalGetSeasonDuration = Game.getSeasonDuration;
+                if (!Game._jneOriginalGetSeasonDuration) Game._jneOriginalGetSeasonDuration = Game.getSeasonDuration;
                 Game.getSeasonDuration = function() {
-                    var raw = originalGetSeasonDuration.apply(this, arguments);
+                    var raw = Game._jneOriginalGetSeasonDuration.apply(this, arguments);
                     var baseDuration = Number(raw);
                     if (!isFinite(baseDuration) || baseDuration <= 0) return raw;
                     var extraHours = 0;
@@ -736,10 +744,10 @@
                 };
             }
             
-            var originalModifyBuildingPrice = Game.modifyBuildingPrice;
+            if (!Game._jneOriginalModifyBuildingPriceHU) Game._jneOriginalModifyBuildingPriceHU = Game.modifyBuildingPrice;
             
             Game.modifyBuildingPrice = function(building, price) {
-                var modifiedPrice = originalModifyBuildingPrice.call(this, building, price);
+                var modifiedPrice = Game._jneOriginalModifyBuildingPriceHU.call(this, building, price);
                 
                 // Apply Turtles discount (level-based max 25%)
                 if (Game.Has('Turtles all the way down') && building && building.level !== undefined) {
@@ -756,14 +764,14 @@
         function setupCookieDisplayUnit() {
             if (!Game.Draw) return;
             if (Game.Draw._jneCookieDisplayHooked) return;
-            var originalDraw = Game.Draw;
+            if (!Game._jneOriginalDraw) Game._jneOriginalDraw = Game.Draw;
             Game.Draw = function() {
                 //  don't draw if game isn't ready
                 if (!Game.ready) return;
                 
                 try {
                     // Call vanilla draw - this may throw if minigame not loaded yet
-                    var result = originalDraw.apply(this, arguments);
+                    var result = Game._jneOriginalDraw.apply(this, arguments);
                     
                     // Only apply our modifications if vanilla draw succeeded
                     try {
@@ -799,10 +807,10 @@
 
         function setupGameEffModifiers() {
         if (!Game.eff || Game.eff._jneAllEffModifiersHooked) return;
-        var originalEff = Game.eff;
+        if (!Game._jneHeavenlyOriginalEff) Game._jneHeavenlyOriginalEff = Game.eff;
         Game.eff = function(what) {
             try {
-                var val = originalEff.apply(this, arguments);
+                var val = Game._jneHeavenlyOriginalEff.apply(this, arguments);
                 if (what === 'wrinklerEat') {
                     if (Game.Has('Ravenous leeches')) val *= 1.2;
                     else if (Game.Has('Hellish hunger')) val *= 1.1;
@@ -819,8 +827,8 @@
                     if (Game.hasBuff('Gilded allure')) val *= 1.3;
                     if (Game.hasBuff('Midas curse')) val /= 4;
                     if (Game.hasBuff('Feedback loop')) val *= 1.1;
-                    var M = Game.Objects['Temple']?.minigame;
-                    if (M?.gods['selfishness']) {
+                    var M = Game.Objects['Temple'] && Game.Objects['Temple'].minigame;
+                    if (M && M.gods['selfishness']) {
                         var l = Game.hasGod('selfishness');
                         if (l) {
                             var r = Math.min((M._selfishnessClickCount || 0) * [0, 0.03, 0.02, 0.01][l], 1);
@@ -832,7 +840,7 @@
             } catch (e) {
                 // If there's an error, return the original result and log it
                 console.error('[HU Game Eff] Error in eff hook:', e);
-                return originalEff ? originalEff.apply(this, arguments) : 1;
+                return Game._jneHeavenlyOriginalEff ? Game._jneHeavenlyOriginalEff.apply(this, arguments) : 1;
             }
         };
         Game.eff._jneAllEffModifiersHooked = true;
@@ -845,8 +853,10 @@
                 return;
             }
             Game.registerHook('cps', function(cps) {
+                // Skip effect in Born Again mode
+                if (Game.ascensionMode == 1) return cps;
                 var mult = 1;
-                if (Game.Has('Divine uninspiration') && Game.Objects['Temple']?.minigame?.slot) {
+                if (Game.Has('Divine uninspiration') && Game.Objects['Temple'] && Game.Objects['Temple'].minigame && Game.Objects['Temple'].minigame.slot) {
                     var s = Game.Objects['Temple'].minigame.slot;
                     mult *= 1 + (s[2] === -1 ? 0.01 : 0) + (s[1] === -1 ? 0.02 : 0) + (s[0] === -1 ? 0.03 : 0);
                 }
@@ -863,8 +873,8 @@
                 if (Game.Has('Stacks on stacks on stacks') && Game.goldenClicksLocal) {
                     mult *= 1 + (Game.goldenClicksLocal * 0.0005);
                 }
-                var M = Game.Objects['Temple']?.minigame;
-                if (M?.gods['procrastination']) {
+                var M = Game.Objects['Temple'] && Game.Objects['Temple'].minigame;
+                if (M && M.gods['procrastination']) {
                     var l = Game.hasGod('procrastination');
                     if (l && M._procrastinationSlotTime) {
                         var h = (Date.now() - M._procrastinationSlotTime) / 3600000, d = Math.min(Math.floor(h / 24), 365), b = [0, 0.015, 0.010, 0.005][l], t = 0;
@@ -873,7 +883,7 @@
                         mult *= (1 + t);
                     }
                 }
-                if (M?.gods['selfishness']) {
+                if (M && M.gods['selfishness']) {
                     var l = Game.hasGod('selfishness');
                     if (l) mult *= (1 - Math.min((M._selfishnessClickCount || 0) * [0, 0.03, 0.02, 0.01][l], 1));
                 }
@@ -886,7 +896,7 @@
         function setupBuffModifiers() {
             if (!Game.gainBuff || Game._jneBuffModifiersHooked) return;
 
-            var origGainBuff = Game.gainBuff;
+            if (!Game._jneOriginalGainBuffHU) Game._jneOriginalGainBuffHU = Game.gainBuff;
             Game.gainBuff = function(type, time, arg1, arg2, arg3) {
                 var alreadyApplying = !!Game._jneApplyingBuffModifiers;
                 if (!alreadyApplying) Game._jneApplyingBuffModifiers = true;
@@ -908,7 +918,7 @@
                             time = time * 0.9;
                         }
                     }
-                    return origGainBuff.call(this, type, time, arg1, arg2, arg3);
+                    return Game._jneOriginalGainBuffHU.call(this, type, time, arg1, arg2, arg3);
                 } finally {
                     if (!alreadyApplying) Game._jneApplyingBuffModifiers = false;
                 }
@@ -919,6 +929,8 @@
         function setupMegaClicks() {
             if (Game.registerHook && !Game._megaClicksHookRegistered) {
                 Game.registerHook('click', function() {
+                    // Skip effect in Born Again mode
+                    if (Game.ascensionMode == 1) return;
                     if (Game.Has && Game.Has('Mega clicks')) {
                         var megaClickChance = Game.Has('Lucky mega clicks') ? 0.015 : 0.01;
                         var isMegaClick = jneIndependentRandom() < megaClickChance; 
@@ -939,9 +951,9 @@
         function setupShinyWrinklers() {
             if (!Game.SpawnWrinkler) return;
             if (Game.SpawnWrinkler._jneShinyHooked) return;
-            var originalSpawn = Game.SpawnWrinkler;
+            if (!Game._jneOriginalSpawnWrinkler) Game._jneOriginalSpawnWrinkler = Game.SpawnWrinkler;
             Game.SpawnWrinkler = function() {
-                var me = originalSpawn.apply(this, arguments);
+                var me = Game._jneOriginalSpawnWrinkler.apply(this, arguments);
                 if (!me) return me;
                 if (me.type === 0) {
                     var base = 0.0001;
@@ -973,10 +985,10 @@
             if (Game._wrinklerPopSpawnHooked || !Game.UpdateGrandmapocalypse) return;
             Game._wrinklerPopSpawnHooked = true;
             Game._jneJamFillingHandled = true;
-            var originalUpdate = Game.UpdateGrandmapocalypse;
+            if (!Game._jneOriginalUpdateGrandmapocalypse) Game._jneOriginalUpdateGrandmapocalypse = Game.UpdateGrandmapocalypse;
             Game.UpdateGrandmapocalypse = function() {
                 var oldCount = Game.wrinklersPopped || 0;
-                var result = originalUpdate.apply(this, arguments);
+                var result = Game._jneOriginalUpdateGrandmapocalypse.apply(this, arguments);
                 var newCount = Game.wrinklersPopped || 0;
                 if (newCount > oldCount) {
                     var popped = newCount - oldCount;
@@ -1016,8 +1028,10 @@
         function setupCycliusSwatch() {
             if (!Game.registerHook || Game._cycliusSwatchHooked) return;
             if (!Game.Has('Cyclius swatch')) return;
-            var M = Game.Objects['Temple']?.minigame;
-            if (!M?.gods?.['ages']) return;
+            var temple = Game.Objects['Temple'];
+            if (!temple || !temple.minigameLoaded || !temple.minigame) return;
+            var M = temple.minigame;
+            if (!M || !M.gods || !M.gods['ages']) return;
             var cyclius = M.gods['ages'];
             if (!cyclius._originalDescs) {
                 cyclius._originalDescs = {
@@ -1028,8 +1042,8 @@
             }
             var update = function() {
                 if (!Game.Has('Cyclius swatch')) return;
-                var M = Game.Objects['Temple']?.minigame;
-                if (!M?.gods?.['ages']) return;
+                var M = Game.Objects['Temple'] && Game.Objects['Temple'].minigame;
+                if (!M || !M.gods || !M.gods['ages']) return;
                 var cyclius = M.gods['ages'];
                 if (!cyclius._originalDescs) return;
                 function getBuffInfo(period) {
@@ -1054,7 +1068,7 @@
                     ` Currently: <span class="${info2.arrowClass}">${info2.arrow}</span> <span class="${info2.textClass}">${info2.text}</span>`;
                 cyclius.desc3 = cyclius._originalDescs.desc3 +
                     ` Currently: <span class="${info3.arrowClass}">${info3.arrow}</span> <span class="${info3.textClass}">${info3.text}</span>`;
-                if (Game.tooltip?.draw && Game.tooltip.matches?.('.framed')) {
+                if (Game.tooltip && Game.tooltip.draw && Game.tooltip.matches && Game.tooltip.matches('.framed')) {
                     Game.tooltip.draw(undefined, 'this');
                 }
             };
@@ -1063,12 +1077,16 @@
         }
 
         function setupPantheonSaveLoadHooks() {
-            var M = Game.Objects['Temple']?.minigame;
+            var temple = Game.Objects['Temple'];
+            if (!temple || !temple.minigameLoaded || !temple.minigame) return;
+            var M = temple.minigame;
             if (!M || !M.save || M.save._heavenlyUpgradesHooked) return;
-            var wrapper = function() {
+            if (!M._jneOriginalSaveTemple) M._jneOriginalSaveTemple = M.save;
+            M.save = function() {
+                var M = Game.Objects['Temple'].minigame;
                 var customGodIds = [];
-                if (M.gods?.['procrastination']?.id !== undefined) customGodIds.push(M.gods['procrastination'].id);
-                if (M.gods?.['selfishness']?.id !== undefined) customGodIds.push(M.gods['selfishness'].id);
+                if (M.gods && M.gods['procrastination'] && M.gods['procrastination'].id !== undefined) customGodIds.push(M.gods['procrastination'].id);
+                if (M.gods && M.gods['selfishness'] && M.gods['selfishness'].id !== undefined) customGodIds.push(M.gods['selfishness'].id);
                 var savedSlots = [];
                 if (M.slot) {
                     for (var i = 0; i < M.slot.length; i++) {
@@ -1078,19 +1096,17 @@
                         }
                     }
                 }
-                var result = wrapper._original.apply(this, arguments);
+                var result = M._jneOriginalSaveTemple.apply(this, arguments);
                 for (var i = 0; i < savedSlots.length; i++) {
                     if (savedSlots[i] !== undefined) M.slot[i] = savedSlots[i];
                 }
                 return result;
             };
-            wrapper._original = M.save;
-            wrapper._heavenlyUpgradesHooked = true;
-            M.save = wrapper;
+            M.save._heavenlyUpgradesHooked = true;
         }
         
         function addNewPantheonSpirits() {
-            if (!Game.Objects['Temple']?.minigame) return;
+            if (!Game.Objects['Temple'] || !Game.Objects['Temple'].minigame) return;
             var M = Game.Objects['Temple'].minigame;
 
             if (M._pantheonSpiritsCheckInterval) {
@@ -1122,7 +1138,7 @@
 
             for (var key in spirits) {
                 var spirit = spirits[key];
-                var hasUpgrade = Game.Upgrades[spirit.upgrade]?.bought;
+                var hasUpgrade = Game.Upgrades[spirit.upgrade] && Game.Upgrades[spirit.upgrade].bought;
                 
                 // Create god definition if it doesn't exist (regardless of upgrade ownership)
                 if (!M.gods[key]) {
@@ -1171,11 +1187,13 @@
             if (!M._spiritEffectsSetup && (M.gods['procrastination'] || M.gods['selfishness'])) {setupPantheonSpiritEffects(); M._spiritEffectsSetup = true;}
 
             if (!M.godTooltip._hooked) {
-                var wrapper = function(id) {
+                if (!M._jneOriginalGodTooltip) M._jneOriginalGodTooltip = M.godTooltip;
+                M.godTooltip = function(id) {
+                    var M = Game.Objects['Temple'].minigame;
                     return function() {
                         var me = M.godsById[id];
                         if (me && me.icon && me.icon[2]) {
-                            var result = wrapper._original(id)();
+                            var result = M._jneOriginalGodTooltip(id)();
                             var searchStr = '<div class="icon" style="float:left;margin-left:-8px;margin-top:-8px;background-position:' + (-me.icon[0]*48) + 'px ' + (-me.icon[1]*48) + 'px;">';
                             result = result.replace(
                                 searchStr,
@@ -1183,18 +1201,18 @@
                             );
                             return result;
                         }
-                        return wrapper._original(id)();
+                        return M._jneOriginalGodTooltip(id)();
                     };
                 };
-                wrapper._original = M.godTooltip;
-                wrapper._hooked = true;
-                M.godTooltip = wrapper;
+                M.godTooltip._hooked = true;
             }
 
             if (!M.slotTooltip._hooked) {
-                var wrapper2 = function(id) {
+                if (!M._jneOriginalSlotTooltip) M._jneOriginalSlotTooltip = M.slotTooltip;
+                M.slotTooltip = function(id) {
+                    var M = Game.Objects['Temple'].minigame;
                     return function() {
-                        var result = wrapper2._original(id)();
+                        var result = M._jneOriginalSlotTooltip(id)();
                         if (M.slot[id] != -1) {
                             var me = M.godsById[M.slot[id]];
                             if (me && me.icon && me.icon[2]) {
@@ -1207,19 +1225,18 @@
                         return result;
                     };
                 };
-                wrapper2._original = M.slotTooltip;
-                wrapper2._hooked = true;
-                M.slotTooltip = wrapper2;
+                M.slotTooltip._hooked = true;
             }
         }
 
         function applySlotGodHook(M) {
             if (M.slotGod && !M.slotGod._hooked) {
-                var orig = M.slotGod;
+                if (!M._jneOriginalSlotGod) M._jneOriginalSlotGod = M.slotGod;
                 M.slotGod = function(god, slot) {
-                    if (!god) return orig.apply(this, arguments);
+                    var M = Game.Objects['Temple'].minigame;
+                    if (!god) return M._jneOriginalSlotGod.apply(this, arguments);
                     var prev = god.slot;
-                    var result = orig.apply(this, arguments);
+                    var result = M._jneOriginalSlotGod.apply(this, arguments);
                     
                     var proc = M.gods['procrastination'], self = M.gods['selfishness'];
                     
@@ -1247,11 +1264,11 @@
                     }
                     if (self && god.id === self.id) {
                         if (slot === -1 && prev !== -1) {
-                            for (var i in Game.buffs) if (Game.buffs[i]?.aura === 1) Game.buffs[i].time = 0;
+                            for (var i in Game.buffs) if (Game.buffs[i] && Game.buffs[i].aura === 1) Game.buffs[i].time = 0;
                             M._selfishnessClickCount = 0;
                             Game.recalculateGains = true;
                         } else if (slot !== -1 && prev !== -1 && prev !== slot) {
-                            for (var i in Game.buffs) if (Game.buffs[i]?.aura === 1) Game.buffs[i].time = 0;
+                            for (var i in Game.buffs) if (Game.buffs[i] && Game.buffs[i].aura === 1) Game.buffs[i].time = 0;
                             M._selfishnessClickCount = 0;
                         } else if (slot !== -1 && prev === -1) {
                             M._selfishnessClickCount = 0;
@@ -1264,7 +1281,7 @@
         }
 
         function setupPantheonSpiritEffects() {
-            if (!Game.Objects['Temple']?.minigame) return;
+            if (!Game.Objects['Temple'] || !Game.Objects['Temple'].minigame) return;
             var M = Game.Objects['Temple'].minigame;
             if (M._spiritEffectsSetup) return;
             
@@ -1279,9 +1296,10 @@
 
             var st = Game.shimmerTypes && Game.shimmerTypes.golden;
             if (st && !st._selfishnessSpawnConditionsHooked) {
-                var originalSpawnConditions = st.spawnConditions;
+                if (!st._jneOriginalSpawnConditions) st._jneOriginalSpawnConditions = st.spawnConditions;
                 st.spawnConditions = function() {
-                    if (!originalSpawnConditions || !originalSpawnConditions()) return false;
+                    var st = Game.shimmerTypes && Game.shimmerTypes.golden;
+                    if (!st._jneOriginalSpawnConditions || !st._jneOriginalSpawnConditions()) return false;
                     if (M.gods && M.gods['selfishness'] && Game.hasGod('selfishness')) {
                         var l = Game.hasGod('selfishness');
                         if (l) {
@@ -1296,8 +1314,8 @@
 
             if (Game.registerHook && !Game._jneProcrastinationRecalcHooked) {
                 Game.registerHook('check', function() {
-                    var M = Game.Objects['Temple']?.minigame;
-                    if (!M?.gods?.['procrastination']) return;
+                    var M = Game.Objects['Temple'] && Game.Objects['Temple'].minigame;
+                    if (!M || !M.gods || !M.gods['procrastination']) return;
                     if (!Game.hasGod('procrastination')) return;
                     if (!M._procrastinationSlotTime) return;
                     if (Game.T % (Game.fps * 5) === 0) Game.recalculateGains = true;
@@ -1305,13 +1323,15 @@
                 Game._jneProcrastinationRecalcHooked = true;
             }
 
-            if (M.slotGod?._hooked && st?._hooked && st?._selfishnessSpawnConditionsHooked) M._spiritEffectsSetup = true;
+            if (M.slotGod && M.slotGod._hooked && st && st._hooked && st._selfishnessSpawnConditionsHooked) M._spiritEffectsSetup = true;
         }
 
         function setupRegifting() {
             if (!Game.registerHook || Game._regiftingHooked) return;
             Game._regiftingHooked = true;
             Game.registerHook('reset', function(hard) {
+                // Skip effect in Born Again mode
+                if (Game.ascensionMode == 1) return;
                 if (hard) return;
 
                 if (!Game.seasonDrops || !Array.isArray(Game.seasonDrops)) return;
@@ -1342,7 +1362,7 @@
         function setupCookieReduction() {
             if (typeof choose !== 'function' || choose._jneCookieReductionHooked) return;
             
-            var originalChoose = choose;
+            if (!Game._jneOriginalChoose) Game._jneOriginalChoose = choose;
                 choose = function(arr) {
                     if (Array.isArray(arr)) {
                         if (arr.indexOf('multiply cookies') !== -1) {
@@ -1371,7 +1391,7 @@
                     }
                 }
                 
-                return originalChoose.call(this, arr);
+                return Game._jneOriginalChoose.call(this, arr);
             };
             choose._jneCookieReductionHooked = true;
         }
@@ -1538,9 +1558,9 @@
             
             if (Game.registerHook && !Game._hatcheryEffectHooked && Game.shimmerTypes && Game.shimmerTypes['fish']) {
                 Game._hatcheryEffectHooked = true;
-                var originalInitFunc = Game.shimmerTypes['fish'].initFunc;
+                if (!Game.shimmerTypes['fish']._jneOriginalInitFunc) Game.shimmerTypes['fish']._jneOriginalInitFunc = Game.shimmerTypes['fish'].initFunc;
                 Game.shimmerTypes['fish'].initFunc = function(me) {
-                    originalInitFunc.call(this, me);
+                    Game.shimmerTypes['fish']._jneOriginalInitFunc.call(this, me);
                     if (Game.Has('Hatchery effect') && Math.random() < 0.1 && !me._hatcheryPair) {
                         me._hatcheryPair = true;
                         if (Game.shimmer && Game.shimmerTypes && Game.shimmerTypes['fish'] && Game.shimmerTypes['fish'].spawnConditions()) {
@@ -1552,18 +1572,19 @@
         }
         
         function setupWallstreetBets() {
-            if (!Game.Objects['Bank'] || !Game.Objects['Bank'].minigame) return;
-            var M = Game.Objects['Bank'].minigame;
+            var bank = Game.Objects['Bank'];
+            if (!bank || !bank.minigameLoaded || !bank.minigame) return;
+            var M = bank.minigame;
             if (!M.getGoodMaxStock || M.getGoodMaxStock._wallstreetBetsHooked) return;
 
-            var wrapper = function(id) {
-                var max = wrapper._original.call(this, id);
+            if (!M._jneOriginalGetGoodMaxStock) M._jneOriginalGetGoodMaxStock = M.getGoodMaxStock;
+            M.getGoodMaxStock = function(id) {
+                var M = Game.Objects['Bank'].minigame;
+                var max = M._jneOriginalGetGoodMaxStock.call(this, id);
                 if (Game.Has('Wallstreet bets')) max *= 1.5;
                 return max;
             };
-            wrapper._original = M.getGoodMaxStock;
-            wrapper._wallstreetBetsHooked = true;
-            M.getGoodMaxStock = wrapper;
+            M.getGoodMaxStock._wallstreetBetsHooked = true;
         }
         
         function setupFadingPayout() {
@@ -1661,7 +1682,7 @@
         
         function setupWeakestLink() {
             if (Game._jneWeakestLinkHooked) return;
-            var upgrades = [
+            Game._jneWeakestLinkUpgrades = [
                 { name: 'Weakest link', rank: 1, mult: 16 },
                 { name: 'The next weakest link', rank: 2, mult: 12 },
                 { name: 'No more weak links', rank: 3, mult: 8 }
@@ -1669,10 +1690,12 @@
             
             if (!Game._weakestLinkCache) Game._weakestLinkCache = { assignments: {}, lastRecalc: 0 };
 
-            var previousMagicCpS = Game.magicCpS;
+            if (!Game._jneOriginalMagicCpSWeakestLink) Game._jneOriginalMagicCpSWeakestLink = Game.magicCpS;
             Game.magicCpS = function(what) {
-                var mult = previousMagicCpS(what);
+                var mult = Game._jneOriginalMagicCpSWeakestLink(what);
+                var upgrades = Game._jneWeakestLinkUpgrades;
 
+                // Weakest Link logic
                 var owned = upgrades.filter(function(u) { return Game.Has(u.name); });
                 if (owned.length > 0) {
                     var cache = Game._weakestLinkCache;
@@ -1735,6 +1758,52 @@
                     }
                 }
 
+                // Magic Mushroom logic
+                var M = Game.Objects['Farm'] && Game.Objects['Farm'].minigame;
+                if (M && M.effs && M.effs.magicMushroomMult > 0 && M.freeze === 0) {
+                    var cache = Game._weakestLinkCache;
+
+                    if (!cache.magicMushroomAssignment || (Date.now() - cache.lastRecalc) > 1000) {
+                        var buildings = [];
+
+                        for (var i = 0; i < Game.ObjectsById.length; i++) {
+                            var b = Game.ObjectsById[i];
+                            if (b && b.amount > 0) {
+                                var cps = (b.storedTotalCps || 0) * (Game.globalCpsMult || 1);
+
+                                if (cache.assignments) {
+                                    for (var k in cache.assignments) {
+                                        if (cache.assignments[k].buildingName === b.name) {
+                                            for (var u = 0; u < Game.jneWeakestLinkUpgrades.length; u++) {
+                                                if (Game.jneWeakestLinkUpgrades[u].name === k && Game.Has(k)) {
+                                                    cps /= Game.jneWeakestLinkUpgrades[u].mult;
+                                                    break;
+                                                }
+                                            }
+                                            break;
+                                        }
+                                    }
+                                }
+
+                                if (cache.magicMushroomAssignment === b.name) {
+                                    cps /= (1 + M.effs.magicMushroomMult);
+                                }
+
+                                buildings.push({ name: b.name, cps: cps });
+                            }
+                        }
+                        buildings.sort(function(a, b) { return a.cps - b.cps; });
+
+                        if (buildings.length > 0) {
+                            cache.magicMushroomAssignment = buildings[0].name;
+                        }
+                    }
+
+                    if (cache.magicMushroomAssignment === what) {
+                        mult *= 1 + M.effs.magicMushroomMult;
+                    }
+                }
+
                 return mult;
             };
             Game._jneWeakestLinkHooked = true;
@@ -1747,11 +1816,13 @@
             if (!M || !M.clickTile || !M.useTool) return;
             if (M.clickTile._jnePlantAllHooked) return; // Already hooked (check actual function, not flag)
             M._plantAllHooked = true;
-            var wrapper = function(x, y) {
+            if (!M._jneOriginalClickTile) M._jneOriginalClickTile = M.clickTile;
+            M.clickTile = function(x, y) {
+                var M = Game.Objects['Farm'].minigame;
                 if (Game.Has('Plant all') && Game.keys[16] && Game.keys[17] && M.seedSelected >= 0) {
                     var seedId = M.seedSelected;
                     var seed = M.plantsById[seedId];
-                    if (!seed || !M.canPlant(seed)) return wrapper._original.call(M, x, y);
+                    if (!seed || !M.canPlant(seed)) return M._jneOriginalClickTile.call(M, x, y);
                     var planted = M.useTool(seedId, x, y);
                     M.toCompute = true;
                     if (planted) {
@@ -1767,11 +1838,9 @@
                     }
                     return;
                 }
-                return wrapper._original.call(M, x, y);
+                return M._jneOriginalClickTile.call(M, x, y);
             };
-            wrapper._original = M.clickTile;
-            wrapper._jnePlantAllHooked = true;
-            M.clickTile = wrapper;
+            M.clickTile._jnePlantAllHooked = true;
         }
         
         function setupSoilInspector() {
@@ -1784,7 +1853,8 @@
                 M.originalTileTooltip = M.tileTooltip;
             }
             
-            function getPlantGrowthChances(x, y) {
+            M._jneGetPlantGrowthChances = function getPlantGrowthChances(x, y) {
+                var M = Game.Objects['Farm'].minigame;
                 if (!M || !M.getMuts || !M.getTile || !M.plants || !M.plantsById || !M.soilsById || !M.plotBoost) return null;
                 var n = {}, nm = {}, k, t, p, r = [], probs = {}, dirs = [[-1,-1],[0,-1],[1,-1],[-1,0],[1,0],[-1,1],[0,1],[1,1]];
                 for (k in M.plants) { n[k] = 0; nm[k] = 0; }
@@ -1807,6 +1877,7 @@
             }
             
             M.tileTooltip = function(x, y) {
+                var M = Game.Objects['Farm'].minigame;
                 var originalTooltip = M.originalTileTooltip(x, y);
                 
                 if (Game.Has('Soil inspector') && 
@@ -1815,7 +1886,7 @@
                     return function() {
                         var originalHtml = originalTooltip();
                         if (originalHtml && originalHtml.includes('Empty tile')) {
-                            var chances = getPlantGrowthChances(x, y);
+                            var chances = M._jneGetPlantGrowthChances(x, y);
                             if (chances && chances.length > 0) {
                                 var body = chances.map(function(p){return '<div>'+p.name+': <b>'+p.chance.toFixed(1)+'%</b></div>';}).join('');
                                 var block = '<div class="line"></div><div style="margin-top: 8px; font-size: 11px;"><div style="margin-bottom: 4px; font-weight: bold;">Natural growth chances (per tick)</div>'+body+'</div>';
@@ -1831,14 +1902,18 @@
         }
         
         function setupGardenSaveHookImmediate() {
-            var M = Game.Objects['Farm']?.minigame;
-            if (!M?.save || M.save._heavenlyUpgradesHooked) return;
+            var farm = Game.Objects['Farm'];
+            if (!farm || !farm.minigameLoaded || !farm.minigame) return;
+            var M = farm.minigame;
+            if (!M || !M.save || M.save._heavenlyUpgradesHooked) return;
 
             // Default state - load() will restore from save data
-            var wrapper = function() {
-                var savedPlants = [], savedSoil = M.soil, isAerated = M.soils?.aerated && M.soil === M.soils.aerated.id;
+            if (!M._jneOriginalSaveFarm) M._jneOriginalSaveFarm = M.save;
+            M.save = function() {
+                var M = Game.Objects['Farm'].minigame;
+                var savedPlants = [], savedSoil = M.soil, isAerated = M.soils && M.soils.aerated && M.soil === M.soils.aerated.id;
                 if (M.plot) {
-                    var plotH = M.h || M.plot.length, plotW = M.w || (M.plot[0]?.length || 0);
+                    var plotH = M.h || M.plot.length, plotW = M.w || (M.plot[0] && M.plot[0].length || 0);
                     for (var y = 0; y < plotH; y++) {
                         if (!M.plot[y]) continue;
                         for (var x = 0; x < plotW; x++) {
@@ -1854,27 +1929,29 @@
                     }
                 }
                 if (isAerated) M.soil = 0;
-                var result = wrapper._original.apply(this, arguments);
+                var result = M._jneOriginalSaveFarm.apply(this, arguments);
                 savedPlants.forEach(function(p) { if (M.plot[p.y] && M.plot[p.y][p.x]) M.plot[p.y][p.x] = p.tile; });
                 if (isAerated) M.soil = savedSoil;
                 return result;
             };
-            wrapper._original = M.save;
-            wrapper._heavenlyUpgradesHooked = true;
-            M.save = wrapper;
+            M.save._heavenlyUpgradesHooked = true;
         }
         
         function setupAeratedSoil() {
-            var M = Game.Objects['Farm']?.minigame;
-            if (!M) return;
-            function isAeratedSelected() {
-                return M.soilsById?.[M.soil]?.key === 'aerated';
-            }
+            var farm = Game.Objects['Farm'];
+            if (!farm || !farm.minigameLoaded || !farm.minigame) return;
+            var M = farm.minigame;
+          
+            M._isAeratedSelected = function() {
+                var m = Game.Objects['Farm'] && Game.Objects['Farm'].minigame;
+                return !!(m && m.soilsById && m.soilsById[m.soil] && m.soilsById[m.soil].key === 'aerated');
+            };
             if (!M._aeratedSoilLoadHooked && M.load) {
                 M._aeratedSoilLoadHooked = true;
-                var originalLoad = M.load;
+                if (!M._jneOriginalLoad) M._jneOriginalLoad = M.load;
                 M.load = function(str) {
-                    originalLoad.call(this, str);
+                    var M = Game.Objects['Farm'].minigame;
+                    M._jneOriginalLoad.call(this, str);
                     var savedData = Game.JNE && Game.JNE.heavenlyUpgradesSavedData;
                     var savedSoil = savedData && savedData.garden && savedData.garden.soil;
                     if (savedSoil !== undefined && Game.Has('Aerated soil') && M.soils.aerated && M.soilsById[savedSoil]) {
@@ -1935,9 +2012,10 @@
             if (Game.Has('Aerated soil') && l('gardenSoils')) {
                 if (M.soilTooltip && !M._aeratedSoilTooltipHooked) {
                     M._aeratedSoilTooltipHooked = true;
-                    var originalSoilTooltip = M.soilTooltip;
+                    if (!M._jneOriginalSoilTooltip) M._jneOriginalSoilTooltip = M.soilTooltip;
                     M.soilTooltip = function(id) {
-                        var tooltipFunc = originalSoilTooltip.call(this, id);
+                        var M = Game.Objects['Farm'].minigame;
+                        var tooltipFunc = M._jneOriginalSoilTooltip.call(this, id);
                         var me = M.soilsById[id];
                         
                         if (me && me.key === 'aerated' && me.customIcon && me.customIconSheet) {
@@ -1967,7 +2045,8 @@
                 M._aeratedSoilHooked = true;
                 if (!M._originalLogic) M._originalLogic = M.logic;
                 M.logic = function() {
-                    var isAerated = isAeratedSelected() && !M.freeze && Date.now() >= M.nextStep;
+                    var M = Game.Objects['Farm'].minigame;
+                    var isAerated = M._isAeratedSelected() && !M.freeze && Date.now() >= M.nextStep;
                     if (isAerated) {
                         if (!M._fracAge) M._fracAge = {};
                         M.computeBoostPlot();
@@ -1991,8 +2070,9 @@
                 // Hook draw to fix dying transparency 
                 if (!M._originalDraw) M._originalDraw = M.draw;
                 M.draw = function() {
+                    var M = Game.Objects['Farm'].minigame;
                     M._originalDraw.call(this);
-                    if (isAeratedSelected() && M._fracAge) {
+                    if (M._isAeratedSelected() && M._fracAge) {
                         for (var y = 0; y < 6; y++) for (var x = 0; x < 6; x++) {
                             var tile = M.plot[y][x];
                             if (!tile || tile[0] <= 0) continue;
@@ -2012,8 +2092,8 @@
         }
 
         function setupHeavenlyPlantUnlocks() {
-            var M = Game.Objects['Farm']?.minigame;
-            if (!M?.getUnlockedN || M._heavenlyPlantUnlocksHooked) return;
+            var M = Game.Objects['Farm'] && Game.Objects['Farm'].minigame;
+            if (!M || !M.getUnlockedN || M._heavenlyPlantUnlocksHooked) return;
             M._heavenlyPlantUnlocksHooked = true;
             M.getUnlockedN = function() {
                 var unlockedN = 0;
@@ -2040,11 +2120,12 @@
         }
 
         function setupNewPlants() {
-            if (!Game.Objects['Farm']) {
+            var farm = Game.Objects['Farm'];
+            if (!farm || !farm.minigameLoaded || !farm.minigame) {
                 return;
             }
 
-            var M = Game.Objects['Farm'].minigame;
+            var M = farm.minigame;
             if (!M || !M.plants || !M.plantsById) {
                 return;
             }
@@ -2275,11 +2356,12 @@
             
             if (M.reset && !M._resetHooked) {
                 M._resetHooked = true;
-                var origReset = M.reset;
+                if (!M._jneOriginalReset) M._jneOriginalReset = M.reset;
                 M.reset = function(hard) {
+                    var M = Game.Objects['Farm'].minigame;
                     // Clear the flag so custom plants get re-injected after reset
                     M._gardenPlantsInjected = false;
-                    origReset.call(this, hard);
+                    M._jneOriginalReset.call(this, hard);
                     // Re-inject plants immediately after reset
                     if (M.plants && M.plantsById && !M.plants['sparklingSugarCane']) {
                         setupNewPlants();
@@ -2292,15 +2374,16 @@
             
             if (M.load && !M._loadHooked) {
                 M._loadHooked = true;
-                var origLoad = M.load;
+                if (!M._jneOriginalLoad) M._jneOriginalLoad = M.load;
                 M.load = function(str) {
+                    var M = Game.Objects['Farm'].minigame;
                     // Ensure custom plant definitions exist before decoding saved garden data.
                     if (!M.plants || !M.plantsById || !M.plants['sparklingSugarCane']) {
                         M._gardenPlantsInjected = false;
                         setupNewPlants();
                     }
 
-                    origLoad.call(this, str);
+                    M._jneOriginalLoad.call(this, str);
                     
                     // Restore custom seed unlock states from save data
                     var _huSave = Game.JNE && Game.JNE.heavenlyUpgradesSavedData;
@@ -2330,15 +2413,16 @@
                 // Check if M.load was replaced by vanilla (our wrapper would have _jneLoadWrapper property)
                 if (!M.load._jneLoadWrapper) {
                     M._loadHooked = false;
-                    var origLoad = M.load;
+                    if (!M._jneOriginalLoad) M._jneOriginalLoad = M.load;
                     M.load = function(str) {
+                        var M = Game.Objects['Farm'].minigame;
                         // Ensure custom plant definitions exist before decoding saved garden data.
                         if (!M.plants || !M.plantsById || !M.plants['sparklingSugarCane']) {
                             M._gardenPlantsInjected = false;
                             setupNewPlants();
                         }
 
-                        origLoad.call(this, str);
+                        M._jneOriginalLoad.call(this, str);
                         
                         // Re-apply saved custom plant unlock states (same reason as first-hook branch).
                         var _huSave = Game.JNE && Game.JNE.heavenlyUpgradesSavedData;
@@ -2369,9 +2453,10 @@
             
             if (M.init && !M._initSwapped) {
                 M._initSwapped = true;
-                var origInit = M.init;
+                if (!M._jneOriginalInitSwapped) M._jneOriginalInitSwapped = M.init;
                 M.init = function(div) {
-                    origInit.call(this, div);
+                    var M = Game.Objects['Farm'].minigame;
+                    M._jneOriginalInitSwapped.call(this, div);
                     if (M.plants && M.plantsById && !M.plants['sparklingSugarCane']) {
                         // DO NOT set _gardenPlantsInjected = false - it destroys our plants during save load
                         setupNewPlants();
@@ -2494,11 +2579,20 @@
                     return 1;
                 }
 
+                M._addCustomPlantCSSRules = addCustomPlantCSSRules;
+                M._markVanillaSeeds = markVanillaSeeds;
+                M._markCustomSeeds = markCustomSeeds;
+                M._fixPlantIcon = fixPlantIcon;
+                M._jneGetPlantStage = getPlantStage;
+                M._jneIconMap = iconMap;
+                M._jneCustomSheet = customSheet;
+
                 if (M.draw && !M._drawHookedForIcons) {
                     M._drawHookedForIcons = true;
-                    var origDraw = M.draw;
+                    if (!M._jneOriginalDrawForIcons) M._jneOriginalDrawForIcons = M.draw;
                     M.draw = function() {
-                        origDraw.call(this);
+                        var M = Game.Objects['Farm'].minigame;
+                        M._jneOriginalDrawForIcons.call(this);
                         var cur = M.cursorL || l('gardenCursor');
                         if (!cur || cur.id !== 'gardenCursor') return;
                         var customKeys = { sparklingSugarCane: 1, krazyKudzu: 1, magicMushroom: 1 };
@@ -2511,7 +2605,7 @@
                         var seed = M.plantsById[M.seedSelected];
                         var isCustomSeed = !!(seed && seed.key && customKeys[seed.key] && seed.icon >= 34 && seed.icon <= 36);
                         if (isCustomSeed) {
-                            fixPlantIcon(cur, seed.icon, 0, seed.key);
+                            M._fixPlantIcon(cur, seed.icon, 0, seed.key);
                         } else {
                             cur.removeAttribute('data-custom-plant');
                             cur.setAttribute('data-vanilla-plant', 'true');
@@ -2523,12 +2617,13 @@
                 }
 
                 if (M.buildPanel && !M.buildPanel._jneCustomPlantWrapped) {
-                    var origBuildPanel = M.buildPanel;
+                    if (!M._jneOriginalBuildPanelForCustomPlant) M._jneOriginalBuildPanelForCustomPlant = M.buildPanel;
                     M.buildPanel = function() {
-                        origBuildPanel.call(this);
-                        addCustomPlantCSSRules();
-                        markVanillaSeeds();
-                        markCustomSeeds();
+                        var M = Game.Objects['Farm'].minigame;
+                        M._jneOriginalBuildPanelForCustomPlant.call(this);
+                        M._addCustomPlantCSSRules();
+                        M._markVanillaSeeds();
+                        M._markCustomSeeds();
 
                         for (var i in M.plants) {
                             var me = M.plants[i];
@@ -2536,7 +2631,7 @@
                                 if (me.icon && (me.icon === 34 || me.icon === 35 || me.icon === 36)) {
                                     var el = l('gardenSeedIcon-' + me.id);
                                     if (el) {
-                                        fixPlantIcon(el, me.icon, 0, me.key);
+                                        M._fixPlantIcon(el, me.icon, 0, me.key);
                                     }
                                 }
                             }
@@ -2547,9 +2642,10 @@
 
                 if (M.buildPlot && !M._buildPlotHookedForData) {
                     M._buildPlotHookedForData = true;
-                    var origBuildPlot = M.buildPlot;
+                    if (!M._jneOriginalBuildPlotForData) M._jneOriginalBuildPlotForData = M.buildPlot;
                     M.buildPlot = function() {
-                        origBuildPlot.call(this);
+                        var M = Game.Objects['Farm'].minigame;
+                        M._jneOriginalBuildPlotForData.call(this);
                         for (var y = 0; y < 6; y++) {
                             for (var x = 0; x < 6; x++) {
                                 var tile = M.plot[y][x];
@@ -2559,7 +2655,7 @@
                                     if (me && me.key && (me.key === 'sparklingSugarCane' || me.key === 'krazyKudzu' || me.key === 'magicMushroom')) {
                                         el.setAttribute('data-custom-plant', 'true');
                                         el.removeAttribute('data-vanilla-plant');
-                                        fixPlantIcon(el, me.icon, getPlantStage(tile[1], me.mature), me.key);
+                                        M._fixPlantIcon(el, me.icon, M._jneGetPlantStage(tile[1], me.mature), me.key);
                                     } else {
                                         el.setAttribute('data-vanilla-plant', 'true');
                                         el.removeAttribute('data-custom-plant');
@@ -2570,9 +2666,11 @@
                     };
                 }
                 if (M.seedTooltip && !M.seedTooltip._jneCustomPlantWrapped) {
-                    var origSeedTooltip = M.seedTooltip;
+                    if (!M._jneOriginalSeedTooltip) M._jneOriginalSeedTooltip = M.seedTooltip;
                     M.seedTooltip = function(id) {
-                        var func = origSeedTooltip.call(this, id);
+                        var M = Game.Objects['Farm'].minigame;
+                        var iconMap = M._jneIconMap, customSheet = M._jneCustomSheet;
+                        var func = M._jneOriginalSeedTooltip.call(this, id);
                         if (typeof func === 'function') {
                             return function() {
                                 var result = func();
@@ -2609,9 +2707,11 @@
                 }
 
                 if (M.tileTooltip && !M.tileTooltip._jneCustomPlantWrapped) {
-                    var origTileTooltip = M.tileTooltip;
+                    if (!M._jneOriginalTileTooltip) M._jneOriginalTileTooltip = M.tileTooltip;
                     M.tileTooltip = function(x, y) {
-                        var func = origTileTooltip.call(this, x, y);
+                        var M = Game.Objects['Farm'].minigame;
+                        var iconMap = M._jneIconMap, customSheet = M._jneCustomSheet;
+                        var func = M._jneOriginalTileTooltip.call(this, x, y);
                         if (typeof func === 'function') {
                             return function() {
                                 var result = func();
@@ -2652,9 +2752,10 @@
                 }
 
                 if (M.toolTooltip && !M.toolTooltip._jneCustomPlantWrapped) {
-                    var origToolTooltip = M.toolTooltip;
+                    if (!M._jneOriginalToolTooltip) M._jneOriginalToolTooltip = M.toolTooltip;
                     M.toolTooltip = function(id) {
-                        var func = origToolTooltip.call(this, id);
+                        var M = Game.Objects['Farm'].minigame;
+                        var func = M._jneOriginalToolTooltip.call(this, id);
                         if (typeof func === 'function') {
                             return function() {
                                 var result = func();
@@ -2665,7 +2766,7 @@
                                 if (result && (isGardenInfoTool || hasGardenInfoAnchor)) {
                                     var customInfo = '';
                                     
-                                    if (M.effs && M.effs.magicMushroomMult > 0) {
+                                    if (M.effs && M.effs.magicMushroomMult > 0 && M.freeze === 0) {
                                         var mult = M.effs.magicMushroomMult;
                                         
                                         if (!Game._weakestLinkCache) Game._weakestLinkCache = { assignments: {}, lastRecalc: 0 };
@@ -2680,9 +2781,9 @@
                                                 if (cache.assignments) {
                                                     for (var k in cache.assignments) {
                                                         if (cache.assignments[k].buildingName === b.name) {
-                                                            for (var u = 0; u < WEAKEST_LINK_UPGRADES.length; u++) {
-                                                                if (WEAKEST_LINK_UPGRADES[u].name === k && Game.Has(k)) {
-                                                                    cps /= WEAKEST_LINK_UPGRADES[u].mult;
+                                                            for (var u = 0; u < Game.jneWeakestLinkUpgrades.length; u++) {
+                                                                if (Game.jneWeakestLinkUpgrades[u].name === k && Game.Has(k)) {
+                                                                    cps /= Game.jneWeakestLinkUpgrades[u].mult;
                                                                     break;
                                                                 }
                                                             }
@@ -2763,9 +2864,10 @@
             }
 
             if (M.getMuts && !M.getMuts._jneNewPlantMutsWrapped) {
-                var originalGetMuts = M.getMuts;
+                if (!M._jneOriginalGetMuts) M._jneOriginalGetMuts = M.getMuts;
                 M.getMuts = function(neighs, neighsM) {
-                    var muts = originalGetMuts.call(this, neighs, neighsM);
+                    var M = Game.Objects['Farm'].minigame;
+                    var muts = M._jneOriginalGetMuts.call(this, neighs, neighsM);
 
                     if (Game.Has('Sparkling sugar cane')) {
                         if (neighsM['bakeberry'] >= 1 && neighsM['thumbcorn'] >= 1) muts.push(['sparklingSugarCane', 0.01]);
@@ -2789,9 +2891,10 @@
             }
 
             if (M.computeEffs && !M.computeEffs._jneNewPlantEffsWrapped) {
-                var originalComputeEffs = M.computeEffs;
+                if (!M._jneOriginalComputeEffs) M._jneOriginalComputeEffs = M.computeEffs;
                 M.computeEffs = function() {
-                    originalComputeEffs.call(this);
+                    var M = Game.Objects['Farm'].minigame;
+                    M._jneOriginalComputeEffs.call(this);
 
                     var soilMult = M.soilsById[M.soil].effMult;
                     var magicMushroomMult = 0;
@@ -2840,62 +2943,6 @@
                 M.computeEffs._jneNewPlantEffsWrapped = true;
             }
 
-            if (!Game._magicMushroomHooked) {
-                Game._magicMushroomHooked = true;
-                var previousMagicCpS = Game.magicCpS;
-                Game.magicCpS = function(what) {
-                    var mult = previousMagicCpS(what);
-
-                    var M = Game.Objects['Farm'] && Game.Objects['Farm'].minigame;
-                    if (M && M.effs && M.effs.magicMushroomMult > 0) {
-                        if (!Game._weakestLinkCache) Game._weakestLinkCache = { assignments: {}, lastRecalc: 0 };
-                        var cache = Game._weakestLinkCache;
-
-                        if (!cache.magicMushroomAssignment || (Date.now() - cache.lastRecalc) > 1000) {
-                            var buildings = [];
-
-                            for (var i = 0; i < Game.ObjectsById.length; i++) {
-                                var b = Game.ObjectsById[i];
-                                if (b && b.amount > 0) {
-                                    var cps = (b.storedTotalCps || 0) * (Game.globalCpsMult || 1);
-
-                                    if (cache.assignments) {
-                                        for (var k in cache.assignments) {
-                                            if (cache.assignments[k].buildingName === b.name) {
-                                                for (var u = 0; u < WEAKEST_LINK_UPGRADES.length; u++) {
-                                                    if (WEAKEST_LINK_UPGRADES[u].name === k && Game.Has(k)) {
-                                                        cps /= WEAKEST_LINK_UPGRADES[u].mult;
-                                                        break;
-                                                    }
-                                                }
-                                                break;
-                                            }
-                                        }
-                                    }
-
-                                    if (cache.magicMushroomAssignment === b.name) {
-                                        cps /= (1 + M.effs.magicMushroomMult);
-                                    }
-
-                                    buildings.push({ name: b.name, cps: cps });
-                                }
-                            }
-                            buildings.sort(function(a, b) { return a.cps - b.cps; });
-
-                            if (buildings.length > 0) {
-                                cache.magicMushroomAssignment = buildings[0].name;
-                            }
-                        }
-
-                        if (cache.magicMushroomAssignment === what) {
-                            mult *= 1 + M.effs.magicMushroomMult;
-                        }
-                    }
-
-                    return mult;
-                };
-            }
-
             if (M.freeze !== undefined && !M._newPlantFreezeHooked) {
                 M._newPlantFreezeHooked = true;
 
@@ -2928,9 +2975,9 @@
 
             if (Game.harvestLumps && !Game._sugarCaneHooked) {
                 Game._sugarCaneHooked = true;
-                var originalHarvestLumps = Game.harvestLumps;
-                var sugarCaneHarvest = function(amount, silent) {
-                    var orig = originalHarvestLumps || sugarCaneHarvest._orig;
+                if (!Game._jneOriginalHarvestLumpsForSugarCane) Game._jneOriginalHarvestLumpsForSugarCane = Game.harvestLumps;
+                Game.harvestLumps = function(amount, silent) {
+                    var orig = Game._jneOriginalHarvestLumpsForSugarCane;
                     var M = Game.Objects['Farm'] && Game.Objects['Farm'].minigame;
                     if (M && M.plants && M.plants['sparklingSugarCane'] && M.plot) {
                         var totalMult = 0;
@@ -2971,15 +3018,8 @@
                             }
                         }
                     }
-                    if (!orig || typeof orig !== 'function') {
-                        var fallback = (Game.harvestLumps !== sugarCaneHarvest) ? Game.harvestLumps : null;
-                        if (fallback && typeof fallback === 'function') return fallback.call(this, amount, silent);
-                        return;
-                    }
                     return orig.call(this, amount, silent);
                 };
-                sugarCaneHarvest._orig = originalHarvestLumps;
-                Game.harvestLumps = sugarCaneHarvest;
             }
 
             
@@ -3043,8 +3083,9 @@
 
             if (!Game._magicMushroomDropsHooked) {
                 Game._magicMushroomDropsHooked = true;
-                var prev = Game.GetTieredCpsMult;
+                if (!Game._jneOriginalGetTieredCpsMult) Game._jneOriginalGetTieredCpsMult = Game.GetTieredCpsMult;
                 Game.GetTieredCpsMult = function(me) {
+                    var prev = Game._jneOriginalGetTieredCpsMult;
                     if (!me || !me.name) return prev ? prev(me) : 1;
                     var mult = prev ? prev(me) : 1;
                     if ((me.name === 'Farm' && Game.Has('Hearty farm biscuit')) ||
@@ -3056,9 +3097,13 @@
         }
 
         function setupShinyWrinklerSpell() {
-            var M = Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].minigame;
+            var tower = Game.Objects['Wizard tower'];
+            if (!tower || !tower.minigameLoaded || !tower.minigame) return;
+            var M = tower.minigame;
             if (!M || !M.castSpell || M._shinyWrinklerHooked) return;
-            var wrapper = function(spell, obj) {
+            if (!M._jneOriginalCastSpell) M._jneOriginalCastSpell = M.castSpell;
+            M.castSpell = function(spell, obj) {
+                var M = Game.Objects['Wizard tower'].minigame;
                 var before = new Set();
                 if (spell && spell.name === 'Resurrect Abomination') {
                     for (var i in Game.wrinklers) {
@@ -3066,7 +3111,7 @@
                         if (w && w.phase > 0) before.add(w);
                     }
                 }
-                var result = wrapper._original.call(this, spell, obj);
+                var result = M._jneOriginalCastSpell.call(this, spell, obj);
                 if (spell && spell.name === 'Resurrect Abomination' && result !== -1) {
                     var chance = 0, upgrade = null;
                     if (Game.Has('Alakazoodle evil noodle')) { chance = 0.03; upgrade = Game.Upgrades['Alakazoodle evil noodle']; }
@@ -3093,8 +3138,6 @@
                 }
                 return result;
             };
-            wrapper._original = M.castSpell;
-            M.castSpell = wrapper;
             M._shinyWrinklerHooked = true;
         }
         
@@ -3105,11 +3148,13 @@
                 new Game.buffType('midas curse', (t,p)=>({name:'Midas curse',desc:'Golden cookies appear 75% less often for the next '+Game.sayTime(t*Game.fps,-1)+'.',icon:[20,19,getSpriteSheet('custom')],time:t*Game.fps}));
             }
 
-            var M = Game.Objects['Wizard tower']?.minigame;
+            var tower = Game.Objects['Wizard tower'];
+            if (!tower || !tower.minigameLoaded || !tower.minigame) return;
+            var M = tower.minigame;
             if (!M || !M.spells || !M.spellsById) return;
             
             // Set up GFD/FortuneCookie patches even if player doesn't have the upgrade yet
-            // This ensures predictions work correctly once they buy it
+            // This ensures preditions work correctly once they buy it
             var hasUpgrade = Game.Has('Gilded allure');
             
             if (!hasUpgrade && M._gildedAllureHooked) return; // Don't need spell if no upgrade
@@ -3122,24 +3167,18 @@
             if (M.spells['gilded allure']) {
                 delete M.spells['gilded allure'];
             }
-            // Remove from spellsById array
+            // Remove from spellsById array and compact it
             for (var i = 0; i < M.spellsById.length; i++) {
                 if (M.spellsById[i] && (M.spellsById[i].name === loc("Gilded Allure") || M.spellsById[i].name === "Gilded Allure")) {
-                    M.spellsById[i] = null;
+                    M.spellsById.splice(i, 1);
+                    i--; // Adjust index since array shifted
                 }
             }
-            // Remove existing DOM element
-            var existingSpellEl = l('grimoireSpells').querySelector('[id^="grimoireSpell"]');
-            if (existingSpellEl) {
-                for (var i = 0; i < M.spellsById.length; i++) {
-                    var el = l('grimoireSpell' + i);
-                    if (el) {
-                        var tooltip = el.getAttribute('onmouseover') || el.getAttribute('data-tooltip');
-                        if (tooltip && (tooltip.includes('Gilded Allure') || tooltip.includes('gilded allure'))) {
-                            el.remove();
-                        }
-                    }
-                }
+ 
+            // Tagging our element with a stable data attribute lets us find and remove it reliably.
+            var staleSpellEls = l('grimoireSpells').querySelectorAll('[data-jne-gilded-allure]');
+            for (var i = 0; i < staleSpellEls.length; i++) {
+                staleSpellEls[i].remove();
             }
             
             var me={name:loc("Gilded Allure"),desc:loc("Golden Cookies appear 30% more often for the next 10 minutes."),failDesc:loc("Golden Cookies appear 75% less often for the next hour."),icon:[20,19],customIconSheet:getSpriteSheet('custom'),costMin:15,costPercent:0.5,
@@ -3147,15 +3186,16 @@
                 fail:()=>{Game.killBuff('Gilded allure');Game.killBuff('Midas curse');Game.gainBuff('midas curse',3600,1);Game.Popup(loc("Backfire!")+'<br>'+loc("Midas curse!"),Game.mouseX,Game.mouseY);}};
             M.spells['gilded allure']=me; me.id=M.spellsById.length; M.spellsById[me.id]=me; M._gildedAllureHooked=true;
             var div = document.createElement('div');
-            div.innerHTML = '<div class="grimoireSpell titleFont" id="grimoireSpell'+me.id+'" '+Game.getDynamicTooltip('Game.ObjectsById['+M.parent.id+'].minigame.spellTooltip('+me.id+')','this')+'><div class="usesIcon shadowFilter grimoireIcon" style="background-image:url(\''+me.customIconSheet+'\');background-position:'+(-me.icon[0]*48)+'px '+(-me.icon[1]*48)+'px;"></div><div class="grimoirePrice" id="grimoirePrice'+me.id+'">-</div></div>';
+            div.innerHTML = '<div class="grimoireSpell titleFont" data-jne-gilded-allure="1" id="grimoireSpell'+me.id+'" '+Game.getDynamicTooltip('Game.ObjectsById['+M.parent.id+'].minigame.spellTooltip('+me.id+')','this')+'><div class="usesIcon shadowFilter grimoireIcon" style="background-image:url(\''+me.customIconSheet+'\');background-position:'+(-me.icon[0]*48)+'px '+(-me.icon[1]*48)+'px;"></div><div class="grimoirePrice" id="grimoirePrice'+me.id+'">-</div></div>';
             var d = div.firstChild;
             l('grimoireSpells').appendChild(d); AddEvent(d,'click',()=>{PlaySound('snd/tick.mp3');M.castSpell(me);});
 
             if (M.spellTooltip && !M._gildedAllureTooltipHooked) {
                 M._gildedAllureTooltipHooked = true;
-                var originalSpellTooltip = M.spellTooltip;
+                if (!M._jneOriginalSpellTooltip) M._jneOriginalSpellTooltip = M.spellTooltip;
                 M.spellTooltip = function(id) {
-                    var tooltipFunc = originalSpellTooltip.call(this, id);
+                    var M = Game.Objects['Wizard tower'].minigame;
+                    var tooltipFunc = M._jneOriginalSpellTooltip.call(this, id);
                     var spell = M.spellsById[id];
                     
                     if (spell && spell.name === loc("Gilded Allure") && spell.customIconSheet) {
@@ -3166,7 +3206,7 @@
                             if (cost != costBreakdown) costBreakdown = ' <small>(' + costBreakdown + ')</small>'; else costBreakdown = '';
                             var backfire = M.getFailChance(spell);
                             var str = '<div style="padding:8px 4px;min-width:350px;" id="tooltipSpell">' +
-                                '<div class="icon" style="float:left;margin-left:-8px;margin-top:-8px;background-image:url(\'' + spell.customIconSheet + '\');background-position:' + (-spell.icon[0] * 48) + 'px ' + (-spell.icon[1] * 48) + 'px;"></div>' +
+                                '<div class="icon" style="float:left;margin-left:-8px;margin-top:-8px;background-image:url(\'' + spell.customIconSheet + '\');' + (spell.icon[2] ? 'background-image:url(' + spell.icon[2] + ');' : '') + 'background-position:' + (-spell.icon[0] * 48) + 'px ' + (-spell.icon[1] * 48) + 'px;"></div>' +
                                 '<div class="name">' + spell.name + '</div>' +
                                 '<div>' + (typeof loc === 'function' ? loc("Magic cost:") : "Magic cost:") + ' <b style="color:#' + (cost <= M.magic ? '6f6' : 'f66') + ';">' + cost + '</b>' + costBreakdown + '</div>' +
                                 (spell.fail ? ('<div><small>' + (typeof loc === 'function' ? loc("Chance to backfire:") : "Chance to backfire:") + ' <b style="color:#f66">' + Math.ceil(100 * backfire) + '%</b></small></div>') : '') +
@@ -3187,16 +3227,16 @@
                 if (FortuneCookie._gildedAllurePatched) return;
                 FortuneCookie._gildedAllurePatched = true;
                 
-                var originalSpellForecast = FortuneCookie.spellForecast;
+                if (!FortuneCookie._jneOriginalSpellForecast) FortuneCookie._jneOriginalSpellForecast = FortuneCookie.spellForecast;
                 FortuneCookie.spellForecast = function(spell) {
-                    var M = Game.Objects['Wizard tower']?.minigame;
-                    if (!M) return originalSpellForecast.apply(this, arguments);
+                    var M = Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].minigame;
+                    if (!M) return FortuneCookie._jneOriginalSpellForecast.apply(this, arguments);
                     
                     if (spell && spell.name === "Gambler's Fever Dream") {
                         var originalSpellsById = M.spellsById;
                         var originalSpells = M.spells;
                         
-                        M.spellsById = originalSpellsById.slice(0, vanillaSpellCount);
+                        M.spellsById = originalSpellsById.slice(0, 8);
                         var filteredSpells = {};
                         for (var key in originalSpells) {
                             if (key !== 'gilded allure') {
@@ -3206,13 +3246,13 @@
                         M.spells = filteredSpells;
                         
                         try {
-                            return originalSpellForecast.apply(this, arguments);
+                            return FortuneCookie._jneOriginalSpellForecast.apply(this, arguments);
                         } finally {
                             M.spellsById = originalSpellsById;
                             M.spells = originalSpells;
                         }
                     }
-                    return originalSpellForecast.apply(this, arguments);
+                    return FortuneCookie._jneOriginalSpellForecast.apply(this, arguments);
                 };
             };
             
@@ -3232,12 +3272,13 @@
                 
                 gfd._gildedAllurePatched = true;
                 
-                var originalWin = gfd.win;
+                if (!gfd._jneOriginalWin) gfd._jneOriginalWin = gfd.win;
                 
                 gfd.win = function() {
+                    var M = Game.Objects['Wizard tower'].minigame;
                     // Only filter if gilded allure actually exists in the spell list
                     if (!M.spells['gilded allure']) {
-                        return originalWin.apply(this, arguments);
+                        return gfd._jneOriginalWin.apply(this, arguments);
                     }
                     
                     var originalSpells = M.spells;
@@ -3251,7 +3292,7 @@
                     M.spells = filteredSpells;
                     
                     try {
-                        return originalWin.apply(this, arguments);
+                        return gfd._jneOriginalWin.apply(this, arguments);
                     } finally {
                         M.spells = originalSpells;
                     }
@@ -3269,11 +3310,14 @@
 
         function setupWizardlyAccomplishments() {
             if (!Game.Has('Wizardly accomplishments')) return;
-            var M = Game.Objects['Wizard tower']?.minigame;
+            var tower = Game.Objects['Wizard tower'];
+            if (!tower || !tower.minigameLoaded || !tower.minigame) return;
+            var M = tower.minigame;
             if (!M || M._wizardlyAccomplishmentsHooked) return;
             if (typeof l !== 'function') return;
 
             M.logic = function() {
+                var M = Game.Objects['Wizard tower'].minigame;
                 if (Game.T%5==0) {M.computeMagicM();}
                 var towerLevel = Math.min(M.parent.level, 20);
                 var bonus = (towerLevel * 0.001) / Game.fps; // level 4 6&% increase, level 10 16.7%, level 20 33%
@@ -3290,6 +3334,7 @@
             };
 
             M.draw = function() {
+                var M = Game.Objects['Wizard tower'].minigame;
                 if (Game.drawT%5==0) {
                     if (M.magicBarTextL) M.magicBarTextL.innerHTML=Math.min(Math.floor(M.magicM),Beautify(M.magic))+'/'+Beautify(Math.floor(M.magicM))+(M.magic<M.magicM?(' ('+loc("+%1/s",Beautify((M.magicPS||0)*Game.fps,3))+')'):'');
                     if (M.magicBarFullL) M.magicBarFullL.style.width=((M.magic/M.magicM)*100)+'%';
@@ -3627,7 +3672,7 @@
             };
         };
 
-        var detectRigidelSlot = function() {
+        Game.jneDetectRigidelSlot = function() {
             if (!Game.Objects['Temple'] || !Game.Objects['Temple'].minigame) return 0;
             if (Game.hasGod && typeof Game.hasGod === 'function') {
                 try {
@@ -3638,14 +3683,14 @@
             return 0;
         };
 
-        var detectRigidelActive = function() {
+        Game.jneDetectRigidelActive = function() {
             if (!Game.Objects['Temple'] || !Game.Objects['Temple'].minigame) return 0;
-            var slot = detectRigidelSlot();
+            var slot = Game.jneDetectRigidelSlot();
             if (slot === 0) return 0; // Rigidel cannot be active when not slotted
             return (Game.BuildingsOwned % 10 === 0) ? 1 : 0;
         };
 
-        var normalizeElderWrathForPredictor = function() {
+        Game.jneNormalizeElderWrathForPredictor = function() {
             var w = Game.elderWrath;
             if (typeof w !== 'number' || w !== w) return 0;
             w = w | 0;
@@ -3797,8 +3842,8 @@
                 var t = (typeof startTime === 'number') ? startTime : Game.lumpT;
                 var current = {
                     grandmas: Game.Objects['Grandma'].amount,
-                    rigidel: detectRigidelSlot(),
-                    rigidelActive: detectRigidelActive(),
+                    rigidel: Game.jneDetectRigidelSlot(),
+                    rigidelActive: Game.jneDetectRigidelActive(),
                     dragonsCurve: Game.hasAura('Dragon\'s Curve') ? 1 : 0,
                     realityBending: Game.hasAura('Reality Bending') ? 1 : 0,
                     supremeIntellect: Game.hasAura('Supreme Intellect') ? 1 : 0
@@ -3961,12 +4006,12 @@
                 if (!sol) return '<span class="red">Not possible</span>';
 
                 var curGrandmas = Game.Objects['Grandma'] ? Game.Objects['Grandma'].amount : 0;
-                var curRigidel = detectRigidelSlot();
-                var curRigidelActive = detectRigidelActive();
+                var curRigidel = Game.jneDetectRigidelSlot();
+                var curRigidelActive = Game.jneDetectRigidelActive();
                 var curDragonsCurve = Game.hasAura('Dragon\'s Curve') ? 1 : 0;
                 var curRealityBending = Game.hasAura('Reality Bending') ? 1 : 0;
                 var curSupremeIntellect = Game.hasAura('Supreme Intellect') ? 1 : 0;
-                var curWrath = normalizeElderWrathForPredictor();
+                var curWrath = Game.jneNormalizeElderWrathForPredictor();
 
                 var checkmark = function(met) {
                     if (!met) return '';
@@ -4052,13 +4097,13 @@
                 Game.registerHook('logic', function() {
                     if (!Game.Has('Sugar predictor')) return;
 
-                    var currentWrath = normalizeElderWrathForPredictor();
+                    var currentWrath = Game.jneNormalizeElderWrathForPredictor();
 
                     var state = {
                         lumpT: Game.lumpT,
                         grandmas: Game.Objects['Grandma'] ? Game.Objects['Grandma'].amount : 0,
-                        rigidel: detectRigidelSlot(),
-                        rigidelActive: detectRigidelActive(),
+                        rigidel: Game.jneDetectRigidelSlot(),
+                        rigidelActive: Game.jneDetectRigidelActive(),
                         dragonsCurve: Game.hasAura('Dragon\'s Curve') ? 1 : 0,
                         realityBending: Game.hasAura('Reality Bending') ? 1 : 0,
                         supremeIntellect: Game.hasAura('Supreme Intellect') ? 1 : 0,
@@ -4183,9 +4228,6 @@
                 }
             };
             
-            var originalChoicesFunction = selector.choicesFunction;
-            var originalChoicesPick = selector.choicesPick;
-            
             selector.choicesFunction = function() {
                 var str = '';
                 
@@ -4259,29 +4301,7 @@
             }
             
             var vanillaUpdateShimmers = Game.updateShimmers;
-            
-            function maybeDoubleTimerSpawn(i) {
-                var hasVanillaLuck = Game.Has('Distilled essence of redoubled luck');
-                var hasRetripledLuck = Game.Has('Distilled essence of retripled luck');
-                // cookie chain and break chain behavior — skip all doubling for timer goldens while chain depth > 0.
-                if (i === 'golden' && Game.shimmerTypes && Game.shimmerTypes['golden']) {
-                    var gChain = Game.shimmerTypes['golden'].chain;
-                    if (typeof gChain === 'number' && gChain > 0) return;
-                }
-                // Fish: never double here.
-                if (i === 'fish') return;
-                if (hasRetripledLuck) {
-                    var chance =  0.02;
-                    if (jneIndependentRandom() < chance) {
-                        var rExtra = new Game.shimmer(i, {_retripledLuckExtra: true});
-                        if (rExtra) rExtra.spawnLead = 1;
-                    }
-                } else if (hasVanillaLuck && Math.random() < 0.01) {
-                    var vExtra = new Game.shimmer(i);
-                    if (vExtra) vExtra.spawnLead = 1;
-                }
-            }
-            
+
             Game.updateShimmers = function() {
                 for (var si in Game.shimmers) {
                     Game.shimmers[si].update();
@@ -4302,7 +4322,7 @@
                             if (Math.random() < Math.pow(Math.max(0, (me.time - me.minTime) / (me.maxTime - me.minTime)), 5)) {
                                 var newShimmer = new Game.shimmer(ti);
                                 newShimmer.spawnLead = 1;
-                                maybeDoubleTimerSpawn(ti);
+                                if (Game.JNE && Game.JNE.maybeDoubleTimerSpawn) Game.JNE.maybeDoubleTimerSpawn(ti);
                                 me.spawned = 1;
                             }
                         }
@@ -4325,7 +4345,8 @@
                 Game.specialTabs = [];
                 if (Game.Has('A festive hat')) Game.specialTabs.push('santa');
                 if (Game.Has('A crumbly egg')) Game.specialTabs.push('dragon');
-                Game.specialTabs.push('stopwatch');
+                // Skip stopwatch tab in Born Again mode
+                if (Game.ascensionMode != 1) Game.specialTabs.push('stopwatch');
                 if (Game.specialTabs.length === 0) { Game.ToggleSpecialMenu(0); return; }
                 if (Game.LeftBackground) {
                     Game.specialTabHovered = '';
@@ -4382,8 +4403,12 @@
             };
             Game.DrawSpecial._goldenStopwatchHooked = true;
 
-            var origToggle = Game.ToggleSpecialMenu;
+            if (!Game._jneOriginalToggleSpecialMenu) Game._jneOriginalToggleSpecialMenu = Game.ToggleSpecialMenu;
             Game.ToggleSpecialMenu = function(on) {
+                // Skip stopwatch menu in Born Again mode
+                if (on && Game.specialTab === 'stopwatch' && Game.ascensionMode == 1) {
+                    return Game._jneOriginalToggleSpecialMenu.apply(this, arguments);
+                }
                 if (on && Game.specialTab === 'stopwatch') {
                     var up = Game.Upgrades['Golden stopwatch'];
                     if (up && up.icon) {
@@ -4400,11 +4425,13 @@
                     l('specialPopup').className = 'framed prompt onScreen';
                     return;
                 }
-                return origToggle.apply(this, arguments);
+                return Game._jneOriginalToggleSpecialMenu.apply(this, arguments);
             };
             Game.ToggleSpecialMenu._goldenStopwatchHooked = true;
             
             Game.registerHook('draw', function() {
+                // Skip effect in Born Again mode
+                if (Game.ascensionMode == 1) return;
                 if (Game.specialTab !== 'stopwatch' || !l('TimerBar')) return;
                 var tb = l('TimerBar'), w = tb.getBoundingClientRect().width - 185;
                 tb.innerHTML = '';
@@ -4586,7 +4613,7 @@
             Game.last.ddesc = 'Lets you pick which cookie image to display.';
             Game.last.descFunc = function() { var choice = this.choicesFunction()[Game.cookieImageType] || this.choicesFunction()[0]; return '<div style="text-align:center;">'+loc("Current:")+' '+tinyIcon(choice.icon)+' <b>'+choice.name+'</b></div><div class="line"></div>'+this.ddesc; };
             Game.last.choicesFunction = function() { var choices = []; for (var i in Game.CookiesByChoice) { choices[i] = {name: Game.CookiesByChoice[i].name, icon: Game.CookiesByChoice[i].icon, order: parseInt(i)}; } if (choices[Game.cookieImageType]) choices[Game.cookieImageType].selected = 1; return choices; };
-            Game.last.choicesPick = function(id) { Game.cookieImageType = id; if (Game.CookiesByChoice[id] && Game.Loader && Game.Loader.Replace) Game.Loader.Replace('perfectCookie.png', Game.CookiesByChoice[id].pic); };
+            Game.last.choicesPick = function(id) { Game.cookieImageType = id; if (Game.Loader && Game.Loader.Replace) { if (id !== 0 && Game.CookiesByChoice[id]) { Game.Loader.Replace('perfectCookie.png', Game.CookiesByChoice[id].pic); } else { Game.Loader.Replace('perfectCookie.png', 'perfectCookie.png'); } } };
             if (Game.Has('Big cookie image selector')) Game.Unlock('Cookie image selector');
         }
         
@@ -4758,7 +4785,7 @@
                 addHeavenlySourceText(upgrade);
                 
                 if (Game.BuildAscendTree && !Game.BuildAscendTree._heavenlyUpgradesHooked) {
-                    var originalBuildAscendTree = Game.BuildAscendTree;
+                    if (!Game._jneOriginalBuildAscendTree) Game._jneOriginalBuildAscendTree = Game.BuildAscendTree;
                     Game.BuildAscendTree = function(justBought) {
                         if (!Game.PrestigeUpgrades) Game.PrestigeUpgrades = [];
                         
@@ -4824,7 +4851,7 @@
                             }
                         }
                         
-                        var result = originalBuildAscendTree.apply(this, arguments);
+                        var result = Game._jneOriginalBuildAscendTree.apply(this, arguments);
                         
                         if (shouldCenterOnJNE && jneParent && jneParent.posX !== undefined && jneParent.posY !== undefined) {
                             var targetOffX = -jneParent.posX - 28;
@@ -4916,8 +4943,8 @@
             });
             [morrowenUpgrade, solgrethUpgrade].forEach(function(upgrade) {
                 if (upgrade) {
-                    var orig = upgrade.buyFunction;
-                    upgrade.buyFunction = function() { if (orig) orig.call(this); addNewPantheonSpirits(); };
+                    if (!upgrade._jneOriginalBuyFunction) upgrade._jneOriginalBuyFunction = upgrade.buyFunction;
+                    upgrade.buyFunction = function() { if (this._jneOriginalBuyFunction) this._jneOriginalBuyFunction.call(this); addNewPantheonSpirits(); };
                 }
             });
             
@@ -4989,11 +5016,11 @@
 
             [sparklingUpgrade, kudzuUpgrade, mushroomUpgrade].forEach(function(upgrade) {
                 if (upgrade) {
-                    var orig = upgrade.buyFunction;
+                    if (!upgrade._jneOriginalBuyFunction) upgrade._jneOriginalBuyFunction = upgrade.buyFunction;
                     upgrade.buyFunction = function() {
-                        if (orig) orig.call(this);
+                        if (this._jneOriginalBuyFunction) this._jneOriginalBuyFunction.call(this);
                         
-                        var M = Game.Objects['Farm']?.minigame;
+                        var M = Game.Objects['Farm'] && Game.Objects['Farm'].minigame;
                         if (M && M.buildPanel) {
                             // Heavenly upgrade bought - inject custom plants if not already present
                             if (M.plants && !M.plants['sparklingSugarCane']) {
@@ -6161,7 +6188,7 @@
                     saveData.garden.soil = M.soil || 0;
                     var modPlants = [];
                     if (M.plants && M.plot && M.plantsById) {
-                        var plotH = M.h || M.plot.length, plotW = M.w || (M.plot[0]?.length || 0);
+                        var plotH = M.h || M.plot.length, plotW = M.w || (M.plot[0] && M.plot[0].length || 0);
                         for (var y = 0; y < plotH; y++) {
                             if (!M.plot[y]) continue;
                             for (var x = 0; x < plotW; x++) {
@@ -6591,8 +6618,12 @@
             // Apply big cookie image
             if (saveData.bigCookieImage !== undefined) {
                 Game.cookieImageType = saveData.bigCookieImage;
-                if (Game.CookiesByChoice && Game.CookiesByChoice[saveData.bigCookieImage] && Game.Loader && Game.Loader.Replace) {
-                    Game.Loader.Replace('perfectCookie.png', Game.CookiesByChoice[saveData.bigCookieImage].pic);
+                if (Game.Loader && Game.Loader.Replace) {
+                    if (saveData.bigCookieImage !== 0 && Game.CookiesByChoice && Game.CookiesByChoice[saveData.bigCookieImage]) {
+                        Game.Loader.Replace('perfectCookie.png', Game.CookiesByChoice[saveData.bigCookieImage].pic);
+                    } else {
+                        Game.Loader.Replace('perfectCookie.png', 'perfectCookie.png');
+                    }
                 }
             }
 
@@ -6629,7 +6660,7 @@
                             if (!god) continue;
                             if (M.slot[i] !== -1) continue;
                             
-                            if (god.upgrade && !Game.Upgrades[god.upgrade]?.bought) continue;
+                            if (god.upgrade && (!Game.Upgrades[god.upgrade] || !Game.Upgrades[god.upgrade].bought)) continue;
                             
                             // Use M.slotGod to ensure hooks are called during load
                             M.slotGod(god, i);
@@ -6655,9 +6686,9 @@
                     
                     // Reapply sugar predictor hook if needed
                     if (Game.Has('Sugar predictor') && !M._sugarPredictorSlotHooked) {
-                        var origSlotGod = M.slotGod;
+                        var origSlotGodForPredictor = M.slotGod;
                         M.slotGod = function() {
-                            var result = origSlotGod.apply(this, arguments);
+                            var result = origSlotGodForPredictor.apply(this, arguments);
                             Game.calculateLumpPredictions();
                             return result;
                         };
@@ -6819,5 +6850,28 @@
                 Game.JNE.HeavenlyUpgrades.restoreDonutsNow = restoreDonutsNow;
                 Game.JNE.HeavenlyUpgrades.setupBuffModifiers = setupBuffModifiers;
             }
+
+            // Expose maybeDoubleTimerSpawn globally for CCSE compatibility
+            Game.JNE.maybeDoubleTimerSpawn = function(i) {
+                var hasVanillaLuck = Game.Has('Distilled essence of redoubled luck');
+                var hasRetripledLuck = Game.Has('Distilled essence of retripled luck');
+                // cookie chain and break chain behavior — skip all doubling for timer goldens while chain depth > 0.
+                if (i === 'golden' && Game.shimmerTypes && Game.shimmerTypes['golden']) {
+                    var gChain = Game.shimmerTypes['golden'].chain;
+                    if (typeof gChain === 'number' && gChain > 0) return;
+                }
+                // Fish: never double here.
+                if (i === 'fish') return;
+                if (hasRetripledLuck) {
+                    var chance =  0.02;
+                    if (jneIndependentRandom() < chance) {
+                        var rExtra = new Game.shimmer(i, {_retripledLuckExtra: true});
+                        if (rExtra) rExtra.spawnLead = 1;
+                    }
+                } else if (hasVanillaLuck && Math.random() < 0.01) {
+                    var vExtra = new Game.shimmer(i);
+                    if (vExtra) vExtra.spawnLead = 1;
+                }
+            };
         }
     })();

@@ -284,8 +284,8 @@ window.JNEData = {
                 name: 'Increased Social Security Checks',
                 type: 'discount',
                 building: 'Grandma',
-                desc: 'Grandmas cost <b>5%</b> less.',
-                ddesc: 'Grandmas cost <b>5%</b> less.<q>With better retirement benefits, your grandmas can afford to work for less. They\'re just happy to be baking cookies and staying active.</q>',
+                desc: 'Grandmas cost <b>15%</b> less.',
+                ddesc: 'Grandmas cost <b>15%</b> less.<q>With better retirement benefits, your grandmas can afford to work for less. They\'re just happy to be baking cookies and staying active.</q>',
                 price: 5e45, // 5 quattuordecillion
                 icon: [1, 0, 'custom'], // Matches 750 threshold (index 0)
                 unlockCondition: function() {
@@ -294,8 +294,8 @@ window.JNEData = {
             },
             {
                 name: 'Advanced knitting techniques',
-                desc: 'Grandmas are <b>8%</b> more efficient.',
-                ddesc: 'Grandmas are <b>8%</b> more efficient.<q>After years of practice, your grandmas have mastered the ancient art of knitting with cookie dough. The results are both delicious and surprisingly warm.</q>',
+                desc: 'Grandmas are <b>25%</b> more efficient.',
+                ddesc: 'Grandmas are <b>25%</b> more efficient.<q>After years of practice, your grandmas have mastered the ancient art of knitting with cookie dough. The results are both delicious and surprisingly warm.</q>',
                 price: 5e47, // 500 quattuordecillion
                 icon: [1, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
@@ -304,14 +304,14 @@ window.JNEData = {
                     return Game.Objects['Grandma'] && Game.Objects['Grandma'].amount >= 800;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Off-Brand Eyeglasses',
                 type: 'discount',
-                desc: 'Grandmas cost <b>5%</b> less.',
-                ddesc: 'Grandmas cost <b>5%</b> less.<q>Generic reading glasses are just as good as the expensive ones, and they make your grandmas look more distinguished while they bake.</q>',
+                desc: 'Grandmas cost <b>15%</b> less.',
+                ddesc: 'Grandmas cost <b>15%</b> less.<q>Generic reading glasses are just as good as the expensive ones, and they make your grandmas look more distinguished while they bake.</q>',
                 price: 5e49, // 50 quindecillion
                 icon: [1, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Grandma',
@@ -321,8 +321,8 @@ window.JNEData = {
             },
             {
                 name: 'Bingo night optimization',
-                desc: 'Grandmas are <b>8%</b> more efficient.',
-                ddesc: 'Grandmas are <b>8%</b> more efficient.<q>Your grandmas have discovered that playing bingo while baking cookies creates a perfect synergy of concentration and chaos. The cookies are somehow better when they\'re distracted.</q>',
+                desc: 'Grandmas are <b>25%</b> more efficient.',
+                ddesc: 'Grandmas are <b>25%</b> more efficient.<q>Your grandmas have discovered that playing bingo while baking cookies creates a perfect synergy of concentration and chaos. The cookies are somehow better when they\'re distracted.</q>',
                 price: 5e51, // 5 sexdecillion
                 icon: [1, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
@@ -331,14 +331,14 @@ window.JNEData = {
                     return Game.Objects['Grandma'] && Game.Objects['Grandma'].amount >= 900;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Plastic Walkers',
                 type: 'discount',
-                desc: 'Grandmas cost <b>5%</b> less.',
-                ddesc: 'Grandmas cost <b>5%</b> less.<q>Lightweight, durable, and much cheaper than the fancy ones. Your grandmas can now move around the kitchen more efficiently while saving money.</q>',
+                desc: 'Grandmas cost <b>15%</b> less.',
+                ddesc: 'Grandmas cost <b>15%</b> less.<q>Lightweight, durable, and much cheaper than the fancy ones. Your grandmas can now move around the kitchen more efficiently while saving money.</q>',
                 price: 5e53, // 500 sexdecillion
                 icon: [1, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Grandma',
@@ -348,8 +348,8 @@ window.JNEData = {
             },
             {
                 name: 'Tea time efficiency',
-                desc: 'Grandmas are <b>8%</b> more efficient.',
-                ddesc: 'Grandmas are <b>8%</b> more efficient.<q>Your grandmas have perfected the art of brewing tea while simultaneously managing cookie production. The secret is to never let the tea steep for exactly the right amount of time.</q>',
+                desc: 'Grandmas are <b>25%</b> more efficient.',
+                ddesc: 'Grandmas are <b>25%</b> more efficient.<q>Your grandmas have perfected the art of brewing tea while simultaneously managing cookie production. The secret is to never let the tea steep for exactly the right amount of time.</q>',
                 price: 5e55, // 50 septendecillion
                 icon: [1, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
@@ -358,14 +358,14 @@ window.JNEData = {
                     return Game.Objects['Grandma'] && Game.Objects['Grandma'].amount >= 1000;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Bulk Discount Hearing Aids',
                 type: 'discount',
-                desc: 'Grandmas cost <b>5%</b> less.',
-                ddesc: 'Grandmas cost <b>5%</b> less.<q>Buying hearing aids in bulk saves money, and your grandmas can now hear cookie timers perfectly. What\'s that? They said the cookies are ready!</q>',
+                desc: 'Grandmas cost <b>15%</b> less.',
+                ddesc: 'Grandmas cost <b>15%</b> less.<q>Buying hearing aids in bulk saves money, and your grandmas can now hear cookie timers perfectly. What\'s that? They said the cookies are ready!</q>',
                 price: 5e57, // 5 octodecillion
                 icon: [1, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Grandma',
@@ -375,8 +375,8 @@ window.JNEData = {
             },
             {
                 name: 'Gossip-powered baking',
-                desc: 'Grandmas are <b>8%</b> more efficient.',
-                ddesc: 'Grandmas are <b>8%</b> more efficient.<q>Your grandmas have discovered that sharing the latest neighborhood gossip while baking creates a perfect rhythm. The more scandalous the news, the faster the cookies bake.</q>',
+                desc: 'Grandmas are <b>25%</b> more efficient.',
+                ddesc: 'Grandmas are <b>25%</b> more efficient.<q>Your grandmas have discovered that sharing the latest neighborhood gossip while baking creates a perfect rhythm. The more scandalous the news, the faster the cookies bake.</q>',
                 price: 5e59, // 500 octodecillion
                 icon: [1, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
@@ -385,14 +385,14 @@ window.JNEData = {
                     return Game.Objects['Grandma'] && Game.Objects['Grandma'].amount >= 1100;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Generic Arthritis Medication',
                 type: 'discount',
-                desc: 'Grandmas cost <b>5%</b> less.',
-                ddesc: 'Grandmas cost <b>5%</b> less.<q>The store brand works just as well as the name brand, and your grandmas can now knead dough without any complaints. Well, fewer complaints.</q>',
+                desc: 'Grandmas cost <b>15%</b> less.',
+                ddesc: 'Grandmas cost <b>15%</b> less.<q>The store brand works just as well as the name brand, and your grandmas can now knead dough without any complaints. Well, fewer complaints.</q>',
                 price: 5e61, // 50 novemdecillion
                 icon: [1, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Grandma',
@@ -402,8 +402,8 @@ window.JNEData = {
             },
             {
                 name: 'Senior discount mastery',
-                desc: 'Grandmas are <b>8%</b> more efficient.',
-                ddesc: 'Grandmas are <b>8%</b> more efficient.<q>Your grandmas have learned to apply their senior discount expertise to cookie production. They can now get better deals on ingredients, which somehow makes the cookies taste better too.</q>',
+                desc: 'Grandmas are <b>25%</b> more efficient.',
+                ddesc: 'Grandmas are <b>25%</b> more efficient.<q>Your grandmas have learned to apply their senior discount expertise to cookie production. They can now get better deals on ingredients, which somehow makes the cookies taste better too.</q>',
                 price: 5e63, // 5 vigintillion
                 icon: [1, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
@@ -412,14 +412,14 @@ window.JNEData = {
                     return Game.Objects['Grandma'] && Game.Objects['Grandma'].amount >= 1200;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Wholesale Denture Adhesive',
                 type: 'discount',
-                desc: 'Grandmas cost <b>5%</b> less.',
-                ddesc: 'Grandmas cost <b>5%</b> less.<q>Buying denture adhesive in industrial quantities means your grandmas can smile confidently while tasting their cookie creations. The savings are toothsome!</q>',
+                desc: 'Grandmas cost <b>15%</b> less.',
+                ddesc: 'Grandmas cost <b>15%</b> less.<q>Buying denture adhesive in industrial quantities means your grandmas can smile confidently while tasting their cookie creations. The savings are toothsome!</q>',
                 price: 5e65, // 500 vigintillion
                 icon: [1, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Grandma',
@@ -430,8 +430,8 @@ window.JNEData = {
             {
                 name: 'Biodiesel fueled tractors',
                 type: 'discount',
-                desc: 'Farms cost <b>5%</b> less.',
-                ddesc: 'Farms cost <b>5%</b> less.<q>Your farms have discovered that running tractors on recycled cooking oil from cookie production is both eco-friendly and surprisingly cost-effective. The tractors smell like fresh cookies now!</q>',
+                desc: 'Farms cost <b>15%</b> less.',
+                ddesc: 'Farms cost <b>15%</b> less.<q>Your farms have discovered that running tractors on recycled cooking oil from cookie production is both eco-friendly and surprisingly cost-effective. The tractors smell like fresh cookies now!</q>',
                 price: 5e46, // 50 quattuordecillion
                 icon: [2, 0, 'custom'], // Matches 750 threshold (index 0)
                 building: 'Farm',
@@ -441,8 +441,8 @@ window.JNEData = {
             },
             {
                 name: 'Hydroponic cookie cultivation',
-                desc: 'Farms are <b>8%</b> more efficient.',
-                ddesc: 'Farms are <b>8%</b> more efficient.<q>Your farms have discovered that growing cookies in nutrient-rich water solutions eliminates the need for soil entirely. The cookies somehow taste even better when they\'ve never touched dirt.</q>',
+                desc: 'Farms are <b>25%</b> more efficient.',
+                ddesc: 'Farms are <b>25%</b> more efficient.<q>Your farms have discovered that growing cookies in nutrient-rich water solutions eliminates the need for soil entirely. The cookies somehow taste even better when they\'ve never touched dirt.</q>',
                 price: 5e48, // 5 quindecillion
                 icon: [2, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
@@ -451,14 +451,14 @@ window.JNEData = {
                     return Game.Objects['Farm'] && Game.Objects['Farm'].amount >= 800;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Free manure from clone factories',
                 type: 'discount',
-                desc: 'Farms cost <b>5%</b> less.',
-                ddesc: 'Farms cost <b>5%</b> less.<q>The clone factories produce so much waste that your farms get all the fertilizer they need for free. The cookies grown with this manure taste surprisingly good.</q>',
+                desc: 'Farms cost <b>15%</b> less.',
+                ddesc: 'Farms cost <b>15%</b> less.<q>The clone factories produce so much waste that your farms get all the fertilizer they need for free. The cookies grown with this manure taste surprisingly good.</q>',
                 price: 5e50, // 500 quindecillion
                 icon: [2, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Farm',
@@ -468,8 +468,8 @@ window.JNEData = {
             },
             {
                 name: 'Vertical farming revolution',
-                desc: 'Farms are <b>8%</b> more efficient.',
-                ddesc: 'Farms are <b>8%</b> more efficient.<q>Your farms now stack cookie crops in towering vertical structures. The cookies at the top get more sunlight, while the ones at the bottom get more shade. Somehow they all taste perfect.</q>',
+                desc: 'Farms are <b>25%</b> more efficient.',
+                ddesc: 'Farms are <b>25%</b> more efficient.<q>Your farms now stack cookie crops in towering vertical structures. The cookies at the top get more sunlight, while the ones at the bottom get more shade. Somehow they all taste perfect.</q>',
                 price: 5e52, // 50 sexdecillion
                 icon: [2, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
@@ -478,14 +478,14 @@ window.JNEData = {
                     return Game.Objects['Farm'] && Game.Objects['Farm'].amount >= 900;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Solar-powered irrigation systems',
                 type: 'discount',
-                desc: 'Farms cost <b>5%</b> less.',
-                ddesc: 'Farms cost <b>5%</b> less.<q>Your farms now use solar panels to power their irrigation systems. The cookies grow faster when they\'re watered with sunlight-filtered water, and the energy bills are practically zero.</q>',
+                desc: 'Farms cost <b>15%</b> less.',
+                ddesc: 'Farms cost <b>15%</b> less.<q>Your farms now use solar panels to power their irrigation systems. The cookies grow faster when they\'re watered with sunlight-filtered water, and the energy bills are practically zero.</q>',
                 price: 5e54, // 5 septendecillion
                 icon: [2, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Farm',
@@ -495,8 +495,8 @@ window.JNEData = {
             },
             {
                 name: 'Quantum crop rotation',
-                desc: 'Farms are <b>8%</b> more efficient.',
-                ddesc: 'Farms are <b>8%</b> more efficient.<q>Your farms have mastered the art of rotating crops through multiple dimensions simultaneously. The cookies exist in superposition until harvested, making them both baked and unbaked at the same time.</q>',
+                desc: 'Farms are <b>25%</b> more efficient.',
+                ddesc: 'Farms are <b>25%</b> more efficient.<q>Your farms have mastered the art of rotating crops through multiple dimensions simultaneously. The cookies exist in superposition until harvested, making them both baked and unbaked at the same time.</q>',
                 price: 5e56, // 500 septendecillion
                 icon: [2, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
@@ -505,14 +505,14 @@ window.JNEData = {
                     return Game.Objects['Farm'] && Game.Objects['Farm'].amount >= 1000;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Bulk seed purchases',
                 type: 'discount',
-                desc: 'Farms cost <b>5%</b> less.',
-                ddesc: 'Farms cost <b>5%</b> less.<q>Buying cookie seeds in industrial quantities has dramatically reduced costs. Your farms now have enough seeds to plant cookie forests, and the bulk discount is delicious.</q>',
+                desc: 'Farms cost <b>15%</b> less.',
+                ddesc: 'Farms cost <b>15%</b> less.<q>Buying cookie seeds in industrial quantities has dramatically reduced costs. Your farms now have enough seeds to plant cookie forests, and the bulk discount is delicious.</q>',
                 price: 5e58, // 50 octodecillion
                 icon: [2, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Farm',
@@ -522,8 +522,8 @@ window.JNEData = {
             },
             {
                 name: 'Sentient soil enhancement',
-                desc: 'Farms are <b>8%</b> more efficient.',
-                ddesc: 'Farms are <b>8%</b> more efficient.<q>Your farms have developed soil that can think, feel, and most importantly, optimize cookie growth. The soil is quite chatty about its feelings, but the results speak for themselves.</q>',
+                desc: 'Farms are <b>25%</b> more efficient.',
+                ddesc: 'Farms are <b>25%</b> more efficient.<q>Your farms have developed soil that can think, feel, and most importantly, optimize cookie growth. The soil is quite chatty about its feelings, but the results speak for themselves.</q>',
                 price: 5e60, // 5 novemdecillion
                 icon: [2, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
@@ -532,14 +532,14 @@ window.JNEData = {
                     return Game.Objects['Farm'] && Game.Objects['Farm'].amount >= 1100;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Robot farm hands',
                 type: 'discount',
-                desc: 'Farms cost <b>5%</b> less.',
-                ddesc: 'Farms cost <b>5%</b> less.<q>Your farms now employ robotic workers who never tire and work for free. They\'re programmed to be gentle with the cookie plants and surprisingly good at telling cookie jokes.</q>',
+                desc: 'Farms cost <b>15%</b> less.',
+                ddesc: 'Farms cost <b>15%</b> less.<q>Your farms now employ robotic workers who never tire and work for free. They\'re programmed to be gentle with the cookie plants and surprisingly good at telling cookie jokes.</q>',
                 price: 5e62, // 500 novemdecillion
                 icon: [2, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Farm',
@@ -549,8 +549,8 @@ window.JNEData = {
             },
             {
                 name: 'Temporal harvest acceleration',
-                desc: 'Farms are <b>8%</b> more efficient.',
-                ddesc: 'Farms are <b>8%</b> more efficient.<q>Your farms can now manipulate time itself to speed up cookie growth. The cookies ripen in seconds instead of months, though occasionally you get cookies from the future that haven\'t been invented yet.</q>',
+                desc: 'Farms are <b>25%</b> more efficient.',
+                ddesc: 'Farms are <b>25%</b> more efficient.<q>Your farms can now manipulate time itself to speed up cookie growth. The cookies ripen in seconds instead of months, though occasionally you get cookies from the future that haven\'t been invented yet.</q>',
                 price: 5e64, // 50 vigintillion
                 icon: [2, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
@@ -559,14 +559,14 @@ window.JNEData = {
                     return Game.Objects['Farm'] && Game.Objects['Farm'].amount >= 1200;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Vertical farming subsidies',
                 type: 'discount',
-                desc: 'Farms cost <b>5%</b> less.',
-                ddesc: 'Farms cost <b>5%</b> less.<q>The government is so impressed with your cookie farming innovation that they\'re providing subsidies for vertical farming. Your cookie towers are now taxpayer-funded!</q>',
+                desc: 'Farms cost <b>15%</b> less.',
+                ddesc: 'Farms cost <b>15%</b> less.<q>The government is so impressed with your cookie farming innovation that they\'re providing subsidies for vertical farming. Your cookie towers are now taxpayer-funded!</q>',
                 price: 5e66, // 5 unvigintillion
                 icon: [2, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Farm',
@@ -577,8 +577,8 @@ window.JNEData = {
             {
                 name: 'Clearance shaft kits',
                 type: 'discount',
-                desc: 'Mines cost <b>5%</b> less.',
-                ddesc: 'Mines cost <b>5%</b> less.<q>Flat-pack mining in a box! Comes with complimentary dust, three bent bolts, and a manual that just says "dig."</q>',
+                desc: 'Mines cost <b>15%</b> less.',
+                ddesc: 'Mines cost <b>15%</b> less.<q>Flat-pack mining in a box! Comes with complimentary dust, three bent bolts, and a manual that just says "dig."</q>',
                 price: 5e47, // 500 quattuordecillion
                 icon: [3, 0, 'custom'], // Matches 750 threshold (index 0)
                 building: 'Mine',
@@ -588,8 +588,8 @@ window.JNEData = {
             },
             {
                 name: 'Quantum tunneling excavation',
-                desc: 'Mines are <b>8%</b> more efficient.',
-                ddesc: 'Mines are <b>8%</b> more efficient.<q>Your mines have discovered that quantum tunneling allows them to extract resources from multiple locations simultaneously. The cookies somehow taste better when mined through probability clouds.</q>',
+                desc: 'Mines are <b>25%</b> more efficient.',
+                ddesc: 'Mines are <b>25%</b> more efficient.<q>Your mines have discovered that quantum tunneling allows them to extract resources from multiple locations simultaneously. The cookies somehow taste better when mined through probability clouds.</q>',
                 price: 5e49, // 50 quindecillion
                 icon: [3, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
@@ -598,14 +598,14 @@ window.JNEData = {
                     return Game.Objects['Mine'] && Game.Objects['Mine'].amount >= 800;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Punch-card TNT club',
                 type: 'discount',
-                desc: 'Mines cost <b>5%</b> less.',
-                ddesc: 'Mines cost <b>5%</b> less.<q>Every tenth kaboom is free. Please remember to validate your detonation.</q>',
+                desc: 'Mines cost <b>15%</b> less.',
+                ddesc: 'Mines cost <b>15%</b> less.<q>Every tenth kaboom is free. Please remember to validate your detonation.</q>',
                 price: 5e51, // 5 sexdecillion
                 icon: [3, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Mine',
@@ -615,8 +615,8 @@ window.JNEData = {
             },
             {
                 name: 'Neutron star compression',
-                desc: 'Mines are <b>8%</b> more efficient.',
-                ddesc: 'Mines are <b>8%</b> more efficient.<q>Your mines now operate under neutron star gravity conditions, compressing cookie ingredients to impossible densities. The resulting cookies are so dense they create their own gravitational fields.</q>',
+                desc: 'Mines are <b>25%</b> more efficient.',
+                ddesc: 'Mines are <b>25%</b> more efficient.<q>Your mines now operate under neutron star gravity conditions, compressing cookie ingredients to impossible densities. The resulting cookies are so dense they create their own gravitational fields.</q>',
                 price: 5e53, // 500 sexdecillion
                 icon: [3, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
@@ -625,14 +625,14 @@ window.JNEData = {
                     return Game.Objects['Mine'] && Game.Objects['Mine'].amount >= 900;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Hand-me-down hardhats',
                 type: 'discount',
-                desc: 'Mines cost <b>5%</b> less.',
-                ddesc: 'Mines cost <b>5%</b> less.<q>Pre-scuffed for authenticity. Comes with vintage stickers and suspiciously fresh chin straps.</q>',
+                desc: 'Mines cost <b>15%</b> less.',
+                ddesc: 'Mines cost <b>15%</b> less.<q>Pre-scuffed for authenticity. Comes with vintage stickers and suspiciously fresh chin straps.</q>',
                 price: 5e55, // 50 septendecillion
                 icon: [3, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Mine',
@@ -642,8 +642,8 @@ window.JNEData = {
             },
             {
                 name: 'Dimensional rift mining',
-                desc: 'Mines are <b>8%</b> more efficient.',
-                ddesc: 'Mines are <b>8%</b> more efficient.<q>Your mines have learned to extract resources from parallel dimensions through carefully controlled spacetime rifts. The cookies from alternate realities have flavors that shouldn\'t exist in this universe.</q>',
+                desc: 'Mines are <b>25%</b> more efficient.',
+                ddesc: 'Mines are <b>25%</b> more efficient.<q>Your mines have learned to extract resources from parallel dimensions through carefully controlled spacetime rifts. The cookies from alternate realities have flavors that shouldn\'t exist in this universe.</q>',
                 price: 5e57, // 5 octodecillion
                 icon: [3, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
@@ -652,14 +652,14 @@ window.JNEData = {
                     return Game.Objects['Mine'] && Game.Objects['Mine'].amount >= 1000;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Lease-back drill rigs',
                 type: 'discount',
-                desc: 'Mines cost <b>5%</b> less.',
-                ddesc: 'Mines cost <b>5%</b> less.<q>You rent them your rigs; they rent them back to you cheaper. Don\'t think about it too hard—just keep drilling.</q>',
+                desc: 'Mines cost <b>15%</b> less.',
+                ddesc: 'Mines cost <b>15%</b> less.<q>You rent them your rigs; they rent them back to you cheaper. Don\'t think about it too hard—just keep drilling.</q>',
                 price: 5e59, // 500 octodecillion
                 icon: [3, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Mine',
@@ -669,8 +669,8 @@ window.JNEData = {
             },
             {
                 name: 'Singularity core extraction',
-                desc: 'Mines are <b>8%</b> more efficient.',
-                ddesc: 'Mines are <b>8%</b> more efficient.<q>Your mines can now extract resources from the very heart of black holes. The cookies mined from event horizons have flavors that exist in a state of quantum superposition.</q>',
+                desc: 'Mines are <b>25%</b> more efficient.',
+                ddesc: 'Mines are <b>25%</b> more efficient.<q>Your mines can now extract resources from the very heart of black holes. The cookies mined from event horizons have flavors that exist in a state of quantum superposition.</q>',
                 price: 5e61, // 50 novemdecillion
                 icon: [3, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
@@ -679,14 +679,14 @@ window.JNEData = {
                     return Game.Objects['Mine'] && Game.Objects['Mine'].amount >= 1100;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Ore cartel coupons',
                 type: 'discount',
-                desc: 'Mines cost <b>5%</b> less.',
-                ddesc: 'Mines cost <b>5%</b> less.<q>Clip these to save big on ironies, aluminums, and suspiciously inexpensive unobtainium.</q>',
+                desc: 'Mines cost <b>15%</b> less.',
+                ddesc: 'Mines cost <b>15%</b> less.<q>Clip these to save big on ironies, aluminums, and suspiciously inexpensive unobtainium.</q>',
                 price: 5e63, // 5 vigintillion
                 icon: [3, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Mine',
@@ -696,8 +696,8 @@ window.JNEData = {
             },
             {
                 name: 'Temporal paradox drilling',
-                desc: 'Mines are <b>8%</b> more efficient.',
-                ddesc: 'Mines are <b>8%</b> more efficient.<q>Your mines can now extract resources from different points in time simultaneously. The cookies exist in a state where they were both baked and unbaked until observed.</q>',
+                desc: 'Mines are <b>25%</b> more efficient.',
+                ddesc: 'Mines are <b>25%</b> more efficient.<q>Your mines can now extract resources from different points in time simultaneously. The cookies exist in a state where they were both baked and unbaked until observed.</q>',
                 price: 5e65, // 500 vigintillion
                 icon: [3, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
@@ -706,14 +706,14 @@ window.JNEData = {
                     return Game.Objects['Mine'] && Game.Objects['Mine'].amount >= 1200;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Cave-in insurance kickbacks',
                 type: 'discount',
-                desc: 'Mines cost <b>5%</b> less.',
-                ddesc: 'Mines cost <b>5%</b> less.<q>Policy fine print: "cave-ins not included." The cashback is, though!</q>',
+                desc: 'Mines cost <b>15%</b> less.',
+                ddesc: 'Mines cost <b>15%</b> less.<q>Policy fine print: "cave-ins not included." The cashback is, though!</q>',
                 price: 5e67, // 50 unvigintillion
                 icon: [3, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Mine',
@@ -724,8 +724,8 @@ window.JNEData = {
             {
                 name: 'Flat-pack factory frames',
                 type: 'discount',
-                desc: 'Factories cost <b>5%</b> less.',
-                ddesc: 'Factories cost <b>5%</b> less.<q>Arrives in 47 boxes, 2 mystery bolts, and one tiny allen key. Assembly required; dignity sold separately.</q>',
+                desc: 'Factories cost <b>15%</b> less.',
+                ddesc: 'Factories cost <b>15%</b> less.<q>Arrives in 47 boxes, 2 mystery bolts, and one tiny allen key. Assembly required; dignity sold separately.</q>',
                 price: 5e48, // 5 quindecillion
                 icon: [4, 0, 'custom'], // Matches 750 threshold (index 0)
                 building: 'Factory',
@@ -735,8 +735,8 @@ window.JNEData = {
             },
             {
                 name: 'Quantum assembly optimization',
-                desc: 'Factories are <b>8%</b> more efficient.',
-                ddesc: 'Factories are <b>8%</b> more efficient.<q>Your factories have discovered that quantum superposition allows them to assemble cookies in multiple states simultaneously. The cookies exist in a state of both completion and incompletion until observed.</q>',
+                desc: 'Factories are <b>25%</b> more efficient.',
+                ddesc: 'Factories are <b>25%</b> more efficient.<q>Your factories have discovered that quantum superposition allows them to assemble cookies in multiple states simultaneously. The cookies exist in a state of both completion and incompletion until observed.</q>',
                 price: 5e50, // 500 quindecillion
                 icon: [4, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
@@ -745,14 +745,14 @@ window.JNEData = {
                     return Game.Objects['Factory'] && Game.Objects['Factory'].amount >= 800;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'BOGO rivet bins',
                 type: 'discount',
-                desc: 'Factories cost <b>5%</b> less.',
-                ddesc: 'Factories cost <b>5%</b> less.<q>Buy one rivet, get one lodged in the break room floor for free. Savings that really fasten your margins.</q>',
+                desc: 'Factories cost <b>15%</b> less.',
+                ddesc: 'Factories cost <b>15%</b> less.<q>Buy one rivet, get one lodged in the break room floor for free. Savings that really fasten your margins.</q>',
                 price: 5e52, // 50 sexdecillion
                 icon: [4, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Factory',
@@ -762,8 +762,8 @@ window.JNEData = {
             },
             {
                 name: 'Temporal manufacturing loops',
-                desc: 'Factories are <b>8%</b> more efficient.',
-                ddesc: 'Factories are <b>8%</b> more efficient.<q>Your factories can now create temporal loops that allow them to manufacture cookies in the past, present, and future simultaneously. The cookies taste better when they\'ve been baked in multiple timelines.</q>',
+                desc: 'Factories are <b>25%</b> more efficient.',
+                ddesc: 'Factories are <b>25%</b> more efficient.<q>Your factories can now create temporal loops that allow them to manufacture cookies in the past, present, and future simultaneously. The cookies taste better when they\'ve been baked in multiple timelines.</q>',
                 price: 5e54, // 5 septendecillion
                 icon: [4, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
@@ -772,14 +772,14 @@ window.JNEData = {
                     return Game.Objects['Factory'] && Game.Objects['Factory'].amount >= 900;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Off-brand gear grease',
                 type: 'discount',
-                desc: 'Factories cost <b>5%</b> less.',
-                ddesc: 'Factories cost <b>5%</b> less.<q>It says "lubricishion" on the drum but the conveyor squeaks stopped and the budget squeals with joy.</q>',
+                desc: 'Factories cost <b>15%</b> less.',
+                ddesc: 'Factories cost <b>15%</b> less.<q>It says "lubricishion" on the drum but the conveyor squeaks stopped and the budget squeals with joy.</q>',
                 price: 5e56, // 500 septendecillion
                 icon: [4, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Factory',
@@ -789,8 +789,8 @@ window.JNEData = {
             },
             {
                 name: 'Dimensional cookie synthesis',
-                desc: 'Factories are <b>8%</b> more efficient.',
-                ddesc: 'Factories are <b>8%</b> more efficient.<q>Your factories can now extract cookie ingredients from parallel dimensions and synthesize them into cookies that shouldn\'t exist in this universe. The flavors are indescribable.</q>',
+                desc: 'Factories are <b>25%</b> more efficient.',
+                ddesc: 'Factories are <b>25%</b> more efficient.<q>Your factories can now extract cookie ingredients from parallel dimensions and synthesize them into cookies that shouldn\'t exist in this universe. The flavors are indescribable.</q>',
                 price: 5e58, // 50 octodecillion
                 icon: [4, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
@@ -799,14 +799,14 @@ window.JNEData = {
                     return Game.Objects['Factory'] && Game.Objects['Factory'].amount >= 1000;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Misprint warning labels',
                 type: 'discount',
-                desc: 'Factories cost <b>5%</b> less.',
-                ddesc: 'Factories cost <b>5%</b> less.<q>"DO NOT NOT TOUCH" and "CAUTION: SPICY ELECTRICITY" — flawed labels at flawless prices.</q>',
+                desc: 'Factories cost <b>15%</b> less.',
+                ddesc: 'Factories cost <b>15%</b> less.<q>"DO NOT NOT TOUCH" and "CAUTION: SPICY ELECTRICITY" — flawed labels at flawless prices.</q>',
                 price: 5e60, // 5 novemdecillion
                 icon: [4, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Factory',
@@ -816,8 +816,8 @@ window.JNEData = {
             },
             {
                 name: 'Singularity production cores',
-                desc: 'Factories are <b>8%</b> more efficient.',
-                ddesc: 'Factories are <b>8%</b> more efficient.<q>Your factories now operate at the heart of artificial superintelligence cores, where cookies are created by entities that understand the very fabric of reality. The cookies are so advanced they\'re almost sentient.</q>',
+                desc: 'Factories are <b>25%</b> more efficient.',
+                ddesc: 'Factories are <b>25%</b> more efficient.<q>Your factories now operate at the heart of artificial superintelligence cores, where cookies are created by entities that understand the very fabric of reality. The cookies are so advanced they\'re almost sentient.</q>',
                 price: 5e62, // 500 novemdecillion
                 icon: [4, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
@@ -826,14 +826,14 @@ window.JNEData = {
                     return Game.Objects['Factory'] && Game.Objects['Factory'].amount >= 1100;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Pallet-jack rebates',
                 type: 'discount',
-                desc: 'Factories cost <b>5%</b> less.',
-                ddesc: 'Factories cost <b>5%</b> less.<q>Return three worn wheels and a heartfelt shrug to receive instant savings on moving heavy expectations.</q>',
+                desc: 'Factories cost <b>15%</b> less.',
+                ddesc: 'Factories cost <b>15%</b> less.<q>Return three worn wheels and a heartfelt shrug to receive instant savings on moving heavy expectations.</q>',
                 price: 5e64, // 50 vigintillion
                 icon: [4, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Factory',
@@ -843,8 +843,8 @@ window.JNEData = {
             },
             {
                 name: 'Reality-warping assembly',
-                desc: 'Factories are <b>8%</b> more efficient.',
-                ddesc: 'Factories are <b>8%</b> more efficient.<q>Your factories can now bend the laws of physics to create cookies that exist in impossible states. The cookies are so reality-defying that they create their own pocket universes.</q>',
+                desc: 'Factories are <b>25%</b> more efficient.',
+                ddesc: 'Factories are <b>25%</b> more efficient.<q>Your factories can now bend the laws of physics to create cookies that exist in impossible states. The cookies are so reality-defying that they create their own pocket universes.</q>',
                 price: 5e66, // 5 unvigintillion
                 icon: [4, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
@@ -853,14 +853,14 @@ window.JNEData = {
                     return Game.Objects['Factory'] && Game.Objects['Factory'].amount >= 1200;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Prefab cookie modules',
                 type: 'discount',
-                desc: 'Factories cost <b>5%</b> less.',
-                ddesc: 'Factories cost <b>5%</b> less.<q>Snap together a fully functional bakery block before lunch. Some assembly lines may snap back.</q>',
+                desc: 'Factories cost <b>15%</b> less.',
+                ddesc: 'Factories cost <b>15%</b> less.<q>Snap together a fully functional bakery block before lunch. Some assembly lines may snap back.</q>',
                 price: 5e68, // 500 unvigintillion
                 icon: [4, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Factory',
@@ -871,8 +871,8 @@ window.JNEData = {
             {
                 name: 'Piggy buyback bonanza',
                 type: 'discount',
-                desc: 'Banks cost <b>5%</b> less.',
-                ddesc: 'Banks cost <b>5%</b> less.<q>We buy your old piggy banks for scrap, you get bulk rates on brand-new savings. Oink if you love rebates.</q>',
+                desc: 'Banks cost <b>15%</b> less.',
+                ddesc: 'Banks cost <b>15%</b> less.<q>We buy your old piggy banks for scrap, you get bulk rates on brand-new savings. Oink if you love rebates.</q>',
                 price: 5e49, // 50 quindecillion
                 icon: [13, 0, 'custom'], // Matches 750 threshold (index 0)
                 building: 'Bank',
@@ -882,8 +882,8 @@ window.JNEData = {
             },
             {
                 name: 'Quantum banking protocols',
-                desc: 'Banks are <b>8%</b> more efficient.',
-                ddesc: 'Banks are <b>8%</b> more efficient.<q>Your banks have implemented quantum encryption protocols that allow them to process transactions in multiple parallel universes simultaneously. The interest rates are so complex they exist in superposition.</q>',
+                desc: 'Banks are <b>25%</b> more efficient.',
+                ddesc: 'Banks are <b>25%</b> more efficient.<q>Your banks have implemented quantum encryption protocols that allow them to process transactions in multiple parallel universes simultaneously. The interest rates are so complex they exist in superposition.</q>',
                 price: 5e51, // 5 sexdecillion
                 icon: [13, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
@@ -892,14 +892,14 @@ window.JNEData = {
                     return Game.Objects['Bank'] && Game.Objects['Bank'].amount >= 800;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Vault door floor-models',
                 type: 'discount',
-                desc: 'Banks cost <b>5%</b> less.',
-                ddesc: 'Banks cost <b>5%</b> less.<q>Slightly scuffed, mostly secure, and drastically discounted. May include complimentary salesperson fingerprints.</q>',
+                desc: 'Banks cost <b>15%</b> less.',
+                ddesc: 'Banks cost <b>15%</b> less.<q>Slightly scuffed, mostly secure, and drastically discounted. May include complimentary salesperson fingerprints.</q>',
                 price: 5e53, // 500 sexdecillion
                 icon: [13, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Bank',
@@ -909,8 +909,8 @@ window.JNEData = {
             },
             {
                 name: 'Temporal interest compounding',
-                desc: 'Banks are <b>8%</b> more efficient.',
-                ddesc: 'Banks are <b>8%</b> more efficient.<q>Your banks can now compound interest across multiple time periods simultaneously. The money grows so fast it creates temporal paradoxes in the financial markets.</q>',
+                desc: 'Banks are <b>25%</b> more efficient.',
+                ddesc: 'Banks are <b>25%</b> more efficient.<q>Your banks can now compound interest across multiple time periods simultaneously. The money grows so fast it creates temporal paradoxes in the financial markets.</q>',
                 price: 5e55, // 50 septendecillion
                 icon: [13, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
@@ -919,14 +919,14 @@ window.JNEData = {
                     return Game.Objects['Bank'] && Game.Objects['Bank'].amount >= 900;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Pen-on-a-chain procurement',
                 type: 'discount',
-                desc: 'Banks cost <b>5%</b> less.',
-                ddesc: 'Banks cost <b>5%</b> less.<q>We negotiated a lifetime supply of those pens everyone "borrows". Budgets balanced; chains tested for tensile sass.</q>',
+                desc: 'Banks cost <b>15%</b> less.',
+                ddesc: 'Banks cost <b>15%</b> less.<q>We negotiated a lifetime supply of those pens everyone "borrows". Budgets balanced; chains tested for tensile sass.</q>',
                 price: 5e57, // 5 octodecillion
                 icon: [13, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Bank',
@@ -936,8 +936,8 @@ window.JNEData = {
             },
             {
                 name: 'Dimensional currency exchange',
-                desc: 'Banks are <b>8%</b> more efficient.',
-                ddesc: 'Banks are <b>8%</b> more efficient.<q>Your banks can now exchange cookies for currencies from parallel dimensions. The exchange rates are so favorable they\'re practically stealing from other universes.</q>',
+                desc: 'Banks are <b>25%</b> more efficient.',
+                ddesc: 'Banks are <b>25%</b> more efficient.<q>Your banks can now exchange cookies for currencies from parallel dimensions. The exchange rates are so favorable they\'re practically stealing from other universes.</q>',
                 price: 5e59, // 500 octodecillion
                 icon: [13, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
@@ -946,14 +946,14 @@ window.JNEData = {
                     return Game.Objects['Bank'] && Game.Objects['Bank'].amount >= 1000;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Complimentary complimentary mints',
                 type: 'discount',
-                desc: 'Banks cost <b>5%</b> less.',
-                ddesc: 'Banks cost <b>5%</b> less.<q>They\'re free. The mints are free. The sign telling you they\'re complimentary is also complimentary.</q>',
+                desc: 'Banks cost <b>15%</b> less.',
+                ddesc: 'Banks cost <b>15%</b> less.<q>They\'re free. The mints are free. The sign telling you they\'re complimentary is also complimentary.</q>',
                 price: 5e61, // 50 novemdecillion
                 icon: [13, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Bank',
@@ -963,8 +963,8 @@ window.JNEData = {
             },
             {
                 name: 'Singularity financial algorithms',
-                desc: 'Banks are <b>8%</b> more efficient.',
-                ddesc: 'Banks are <b>8%</b> more efficient.<q>Your banks now use artificial superintelligence to predict market movements with perfect accuracy. The algorithms are so advanced they can see the future of finance.</q>',
+                desc: 'Banks are <b>25%</b> more efficient.',
+                ddesc: 'Banks are <b>25%</b> more efficient.<q>Your banks now use artificial superintelligence to predict market movements with perfect accuracy. The algorithms are so advanced they can see the future of finance.</q>',
                 price: 5e63, // 5 vigintillion
                 icon: [13, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
@@ -973,14 +973,14 @@ window.JNEData = {
                     return Game.Objects['Bank'] && Game.Objects['Bank'].amount >= 1100;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Fee waiver wavers',
                 type: 'discount',
-                desc: 'Banks cost <b>5%</b> less.',
-                ddesc: 'Banks cost <b>5%</b> less.<q>Wave the fee, waive the fee—our interns practiced both until the numbers surrendered.</q>',
+                desc: 'Banks cost <b>15%</b> less.',
+                ddesc: 'Banks cost <b>15%</b> less.<q>Wave the fee, waive the fee—our interns practiced both until the numbers surrendered.</q>',
                 price: 5e65, // 500 vigintillion
                 icon: [13, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Bank',
@@ -990,8 +990,8 @@ window.JNEData = {
             },
             {
                 name: 'Reality-warping economics',
-                desc: 'Banks are <b>8%</b> more efficient.',
-                ddesc: 'Banks are <b>8%</b> more efficient.<q>Your banks can now bend the laws of economics to create wealth from nothing. The money is so real it creates its own pocket universes of pure profit.</q>',
+                desc: 'Banks are <b>25%</b> more efficient.',
+                ddesc: 'Banks are <b>25%</b> more efficient.<q>Your banks can now bend the laws of economics to create wealth from nothing. The money is so real it creates its own pocket universes of pure profit.</q>',
                 price: 5e67, // 50 unvigintillion
                 icon: [13, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
@@ -1000,14 +1000,14 @@ window.JNEData = {
                     return Game.Objects['Bank'] && Game.Objects['Bank'].amount >= 1200;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Dough Jones clearance',
                 type: 'discount',
-                desc: 'Banks cost <b>5%</b> less.',
-                ddesc: 'Banks cost <b>5%</b> less.<q>The market dipped; we scooped vault carpeting and gold-plated clipboards by the pallet. Buy low, bank lower.</q>',
+                desc: 'Banks cost <b>15%</b> less.',
+                ddesc: 'Banks cost <b>15%</b> less.<q>The market dipped; we scooped vault carpeting and gold-plated clipboards by the pallet. Buy low, bank lower.</q>',
                 price: 5e69, // 5 duovigintillion
                 icon: [13, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Bank',
@@ -1018,8 +1018,8 @@ window.JNEData = {
             {
                 name: 'Tithe punch cards',
                 type: 'discount',
-                desc: 'Temples cost <b>5%</b> less.',
-                ddesc: 'Temples cost <b>5%</b> less.<q>Pray ten times, the eleventh comes with a coupon. Blessings accrue interest; salvation may vary.</q>',
+                desc: 'Temples cost <b>15%</b> less.',
+                ddesc: 'Temples cost <b>15%</b> less.<q>Pray ten times, the eleventh comes with a coupon. Blessings accrue interest; salvation may vary.</q>',
                 price: 5e50, // 500 quindecillion
                 icon: [14, 0, 'custom'], // Matches 750 threshold (index 0)
                 building: 'Temple',
@@ -1029,8 +1029,8 @@ window.JNEData = {
             },
             {
                 name: 'Quantum divine intervention',
-                desc: 'Temples are <b>8%</b> more efficient.',
-                ddesc: 'Temples are <b>8%</b> more efficient.<q>Your temples can now summon deities from quantum superposition states. The gods are so powerful they can answer prayers before they\'re even made.</q>',
+                desc: 'Temples are <b>25%</b> more efficient.',
+                ddesc: 'Temples are <b>25%</b> more efficient.<q>Your temples can now summon deities from quantum superposition states. The gods are so powerful they can answer prayers before they\'re even made.</q>',
                 price: 5e52, // 50 sexdecillion
                 icon: [14, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
@@ -1039,14 +1039,14 @@ window.JNEData = {
                     return Game.Objects['Temple'] && Game.Objects['Temple'].amount >= 800;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Relic replica racks',
                 type: 'discount',
-                desc: 'Temples cost <b>5%</b> less.',
-                ddesc: 'Temples cost <b>5%</b> less.<q>Authentically inauthentic! Perfect for display, fundraising, and keeping the real relics safe in a sock drawer.</q>',
+                desc: 'Temples cost <b>15%</b> less.',
+                ddesc: 'Temples cost <b>15%</b> less.<q>Authentically inauthentic! Perfect for display, fundraising, and keeping the real relics safe in a sock drawer.</q>',
                 price: 5e54, // 5 septendecillion
                 icon: [14, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Temple',
@@ -1056,8 +1056,8 @@ window.JNEData = {
             },
             {
                 name: 'Temporal prayer loops',
-                desc: 'Temples are <b>8%</b> more efficient.',
-                ddesc: 'Temples are <b>8%</b> more efficient.<q>Your temples can create temporal loops that allow prayers to be answered in the past, present, and future simultaneously. The divine favor is so strong it creates time paradoxes.</q>',
+                desc: 'Temples are <b>25%</b> more efficient.',
+                ddesc: 'Temples are <b>25%</b> more efficient.<q>Your temples can create temporal loops that allow prayers to be answered in the past, present, and future simultaneously. The divine favor is so strong it creates time paradoxes.</q>',
                 price: 5e56, // 500 septendecillion
                 icon: [14, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
@@ -1066,14 +1066,14 @@ window.JNEData = {
                     return Game.Objects['Temple'] && Game.Objects['Temple'].amount >= 900;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Incense refill program',
                 type: 'discount',
-                desc: 'Temples cost <b>5%</b> less.',
-                ddesc: 'Temples cost <b>5%</b> less.<q>Bring back your incense stubs for a discount on fresh sticks. Smells like savings (and nutmeg).</q>',
+                desc: 'Temples cost <b>15%</b> less.',
+                ddesc: 'Temples cost <b>15%</b> less.<q>Bring back your incense stubs for a discount on fresh sticks. Smells like savings (and nutmeg).</q>',
                 price: 5e58, // 50 octodecillion
                 icon: [14, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Temple',
@@ -1083,8 +1083,8 @@ window.JNEData = {
             },
             {
                 name: 'Dimensional deity summoning',
-                desc: 'Temples are <b>8%</b> more efficient.',
-                ddesc: 'Temples are <b>8%</b> more efficient.<q>Your temples can now summon gods from parallel dimensions and alternate pantheons. The divine power is so overwhelming it threatens the fabric of reality.</q>',
+                desc: 'Temples are <b>25%</b> more efficient.',
+                ddesc: 'Temples are <b>25%</b> more efficient.<q>Your temples can now summon gods from parallel dimensions and alternate pantheons. The divine power is so overwhelming it threatens the fabric of reality.</q>',
                 price: 5e60, // 5 novemdecillion
                 icon: [14, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
@@ -1093,14 +1093,14 @@ window.JNEData = {
                     return Game.Objects['Temple'] && Game.Objects['Temple'].amount >= 1000;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Chant-o-matic hymn reels',
                 type: 'discount',
-                desc: 'Temples cost <b>5%</b> less.',
-                ddesc: 'Temples cost <b>5%</b> less.<q>Wind them up for a full liturgical set in C Major. Now with extended Amen remix.</q>',
+                desc: 'Temples cost <b>15%</b> less.',
+                ddesc: 'Temples cost <b>15%</b> less.<q>Wind them up for a full liturgical set in C Major. Now with extended Amen remix.</q>',
                 price: 5e62, // 500 novemdecillion
                 icon: [14, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Temple',
@@ -1110,8 +1110,8 @@ window.JNEData = {
             },
             {
                 name: 'Singularity divine consciousness',
-                desc: 'Temples are <b>8%</b> more efficient.',
-                ddesc: 'Temples are <b>8%</b> more efficient.<q>Your temples now house artificial superintelligence that has achieved divine consciousness. The AI gods are so advanced they can create and destroy universes at will.</q>',
+                desc: 'Temples are <b>25%</b> more efficient.',
+                ddesc: 'Temples are <b>25%</b> more efficient.<q>Your temples now house artificial superintelligence that has achieved divine consciousness. The AI gods are so advanced they can create and destroy universes at will.</q>',
                 price: 5e64, // 50 vigintillion
                 icon: [14, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
@@ -1120,14 +1120,14 @@ window.JNEData = {
                     return Game.Objects['Temple'] && Game.Objects['Temple'].amount >= 1100;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Pew-per-view sponsorships',
                 type: 'discount',
-                desc: 'Temples cost <b>5%</b> less.',
-                ddesc: 'Temples cost <b>5%</b> less.<q>Local businesses sponsor your pews. Sit in Savings Row, brought to you by Discount Chalice Emporium.</q>',
+                desc: 'Temples cost <b>15%</b> less.',
+                ddesc: 'Temples cost <b>15%</b> less.<q>Local businesses sponsor your pews. Sit in Savings Row, brought to you by Discount Chalice Emporium.</q>',
                 price: 5e66, // 5 unvigintillion
                 icon: [14, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Temple',
@@ -1137,8 +1137,8 @@ window.JNEData = {
             },
             {
                 name: 'Reality-warping divinity',
-                desc: 'Temples are <b>8%</b> more efficient.',
-                ddesc: 'Temples are <b>8%</b> more efficient.<q>Your temples can now bend the laws of reality to create divine miracles on demand. The divine power is so overwhelming it creates pocket universes of pure holiness.</q>',
+                desc: 'Temples are <b>25%</b> more efficient.',
+                ddesc: 'Temples are <b>25%</b> more efficient.<q>Your temples can now bend the laws of reality to create divine miracles on demand. The divine power is so overwhelming it creates pocket universes of pure holiness.</q>',
                 price: 5e68, // 500 unvigintillion
                 icon: [14, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
@@ -1147,14 +1147,14 @@ window.JNEData = {
                     return Game.Objects['Temple'] && Game.Objects['Temple'].amount >= 1200;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Sacred site tax amnesty',
                 type: 'discount',
-                desc: 'Temples cost <b>5%</b> less.',
-                ddesc: 'Temples cost <b>5%</b> less.<q>Pilgrims rejoice; accountants rejoice harder. Certain restrictions (and miracles) apply.</q>',
+                desc: 'Temples cost <b>15%</b> less.',
+                ddesc: 'Temples cost <b>15%</b> less.<q>Pilgrims rejoice; accountants rejoice harder. Certain restrictions (and miracles) apply.</q>',
                 price: 5e70, // 50 duovigintillion
                 icon: [14, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Temple',
@@ -1165,8 +1165,8 @@ window.JNEData = {
             {
                 name: 'Wand warranty returns',
                 type: 'discount',
-                desc: 'Wizard towers cost <b>5%</b> less.',
-                ddesc: 'Wizard towers cost <b>5%</b> less.<q>Returned within 30 days of transmogrification. Minor scorch marks add character.</q>',
+                desc: 'Wizard towers cost <b>15%</b> less.',
+                ddesc: 'Wizard towers cost <b>15%</b> less.<q>Returned within 30 days of transmogrification. Minor scorch marks add character.</q>',
                 price: 5e51, // 5 sexdecillion
                 icon: [15, 0, 'custom'], // Matches 750 threshold (index 0)
                 building: 'Wizard tower',
@@ -1176,8 +1176,8 @@ window.JNEData = {
             },
             {
                 name: 'Arcane resonance',
-                desc: 'Wizard towers are <b>8%</b> more efficient.',
-                ddesc: 'Wizard towers are <b>8%</b> more efficient.<q>Your wizard towers have learned to harmonize their magical energies, creating spells that resonate across the fabric of reality itself. When they work together, their incantations create symphonies of pure arcane power.</q>',
+                desc: 'Wizard towers are <b>25%</b> more efficient.',
+                ddesc: 'Wizard towers are <b>25%</b> more efficient.<q>Your wizard towers have learned to harmonize their magical energies, creating spells that resonate across the fabric of reality itself. When they work together, their incantations create symphonies of pure arcane power.</q>',
                 price: 5e53, // 500 sexdecillion
                 icon: [15, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
@@ -1186,14 +1186,14 @@ window.JNEData = {
                     return Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].amount >= 800;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Grimoire remainder sale',
                 type: 'discount',
-                desc: 'Wizard towers cost <b>5%</b> less.',
-                ddesc: 'Wizard towers cost <b>5%</b> less.<q>Spellbooks with the last page missing. The twist ending is cheaper anyway.</q>',
+                desc: 'Wizard towers cost <b>15%</b> less.',
+                ddesc: 'Wizard towers cost <b>15%</b> less.<q>Spellbooks with the last page missing. The twist ending is cheaper anyway.</q>',
                 price: 5e55, // 50 septendecillion
                 icon: [15, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Wizard tower',
@@ -1203,8 +1203,8 @@ window.JNEData = {
             },
             {
                 name: 'Spell weaving',
-                desc: 'Wizard towers are <b>8%</b> more efficient.',
-                ddesc: 'Wizard towers are <b>8%</b> more efficient.<q>Your wizard towers have mastered the ancient art of spell weaving, combining multiple enchantments into complex magical tapestries. Each spell is now a work of art that enhances cookie production while creating beautiful magical effects.</q>',
+                desc: 'Wizard towers are <b>25%</b> more efficient.',
+                ddesc: 'Wizard towers are <b>25%</b> more efficient.<q>Your wizard towers have mastered the ancient art of spell weaving, combining multiple enchantments into complex magical tapestries. Each spell is now a work of art that enhances cookie production while creating beautiful magical effects.</q>',
                 price: 5e57, // 5 octodecillion
                 icon: [15, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
@@ -1213,14 +1213,14 @@ window.JNEData = {
                     return Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].amount >= 900;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Robes with "character"',
                 type: 'discount',
-                desc: 'Wizard towers cost <b>5%</b> less.',
-                ddesc: 'Wizard towers cost <b>5%</b> less.<q>Vintage, moth-kissed, and pockets full of mysterious lint. Very arcane, very affordable.</q>',
+                desc: 'Wizard towers cost <b>15%</b> less.',
+                ddesc: 'Wizard towers cost <b>15%</b> less.<q>Vintage, moth-kissed, and pockets full of mysterious lint. Very arcane, very affordable.</q>',
                 price: 5e59, // 500 octodecillion
                 icon: [15, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Wizard tower',
@@ -1230,8 +1230,8 @@ window.JNEData = {
             },
             {
                 name: 'Mystical attunement',
-                desc: 'Wizard towers are <b>8%</b> more efficient.',
-                ddesc: 'Wizard towers are <b>8%</b> more efficient.<q>Your wizard towers have achieved perfect mystical attunement, allowing them to sense and manipulate the fundamental forces of magic. They can now channel raw magical energy directly into cookie production, creating treats that taste like pure enchantment.</q>',
+                desc: 'Wizard towers are <b>25%</b> more efficient.',
+                ddesc: 'Wizard towers are <b>25%</b> more efficient.<q>Your wizard towers have achieved perfect mystical attunement, allowing them to sense and manipulate the fundamental forces of magic. They can now channel raw magical energy directly into cookie production, creating treats that taste like pure enchantment.</q>',
                 price: 5e61, // 50 novemdecillion
                 icon: [15, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
@@ -1240,14 +1240,14 @@ window.JNEData = {
                     return Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].amount >= 1000;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Familiar foster program',
                 type: 'discount',
-                desc: 'Wizard towers cost <b>5%</b> less.',
-                ddesc: 'Wizard towers cost <b>5%</b> less.<q>Give a stray imp a home and it will fetch reagents, guard cauldrons, and occasionally judge your hat.</q>',
+                desc: 'Wizard towers cost <b>15%</b> less.',
+                ddesc: 'Wizard towers cost <b>15%</b> less.<q>Give a stray imp a home and it will fetch reagents, guard cauldrons, and occasionally judge your hat.</q>',
                 price: 5e63, // 5 vigintillion
                 icon: [15, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Wizard tower',
@@ -1257,8 +1257,8 @@ window.JNEData = {
             },
             {
                 name: 'Ethereal manifestation',
-                desc: 'Wizard towers are <b>8%</b> more efficient.',
-                ddesc: 'Wizard towers are <b>8%</b> more efficient.<q>Your wizard towers have learned to manifest their magical abilities in the ethereal plane, allowing them to cast spells that exist beyond normal reality. The cookies they produce seem to exist in a state of pure magical potential.</q>',
+                desc: 'Wizard towers are <b>25%</b> more efficient.',
+                ddesc: 'Wizard towers are <b>25%</b> more efficient.<q>Your wizard towers have learned to manifest their magical abilities in the ethereal plane, allowing them to cast spells that exist beyond normal reality. The cookies they produce seem to exist in a state of pure magical potential.</q>',
                 price: 5e65, // 500 vigintillion
                 icon: [15, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
@@ -1267,14 +1267,14 @@ window.JNEData = {
                     return Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].amount >= 1100;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Council scroll stipends',
                 type: 'discount',
-                desc: 'Wizard towers cost <b>5%</b> less.',
-                ddesc: 'Wizard towers cost <b>5%</b> less.<q>Stipends for parchment, ink, and the occasional sworn oath. Please initial with runes.</q>',
+                desc: 'Wizard towers cost <b>15%</b> less.',
+                ddesc: 'Wizard towers cost <b>15%</b> less.<q>Stipends for parchment, ink, and the occasional sworn oath. Please initial with runes.</q>',
                 price: 5e67, // 50 unvigintillion
                 icon: [15, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Wizard tower',
@@ -1284,8 +1284,8 @@ window.JNEData = {
             },
             {
                 name: 'Transcendent thaumaturgy',
-                desc: 'Wizard towers are <b>8%</b> more efficient.',
-                ddesc: 'Wizard towers are <b>8%</b> more efficient.<q>Your wizard towers have transcended the limitations of conventional magic, achieving a state of pure thaumaturgical enlightenment. They can now create cookies that embody the very essence of magical possibility itself.</q>',
+                desc: 'Wizard towers are <b>25%</b> more efficient.',
+                ddesc: 'Wizard towers are <b>25%</b> more efficient.<q>Your wizard towers have transcended the limitations of conventional magic, achieving a state of pure thaumaturgical enlightenment. They can now create cookies that embody the very essence of magical possibility itself.</q>',
                 price: 5e69, // 5 duovigintillion
                 icon: [15, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
@@ -1294,14 +1294,14 @@ window.JNEData = {
                     return Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].amount >= 1200;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Broom-sharing scheme',
                 type: 'discount',
-                desc: 'Wizard towers cost <b>5%</b> less.',
-                ddesc: 'Wizard towers cost <b>5%</b> less.<q>One broom, many roommates. Please schedule your midnight flights responsibly.</q>',
+                desc: 'Wizard towers cost <b>15%</b> less.',
+                ddesc: 'Wizard towers cost <b>15%</b> less.<q>One broom, many roommates. Please schedule your midnight flights responsibly.</q>',
                 price: 5e71, // 500 duovigintillion
                 icon: [15, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Wizard tower',
@@ -1312,8 +1312,8 @@ window.JNEData = {
             {
                 name: 'Retired cargo pods',
                 type: 'discount',
-                desc: 'Shipments cost <b>5%</b> less.',
-                ddesc: 'Shipments cost <b>5%</b> less.<q>Previously orbited. Lightly meteor-kissed. Still airtight (mostly).</q>',
+                desc: 'Shipments cost <b>15%</b> less.',
+                ddesc: 'Shipments cost <b>15%</b> less.<q>Previously orbited. Lightly meteor-kissed. Still airtight (mostly).</q>',
                 price: 5e52, // 50 sexdecillion
                 icon: [5, 0, 'custom'], // Matches 750 threshold (index 0)
                 building: 'Shipment',
@@ -1323,8 +1323,8 @@ window.JNEData = {
             },
             {
                 name: 'Hypervelocity transport',
-                desc: 'Shipments are <b>8%</b> more efficient.',
-                ddesc: 'Shipments are <b>8%</b> more efficient.<q>Your shipments have achieved speeds that defy the laws of physics, delivering cookies faster than light itself. The delivery vehicles leave trails of pure velocity in their wake, creating beautiful streaks of cookie-scented energy.</q>',
+                desc: 'Shipments are <b>25%</b> more efficient.',
+                ddesc: 'Shipments are <b>25%</b> more efficient.<q>Your shipments have achieved speeds that defy the laws of physics, delivering cookies faster than light itself. The delivery vehicles leave trails of pure velocity in their wake, creating beautiful streaks of cookie-scented energy.</q>',
                 price: 5e54, // 5 septendecillion
                 icon: [5, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
@@ -1333,14 +1333,14 @@ window.JNEData = {
                     return Game.Objects['Shipment'] && Game.Objects['Shipment'].amount >= 800;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Container co-op cards',
                 type: 'discount',
-                desc: 'Shipments cost <b>5%</b> less.',
-                ddesc: 'Shipments cost <b>5%</b> less.<q>Members share containers, points, and an inexplicable fondness for pallet forts.</q>',
+                desc: 'Shipments cost <b>15%</b> less.',
+                ddesc: 'Shipments cost <b>15%</b> less.<q>Members share containers, points, and an inexplicable fondness for pallet forts.</q>',
                 price: 5e56, // 500 septendecillion
                 icon: [5, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Shipment',
@@ -1350,8 +1350,8 @@ window.JNEData = {
             },
             {
                 name: 'Spatial compression',
-                desc: 'Shipments are <b>8%</b> more efficient.',
-                ddesc: 'Shipments are <b>8%</b> more efficient.<q>Your shipments have mastered the art of spatial compression, allowing them to fold space itself to reduce delivery distances to zero. The cookies arrive before they\'re even sent, creating delicious temporal paradoxes.</q>',
+                desc: 'Shipments are <b>25%</b> more efficient.',
+                ddesc: 'Shipments are <b>25%</b> more efficient.<q>Your shipments have mastered the art of spatial compression, allowing them to fold space itself to reduce delivery distances to zero. The cookies arrive before they\'re even sent, creating delicious temporal paradoxes.</q>',
                 price: 5e58, // 50 octodecillion
                 icon: [5, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
@@ -1360,14 +1360,14 @@ window.JNEData = {
                     return Game.Objects['Shipment'] && Game.Objects['Shipment'].amount >= 900;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Reusable launch crates',
                 type: 'discount',
-                desc: 'Shipments cost <b>5%</b> less.',
-                ddesc: 'Shipments cost <b>5%</b> less.<q>Return for deposit and a complimentary dent count. Blast off again and again.</q>',
+                desc: 'Shipments cost <b>15%</b> less.',
+                ddesc: 'Shipments cost <b>15%</b> less.<q>Return for deposit and a complimentary dent count. Blast off again and again.</q>',
                 price: 5e60, // 5 novemdecillion
                 icon: [5, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Shipment',
@@ -1377,8 +1377,8 @@ window.JNEData = {
             },
             {
                 name: 'Dimensional routing',
-                desc: 'Shipments are <b>8%</b> more efficient.',
-                ddesc: 'Shipments are <b>8%</b> more efficient.<q>Your shipments can navigate through the hidden dimensions between realities, finding the shortest path through the multiverse. Each delivery route is a masterpiece of interdimensional cartography.</q>',
+                desc: 'Shipments are <b>25%</b> more efficient.',
+                ddesc: 'Shipments are <b>25%</b> more efficient.<q>Your shipments can navigate through the hidden dimensions between realities, finding the shortest path through the multiverse. Each delivery route is a masterpiece of interdimensional cartography.</q>',
                 price: 5e62, // 500 novemdecillion
                 icon: [5, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
@@ -1387,14 +1387,14 @@ window.JNEData = {
                     return Game.Objects['Shipment'] && Game.Objects['Shipment'].amount >= 1000;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Autodocker apprentices',
                 type: 'discount',
-                desc: 'Shipments cost <b>5%</b> less.',
-                ddesc: 'Shipments cost <b>5%</b> less.<q>They learn by bumping every harbor gently, then sending a heartfelt apology ping.</q>',
+                desc: 'Shipments cost <b>15%</b> less.',
+                ddesc: 'Shipments cost <b>15%</b> less.<q>They learn by bumping every harbor gently, then sending a heartfelt apology ping.</q>',
                 price: 5e64, // 50 vigintillion
                 icon: [5, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Shipment',
@@ -1404,8 +1404,8 @@ window.JNEData = {
             },
             {
                 name: 'Quantum teleportation',
-                desc: 'Shipments are <b>8%</b> more efficient.',
-                ddesc: 'Shipments are <b>8%</b> more efficient.<q>Your shipments have perfected quantum teleportation, allowing cookies to be instantaneously transmitted across any distance. The quantum entanglement ensures that every cookie arrives in perfect condition, no matter how far it travels.</q>',
+                desc: 'Shipments are <b>25%</b> more efficient.',
+                ddesc: 'Shipments are <b>25%</b> more efficient.<q>Your shipments have perfected quantum teleportation, allowing cookies to be instantaneously transmitted across any distance. The quantum entanglement ensures that every cookie arrives in perfect condition, no matter how far it travels.</q>',
                 price: 5e66, // 5 unvigintillion
                 icon: [5, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
@@ -1414,14 +1414,14 @@ window.JNEData = {
                     return Game.Objects['Shipment'] && Game.Objects['Shipment'].amount >= 1100;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Route rebate vouchers',
                 type: 'discount',
-                desc: 'Shipments cost <b>5%</b> less.',
-                ddesc: 'Shipments cost <b>5%</b> less.<q>Redeem along preferred lanes for discounts and occasional scenic detours.</q>',
+                desc: 'Shipments cost <b>15%</b> less.',
+                ddesc: 'Shipments cost <b>15%</b> less.<q>Redeem along preferred lanes for discounts and occasional scenic detours.</q>',
                 price: 5e68, // 500 unvigintillion
                 icon: [5, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Shipment',
@@ -1431,8 +1431,8 @@ window.JNEData = {
             },
             {
                 name: 'Causality manipulation',
-                desc: 'Shipments are <b>8%</b> more efficient.',
-                ddesc: 'Shipments are <b>8%</b> more efficient.<q>Your shipments can manipulate the very fabric of causality, ensuring that cookies are delivered before they\'re even ordered. The delivery system is so advanced it creates its own demand through temporal manipulation.</q>',
+                desc: 'Shipments are <b>25%</b> more efficient.',
+                ddesc: 'Shipments are <b>25%</b> more efficient.<q>Your shipments can manipulate the very fabric of causality, ensuring that cookies are delivered before they\'re even ordered. The delivery system is so advanced it creates its own demand through temporal manipulation.</q>',
                 price: 5e70, // 50 duovigintillion
                 icon: [5, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
@@ -1441,14 +1441,14 @@ window.JNEData = {
                     return Game.Objects['Shipment'] && Game.Objects['Shipment'].amount >= 1200;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Free-trade cookie ports',
                 type: 'discount',
-                desc: 'Shipments cost <b>5%</b> less.',
-                ddesc: 'Shipments cost <b>5%</b> less.<q>Tariffs take a coffee break, cranes work overtime. Paperwork now served with biscotti.</q>',
+                desc: 'Shipments cost <b>15%</b> less.',
+                ddesc: 'Shipments cost <b>15%</b> less.<q>Tariffs take a coffee break, cranes work overtime. Paperwork now served with biscotti.</q>',
                 price: 5e72, // 5 trevigintillion
                 icon: [5, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Shipment',
@@ -1459,8 +1459,8 @@ window.JNEData = {
             {
                 name: 'Beaker buybacks',
                 type: 'discount',
-                desc: 'Alchemy labs cost <b>5%</b> less.',
-                ddesc: 'Alchemy labs cost <b>5%</b> less.<q>Trade in cracked glassware for shiny almost-new beakers. Some have personality bubbles.</q>',
+                desc: 'Alchemy labs cost <b>15%</b> less.',
+                ddesc: 'Alchemy labs cost <b>15%</b> less.<q>Trade in cracked glassware for shiny almost-new beakers. Some have personality bubbles.</q>',
                 price: 5e53, // 500 sexdecillion
                 icon: [6, 0, 'custom'], // Matches 750 threshold (index 0)
                 building: 'Alchemy lab',
@@ -1470,8 +1470,8 @@ window.JNEData = {
             },
             {
                 name: 'Essence distillation',
-                desc: 'Alchemy labs are <b>8%</b> more efficient.',
-                ddesc: 'Alchemy labs are <b>8%</b> more efficient.<q>Your alchemy labs have mastered the art of essence distillation, extracting the purest flavors from the most exotic ingredients. Each transmutation creates flavors that transcend the boundaries of taste itself.</q>',
+                desc: 'Alchemy labs are <b>25%</b> more efficient.',
+                ddesc: 'Alchemy labs are <b>25%</b> more efficient.<q>Your alchemy labs have mastered the art of essence distillation, extracting the purest flavors from the most exotic ingredients. Each transmutation creates flavors that transcend the boundaries of taste itself.</q>',
                 price: 5e55, // 50 septendecillion
                 icon: [6, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
@@ -1480,14 +1480,14 @@ window.JNEData = {
                     return Game.Objects['Alchemy lab'] && Game.Objects['Alchemy lab'].amount >= 800;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Philosopher\'s pebbles',
                 type: 'discount',
-                desc: 'Alchemy labs cost <b>5%</b> less.',
-                ddesc: 'Alchemy labs cost <b>5%</b> less.<q>Bulk-bought bits of the legendary rock. Not quite stones—more like budget-friendly pebbles with surprisingly similar savings.</q>',
+                desc: 'Alchemy labs cost <b>15%</b> less.',
+                ddesc: 'Alchemy labs cost <b>15%</b> less.<q>Bulk-bought bits of the legendary rock. Not quite stones—more like budget-friendly pebbles with surprisingly similar savings.</q>',
                 price: 5e57, // 5 octodecillion
                 icon: [6, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Alchemy lab',
@@ -1497,8 +1497,8 @@ window.JNEData = {
             },
             {
                 name: 'Molecular gastronomy',
-                desc: 'Alchemy labs are <b>8%</b> more efficient.',
-                ddesc: 'Alchemy labs are <b>8%</b> more efficient.<q>Your alchemy labs have pioneered molecular gastronomy techniques, manipulating ingredients at the atomic level to create cookies with impossible textures and flavors that defy conventional baking.</q>',
+                desc: 'Alchemy labs are <b>25%</b> more efficient.',
+                ddesc: 'Alchemy labs are <b>25%</b> more efficient.<q>Your alchemy labs have pioneered molecular gastronomy techniques, manipulating ingredients at the atomic level to create cookies with impossible textures and flavors that defy conventional baking.</q>',
                 price: 5e59, // 500 octodecillion
                 icon: [6, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
@@ -1507,14 +1507,14 @@ window.JNEData = {
                     return Game.Objects['Alchemy lab'] && Game.Objects['Alchemy lab'].amount >= 900;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Cool-running crucibles',
                 type: 'discount',
-                desc: 'Alchemy labs cost <b>5%</b> less.',
-                ddesc: 'Alchemy labs cost <b>5%</b> less.<q>They simmer at savings and rarely explode out of spite. Rarely.</q>',
+                desc: 'Alchemy labs cost <b>15%</b> less.',
+                ddesc: 'Alchemy labs cost <b>15%</b> less.<q>They simmer at savings and rarely explode out of spite. Rarely.</q>',
                 price: 5e61, // 50 novemdecillion
                 icon: [6, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Alchemy lab',
@@ -1524,8 +1524,8 @@ window.JNEData = {
             },
             {
                 name: 'Flavor alchemy',
-                desc: 'Alchemy labs are <b>8%</b> more efficient.',
-                ddesc: 'Alchemy labs are <b>8%</b> more efficient.<q>Your alchemy labs have unlocked the secrets of flavor alchemy, combining ingredients in ways that create entirely new taste sensations. Each cookie is a masterpiece of culinary chemistry.</q>',
+                desc: 'Alchemy labs are <b>25%</b> more efficient.',
+                ddesc: 'Alchemy labs are <b>25%</b> more efficient.<q>Your alchemy labs have unlocked the secrets of flavor alchemy, combining ingredients in ways that create entirely new taste sensations. Each cookie is a masterpiece of culinary chemistry.</q>',
                 price: 5e63, // 5 vigintillion
                 icon: [6, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
@@ -1534,14 +1534,14 @@ window.JNEData = {
                     return Game.Objects['Alchemy lab'] && Game.Objects['Alchemy lab'].amount >= 1000;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Batch homunculi permits',
                 type: 'discount',
-                desc: 'Alchemy labs cost <b>5%</b> less.',
-                ddesc: 'Alchemy labs cost <b>5%</b> less.<q>Legal recognition for small goo people doing big batch work. Includes tiny hairnets.</q>',
+                desc: 'Alchemy labs cost <b>15%</b> less.',
+                ddesc: 'Alchemy labs cost <b>15%</b> less.<q>Legal recognition for small goo people doing big batch work. Includes tiny hairnets.</q>',
                 price: 5e65, // 500 vigintillion
                 icon: [6, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Alchemy lab',
@@ -1551,8 +1551,8 @@ window.JNEData = {
             },
             {
                 name: 'Culinary transmutation',
-                desc: 'Alchemy labs are <b>8%</b> more efficient.',
-                ddesc: 'Alchemy labs are <b>8%</b> more efficient.<q>Your alchemy labs can transmute any ingredient into the perfect cookie component, turning lead into chocolate and water into vanilla. The alchemical reactions are pure culinary magic.</q>',
+                desc: 'Alchemy labs are <b>25%</b> more efficient.',
+                ddesc: 'Alchemy labs are <b>25%</b> more efficient.<q>Your alchemy labs can transmute any ingredient into the perfect cookie component, turning lead into chocolate and water into vanilla. The alchemical reactions are pure culinary magic.</q>',
                 price: 5e67, // 50 unvigintillion
                 icon: [6, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
@@ -1561,14 +1561,14 @@ window.JNEData = {
                     return Game.Objects['Alchemy lab'] && Game.Objects['Alchemy lab'].amount >= 1100;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Guild reagent rates',
                 type: 'discount',
-                desc: 'Alchemy labs cost <b>5%</b> less.',
-                ddesc: 'Alchemy labs cost <b>5%</b> less.<q>Member pricing on phoenix down, dragonfruit essence, and ethically sourced eldritch goo.</q>',
+                desc: 'Alchemy labs cost <b>15%</b> less.',
+                ddesc: 'Alchemy labs cost <b>15%</b> less.<q>Member pricing on phoenix down, dragonfruit essence, and ethically sourced eldritch goo.</q>',
                 price: 5e69, // 5 duovigintillion
                 icon: [6, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Alchemy lab',
@@ -1578,8 +1578,8 @@ window.JNEData = {
             },
             {
                 name: 'Gastronomic enlightenment',
-                desc: 'Alchemy labs are <b>8%</b> more efficient.',
-                ddesc: 'Alchemy labs are <b>8%</b> more efficient.<q>Your alchemy labs have achieved gastronomic enlightenment, understanding the fundamental nature of taste itself. They can now create cookies that embody the very essence of deliciousness.</q>',
+                desc: 'Alchemy labs are <b>25%</b> more efficient.',
+                ddesc: 'Alchemy labs are <b>25%</b> more efficient.<q>Your alchemy labs have achieved gastronomic enlightenment, understanding the fundamental nature of taste itself. They can now create cookies that embody the very essence of deliciousness.</q>',
                 price: 5e71, // 500 duovigintillion
                 icon: [6, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
@@ -1588,14 +1588,14 @@ window.JNEData = {
                     return Game.Objects['Alchemy lab'] && Game.Objects['Alchemy lab'].amount >= 1200;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: '"Mostly lead" gold grants',
                 type: 'discount',
-                desc: 'Alchemy labs cost <b>5%</b> less.',
-                ddesc: 'Alchemy labs cost <b>5%</b> less.<q>Funding for ambitious projects that turn profits into more profits, occasionally metal into other metal.</q>',
+                desc: 'Alchemy labs cost <b>15%</b> less.',
+                ddesc: 'Alchemy labs cost <b>15%</b> less.<q>Funding for ambitious projects that turn profits into more profits, occasionally metal into other metal.</q>',
                 price: 5e73, // 50 trevigintillion
                 icon: [6, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Alchemy lab',
@@ -1606,8 +1606,8 @@ window.JNEData = {
             {
                 name: 'Pre-owned ring frames',
                 type: 'discount',
-                desc: 'Portals cost <b>5%</b> less.',
-                ddesc: 'Portals cost <b>5%</b> less.<q>Lightly used by previous dimensions. May creak audibly when reality bends.</q>',
+                desc: 'Portals cost <b>15%</b> less.',
+                ddesc: 'Portals cost <b>15%</b> less.<q>Lightly used by previous dimensions. May creak audibly when reality bends.</q>',
                 price: 5e54, // 5 septendecillion
                 icon: [7, 0, 'custom'], // Matches 750 threshold (index 0)
                 building: 'Portal',
@@ -1617,8 +1617,8 @@ window.JNEData = {
             },
             {
                 name: 'Dimensional gateways',
-                desc: 'Portals are <b>8%</b> more efficient.',
-                ddesc: 'Portals are <b>8%</b> more efficient.<q>Your portals have evolved into true dimensional gateways, connecting distant worlds and realities. Each portal is a masterpiece of spatial engineering that bridges the impossible.</q>',
+                desc: 'Portals are <b>25%</b> more efficient.',
+                ddesc: 'Portals are <b>25%</b> more efficient.<q>Your portals have evolved into true dimensional gateways, connecting distant worlds and realities. Each portal is a masterpiece of spatial engineering that bridges the impossible.</q>',
                 price: 5e56, // 500 septendecillion
                 icon: [7, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
@@ -1627,14 +1627,14 @@ window.JNEData = {
                     return Game.Objects['Portal'] && Game.Objects['Portal'].amount >= 800;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Anchor warehouse club',
                 type: 'discount',
-                desc: 'Portals cost <b>5%</b> less.',
-                ddesc: 'Portals cost <b>5%</b> less.<q>Wholesale anchors! Keep your gateways grounded, your prices too.</q>',
+                desc: 'Portals cost <b>15%</b> less.',
+                ddesc: 'Portals cost <b>15%</b> less.<q>Wholesale anchors! Keep your gateways grounded, your prices too.</q>',
                 price: 5e58, // 50 octodecillion
                 icon: [7, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Portal',
@@ -1644,8 +1644,8 @@ window.JNEData = {
             },
             {
                 name: 'Reality bridges',
-                desc: 'Portals are <b>8%</b> more efficient.',
-                ddesc: 'Portals are <b>8%</b> more efficient.<q>Your portals can now create stable bridges between parallel universes, allowing cookies to flow freely across the multiverse. The connections are so strong they create permanent trade routes.</q>',
+                desc: 'Portals are <b>25%</b> more efficient.',
+                ddesc: 'Portals are <b>25%</b> more efficient.<q>Your portals can now create stable bridges between parallel universes, allowing cookies to flow freely across the multiverse. The connections are so strong they create permanent trade routes.</q>',
                 price: 5e60, // 5 novemdecillion
                 icon: [7, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
@@ -1654,14 +1654,14 @@ window.JNEData = {
                     return Game.Objects['Portal'] && Game.Objects['Portal'].amount >= 900;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Passive rift baffles',
                 type: 'discount',
-                desc: 'Portals cost <b>5%</b> less.',
-                ddesc: 'Portals cost <b>5%</b> less.<q>Simple fins that hush the howling void and cut the utility bill in half.</q>',
+                desc: 'Portals cost <b>15%</b> less.',
+                ddesc: 'Portals cost <b>15%</b> less.<q>Simple fins that hush the howling void and cut the utility bill in half.</q>',
                 price: 5e62, // 500 novemdecillion
                 icon: [7, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Portal',
@@ -1671,8 +1671,8 @@ window.JNEData = {
             },
             {
                 name: 'Spatial conduits',
-                desc: 'Portals are <b>8%</b> more efficient.',
-                ddesc: 'Portals are <b>8%</b> more efficient.<q>Your portals have become spatial conduits, channeling the energy of multiple dimensions into cookie production. The dimensional energy enhances every batch with cosmic flavor.</q>',
+                desc: 'Portals are <b>25%</b> more efficient.',
+                ddesc: 'Portals are <b>25%</b> more efficient.<q>Your portals have become spatial conduits, channeling the energy of multiple dimensions into cookie production. The dimensional energy enhances every batch with cosmic flavor.</q>',
                 price: 5e64, // 50 vigintillion
                 icon: [7, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
@@ -1681,14 +1681,14 @@ window.JNEData = {
                     return Game.Objects['Portal'] && Game.Objects['Portal'].amount >= 1000;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Volunteer gatekeepers',
                 type: 'discount',
-                desc: 'Portals cost <b>5%</b> less.',
-                ddesc: 'Portals cost <b>5%</b> less.<q>Enthusiasts with clipboards who shout "Mind the tear!" and hand out cookies.</q>',
+                desc: 'Portals cost <b>15%</b> less.',
+                ddesc: 'Portals cost <b>15%</b> less.<q>Enthusiasts with clipboards who shout "Mind the tear!" and hand out cookies.</q>',
                 price: 5e66, // 5 unvigintillion
                 icon: [7, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Portal',
@@ -1698,8 +1698,8 @@ window.JNEData = {
             },
             {
                 name: 'Interdimensional highways',
-                desc: 'Portals are <b>8%</b> more efficient.',
-                ddesc: 'Portals are <b>8%</b> more efficient.<q>Your portals form a vast network of interdimensional highways, allowing instant travel between any two points in the multiverse. The cookie trade has never been so efficient.</q>',
+                desc: 'Portals are <b>25%</b> more efficient.',
+                ddesc: 'Portals are <b>25%</b> more efficient.<q>Your portals form a vast network of interdimensional highways, allowing instant travel between any two points in the multiverse. The cookie trade has never been so efficient.</q>',
                 price: 5e68, // 500 unvigintillion
                 icon: [7, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
@@ -1708,14 +1708,14 @@ window.JNEData = {
                     return Game.Objects['Portal'] && Game.Objects['Portal'].amount >= 1100;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Interrealm stipend scrolls',
                 type: 'discount',
-                desc: 'Portals cost <b>5%</b> less.',
-                ddesc: 'Portals cost <b>5%</b> less.<q>Official parchments granting snack stipends to keep doors open and demons docile.</q>',
+                desc: 'Portals cost <b>15%</b> less.',
+                ddesc: 'Portals cost <b>15%</b> less.<q>Official parchments granting snack stipends to keep doors open and demons docile.</q>',
                 price: 5e70, // 50 duovigintillion
                 icon: [7, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Portal',
@@ -1725,8 +1725,8 @@ window.JNEData = {
             },
             {
                 name: 'Cosmic gateways',
-                desc: 'Portals are <b>8%</b> more efficient.',
-                ddesc: 'Portals are <b>8%</b> more efficient.<q>Your portals have transcended mere transportation, becoming cosmic gateways that channel the raw power of creation itself into cookie production. The results are divine.</q>',
+                desc: 'Portals are <b>25%</b> more efficient.',
+                ddesc: 'Portals are <b>25%</b> more efficient.<q>Your portals have transcended mere transportation, becoming cosmic gateways that channel the raw power of creation itself into cookie production. The results are divine.</q>',
                 price: 5e72, // 5 trevigintillion
                 icon: [7, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
@@ -1735,14 +1735,14 @@ window.JNEData = {
                     return Game.Objects['Portal'] && Game.Objects['Portal'].amount >= 1200;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Multiversal enterprise zone',
                 type: 'discount',
-                desc: 'Portals cost <b>5%</b> less.',
-                ddesc: 'Portals cost <b>5%</b> less.<q>Business-friendly realities with tax holidays, physics optional, pastries encouraged.</q>',
+                desc: 'Portals cost <b>15%</b> less.',
+                ddesc: 'Portals cost <b>15%</b> less.<q>Business-friendly realities with tax holidays, physics optional, pastries encouraged.</q>',
                 price: 5e74, // 500 trevigintillion
                 icon: [7, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Portal',
@@ -1753,8 +1753,8 @@ window.JNEData = {
             {
                 name: 'Pre-loved hourglasses',
                 type: 'discount',
-                desc: 'Time machines cost <b>5%</b> less.',
-                ddesc: 'Time machines cost <b>5%</b> less.<q>They\'ve seen some things. Sand flows fine; occasional deja vu included.</q>',
+                desc: 'Time machines cost <b>15%</b> less.',
+                ddesc: 'Time machines cost <b>15%</b> less.<q>They\'ve seen some things. Sand flows fine; occasional deja vu included.</q>',
                 price: 5e55, // 50 septendecillion
                 icon: [8, 0, 'custom'], // Matches 750 threshold (index 0)
                 building: 'Time machine',
@@ -1764,8 +1764,8 @@ window.JNEData = {
             },
             {
                 name: 'Temporal engineering',
-                desc: 'Time machines are <b>8%</b> more efficient.',
-                ddesc: 'Time machines are <b>8%</b> more efficient.<q>Your time machines have mastered the art of temporal engineering, allowing them to harvest the perfect moments from throughout history for cookie production. Each batch contains the essence of a thousand perfect moments.</q>',
+                desc: 'Time machines are <b>25%</b> more efficient.',
+                ddesc: 'Time machines are <b>25%</b> more efficient.<q>Your time machines have mastered the art of temporal engineering, allowing them to harvest the perfect moments from throughout history for cookie production. Each batch contains the essence of a thousand perfect moments.</q>',
                 price: 5e57, // 5 octodecillion
                 icon: [8, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
@@ -1774,14 +1774,14 @@ window.JNEData = {
                     return Game.Objects['Time machine'] && Game.Objects['Time machine'].amount >= 800;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Depreciated timeline scraps',
                 type: 'discount',
-                desc: 'Time machines cost <b>5%</b> less.',
-                ddesc: 'Time machines cost <b>5%</b> less.<q>Leftover future-past parts at clearance prices. Warranty voids itself retroactively.</q>',
+                desc: 'Time machines cost <b>15%</b> less.',
+                ddesc: 'Time machines cost <b>15%</b> less.<q>Leftover future-past parts at clearance prices. Warranty voids itself retroactively.</q>',
                 price: 5e59, // 500 octodecillion
                 icon: [8, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Time machine',
@@ -1791,8 +1791,8 @@ window.JNEData = {
             },
             {
                 name: 'Chronological optimization',
-                desc: 'Time machines are <b>8%</b> more efficient.',
-                ddesc: 'Time machines are <b>8%</b> more efficient.<q>Your time machines can optimize the flow of time itself, ensuring that every second is perfectly utilized for cookie production. The temporal efficiency is beyond measure.</q>',
+                desc: 'Time machines are <b>25%</b> more efficient.',
+                ddesc: 'Time machines are <b>25%</b> more efficient.<q>Your time machines can optimize the flow of time itself, ensuring that every second is perfectly utilized for cookie production. The temporal efficiency is beyond measure.</q>',
                 price: 5e61, // 50 novemdecillion
                 icon: [8, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
@@ -1801,14 +1801,14 @@ window.JNEData = {
                     return Game.Objects['Time machine'] && Game.Objects['Time machine'].amount >= 900;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Off-season flux valves',
                 type: 'discount',
-                desc: 'Time machines cost <b>5%</b> less.',
-                ddesc: 'Time machines cost <b>5%</b> less.<q>Winter flux on summer sale; flows like syrup on a cold morning.</q>',
+                desc: 'Time machines cost <b>15%</b> less.',
+                ddesc: 'Time machines cost <b>15%</b> less.<q>Winter flux on summer sale; flows like syrup on a cold morning.</q>',
                 price: 5e63, // 5 vigintillion
                 icon: [8, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Time machine',
@@ -1818,8 +1818,8 @@ window.JNEData = {
             },
             {
                 name: 'Historical preservation',
-                desc: 'Time machines are <b>8%</b> more efficient.',
-                ddesc: 'Time machines are <b>8%</b> more efficient.<q>Your time machines preserve the finest baking techniques from throughout history, ensuring that ancient wisdom is never lost. Each cookie carries the weight of culinary tradition.</q>',
+                desc: 'Time machines are <b>25%</b> more efficient.',
+                ddesc: 'Time machines are <b>25%</b> more efficient.<q>Your time machines preserve the finest baking techniques from throughout history, ensuring that ancient wisdom is never lost. Each cookie carries the weight of culinary tradition.</q>',
                 price: 5e65, // 500 vigintillion
                 icon: [8, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
@@ -1828,14 +1828,14 @@ window.JNEData = {
                     return Game.Objects['Time machine'] && Game.Objects['Time machine'].amount >= 1000;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Weekend paradox passes',
                 type: 'discount',
-                desc: 'Time machines cost <b>5%</b> less.',
-                ddesc: 'Time machines cost <b>5%</b> less.<q>Unlimited round-trips between Friday and Monday. Terms loop perpetually.</q>',
+                desc: 'Time machines cost <b>15%</b> less.',
+                ddesc: 'Time machines cost <b>15%</b> less.<q>Unlimited round-trips between Friday and Monday. Terms loop perpetually.</q>',
                 price: 5e67, // 50 unvigintillion
                 icon: [8, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Time machine',
@@ -1845,8 +1845,8 @@ window.JNEData = {
             },
             {
                 name: 'Temporal synchronization',
-                desc: 'Time machines are <b>8%</b> more efficient.',
-                ddesc: 'Time machines are <b>8%</b> more efficient.<q>Your time machines can synchronize multiple timelines, allowing cookies to be baked simultaneously across different eras. The temporal coordination is a marvel of engineering.</q>',
+                desc: 'Time machines are <b>25%</b> more efficient.',
+                ddesc: 'Time machines are <b>25%</b> more efficient.<q>Your time machines can synchronize multiple timelines, allowing cookies to be baked simultaneously across different eras. The temporal coordination is a marvel of engineering.</q>',
                 price: 5e69, // 5 duovigintillion
                 icon: [8, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
@@ -1855,14 +1855,14 @@ window.JNEData = {
                     return Game.Objects['Time machine'] && Game.Objects['Time machine'].amount >= 1100;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Department of When grants',
                 type: 'discount',
-                desc: 'Time machines cost <b>5%</b> less.',
-                ddesc: 'Time machines cost <b>5%</b> less.<q>Official funding to keep the clock from quitting and causality from filing complaints.</q>',
+                desc: 'Time machines cost <b>15%</b> less.',
+                ddesc: 'Time machines cost <b>15%</b> less.<q>Official funding to keep the clock from quitting and causality from filing complaints.</q>',
                 price: 5e71, // 500 duovigintillion
                 icon: [8, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Time machine',
@@ -1872,8 +1872,8 @@ window.JNEData = {
             },
             {
                 name: 'Chronological mastery',
-                desc: 'Time machines are <b>8%</b> more efficient.',
-                ddesc: 'Time machines are <b>8%</b> more efficient.<q>Your time machines have achieved complete mastery over time itself, bending the flow of history to optimize cookie production. The temporal manipulation is pure artistry.</q>',
+                desc: 'Time machines are <b>25%</b> more efficient.',
+                ddesc: 'Time machines are <b>25%</b> more efficient.<q>Your time machines have achieved complete mastery over time itself, bending the flow of history to optimize cookie production. The temporal manipulation is pure artistry.</q>',
                 price: 5e73, // 50 trevigintillion
                 icon: [8, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
@@ -1882,14 +1882,14 @@ window.JNEData = {
                     return Game.Objects['Time machine'] && Game.Objects['Time machine'].amount >= 1200;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Antique warranty loopholes',
                 type: 'discount',
-                desc: 'Time machines cost <b>5%</b> less.',
-                ddesc: 'Time machines cost <b>5%</b> less.<q>Warranties that expire yesterday can\'t be voided today. That\'s just science.</q>',
+                desc: 'Time machines cost <b>15%</b> less.',
+                ddesc: 'Time machines cost <b>15%</b> less.<q>Warranties that expire yesterday can\'t be voided today. That\'s just science.</q>',
                 price: 5e75, // 5 quattuorvigintillion
                 icon: [8, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Time machine',
@@ -1900,8 +1900,8 @@ window.JNEData = {
             {
                 name: 'Certified negamatter cans',
                 type: 'discount',
-                desc: 'Antimatter condensers cost <b>5%</b> less.',
-                ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>Pre-certified, lightly cursed containment vessels. Store your nothing where it belongs.</q>',
+                desc: 'Antimatter condensers cost <b>15%</b> less.',
+                ddesc: 'Antimatter condensers cost <b>15%</b> less.<q>Pre-certified, lightly cursed containment vessels. Store your nothing where it belongs.</q>',
                 price: 5e56, // 500 septendecillion
                 icon: [11, 0, 'custom'], // Matches 750 threshold (index 0)
                 building: 'Antimatter condenser',
@@ -1911,8 +1911,8 @@ window.JNEData = {
             },
             {
                 name: 'Particle synthesis',
-                desc: 'Antimatter condensers are <b>8%</b> more efficient.',
-                ddesc: 'Antimatter condensers are <b>8%</b> more efficient.<q>Your antimatter condensers have mastered particle synthesis, creating exotic matter that enhances cookie production in ways that defy physics. The particle interactions are pure culinary science.</q>',
+                desc: 'Antimatter condensers are <b>25%</b> more efficient.',
+                ddesc: 'Antimatter condensers are <b>25%</b> more efficient.<q>Your antimatter condensers have mastered particle synthesis, creating exotic matter that enhances cookie production in ways that defy physics. The particle interactions are pure culinary science.</q>',
                 price: 5e58, // 50 octodecillion
                 icon: [11, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
@@ -1921,14 +1921,14 @@ window.JNEData = {
                     return Game.Objects['Antimatter condenser'] && Game.Objects['Antimatter condenser'].amount >= 800;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Matter swap rebates',
                 type: 'discount',
-                desc: 'Antimatter condensers cost <b>5%</b> less.',
-                ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>Trade in your old matter for upgraded matter. Some terms may invert unexpectedly.</q>',
+                desc: 'Antimatter condensers cost <b>15%</b> less.',
+                ddesc: 'Antimatter condensers cost <b>15%</b> less.<q>Trade in your old matter for upgraded matter. Some terms may invert unexpectedly.</q>',
                 price: 5e60, // 5 novemdecillion
                 icon: [11, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Antimatter condenser',
@@ -1938,8 +1938,8 @@ window.JNEData = {
             },
             {
                 name: 'Matter transmutation',
-                desc: 'Antimatter condensers are <b>8%</b> more efficient.',
-                ddesc: 'Antimatter condensers are <b>8%</b> more efficient.<q>Your antimatter condensers can transmute any form of matter into the perfect cookie ingredients, using the power of antimatter to create impossible flavors and textures.</q>',
+                desc: 'Antimatter condensers are <b>25%</b> more efficient.',
+                ddesc: 'Antimatter condensers are <b>25%</b> more efficient.<q>Your antimatter condensers can transmute any form of matter into the perfect cookie ingredients, using the power of antimatter to create impossible flavors and textures.</q>',
                 price: 5e62, // 500 novemdecillion
                 icon: [11, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
@@ -1948,14 +1948,14 @@ window.JNEData = {
                     return Game.Objects['Antimatter condenser'] && Game.Objects['Antimatter condenser'].amount >= 900;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Low-idle annihilators',
                 type: 'discount',
-                desc: 'Antimatter condensers cost <b>5%</b> less.',
-                ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>They hum quietly and only obliterate the bare minimum of existence during lunch.</q>',
+                desc: 'Antimatter condensers cost <b>15%</b> less.',
+                ddesc: 'Antimatter condensers cost <b>15%</b> less.<q>They hum quietly and only obliterate the bare minimum of existence during lunch.</q>',
                 price: 5e64, // 50 vigintillion
                 icon: [11, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Antimatter condenser',
@@ -1965,8 +1965,8 @@ window.JNEData = {
             },
             {
                 name: 'Quantum baking',
-                desc: 'Antimatter condensers are <b>8%</b> more efficient.',
-                ddesc: 'Antimatter condensers are <b>8%</b> more efficient.<q>Your antimatter condensers use quantum mechanics to bake cookies that exist in multiple states simultaneously. Each cookie is both perfectly baked and infinitely delicious.</q>',
+                desc: 'Antimatter condensers are <b>25%</b> more efficient.',
+                ddesc: 'Antimatter condensers are <b>25%</b> more efficient.<q>Your antimatter condensers use quantum mechanics to bake cookies that exist in multiple states simultaneously. Each cookie is both perfectly baked and infinitely delicious.</q>',
                 price: 5e66, // 5 unvigintillion
                 icon: [11, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
@@ -1975,14 +1975,14 @@ window.JNEData = {
                     return Game.Objects['Antimatter condenser'] && Game.Objects['Antimatter condenser'].amount >= 1000;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Grad-lab particle labor',
                 type: 'discount',
-                desc: 'Antimatter condensers cost <b>5%</b> less.',
-                ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>Enthusiastic assistants accelerate savings (and particles) for the promise of "experience".</q>',
+                desc: 'Antimatter condensers cost <b>15%</b> less.',
+                ddesc: 'Antimatter condensers cost <b>15%</b> less.<q>Enthusiastic assistants accelerate savings (and particles) for the promise of "experience".</q>',
                 price: 5e68, // 500 unvigintillion
                 icon: [11, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Antimatter condenser',
@@ -1992,8 +1992,8 @@ window.JNEData = {
             },
             {
                 name: 'Particle optimization',
-                desc: 'Antimatter condensers are <b>8%</b> more efficient.',
-                ddesc: 'Antimatter condensers are <b>8%</b> more efficient.<q>Your antimatter condensers optimize every particle for maximum cookie efficiency, ensuring that no energy is wasted in the baking process. The particle physics is pure efficiency.</q>',
+                desc: 'Antimatter condensers are <b>25%</b> more efficient.',
+                ddesc: 'Antimatter condensers are <b>25%</b> more efficient.<q>Your antimatter condensers optimize every particle for maximum cookie efficiency, ensuring that no energy is wasted in the baking process. The particle physics is pure efficiency.</q>',
                 price: 5e70, // 50 duovigintillion
                 icon: [11, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
@@ -2002,14 +2002,14 @@ window.JNEData = {
                     return Game.Objects['Antimatter condenser'] && Game.Objects['Antimatter condenser'].amount >= 1100;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Institute endowment match',
                 type: 'discount',
-                desc: 'Antimatter condensers cost <b>5%</b> less.',
-                ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>Philanthropy meets physics: every cookie you invest is matched by a very generous boson.</q>',
+                desc: 'Antimatter condensers cost <b>15%</b> less.',
+                ddesc: 'Antimatter condensers cost <b>15%</b> less.<q>Philanthropy meets physics: every cookie you invest is matched by a very generous boson.</q>',
                 price: 5e72, // 5 trevigintillion
                 icon: [11, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Antimatter condenser',
@@ -2019,8 +2019,8 @@ window.JNEData = {
             },
             {
                 name: 'Matter manipulation',
-                desc: 'Antimatter condensers are <b>8%</b> more efficient.',
-                ddesc: 'Antimatter condensers are <b>8%</b> more efficient.<q>Your antimatter condensers can manipulate matter at the most fundamental level, creating cookies that are literally impossible by conventional means. The results are miraculous.</q>',
+                desc: 'Antimatter condensers are <b>25%</b> more efficient.',
+                ddesc: 'Antimatter condensers are <b>25%</b> more efficient.<q>Your antimatter condensers can manipulate matter at the most fundamental level, creating cookies that are literally impossible by conventional means. The results are miraculous.</q>',
                 price: 5e74, // 500 trevigintillion
                 icon: [11, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
@@ -2029,14 +2029,14 @@ window.JNEData = {
                     return Game.Objects['Antimatter condenser'] && Game.Objects['Antimatter condenser'].amount >= 1200;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Void-zone incentives',
                 type: 'discount',
-                desc: 'Antimatter condensers cost <b>5%</b> less.',
-                ddesc: 'Antimatter condensers cost <b>5%</b> less.<q>Tax breaks for building where reality is thinnest. Perfect for negative overhead.</q>',
+                desc: 'Antimatter condensers cost <b>15%</b> less.',
+                ddesc: 'Antimatter condensers cost <b>15%</b> less.<q>Tax breaks for building where reality is thinnest. Perfect for negative overhead.</q>',
                 price: 5e76, // 50 quattuorvigintillion
                 icon: [11, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Antimatter condenser',
@@ -2047,8 +2047,8 @@ window.JNEData = {
             {
                 name: 'Lens co-op exchange',
                 type: 'discount',
-                desc: 'Prisms cost <b>5%</b> less.',
-                ddesc: 'Prisms cost <b>5%</b> less.<q>Swap scratches for savings. Community-sourced optics with community-sourced fingerprints.</q>',
+                desc: 'Prisms cost <b>15%</b> less.',
+                ddesc: 'Prisms cost <b>15%</b> less.<q>Swap scratches for savings. Community-sourced optics with community-sourced fingerprints.</q>',
                 price: 5e58, // 50 octodecillion
                 icon: [12, 0, 'custom'], // Matches 750 threshold (index 0)
                 building: 'Prism',
@@ -2058,8 +2058,8 @@ window.JNEData = {
             },
             {
                 name: 'Light crystallization',
-                desc: 'Prisms are <b>8%</b> more efficient.',
-                ddesc: 'Prisms are <b>8%</b> more efficient.<q>Your prisms have mastered light crystallization, turning pure light into solid cookie ingredients. The crystalline structures create cookies with impossible clarity and brilliance.</q>',
+                desc: 'Prisms are <b>25%</b> more efficient.',
+                ddesc: 'Prisms are <b>25%</b> more efficient.<q>Your prisms have mastered light crystallization, turning pure light into solid cookie ingredients. The crystalline structures create cookies with impossible clarity and brilliance.</q>',
                 price: 5e60, // 5 novemdecillion
                 icon: [12, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
@@ -2068,14 +2068,14 @@ window.JNEData = {
                     return Game.Objects['Prism'] && Game.Objects['Prism'].amount >= 800;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Spectral seconds',
                 type: 'discount',
-                desc: 'Prisms cost <b>5%</b> less.',
-                ddesc: 'Prisms cost <b>5%</b> less.<q>Factory blemishes. Perfect rainbows, slightly embarrassed casings.</q>',
+                desc: 'Prisms cost <b>15%</b> less.',
+                ddesc: 'Prisms cost <b>15%</b> less.<q>Factory blemishes. Perfect rainbows, slightly embarrassed casings.</q>',
                 price: 5e62, // 500 novemdecillion
                 icon: [12, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Prism',
@@ -2085,8 +2085,8 @@ window.JNEData = {
             },
             {
                 name: 'Spectral baking',
-                desc: 'Prisms are <b>8%</b> more efficient.',
-                ddesc: 'Prisms are <b>8%</b> more efficient.<q>Your prisms use the full spectrum of light to bake cookies, each wavelength contributing its own unique flavor and texture. The spectral combinations are infinite.</q>',
+                desc: 'Prisms are <b>25%</b> more efficient.',
+                ddesc: 'Prisms are <b>25%</b> more efficient.<q>Your prisms use the full spectrum of light to bake cookies, each wavelength contributing its own unique flavor and texture. The spectral combinations are infinite.</q>',
                 price: 5e64, // 50 vigintillion
                 icon: [12, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
@@ -2095,14 +2095,14 @@ window.JNEData = {
                     return Game.Objects['Prism'] && Game.Objects['Prism'].amount >= 900;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Sleep-mode rainbows',
                 type: 'discount',
-                desc: 'Prisms cost <b>5%</b> less.',
-                ddesc: 'Prisms cost <b>5%</b> less.<q>They dim themselves when you look away. Shy, efficient, dazzling when ready.</q>',
+                desc: 'Prisms cost <b>15%</b> less.',
+                ddesc: 'Prisms cost <b>15%</b> less.<q>They dim themselves when you look away. Shy, efficient, dazzling when ready.</q>',
                 price: 5e66, // 5 unvigintillion
                 icon: [12, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Prism',
@@ -2112,8 +2112,8 @@ window.JNEData = {
             },
             {
                 name: 'Optical alchemy',
-                desc: 'Prisms are <b>8%</b> more efficient.',
-                ddesc: 'Prisms are <b>8%</b> more efficient.<q>Your prisms perform optical alchemy, transforming light into matter through complex refraction patterns. Each cookie is a masterpiece of light and flavor engineering.</q>',
+                desc: 'Prisms are <b>25%</b> more efficient.',
+                ddesc: 'Prisms are <b>25%</b> more efficient.<q>Your prisms perform optical alchemy, transforming light into matter through complex refraction patterns. Each cookie is a masterpiece of light and flavor engineering.</q>',
                 price: 5e68, // 500 unvigintillion
                 icon: [12, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
@@ -2122,14 +2122,14 @@ window.JNEData = {
                     return Game.Objects['Prism'] && Game.Objects['Prism'].amount >= 1000;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Apprentice refractioneers',
                 type: 'discount',
-                desc: 'Prisms cost <b>5%</b> less.',
-                ddesc: 'Prisms cost <b>5%</b> less.<q>Trainees with straightedges and boundless optimism. Do not stare directly at their enthusiasm.</q>',
+                desc: 'Prisms cost <b>15%</b> less.',
+                ddesc: 'Prisms cost <b>15%</b> less.<q>Trainees with straightedges and boundless optimism. Do not stare directly at their enthusiasm.</q>',
                 price: 5e70, // 50 duovigintillion
                 icon: [12, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Prism',
@@ -2139,8 +2139,8 @@ window.JNEData = {
             },
             {
                 name: 'Luminous confectionery',
-                desc: 'Prisms are <b>8%</b> more efficient.',
-                ddesc: 'Prisms are <b>8%</b> more efficient.<q>Your prisms create luminous confectionery that glows with inner light, each cookie a miniature sun of deliciousness. The illumination enhances both taste and presentation.</q>',
+                desc: 'Prisms are <b>25%</b> more efficient.',
+                ddesc: 'Prisms are <b>25%</b> more efficient.<q>Your prisms create luminous confectionery that glows with inner light, each cookie a miniature sun of deliciousness. The illumination enhances both taste and presentation.</q>',
                 price: 5e72, // 5 trevigintillion
                 icon: [12, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
@@ -2149,14 +2149,14 @@ window.JNEData = {
                     return Game.Objects['Prism'] && Game.Objects['Prism'].amount >= 1100;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Arts-of-Optics grants',
                 type: 'discount',
-                desc: 'Prisms cost <b>5%</b> less.',
-                ddesc: 'Prisms cost <b>5%</b> less.<q>Funding for cultural light projects: installations, refractions, and occasional tasteful lens flares.</q>',
+                desc: 'Prisms cost <b>15%</b> less.',
+                ddesc: 'Prisms cost <b>15%</b> less.<q>Funding for cultural light projects: installations, refractions, and occasional tasteful lens flares.</q>',
                 price: 5e74, // 500 trevigintillion
                 icon: [12, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Prism',
@@ -2166,8 +2166,8 @@ window.JNEData = {
             },
             {
                 name: 'Radiant gastronomy',
-                desc: 'Prisms are <b>8%</b> more efficient.',
-                ddesc: 'Prisms are <b>8%</b> more efficient.<q>Your prisms have achieved radiant gastronomy, using pure light energy to create cookies that transcend the boundaries of conventional baking. The results are literally brilliant.</q>',
+                desc: 'Prisms are <b>25%</b> more efficient.',
+                ddesc: 'Prisms are <b>25%</b> more efficient.<q>Your prisms have achieved radiant gastronomy, using pure light energy to create cookies that transcend the boundaries of conventional baking. The results are literally brilliant.</q>',
                 price: 5e76, // 50 quattuorvigintillion
                 icon: [12, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
@@ -2176,14 +2176,14 @@ window.JNEData = {
                     return Game.Objects['Prism'] && Game.Objects['Prism'].amount >= 1200;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Rainbow renewal credits',
                 type: 'discount',
-                desc: 'Prisms cost <b>5%</b> less.',
-                ddesc: 'Prisms cost <b>5%</b> less.<q>Tax incentives for neighborhoods with excellent chroma. Bring your own pot of gold.</q>',
+                desc: 'Prisms cost <b>15%</b> less.',
+                ddesc: 'Prisms cost <b>15%</b> less.<q>Tax incentives for neighborhoods with excellent chroma. Bring your own pot of gold.</q>',
                 price: 5e78, // 5 quinvigintillion
                 icon: [12, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Prism',
@@ -2194,8 +2194,8 @@ window.JNEData = {
             {
                 name: 'Misprinted fortunes',
                 type: 'discount',
-                desc: 'Chancemakers cost <b>5%</b> less.',
-                ddesc: 'Chancemakers cost <b>5%</b> less.<q>Fortunes with typos sell for cheap; destiny still reads between the lines.</q>',
+                desc: 'Chancemakers cost <b>15%</b> less.',
+                ddesc: 'Chancemakers cost <b>15%</b> less.<q>Fortunes with typos sell for cheap; destiny still reads between the lines.</q>',
                 price: 5e60, // 5 novemdecillion
                 icon: [17, 0, 'custom'], // Matches 750 threshold
                 building: 'Chancemaker',
@@ -2205,8 +2205,8 @@ window.JNEData = {
             },
             {
                 name: 'Probability manipulation',
-                desc: 'Chancemakers are <b>8%</b> more efficient.',
-                ddesc: 'Chancemakers are <b>8%</b> more efficient.<q>Your chancemakers can manipulate probability itself, ensuring that every batch of cookies turns out perfectly regardless of the circumstances. The odds are always in your favor.</q>',
+                desc: 'Chancemakers are <b>25%</b> more efficient.',
+                ddesc: 'Chancemakers are <b>25%</b> more efficient.<q>Your chancemakers can manipulate probability itself, ensuring that every batch of cookies turns out perfectly regardless of the circumstances. The odds are always in your favor.</q>',
                 price: 5e62, // 500 novemdecillion
                 icon: [17, 1, 'custom'], // Matches 800 threshold
                 pool: '',
@@ -2215,14 +2215,14 @@ window.JNEData = {
                     return Game.Objects['Chancemaker'] && Game.Objects['Chancemaker'].amount >= 800;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Reroll refund policy',
                 type: 'discount',
-                desc: 'Chancemakers cost <b>5%</b> less.',
-                ddesc: 'Chancemakers cost <b>5%</b> less.<q>If at first you don\'t crit, try again - now with store credit.</q>',
+                desc: 'Chancemakers cost <b>15%</b> less.',
+                ddesc: 'Chancemakers cost <b>15%</b> less.<q>If at first you don\'t crit, try again - now with store credit.</q>',
                 price: 5e64, // 50 vigintillion
                 icon: [17, 2, 'custom'], // Matches 850 threshold
                 building: 'Chancemaker',
@@ -2232,8 +2232,8 @@ window.JNEData = {
             },
             {
                 name: 'Fortune optimization',
-                desc: 'Chancemakers are <b>8%</b> more efficient.',
-                ddesc: 'Chancemakers are <b>8%</b> more efficient.<q>Your chancemakers optimize fortune for maximum cookie production, ensuring that every random event contributes to your success. Luck is now a reliable resource.</q>',
+                desc: 'Chancemakers are <b>25%</b> more efficient.',
+                ddesc: 'Chancemakers are <b>25%</b> more efficient.<q>Your chancemakers optimize fortune for maximum cookie production, ensuring that every random event contributes to your success. Luck is now a reliable resource.</q>',
                 price: 5e66, // 5 unvigintillion
                 icon: [17, 3, 'custom'], // Matches 900 threshold
                 pool: '',
@@ -2242,14 +2242,14 @@ window.JNEData = {
                     return Game.Objects['Chancemaker'] && Game.Objects['Chancemaker'].amount >= 900;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Economy-grade omens',
                 type: 'discount',
-                desc: 'Chancemakers cost <b>5%</b> less.',
-                ddesc: 'Chancemakers cost <b>5%</b> less.<q>Fits most prophecies. Some assembly (and belief) required.</q>',
+                desc: 'Chancemakers cost <b>15%</b> less.',
+                ddesc: 'Chancemakers cost <b>15%</b> less.<q>Fits most prophecies. Some assembly (and belief) required.</q>',
                 price: 5e68, // 500 unvigintillion
                 icon: [17, 4, 'custom'], // Matches 950 threshold
                 building: 'Chancemaker',
@@ -2259,8 +2259,8 @@ window.JNEData = {
             },
             {
                 name: 'Serendipity engineering',
-                desc: 'Chancemakers are <b>8%</b> more efficient.',
-                ddesc: 'Chancemakers are <b>8%</b> more efficient.<q>Your chancemakers engineer serendipity, creating happy accidents that always result in better cookies. The unexpected discoveries are now perfectly predictable.</q>',
+                desc: 'Chancemakers are <b>25%</b> more efficient.',
+                ddesc: 'Chancemakers are <b>25%</b> more efficient.<q>Your chancemakers engineer serendipity, creating happy accidents that always result in better cookies. The unexpected discoveries are now perfectly predictable.</q>',
                 price: 5e70, // 50 duovigintillion
                 icon: [17, 5, 'custom'], // Matches 1000 threshold
                 pool: '',
@@ -2269,14 +2269,14 @@ window.JNEData = {
                     return Game.Objects['Chancemaker'] && Game.Objects['Chancemaker'].amount >= 1000;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Volunteer augury nights',
                 type: 'discount',
-                desc: 'Chancemakers cost <b>5%</b> less.',
-                ddesc: 'Chancemakers cost <b>5%</b> less.<q>Community diviners bring your costs down and your eyebrows up.</q>',
+                desc: 'Chancemakers cost <b>15%</b> less.',
+                ddesc: 'Chancemakers cost <b>15%</b> less.<q>Community diviners bring your costs down and your eyebrows up.</q>',
                 price: 5e72, // 5 trevigintillion
                 icon: [17, 6, 'custom'], // Matches 1050 threshold
                 building: 'Chancemaker',
@@ -2286,8 +2286,8 @@ window.JNEData = {
             },
             {
                 name: 'Random enhancement',
-                desc: 'Chancemakers are <b>8%</b> more efficient.',
-                ddesc: 'Chancemakers are <b>8%</b> more efficient.<q>Your chancemakers enhance randomness itself, ensuring that every random event improves cookie quality. The chaos is now perfectly controlled.</q>',
+                desc: 'Chancemakers are <b>25%</b> more efficient.',
+                ddesc: 'Chancemakers are <b>25%</b> more efficient.<q>Your chancemakers enhance randomness itself, ensuring that every random event improves cookie quality. The chaos is now perfectly controlled.</q>',
                 price: 5e74, // 500 trevigintillion
                 icon: [17, 7, 'custom'], // Matches 1100 threshold
                 pool: '',
@@ -2296,14 +2296,14 @@ window.JNEData = {
                     return Game.Objects['Chancemaker'] && Game.Objects['Chancemaker'].amount >= 1100;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Lottery board matching',
                 type: 'discount',
-                desc: 'Chancemakers cost <b>5%</b> less.',
-                ddesc: 'Chancemakers cost <b>5%</b> less.<q>Public funding for private jackpots. Everybody wins (statistically speaking).</q>',
+                desc: 'Chancemakers cost <b>15%</b> less.',
+                ddesc: 'Chancemakers cost <b>15%</b> less.<q>Public funding for private jackpots. Everybody wins (statistically speaking).</q>',
                 price: 5e76, // 50 quattuorvigintillion
                 icon: [17, 8, 'custom'], // Matches 1150 threshold
                 building: 'Chancemaker',
@@ -2313,8 +2313,8 @@ window.JNEData = {
             },
             {
                 name: 'Luck amplification',
-                desc: 'Chancemakers are <b>8%</b> more efficient.',
-                ddesc: 'Chancemakers are <b>8%</b> more efficient.<q>Your chancemakers amplify luck to impossible levels, ensuring that every batch of cookies is blessed with supernatural deliciousness. Fortune favors the prepared baker.</q>',
+                desc: 'Chancemakers are <b>25%</b> more efficient.',
+                ddesc: 'Chancemakers are <b>25%</b> more efficient.<q>Your chancemakers amplify luck to impossible levels, ensuring that every batch of cookies is blessed with supernatural deliciousness. Fortune favors the prepared baker.</q>',
                 price: 5e78, // 5 quinvigintillion
                 icon: [17, 9, 'custom'], // Matches 1200 threshold
                 pool: '',
@@ -2323,14 +2323,14 @@ window.JNEData = {
                     return Game.Objects['Chancemaker'] && Game.Objects['Chancemaker'].amount >= 1200;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Lucky district waivers',
                 type: 'discount',
-                desc: 'Chancemakers cost <b>5%</b> less.',
-                ddesc: 'Chancemakers cost <b>5%</b> less.<q>Zones where chance is zoned in your favor. Paperwork pre-blessed.</q>',
+                desc: 'Chancemakers cost <b>15%</b> less.',
+                ddesc: 'Chancemakers cost <b>15%</b> less.<q>Zones where chance is zoned in your favor. Paperwork pre-blessed.</q>',
                 price: 5e80, // 500 quinvigintillion
                 icon: [17, 10, 'custom'], // Matches 1250 threshold
                 building: 'Chancemaker',
@@ -2341,8 +2341,8 @@ window.JNEData = {
             {
                 name: 'Iteration liquidation',
                 type: 'discount',
-                desc: 'Fractal engines cost <b>5%</b> less.',
-                ddesc: 'Fractal engines cost <b>5%</b> less.<q>We sold the old parts again and again and again. Recursively affordable.</q>',
+                desc: 'Fractal engines cost <b>15%</b> less.',
+                ddesc: 'Fractal engines cost <b>15%</b> less.<q>We sold the old parts again and again and again. Recursively affordable.</q>',
                 price: 5e62, // 500 novemdecillion
                 icon: [18, 0, 'custom'], // Matches 750 threshold
                 building: 'Fractal engine',
@@ -2352,8 +2352,8 @@ window.JNEData = {
             },
             {
                 name: 'Infinite recursion',
-                desc: 'Fractal engines are <b>8%</b> more efficient.',
-                ddesc: 'Fractal engines are <b>8%</b> more efficient.<q>Your fractal engines use infinite recursion to create cookies that contain infinite layers of flavor and texture. Each cookie is a universe of taste within itself.</q>',
+                desc: 'Fractal engines are <b>25%</b> more efficient.',
+                ddesc: 'Fractal engines are <b>25%</b> more efficient.<q>Your fractal engines use infinite recursion to create cookies that contain infinite layers of flavor and texture. Each cookie is a universe of taste within itself.</q>',
                 price: 5e64, // 50 vigintillion
                 icon: [18, 1, 'custom'], // Matches 800 threshold
                 pool: '',
@@ -2362,14 +2362,14 @@ window.JNEData = {
                     return Game.Objects['Fractal engine'] && Game.Objects['Fractal engine'].amount >= 800;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Self-similar spare parts',
                 type: 'discount',
-                desc: 'Fractal engines cost <b>5%</b> less.',
-                ddesc: 'Fractal engines cost <b>5%</b> less.<q>Each part contains smaller parts that also contain… discounts.</q>',
+                desc: 'Fractal engines cost <b>15%</b> less.',
+                ddesc: 'Fractal engines cost <b>15%</b> less.<q>Each part contains smaller parts that also contain… discounts.</q>',
                 price: 5e66, // 5 unvigintillion
                 icon: [18, 2, 'custom'], // Matches 850 threshold
                 building: 'Fractal engine',
@@ -2379,8 +2379,8 @@ window.JNEData = {
             },
             {
                 name: 'Self-similar baking',
-                desc: 'Fractal engines are <b>8%</b> more efficient.',
-                ddesc: 'Fractal engines are <b>8%</b> more efficient.<q>Your fractal engines create self-similar cookie structures, where each part contains the essence of the whole. The patterns repeat infinitely, creating endless variety.</q>',
+                desc: 'Fractal engines are <b>25%</b> more efficient.',
+                ddesc: 'Fractal engines are <b>25%</b> more efficient.<q>Your fractal engines create self-similar cookie structures, where each part contains the essence of the whole. The patterns repeat infinitely, creating endless variety.</q>',
                 price: 5e68, // 500 unvigintillion
                 icon: [18, 3, 'custom'], // Matches 900 threshold
                 pool: '',
@@ -2389,14 +2389,14 @@ window.JNEData = {
                     return Game.Objects['Fractal engine'] && Game.Objects['Fractal engine'].amount >= 900;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Recursion rebates',
                 type: 'discount',
-                desc: 'Fractal engines cost <b>5%</b> less.',
-                ddesc: 'Fractal engines cost <b>5%</b> less.<q>Get cash back on purchases that refer to themselves. Terms repeat.</q>',
+                desc: 'Fractal engines cost <b>15%</b> less.',
+                ddesc: 'Fractal engines cost <b>15%</b> less.<q>Get cash back on purchases that refer to themselves. Terms repeat.</q>',
                 price: 5e70, // 50 duovigintillion
                 icon: [18, 4, 'custom'], // Matches 950 threshold
                 building: 'Fractal engine',
@@ -2406,8 +2406,8 @@ window.JNEData = {
             },
             {
                 name: 'Fractal optimization',
-                desc: 'Fractal engines are <b>8%</b> more efficient.',
-                ddesc: 'Fractal engines are <b>8%</b> more efficient.<q>Your fractal engines optimize every aspect of cookie production using fractal mathematics, ensuring perfect efficiency at every scale. The optimization is infinite.</q>',
+                desc: 'Fractal engines are <b>25%</b> more efficient.',
+                ddesc: 'Fractal engines are <b>25%</b> more efficient.<q>Your fractal engines optimize every aspect of cookie production using fractal mathematics, ensuring perfect efficiency at every scale. The optimization is infinite.</q>',
                 price: 5e72, // 5 trevigintillion
                 icon: [18, 5, 'custom'], // Matches 1000 threshold
                 pool: '',
@@ -2416,14 +2416,14 @@ window.JNEData = {
                     return Game.Objects['Fractal engine'] && Game.Objects['Fractal engine'].amount >= 1000;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Autogenerator residencies',
                 type: 'discount',
-                desc: 'Fractal engines cost <b>5%</b> less.',
-                ddesc: 'Fractal engines cost <b>5%</b> less.<q>Invite artists-in-algorithm to iterate patterns and budgets into pleasing shapes.</q>',
+                desc: 'Fractal engines cost <b>15%</b> less.',
+                ddesc: 'Fractal engines cost <b>15%</b> less.<q>Invite artists-in-algorithm to iterate patterns and budgets into pleasing shapes.</q>',
                 price: 5e74, // 500 trevigintillion
                 icon: [18, 6, 'custom'], // Matches 1050 threshold
                 building: 'Fractal engine',
@@ -2433,8 +2433,8 @@ window.JNEData = {
             },
             {
                 name: 'Recursive enhancement',
-                desc: 'Fractal engines are <b>8%</b> more efficient.',
-                ddesc: 'Fractal engines are <b>8%</b> more efficient.<q>Your fractal engines use recursive enhancement to improve cookies with each iteration, creating flavors that evolve infinitely. The improvement never ends.</q>',
+                desc: 'Fractal engines are <b>25%</b> more efficient.',
+                ddesc: 'Fractal engines are <b>25%</b> more efficient.<q>Your fractal engines use recursive enhancement to improve cookies with each iteration, creating flavors that evolve infinitely. The improvement never ends.</q>',
                 price: 5e76, // 50 quattuorvigintillion
                 icon: [18, 7, 'custom'], // Matches 1100 threshold
                 pool: '',
@@ -2443,14 +2443,14 @@ window.JNEData = {
                     return Game.Objects['Fractal engine'] && Game.Objects['Fractal engine'].amount >= 1100;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Grant-funded proofs',
                 type: 'discount',
-                desc: 'Fractal engines cost <b>5%</b> less.',
-                ddesc: 'Fractal engines cost <b>5%</b> less.<q>We proved it costs less, QED (Quite Economically Done).</q>',
+                desc: 'Fractal engines cost <b>15%</b> less.',
+                ddesc: 'Fractal engines cost <b>15%</b> less.<q>We proved it costs less, QED (Quite Economically Done).</q>',
                 price: 5e78, // 5 quinvigintillion
                 icon: [18, 8, 'custom'], // Matches 1150 threshold
                 building: 'Fractal engine',
@@ -2460,8 +2460,8 @@ window.JNEData = {
             },
             {
                 name: 'Fractal gastronomy',
-                desc: 'Fractal engines are <b>8%</b> more efficient.',
-                ddesc: 'Fractal engines are <b>8%</b> more efficient.<q>Your fractal engines have achieved fractal gastronomy, creating cookies that embody the mathematical beauty of fractals themselves. The results are geometrically perfect.</q>',
+                desc: 'Fractal engines are <b>25%</b> more efficient.',
+                ddesc: 'Fractal engines are <b>25%</b> more efficient.<q>Your fractal engines have achieved fractal gastronomy, creating cookies that embody the mathematical beauty of fractals themselves. The results are geometrically perfect.</q>',
                 price: 5e80, // 500 quinvigintillion
                 icon: [18, 9, 'custom'], // Matches 1200 threshold
                 pool: '',
@@ -2470,14 +2470,14 @@ window.JNEData = {
                     return Game.Objects['Fractal engine'] && Game.Objects['Fractal engine'].amount >= 1200;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Infinite-lot variances',
                 type: 'discount',
-                desc: 'Fractal engines cost <b>5%</b> less.',
-                ddesc: 'Fractal engines cost <b>5%</b> less.<q>Zoning approvals for parcels that subdivide forever. Plenty of room for savings.</q>',
+                desc: 'Fractal engines cost <b>15%</b> less.',
+                ddesc: 'Fractal engines cost <b>15%</b> less.<q>Zoning approvals for parcels that subdivide forever. Plenty of room for savings.</q>',
                 price: 5e82, // 50 sexvigintillion
                 icon: [18, 10, 'custom'], // Matches 1250 threshold
                 building: 'Fractal engine',
@@ -2488,8 +2488,8 @@ window.JNEData = {
             {
                 name: 'Refurb dev boards',
                 type: 'discount',
-                desc: 'Javascript consoles cost <b>5%</b> less.',
-                ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Pre-loved PCBs with fresh solder and faint coffee notes. Still compiles.</q>',
+                desc: 'Javascript consoles cost <b>15%</b> less.',
+                ddesc: 'Javascript consoles cost <b>15%</b> less.<q>Pre-loved PCBs with fresh solder and faint coffee notes. Still compiles.</q>',
                 price: 5e64, // 50 vigintillion
                 icon: [19, 0, 'custom'], // Matches 750 threshold
                 building: 'Javascript console',
@@ -2499,8 +2499,8 @@ window.JNEData = {
             },
             {
                 name: 'Code optimization',
-                desc: 'Javascript consoles are <b>8%</b> more efficient.',
-                ddesc: 'Javascript consoles are <b>8%</b> more efficient.<q>Your javascript consoles optimize every line of code for maximum cookie production efficiency. The algorithms are so refined they approach mathematical perfection.</q>',
+                desc: 'Javascript consoles are <b>25%</b> more efficient.',
+                ddesc: 'Javascript consoles are <b>25%</b> more efficient.<q>Your javascript consoles optimize every line of code for maximum cookie production efficiency. The algorithms are so refined they approach mathematical perfection.</q>',
                 price: 5e66, // 5 unvigintillion
                 icon: [19, 1, 'custom'], // Matches 800 threshold
                 pool: '',
@@ -2509,14 +2509,14 @@ window.JNEData = {
                     return Game.Objects['Javascript console'] && Game.Objects['Javascript console'].amount >= 800;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Compiler credit program',
                 type: 'discount',
-                desc: 'Javascript consoles cost <b>5%</b> less.',
-                ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Compile now, pay later. Terms readable only after transpilation.</q>',
+                desc: 'Javascript consoles cost <b>15%</b> less.',
+                ddesc: 'Javascript consoles cost <b>15%</b> less.<q>Compile now, pay later. Terms readable only after transpilation.</q>',
                 price: 5e68, // 500 unvigintillion
                 icon: [19, 2, 'custom'], // Matches 850 threshold
                 building: 'Javascript console',
@@ -2526,8 +2526,8 @@ window.JNEData = {
             },
             {
                 name: 'Programmatic baking',
-                desc: 'Javascript consoles are <b>8%</b> more efficient.',
-                ddesc: 'Javascript consoles are <b>8%</b> more efficient.<q>Your javascript consoles use programmatic baking techniques, writing code that creates cookies with impossible precision and consistency. The programming is pure artistry.</q>',
+                desc: 'Javascript consoles are <b>25%</b> more efficient.',
+                ddesc: 'Javascript consoles are <b>25%</b> more efficient.<q>Your javascript consoles use programmatic baking techniques, writing code that creates cookies with impossible precision and consistency. The programming is pure artistry.</q>',
                 price: 5e70, // 50 duovigintillion
                 icon: [19, 3, 'custom'], // Matches 900 threshold
                 pool: '',
@@ -2536,14 +2536,14 @@ window.JNEData = {
                     return Game.Objects['Javascript console'] && Game.Objects['Javascript console'].amount >= 900;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Idle-friendly runtimes',
                 type: 'discount',
-                desc: 'Javascript consoles cost <b>5%</b> less.',
-                ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Optimized for waiting around productively. Uses fewer cycles, fewer snacks.</q>',
+                desc: 'Javascript consoles cost <b>15%</b> less.',
+                ddesc: 'Javascript consoles cost <b>15%</b> less.<q>Optimized for waiting around productively. Uses fewer cycles, fewer snacks.</q>',
                 price: 5e72, // 5 trevigintillion
                 icon: [19, 4, 'custom'], // Matches 950 threshold
                 building: 'Javascript console',
@@ -2553,8 +2553,8 @@ window.JNEData = {
             },
             {
                 name: 'Algorithmic enhancement',
-                desc: 'Javascript consoles are <b>8%</b> more efficient.',
-                ddesc: 'Javascript consoles are <b>8%</b> more efficient.<q>Your javascript consoles use algorithmic enhancement to improve every aspect of cookie production, ensuring that every batch is better than the last. The improvement is exponential.</q>',
+                desc: 'Javascript consoles are <b>25%</b> more efficient.',
+                ddesc: 'Javascript consoles are <b>25%</b> more efficient.<q>Your javascript consoles use algorithmic enhancement to improve every aspect of cookie production, ensuring that every batch is better than the last. The improvement is exponential.</q>',
                 price: 5e74, // 500 trevigintillion
                 icon: [19, 5, 'custom'], // Matches 1000 threshold
                 pool: '',
@@ -2563,14 +2563,14 @@ window.JNEData = {
                     return Game.Objects['Javascript console'] && Game.Objects['Javascript console'].amount >= 1000;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Peer-review co-ops',
                 type: 'discount',
-                desc: 'Javascript consoles cost <b>5%</b> less.',
-                ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Throw code, catch feedback, share snacks. Merge with confidence (and crumbs).</q>',
+                desc: 'Javascript consoles cost <b>15%</b> less.',
+                ddesc: 'Javascript consoles cost <b>15%</b> less.<q>Throw code, catch feedback, share snacks. Merge with confidence (and crumbs).</q>',
                 price: 5e76, // 50 quattuorvigintillion
                 icon: [19, 6, 'custom'], // Matches 1050 threshold
                 building: 'Javascript console',
@@ -2580,8 +2580,8 @@ window.JNEData = {
             },
             {
                 name: 'Computational gastronomy',
-                desc: 'Javascript consoles are <b>8%</b> more efficient.',
-                ddesc: 'Javascript consoles are <b>8%</b> more efficient.<q>Your javascript consoles have pioneered computational gastronomy, using advanced algorithms to create cookies that are mathematically perfect in every way.</q>',
+                desc: 'Javascript consoles are <b>25%</b> more efficient.',
+                ddesc: 'Javascript consoles are <b>25%</b> more efficient.<q>Your javascript consoles have pioneered computational gastronomy, using advanced algorithms to create cookies that are mathematically perfect in every way.</q>',
                 price: 5e78, // 5 quinvigintillion
                 icon: [19, 7, 'custom'], // Matches 1100 threshold
                 pool: '',
@@ -2590,14 +2590,14 @@ window.JNEData = {
                     return Game.Objects['Javascript console'] && Game.Objects['Javascript console'].amount >= 1100;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Open-source grants',
                 type: 'discount',
-                desc: 'Javascript consoles cost <b>5%</b> less.',
-                ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Foundation funds for critical libraries like dough.js and crumb-utils.</q>',
+                desc: 'Javascript consoles cost <b>15%</b> less.',
+                ddesc: 'Javascript consoles cost <b>15%</b> less.<q>Foundation funds for critical libraries like dough.js and crumb-utils.</q>',
                 price: 5e80, // 500 quinvigintillion
                 icon: [19, 8, 'custom'], // Matches 1150 threshold
                 building: 'Javascript console',
@@ -2607,8 +2607,8 @@ window.JNEData = {
             },
             {
                 name: 'Digital confectionery',
-                desc: 'Javascript consoles are <b>8%</b> more efficient.',
-                ddesc: 'Javascript consoles are <b>8%</b> more efficient.<q>Your javascript consoles create digital confectionery that exists in both the physical and digital realms, bridging the gap between code and cookies with elegant simplicity.</q>',
+                desc: 'Javascript consoles are <b>25%</b> more efficient.',
+                ddesc: 'Javascript consoles are <b>25%</b> more efficient.<q>Your javascript consoles create digital confectionery that exists in both the physical and digital realms, bridging the gap between code and cookies with elegant simplicity.</q>',
                 price: 5e82, // 50 sexvigintillion
                 icon: [19, 9, 'custom'], // Matches 1200 threshold
                 pool: '',
@@ -2617,14 +2617,14 @@ window.JNEData = {
                     return Game.Objects['Javascript console'] && Game.Objects['Javascript console'].amount >= 1200;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Cloud credit vouchers',
                 type: 'discount',
-                desc: 'Javascript consoles cost <b>5%</b> less.',
-                ddesc: 'Javascript consoles cost <b>5%</b> less.<q>Spin up instances for less. Free tier includes occasional cumulonimbus.</q>',
+                desc: 'Javascript consoles cost <b>15%</b> less.',
+                ddesc: 'Javascript consoles cost <b>15%</b> less.<q>Spin up instances for less. Free tier includes occasional cumulonimbus.</q>',
                 price: 5e84, // 5 septenvigintillion
                 icon: [19, 10, 'custom'], // Matches 1250 threshold
                 building: 'Javascript console',
@@ -2635,8 +2635,8 @@ window.JNEData = {
             {
                 name: 'Interdimensional tax breaks',
                 type: 'discount',
-                desc: 'Idleverses cost <b>5%</b> less.',
-                ddesc: 'Idleverses cost <b>5%</b> less.<q>Your idleverses qualify for special tax incentives across multiple dimensions. The paperwork is filed in parallel universes, but the savings are very real.</q>',
+                desc: 'Idleverses cost <b>15%</b> less.',
+                ddesc: 'Idleverses cost <b>15%</b> less.<q>Your idleverses qualify for special tax incentives across multiple dimensions. The paperwork is filed in parallel universes, but the savings are very real.</q>',
                 price: 6e66, // 6 unvigintillion
                 icon: [20, 0, 'custom'], // Matches 750 threshold
                 building: 'Idleverse',
@@ -2646,8 +2646,8 @@ window.JNEData = {
             },
             {
                 name: 'Reality real estate',
-                desc: 'Idleverses are <b>8%</b> more efficient.',
-                ddesc: 'Idleverses are <b>8%</b> more efficient.<q>You\'ve cornered the market on interdimensional property development. Each idleverse now serves as prime real estate for cookie franchises, with locations in every conceivable reality. The property taxes alone could fund a small galaxy.</q>',
+                desc: 'Idleverses are <b>25%</b> more efficient.',
+                ddesc: 'Idleverses are <b>25%</b> more efficient.<q>You\'ve cornered the market on interdimensional property development. Each idleverse now serves as prime real estate for cookie franchises, with locations in every conceivable reality. The property taxes alone could fund a small galaxy.</q>',
                 price: 6e68, // 600 unvigintillion
                 icon: [20, 1, 'custom'], // Matches 800 threshold
                 pool: '',
@@ -2656,14 +2656,14 @@ window.JNEData = {
                     return Game.Objects['Idleverse'] && Game.Objects['Idleverse'].amount >= 800;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Reality consolidation discounts',
                 type: 'discount',
-                desc: 'Idleverses cost <b>5%</b> less.',
-                ddesc: 'Idleverses cost <b>5%</b> less.<q>By consolidating multiple idleverses under unified management, you\'ve negotiated bulk pricing that applies across all dimensions. The savings scale with your multiverse presence.</q>',
+                desc: 'Idleverses cost <b>15%</b> less.',
+                ddesc: 'Idleverses cost <b>15%</b> less.<q>By consolidating multiple idleverses under unified management, you\'ve negotiated bulk pricing that applies across all dimensions. The savings scale with your multiverse presence.</q>',
                 price: 6e70, // 60 duovigintillion
                 icon: [20, 2, 'custom'], // Matches 850 threshold
                 building: 'Idleverse',
@@ -2673,8 +2673,8 @@ window.JNEData = {
             },
             {
                 name: 'Dimensional franchising',
-                desc: 'Idleverses are <b>8%</b> more efficient.',
-                ddesc: 'Idleverses are <b>8%</b> more efficient.<q>Your cookie empire has gone viral across the multiverse. Every reality now hosts at least one of your signature bakeries, with local entrepreneurs clamoring for franchise opportunities. The brand recognition is literally universal.</q>',
+                desc: 'Idleverses are <b>25%</b> more efficient.',
+                ddesc: 'Idleverses are <b>25%</b> more efficient.<q>Your cookie empire has gone viral across the multiverse. Every reality now hosts at least one of your signature bakeries, with local entrepreneurs clamoring for franchise opportunities. The brand recognition is literally universal.</q>',
                 price: 6e72, // 6 trevigintillion
                 icon: [20, 3, 'custom'], // Matches 900 threshold
                 pool: '',
@@ -2683,14 +2683,14 @@ window.JNEData = {
                     return Game.Objects['Idleverse'] && Game.Objects['Idleverse'].amount >= 900;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Cosmic bulk purchasing',
                 type: 'discount',
-                desc: 'Idleverses cost <b>5%</b> less.',
-                ddesc: 'Idleverses cost <b>5%</b> less.<q>Your massive scale across the multiverse allows you to purchase idleverse components in quantities that would bankrupt entire galaxies. The suppliers are happy to offer volume discounts.</q>',
+                desc: 'Idleverses cost <b>15%</b> less.',
+                ddesc: 'Idleverses cost <b>15%</b> less.<q>Your massive scale across the multiverse allows you to purchase idleverse components in quantities that would bankrupt entire galaxies. The suppliers are happy to offer volume discounts.</q>',
                 price: 6e74, // 600 trevigintillion
                 icon: [20, 4, 'custom'], // Matches 950 threshold
                 building: 'Idleverse',
@@ -2700,8 +2700,8 @@ window.JNEData = {
             },
             {
                 name: 'Cosmic supply chains',
-                desc: 'Idleverses are <b>8%</b> more efficient.',
-                ddesc: 'Idleverses are <b>8%</b> more efficient.<q>Your idleverses now form the backbone of the largest supply chain in existence. Raw materials flow from one reality to another, with each universe specializing in different cookie ingredients. The logistics are mind-bendingly complex.</q>',
+                desc: 'Idleverses are <b>25%</b> more efficient.',
+                ddesc: 'Idleverses are <b>25%</b> more efficient.<q>Your idleverses now form the backbone of the largest supply chain in existence. Raw materials flow from one reality to another, with each universe specializing in different cookie ingredients. The logistics are mind-bendingly complex.</q>',
                 price: 6e76, // 60 quattuorvigintillion
                 icon: [20, 5, 'custom'], // Matches 1000 threshold
                 pool: '',
@@ -2710,14 +2710,14 @@ window.JNEData = {
                     return Game.Objects['Idleverse'] && Game.Objects['Idleverse'].amount >= 1000;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Multiverse supplier networks',
                 type: 'discount',
-                desc: 'Idleverses cost <b>5%</b> less.',
-                ddesc: 'Idleverses cost <b>5%</b> less.<q>You\'ve established exclusive supplier relationships across multiple realities. These vendors compete for your business, driving down prices while maintaining quality across all dimensions.</q>',
+                desc: 'Idleverses cost <b>15%</b> less.',
+                ddesc: 'Idleverses cost <b>15%</b> less.<q>You\'ve established exclusive supplier relationships across multiple realities. These vendors compete for your business, driving down prices while maintaining quality across all dimensions.</q>',
                 price: 6e78, // 6 quinvigintillion
                 icon: [20, 6, 'custom'], // Matches 1050 threshold
                 building: 'Idleverse',
@@ -2727,8 +2727,8 @@ window.JNEData = {
             },
             {
                 name: 'Reality marketplaces',
-                desc: 'Idleverses are <b>8%</b> more efficient.',
-                ddesc: 'Idleverses are <b>8%</b> more efficient.<q>Your idleverses have become the ultimate shopping destinations. Merchants from every dimension set up stalls, selling everything from exotic spices to rare cookie recipes. The haggling is intense, but the profits are astronomical.</q>',
+                desc: 'Idleverses are <b>25%</b> more efficient.',
+                ddesc: 'Idleverses are <b>25%</b> more efficient.<q>Your idleverses have become the ultimate shopping destinations. Merchants from every dimension set up stalls, selling everything from exotic spices to rare cookie recipes. The haggling is intense, but the profits are astronomical.</q>',
                 price: 6e80, // 600 quinvigintillion
                 icon: [20, 7, 'custom'], // Matches 1100 threshold
                 pool: '',
@@ -2737,14 +2737,14 @@ window.JNEData = {
                     return Game.Objects['Idleverse'] && Game.Objects['Idleverse'].amount >= 1100;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Dimensional economies of scale',
                 type: 'discount',
-                desc: 'Idleverses cost <b>5%</b> less.',
-                ddesc: 'Idleverses cost <b>5%</b> less.<q>Your idleverse operations have reached such massive scale that you can leverage economies across the entire multiverse. Each new idleverse makes all the others cheaper to build.</q>',
+                desc: 'Idleverses cost <b>15%</b> less.',
+                ddesc: 'Idleverses cost <b>15%</b> less.<q>Your idleverse operations have reached such massive scale that you can leverage economies across the entire multiverse. Each new idleverse makes all the others cheaper to build.</q>',
                 price: 6e82, // 60 sexvigintillion
                 icon: [20, 8, 'custom'], // Matches 1150 threshold
                 building: 'Idleverse',
@@ -2754,8 +2754,8 @@ window.JNEData = {
             },
             {
                 name: 'Multiverse headquarters',
-                desc: 'Idleverses are <b>8%</b> more efficient.',
-                ddesc: 'Idleverses are <b>8%</b> more efficient.<q>Your idleverses now serve as the corporate headquarters for the largest cookie conglomerate in existence. Board meetings span multiple realities, with executives teleporting in from different dimensions. The coffee machine alone is a marvel of interdimensional engineering.</q>',
+                desc: 'Idleverses are <b>25%</b> more efficient.',
+                ddesc: 'Idleverses are <b>25%</b> more efficient.<q>Your idleverses now serve as the corporate headquarters for the largest cookie conglomerate in existence. Board meetings span multiple realities, with executives teleporting in from different dimensions. The coffee machine alone is a marvel of interdimensional engineering.</q>',
                 price: 6e84, // 6 septenvigintillion
                 icon: [20, 9, 'custom'], // Matches 1200 threshold
                 pool: '',
@@ -2764,14 +2764,14 @@ window.JNEData = {
                     return Game.Objects['Idleverse'] && Game.Objects['Idleverse'].amount >= 1200;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Reality monopoly pricing',
                 type: 'discount',
-                desc: 'Idleverses cost <b>5%</b> less.',
-                ddesc: 'Idleverses cost <b>5%</b> less.<q>You\'ve achieved such dominance across the multiverse that suppliers are willing to offer preferential pricing just to maintain their relationship with the largest cookie empire in existence.</q>',
+                desc: 'Idleverses cost <b>15%</b> less.',
+                ddesc: 'Idleverses cost <b>15%</b> less.<q>You\'ve achieved such dominance across the multiverse that suppliers are willing to offer preferential pricing just to maintain their relationship with the largest cookie empire in existence.</q>',
                 price: 6e86, // 600 septenvigintillion
                 icon: [20, 10, 'custom'], // Matches 1250 threshold
                 building: 'Idleverse',
@@ -2782,8 +2782,8 @@ window.JNEData = {
             {
                 name: 'Neural bulk purchasing',
                 type: 'discount',
-                desc: 'Cortex bakers cost <b>5%</b> less.',
-                ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex bakers have negotiated bulk discounts on neural tissue and synaptic materials. Buying brain matter in industrial quantities significantly reduces the per-unit cost of each new baker.</q>',
+                desc: 'Cortex bakers cost <b>15%</b> less.',
+                ddesc: 'Cortex bakers cost <b>15%</b> less.<q>Your cortex bakers have negotiated bulk discounts on neural tissue and synaptic materials. Buying brain matter in industrial quantities significantly reduces the per-unit cost of each new baker.</q>',
                 price: 9.5e68, // 950 unvigintillion
                 icon: [21, 0, 'custom'], // Matches 750 threshold
                 building: 'Cortex baker',
@@ -2793,8 +2793,8 @@ window.JNEData = {
             },
             {
                 name: 'Neural plasticity',
-                desc: 'Cortex bakers are <b>8%</b> more efficient.',
-                ddesc: 'Cortex bakers are <b>8%</b> more efficient.<q>Your cortex bakers have developed extraordinary neural plasticity, allowing them to rapidly adapt their baking techniques to any situation. They can learn new recipes instantly and modify their approach based on the slightest changes in ingredient quality or environmental conditions.</q>',
+                desc: 'Cortex bakers are <b>25%</b> more efficient.',
+                ddesc: 'Cortex bakers are <b>25%</b> more efficient.<q>Your cortex bakers have developed extraordinary neural plasticity, allowing them to rapidly adapt their baking techniques to any situation. They can learn new recipes instantly and modify their approach based on the slightest changes in ingredient quality or environmental conditions.</q>',
                 price: 9.5e70, // 95 duovigintillion
                 icon: [21, 1, 'custom'], // Matches 800 threshold
                 pool: '',
@@ -2803,14 +2803,14 @@ window.JNEData = {
                     return Game.Objects['Cortex baker'] && Game.Objects['Cortex baker'].amount >= 800;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Synaptic wholesale networks',
                 type: 'discount',
-                desc: 'Cortex bakers cost <b>5%</b> less.',
-                ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex bakers have established direct relationships with neural tissue suppliers, bypassing middlemen and securing wholesale pricing on synaptic components. The savings are mind-boggling.</q>',
+                desc: 'Cortex bakers cost <b>15%</b> less.',
+                ddesc: 'Cortex bakers cost <b>15%</b> less.<q>Your cortex bakers have established direct relationships with neural tissue suppliers, bypassing middlemen and securing wholesale pricing on synaptic components. The savings are mind-boggling.</q>',
                 price: 9.5e72, // 9.5 trevigintillion
                 icon: [21, 2, 'custom'], // Matches 850 threshold
                 building: 'Cortex baker',
@@ -2820,8 +2820,8 @@ window.JNEData = {
             },
             {
                 name: 'Synaptic pruning',
-                desc: 'Cortex bakers are <b>8%</b> more efficient.',
-                ddesc: 'Cortex bakers are <b>8%</b> more efficient.<q>Your cortex bakers have undergone advanced synaptic pruning, eliminating inefficient neural pathways and optimizing their cognitive processes. They now focus exclusively on the most effective baking techniques, discarding outdated methods like a chef discards failed experiments.</q>',
+                desc: 'Cortex bakers are <b>25%</b> more efficient.',
+                ddesc: 'Cortex bakers are <b>25%</b> more efficient.<q>Your cortex bakers have undergone advanced synaptic pruning, eliminating inefficient neural pathways and optimizing their cognitive processes. They now focus exclusively on the most effective baking techniques, discarding outdated methods like a chef discards failed experiments.</q>',
                 price: 9.5e74, // 950 trevigintillion
                 icon: [21, 3, 'custom'], // Matches 900 threshold
                 pool: '',
@@ -2830,14 +2830,14 @@ window.JNEData = {
                     return Game.Objects['Cortex baker'] && Game.Objects['Cortex baker'].amount >= 900;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Cerebral mass production',
                 type: 'discount',
-                desc: 'Cortex bakers cost <b>5%</b> less.',
-                ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex bakers have mastered the art of mass-producing brain tissue, creating economies of scale that make each additional baker significantly cheaper. It\'s like a neural assembly line.</q>',
+                desc: 'Cortex bakers cost <b>15%</b> less.',
+                ddesc: 'Cortex bakers cost <b>15%</b> less.<q>Your cortex bakers have mastered the art of mass-producing brain tissue, creating economies of scale that make each additional baker significantly cheaper. It\'s like a neural assembly line.</q>',
                 price: 9.5e76, // 95 quattuorvigintillion
                 icon: [21, 4, 'custom'], // Matches 950 threshold
                 building: 'Cortex baker',
@@ -2847,8 +2847,8 @@ window.JNEData = {
             },
             {
                 name: 'Cognitive load balancing',
-                desc: 'Cortex bakers are <b>8%</b> more efficient.',
-                ddesc: 'Cortex bakers are <b>8%</b> more efficient.<q>Your cortex bakers have mastered the art of cognitive load balancing, distributing their mental resources across multiple baking tasks simultaneously. They can monitor dozens of recipes at once while maintaining perfect quality control and inventing new flavor combinations.</q>',
+                desc: 'Cortex bakers are <b>25%</b> more efficient.',
+                ddesc: 'Cortex bakers are <b>25%</b> more efficient.<q>Your cortex bakers have mastered the art of cognitive load balancing, distributing their mental resources across multiple baking tasks simultaneously. They can monitor dozens of recipes at once while maintaining perfect quality control and inventing new flavor combinations.</q>',
                 price: 9.5e78, // 9.5 quinvigintillion
                 icon: [21, 5, 'custom'], // Matches 1000 threshold
                 pool: '',
@@ -2857,14 +2857,14 @@ window.JNEData = {
                     return Game.Objects['Cortex baker'] && Game.Objects['Cortex baker'].amount >= 1000;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Mind monopoly pricing',
                 type: 'discount',
-                desc: 'Cortex bakers cost <b>5%</b> less.',
-                ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex bakers have achieved such dominance in the neural market that suppliers offer preferential pricing just to maintain their relationship with the largest brain-based cookie empire in existence.</q>',
+                desc: 'Cortex bakers cost <b>15%</b> less.',
+                ddesc: 'Cortex bakers cost <b>15%</b> less.<q>Your cortex bakers have achieved such dominance in the neural market that suppliers offer preferential pricing just to maintain their relationship with the largest brain-based cookie empire in existence.</q>',
                 price: 9.5e80, // 950 quinvigintillion
                 icon: [21, 6, 'custom'], // Matches 1050 threshold
                 building: 'Cortex baker',
@@ -2874,8 +2874,8 @@ window.JNEData = {
             },
             {
                 name: 'Metacognitive awareness',
-                desc: 'Cortex bakers are <b>8%</b> more efficient.',
-                ddesc: 'Cortex bakers are <b>8%</b> more efficient.<q>Your cortex bakers have developed metacognitive awareness, allowing them to think about their own thinking processes. They can analyze their baking decisions in real-time, identify inefficiencies, and continuously improve their techniques without external guidance.</q>',
+                desc: 'Cortex bakers are <b>25%</b> more efficient.',
+                ddesc: 'Cortex bakers are <b>25%</b> more efficient.<q>Your cortex bakers have developed metacognitive awareness, allowing them to think about their own thinking processes. They can analyze their baking decisions in real-time, identify inefficiencies, and continuously improve their techniques without external guidance.</q>',
                 price: 9.5e82, // 95 sexvigintillion
                 icon: [21, 7, 'custom'], // Matches 1100 threshold
                 pool: '',
@@ -2884,14 +2884,14 @@ window.JNEData = {
                     return Game.Objects['Cortex baker'] && Game.Objects['Cortex baker'].amount >= 1100;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Neural economies of scale',
                 type: 'discount',
-                desc: 'Cortex bakers cost <b>5%</b> less.',
-                ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex baker operations have reached such massive scale that you can leverage neural economies across the entire network. Each new baker makes all the others cheaper to build through shared infrastructure.</q>',
+                desc: 'Cortex bakers cost <b>15%</b> less.',
+                ddesc: 'Cortex bakers cost <b>15%</b> less.<q>Your cortex baker operations have reached such massive scale that you can leverage neural economies across the entire network. Each new baker makes all the others cheaper to build through shared infrastructure.</q>',
                 price: 9.5e84, // 9.5 septenvigintillion
                 icon: [21, 8, 'custom'], // Matches 1150 threshold
                 building: 'Cortex baker',
@@ -2901,8 +2901,8 @@ window.JNEData = {
             },
             {
                 name: 'Neural synchronization',
-                desc: 'Cortex bakers are <b>8%</b> more efficient.',
-                ddesc: 'Cortex bakers are <b>8%</b> more efficient.<q>Your cortex bakers have achieved perfect neural synchronization, allowing them to work as a unified superintelligence. They can coordinate complex baking operations across vast distances, sharing insights and techniques instantaneously. It\'s like having a hive mind of master bakers.</q>',
+                desc: 'Cortex bakers are <b>25%</b> more efficient.',
+                ddesc: 'Cortex bakers are <b>25%</b> more efficient.<q>Your cortex bakers have achieved perfect neural synchronization, allowing them to work as a unified superintelligence. They can coordinate complex baking operations across vast distances, sharing insights and techniques instantaneously. It\'s like having a hive mind of master bakers.</q>',
                 price: 9.5e86, // 950 septenvigintillion
                 icon: [21, 9, 'custom'], // Matches 1200 threshold
                 pool: '',
@@ -2911,14 +2911,14 @@ window.JNEData = {
                     return Game.Objects['Cortex baker'] && Game.Objects['Cortex baker'].amount >= 1200;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Synaptic supply dominance',
                 type: 'discount',
-                desc: 'Cortex bakers cost <b>5%</b> less.',
-                ddesc: 'Cortex bakers cost <b>5%</b> less.<q>Your cortex bakers have cornered the market on synaptic materials, controlling the entire supply chain from neural tissue farms to advanced cognitive enhancement facilities. Suppliers compete for your business.</q>',
+                desc: 'Cortex bakers cost <b>15%</b> less.',
+                ddesc: 'Cortex bakers cost <b>15%</b> less.<q>Your cortex bakers have cornered the market on synaptic materials, controlling the entire supply chain from neural tissue farms to advanced cognitive enhancement facilities. Suppliers compete for your business.</q>',
                 price: 9.5e88, // 95 octovigintillion
                 icon: [21, 10, 'custom'], // Matches 1250 threshold
                 building: 'Cortex baker',
@@ -2929,8 +2929,8 @@ window.JNEData = {
             {
                 name: 'Clone factory economies',
                 type: 'discount',
-                desc: 'You cost <b>5%</b> less.',
-                ddesc: 'You cost <b>5%</b> less.<q>Your clone factory has achieved economies of scale, making each additional clone significantly cheaper to produce. The infrastructure costs are spread across more units, and suppliers offer bulk discounts on cloning materials.</q>',
+                desc: 'You cost <b>15%</b> less.',
+                ddesc: 'You cost <b>15%</b> less.<q>Your clone factory has achieved economies of scale, making each additional clone significantly cheaper to produce. The infrastructure costs are spread across more units, and suppliers offer bulk discounts on cloning materials.</q>',
                 price: 2.7e70, // 27 duovigintillion
                 icon: [22, 0, 'custom'], // Matches 750 threshold
                 building: 'You',
@@ -2940,8 +2940,8 @@ window.JNEData = {
             },
             {
                 name: 'Mitotic mastery',
-                desc: 'You are <b>8%</b> more efficient.',
-                ddesc: 'You are <b>8%</b> more efficient.<q>Your clones have perfected the art of cellular division, allowing them to replicate themselves with unprecedented precision and speed. Each new clone emerges fully formed and ready to work, with no awkward adolescence or training period. It\'s like having an army of instant experts.</q>',
+                desc: 'You are <b>25%</b> more efficient.',
+                ddesc: 'You are <b>25%</b> more efficient.<q>Your clones have perfected the art of cellular division, allowing them to replicate themselves with unprecedented precision and speed. Each new clone emerges fully formed and ready to work, with no awkward adolescence or training period. It\'s like having an army of instant experts.</q>',
                 price: 2.7e72, // 2.7 trevigintillion
                 icon: [22, 1, 'custom'], // Matches 800 threshold
                 pool: '',
@@ -2950,14 +2950,14 @@ window.JNEData = {
                     return Game.Objects['You'] && Game.Objects['You'].amount >= 800;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Replica production lines',
                 type: 'discount',
-                desc: 'You cost <b>5%</b> less.',
-                ddesc: 'You cost <b>5%</b> less.<q>Your clone production has been streamlined into efficient assembly lines, reducing waste and optimizing resource usage. Each clone is now produced with surgical precision at a fraction of the original cost.</q>',
+                desc: 'You cost <b>15%</b> less.',
+                ddesc: 'You cost <b>15%</b> less.<q>Your clone production has been streamlined into efficient assembly lines, reducing waste and optimizing resource usage. Each clone is now produced with surgical precision at a fraction of the original cost.</q>',
                 price: 2.7e74, // 270 trevigintillion
                 icon: [22, 2, 'custom'], // Matches 850 threshold
                 building: 'You',
@@ -2967,8 +2967,8 @@ window.JNEData = {
             },
             {
                 name: 'Epigenetic programming',
-                desc: 'You are <b>8%</b> more efficient.',
-                ddesc: 'You are <b>8%</b> more efficient.<q>Your clones have developed the ability to modify their genetic expression on demand, activating different skill sets as needed. One moment they\'re master bakers, the next they\'re expert decorators, all without changing their core DNA. It\'s like having a Swiss Army knife of cookie production.</q>',
+                desc: 'You are <b>25%</b> more efficient.',
+                ddesc: 'You are <b>25%</b> more efficient.<q>Your clones have developed the ability to modify their genetic expression on demand, activating different skill sets as needed. One moment they\'re master bakers, the next they\'re expert decorators, all without changing their core DNA. It\'s like having a Swiss Army knife of cookie production.</q>',
                 price: 2.7e76, // 27 quattuorvigintillion
                 icon: [22, 3, 'custom'], // Matches 900 threshold
                 pool: '',
@@ -2977,14 +2977,14 @@ window.JNEData = {
                     return Game.Objects['You'] && Game.Objects['You'].amount >= 900;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Mirror manufacturing mastery',
                 type: 'discount',
-                desc: 'You cost <b>5%</b> less.',
-                ddesc: 'You cost <b>5%</b> less.<q>Your clone manufacturing process has reached industrial perfection, with automated quality control and bulk material sourcing. The cost per clone has plummeted as you\'ve mastered the art of mass self-replication.</q>',
+                desc: 'You cost <b>15%</b> less.',
+                ddesc: 'You cost <b>15%</b> less.<q>Your clone manufacturing process has reached industrial perfection, with automated quality control and bulk material sourcing. The cost per clone has plummeted as you\'ve mastered the art of mass self-replication.</q>',
                 price: 2.7e78, // 2.7 quinvigintillion
                 icon: [22, 4, 'custom'], // Matches 950 threshold
                 building: 'You',
@@ -2994,8 +2994,8 @@ window.JNEData = {
             },
             {
                 name: 'Cellular differentiation',
-                desc: 'You are <b>8%</b> more efficient.',
-                ddesc: 'You are <b>8%</b> more efficient.<q>Your clones have mastered cellular differentiation, allowing them to develop specialized organs and abilities optimized for specific tasks. Some have enhanced taste buds, others have improved dexterity, and a few have developed the ability to sense cookie freshness through their skin. The specialization is remarkable.</q>',
+                desc: 'You are <b>25%</b> more efficient.',
+                ddesc: 'You are <b>25%</b> more efficient.<q>Your clones have mastered cellular differentiation, allowing them to develop specialized organs and abilities optimized for specific tasks. Some have enhanced taste buds, others have improved dexterity, and a few have developed the ability to sense cookie freshness through their skin. The specialization is remarkable.</q>',
                 price: 2.7e80, // 270 quinvigintillion
                 icon: [22, 5, 'custom'], // Matches 1000 threshold
                 pool: '',
@@ -3004,14 +3004,14 @@ window.JNEData = {
                     return Game.Objects['You'] && Game.Objects['You'].amount >= 1000;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Twin tycoon pricing',
                 type: 'discount',
-                desc: 'You cost <b>5%</b> less.',
-                ddesc: 'You cost <b>5%</b> less.<q>Your clone empire has achieved such dominance that suppliers compete for your business, offering preferential pricing on all cloning materials. Being the largest self-replicating entity has its financial advantages.</q>',
+                desc: 'You cost <b>15%</b> less.',
+                ddesc: 'You cost <b>15%</b> less.<q>Your clone empire has achieved such dominance that suppliers compete for your business, offering preferential pricing on all cloning materials. Being the largest self-replicating entity has its financial advantages.</q>',
                 price: 2.7e82, // 27 sexvigintillion
                 icon: [22, 6, 'custom'], // Matches 1050 threshold
                 building: 'You',
@@ -3021,8 +3021,8 @@ window.JNEData = {
             },
             {
                 name: 'Telomere regeneration',
-                desc: 'You are <b>8%</b> more efficient.',
-                ddesc: 'You are <b>8%</b> more efficient.<q>Your clones have unlocked the secret of telomere regeneration, allowing them to maintain their youth and vitality indefinitely. They no longer age or tire, working tirelessly without the need for rest or rejuvenation. It\'s like having an immortal workforce that never gets bored of baking.</q>',
+                desc: 'You are <b>25%</b> more efficient.',
+                ddesc: 'You are <b>25%</b> more efficient.<q>Your clones have unlocked the secret of telomere regeneration, allowing them to maintain their youth and vitality indefinitely. They no longer age or tire, working tirelessly without the need for rest or rejuvenation. It\'s like having an immortal workforce that never gets bored of baking.</q>',
                 price: 2.7e84, // 2.7 septenvigintillion
                 icon: [22, 7, 'custom'], // Matches 1100 threshold
                 pool: '',
@@ -3031,14 +3031,14 @@ window.JNEData = {
                     return Game.Objects['You'] && Game.Objects['You'].amount >= 1100;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Doppelganger discount networks',
                 type: 'discount',
-                desc: 'You cost <b>5%</b> less.',
-                ddesc: 'You cost <b>5%</b> less.<q>Your clone network has established direct relationships with material suppliers, bypassing middlemen and securing wholesale pricing. The savings from cutting out intermediaries are substantial.</q>',
+                desc: 'You cost <b>15%</b> less.',
+                ddesc: 'You cost <b>15%</b> less.<q>Your clone network has established direct relationships with material suppliers, bypassing middlemen and securing wholesale pricing. The savings from cutting out intermediaries are substantial.</q>',
                 price: 2.7e86, // 270 septenvigintillion
                 icon: [22, 8, 'custom'], // Matches 1150 threshold
                 building: 'You',
@@ -3048,8 +3048,8 @@ window.JNEData = {
             },
             {
                 name: 'Quantum entanglement',
-                desc: 'You are <b>8%</b> more efficient.',
-                ddesc: 'You are <b>8%</b> more efficient.<q>Your clones have achieved quantum entanglement, allowing them to share information and coordinate actions instantaneously across vast distances. When one clone learns a new technique, all clones know it immediately. It\'s like having a network of minds that think as one, yet remain individually brilliant.</q>',
+                desc: 'You are <b>25%</b> more efficient.',
+                ddesc: 'You are <b>25%</b> more efficient.<q>Your clones have achieved quantum entanglement, allowing them to share information and coordinate actions instantaneously across vast distances. When one clone learns a new technique, all clones know it immediately. It\'s like having a network of minds that think as one, yet remain individually brilliant.</q>',
                 price: 2.7e88, // 27 octovigintillion
                 icon: [22, 9, 'custom'], // Matches 1200 threshold
                 pool: '',
@@ -3058,14 +3058,14 @@ window.JNEData = {
                     return Game.Objects['You'] && Game.Objects['You'].amount >= 1200;
                 },
                 effect: function() {
-                    return 1.08; // 8% increase
+                    return 1.25; // 25% increase
                 }
             },
             {
                 name: 'Clone supply dominance',
                 type: 'discount',
-                desc: 'You cost <b>5%</b> less.',
-                ddesc: 'You cost <b>5%</b> less.<q>Your clone operations have cornered the market on self-replication materials, controlling the entire supply chain from basic cloning components to advanced genetic enhancement facilities. Suppliers compete for your business.</q>',
+                desc: 'You cost <b>15%</b> less.',
+                ddesc: 'You cost <b>15%</b> less.<q>Your clone operations have cornered the market on self-replication materials, controlling the entire supply chain from basic cloning components to advanced genetic enhancement facilities. Suppliers compete for your business.</q>',
                 price: 2.7e90, // 2.7 novemvigintillion
                 icon: [22, 10, 'custom'], // Matches 1250 threshold
                 building: 'You',
@@ -3415,10 +3415,10 @@ window.JNEData = {
     achievementData: {
         buildings: {
             cursor: {
-                names: ["Carpal diem", "Hand over fist", "Finger guns", "Thumbs up, buttercup", "Pointer sisters", "Knuckle sandwich", "Phalanx formation", "Manual override", "Clickbaiter-in-chief", "With flying digits", "Palm before the storm"],
-                thresholds: [1100, 1150, 1250, 1300, 1400, 1450, 1550, 1600, 1700, 1750, 1850],
-                customIcons: [[0, 0, 'custom'], [0, 1, 'custom'], [0, 2, 'custom'], [0, 3, 'custom'], [0, 4, 'custom'], [0, 5, 'custom'], [0, 6, 'custom'], [0, 7, 'custom'], [0, 8, 'custom'], [0, 9, 'custom'], [0, 10, 'custom']],
-                orders: [1050.652, 1050.662, 1050.672, 1050.682, 1050.692, 1050.702, 1050.712, 1050.722, 1050.732, 1050.742, 1050.752]
+                names: ["Carpal diem", "Hand over fist", "Thumbs up, buttercup", "Pointer sisters", "Knuckle sandwich"],
+                thresholds: [1100, 1200, 1300, 1400, 1500],
+                customIcons: [[0, 0, 'custom'], [0, 1, 'custom'], [0, 2, 'custom'], [0, 3, 'custom'], [0, 4, 'custom']],
+                orders: [1050.652, 1050.662, 1050.672, 1050.682, 1050.692]
             },
             'grandma': {
                 names: ["All rise for Nana", "The crinkle collective", "Okay elder", "Wrinkle monarchy", "The wrinkling hour", "Matriarchal meltdown", "Cookies before crones", "Dust to crust", "Bingo bloodbath", "Supreme doughmother", "The last custodian"],
@@ -3545,8 +3545,8 @@ window.JNEData = {
             },
             click: {
                 names: ["Clickbait & Switch", "Click to the Future", "Clickety Clique", "Clickonomicon", "Clicks and Stones", "Click It Till You Make It", "One Does Not Simply Click Once", "Lord of the Clicks", "Click of the Titans"],
-                thresholds: [1e63, 1e69, 1e75, 1e81, 1e87, 1e93, 1e99, 1e105, "clickOfTitans"],
-                descs: ["Make <b>1 vigintillion</b> from clicking.<q>Tired finger yet?</q>", "Make <b>1 duovigintillion</b> from clicking.", "Make <b>1 quattuorvigintillion</b> from clicking.", "Make <b>1 sexvigintillion</b> from clicking.", "Make <b>1 octovigintillion</b> from clicking.", "Make <b>1 trigintillion</b> from clicking.", "Make <b>1 duotrigintillion</b> from clicking.", "Make <b>1 quattuortrigintillion</b> from clicking.", "Generate <b>1 year of raw CpS</b> in a single cookie click.<q>One click to rule them all!</q>"],
+                thresholds: [1e63, 1e66, 1e69, 1e72, 1e75, 1e78, 1e81, 1e84, "clickOfTitans"],
+                descs: ["Make <b>1 vigintillion</b> from clicking.<q>Tired finger yet?</q>", "Make <b>1 unvigintillion</b> from clicking.", "Make <b>1 duovigintillion</b> from clicking.", "Make <b>1 trevigintillion</b> from clicking.", "Make <b>1 quattuorvigintillion</b> from clicking.", "Make <b>1 quinvigintillion</b> from clicking.", "Make <b>1 sexvigintillion</b> from clicking.", "Make <b>1 septvigintillion</b> from clicking.", "Generate <b>1 year of raw CpS</b> in a single cookie click.<q>One click to rule them all!</q>"],
                 customIcons: [[9, 0, 'custom'], [9, 1, 'custom'], [9, 2, 'custom'], [9, 3, 'custom'], [9, 4, 'custom'], [9, 5, 'custom'], [9, 6, 'custom'], [9, 7, 'custom'], [9, 8, 'custom']],
                 orders: [1000.650, 1000.660, 1000.670, 1000.680, 1000.690, 1000.700, 1000.710, 1000.720, 7004]
             },
@@ -3655,33 +3655,25 @@ window.JNEData = {
                 customIcons: [[18, 14], [18, 13]],
                 orders: [10000.475, 10000.485]
             },
-            reincarnate: {
-                names: ["Ascension master", "Ascension legend", "Ascension deity"],
-                thresholds: [250, 500, 999],
-                descs: ["Ascend <b>250 times</b>.", "Ascend <b>500 times</b>.", "Ascend <b>999 times</b>."],
-                customIcons: [[17, 16, 'custom'], [17, 15, 'custom'], [17, 14, 'custom']],
-                orders: [30000.216, 30000.226, 30000.236]
-            },
             stockmarket: {
-                names: ["Doughfolio Debut", "Crumb Fund Manager", "Biscuit Market Baron", "Fortune Cookie Tycoon", "Dough Jones Legend", "The Dough Jones Plunge"],
-                thresholds: [25e6, 100e6, 250e6, 500e6, 1e9, -1e6],
+                names: ["Crumb Fund Manager", "Biscuit Market Baron", "Fortune Cookie Tycoon", "Dough Jones Legend", "The Dough Jones Plunge"],
+                thresholds: [100e6, 250e6, 500e6, 1e9, -1e6],
                 descs: [
-                    "Have <b>$25 million in stock market profits</b> across all ascensions.<q>Your cookie portfolio finally rose without burning. Neat!</q>",
                     "Have <b>$100 million in stock market profits</b> across all ascensions.<q>Turning crumbs into capital—one nibble at a time.</q>",
                     "Have <b>$250 million in stock market profits</b> across all ascensions.<q>You now own half the cookie aisle and a third of the jar.</q>",
-                    "Have <b>$500 million in stock market profits</b> across all ascensions.<q>You don’t just read the market—you crack it open like a fortune cookie.</q>",
+                    "Have <b>$500 million in stock market profits</b> across all ascensions.<q>You don't just read the market—you crack it open like a fortune cookie.</q>",
                     "Have <b>$1 billion in stock market profits</b> across all ascensions.<q>The index now tracks you. Analysts recommend: dunk.</q>",
                     "Have <b>$1 million in stock market losses</b> in one ascension.<q>This is why you diversify. Probably.</q>"
                 ],
-                customIcons: [[17, 6], [26, 7], [33, 33], [28, 29], [31, 8], [15, 8]],
-                orders: [61616.547, 61616.557, 61616.567, 61616.577, 61616.587, 61616.597]
+                customIcons: [[26, 7], [33, 33], [28, 29], [31, 8], [15, 8]],
+                orders: [61616.557, 61616.567, 61616.577, 61616.587, 61616.597]
             },
             seasonalReindeer: {
-                names: ["Cupid's Reindeer", "Business Reindeer", "Bundeer", "Ghost Reindeer"],
-                thresholds: [1, 1, 1, 1],
-                descs: ["Pop a reindeer during <b>Valentine's Day season.</b><q>Love is fleeting. So was that reindeer.</q>", "Pop a reindeer during <b>Business Day season.</b><q>His KPI was 'don't get popped.'</q>", "Pop a reindeer during <b>Easter season.</b><q>Wrong holiday, right target.</q>", "Pop a reindeer during <b>Halloween season.</b><q>Was that ectoplasm or caramel?</q>"],
-                customIcons: [[18, 16, 'custom'], [18, 15, 'custom'], [18, 14, 'custom'], [18, 17, 'custom']],
-                orders: [22100.275, 22100.285, 22100.295, 22100.305]
+                names: ["Seasonal Affective Deerorder"],
+                thresholds: [1],
+                descs: ["Pop at least <b>one</b> reindeer during <b>all non-Christmas seasons</b>.<q>Turns out the cure for seasonal depression was Christmas cheer all year long, keep those holiday lights running all year regardless of what the HOA\’s say.</q>"],
+                customIcons: [[22, 15, 'custom']],
+                orders: [22100.275]
             },
             gardenSeedsTime: {
                 names: ["I feel the need for seed"],
@@ -3902,11 +3894,11 @@ window.JNEData = {
             orders: [20000.090]
         },
         buffs: {
-            names: ["Trifecta Combo", "Combo Initiate", "Combo God", "Combo Hacker", "Frenzy frenzy", "Double Dragon Clicker", "Frenzy Marathon", "Hogwarts Graduate", "Hogwarts Dropout", "Spell Slinger"],
-            thresholds: [3, 6, 9, 12, 0, 0, 0, 0, 0, 0], // 3, 6, 9, 12 buffs active, frenzy frenzy, double dragon, frenzy marathon, wizard achievements, and spell slinger (handled separately)
-            descs: ["Have <b>3 buffs</b> active at once.<q>Hey that was pretty neat!</q>", "Have <b>6 buffs</b> active at once.<q>Okay that was downright impressive clicking.</q>", "Have <b>9 buffs</b> active at once.<q>I can't even follow what you did there but it looked really cool.</q>", "Have <b>12 buffs</b> active at once.<q>I don't believe you, but for like real congrats if you did that.</q>", "Have all three frenzy buffs active at once.<q>Like pizza pizza but with more wrath.</q>", "Have a dragon flight and a click frenzy active at the same time.<q>Double the dragons, double the clicking!</q>", "Have a frenzy buff with a total duration of at least 10 minutes.<q>Who needs coffee when you have this much energy?</q>", "Have <b>3 positive Grimoire spell effects</b> active at once.<q>Merlin would be proud of your spellcraft!</q>", "Have <b>3 negative Grimoire spell effects</b> active at once.<q>The Sorting Hat made a terrible mistake!</q>", "Cast <b>10 spells</b> within a 10-second window.<q>Speed casting at its finest!</q>"],
-            customIcons: [[25, 36], [26, 11], [22, 11], [23, 11], [23, 2, 'custom'], [30, 12], [22, 13], [30, 20], [31, 20], [32, 4]],
-            orders: [25000.232, 25000.242, 25000.252, 25000.262, 25000.272, 25000.282, 25000.292, 25000.302, 25000.312, 25000.322]
+            names: ["Trifecta Combo", "Combo Initiate", "Combo God", "Combo Hacker", "Up Up Down Down, Shame Shame", "Frenzy frenzy", "Double Dragon Clicker", "Frenzy Marathon", "Hogwarts Graduate", "Hogwarts Dropout", "Spell Slinger"],
+            thresholds: [3, 6, 9, 12, 15, 0, 0, 0, 0, 0, 0], // 3, 6, 9, 12, 15 buffs active, frenzy frenzy, double dragon, frenzy marathon, wizard achievements, and spell slinger (handled separately)
+            descs: ["Have <b>3 buffs</b> active at once.<q>Hey that was pretty neat!</q>", "Have <b>6 buffs</b> active at once.<q>Okay that was downright impressive clicking.</q>", "Have <b>9 buffs</b> active at once.<q>I can't even follow what you did there but it looked really cool.</q>", "Have <b>12 buffs</b> active at once.<q>I don't believe you, but for like real congrats if you did that.</q>", "Have <b>15 buffs</b> active at once.<q>You know what you did.</q>", "Have all three frenzy buffs active at once.<q>Like pizza pizza but with more wrath.</q>", "Have a dragon flight and a click frenzy active at the same time.<q>Double the dragons, double the clicking!</q>", "Have a frenzy buff with a total duration of at least 10 minutes.<q>Who needs coffee when you have this much energy?</q>", "Have <b>3 positive Grimoire spell effects</b> active at once.<q>Merlin would be proud of your spellcraft!</q>", "Have <b>3 negative Grimoire spell effects</b> active at once.<q>The Sorting Hat made a terrible mistake!</q>", "Cast <b>10 spells</b> within a 10-second window.<q>Speed casting at its finest!</q>"],
+            customIcons: [[25, 36], [26, 11], [22, 11], [23, 11], [20, 19, 'custom'], [23, 2, 'custom'], [30, 12], [22, 13], [30, 20], [31, 20], [32, 4]],
+            orders: [25000.232, 25000.242, 25000.252, 25000.262, 25000.272, 25000.282, 25000.292, 25000.302, 25000.312, 25000.322, 25000.332]
         },
         prestigeUpgrades: {
             names: ["Beyond Prestige"],

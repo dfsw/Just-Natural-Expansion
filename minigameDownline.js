@@ -751,7 +751,7 @@ DownlineM.init = function(div) {
       <div class="downline-bars framed">
         <div class="subsection">
           <div class="title downline-status-title">Downline CpS + <span id="downline-status-boost" class="green">0.00%</span></div>
-          <div class="downline-bar downline-bar-players" data-name="Players" data-desc-html="Recruited players who are actively playing Cookie Clicker.&lt;br&gt;&lt;br&gt;&lt;div class='downline-tier-line'&gt;&lt;span class='downline-tier-dot' style='background:#2a8a2a'&gt;&lt;/span&gt;&lt;b&gt;Dabblers&lt;/b&gt; are new players who are trying out the game, they may not stay long if you cannot hold their interest but they may also go on to become more serious players.&lt;/div&gt;&lt;div class='downline-tier-line'&gt;&lt;span class='downline-tier-dot' style='background:#c9c920'&gt;&lt;/span&gt;&lt;b&gt;Casuals&lt;/b&gt; players have decided to give the game a chance and as long as it&amp;rsquo;s well maintained there is a decent chance they will stick around.&lt;/div&gt;&lt;div class='downline-tier-line'&gt;&lt;span class='downline-tier-dot' style='background:#c97620'&gt;&lt;/span&gt;&lt;b&gt;Habituals&lt;/b&gt; have caught cookie fever and are playing regularly.&lt;/div&gt;&lt;div class='downline-tier-line'&gt;&lt;span class='downline-tier-dot' style='background:#c92a2a'&gt;&lt;/span&gt;&lt;b&gt;Devotees&lt;/b&gt; are players who are committed to 100%ing the game and can even recruit some friends to play with. With high enough commitment they can become fanatics.&lt;/div&gt;&lt;div class='downline-tier-line'&gt;&lt;span class='downline-tier-dot' style='background:#b07acc'&gt;&lt;/span&gt;&lt;b&gt;Fanatics&lt;/b&gt; are your most devoted players, they will actively recruit more players and generate the most CpS. However if the game goes downhill they may quit playing, if they do they will take many other players with them.&lt;/div&gt;">
+          <div class="downline-bar downline-bar-players" data-name="Players" data-desc-html="Recruited players who are actively playing Cookie Clicker. Players quit on their own randomly based on level and commitment, you must always be adding players to counteract this.&lt;br&gt;&lt;br&gt;&lt;div class='downline-tier-line'&gt;&lt;span class='downline-tier-dot' style='background:#2a8a2a'&gt;&lt;/span&gt;&lt;b&gt;Dabblers&lt;/b&gt; are new players who are trying out the game, they may not stay long if you cannot hold their interest but they may also go on to become more serious players.&lt;/div&gt;&lt;div class='downline-tier-line'&gt;&lt;span class='downline-tier-dot' style='background:#c9c920'&gt;&lt;/span&gt;&lt;b&gt;Casuals&lt;/b&gt; players have decided to give the game a chance and as long as it&amp;rsquo;s well maintained there is a decent chance they will stick around.&lt;/div&gt;&lt;div class='downline-tier-line'&gt;&lt;span class='downline-tier-dot' style='background:#c97620'&gt;&lt;/span&gt;&lt;b&gt;Habituals&lt;/b&gt; have caught cookie fever and are playing regularly.&lt;/div&gt;&lt;div class='downline-tier-line'&gt;&lt;span class='downline-tier-dot' style='background:#c92a2a'&gt;&lt;/span&gt;&lt;b&gt;Devotees&lt;/b&gt; are players who are committed to 100%ing the game and can even recruit some friends to play with. With high enough commitment they can become fanatics.&lt;/div&gt;&lt;div class='downline-tier-line'&gt;&lt;span class='downline-tier-dot' style='background:#b07acc'&gt;&lt;/span&gt;&lt;b&gt;Fanatics&lt;/b&gt; are your most devoted players, they will actively recruit more players and generate the most CpS. However if the game goes downhill they may quit playing, if they do they will take many other players with them.&lt;/div&gt;">
             <div class="name" id="downline-bar-players-label">Players 0</div>
             <div class="downline-bar-track">
               <div class="downline-bar-fill" id="downline-bar-players-fill" style="width:0%">
@@ -1605,7 +1605,7 @@ DownlineM.init = function(div) {
         desc: 'Send in the slightly creepy guy in the giant kitten outfit.',
         flavor: "He has a little dance he does and everything",
         unlock: { conditions: [{ stat: 'players', min: 100 }, { stat: 'hype', min: 100 }] },
-        effects: { players: 4, reputation: 2, hype: -2, commitment: -1, referrals: 1 },
+        effects: { players: 4, reputation: 1.5, hype: -2, commitment: -1, referrals: 1 },
         headline: 'Kitten mascot waves at shoppers — wholesome but forgettable' },
     
         { name: 'Ban cheaters', icon: [1,7], durationSec: 1 * 60 * 60, costCps: 35 * 60,
@@ -1841,7 +1841,7 @@ DownlineM.init = function(div) {
         { name: 'Rebrand', icon: [31, 1], durationSec: 0, costCps: 0,
         desc: "When everything else fails, rebrand. This will reset your progress back to the starting point. (Does not reset prestige)",
         flavor: 'Kookie Clicker a brand new game with no association to the original game at all we swear.',
-        unlock: { conditions: [{ stat: 'players', min: 50 }]},
+        unlock: { conditions: [{ stat: 'players', min: 10 }]},
         effects: {},
         special: 'rebrand',
         headline: '"A new dawn a new day" says Kookie Clicker CEO who was totally not the CEO of Cookie Clicker 5 minutes ago.' }
@@ -2532,6 +2532,9 @@ DownlineM.init = function(div) {
       G.activeActions.push(state);
       if (typeof DownlineM.onActionAdd === 'function') DownlineM.onActionAdd(1);
       if (def.headline) addHeadlineToTickerPool(def.headline);
+      if (name === 'Revive Order of the Cookie Age Cult' && typeof PlaySound === 'function') {
+        PlaySound('https://cdn.jsdelivr.net/gh/dfsw/Cookies@bf87f7a/orderofthecookie.mp3');
+      }
 
       G.lastActions.unshift(name);
       if (G.lastActions.length > LAST_ACTIONS_CAP) G.lastActions.length = LAST_ACTIONS_CAP;
@@ -3014,6 +3017,7 @@ DownlineM.init = function(div) {
       G.activeActions = []; G.unlocked = {}; G.pendingNewPlayers = 0; G.tickerPool = [];
       G.prestige++;
       G.releasesThisAscension = (G.releasesThisAscension || 0) + 1;
+      if (typeof DownlineM.onRelease === 'function') DownlineM.onRelease();
       renderActiveSlots();
       activeCountEl.textContent = 0;
       checkUnlocks();
@@ -3630,6 +3634,7 @@ function removeDownlineAchievements() {
         }
     });
     downlineAchievementState.achievementsCreated = false;
+    DownlineM._checkHookRegistered = false;
     if (Game.Achievements) {
         var newAchievementsOwned = 0;
         for (var achName in Game.Achievements) {
