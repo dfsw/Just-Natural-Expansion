@@ -3,7 +3,7 @@
 (function() {
 'use strict';
 
-const POTIONS_VERSION = '1.1.0';
+const POTIONS_VERSION = '1.1.1';
 
 var POTIONS_CUSTOM_SPRITE_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
 
@@ -1925,6 +1925,7 @@ PotionsM.updatePotionsBrewedDisplay = function() {
 Game._potionsGardenHooked = false;
 Game._potionsMarketHooked = false;
 Game._potionsGrimoireHooked = false;
+Game._potionsGrimoireLogicHooked = false;
 Game._potionsTerminalHooked = false;
 Game._potionsDownlineHooked = false;
 PotionsM.parent = Game.Objects && Game.Objects['Alchemy lab'] ? Game.Objects['Alchemy lab'] : {
@@ -3007,74 +3008,75 @@ PotionsM._hookMarket = function() {
 PotionsM._hookGrimoire = function() {
     var GM = Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].minigame;
     if (!GM || !GM.castSpell) return;
-    
-    // If already hooked update reference
-    if (GM.castSpell._potionsHooked) {
-        GM.castSpell._potionsM = PotionsM;
-        Game._potionsGrimoireHooked = true;
-        return;
-    }
-    
-    if (!GM._jneOriginalCastSpellPotions) GM._jneOriginalCastSpellPotions = GM.castSpell;
-    var wrapper = function(spell, obj) {
-        var GM = Game.Objects['Wizard tower'].minigame;
-        var PM = GM.castSpell._potionsM || PotionsM;
-        if (!Game._potionsGrimoireReady) return GM._jneOriginalCastSpellPotions.apply(this, arguments);
-        // Detect misbrew by temporarily wrapping spell.fail and spell.win
-        var origFail = spell.fail;
-        var origWin  = spell.win;
-        PM._grimoireLastFail = null;
-        if (origFail) {
-            spell.fail = function() { PM._grimoireLastFail = true;  return origFail.apply(this, arguments); };
-        }
-        if (origWin) {
-            spell.win  = function() { PM._grimoireLastFail = false; return origWin.apply(this, arguments); };
-        }
-        var result = GM._jneOriginalCastSpellPotions.apply(this, arguments);
-        if (origFail) spell.fail = origFail;
-        if (origWin)  spell.win  = origWin;
-        if (PM._loading) return result;
-        if (result === true && PM._grimoireLastFail !== null) {
-            if (PM._grimoireLastFail) {
-                if (PotionsM.reagentRoll('magical_blight')) PotionsM._addReagent('magical_blight', 1, 'grimoire_misbrew');
-            } else {
-                if (PotionsM.reagentRoll('magical_infusion')) PotionsM._addReagent('magical_infusion', 1, 'grimoire_success');
+
+    // Wrap castSpell if it is not already wrapped by us, and always update the current PotionsM reference
+    if (!GM.castSpell._potionsHooked) {
+        if (!GM._jneOriginalCastSpellPotions) GM._jneOriginalCastSpellPotions = GM.castSpell;
+        var wrapper = function(spell, obj) {
+            var GM = Game.Objects['Wizard tower'].minigame;
+            var PM = GM.castSpell._potionsM || PotionsM;
+            if (!Game._potionsGrimoireReady) return GM._jneOriginalCastSpellPotions.apply(this, arguments);
+            // Detect misbrew by temporarily wrapping spell.fail and spell.win
+            var origFail = spell.fail;
+            var origWin  = spell.win;
+            PM._grimoireLastFail = null;
+            if (origFail) {
+                spell.fail = function() { PM._grimoireLastFail = true;  return origFail.apply(this, arguments); };
             }
-        }
-        return result;
-    };
-    PotionsM._grimoireLastFail = null;
-    GM.castSpell = wrapper;
-    GM.castSpell._potionsHooked = true;
+            if (origWin) {
+                spell.win  = function() { PM._grimoireLastFail = false; return origWin.apply(this, arguments); };
+            }
+            var result = GM._jneOriginalCastSpellPotions.apply(this, arguments);
+            if (origFail) spell.fail = origFail;
+            if (origWin)  spell.win  = origWin;
+            if (PM._loading) return result;
+            if (result === true && PM._grimoireLastFail !== null) {
+                if (PM._grimoireLastFail) {
+                    if (PotionsM.reagentRoll('magical_blight')) PotionsM._addReagent('magical_blight', 1, 'grimoire_misbrew');
+                } else {
+                    if (PotionsM.reagentRoll('magical_infusion')) PotionsM._addReagent('magical_infusion', 1, 'grimoire_success');
+                }
+            }
+            return result;
+        };
+        GM.castSpell = wrapper;
+        GM.castSpell._potionsHooked = true;
+    }
     GM.castSpell._potionsM = PotionsM;
     Game._potionsGrimoireHooked = true;
 
     // Hook into grimoire logic to modify mana regen for Balm of Merlin
-    if (GM.logic && !Game._potionsGrimoireLogicHooked) {
-        var wrapper2 = function() {
-            var GM = Game.Objects['Wizard tower'].minigame;
-            var balmBuff = Game.hasBuff('Balm of Merlin');
-            var balmCurse = Game.hasBuff('Balm of Merlin (misbrewed)');
-            var multiplier = balmBuff ? 2 : (balmCurse ? 0.5 : 1);
+    if (GM.logic && !GM.logic._potionsLogicHooked) {
+        // An existing wrapper from a previous load does not have _potionsLogicHooked; mark it instead of double-wrapping
+        if (GM.logic._original && typeof GM.logic._original === 'function' && GM.logic._original !== GM.logic) {
+            GM.logic._potionsLogicHooked = true;
+        } else {
+            var wrapper2 = function() {
+                var GM = Game.Objects['Wizard tower'].minigame;
+                var balmBuff = Game.hasBuff('Balm of Merlin');
+                var balmCurse = Game.hasBuff('Balm of Merlin (misbrewed)');
+                var multiplier = balmBuff ? 2 : (balmCurse ? 0.5 : 1);
 
-            // Call original logic first
-            if (wrapper2._original) wrapper2._original.apply(this, arguments);
+                // Call original logic first
+                if (wrapper2._original) wrapper2._original.apply(this, arguments);
 
-            // Check if heavenlyUpgrades has added a tower level bonus
-            var hasWizardlyBonus = Game.Has && Game.Has('Wizardly accomplishments');
-            var towerLevel = hasWizardlyBonus ? Math.min(GM.parent.level, 20) : 0;
-            var wizardlyBonus = hasWizardlyBonus ? (towerLevel * 0.001) / Game.fps : 0;
+                // Check if heavenlyUpgrades has added a tower level bonus
+                var hasWizardlyBonus = Game.Has && Game.Has('Wizardly accomplishments');
+                var towerLevel = hasWizardlyBonus ? Math.min(GM.parent.level, 20) : 0;
+                var wizardlyBonus = hasWizardlyBonus ? (towerLevel * 0.001) / Game.fps : 0;
 
-            // Add heavenlyUpgrades bonus first
-            GM.magicPS += wizardlyBonus;
+                // Add heavenlyUpgrades bonus first
+                GM.magicPS += wizardlyBonus;
 
-            // Apply Balm of Merlin multiplier to mana regen
-            if (multiplier !== 1) {
-                GM.magicPS *= multiplier;
-            }
-        };
-        wrapper2._original = GM.logic;
-        GM.logic = wrapper2;
+                // Apply Balm of Merlin multiplier to mana regen
+                if (multiplier !== 1) {
+                    GM.magicPS *= multiplier;
+                }
+            };
+            wrapper2._original = GM.logic;
+            wrapper2._potionsLogicHooked = true;
+            GM.logic = wrapper2;
+        }
         Game._potionsGrimoireLogicHooked = true;
     }
 
@@ -4013,7 +4015,6 @@ PotionsM._startBrew = function() {
             var curseBuff = Game.buffs['Draught of Urgency (misbrewed)'];
             speedMultiplier *= curseBuff.power;
         }
-        
         brewTime *= speedMultiplier;
         
         // Override brew time to 5 seconds in debug mode
@@ -4539,8 +4540,10 @@ PotionsM._buildSaveDataImpl = function() {
             var buff = Game.buffs[bname];
             if (!buff) continue;
             var entry = { n: bname, t: Math.round(buff.time / (Game.fps || 30)), m: Math.round(buff.maxTime / (Game.fps || 30)) };
-            // Save power for Nepenthe of Undoing (variable multCpS based on buffs consumed)
-            if (bname === 'Nepenthe of Undoing' && typeof buff.multCpS !== 'undefined') entry.pw = buff.multCpS;
+            // Save whichever multiplier property this buff type uses (power/mult/multCpS),
+            // so its effect strength is preserved across saves for ALL potion buffs, not just special-cased ones.
+            var savedPower = (buff.power !== undefined) ? buff.power : (buff.mult !== undefined ? buff.mult : (buff.multCpS !== undefined ? buff.multCpS : undefined));
+            if (savedPower !== undefined) entry.pw = savedPower;
             // Save building name for Suspension of Hallucinogenic
             if ((bname === 'Suspension of Hallucinogenic' || bname === 'Suspension of Hallucinogenic (misbrewed)') && buff.buildingName) {
                 entry.bn = buff.buildingName;
@@ -4570,7 +4573,8 @@ PotionsM._buildSaveDataImpl = function() {
              pc: G.prestigeCount || 0,
              up: G.unlockedPrestige || [],
              rm: G.recipeMap || null,
-             fns: G.feverNightmareStart || 0 };
+             fns: G.feverNightmareStart || 0,
+             sr: G.selectedReagents || [] };
 };
 
 PotionsM._saveImpl = function() {
@@ -4651,6 +4655,19 @@ PotionsM._loadImpl = function(str) {
             if (pv >= 2) {
                 POTIONS[i].unlocked = true;
             }
+        }
+    }
+
+    // Staged reagents (selected but not yet committed to a brew)
+    G.selectedReagents = [];
+    if (Array.isArray(data.sr)) {
+        for (var i = 0; i < data.sr.length; i++) {
+            var rid = data.sr[i];
+            var valid = false;
+            for (var ri = 0; ri < REAGENTS.length; ri++) {
+                if (REAGENTS[ri].id === rid) { valid = true; break; }
+            }
+            if (valid && G.selectedReagents.length < 3) G.selectedReagents.push(rid);
         }
     }
 
@@ -4754,6 +4771,7 @@ PotionsM._loadImpl = function(str) {
     }
 
     scheduleUnlock();
+    PotionsM._hookGrimoire();
 };
 
 // Restore pending buffs after all buff types are registered
@@ -4766,10 +4784,8 @@ PotionsM._restorePendingBuffs = function() {
         var maxSeconds = Math.max(remainSeconds, bd.m || remainSeconds);
         if (remainSeconds <= 0) continue;
         try {
-            var power = 1;
-            if (bd.n === 'Suspension of Hallucinogenic') power = 2.0;
-            else if (bd.n === 'Suspension of Hallucinogenic (misbrewed)') power = 0.5;
-            else if (bd.n === 'Nepenthe of Undoing') { power = bd.pw || 1; delete Game.buffs['Nepenthe of Undoing']; }
+            var power = (bd.pw !== undefined) ? bd.pw : 1;
+            if (bd.n === 'Nepenthe of Undoing') delete Game.buffs['Nepenthe of Undoing'];
             if (bd.bn && (bd.n === 'Suspension of Hallucinogenic' || bd.n === 'Suspension of Hallucinogenic (misbrewed)')) _suspBuildingKey = bd.bn;
             Game.gainBuff(bd.n, remainSeconds, power, 0);
             _suspBuildingKey = null;
@@ -5065,6 +5081,7 @@ var publicAPI = {
         Game.JNE.potionsSavedData = s;
         PotionsM._loadImpl(s);
         PotionsM._restorePendingBuffs();
+        PotionsM._hookGrimoire();
     },
     writeCache: function(s) {
         if (typeof s !== 'string') s = '';

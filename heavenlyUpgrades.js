@@ -4,7 +4,7 @@
         var _huT0 = Date.now();
         
         const SIMPLE_MOD_NAME = 'Just Natural Expansion';
-        const MOD_HU_VERSION = '1.0.20';
+        const MOD_HU_VERSION = '1.0.21';
         var isInitialized = false;
         const MOD_ICON = [15, 7];
         const CUSTOM_SPRITE_SHEET_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
@@ -1247,6 +1247,7 @@
                     if (proc && god.id === proc.id) {
                         var oldTime = M._procrastinationSlotTime;
                         var newTime = M._procrastinationSlotTime;
+                        var isRestoring = Game.JNE && Game.JNE._isRestoringData;
                         
                         // Only reset timer when moving between slots or unslotting, not during load
                         if (slot === -1) {
@@ -1254,6 +1255,9 @@
                             newTime = null;
                         } else if (prev !== -1 && prev !== slot) {
                             // Moving from one slot to another
+                            newTime = Date.now();
+                        } else if (prev === -1 && !isRestoring) {
+                            // First time being slotted (not from save load)
                             newTime = Date.now();
                         }
                         
@@ -1317,7 +1321,12 @@
                     var M = Game.Objects['Temple'] && Game.Objects['Temple'].minigame;
                     if (!M || !M.gods || !M.gods['procrastination']) return;
                     if (!Game.hasGod('procrastination')) return;
-                    if (!M._procrastinationSlotTime) return;
+                    if (!M._procrastinationSlotTime) {
+                        if (Game.JNE && Game.JNE._isRestoringData) return;
+                        M._procrastinationSlotTime = Date.now();
+                        Game.recalculateGains = true;
+                        return;
+                    }
                     if (Game.T % (Game.fps * 5) === 0) Game.recalculateGains = true;
                 }, 'Morrowen CpS refresh');
                 Game._jneProcrastinationRecalcHooked = true;
@@ -3316,22 +3325,25 @@
             if (!M || M._wizardlyAccomplishmentsHooked) return;
             if (typeof l !== 'function') return;
 
-            M.logic = function() {
-                var M = Game.Objects['Wizard tower'].minigame;
-                if (Game.T%5==0) {M.computeMagicM();}
-                var towerLevel = Math.min(M.parent.level, 20);
-                var bonus = (towerLevel * 0.001) / Game.fps; // level 4 6&% increase, level 10 16.7%, level 20 33%
-                M.magicPS = Math.max(0.002, Math.pow(M.magic/Math.max(M.magicM,100),0.5))*0.002 + bonus;
-                M.magic += M.magicPS;
-                M.magic = Math.min(M.magic, M.magicM);
-                if (Game.T%5==0) for (var i in M.spells) {
-                    var me = M.spells[i], cost = M.getSpellCost(me);
-                    var priceEl = l('grimoirePrice' + me.id);
-                    if (priceEl) priceEl.innerHTML = Beautify(cost);
-                    var spellEl = l('grimoireSpell' + me.id);
-                    if (spellEl) spellEl.className = M.magic < cost ? 'grimoireSpell titleFont' : 'grimoireSpell titleFont ready';
-                }
-            };
+
+            if (!(M.logic && M.logic._potionsLogicHooked)) {
+                M.logic = function() {
+                    var M = Game.Objects['Wizard tower'].minigame;
+                    if (Game.T%5==0) {M.computeMagicM();}
+                    var towerLevel = Math.min(M.parent.level, 20);
+                    var bonus = (towerLevel * 0.001) / Game.fps; // level 4 6&% increase, level 10 16.7%, level 20 33%
+                    M.magicPS = Math.max(0.002, Math.pow(M.magic/Math.max(M.magicM,100),0.5))*0.002 + bonus;
+                    M.magic += M.magicPS;
+                    M.magic = Math.min(M.magic, M.magicM);
+                    if (Game.T%5==0) for (var i in M.spells) {
+                        var me = M.spells[i], cost = M.getSpellCost(me);
+                        var priceEl = l('grimoirePrice' + me.id);
+                        if (priceEl) priceEl.innerHTML = Beautify(cost);
+                        var spellEl = l('grimoireSpell' + me.id);
+                        if (spellEl) spellEl.className = M.magic < cost ? 'grimoireSpell titleFont' : 'grimoireSpell titleFont ready';
+                    }
+                };
+            }
 
             M.draw = function() {
                 var M = Game.Objects['Wizard tower'].minigame;
@@ -6574,8 +6586,15 @@
             Game.storeToRefresh = 1;
             Game.upgradesToRebuild = 1;
 
-            // Update toggle states and cache restored data immediately 
+            // Update toggle states
             updateAllToggleStates();
+            
+            // Apply stats BEFORE caching so the cached save data reflects restored values
+            if (saveData.stats) {
+                if (saveData.stats.cookieFishCaught !== undefined) Game.JNE.cookieFishCaught = saveData.stats.cookieFishCaught || 0;
+                if (saveData.stats.bingoJackpotWins !== undefined) Game.JNE.bingoJackpotWins = saveData.stats.bingoJackpotWins || 0;
+                if (saveData.stats.ascensionSpecialJackpots !== undefined) Game.JNE.ascensionSpecialJackpots = saveData.stats.ascensionSpecialJackpots || 0;
+            }
             
             // Cache the fully restored state immediately
             if (Game.JNE) {
@@ -6608,13 +6627,6 @@
                 // No farm drops in save data
             }
             
-            // Apply stats
-            if (saveData.stats) {
-                if (saveData.stats.cookieFishCaught !== undefined) Game.JNE.cookieFishCaught = saveData.stats.cookieFishCaught || 0;
-                if (saveData.stats.bingoJackpotWins !== undefined) Game.JNE.bingoJackpotWins = saveData.stats.bingoJackpotWins || 0;
-                if (saveData.stats.ascensionSpecialJackpots !== undefined) Game.JNE.ascensionSpecialJackpots = saveData.stats.ascensionSpecialJackpots || 0;
-            }
-            
             // Apply big cookie image
             if (saveData.bigCookieImage !== undefined) {
                 Game.cookieImageType = saveData.bigCookieImage;
@@ -6645,6 +6657,10 @@
             if (saveData.pantheon) {
                 var M = Game.Objects['Temple'] && Game.Objects['Temple'].minigame;
                 if (M && M.slot && M.gods && M.godsById) {
+                    // Clear stale pantheon state before restoring from save
+                    M._procrastinationSlotTime = null;
+                    M._selfishnessClickCount = 0;
+
                     if (saveData.pantheon.slots) {
                         for (var i = 0; i < Math.min(saveData.pantheon.slots.length, M.slot.length); i++) {
                             var savedSlot = saveData.pantheon.slots[i];
