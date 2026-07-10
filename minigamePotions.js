@@ -3,7 +3,7 @@
 (function() {
 'use strict';
 
-const POTIONS_VERSION = '1.1.1';
+const POTIONS_VERSION = '1.1.2';
 
 var POTIONS_CUSTOM_SPRITE_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
 
@@ -2657,7 +2657,9 @@ PotionsM._registerHooks = function() {
     PotionsM._hookGrimoire();
     if (!Game._potionsGrimoireHooked) {
         Game.registerHook('check', function() {
-            if (!Game._potionsGrimoireHooked) PotionsM._hookGrimoire();
+
+            var GM = Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].minigame;
+            if (GM && GM.castSpell && !GM.castSpell._potionsHooked) PotionsM._hookGrimoire();
         });
     }
     
@@ -3011,11 +3013,12 @@ PotionsM._hookGrimoire = function() {
 
     // Wrap castSpell if it is not already wrapped by us, and always update the current PotionsM reference
     if (!GM.castSpell._potionsHooked) {
-        if (!GM._jneOriginalCastSpellPotions) GM._jneOriginalCastSpellPotions = GM.castSpell;
+
+        var originalCastSpell = GM.castSpell;
         var wrapper = function(spell, obj) {
             var GM = Game.Objects['Wizard tower'].minigame;
             var PM = GM.castSpell._potionsM || PotionsM;
-            if (!Game._potionsGrimoireReady) return GM._jneOriginalCastSpellPotions.apply(this, arguments);
+            if (!Game._potionsGrimoireReady) return originalCastSpell.apply(this, arguments);
             // Detect misbrew by temporarily wrapping spell.fail and spell.win
             var origFail = spell.fail;
             var origWin  = spell.win;
@@ -3026,7 +3029,7 @@ PotionsM._hookGrimoire = function() {
             if (origWin) {
                 spell.win  = function() { PM._grimoireLastFail = false; return origWin.apply(this, arguments); };
             }
-            var result = GM._jneOriginalCastSpellPotions.apply(this, arguments);
+            var result = originalCastSpell.apply(this, arguments);
             if (origFail) spell.fail = origFail;
             if (origWin)  spell.win  = origWin;
             if (PM._loading) return result;
@@ -3663,8 +3666,8 @@ PotionsM._getReagentDef = function(reagentId) {
 };
 
 PotionsM.reagentRoll = function(reagentId) {
-    // Don't award reagents if minigame isn't loaded 
-    if (!PotionsM.parent || !PotionsM.parent.minigameLoaded || Game.ascensionMode == 1) return false;
+    // Don't award reagents if minigame isn't loaded
+    if (!PotionsM.parent || !Game._potionsGrimoireReady || Game.ascensionMode == 1) return false;
     var rDef = PotionsM._getReagentDef(reagentId);
     if (!rDef) return false;
     var dropChance = rDef.dropChance || 0;
@@ -3709,8 +3712,8 @@ PotionsM._onCookieClick = function() {
 };
 
 PotionsM._addReagent = function(reagentId, amount, source) {
-    // Don't award reagents if minigame isn't loaded 
-    if (!PotionsM.parent || !PotionsM.parent.minigameLoaded || Game.ascensionMode == 1) return;
+    // Don't award reagents if minigame isn't loaded
+    if (!PotionsM.parent || !Game._potionsGrimoireReady || Game.ascensionMode == 1) return;
     if (PotionsM._loading) return;
     if (Game.buffs['Poultice of Overgrowth']) amount *= 2;
     var current = G.reagents[reagentId] || 0;
@@ -3742,13 +3745,13 @@ PotionsM._addReagent = function(reagentId, amount, source) {
             Game.Notify('New reagent discovered!', name, icon, 6);
         } else {
             var msg = 'Reagent found: ' + name + '!';
-            // Position popup at bottom of screen to avoid vanilla popups at cursor 
+            // Position popup at bottom of screen to avoid vanilla popups at cursor
             var px = Game.windowW / 2;
             var py = Game.windowH - 100;
             Game.Popup(msg, px, py);
         }
         PotionsM._buildReagents();
-        PotionsM._buildCatalog(); 
+        PotionsM._buildCatalog();
     }, 0);
 };
 

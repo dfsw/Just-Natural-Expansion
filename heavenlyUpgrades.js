@@ -4,7 +4,7 @@
         var _huT0 = Date.now();
         
         const SIMPLE_MOD_NAME = 'Just Natural Expansion';
-        const MOD_HU_VERSION = '1.0.21';
+        const MOD_HU_VERSION = '1.0.22';
         var isInitialized = false;
         const MOD_ICON = [15, 7];
         const CUSTOM_SPRITE_SHEET_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
@@ -3109,10 +3109,20 @@
             var tower = Game.Objects['Wizard tower'];
             if (!tower || !tower.minigameLoaded || !tower.minigame) return;
             var M = tower.minigame;
-            if (!M || !M.castSpell || M._shinyWrinklerHooked) return;
-            if (!M._jneOriginalCastSpell) M._jneOriginalCastSpell = M.castSpell;
-            M.castSpell = function(spell, obj) {
-                var M = Game.Objects['Wizard tower'].minigame;
+            if (!M || !M.castSpell) return;
+            // Marker lives on the wrapper function itself, not just M._shinyWrinklerHooked
+            // (which gets reset to false on every save load). This way, if some other mod
+            // (e.g. Potions) re-wraps M.castSpell after us, we correctly detect that OUR
+            // wrapper is gone and re-chain to whatever the CURRENT castSpell is, instead of
+            // unconditionally overwriting it and discarding the other mod's hook.
+            if (M.castSpell._shinyWrinklerWrapped) { M._shinyWrinklerHooked = true; return; }
+            // Capture the chain-through target as a LOCAL CLOSURE VARIABLE rather than a
+            // shared mutable property on M. Reading a shared property dynamically at call
+            // time is dangerous: if another mod's wrapper does the same thing, the two
+            // "original" references can end up pointing at each other's current wrapper,
+            // causing infinite recursion.
+            var originalCastSpell = M.castSpell;
+            var shinyWrinklerCastSpellWrapper = function(spell, obj) {
                 var before = new Set();
                 if (spell && spell.name === 'Resurrect Abomination') {
                     for (var i in Game.wrinklers) {
@@ -3120,7 +3130,7 @@
                         if (w && w.phase > 0) before.add(w);
                     }
                 }
-                var result = M._jneOriginalCastSpell.call(this, spell, obj);
+                var result = originalCastSpell.call(this, spell, obj);
                 if (spell && spell.name === 'Resurrect Abomination' && result !== -1) {
                     var chance = 0, upgrade = null;
                     if (Game.Has('Alakazoodle evil noodle')) { chance = 0.03; upgrade = Game.Upgrades['Alakazoodle evil noodle']; }
@@ -3147,6 +3157,8 @@
                 }
                 return result;
             };
+            shinyWrinklerCastSpellWrapper._shinyWrinklerWrapped = true;
+            M.castSpell = shinyWrinklerCastSpellWrapper;
             M._shinyWrinklerHooked = true;
         }
         
