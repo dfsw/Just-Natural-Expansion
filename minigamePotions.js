@@ -610,7 +610,7 @@ var POTIONS = [
         effect: "Clicking a golden cookie has a 30% chance to summon another (storms and chains excluded) for the next 20 seconds.",
         brewTime: 60*60*4,
         duration: 20,
-        misbrewChance: 30,
+        misbrewChance: .30,
         misbrew: "Golden cookies appear 50% less often for the next 5 minutes.",
         prestige: true,
         prestigeLocked: true
