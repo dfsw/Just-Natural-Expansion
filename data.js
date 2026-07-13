@@ -149,7 +149,7 @@ window.JNEData = {
             {
                 name: 'Kitten unpaid interns',
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
-                ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>They work for expurrience and exposure, sir.</q>',
+                ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>They work for expurrience and exposure, boss.</q>',
                 price: 9e53, // 900 sexdecillion
                 icon: [16, 0, 'custom'],
                 pool: 'kitten',
@@ -161,7 +161,7 @@ window.JNEData = {
             {
                 name: 'Kitten overpaid "temporary" contractors',
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
-                ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>They\'re definitely not purrmanent, we promise, sir.</q>',
+                ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>They\'re definitely not purrmanent, we promise, boss.</q>',
                 price: 9e56, // 900 septendecillion
                 icon: [16, 1, 'custom'],
                 pool: 'kitten',
@@ -173,7 +173,7 @@ window.JNEData = {
             {
                 name: 'Kitten remote workers',
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
-                ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>Working from home since furever, sir.</q>',
+                ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>Working from home since furever, boss.</q>',
                 price: 9e59, // 900 octodecillion
                 icon: [16, 2, 'custom'],
                 pool: 'kitten',
@@ -185,7 +185,7 @@ window.JNEData = {
             {
                 name: 'Kitten scrum masters',
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
-                ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>They facilitate the facilitation, sir.</q>',
+                ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>They facilitate the facilitation, boss.</q>',
                 price: 9e62, // 900 novemdecillion
                 icon: [16, 3, 'custom'],
                 pool: 'kitten',
@@ -197,7 +197,7 @@ window.JNEData = {
             {
                 name: 'Kitten UX designers',
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
-                ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>Making everything more user-furry, one pixel at a time, sir.</q>',
+                ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>Making everything more user-furry, one pixel at a time, boss.</q>',
                 price: 9e65, // 900 vigintillion
                 icon: [16, 4, 'custom'],
                 pool: 'kitten',
@@ -209,9 +209,9 @@ window.JNEData = {
             {
                 name: 'Kitten janitors',
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
-                ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>Keeping the office clean and organized, sir.</q>',
+                ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>Keeping the office clean and organized, boss.</q>',
                 price: 9e68, // 900 vigintillion
-                icon: [10, 8, 'custom'],
+                icon: [16, 5, 'custom'],
                 pool: 'kitten',
                 kitten: 105,
                 unlockCondition: function() {
@@ -221,9 +221,9 @@ window.JNEData = {
             {
                 name: 'Kitten coffee fetchers',
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
-                ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>Essential for maintaining purrductivity levels, sir.</q>',
+                ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>Essential for maintaining purrductivity levels, boss.</q>',
                 price: 9e71, // 900 duovigintillion
-                icon: [10, 9, 'custom'],
+                icon: [16, 6, 'custom'],
                 pool: 'kitten',
                 kitten: 106,
                 unlockCondition: function() {
@@ -233,9 +233,9 @@ window.JNEData = {
             {
                 name: 'Kitten personal assistants',
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
-                ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>They know your schedule better than you do, sir.</q>',
+                ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>They know your schedule better than you do, boss.</q>',
                 price: 9e74, // 900 trevigintillion
-                icon: [10, 10, 'custom'],
+                icon: [16, 7, 'custom'],
                 pool: 'kitten',
                 kitten: 107,
                 unlockCondition: function() {
@@ -245,7 +245,7 @@ window.JNEData = {
             {
                 name: 'Kitten vice presidents',
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
-                ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>They have a corner office and everything, sir.</q>',
+                ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>They have a corner office and everything, boss.</q>',
                 price: 9e77, // 900 quattuorvigintillion
                 icon: [16, 8, 'custom'],
                 pool: 'kitten',
@@ -257,7 +257,7 @@ window.JNEData = {
             {
                 name: 'Kitten board members',
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
-                ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>Making strategic decisions from the top floor, sir.</q>',
+                ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>Making strategic decisions from the top floor, boss.</q>',
                 price: 9e80, // 900 quinvigintillion
                 icon: [16, 9, 'custom'],
                 pool: 'kitten',
@@ -269,7 +269,7 @@ window.JNEData = {
             {
                 name: 'Kitten founders',
                 desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
-                ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>The original visionaries who started it all, sir.</q>',
+                ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>The original visionaries who started it all, boss.</q>',
                 price: 9e83, // 900 sexvigintillion
                 icon: [16, 10, 'custom'],
                 pool: 'kitten',

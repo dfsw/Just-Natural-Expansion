@@ -23,7 +23,7 @@
     
     function initializeMod() {
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.6.0';
+    var modVersion = '0.6.1';
     var debugMode = false; 
     
     function debugLog() {
@@ -135,10 +135,59 @@
         : 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/heavenlyUpgrades.js';
     var spriteSheets = {
         custom: BETA_MODE 
-            ? 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png'
+            ? 'https://raw.githubusercontent.com/dfsw/Cookies/refs/heads/beta/updatedSpriteSheet.png'
             : 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png',
         gardenPlants: 'https://orteil.dashnet.org/cookieclicker/img/gardenPlants.png'
     };
+
+    // JNE Tier System
+    Game.Tiers['jne1'] = { name: 'Sterlicious', color: '#DDEAF0', special: 1, unlock: -1 };
+    Game.Tiers['jne2'] = { name: 'Championchip', color: '#FFF05A', special: 1, unlock: -1 };
+    Game.Tiers['jne3'] = { name: 'Gumshoechew', color: '#D8A868', special: 1, unlock: -1 };
+    Game.Tiers['jne4'] = { name: 'Atomalt', color: '#20B8C8', special: 1, unlock: -1 };
+    Game.Tiers['jne5'] = { name: 'Groovium', color: '#FF1A90', special: 1, unlock: -1 };
+    Game.Tiers['jne6'] = { name: 'Retroffee', color: '#E87038', special: 1, unlock: -1 };
+    Game.Tiers['jne7'] = { name: 'Synthberry', color: '#FF3A90', special: 1, unlock: -1 };
+    Game.Tiers['jne8'] = { name: 'Neonblast', color: '#20F0D8', special: 1, unlock: -1 };
+    Game.Tiers['jne9'] = { name: 'Cybercandy', color: '#A880FF', special: 1, unlock: -1 };
+    Game.Tiers['jne10'] = { name: 'Magmallow', color: '#D81A00', special: 1, unlock: -1 };
+    Game.Tiers['jne11'] = { name: 'Blazium', color: '#D01078', special: 1, unlock: -1 };
+
+    function getJNETier(threshold) {
+        if (threshold >= 1250) return 'jne11';
+        if (threshold >= 1200) return 'jne10';
+        if (threshold >= 1150) return 'jne9';
+        if (threshold >= 1100) return 'jne8';
+        if (threshold >= 1050) return 'jne7';
+        if (threshold >= 1000) return 'jne6';
+        if (threshold >= 950) return 'jne5';
+        if (threshold >= 900) return 'jne4';
+        if (threshold >= 850) return 'jne3';
+        if (threshold >= 800) return 'jne2';
+        return 'jne1';
+    }
+
+    function getJNEKittenTier(achievementThreshold) {
+        if (achievementThreshold >= 1000) return 'jne11';
+        if (achievementThreshold >= 950) return 'jne10';
+        if (achievementThreshold >= 900) return 'jne9';
+        if (achievementThreshold >= 850) return 'jne8';
+        if (achievementThreshold >= 800) return 'jne7';
+        if (achievementThreshold >= 750) return 'jne6';
+        if (achievementThreshold >= 700) return 'jne5';
+        if (achievementThreshold >= 650) return 'jne4';
+        if (achievementThreshold >= 600) return 'jne3';
+        if (achievementThreshold >= 550) return 'jne2';
+        return 'jne1';
+    }
+
+    function addJNETierLabel(upgrade, threshold) {
+        upgrade.tier = getJNETier(threshold);
+    }
+
+    function addJNEKittenTierLabel(upgrade, achievementThreshold) {
+        upgrade.tier = getJNEKittenTier(achievementThreshold);
+    }
 
 var pendingTerminalMinigameSave = '';
 var terminalMinigameLoadedOnce = false;
@@ -6557,6 +6606,27 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             upgrade.isUnlocked = function() { return this.unlockCondition ? this.unlockCondition() : true; };
             upgrade.isBought = function() { return this.bought > 0; };
             // Let vanilla game handle getPrice (which will call priceFunc if it exists)
+
+            // Apply  tier label 
+            if (upgradeInfo.building && upgradeInfo.unlockCondition) {
+                var threshold = 0;
+                var unlockStr = upgradeInfo.unlockCondition.toString();
+                var thresholdMatch = unlockStr.match(/>=\s*(\d+)/); //yea yea hacky but I didnt want to try and script a massive file edit
+                if (thresholdMatch) {
+                    threshold = parseInt(thresholdMatch[1]);
+                    addJNETierLabel(upgrade, threshold);
+                }
+            }
+
+            if (upgradeInfo.pool === 'kitten' && upgradeInfo.unlockCondition) {
+                var achievementThreshold = 0;
+                var unlockStr = upgradeInfo.unlockCondition.toString();
+                var thresholdMatch = unlockStr.match(/>=\s*(\d+)/);
+                if (thresholdMatch) {
+                    achievementThreshold = parseInt(thresholdMatch[1]);
+                    addJNEKittenTierLabel(upgrade, achievementThreshold);
+                }
+            }
             
             // Start all upgrades as locked - our checkAndUnlockOrderUpgrades function will manage unlock state
             upgrade.unlocked = 0;
@@ -6569,7 +6639,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             }
             
             // Force the upgrade to be recognized by the vanilla game
-            // by adding it to the main upgrades array if it's not already there
             if (Game.Upgrades && !Game.Upgrades[upgrade.name]) {
                 Game.Upgrades[upgrade.name] = upgrade;
             }
@@ -6582,7 +6651,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         }
     }
     
-    // Create kitten upgrade (refactored)
+    // Create kitten upgrade
     function createKittenUpgrade(upgradeInfo) {
         if (!validateUpgradeData(upgradeInfo, ['kitten'], 'kitten')) {
             return;
@@ -6623,7 +6692,18 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             var actualPrice = this.getPrice ? this.getPrice() : this.price;
             return this.unlocked && !this.bought && Game.cookies >= actualPrice;
         };
-        
+
+        // Apply tier label 
+        if (upgradeInfo.pool === 'kitten' && upgradeInfo.unlockCondition) {
+            var achievementThreshold = 0;
+            var unlockStr = upgradeInfo.unlockCondition.toString();
+            var thresholdMatch = unlockStr.match(/>=\s*(\d+)/); //yea yea hacky but I didnt want to try and script a massive file edit
+            if (thresholdMatch) {
+                achievementThreshold = parseInt(thresholdMatch[1]);
+                addJNEKittenTierLabel(Game.last, achievementThreshold);
+            }
+        }
+
         registerUpgrade(upgradeInfo, 'kitten', { kitten: upgradeInfo.kitten });
         Game.last.price = upgradeInfo.price;
     
@@ -6915,6 +6995,17 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     Game.storeToRefresh = 1;
                     Game.RecalculateUpgrades();
                 };
+            }
+
+            // Apply tier label 
+            if (Game.last && upgradeInfo.unlockCondition) {
+                var threshold = 0;
+                var unlockStr = upgradeInfo.unlockCondition.toString();
+                var thresholdMatch = unlockStr.match(/>=\s*(\d+)/); //yea yea hacky but I didnt want to try and script a massive file edit
+                if (thresholdMatch) {
+                    threshold = parseInt(thresholdMatch[1]);
+                    addJNETierLabel(Game.last, threshold);
+                }
             }
         } catch (e) {
             console.error('Error creating building upgrade:', upgradeInfo.name, e);

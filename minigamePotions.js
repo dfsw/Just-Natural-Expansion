@@ -3,7 +3,7 @@
 (function() {
 'use strict';
 
-const POTIONS_VERSION = '1.1.2';
+const POTIONS_VERSION = '1.1.3';
 
 var POTIONS_CUSTOM_SPRITE_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
 
@@ -146,7 +146,8 @@ var POTIONS = [
         icon: [9, 34, 'main'],
         desc: "Equivalent exchange rates may apply.",
         effect: "Summon a random golden cookie.",
-        brewTime: 60*60*3,
+        brewTime: 60*60*4,
+        misbrewChance: 0.3,
         misbrew: "A random positive buff is ended immediately.",
         reagents: { golden_flour: 1, captured_auroras: 1, pure_cane_sugar: 1 },
     },
@@ -337,7 +338,7 @@ var POTIONS = [
         name: "Extract of Cadence",
         icon: [9, 26, 'custom'],
         desc: "Time stretches and pulls upon consumption, also provides a mildly trippy feel in which walls are known to melt. Overall worth it though.",
-        effect: "All existing buff durations are tripled up to a maximum of 1 minute longer.",
+        effect: "Triples the remaining duration of all active buffs. Each buff can gain no more than <b>1 additional minute</b> in total from this effect, regardless of how many separate potions are used.",
         brewTime: 60*90,
         misbrew: "All existing buff durations are halved.",
         reagents: { culture_of_time: 1, magical_infusion: 1, golden_flour: 1 },
@@ -434,7 +435,7 @@ var POTIONS = [
         name: "Blood of the Craftsman",
         icon: [17, 25, 'custom'],
         desc: "Don\'t think too hard about the name, color, or taste. Just hold your nose and chug it quick.",
-        effect: "Gain 10 random free buildings (that you already own at least one of).",
+        effect: "Gain 10 random free buildings (that you already own at least one of, per ascension you can gain a maximum of 50 of each building type using this potion).",
         brewTime: 60*60*4.5,
         misbrewChance: 0.25,
         misbrew: "Lose 50 random buildings.",
@@ -610,7 +611,7 @@ var POTIONS = [
         effect: "Clicking a golden cookie has a 30% chance to summon another (storms and chains excluded) for the next 20 seconds.",
         brewTime: 60*60*4,
         duration: 20,
-        misbrewChance: 30,
+        misbrewChance: .30,
         misbrew: "Golden cookies appear 50% less often for the next 5 minutes.",
         prestige: true,
         prestigeLocked: true
@@ -1026,7 +1027,7 @@ function updatePotionEffects() {
             var rb = buildings.length > 0 ? buildings[Math.floor(Math.random() * buildings.length)] : 'Cursor';
             var bn = Game.Objects[rb] ? Game.Objects[rb].name : rb;
             _suspBuildingKey = rb;
-            Game.gainBuff('Suspension of Hallucinogenic', 900, 2.0, 0);
+            Game.gainBuff('Suspension of Hallucinogenic', 900);
             _suspBuildingKey = null;
             var buff = Game.buffs['Suspension of Hallucinogenic'];
             if (buff) {
@@ -1045,7 +1046,7 @@ function updatePotionEffects() {
             var rb = buildings.length > 0 ? buildings[Math.floor(Math.random() * buildings.length)] : 'Cursor';
             var bn = Game.Objects[rb] ? Game.Objects[rb].name : rb;
             _suspBuildingKey = rb;
-            Game.gainBuff('Suspension of Hallucinogenic (misbrewed)', 3600, 0.5, 0);
+            Game.gainBuff('Suspension of Hallucinogenic (misbrewed)', 3600);
             _suspBuildingKey = null;
             var buff = Game.buffs['Suspension of Hallucinogenic (misbrewed)'];
             if (buff) {
@@ -1060,8 +1061,8 @@ function updatePotionEffects() {
         }
     );
     def('bloom_of_industry',
-        function(p) { Game.killBuff('Bloom of Industry (misbrewed)'); Game.gainBuff('Bloom of Industry', 600, 1.1); Game.Notify(p.name + ' consumed', 'Buildings are 10% more effective for 10 minutes.', getIconArray(p), 6); },
-        function(p) { Game.killBuff('Bloom of Industry'); Game.gainBuff('Bloom of Industry (misbrewed)', 1800, 0.7); Game.Notify(p.name + ' misbrewed', 'Buildings are 30% less effective for 30 minutes.', getIconArray(p), 6); }
+        function(p) { Game.killBuff('Bloom of Industry (misbrewed)'); Game.gainBuff('Bloom of Industry', 600); Game.Notify(p.name + ' consumed', 'Buildings are 10% more effective for 10 minutes.', getIconArray(p), 6); },
+        function(p) { Game.killBuff('Bloom of Industry'); Game.gainBuff('Bloom of Industry (misbrewed)', 1800); Game.Notify(p.name + ' misbrewed', 'Buildings are 30% less effective for 30 minutes.', getIconArray(p), 6); }
     );
     def('tincture_of_purpose',
         function(p) { Game.killBuff('Tincture of Purpose (misbrewed)'); Game.gainBuff('Tincture of Purpose', 120, 1.3); Game.Notify(p.name + ' consumed', '+30% CpS for 2 minutes.', getIconArray(p), 6); },
@@ -1095,7 +1096,7 @@ function updatePotionEffects() {
     def('emulsion_of_sinful_greed',
         function(p) {
             Game.killBuff('Emulsion of Sinful Greed (misbrewed)');
-            Game.gainBuff('Emulsion of Sinful Greed', 1800, 3.0);
+            Game.gainBuff('Emulsion of Sinful Greed', 1800);
             Game.Notify(p.name + ' consumed', 'Shiny wrinkler spawn rate tripled for 30 minutes.', getIconArray(p), 6);
         },
         function(p) {
@@ -1146,11 +1147,38 @@ function updatePotionEffects() {
     );
     def('blood_of_the_craftsman',
         function(p) {
-            var obs = []; for (var i in Game.Objects) { if (Game.Objects[i].amount > 0) obs.push(Game.Objects[i]); }
+            var obs = [];
+            for (var i in Game.Objects) {
+                if (Game.Objects[i].amount > 0 && (G.craftsmanGrants[Game.Objects[i].id] || 0) < 50) {
+                    obs.push(Game.Objects[i]);
+                }
+            }
             if (obs.length > 0) {
-                for (var i = 0; i < 10; i++) { obs[Math.floor(Math.random() * obs.length)].getFree(1); }
-                Game.recalculateGains = 1; Game.Notify(p.name + ' consumed', 'Gained 10 random free buildings.', getIconArray(p), 6);
-            } else { Game.Notify(p.name + ' consumed', 'No buildings owned to gain more of.', getIconArray(p), 6); }
+                var granted = 0;
+                for (var i = 0; i < 10; i++) {
+                    if (obs.length === 0) break;
+                    var ri = Math.floor(Math.random() * obs.length);
+                    var b = obs[ri];
+                    if ((G.craftsmanGrants[b.id] || 0) < 50) {
+                        b.getFree(1);
+                        G.craftsmanGrants[b.id] = (G.craftsmanGrants[b.id] || 0) + 1;
+                        granted++;
+                        if (G.craftsmanGrants[b.id] >= 50) {
+                            obs.splice(ri, 1);
+                        }
+                    } else {
+                        obs.splice(ri, 1);
+                    }
+                }
+                Game.recalculateGains = 1;
+                if (granted > 0) {
+                    Game.Notify(p.name + ' consumed', 'Gained ' + granted + ' random free buildings.', getIconArray(p), 6);
+                } else {
+                    Game.Notify(p.name + ' consumed', 'All building types already at 50 free grants this ascension.', getIconArray(p), 6);
+                }
+            } else {
+                Game.Notify(p.name + ' consumed', 'All building types already at 50 free grants this ascension.', getIconArray(p), 6);
+            }
         },
         function(p) {
             var obs = []; for (var i in Game.Objects) { if (Game.Objects[i].amount > 0) obs.push(Game.Objects[i]); }
@@ -1159,7 +1187,7 @@ function updatePotionEffects() {
                 for (var i = 0; i < max; i++) {
                     if (obs.length === 0) break;
                     var ri = Math.floor(Math.random() * obs.length); var b = obs[ri];
-                    if (b.amount > 0) { b.amount--; b.totalCookies--; Game.BuildingsOwned--; lost++; b.refresh(); if (b.amount === 0) obs.splice(ri, 1); }
+                    if (b.amount > 0) { b.amount--; Game.BuildingsOwned--; lost++; b.refresh(); if (b.amount === 0) obs.splice(ri, 1); }
                 }
                 Game.recalculateGains = 1; Game.Notify(p.name + ' misbrewed', 'Lost ' + lost + ' random buildings.', getIconArray(p), 6);
             } else { Game.Notify(p.name + ' misbrewed', 'No buildings to lose.', getIconArray(p), 6); }
@@ -1249,16 +1277,26 @@ function updatePotionEffects() {
     );
     def('extract_of_cadence',
         function(p) {
-            for (var i in Game.buffs) { 
-                var buff = Game.buffs[i]; 
-                if (buff && buff.time > 0) { 
-                    var originalTime = buff.maxTime;
-                    var extension = Math.min(originalTime * 2, Game.fps * 60);
-                    buff.time += extension;
-                    buff.maxTime += extension;
-                } 
+            var extendedCount = 0;
+            for (var i in Game.buffs) {
+                var buff = Game.buffs[i];
+                if (buff && buff.time > 0) {
+                    var extendedSoFar = G.cadenceExtensions[buff.name] || 0;
+                    var remainingAllowed = 60 - extendedSoFar;
+                    if (remainingAllowed <= 0) continue;
+                    var originalTimeSeconds = buff.maxTime / Game.fps;
+                    var desiredExtensionSeconds = Math.min(originalTimeSeconds * 2, 60);
+                    var actualExtensionSeconds = Math.min(desiredExtensionSeconds, remainingAllowed);
+                    if (actualExtensionSeconds > 0) {
+                        var extensionFrames = actualExtensionSeconds * Game.fps;
+                        buff.time += extensionFrames;
+                        buff.maxTime += extensionFrames;
+                        G.cadenceExtensions[buff.name] = extendedSoFar + actualExtensionSeconds;
+                        extendedCount++;
+                    }
+                }
             }
-            Game.Notify(p.name + ' consumed', 'Buffs extended.', getIconArray(p), 6);
+            Game.Notify(p.name + ' consumed', 'Extended ' + extendedCount + ' buff(s).', getIconArray(p), 6);
         },
         function(p) {
             for (var i in Game.buffs) { var buff = Game.buffs[i]; if (buff && buff.time > 0) { buff.time = Math.floor(buff.time / 2); } }
@@ -1266,8 +1304,8 @@ function updatePotionEffects() {
         }
     );
     def('draught_of_urgency',
-        function(p) { Game.killBuff('Draught of Urgency (misbrewed)'); Game.gainBuff('Draught of Urgency', 7200, 0.75); Game.Notify(p.name + ' consumed', 'Potions brew 25% faster for the next 2 hours.', getIconArray(p), 6); },
-        function(p) { Game.killBuff('Draught of Urgency'); Game.gainBuff('Draught of Urgency (misbrewed)', 7200, 1.5); Game.Notify(p.name + ' misbrewed', 'Potions brew 50% slower for the next 2 hours.', getIconArray(p), 6); }
+        function(p) { Game.killBuff('Draught of Urgency (misbrewed)'); Game.gainBuff('Draught of Urgency', 7200); Game.Notify(p.name + ' consumed', 'Potions brew 25% faster for the next 2 hours.', getIconArray(p), 6); },
+        function(p) { Game.killBuff('Draught of Urgency'); Game.gainBuff('Draught of Urgency (misbrewed)', 7200); Game.Notify(p.name + ' misbrewed', 'Potions brew 50% slower for the next 2 hours.', getIconArray(p), 6); }
     );
     def('reduction_of_silica',
         function(p) {
@@ -1665,12 +1703,16 @@ function updatePotionEffects() {
                 if (REAGENTS[i].unlocked) unlocked.push(REAGENTS[i].id);
             }
             for (var i = 0; i < REAGENTS.length; i++) G.reagents[REAGENTS[i].id] = 0;
+            var distributed = 0;
             for (var i = 0; i < total; i++) {
-                var rid = unlocked[Math.floor(PotionsM._random() * unlocked.length)];
+                var available = unlocked.filter(function(rid) { return (G.reagents[rid] || 0) < G.maxReagents; });
+                if (available.length === 0) break;
+                var rid = available[Math.floor(PotionsM._random() * available.length)];
                 G.reagents[rid] = (G.reagents[rid] || 0) + 1;
+                distributed++;
             }
             PotionsM._buildReagents();
-            Game.Notify(p.name + ' consumed', 'Exchanged ' + total + ' reagent' + (total !== 1 ? 's' : '') + ' for random ones.', getIconArray(p), 6);
+            Game.Notify(p.name + ' consumed', 'Exchanged ' + total + ' reagent' + (total !== 1 ? 's' : '') + ' for ' + distributed + ' random one' + (distributed !== 1 ? 's' : '') + '.', getIconArray(p), 6);
         },
         function(p) {
             var total = 0, unlocked = [];
@@ -1680,12 +1722,16 @@ function updatePotionEffects() {
             }
             for (var i = 0; i < REAGENTS.length; i++) G.reagents[REAGENTS[i].id] = 0;
             var half = Math.ceil(total / 2);
+            var distributed = 0;
             for (var i = 0; i < half; i++) {
-                var rid = unlocked[Math.floor(PotionsM._random() * unlocked.length)];
+                var available = unlocked.filter(function(rid) { return (G.reagents[rid] || 0) < G.maxReagents; });
+                if (available.length === 0) break;
+                var rid = available[Math.floor(PotionsM._random() * available.length)];
                 G.reagents[rid] = (G.reagents[rid] || 0) + 1;
+                distributed++;
             }
             PotionsM._buildReagents();
-            Game.Notify(p.name + ' misbrewed', 'Exchanged ' + total + ' reagent' + (total !== 1 ? 's' : '') + ' for only ' + half + ' random ones.', getIconArray(p), 6);
+            Game.Notify(p.name + ' misbrewed', 'Exchanged ' + total + ' reagent' + (total !== 1 ? 's' : '') + ' for only ' + distributed + ' random one' + (distributed !== 1 ? 's' : '') + '.', getIconArray(p), 6);
         }
     );
     def('wassail_of_bedlam',
@@ -1852,7 +1898,9 @@ var G = {
     prestigeCount: 0,             // total prestiges performed (unbounded)
     unlockedPrestige: [],         // IDs of prestige potions that have been unlocked
     recipeMap: null,              // encoded recipe map string; null = use fixed base recipes
-    feverNightmareStart: 0        // timestamp when fever nightmare started (for Fever without dawn achievement)
+    feverNightmareStart: 0,       // timestamp when fever nightmare started (for Fever without dawn achievement)
+    craftsmanGrants: {},          // buildingIndex -> count granted by Blood of the Craftsman this ascension (max 50 per building)
+    cadenceExtensions: {}         // buff.name -> seconds extended by Extract of Cadence (max 60 per buff type per ascension)
 };
 
 // =====================================================================
@@ -1928,6 +1976,7 @@ Game._potionsGrimoireHooked = false;
 Game._potionsGrimoireLogicHooked = false;
 Game._potionsTerminalHooked = false;
 Game._potionsDownlineHooked = false;
+Game._potionsCadenceCleanupHookRegistered = false;
 PotionsM.parent = Game.Objects && Game.Objects['Alchemy lab'] ? Game.Objects['Alchemy lab'] : {
     id: 0,
     level: 10,
@@ -2331,18 +2380,20 @@ createPotionBuffType('Suspension of Hallucinogenic', 'suspension_of_hallucinogen
         var bn = _suspBuildingKey ? (Game.Objects[_suspBuildingKey] ? Game.Objects[_suspBuildingKey].name : _suspBuildingKey) : 'A random building';
         return bn + ' is more effective for ' + Game.sayTime(time * Game.fps, -1) + '!';
     },
-    extraProps: { buildingName: null }
+    extraProps: { buildingName: null },
+    noPower: true
 });
 createPotionBuffType('Suspension of Hallucinogenic (misbrewed)', 'suspension_of_hallucinogenic', true, {
     customDesc: function(potion, mult, time, isMisbrewed) {
         var bn = _suspBuildingKey ? (Game.Objects[_suspBuildingKey] ? Game.Objects[_suspBuildingKey].name : _suspBuildingKey) : 'A random building';
         return 'The effectiveness of ' + bn + ' is reduced by half for ' + Game.sayTime(time * Game.fps, -1) + '!';
     },
-    extraProps: { buildingName: null }
+    extraProps: { buildingName: null },
+    noPower: true
 });
 
-createPotionBuffType('Bloom of Industry', 'bloom_of_industry', false, { onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
-createPotionBuffType('Bloom of Industry (misbrewed)', 'bloom_of_industry', true, { onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
+createPotionBuffType('Bloom of Industry', 'bloom_of_industry', false, { noPower: true, onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
+createPotionBuffType('Bloom of Industry (misbrewed)', 'bloom_of_industry', true, { noPower: true, onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
 
 createPotionBuffType('Tincture of Purpose', 'tincture_of_purpose', false, { powerProp: 'multCpS', onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
 createPotionBuffType('Tincture of Purpose (misbrewed)', 'tincture_of_purpose', true, { powerProp: 'multCpS', onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
@@ -2350,7 +2401,7 @@ createPotionBuffType('Ambrosia of the Leech', 'ambrosia_of_the_leech', false);
 createPotionBuffType('Nectar of Summoning', 'nectar_of_summoning', false);
 createPotionBuffType('Nectar of Summoning (misbrewed)', 'nectar_of_summoning', true);
 createPotionBuffType('Philter of Worms (misbrewed)', 'philter_of_worms', true);
-createPotionBuffType('Emulsion of Sinful Greed', 'emulsion_of_sinful_greed', false, { powerProp: 'mult' });
+createPotionBuffType('Emulsion of Sinful Greed', 'emulsion_of_sinful_greed', false, { noPower: true });
 createPotionBuffType('Vitae of the Mother', 'vitae_of_the_mother', false, { onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
 createPotionBuffType('Vitae of the Mother (misbrewed)', 'vitae_of_the_mother', true, { onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
 createPotionBuffType('Infusion of Chance', 'infusion_of_chance', false);
@@ -2407,8 +2458,8 @@ createPotionBuffType('Whisper of Boreas (misbrewed)', 'whisper_of_boreas', true,
 createPotionBuffType('Essence of Cheer', 'essence_of_cheer', false);
 createPotionBuffType('Essence of Cheer (misbrewed)', 'essence_of_cheer', true);
 createPotionBuffType('Spirit of Protection', 'spirit_of_protection', false);
-createPotionBuffType('Draught of Urgency', 'draught_of_urgency', false);
-createPotionBuffType('Draught of Urgency (misbrewed)', 'draught_of_urgency', true);
+createPotionBuffType('Draught of Urgency', 'draught_of_urgency', false, { noPower: true });
+createPotionBuffType('Draught of Urgency (misbrewed)', 'draught_of_urgency', true, { noPower: true });
 createPotionBuffType('Balm of Merlin', 'balm_of_merlin', false, { noPower: true });
 createPotionBuffType('Balm of Merlin (misbrewed)', 'balm_of_merlin', true, { noPower: true });
 createPotionBuffType('Cordial of Tyche', 'cordial_of_tyche', false, { noPower: true });
@@ -2526,8 +2577,22 @@ PotionsM.launch = function() {
 // =====================================================================
 // Assorted hooks
 // =====================================================================
+PotionsM._cleanupCadenceExtensions = function() {
+    if (PotionsM._loading) return;
+    for (var buffName in G.cadenceExtensions) {
+        if (!Game.buffs[buffName]) {
+            delete G.cadenceExtensions[buffName];
+        }
+    }
+};
+
 PotionsM._registerHooks = function() {
     try {
+    if (!Game._potionsCadenceCleanupHookRegistered) {
+        Game.registerHook('check', PotionsM._cleanupCadenceExtensions);
+        Game._potionsCadenceCleanupHookRegistered = true;
+    }
+
     if (!Game._potionsClickHookRegistered) {
         Game.registerHook('click', PotionsM._onCookieClick);
         Game._potionsClickHookRegistered = true;
@@ -2539,22 +2604,20 @@ PotionsM._registerHooks = function() {
         var wrapper = function(what) {
             var mult = Game._jneOriginalMagicCpSPotions.call(this, what);
 
-            var bloomBuff = Game.hasBuff('Bloom of Industry');
-            if (bloomBuff) {
-                mult *= bloomBuff.power;
+            if (Game.hasBuff('Bloom of Industry')) {
+                mult *= 1.1;
             }
-            var bloomCurse = Game.hasBuff('Bloom of Industry (misbrewed)');
-            if (bloomCurse) {
-                mult *= bloomCurse.power;
+            if (Game.hasBuff('Bloom of Industry (misbrewed)')) {
+                mult *= 0.7;
             }
 
             var suspBuff = Game.hasBuff('Suspension of Hallucinogenic');
             if (suspBuff && suspBuff.buildingName === what) {
-                mult *= suspBuff.power;
+                mult *= 2.0;
             }
             var suspCurse = Game.hasBuff('Suspension of Hallucinogenic (misbrewed)');
             if (suspCurse && suspCurse.buildingName === what) {
-                mult *= suspCurse.power;
+                mult *= 0.5;
             }
 
             return mult;
@@ -3117,7 +3180,7 @@ PotionsM._hookWrinklerSpawn = function() {
                 }
                 if (hasShiny) mult *= 5.0;
             }
-            mult *= Game.buffs['Emulsion of Sinful Greed'].mult || 3.0;
+            mult *= 3.0;
             var p = base * mult;
             if (Math.random() < p) me.type = 1;
         }
@@ -4007,16 +4070,14 @@ PotionsM._startBrew = function() {
         var brewTime = matchingPotion.brewTime;
         var speedMultiplier = 1;
 
-        // Apply Draught of Urgency 
-        if (Game.hasBuff('Draught of Urgency')) {
-            var buff = Game.buffs['Draught of Urgency'];
-            speedMultiplier *= buff.power;
+        // Apply Draught of Urgency
+        if (Game.buffs['Draught of Urgency']) {
+            speedMultiplier *= 0.75;
         }
 
-        // Apply Draught of Urgency curse 
-        if (Game.hasBuff('Draught of Urgency (misbrewed)')) {
-            var curseBuff = Game.buffs['Draught of Urgency (misbrewed)'];
-            speedMultiplier *= curseBuff.power;
+        // Apply Draught of Urgency curse
+        if (Game.buffs['Draught of Urgency (misbrewed)']) {
+            speedMultiplier *= 1.5;
         }
         brewTime *= speedMultiplier;
         
@@ -4577,7 +4638,9 @@ PotionsM._buildSaveDataImpl = function() {
              up: G.unlockedPrestige || [],
              rm: G.recipeMap || null,
              fns: G.feverNightmareStart || 0,
-             sr: G.selectedReagents || [] };
+             sr: G.selectedReagents || [],
+             cg: G.craftsmanGrants || {},
+             ce: G.cadenceExtensions || {} };
 };
 
 PotionsM._saveImpl = function() {
@@ -4637,6 +4700,10 @@ PotionsM._loadImpl = function(str) {
 
     // Load fever nightmare start timestamp
     G.feverNightmareStart = data.fns || 0;
+
+    // Load abuse prevention tracking
+    G.craftsmanGrants = data.cg || {};
+    G.cadenceExtensions = data.ce || {};
 
     // Reagents
     if (Array.isArray(data.r)) {
@@ -4851,6 +4918,8 @@ PotionsM._resetImpl = function(hard, _calledFromLoad) {
         G.prestigeCount = 0;
         G.unlockedPrestige = [];
         G.recipeMap = null;
+        G.craftsmanGrants = {};
+        G.cadenceExtensions = {};
 
         // Set baseline unlocked items, fresh game state 
         var baselineReagents = ['nectar_of_effort', 'dragon_scales', 'golden_flour'];
@@ -4873,6 +4942,8 @@ PotionsM._resetImpl = function(hard, _calledFromLoad) {
         G.highlightedReagents = [];
         G.highlightEndTime = 0;
         G.potionsBrewed = 0;
+        G.craftsmanGrants = {};
+        G.cadenceExtensions = {};
         for (var i = 0; i < REAGENTS.length; i++) {
             G.reagents[REAGENTS[i].id] = 0;
         }

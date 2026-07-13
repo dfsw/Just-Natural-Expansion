@@ -4,7 +4,7 @@
         var _huT0 = Date.now();
         
         const SIMPLE_MOD_NAME = 'Just Natural Expansion';
-        const MOD_HU_VERSION = '1.0.22';
+        const MOD_HU_VERSION = '1.0.23';
         var isInitialized = false;
         const MOD_ICON = [15, 7];
         const CUSTOM_SPRITE_SHEET_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
@@ -877,8 +877,8 @@
                 if (M && M.gods['procrastination']) {
                     var l = Game.hasGod('procrastination');
                     if (l && M._procrastinationSlotTime) {
-                        var h = (Date.now() - M._procrastinationSlotTime) / 3600000, d = Math.min(Math.floor(h / 24), 365), b = [0, 0.015, 0.010, 0.005][l], t = 0;
-                        for (var i = 0; i < d; i++) t += b * Math.pow(0.99, i);
+                        var h = (Date.now() - M._procrastinationSlotTime) / 3600000, d = Math.min(Math.floor(h / 24), 365), b = [0, 0.03, 0.02, 0.01][l];
+                        var t = b * (1 - Math.pow(0.99, d)) / 0.01;
                         if (d < 365) t += b * Math.pow(0.99, d) * (h % 24) / 24;
                         mult *= (1 + t);
                     }
@@ -3110,17 +3110,9 @@
             if (!tower || !tower.minigameLoaded || !tower.minigame) return;
             var M = tower.minigame;
             if (!M || !M.castSpell) return;
-            // Marker lives on the wrapper function itself, not just M._shinyWrinklerHooked
-            // (which gets reset to false on every save load). This way, if some other mod
-            // (e.g. Potions) re-wraps M.castSpell after us, we correctly detect that OUR
-            // wrapper is gone and re-chain to whatever the CURRENT castSpell is, instead of
-            // unconditionally overwriting it and discarding the other mod's hook.
+
             if (M.castSpell._shinyWrinklerWrapped) { M._shinyWrinklerHooked = true; return; }
-            // Capture the chain-through target as a LOCAL CLOSURE VARIABLE rather than a
-            // shared mutable property on M. Reading a shared property dynamically at call
-            // time is dangerous: if another mod's wrapper does the same thing, the two
-            // "original" references can end up pointing at each other's current wrapper,
-            // causing infinite recursion.
+
             var originalCastSpell = M.castSpell;
             var shinyWrinklerCastSpellWrapper = function(spell, obj) {
                 var before = new Set();
@@ -5562,7 +5554,7 @@
                 desc: 'Show the expected result of a <b>Golden Cookie 25%</b> of the time.',
                 ddesc: 'Show the expected result of a <b>Golden Cookie 25%</b> of the time.<q>Who are we kidding anyways, you are going to click the cookie anyway.</q>',
                 price: 500000e16,
-                icon: [4, 17, getSpriteSheet('custom')],
+                icon: [17, 15, getSpriteSheet('custom')],
                 posX: -3289,
                 posY: -314,
                 require: ['Golden cookie predictor']
@@ -5573,7 +5565,7 @@
                 desc: 'Show the expected result of a <b>Golden Cookie 50%</b> of the time.',
                 ddesc: 'Show the expected result of a <b>Golden Cookie 50%</b> of the time.<q>We improved it by making improvements to the dohicky that makes it work.</q>',
                 price: 500000e17,
-                icon: [10, 23, getSpriteSheet('custom')],
+                icon: [17, 14, getSpriteSheet('custom')],
                 posX: -3304,
                 posY: -528,
                 require: ['Tweaked golden cookie predictor']
