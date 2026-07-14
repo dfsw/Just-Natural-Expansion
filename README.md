@@ -55,6 +55,19 @@ The mobile version of Cookie Clicker does not support mods at this time.
 
 ## Changelog    
 
+### Version 0.6.1
+* New artwork for tiers and cookies baked all time and some other ones. 
+* Building and Kitten upgrades now have proper named tiers. 
+* Fix for Morroween not storing his start time the first time he is used in a game. 
+* Fix for Balm of Merlin not retaining its mana hook when a new save is loaded into the game without reloading the browser. 
+* Fixed several potions that would lose their effect when reloading a save without reloading the game. 
+* Fixed a bug that would result in reagents being lost on save/load if they were in the brew slots but not yet used to make a potion. Reagents in the brew slots are now preserved in the save. 
+* Fix for some vanilla minigame reagent drops when savescumming.
+* JNE Kittens no longer make assumptions about the gender of the player <3.
+* In this weeks edition of CursedSliver forces me to nerfs things. Blood of the Craftsman is now capped at an acension max of 50 buildings of each type gained. This should likely never effect most people but does prevent someone from exploiting it. You would need to consume >100 of these to be capped per ascension (owning all 20 buildings). 
+* Also thanks to the aforementioned exploit professional Extract of Cadence can now only ever add 1 minute total to any individual buff. This means casting it multiple times may be capped for buffs that were already extended by the full minute. It will still effect all buffs but no single buff may be continously extended. 
+* Minor bug fixes and improvements.
+
 **Major Version 0.6.0 - Potions, Balance, and Bugs!**
 * Potions Lab now has its own Prestige system, accessible after unlocking all potions, if you can find the slightly hidden access. There’s a lot more to discover, and even more alchemy fun awaits.
 * Refactored a bunch of stuff to hopefully make compatibility with other mods more stable, so we see fewer crashes, lockups, and performance issues. It is still recommended to load Just Natural Expansion last in your mod list if you are running multiple mods. While this makes things more stable, it touches a lot of different code points. I believe I have tested thoroughly, but please report anything that is not working right.
