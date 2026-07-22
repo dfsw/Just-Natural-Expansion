@@ -14,7 +14,7 @@ Big thanks to the amazing folks in the [Cookie Clicker Discord](https://discord.
 
 Thank you to the "beta" testers who were willing to help me balance and test, I have now struck a balance between people saying things are too hard and things are too easy, which I suspect is the sweet middle ground. 
 
-Special thanks to CursedSliver, The_1_Shadow, and Fractyl for donating art to the mod, anyone who wants to improve and donate art is more than welcome as it is not my skillset, all art is temporary until someone donates something improved. 
+Special thanks to CursedSliver, The_1_Shadow, Fractyl, and Narhard GD for donating art to the mod, anyone who wants to improve and donate art is more than welcome as it is not my skillset, all art is temporary until someone donates something improved. 
 
 ## Installation Directions
 
@@ -55,6 +55,15 @@ The mobile version of Cookie Clicker does not support mods at this time.
 
 ## Changelog    
 
+### Version 0.6.2
+
+* Lots of new/updated art as the ground work is being laid for the next major version. 
+* Fixed several upgrade/achievement descriptions that had typos or other issues in them. 
+* If for any reason the custom sprite sheet fails to load from github the mod will try a fallback address now. 
+* Added a cooldown to the popup for Mega Clicks so autoclicker users arent spammed by it. Defaults to 50ms but customizable via Game.JNE.megaClickCooldown = 50; in browser
+* Minor bug fixes, performance improvements, and other fixes. 
+
+
 ### Version 0.6.1
 * New artwork for tiers and cookies baked all time and some other ones. 
 * Building and Kitten upgrades now have proper named tiers. 
@@ -67,6 +76,7 @@ The mobile version of Cookie Clicker does not support mods at this time.
 * In this weeks edition of CursedSliver forces me to nerfs things. Blood of the Craftsman is now capped at an acension max of 50 buildings of each type gained. This should likely never effect most people but does prevent someone from exploiting it. You would need to consume >100 of these to be capped per ascension (owning all 20 buildings). 
 * Also thanks to the aforementioned exploit professional Extract of Cadence can now only ever add 1 minute total to any individual buff. This means casting it multiple times may be capped for buffs that were already extended by the full minute. It will still effect all buffs but no single buff may be continously extended. 
 * Minor bug fixes and improvements.
+
 
 **Major Version 0.6.0 - Potions, Balance, and Bugs!**
 * Potions Lab now has its own Prestige system, accessible after unlocking all potions, if you can find the slightly hidden access. There’s a lot more to discover, and even more alchemy fun awaits.

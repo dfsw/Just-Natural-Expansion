@@ -23,7 +23,7 @@ window.JNEData = {
                 desc: 'Golden cookies appear <b>5%</b> more often.<br>Unlocked by owning the Vanilla Star achievement.<br>Cost scales with CpS',
                 ddesc: 'Golden cookies appear <b>5%</b> more often.<br>Unlocked by owning the Vanilla Star achievement.<br>Cost scales with CpS<q>From the smallest crumb, the greatest feast begins. Founded by the Crumbmonks of the 1st Batch, these solemn custodians protect the tiniest morsels of the First Cookie. It is whispered that even a single Golden Crumb, if eaten, grants visions of infinite bakeries. They roam the world with robes lined in napkin cloth, ready to rescue stray crumbs from the void.</q>',
                 price: 999, // Placeholder price, will be overridden by priceFunc
-                icon: [14, 13, 'custom'],
+                icon: [0, 15, 'custom'],
                 pool: '',
                 order: 30001.001,
                 unlockCondition: function() {
@@ -39,7 +39,7 @@ window.JNEData = {
                 desc: 'Golden cookies appear <b>5%</b> more often.<br>Unlocked by owning The Final Challenger achievement.<br>Cost scales with CpS',
                 ddesc: 'Golden cookies appear <b>5%</b> more often.<br>Unlocked by owning The Final Challenger achievement.<br>Cost scales with CpS<q>The dough will rise… whether reality likes it or not. Bakers of the improbable, challengers of the possible — this Order has baked cookies in ovens that do not exist, from ingredients that never were. Their scrolls describe recipes written in paradox and whisked with defiance. Most of their meetings end with someone on fire.</q>',
                 price: 999, // Placeholder price, will be overridden by priceFunc
-                icon: [15, 13, 'custom'],
+                icon: [1, 15, 'custom'],
                 pool: '',
                 order: 30001.01,
                 unlockCondition: function() {
@@ -55,7 +55,7 @@ window.JNEData = {
                 desc: 'Golden cookie effects last <b>5%</b> longer.<br>Unlocked by owning all Combo achievements.<br>Cost scales with CpS',
                 ddesc: 'Golden cookie effects last <b>5%</b> longer.<br>Unlocked by owning all Combo achievements.<br>Cost scales with CpS<q>Where light meets dough, miracles happen. The Shining Spoon Order believes in the transformative power of proper tools. Their spoons are forged from starlight and polished with hope, each one capable of stirring the very essence of cookie magic. They say a spoon that shines can turn any batter into gold.</q>',
                 price: 999, // Placeholder price, will be overridden by priceFunc
-                icon: [18, 13, 'custom'],
+                icon: [2, 15, 'custom'],
                 pool: '',
                 order: 30001.02,
                 unlockCondition: function() {
@@ -76,7 +76,7 @@ window.JNEData = {
                 desc: 'Golden cookie effects last <b>5%</b> longer.<br>Unlocked by owning all Grandmapocalypse cookie achievements.<br>Cost scales with CpS',
                 ddesc: 'Golden cookie effects last <b>5%</b> longer.<br>Unlocked by owning all Grandmapocalypse cookie achievements.<br>Cost scales with CpS<q>When the light of the cookie sun is hidden, the shadows reveal their secrets. The Cookie Eclipse Order operates in the darkness between batches, when the ovens are cold and the dough is still. They believe that true cookie wisdom comes from understanding both the light and the shadow.</q>',
                 price: 999, // Placeholder price, will be overridden by priceFunc
-                icon: [17, 13, 'custom'],
+                icon: [3, 15, 'custom'],
                 pool: '',
                 order: 30001.03,
                 unlockCondition: function() {
@@ -105,7 +105,7 @@ window.JNEData = {
                 desc: 'Frenzy, Click Frenzy, and Elder Frenzy buffs are <b>5%</b> more powerful.<br>Unlocked by owning all Grimoire achievements.<br>Cost scales with CpS',
                 ddesc: 'Frenzy, Click Frenzy, and Elder Frenzy buffs are <b>5%</b> more powerful.<br>Unlocked by owning all Grimoire achievements.<br>Cost scales with CpS<q>Magic flows through every whisk stroke, every fold of dough. The Enchanted Whisk Order practices the ancient art of cookie sorcery, where ingredients are not just mixed but awakened. Their whisks are carved from enchanted wood and bound with spells that make every cookie a little bit magical.</q>',
                 price: 999, // Placeholder price, will be overridden by priceFunc
-                icon: [16, 13, 'custom'],
+                icon: [4, 15, 'custom'],
                 pool: '',
                 order: 30001.04,
                 unlockCondition: function() {
@@ -129,7 +129,7 @@ window.JNEData = {
                 desc: 'Golden cookies appear <b>5%</b> more often and their effects last <b>5%</b> longer.<br>Unlocked by owning all previous Great Orders of the Cookie Age upgrades.<br>Cost scales with CpS',
                 ddesc: 'Golden cookies appear <b>5%</b> more often and their effects last <b>5%</b> longer.<br>Unlocked by owning all previous Great Orders of the Cookie Age upgrades.<br>Cost scales with CpS<q>Beyond time, beyond space, there exists a cookie that never crumbles. The Eternal Cookie Order seeks to understand the nature of permanence in an impermanent world. They believe that if one can bake a cookie that lasts forever, one can unlock the secrets of immortality itself.</q>',
                 price: 999, // Placeholder price, will be overridden by priceFunc
-                icon: [19, 13, 'custom'],
+                icon: [5, 15, 'custom'],
                 pool: '',
                 order: 30001.05,
                 unlockCondition: function() {
@@ -3539,14 +3539,21 @@ window.JNEData = {
 			cps: {
                 names: ["Beyond the speed of dough", "Speed of sound", "Speed of light", "Faster than light", "Speed of thought", "Faster than speed of thought", "Plaid", "Somehow faster than plaid", "Transcending the very concept of speed itself"],
     thresholds: [1e57, 1e58, 1e59, 1e60, 1e61, 1e62, 1e63, 1e64, 1e65],
-                descs: ["Bake <b>1 octodecillion</b> per second.", "Bake <b>10 octodecillion</b> per second.", "Bake <b>100 octodecillion</b> per second.", "Bake <b>1 novemdecillion</b> per second.", "Bake <b>10 novemdecillion</b> per second.", "Bake <b>100 novemdecillion</b> per second.", "Bake <b>1 vigintillion</b> per second.<q>They've gone to plaid!</q>", "Bake <b>10 vigintillion</b> per second.<q>Ah, buckle this! LUDICROUS SPEED! GO!</q>", "Bake <b>100 vigintillion</b> per second.<q>Everything else is frozen, we’re breaking physics, so, uh... should we actually do something with that?</q>"],
+                descs: function(t, i) {
+                    var q = [null, null, null, null, null, null, "They've gone to plaid!", "Ah, buckle this! LUDICROUS SPEED! GO!", "Everything else is frozen, we\u2019re breaking physics, so, uh... should we actually do something with that?"][i];
+                    return loc("Bake <b>%1</b> per second.", loc("%1 cookie", LBeautify(t))) + (q ? '<q>' + q + '</q>' : '');
+                },
                 customIcons: [[0, 12, 'custom'], [1, 12, 'custom'], [2, 12, 'custom'], [3, 12, 'custom'], [4, 12, 'custom'], [5, 12, 'custom'], [6, 12, 'custom'], [7, 12, 'custom'], [8, 12, 'custom']],
                 orders: [200.48, 200.49, 200.50, 200.51, 200.52, 200.53, 200.54, 200.55, 200.56]
             },
             click: {
                 names: ["Clickbait & Switch", "Click to the Future", "Clickety Clique", "Clickonomicon", "Clicks and Stones", "Click It Till You Make It", "One Does Not Simply Click Once", "Lord of the Clicks", "Click of the Titans"],
                 thresholds: [1e63, 1e66, 1e69, 1e72, 1e75, 1e78, 1e81, 1e84, "clickOfTitans"],
-                descs: ["Make <b>1 vigintillion</b> from clicking.<q>Tired finger yet?</q>", "Make <b>1 unvigintillion</b> from clicking.", "Make <b>1 duovigintillion</b> from clicking.", "Make <b>1 trevigintillion</b> from clicking.", "Make <b>1 quattuorvigintillion</b> from clicking.", "Make <b>1 quinvigintillion</b> from clicking.", "Make <b>1 sexvigintillion</b> from clicking.", "Make <b>1 septvigintillion</b> from clicking.", "Generate <b>1 year of raw CpS</b> in a single cookie click.<q>One click to rule them all!</q>"],
+                descs: function(t, i) {
+                    if (i === 8) return "Generate <b>1 year of raw CpS</b> in a single cookie click.<q>One click to rule them all!</q>";
+                    var q = ["Tired finger yet?", null, null, null, null, null, null, null][i];
+                    return loc("Make <b>%1</b> from clicking.", loc("%1 cookie", LBeautify(t))) + (q ? '<q>' + q + '</q>' : '');
+                },
                 customIcons: [[9, 0, 'custom'], [9, 1, 'custom'], [9, 2, 'custom'], [9, 3, 'custom'], [9, 4, 'custom'], [9, 5, 'custom'], [9, 6, 'custom'], [9, 7, 'custom'], [9, 8, 'custom']],
                 orders: [1000.650, 1000.660, 1000.670, 1000.680, 1000.690, 1000.700, 1000.710, 1000.720, 7004]
             },
@@ -3589,7 +3596,7 @@ window.JNEData = {
                 names: ["Archwizard", "Spellmaster", "Cookieomancer", "Spell lord", "Magic emperor", "Sweet Sorcery"],
                 thresholds: [1999, 2999, 3999, 4999, 9999, "freeSugarLump"],
                 descs: ["Cast <b>1,999</b> spells across all ascensions.<q>Zim zam zap!</q>", "Cast <b>2,999</b> spells across all ascensions.<q>Pew pew pew!</q>", "Cast <b>3,999</b> spells across all ascensions.", "Cast <b>4,999</b> spells across all ascensions.", "Cast <b>9,999</b> spells across all ascensions.<q>Yea well, how many backfired?</q>", "Get the <b>Free Sugar Lump</b> outcome from a magically spawned golden cookie.<q>Sweet sorcery indeed!</q>"],
-                customIcons: [[22, 12], [20, 14, 'custom'], [20, 13, 'custom'], [28, 12], [27, 12], [20, 15, 'custom']],
+                customIcons: [[22, 12], [5, 16, 'custom'], [16, 15, 'custom'], [28, 12], [27, 12], [20, 15, 'custom']],
                 orders: [61495.333, 61495.343, 61495.353, 61495.363, 61495.373, 61496.004]
             },
             templeSwaps: {
@@ -3609,14 +3616,19 @@ window.JNEData = {
             cookiesAscension: {
                 names: ["The Doughpocalypse", "The Flour Flood", "The Ovenverse", "The Crumb Crusade", "The Final Batch", "The Ultimate Ascension", "The Transcendent Rise"],
                 thresholds: [1e73, 1e75, 1e77, 1e79, 1e81, 1e83, 1e85],
-                descs: ["Bake <b>10 trevigintillion</b> cookies in one ascension.<q>Did you know it went higher? Neat.</q>", "Bake <b>1 quattuorvigintillion</b> cookies in one ascension.", "Bake <b>100 quattuorvigintillion</b> cookies in one ascension.", "Bake <b>10 quinvigintillion</b> cookies in one ascension.", "Bake <b>1 sexvigintillion</b> cookies in one ascension.", "Bake <b>100 sexvigintillion</b> cookies in one ascension.<q>I don't think you should be here.</q>", "Bake <b>10 septenvigintillion</b> cookies in one ascension.<q>Okay for real, it doesn't go any higher.</q>"],
+                descs: function(t, i) {
+                    var q = ["Did you know it went higher? Neat.", null, null, null, null, "I don't think you should be here.", "Okay for real, it doesn't go any higher."][i];
+                    return loc("Bake <b>%1</b> in one ascension.", loc("%1 cookie", LBeautify(t))) + (q ? '<q>' + q + '</q>' : '');
+                },
                 customIcons: [[0, 12, 'custom'], [1, 12, 'custom'], [2, 12, 'custom'], [3, 12, 'custom'], [4, 12, 'custom'], [5, 12, 'custom'], [6, 12, 'custom'], [7, 12, 'custom'], [8, 12, 'custom']],
                 orders: [100.48, 100.49, 100.50, 100.51, 100.52, 100.53, 100.54]
             },
             forfeited: {
                 names: ["Dante's unwaking dream", "The abyss gazes back", "Charon's final toll", "Cerberus's third head", "Minos's eternal judgment", "The river Styx flows backward", "Ixion's wheel spins faster", "Sisyphus's boulder crumbles", "Tantalus's eternal thirst", "The ninth circle's center", "Lucifer's frozen tears", "Beyond the void's edge", "The final descent's end"],
                 thresholds: [1e60, 1e63, 1e66, 1e69, 1e72, 1e75, 1e78, 1e81, 1e84, 1e87, 1e90, 1e93, 1e96],
-                descs: ["Forfeit <b>1 novemdecillion</b> cookies total across all ascensions.", "Forfeit <b>1 vigintillion</b> cookies total across all ascensions.", "Forfeit <b>1 unvigintillion</b> cookies total across all ascensions.", "Forfeit <b>1 duovigintillion</b> cookies total across all ascensions.", "Forfeit <b>1 trevigintillion</b> cookies total across all ascensions.", "Forfeit <b>1 quattuorvigintillion</b> cookies total across all ascensions.", "Forfeit <b>1 quinvigintillion</b> cookies total across all ascensions.", "Forfeit <b>1 sexvigintillion</b> cookies total across all ascensions.", "Forfeit <b>1 septenvigintillion</b> cookies total across all ascensions.", "Forfeit <b>1 octovigintillion</b> cookies total across all ascensions.", "Forfeit <b>1 novemvigintillion</b> cookies total across all ascensions.", "Forfeit <b>1 trigintillion</b> cookies total across all ascensions.", "Forfeit <b>1 untrigintillion</b> cookies total across all ascensions."],
+                descs: function(t) {
+                    return loc("Forfeit <b>%1</b> total across all ascensions.", loc("%1 cookie", LBeautify(t)));
+                },
                 customIcons: [[0, 11], [1, 11], [2, 11], [3, 11], [4, 11], [5, 11], [6, 11], [7, 11], [8, 11], [9, 11], [10, 11], [11, 11], [12, 11]],
                 orders: [30050.606, 30050.616, 30050.626, 30050.636, 30050.646, 30050.656, 30050.666, 30050.676, 30050.686, 30050.696, 30050.706, 30050.716, 30050.726]
             },
@@ -3691,70 +3703,70 @@ window.JNEData = {
             },
                     hardercorest: {
             names: ["Hardercorest"],
-            thresholds: [3e9], // 3 billion cookies
+            thresholds: [3e9], 
             descs: ["Bake <b>3 billion cookies</b> with no cookie clicks and no upgrades bought in Born Again mode.<q>Do you hate me or yourself after that one?</q>"],
             customIcons: [[13, 6]],
             orders: [30500.102]
         },
                     hardercorester: {
             names: ["Hardercorest-er"],
-            thresholds: [1e9], // 1 billion cookies
+            thresholds: [1e9], 
             descs: ["Bake <b>1 billion cookies</b> with no more than 20 clicks, no more than 20 buildings (no selling), and no more than 20 upgrades in Born Again mode.<q>Bet you thought that wouldn't be as bad as it was eh?</q>"],
             customIcons: [[14, 6]],
             orders: [30500.112]
         },
         allBuildingsLevel10: {
             names: ["Have your sugar and eat it too"],
-            thresholds: [10], // Level 10,
+            thresholds: [10], 
             descs: ["Have every building reach <b>level 10</b>."],
             customIcons: [[26, 27]],
             orders: [400000.143]
         },
         sugarLumps: {
             names: ["Sweet Child of Mine"],
-            thresholds: [100], // 100 sugar lumps
+            thresholds: [100], 
             descs: ["Own <b>100 sugar lumps</b> at once."],
             customIcons: [[29, 16]],
             orders: [21100.406]
         },
         seasonSwitches: {
             names: ["Calendar Abuser"],
-            thresholds: [50], // 50 season switches
+            thresholds: [50], 
             descs: ["Switch seasons <b>50 times</b> in one ascension.<q>What month even is it?</q>"],
             customIcons: [[16, 6]],
             orders: [21100.416]
         },
         vanillaAchievements: {
             names: ["Vanilla Star"],
-            thresholds: [622], // All 622 vanilla achievements
+            thresholds: [622], 
             descs: ["Own all <b>622 original achievements.</b><q>Wow congratulations 100% achievements! Now just 459 more to go.</q>"],
             customIcons: [[22, 7]],
             orders: [400000.143]
         },
         botanicalPerfection: {
             names: ["Botanical Perfection", "Duketater Salad"],
-            thresholds: [34, 12], // All 34 plant types, 12 duketaters
+            thresholds: [34, 12], 
             descs: ["Have one of every type of plant in the mature stage at once.<q>I have become the plants now, I am the master of the garden, bow before my hoe.</q>", "Harvest <b>12 mature Duketaters</b> simultaneously.<q>Timing your salad is everything otherwise the mayo goes bad and you kill all your friends.</q>"],
             customIcons: [[27, 15], [0, 19, 'gardenPlants']],
             orders: [61515.431, 61515.440]
         },
         soilChanges: {
             names: ["Fifty Shades of Clay"],
-            thresholds: [100], // 100 soil changes
+            thresholds: [100], 
             descs: ["Change the soil type of your Garden <b>100 times</b> in one ascension.<q>This is not how gardening works.</q>"],
             customIcons: [[3, 34, 'gardenPlants']],
             orders: [61515.433]
         },
         tickerClicks: {
             names: ["News ticker addict"],
-            thresholds: [1000], // 1000 ticker clicks
+            thresholds: [1000], 
             descs: ["Click on the news ticker <b>1,000 times</b> in one ascension.<q>Hey dummy you are clicking on the wrong thing.</q>"],
             customIcons: [[10, 12, 'custom']],
             orders: [11000.548]
         },
         wrathCookies: {
             names: ["Warm-Up Ritual", "Deal of the Slightly Damned", "Baker of the Beast"],
-            thresholds: [66, 666, 6666], // Wrath cookie clicks
+            thresholds: [66, 666, 6666], 
             descs: ["Click <b>66 wrath cookies</b> across all ascensions.", "Click <b>666 wrath cookies</b> across all ascensions.", "Click <b>6,666 wrath cookies</b> across all ascensions."],
             customIcons: [[20, 18, 'custom'], [20, 17, 'custom'], [20, 16, 'custom']],
             orders: [19990.605, 19990.615, 19990.625]
@@ -3768,7 +3780,7 @@ window.JNEData = {
         },
         wrinklerTime: {
             names: ["Wrinkler Rush"],
-            thresholds: [930 * 1000], // 930 seconds (15 minutes 30 seconds) in milliseconds
+            thresholds: [930 * 1000], // 930 seconds (15 minutes 30 seconds) 
             descs: ["Pop a wrinkler within <b>15 minutes and 30 seconds</b> of ascending.<q>The Grandmatriarchs barely had time to wake up!</q>"],
             customIcons: [[23, 18, 'custom']],
             orders: [21000.170]
@@ -4008,7 +4020,7 @@ window.JNEData = {
         { building: 'Antimatter condenser', name: 'Powers of Ten', tier4Name: 'Pair production payout', tier5Name: 'Cross-section surplus', tier6Name: 'Powers of crumbs', tier4Desc: 'Make <b>10 septendecillion cookies</b> just from antimatter condensers.', tier5Desc: 'Make <b>10 octodecillion cookies</b> just from antimatter condensers.', tier6Desc: 'Make <b>10 novemdecillion cookies</b> just from antimatter condensers.', mult: 0, tier4Order: 1920.3051, tier5Order: 1920.3052, tier6Order: 1920.3053 },
         { building: 'Prism', name: 'Now the dark days are gone', tier4Name: 'Photons pay dividends', tier5Name: 'Spectral surplus', tier6Name: 'Dawn of plenty', tier4Desc: 'Make <b>100 septendecillion cookies</b> just from prisms.', tier5Desc: 'Make <b>100 octodecillion cookies</b> just from prisms.', tier6Desc: 'Make <b>100 novemdecillion cookies</b> just from prisms.', mult: 0, tier4Order: 2020.3061, tier5Order: 2020.3062, tier6Order: 2020.3063 },
         { building: 'Chancemaker', name: 'Murphy\'s wild guess', tier4Name: 'Against all odds & ends', tier5Name: 'Monte Carlo windfall', tier6Name: 'Fate-backed securities', tier4Desc: 'Make <b>1 octodecillion cookies</b> just from chancemakers.', tier5Desc: 'Make <b>1 novemdecillion cookies</b> just from chancemakers.', tier6Desc: 'Make <b>1 vigintillion cookies</b> just from chancemakers.', mult: 0, tier4Order: 2120.3351, tier5Order: 2120.3352, tier6Order: 2120.3353 },
-        { building: 'Fractal engine', name: 'We must go deeper', tier4Name: 'Infinite series surplus', tier5Name: 'Geometric mean feast', tier6Name: 'Fractal jackpot', tier4Desc: 'Make <b>10 octodecillion cookies</b> just from fractal engines.', tier5Desc: 'Make <b>10 novemdecillion cookies</b> just from fractal engines.', tier6Desc: 'Make <b>10 vigintillion cookies</b> just from fractal engines.', mult: 0, tier4Order: 2220.4461, tier5Order: 2220.4462, tier6Order: 2220.4463 },
+        { building: 'Fractal engine', name: 'We must go deeper', tier4Name: 'Infinite series surplus', tier5Name: 'Geometric mean feast', tier6Name: 'Fractal jackpot', tier4Desc: 'Make <b>10 octodecillion cookies</b> just from fractal engines.', tier5Desc: 'Make <b>10 novemdecillion cookies</b> just from fractal engines.', tier6Desc: 'Make <b>10 vigintillion cookies</b> just from fractal engines.', mult: 0, tier4Order: 2220.4261, tier5Order: 2220.4262, tier6Order: 2220.4263 },
         { building: 'Javascript console', name: 'First-class citizen', tier4Name: 'Cookies per second()++', tier5Name: 'Promise.all(paydays)', tier6Name: 'Async and ye shall receive', tier4Desc: 'Make <b>100 octodecillion cookies</b> just from javascript consoles.', tier5Desc: 'Make <b>100 novemdecillion cookies</b> just from javascript consoles.', tier6Desc: 'Make <b>100 vigintillion cookies</b> just from javascript consoles.', mult: 0, tier4Order: 2320.4321, tier5Order: 2320.4322, tier6Order: 2320.4323 },
         { building: 'Idleverse', name: 'Earth-616', tier4Name: 'Crossover dividends', tier5Name: 'Many-Worlds ROI', tier6Name: 'Continuity bonus', tier4Desc: 'Make <b>1 novemdecillion cookies</b> just from idleverses.', tier5Desc: 'Make <b>1 vigintillion cookies</b> just from idleverses.', tier6Desc: 'Make <b>1 unvigintillion cookies</b> just from idleverses.', mult: 0, tier4Order: 2420.5241, tier5Order: 2420.5242, tier6Order: 2420.5243 },
         { building: 'Cortex baker', name: 'Unthinkable', tier4Name: 'Brainstorm dividend', tier5Name: 'Thought economy boom', tier6Name: 'Neural net worth', tier4Desc: 'Make <b>10 novemdecillion cookies</b> just from cortex bakers.', tier5Desc: 'Make <b>10 vigintillion cookies</b> just from cortex bakers.', tier6Desc: 'Make <b>10 unvigintillion cookies</b> just from cortex bakers.', mult: 0, tier4Order: 2520.5541, tier5Order: 2520.5542, tier6Order: 2520.5543 },

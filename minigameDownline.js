@@ -104,18 +104,30 @@ DownlineM.dragonBoostTooltip = function() {
 
 function $(id) { return document.getElementById(id); }
 
-var SHEETS = {
-    main: 'https://orteil.dashnet.org/cookieclicker/img/icons.png',
-    custom: 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png',
-    garden: 'https://orteil.dashnet.org/cookieclicker/img/gardenPlants.png'
-};
+var SHEETS = {};
+Object.defineProperty(SHEETS, 'main', {
+    get: function() { return window.getSpriteSheet('main'); }
+});
+Object.defineProperty(SHEETS, 'garden', {
+    get: function() { return window.getSpriteSheet('garden'); }
+});
+Object.defineProperty(SHEETS, 'custom', {
+    get: function() { return window.getSpriteSheet('custom'); }
+});
 
 function createIcon(col, row, sheet, cellSize) {
     cellSize = cellSize || 48;
     var el = document.createElement('span');
     el.className = 'downline-icon';
-    el.style.backgroundImage = 'url(' + (SHEETS[sheet || 'main'] || SHEETS.main) + ')';
+    var sheetName = sheet || 'main';
+    el.style.backgroundImage = 'url(' + (SHEETS[sheetName] || SHEETS.main) + ')';
     el.style.backgroundPosition = (-col * cellSize) + 'px ' + (-row * cellSize) + 'px';
+    // Register for sprite sheet update if using custom sheet
+    if (sheetName === 'custom' && typeof window.registerSpriteSheetLoadCallback === 'function') {
+        window.registerSpriteSheetLoadCallback(function() {
+            el.style.backgroundImage = 'url(' + SHEETS.custom + ')';
+        });
+    }
     return el;
 }
 
@@ -1530,7 +1542,7 @@ DownlineM.init = function(div) {
         headline: 'Visual overhaul hits the market — still pixelated, still just perfect' },
       
 
-      { name: 'Publish roadmap', icon: [13,17], sheet: 'custom', durationSec: 2 * 60 * 60, costCps: 10 * 60,
+      { name: 'Publish roadmap', icon: [12,17], sheet: 'custom', durationSec: 2 * 60 * 60, costCps: 10 * 60,
         desc: 'Share the vision. Better hope you can keep these deadlines though or players might come after you.',
         flavor: 'Coming this year. Maybe next year, or in 11 years. We believe in transparency.',
         unlock: { conditions: [{ stat: 'commitment', min: 125 }] },
@@ -1657,7 +1669,7 @@ DownlineM.init = function(div) {
         effects: { hype: 4, reputation: -2 },
         headline: 'Critical reviews vanish overnight — "suspiciously positive" 5 star rating appears' },
 
-      { name: 'Energy drink sponsorship', icon: [9,7], durationSec: 8 * 60 * 60, costCps: 60 * 60,
+      { name: 'Energy drink sponsorship', icon: [20,14], sheet: 'custom', durationSec: 8 * 60 * 60, costCps: 60 * 60,
         desc: 'Brand deal with a caffeine giant.',
         flavor: 'Now with 200% of your daily sugar per serving, 4.5 servings per can.',
         unlock: { conditions: [{ stat: 'players', min: 150 }, { stat: 'hype', min: 100 }] },
@@ -1793,7 +1805,7 @@ DownlineM.init = function(div) {
         effects: { reputation: 5, players: -6, boost: -4},
         headline: 'SAVE Cookie Clicker Act passes house of representatives next stop the senate' },
       
-        { name: 'Subliminal marketing', icon: [0,16], sheet: 'custom', durationSec: 4 * 60 * 60, costCps: 180 * 60,
+        { name: 'Subliminal marketing', icon: [20,13], sheet: 'custom', durationSec: 4 * 60 * 60, costCps: 180 * 60,
         desc: "Hidden messages everywhere. They won't know why they're clicking.",
         flavor: 'eikooc eht kcilc',
         unlock: { conditions: [{ stat: 'players', min: 500 }], tempConditions: [{ stat: 'reputation', min: 700 }] },
@@ -1830,7 +1842,7 @@ DownlineM.init = function(div) {
         effects: { players: 60, commitment: -3, reputation: -5, hype: 5, referrals: 4, boost: -6 },
         headline: 'Cookie Clicker the Motion Picture premieres to packed theaters — finishes to half empty theaters' },
 
-      { name: 'Pivot!', icon: [15,17], sheet: 'custom', durationSec: 0, costCps: 24 * 60 * 60,
+      { name: 'Pivot!', icon: [12,14], sheet: 'custom', durationSec: 0, costCps: 24 * 60 * 60,
         desc: 'Immediately stop all actions, may be used once every hour.',
         flavor: 'Wait this isn\'t really working. CHANGE EVERYTHING RIGHT NOW!',
         unlock: { conditions: [{ stat: 'players', min: 250 }]},
@@ -2176,7 +2188,7 @@ DownlineM.init = function(div) {
     function getTooltipIconStyle(def, name) {
       var iconsUrl = (Game.resPath || 'https://orteil.dashnet.org/cookieclicker/') + 'img/icons.png';
       var gardenUrl = (Game.resPath || 'https://orteil.dashnet.org/cookieclicker/') + 'img/gardenPlants.png';
-      var customUrl = (SHEETS && SHEETS.custom) ? SHEETS.custom : 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/updatedSpriteSheet.png';
+      var customUrl = SHEETS.custom;
       var icon, url;
       if (def && def.icon) {
         icon = def.icon;
@@ -3329,6 +3341,10 @@ DownlineM.init = function(div) {
           if (!saved || typeof saved.name !== 'string') return;
           var def = ACTIONS[saved.name];
           if (!def) return;
+          if (!def.icon || !Array.isArray(def.icon) || def.icon.length < 2) {
+            console.warn('Invalid icon for action:', saved.name, def.icon);
+            return;
+          }
           var chip = document.createElement('span');
           chip.className = 'downline-active-chip';
           chip.setAttribute('data-name', saved.name);
@@ -3552,19 +3568,19 @@ function createDownlineAchievements() {
       {
         name: 'Popularity factor',
         desc: 'Have <b>Hype</b>, <b>Commitment</b>, <b>Reputation</b>, and <b>Word of Mouth</b> over 950 at once in the Downline minigame.<q>You haven\'t been this popular since you got 13 votes for class treasurer in 10th grade, but this time you did better than 7th place.</q>',
-        icon: [18, 9, SHEETS.custom],
+        icon: Game.JNE.icon(18, 6, 'custom'),
         order: baseOrder + 0.1
     },
     {
         name: 'Factorial factor',
         desc: 'Release the <b>Fractal Engine minigame</b> 5 times in the Downline minigame in one ascension.<q>Buckle your seatbelts we are going full recursive on this one.</q>',
-        icon: [18, 8, SHEETS.custom],
+        icon: Game.JNE.icon(18, 7, 'custom'),
         order: baseOrder + 0.3
     },
     {
         name: 'Big tent factor',
         desc: 'Have <b>25,000 players</b> at one time in the Downline minigame.<q>You have more friends than Tila Tequila had on Facebook in 2006, but all of yours are recruiting their own friends to play Cookie Clicker; it’s a veritable pyramid scheme in here.</q>',
-        icon: [18, 10, SHEETS.custom],
+        icon: Game.JNE.icon(18, 8, 'custom'),
         order: baseOrder + 0.2
     }
     ];
@@ -3581,10 +3597,9 @@ function createDownlineAchievements() {
         var achievement = Game.JNE.createAchievement(
             achData.name,
             achData.desc,
-            null,
+            achData.icon,
             achData.order,
-            null,
-            achData.icon
+            null
         );
         if (achievement) {
             achievement.pool = 'normal';
@@ -3600,6 +3615,7 @@ function createDownlineAchievements() {
         }
     }
     downlineAchievementState.achievementsCreated = true;
+
     if (!DownlineM._checkHookRegistered) {
         DownlineM._checkHookRegistered = true;
         setTimeout(function () {
@@ -3721,7 +3737,6 @@ function initializeDownlineMinigame() {
 
         if (isConsoleLoading && !fractalEngine.minigameUrl) {
             fractalEngine.minigameUrl = 'downline';
-            fractalEngine.minigameIcon = [19, 11];
         }
 
         if (typeof fractalEngine.refresh === 'function') {

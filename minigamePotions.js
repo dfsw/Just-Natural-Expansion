@@ -5,8 +5,6 @@
 
 const POTIONS_VERSION = '1.1.3';
 
-var POTIONS_CUSTOM_SPRITE_URL = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
-
 // =====================================================================
 // Potions 
 //
@@ -2067,9 +2065,7 @@ function formatRemaining(sec) {
 }
 
 function getSpriteSheet(sheetName) {
-    if (typeof window.getSpriteSheet === 'function') return window.getSpriteSheet(sheetName);
-    if (sheetName === 'custom') return POTIONS_CUSTOM_SPRITE_URL;
-    return '';
+    return window.getSpriteSheet(sheetName);
 }
 
 function getPotionById(id) {
@@ -3311,15 +3307,21 @@ PotionsM.init = function(div) {
 // =====================================================================
 // Icon builder 
 // =====================================================================
-var ICON_SHEETS = {
-    main:   'https://orteil.dashnet.org/cookieclicker/img/icons.png',
-    custom: POTIONS_CUSTOM_SPRITE_URL,
-    garden: 'https://orteil.dashnet.org/cookieclicker/img/gardenPlants.png'
-};
+var ICON_SHEETS = {};
+Object.defineProperty(ICON_SHEETS, 'main', {
+    get: function() { return getSpriteSheet('main'); }
+});
+Object.defineProperty(ICON_SHEETS, 'garden', {
+    get: function() { return getSpriteSheet('garden'); }
+});
+Object.defineProperty(ICON_SHEETS, 'custom', {
+    get: function() { return getSpriteSheet('custom'); }
+});
 
 PotionsM._makeIcon = function(col, row, sheet, size) {
     size = size || 48;
-    var sheetUrl = ICON_SHEETS[sheet || 'custom'] || ICON_SHEETS.custom;
+    var sheetName = sheet || 'custom';
+    var sheetUrl = ICON_SHEETS[sheetName] || ICON_SHEETS.custom;
     var el = document.createElement('span');
     el.className = 'potions-icon';
     el.style.backgroundImage = 'url(' + sheetUrl + ')';
@@ -3327,6 +3329,12 @@ PotionsM._makeIcon = function(col, row, sheet, size) {
     if (size !== 48) {
         el.style.width = size + 'px';
         el.style.height = size + 'px';
+    }
+    // Register for sprite sheet update if using custom sheet
+    if (sheetName === 'custom' && typeof registerSpriteSheetLoadCallback === 'function') {
+        registerSpriteSheetLoadCallback(function() {
+            el.style.backgroundImage = 'url(' + ICON_SHEETS.custom + ')';
+        });
     }
     return el;
 };
@@ -5082,7 +5090,6 @@ function initializePotionsMinigame() {
         if (typeof PotionsM.createAchievements === 'function') PotionsM.createAchievements();
         if (!alchemyLab.minigameUrl) {
             alchemyLab.minigameUrl = 'potions';
-            alchemyLab.minigameIcon = [6, 0];
         }
         if (typeof alchemyLab.refresh === 'function') alchemyLab.refresh();
         if (isConsoleLoading && Game.ObjectsById && Game.ObjectsById[alchemyLab.id] &&
@@ -5332,37 +5339,37 @@ function createPotionsAchievements() {
     {
         name: 'The whole pantry',
         desc: 'Unlock all reagents in the Potions Class minigame.<q>Everything has been found, labeled, sorted, cataloged, and licked for good measure.</q>',
-        icon: [11, 25, ICON_SHEETS.custom],
+        icon: Game.JNE.icon(11, 25, 'custom'),
         order: baseOrder + 0.1
     },
     {
         name: 'The complete works of questionable medicine',
         desc: 'Unlock all potions in the Potions Class minigame.<q>Nice little potion book you have collected there. Fancy yourself some sort of Half-Blood Prince?</q>',
-        icon: [15, 25, ICON_SHEETS.custom],
+        icon: Game.JNE.icon(15, 25, 'custom'),
         order: baseOrder + 0.2
     },
     {
         name: 'Stir crazy',
         desc: 'Brew 250 successful potions in the Potions Class minigame.<q>You have drunk so much questionable material that you will either be immortal or die from poisoning by the weekend.</q>',
-        icon: [0, 26, ICON_SHEETS.custom],
+        icon: Game.JNE.icon(0, 26, 'custom'),
         order: baseOrder + 0.3
     },
     {
         name: 'Hoardiculturalist',
         desc: 'Collect 1500 reagents in the Potions Class minigame.<q>You have more gunk in your pockets than a \'90s kid returning from an unsupervised afternoon in the woods.</q>',
-        icon: [13, 25, ICON_SHEETS.custom],
+        icon: Game.JNE.icon(13, 25, 'custom'),
         order: baseOrder + 0.4
     },
     {
         name: 'Advanced Placement Alchemy',
         desc: 'Discover all 10 prestige potions in the Potions Class minigame.<q>You have mastered the forbidden knowledge of the fever nightmare. The universe trembles at your alchemical prowess.</q>',
-        icon: [2, 27, ICON_SHEETS.custom],
+        icon: Game.JNE.icon(2, 27, 'custom'),
         order: baseOrder + 0.5
     },
     {
         name: 'Fever without dawn',
         desc: 'Unlock 50 potions within 8 hours of a fever nightmare.<q>Sleep is for the weak.</q>',
-        icon: [10, 11, ICON_SHEETS.main],
+        icon: Game.JNE.icon(10, 11, 'main'),
         order: baseOrder + 0.6
     }
 ];
@@ -5372,16 +5379,16 @@ function createPotionsAchievements() {
         var achievement = Game.JNE.createAchievement(
             achData.name,
             achData.desc,
-            null,
+            achData.icon,
             achData.order,
-            null,
-            achData.icon
+            null
         );
         if (achievement) {
             achievement.pool = 'normal';
         }
     }
     potionsAchievementState.achievementsCreated = true;
+
     // Apply any achievement won state that was stashed during load (load ran before achievements existed)
     if (Array.isArray(PotionsM._pendingAchWon)) {
         var pending = PotionsM._pendingAchWon;

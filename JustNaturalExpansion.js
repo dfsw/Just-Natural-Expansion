@@ -23,7 +23,7 @@
     
     function initializeMod() {
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.6.1';
+    var modVersion = '0.6.2';
     var debugMode = false; 
     
     function debugLog() {
@@ -133,12 +133,183 @@
     var heavenlyUpgradesScriptUrl = BETA_MODE 
         ? 'https://cdn.jsdelivr.net/gh/dfsw/Cookies@beta/Beta/heavenlyUpgrades.js'
         : 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/heavenlyUpgrades.js';
+
+    var CUSTOM_SHEET_PRIMARY_URL = BETA_MODE
+        ? 'https://raw.githubusercontent.com/dfsw/Cookies/refs/heads/beta/updatedSpriteSheet.png'
+        : 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
+    var CUSTOM_SHEET_FALLBACK_URL = BETA_MODE
+        ? 'https://cdn.jsdelivr.net/gh/dfsw/Cookies@beta/updatedSpriteSheet.png'
+        : 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/updatedSpriteSheet.png';
+   
+    var SPRITE_SHEET_PLACEHOLDER = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
+
     var spriteSheets = {
-        custom: BETA_MODE 
-            ? 'https://raw.githubusercontent.com/dfsw/Cookies/refs/heads/beta/updatedSpriteSheet.png'
-            : 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png',
-        gardenPlants: 'https://orteil.dashnet.org/cookieclicker/img/gardenPlants.png'
+        custom: SPRITE_SHEET_PLACEHOLDER,
+        main: 'https://orteil.dashnet.org/cookieclicker/img/icons.png',
+        garden: 'https://orteil.dashnet.org/cookieclicker/img/gardenPlants.png',
+        gardenPlants: 'https://orteil.dashnet.org/cookieclicker/img/gardenPlants.png' //need to rename out at some point
     };
+
+    // Helper function to get sprite sheet URL
+    function getSpriteSheet(sheetName) {
+        return spriteSheets[sheetName] || '';
+    }
+    window.getSpriteSheet = getSpriteSheet;
+    window.registerSpriteSheetLoadCallback = registerSpriteSheetLoadCallback;
+    window.registerSpriteSheetAchievements = registerSpriteSheetAchievements;
+    
+    // Helper to create icon arrays that resolve sprite sheet URLs at access time
+    // Define this early so external scripts can use it before mod initialization completes
+    if (!Game.JNE) Game.JNE = {};
+    Game.JNE.icon = function(x, y, sheetName) {
+        // Handle both calling conventions: (x, y, sheetName) and ({x, y, sheetName})
+        if (typeof x === 'object' && x !== null) {
+            sheetName = x.sheetName;
+            y = x.y;
+            x = x.x;
+        }
+        var icon = [x, y, sheetName];
+        // Store the sheet name for detection without triggering the getter
+        icon._jneSheetName = sheetName;
+        Object.defineProperty(icon, '2', {
+            get: function() {
+                return getSpriteSheet(sheetName);
+            },
+            configurable: true
+        });
+        return icon;
+    };
+    window.JNE = Game.JNE;
+
+    // Callbacks to notify when sprite sheet loads (for modules that cache the URL)
+    var spriteSheetLoadCallbacks = [];
+    function registerSpriteSheetLoadCallback(callback) {
+        if (typeof callback === 'function') {
+            spriteSheetLoadCallbacks.push(callback);
+        }
+    }
+
+    // Registry for achievement names that need icon updates when sprite sheet loads
+    var spriteSheetAchievementRegistry = [];
+    function registerSpriteSheetAchievements(achievementNames) {
+        if (Array.isArray(achievementNames)) {
+            for (var i = 0; i < achievementNames.length; i++) {
+                if (spriteSheetAchievementRegistry.indexOf(achievementNames[i]) === -1) {
+                    spriteSheetAchievementRegistry.push(achievementNames[i]);
+                }
+            }
+        }
+        // If sprite sheet already loaded (not placeholder), update icons immediately
+        var currentSheet = spriteSheets.custom;
+        if (currentSheet && !currentSheet.startsWith('data:')) {
+            for (var i = 0; i < achievementNames.length; i++) {
+                var achName = achievementNames[i];
+                var ach = Game.Achievements && Game.Achievements[achName];
+                if (ach && Array.isArray(ach.icon) && ach.icon.length === 3) {
+                    try {
+                        // Check if icon has a getter on index 2 (JNE.icon pattern for custom sheet)
+                        var descriptor = Object.getOwnPropertyDescriptor(ach.icon, '2');
+                        if (descriptor && descriptor.get) {
+                            // Replace entire icon array since we can't set getter property
+                            var x = ach.icon[0];
+                            var y = ach.icon[1];
+                            ach.icon = [x, y, currentSheet];
+                        } else {
+                            // Regular array, can set directly
+                            ach.icon[2] = currentSheet;
+                        }
+                    } catch (e) {
+                        console.warn('Failed to update icon for achievement:', achName, e);
+                    }
+                }
+            }
+        }
+    }
+
+    // Fetched exactly once (primary, then fallback if that fails) and cached locally as a blob: URL,
+    // so no matter how many icons/menus reference the custom sheet, only these two requests ever happen.
+    var SPRITE_SHEET_FETCH_TIMEOUT_MS = 8000;
+    function fetchWithTimeout(url, timeoutMs) {
+        var controller = new AbortController();
+        var timedOut = false;
+        var timer = setTimeout(function() {
+            timedOut = true;
+            controller.abort();
+        }, timeoutMs);
+        return fetch(url, { mode: 'cors', cache: 'force-cache', signal: controller.signal }).then(function(resp) {
+            clearTimeout(timer);
+            if (!resp.ok) throw new Error('HTTP ' + resp.status);
+            return resp.blob();
+        }).catch(function(err) {
+            clearTimeout(timer);
+            if (timedOut) throw new Error('Timed out after ' + timeoutMs + 'ms: ' + url);
+            throw err;
+        });
+    }
+    function loadCustomSpriteSheet() {
+        fetchWithTimeout(CUSTOM_SHEET_PRIMARY_URL, SPRITE_SHEET_FETCH_TIMEOUT_MS).catch(function(err) {
+            return fetchWithTimeout(CUSTOM_SHEET_FALLBACK_URL, SPRITE_SHEET_FETCH_TIMEOUT_MS);
+        }).then(function(blob) {
+            var oldUrl = spriteSheets.custom;
+            var blobUrl = URL.createObjectURL(blob);
+            spriteSheets.custom = blobUrl;
+            var fixIcon = function(obj) {
+                var icon = obj && obj.icon;
+                if (Array.isArray(icon) && icon[2] === oldUrl) icon[2] = blobUrl;
+            };
+            if (Game.Achievements) {
+                for (var achName in Game.Achievements) fixIcon(Game.Achievements[achName]);
+            }
+            if (Game.Upgrades) {
+                for (var upName in Game.Upgrades) fixIcon(Game.Upgrades[upName]);
+            }
+            if (Game.UpdateMenu) Game.UpdateMenu();
+            // Update registered achievement icons
+            for (var i = 0; i < spriteSheetAchievementRegistry.length; i++) {
+                var achName = spriteSheetAchievementRegistry[i];
+                var ach = Game.Achievements && Game.Achievements[achName];
+                if (ach && Array.isArray(ach.icon) && ach.icon.length === 3) {
+                    try {
+                        // Check if icon has a getter on index 2 (JNE.icon pattern for custom sheet)
+                        var descriptor = Object.getOwnPropertyDescriptor(ach.icon, '2');
+                        if (descriptor && descriptor.get) {
+                            // Replace entire icon array since we can't set getter property
+                            var x = ach.icon[0];
+                            var y = ach.icon[1];
+                            ach.icon = [x, y, blobUrl];
+                        } else {
+                            // Regular array, can set directly
+                            ach.icon[2] = blobUrl;
+                        }
+                    } catch (e) {
+                        // Fallback: try to set directly
+                        try {
+                            ach.icon[2] = blobUrl;
+                        } catch (e2) {
+                            // If that fails, replace the entire array
+                            var x = ach.icon[0];
+                            var y = ach.icon[1];
+                            ach.icon = [x, y, blobUrl];
+                        }
+                    }
+                }
+            }
+            // Notify registered callbacks
+            for (var i = 0; i < spriteSheetLoadCallbacks.length; i++) {
+                try {
+                    spriteSheetLoadCallbacks[i](blobUrl);
+                } catch (cbErr) {
+                }
+            }
+        }).catch(function(err) {
+            console.error('[JNE] Custom sprite sheet failed to load from both primary and fallback:', err);
+        });
+    }
+    try {
+        loadCustomSpriteSheet();
+    } catch (e) {
+        console.error('Error during sprite sheet preload:', e);
+    }
 
     // JNE Tier System
     Game.Tiers['jne1'] = { name: 'Sterlicious', color: '#DDEAF0', special: 1, unlock: -1 };
@@ -1899,9 +2070,49 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     // Combined menu injection function
     function injectMenus() {
         if (!Game._jneOriginalUpdateMenuJNE) Game._jneOriginalUpdateMenuJNE = Game.UpdateMenu;
+
+        // Patch vanilla writeIcon to handle null icons
+        if (!Game._jneOriginalWriteIcon) {
+            Game._jneOriginalWriteIcon = Game.writeIcon;
+            Game.writeIcon = function(icon) {
+                if (!icon || !Array.isArray(icon) || icon.length < 2) {
+                    console.warn('writeIcon called with invalid icon:', icon);
+                    icon = [0, 0, 'https://orteil.dashnet.org/cookieclicker/img/icons.png'];
+                }
+                return Game._jneOriginalWriteIcon(icon);
+            };
+        }
+
         Game.UpdateMenu = function() {
+            // Fix null icons on achievements and upgrades before rendering
+            if (Game.Achievements) {
+                for (var name in Game.Achievements) {
+                    if (Game.Achievements[name] && !Game.Achievements[name].icon) {
+                        Game.Achievements[name].icon = [0, 0, getSpriteSheet('main')];
+                    }
+                }
+            }
+            if (Game.Upgrades) {
+                for (var name in Game.Upgrades) {
+                    if (Game.Upgrades[name] && !Game.Upgrades[name].icon) {
+                        Game.Upgrades[name].icon = [0, 0, getSpriteSheet('main')];
+                    }
+                }
+            }
+
             const result = Game._jneOriginalUpdateMenuJNE.call(this);
-            
+
+            // Call registered menu hooks from other modules
+            if (Game.JNE && Game.JNE.menuHooks) {
+                for (var i = 0; i < Game.JNE.menuHooks.length; i++) {
+                    try {
+                        Game.JNE.menuHooks[i]();
+                    } catch (e) {
+                        console.error('Menu hook error:', e);
+                    }
+                }
+            }
+
             // Handle options menu injection
             if (Game.onMenu === 'prefs') {
                 let menuContainer = document.getElementById('menu');
@@ -2153,32 +2364,34 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                                 var iconId = 'puzzle-icon-' + trackType + '-' + puzzleId;
                                 var crateClass = 'crate upgrade enabled';
                                 if (!Game.prefs.crates) crateClass += ' noFrame';
-                                
+
+                                var isCustomIcon = icon.hasOwnProperty('_jneSheetName') && icon._jneSheetName === 'custom';
+                                var iconUrl = icon[2];
+                                if (!isCustomIcon && typeof iconUrl === 'string' && !iconUrl.startsWith('http')) {
+                                    iconUrl = getSpriteSheet(iconUrl);
+                                }
+
                                 var description = puzzle.description.replace(/\\n/g, '<br>');
                                 var clue = (puzzle.clue || puzzle.description).replace(/\\n/g, '<br>');
-                                
+
                                 // Process conditional text if Cookie Age is available
                                 if (window.CookieAge && window.CookieAge.processConditionalText) {
                                     description = window.CookieAge.processConditionalText(description);
                                     clue = window.CookieAge.processConditionalText(clue);
                                 }
-                                var trackColor = trackType === 'investigate' ? '#4ecdc4' : trackType === 'infiltrate' ? '#ff6b6b' : '#9b59b6';
-                                var trackLabel = trackType === 'investigate' ? 'Investigate' : trackType === 'infiltrate' ? 'Infiltrate' : 'Choose';
-                                
-                                // Create dynamic tooltip function that checks for Shift key
+
                                 var tooltipFunction = function(puzzleIcon, puzzleName, puzzleDescription, puzzleClue) {
                                     return function() {
-                                        // Check if Shift key is currently pressed
                                         var showClue = Game.keys && (Game.keys[16] || Game.keys.shiftKey);
                                         var displayText = showClue ? puzzleClue : puzzleDescription;
                                         var hintText = showClue ? '' : '<div style="font-size:60%;color:rgba(255,255,255,0.4);margin-top:4px;text-align:center;font-weight:bold;"><br>(Hold Shift to view original clue)</div>';
-                                        
+
                                         return `<div style="position:absolute;left:1px;top:1px;right:1px;bottom:1px;background:linear-gradient(125deg,rgba(50,40,40,1) 0%,rgba(50,40,40,0) 20%);mix-blend-mode:screen;z-index:1;"></div><div style="z-index:10;padding:8px 4px;min-width:350px;position:relative;" id="tooltipCrate"><div class="icon" style="float:left;margin-left:-8px;margin-top:-8px;background-position: -${puzzleIcon[0] * 48}px -${puzzleIcon[1] * 48}px; background-image: url('${puzzleIcon[2]}');"></div><div class="name">${puzzleName}</div><div class="tag" style="background-color:#ff6b6b;">Puzzle</div><div class="tag" style="background-color:#fff;">Solved</div><div class="line"></div><div class="description">${displayText}</div>${hintText}</div>`;
                                     };
                                 }(icon, puzzle.name, description, clue);
-                                
-                                trackIconsHTML += `<div class="${crateClass}" style="background-position: -${icon[0] * 48}px -${icon[1] * 48}px; background-image: url('${icon[2]}');" id="${iconId}"></div>`;
-                                
+
+                                trackIconsHTML += `<div class="${crateClass}" style="background-position: -${icon[0] * 48}px -${icon[1] * 48}px; background-image: url('${iconUrl}');" id="${iconId}"></div>`;
+
                                 // Store tooltip function for later attachment
                                 if (!window.CookieAge) window.CookieAge = {};
                                 if (!window.CookieAge.puzzleTooltips) window.CookieAge.puzzleTooltips = {};
@@ -2815,7 +3028,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         // Full reload path
         cfg.scriptLoaded = false;
         b.minigame = null; b.minigameLoaded = false; b.minigameUrl = '';
-        b.minigameName = ''; b.minigameIcon = null; b.minigameLoading = false;
+        b.minigameName = ''; b.minigameLoading = false;
         if (cfg.globalMiniKey) window[cfg.globalMiniKey] = null;
         if (cfg.globalInitKey) window[cfg.globalInitKey] = null;
         var scripts = document.getElementsByTagName('script');
@@ -2840,14 +3053,13 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             if (shouldShow) {
                 b.minigameName = cfg.minigameName;
                 b.minigameUrl = cfg.scriptUrl + '?v=' + Date.now();
-                b.minigameIcon = cfg.icon;
                 b.minigameLoading = false;
                 // Remove the CC-assigned script element so Game.LoadMinigames() creates a fresh one
                 var oldScript = document.getElementById('minigameScript-' + b.id);
                 if (oldScript && oldScript.parentNode) { oldScript.parentNode.removeChild(oldScript); needsLoad = true; }
                 if (!cfg.scriptLoaded) needsLoad = true;
             } else {
-                b.minigameUrl = ''; b.minigameName = ''; b.minigameIcon = null; b.minigameLoading = false;
+                b.minigameUrl = ''; b.minigameName = ''; b.minigameLoading = false;
                 if (b.minigame && b.minigame.effs) { b.minigame.effs = null; effectsCleared = true; }
                 if (b.minigame) b.minigame._initialEffsSet = false;
                 b.minigameLoaded = false;
@@ -3245,7 +3457,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             // === SELFISHNESS GOD TRACKING ===
             var selfishnessMod = "//JNE_SELFISHNESS\n" +
                 "var M=Game.Objects['Temple']&&Game.Objects['Temple'].minigame;" +
-                "if(M&&M.gods&&M.gods['selfishness']&&Game.hasGod('selfishness')&&me&&me.type==='golden'){" +
+                "if(M&&M.gods&&M.gods['selfishness']&&Game.hasGod('selfishness')&&me&&me.type==='golden'&&!me._predictionMode){" +
                     "if(!(me.force==='cookie storm drop'||(me.forceObj&&me.forceObj.type==='cookie storm drop'))){" +
                         "if(!me._jneSelfishnessCounted){" +
                             "me._jneSelfishnessCounted=true;" +
@@ -4078,30 +4290,21 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     // List of all mod achievement names for debug reset
     var modAchievementNames = [];
     
-    // Preload sprite sheets to avoid multiple HTTP requests
-    function preloadSpriteSheets() {
-        for (var sheetName in spriteSheets) {
-            var img = new Image();
-            img.src = spriteSheets[sheetName];
-            // Store the loaded image for reference
-            spriteSheets[sheetName + '_loaded'] = img;
-        }
-    }
-    
-    // Helper function to get sprite sheet URL
-    function getSpriteSheet(sheetName) {
-        return spriteSheets[sheetName] || '';
-    }
-
     // Helper function to process icon arrays - convert string sprite sheet names to URLs
     function processIcon(icon) {
-        if (!icon) return icon;
+        if (!icon) {
+            console.warn('processIcon received null icon, using default');
+            return [0, 0, getSpriteSheet('main')];
+        }
         if (Array.isArray(icon) && icon.length === 3) {
             var spriteSheet = icon[2];
             // Only convert if it's a simple name (not a full URL)
             if (typeof spriteSheet === 'string' && !spriteSheet.startsWith('http')) {
                 return [icon[0], icon[1], getSpriteSheet(spriteSheet)];
             }
+        } else if (Array.isArray(icon) && icon.length === 2) {
+            // Convert [x, y] to [x, y, sheet]
+            return [icon[0], icon[1], getSpriteSheet('main')];
         }
         return icon;
     }
@@ -4219,33 +4422,52 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     window.JustNaturalExpansionInitialized = true;
 
     
-    function createAchievement(name, desc, icon, order, requirement, customIcon) {
+    function createAchievement(name, desc, icon, order, requirement) {
         if (!Game || !Game.Achievements) {
             console.warn('Game not available for achievement creation');
             return null;
         }
-        
+
         if (!name || !desc) {
             console.warn('Invalid achievement data:', { name: name, desc: desc });
             return null;
         }
-        
-        // Use custom icon if provided, otherwise use the vanilla icon
-        var finalIcon = customIcon || icon;
-        
-        // Handle custom icon formats
-        if (customIcon && Array.isArray(customIcon)) {
-            if (customIcon.length === 3) {
-                // Convert string sprite sheet names to actual URLs (but not full URLs)
-                var spriteSheet = customIcon[2];
+
+        var finalIcon = icon;
+
+        // Ensure icon is never null - use default icon if needed
+        if (!finalIcon) {
+            finalIcon = [0, 0, getSpriteSheet('main')];
+        }
+
+        // Handle icon arrays - preserve JNE.icon dynamic getters for custom sheets, resolve others
+        var usesCustomSheet = false;
+        if (Array.isArray(finalIcon) && finalIcon.length === 3) {
+            var x = finalIcon[0];
+            var y = finalIcon[1];
+            var spriteSheet = finalIcon[2];
+
+            // Check if this is a JNE.icon with the _jneSheetName marker (dynamic sprite sheet)
+            var isJneIcon = finalIcon.hasOwnProperty('_jneSheetName');
+            var sheetName = isJneIcon ? finalIcon._jneSheetName : null;
+
+            // If it's a JNE.icon and references a custom sheet, keep it as-is for dynamic resolution
+            // For vanilla sheets, resolve immediately to avoid issues
+            if (isJneIcon && sheetName === 'custom') {
+                finalIcon = finalIcon; // Keep the JNE.icon with getter
+                usesCustomSheet = true;
+            } else {
+                // Resolve sprite sheet - handle both string names and URLs
                 if (typeof spriteSheet === 'string' && !spriteSheet.startsWith('http')) {
                     spriteSheet = getSpriteSheet(spriteSheet);
                 }
-                finalIcon = [customIcon[0], customIcon[1], spriteSheet];
-            } else if (customIcon.length === 2) {
-                // Simple coordinates: [x, y]
-                finalIcon = customIcon;
+                finalIcon = [x, y, spriteSheet];
             }
+        } else if (Array.isArray(finalIcon) && finalIcon.length === 2) {
+            // Convert [x, y] to [x, y, sheet]
+            finalIcon = [finalIcon[0], finalIcon[1], getSpriteSheet('main')];
+        } else {
+            finalIcon = [0, 0, getSpriteSheet('main')];
         }
         
         // Check for flavor text and append it to the description
@@ -4255,7 +4477,12 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         }
 
         var ach = new Game.Achievement(name, finalDesc, finalIcon);
-        
+
+        // Auto-register for sprite sheet update if using custom icon
+        if (usesCustomSheet && typeof registerSpriteSheetAchievements === 'function') {
+            registerSpriteSheetAchievements([name]);
+        }
+
         // Ensure the achievement is properly initialized with vanilla properties
         ach.id = Game.AchievementsN;
         ach.name = name;
@@ -4743,11 +4970,11 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     start: 'Lunar New Year season has started!',
                     over: 'Lunar New Year season is over.',
                     trigger: 'Lunar biscuit',
-                    endIcon: [6, 13, getSpriteSheet('custom')]
+                    endIcon: JNE.icon(6, 13, 'custom')
                 };
 
                 // Create the trigger upgrade
-                new Game.Upgrade('Lunar biscuit', 'Triggers <b>Lunar New Year season</b> for the next 24 hours.<br>Triggering another season will cancel this one.<br>Cost scales with unbuffed CpS and increases with every season switch.<q>财源广进</q>', Game.seasonTriggerBasePrice, [9, 12, getSpriteSheet('custom')]);
+                new Game.Upgrade('Lunar biscuit', 'Triggers <b>Lunar New Year season</b> for the next 24 hours.<br>Triggering another season will cancel this one.<br>Cost scales with unbuffed CpS and increases with every season switch.<q>财源广进</q>', Game.seasonTriggerBasePrice, JNE.icon(9, 12, 'custom'));
                 Game.last.season = 'lunarnewyear';
                 Game.last.pool = 'toggle';
                 Game.last.order = 24001;
@@ -5448,9 +5675,9 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 };
             })(buildingType, amount);
             
-            var customIcon = customIcons && customIcons[i] ? customIcons[i] : null;
+            var icon = customIcons && customIcons[i] ? customIcons[i] : baseIcon;
             var order = (buildingOrders && buildingOrders[i] !== undefined) ? buildingOrders[i] : (baseOrder + (i + 1) * 0.01);
-            var ach = createAchievement(name, desc, baseIcon, order, requirement, customIcon);
+            var ach = createAchievement(name, desc, icon, order, requirement);
             if (ach) {
                 achievements.push(ach);
             }
@@ -6004,12 +6231,11 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         createAchievement(
             seasonalData.names[0],
             seasonalData.descs[0],
-            null,
+            seasonalData.customIcons[0],
             seasonalData.orders[0],
             function() {
                 return seasonalReindeerData.split('').every(function(char) { return char === '1'; });
-            },
-            seasonalData.customIcons[0]
+            }
         );
     }
     
@@ -6120,7 +6346,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
 
                 Game.Earn(moni);
                 var moniStr = loc('%1 cookie', LBeautify(moni));
-                Game.Notify('You found a lantern!', 'The lantern gives you ' + moniStr + '.', [23, 24, getSpriteSheet('custom')], 6);
+                Game.Notify('You found a lantern!', 'The lantern gives you ' + moniStr + '.', JNE.icon(23, 24, 'custom'), 6);
                 Game.Popup('<div style="font-size:80%;">+' + moniStr + '</div>', Game.mouseX, Game.mouseY);
                 Game.SparkleAt(Game.mouseX, Game.mouseY);
                 PlaySound('snd/shimmerClick.mp3');
@@ -6179,7 +6405,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 order: 22400.1701,
                 type: 'lanternClicks',
                 threshold: 168,
-                icon: [9, 12, getSpriteSheet('custom')]
+                icon: JNE.icon(9, 12, 'custom')
             },
             {
                 name: 'For My Whole Life',
@@ -6187,7 +6413,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 order: 22400.1702,
                 type: 'lanternClicks',
                 threshold: 1314,
-                icon: [12, 16, getSpriteSheet('custom')]
+                icon: JNE.icon(12, 16, 'custom')
             },
             {
                 name: 'Everything Everywhere All at Once',
@@ -6195,7 +6421,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 order: 22400.1703,
                 type: 'zodiacVisits',
                 threshold: 12,
-                icon: [10, 11, getSpriteSheet('custom')]
+                icon: JNE.icon(10, 11, 'custom')
             }
         ];
 
@@ -6398,16 +6624,22 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     function registerUpgrade(upgradeInfo, upgradeType, customProperties) {
         try {
             var upgrade = Game.Upgrades[upgradeInfo.name];
-            
+
             if (!upgrade) {
                 console.warn('Failed to create ' + upgradeType + ' upgrade:', upgradeInfo.name);
                 return false;
             }
-            
+
+            // Ensure icon is never null
+            if (!upgrade.icon) {
+                console.warn('Upgrade has null icon, setting default:', upgradeInfo.name);
+                upgrade.icon = [0, 0, getSpriteSheet('main')];
+            }
+
             // Set basic properties
             upgrade.desc = upgradeInfo.desc;
             upgrade.ddesc = upgradeInfo.ddesc;
-            
+
             // Set custom properties
             if (customProperties) {
                 for (var prop in customProperties) {
@@ -6672,7 +6904,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         var processedIcon = processIcon(upgradeInfo.icon);
         var finalIcon = processedIcon;
         if (Array.isArray(processedIcon) && processedIcon.length === 2) {
-            finalIcon = [processedIcon[0], processedIcon[1], getSpriteSheet('custom')];
+            finalIcon = JNE.icon(processedIcon[0], processedIcon[1], 'custom');
         }
         
         new Game.Upgrade(upgradeInfo.name, upgradeInfo.ddesc, upgradeInfo.price, finalIcon);
@@ -8725,12 +8957,8 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     continue;
                 }
                 
-                // SAFETY: Double-check this is a mod upgrade (should always be true here)
-                if (!modUpgradeNamesSet[upgradeName]) {
-                    continue;
-                }
-
-                if (typeof upgrade.unlockCondition !== 'function') {
+                // some added safety
+                if (!modUpgradeNamesSet[upgradeName] && typeof upgrade.unlockCondition !== 'function') {
                     continue;
                 }
 
@@ -8754,9 +8982,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             // Refresh store ONLY when upgrades actually changed unlock state
             if (unlockChanged) {
                 Game.storeToRefresh = 1;
-                if (Game.RebuildUpgrades) {
-                    Game.RebuildUpgrades();
-                }
+                Game.RebuildUpgrades();               
             }
         }
     });
@@ -8791,14 +9017,16 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             for (var i = 0; i < data.names.length; i++) {
                     var actualRequirementType = (type === 'completionism') ? data.thresholds[i] : type;
                     var requirement = createRequirementFunction(actualRequirementType, data.thresholds[i]);
-                    var customIcon = data.customIcons && data.customIcons[i] ? data.customIcons[i] : null;
+                    var icon = data.customIcons && data.customIcons[i] ? data.customIcons[i] : null;
+                    var desc = data.descs[i];
+                    if (typeof desc === 'function') desc = desc(data.thresholds[i], i);
+                    else if (typeof data.descs === 'function') desc = data.descs(data.thresholds[i], i);
                     createAchievement(
                         data.names[i],
-                        data.descs[i],
-                        null,
+                        desc,
+                        icon,
                         data.orders[i],
-                        requirement,
-                        customIcon
+                        requirement
                     );
             }
         }
@@ -8819,37 +9047,35 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         for (var i = 0; i < levelAchievements.length; i++) {
             var ach = levelAchievements[i];
             var spriteIndex = buildingToSpriteIndex[ach.building] || 0;
-            
-                // Level 15 achievement
+
                 createAchievement(
                     ach.level15,
-                    "Reach Level <b>15</b> " + ach.building.toLowerCase() + "s.",
-                    [spriteIndex, 19, getSpriteSheet('custom')],
+                    "Reach Level <b>15</b> " + Game.Objects[ach.building].plural + ".",
+                    JNE.icon(spriteIndex, 19, 'custom'),
                     ach.level15Order,
                     (function(buildingName) {
-                        return function() { 
+                        return function() {
                             var building = Game.Objects[buildingName];
-                            return building && building.level >= 15; 
+                            return building && building.level >= 15;
                         };
                     })(ach.building)
                 );
-                
-                // Level 20 achievement
+
                 createAchievement(
                     ach.level20,
-                    "Reach Level <b>20</b> " + ach.building.toLowerCase() + "s.",
-                    [spriteIndex, 20, getSpriteSheet('custom')],
+                    "Reach Level <b>20</b> " + Game.Objects[ach.building].plural + ".",
+                    JNE.icon(spriteIndex, 20, 'custom'),
                     ach.level20Order,
                     (function(buildingName) {
-                        return function() { 
+                        return function() {
                             var building = Game.Objects[buildingName];
-                            return building && building.level >= 20; 
+                            return building && building.level >= 20;
                         };
                     })(ach.building)
                 );
         }
 
-        // Create extended production achievements for each building (tier 4, 5, 6)
+        // Create  production achievements
         var productionAchievements = window.JNEData ? window.JNEData.productionAchievements : [];
         
         for (var i = 0; i < productionAchievements.length; i++) {
@@ -8867,7 +9093,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     vanillaExponent = building.n + 40; // safety 
                 }
                 
-                // Calculate thresholds using the actual vanilla threshold as base
                 var vanillaBaseN = vanillaExponent;
                 
                 // Map building names to custom sprite sheet indices
@@ -8892,12 +9117,12 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 createAchievement(
                         tier.name,
                         tier.desc,
-                        [spriteIndex, tier.spriteY, getSpriteSheet('custom')],
+                        JNE.icon(spriteIndex, tier.spriteY, 'custom'),
                         tier.order,
                     (function(buildingName, threshold) {
-                        return function() { 
-                            return Game.Objects[buildingName] && 
-                                   Game.Objects[buildingName].totalCookies >= threshold; 
+                        return function() {
+                            return Game.Objects[buildingName] &&
+                                   Game.Objects[buildingName].totalCookies >= threshold;
                         };
                         })(ach.building, threshold)
                     );
@@ -8909,8 +9134,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             'Just Natural Expansion has been used outside of Leaderboard/Competition mode.',
             [26, 30], 
             10000.25, 
-            null,
-            [26, 30] 
+            null
         );
         
         beyondLeaderboardAchievement.pool = 'shadow';
@@ -9301,14 +9525,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         }
     }
         
-    setTimeout(function() {
-        try {            
-            preloadSpriteSheets();
-        } catch (e) {
-            console.error('Error during mod initialization:', e);
-        }
-    }, 500);
-
     function addCustomBuildingMultipliers() {
         if (Game.customMultipliersSetup) return;
         if (!modSettings.enableBuildingUpgrades) return;
