@@ -3251,6 +3251,17 @@ PotionsM.init = function(div) {
     PotionsM._refreshSlots();
     PotionsM._renderSelectedReagents();
     PotionsM._checkPrestigeButton();
+
+    if (!PotionsM._spriteSheetRefreshRegistered && typeof window.registerSpriteSheetLoadCallback === 'function') {
+        PotionsM._spriteSheetRefreshRegistered = true;
+        window.registerSpriteSheetLoadCallback(function() {
+            PotionsM._buildCatalog();
+            PotionsM._buildReagents();
+            PotionsM._refreshSlots();
+            PotionsM._renderSelectedReagents();
+        });
+    }
+
     PotionsM._potionsBrewedL = l('potionsPotionsBrewed');
     PotionsM.updatePotionsBrewedDisplay();
 
