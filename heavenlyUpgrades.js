@@ -1168,25 +1168,6 @@
                     var dragDiv = document.createElement('div');
                     dragDiv.className = 'templeSlotDrag';
 
-                    // Register callback to update god icon when sprite sheet loads
-                    if (window.registerSpriteSheetLoadCallback && icon[2]) {
-                        var updateGodIcon = function(blobUrl) {
-                            // God may be in templeGods container or in a slot
-                            var godEl = l('templeGod' + me.id);
-                            if (godEl) {
-                                var iconEl = godEl.querySelector('.templeIcon');
-                                if (iconEl) {
-                                    iconEl.style.backgroundImage = 'url(' + blobUrl + ')';
-                                }
-                            }
-                        };
-                        window.registerSpriteSheetLoadCallback(updateGodIcon);
-                        // Check if sprite sheet already loaded
-                        var currentSheet = getSpriteSheet('custom');
-                        if (currentSheet && !currentSheet.startsWith('data:')) {
-                            updateGodIcon(currentSheet);
-                        }
-                    }
                     dragDiv.id = 'templeGodDrag' + me.id;
                     godDiv.appendChild(iconDiv);
                     godDiv.appendChild(dragDiv);
@@ -2518,36 +2499,6 @@
                     36: { baseX: -480, baseY: -1152 }
                 };
 
-                // Register callback to update cached sprite sheet URL when blob loads
-                var updateSpriteSheetRefs = function(blobUrl) {
-                    customSheet = blobUrl;
-                    M._jneCustomSheet = blobUrl;
-                    if (M._addCustomPlantCSSRules) M._addCustomPlantCSSRules();
-                    if (M.soils && M.soils.aerated && M.soils.aerated.customIconSheet) {
-                        M.soils.aerated.customIconSheet = blobUrl;
-                    }
-                    // Update aerated soil CSS if it exists
-                    var aeratedStyle = document.getElementById('aeratedSoilCSS');
-                    if (aeratedStyle && M.soils && M.soils.aerated) {
-                        var aeratedId = M.soils.aerated.id;
-                        var bgPos = (-M.soils.aerated.customIcon[0] * 48) + 'px ' + (-M.soils.aerated.customIcon[1] * 48) + 'px';
-                        aeratedStyle.textContent = '#gardenSoilIcon-' + aeratedId + ' { background-image: url(\'' + blobUrl + '\') !important; background-position: ' + bgPos + ' !important; }';
-                    }
-                    // Redraw Pantheon minigame to update slot icons
-                    var temple = Game.Objects['Temple'];
-                    if (temple && temple.minigame && temple.minigame.draw) {
-                        temple.minigame.draw();
-                    }
-                };
-                if (window.registerSpriteSheetLoadCallback) {
-                    window.registerSpriteSheetLoadCallback(updateSpriteSheetRefs);
-                    // Check if sprite sheet already loaded (not placeholder)
-                    var currentSheet = getSpriteSheet('custom');
-                    if (currentSheet && !currentSheet.startsWith('data:')) {
-                        updateSpriteSheetRefs(currentSheet);
-                    }
-                }
-
                 if (!document.getElementById('customGardenPlantsCSS')) {
                     var style = document.createElement('style');
                     style.id = 'customGardenPlantsCSS';
@@ -3256,25 +3207,6 @@
             var d = div.firstChild;
             l('grimoireSpells').appendChild(d); AddEvent(d,'click',()=>{PlaySound('snd/tick.mp3');M.castSpell(me);});
 
-            // Register callback to update spell icon when sprite sheet loads
-            if (window.registerSpriteSheetLoadCallback) {
-                var updateSpellIcon = function(blobUrl) {
-                    me.customIconSheet = blobUrl;
-                    var spellEl = l('grimoireSpell' + me.id);
-                    if (spellEl) {
-                        var iconEl = spellEl.querySelector('.grimoireIcon');
-                        if (iconEl) {
-                            iconEl.style.backgroundImage = 'url(\'' + blobUrl + '\')';
-                        }
-                    }
-                };
-                window.registerSpriteSheetLoadCallback(updateSpellIcon);
-                // Check if sprite sheet already loaded
-                var currentSheet = getSpriteSheet('custom');
-                if (currentSheet && !currentSheet.startsWith('data:')) {
-                    updateSpellIcon(currentSheet);
-                }
-            }
 
             if (M.spellTooltip && !M._gildedAllureTooltipHooked) {
                 M._gildedAllureTooltipHooked = true;

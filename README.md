@@ -55,8 +55,10 @@ The mobile version of Cookie Clicker does not support mods at this time.
 
 ## Changelog    
 
-### Version 0.6.2
+### Version 0.6.3
+* Compatibility adjustments for certain third party mods.  
 
+### Version 0.6.2
 * Lots of new/updated art as the ground work is being laid for the next major version. 
 * Fixed several upgrade/achievement descriptions that had typos or other issues in them. 
 * If for any reason the custom sprite sheet fails to load from github the mod will try a fallback address now. 

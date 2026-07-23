@@ -122,12 +122,6 @@ function createIcon(col, row, sheet, cellSize) {
     var sheetName = sheet || 'main';
     el.style.backgroundImage = 'url(' + (SHEETS[sheetName] || SHEETS.main) + ')';
     el.style.backgroundPosition = (-col * cellSize) + 'px ' + (-row * cellSize) + 'px';
-    // Register for sprite sheet update if using custom sheet
-    if (sheetName === 'custom' && typeof window.registerSpriteSheetLoadCallback === 'function') {
-        window.registerSpriteSheetLoadCallback(function() {
-            el.style.backgroundImage = 'url(' + SHEETS.custom + ')';
-        });
-    }
     return el;
 }
 

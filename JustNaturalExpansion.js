@@ -5,25 +5,62 @@
     'use strict';
     
     var BETA_MODE = false; 
-    
-    // off loaded the static data for upgrades, achievements, etc
-    var script = document.createElement('script');
-    script.src = BETA_MODE 
-            ? 'https://cdn.jsdelivr.net/gh/dfsw/Cookies@beta/Beta/data.js?v=' + Date.now()
-        : 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/data.js?v=' + Date.now();
-    script.onload = function() {
-        // Continue initialization after data.js is loaded
-        initializeMod();
+
+    // Load the custom sprite sheet  (github then jsdelivr)
+    var CUSTOM_SHEET_PRIMARY_URL = BETA_MODE
+        ? 'https://raw.githubusercontent.com/dfsw/Cookies/refs/heads/beta/updatedSpriteSheet.png?v=' + Date.now()
+        : 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png?v=' + Date.now();
+    var CUSTOM_SHEET_FALLBACK_URL = BETA_MODE
+        ? 'https://cdn.jsdelivr.net/gh/dfsw/Cookies@beta/updatedSpriteSheet.png?v=' + Date.now()
+        : 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/updatedSpriteSheet.png?v=' + Date.now();
+
+    var spriteSheets = {
+        custom: null,
+        main: 'https://orteil.dashnet.org/cookieclicker/img/icons.png',
+        garden: 'https://orteil.dashnet.org/cookieclicker/img/gardenPlants.png',
+        gardenPlants: 'https://orteil.dashnet.org/cookieclicker/img/gardenPlants.png'
     };
-    script.onerror = function() {
-        console.error('[JNE] Failed to load data.js from:', script.src);
-        console.error('[JNE] Mod initialization aborted. Check your network connection or try again later.');
-    };
-    document.head.appendChild(script); 
+    function getSpriteSheet(sheetName) { return spriteSheets[sheetName] || ''; }
+    window.getSpriteSheet = getSpriteSheet;
+
+    function fetchSheet(url) {
+        return fetch(url, { mode: 'cors', cache: 'force-cache' }).then(function(r) {
+            if (!r.ok) throw new Error('HTTP ' + r.status);
+            return r.blob();
+        });
+    }
+
+    fetchSheet(CUSTOM_SHEET_PRIMARY_URL).catch(function() {
+        return fetchSheet(CUSTOM_SHEET_FALLBACK_URL);
+    }).then(function(blob) {
+        spriteSheets.custom = URL.createObjectURL(blob);
+        loadModData();
+    }).catch(function(err) {
+        console.error('[JNE] Custom sprite sheet failed to load from both URLs. Mod initialization aborted.', err);
+        Game.Notify('Just Natural Expansion Error', 'Could not load required files (Github and JSDelivr both failed). Check your network/blockers. The mod will not be loaded.', [15, 7], 30);
+    });
+
+    function loadModData() {
+        // off loaded the static data for upgrades, achievements, etc
+        var script = document.createElement('script');
+        script.src = BETA_MODE 
+                ? 'https://cdn.jsdelivr.net/gh/dfsw/Cookies@beta/Beta/data.js?v=' + Date.now()
+            : 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/data.js?v=' + Date.now();
+        script.onload = function() {
+            // Continue initialization after data.js is loaded
+            initializeMod();
+        };
+        script.onerror = function() {
+            console.error('[JNE] Failed to load data.js from:', script.src, '- Mod initialization aborted.');
+             Game.Notify('Just Natural Expansion Error', 'Could not load required files (Data). Check your network/blockers. The mod will not be loaded.', [15, 7], 30);
+            
+        };
+        document.head.appendChild(script); 
+    }
     
     function initializeMod() {
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.6.2';
+    var modVersion = '0.6.3';
     var debugMode = false; 
     
     function debugLog() {
@@ -134,32 +171,9 @@
         ? 'https://cdn.jsdelivr.net/gh/dfsw/Cookies@beta/Beta/heavenlyUpgrades.js'
         : 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/heavenlyUpgrades.js';
 
-    var CUSTOM_SHEET_PRIMARY_URL = BETA_MODE
-        ? 'https://raw.githubusercontent.com/dfsw/Cookies/refs/heads/beta/updatedSpriteSheet.png'
-        : 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/refs/heads/main/updatedSpriteSheet.png';
-    var CUSTOM_SHEET_FALLBACK_URL = BETA_MODE
-        ? 'https://cdn.jsdelivr.net/gh/dfsw/Cookies@beta/updatedSpriteSheet.png'
-        : 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/updatedSpriteSheet.png';
-   
-    var SPRITE_SHEET_PLACEHOLDER = 'data:image/gif;base64,R0lGODlhAQABAAAAACH5BAEKAAEALAAAAAABAAEAAAICTAEAOw==';
-
-    var spriteSheets = {
-        custom: SPRITE_SHEET_PLACEHOLDER,
-        main: 'https://orteil.dashnet.org/cookieclicker/img/icons.png',
-        garden: 'https://orteil.dashnet.org/cookieclicker/img/gardenPlants.png',
-        gardenPlants: 'https://orteil.dashnet.org/cookieclicker/img/gardenPlants.png' //need to rename out at some point
-    };
-
-    // Helper function to get sprite sheet URL
-    function getSpriteSheet(sheetName) {
-        return spriteSheets[sheetName] || '';
-    }
-    window.getSpriteSheet = getSpriteSheet;
-    window.registerSpriteSheetLoadCallback = registerSpriteSheetLoadCallback;
-    window.registerSpriteSheetAchievements = registerSpriteSheetAchievements;
-    
-    // Helper to create icon arrays that resolve sprite sheet URLs at access time
-    // Define this early so external scripts can use it before mod initialization completes
+    // Sprite sheet is already loaded (see top of file) by the time initializeMod() runs.
+    // Helper to create icon arrays; the sheet name is resolved to its final URL immediately
+    // since window.getSpriteSheet already returns the real (fetched) value at this point.
     if (!Game.JNE) Game.JNE = {};
     Game.JNE.icon = function(x, y, sheetName) {
         // Handle both calling conventions: (x, y, sheetName) and ({x, y, sheetName})
@@ -168,148 +182,12 @@
             y = x.y;
             x = x.x;
         }
-        var icon = [x, y, sheetName];
-        // Store the sheet name for detection without triggering the getter
+        var icon = [x, y, getSpriteSheet(sheetName)];
+
         icon._jneSheetName = sheetName;
-        Object.defineProperty(icon, '2', {
-            get: function() {
-                return getSpriteSheet(sheetName);
-            },
-            configurable: true
-        });
         return icon;
     };
     window.JNE = Game.JNE;
-
-    // Callbacks to notify when sprite sheet loads (for modules that cache the URL)
-    var spriteSheetLoadCallbacks = [];
-    function registerSpriteSheetLoadCallback(callback) {
-        if (typeof callback === 'function') {
-            spriteSheetLoadCallbacks.push(callback);
-        }
-    }
-
-    // Registry for achievement names that need icon updates when sprite sheet loads
-    var spriteSheetAchievementRegistry = [];
-    function registerSpriteSheetAchievements(achievementNames) {
-        if (Array.isArray(achievementNames)) {
-            for (var i = 0; i < achievementNames.length; i++) {
-                if (spriteSheetAchievementRegistry.indexOf(achievementNames[i]) === -1) {
-                    spriteSheetAchievementRegistry.push(achievementNames[i]);
-                }
-            }
-        }
-        // If sprite sheet already loaded (not placeholder), update icons immediately
-        var currentSheet = spriteSheets.custom;
-        if (currentSheet && !currentSheet.startsWith('data:')) {
-            for (var i = 0; i < achievementNames.length; i++) {
-                var achName = achievementNames[i];
-                var ach = Game.Achievements && Game.Achievements[achName];
-                if (ach && Array.isArray(ach.icon) && ach.icon.length === 3) {
-                    try {
-                        // Check if icon has a getter on index 2 (JNE.icon pattern for custom sheet)
-                        var descriptor = Object.getOwnPropertyDescriptor(ach.icon, '2');
-                        if (descriptor && descriptor.get) {
-                            // Replace entire icon array since we can't set getter property
-                            var x = ach.icon[0];
-                            var y = ach.icon[1];
-                            ach.icon = [x, y, currentSheet];
-                        } else {
-                            // Regular array, can set directly
-                            ach.icon[2] = currentSheet;
-                        }
-                    } catch (e) {
-                        console.warn('Failed to update icon for achievement:', achName, e);
-                    }
-                }
-            }
-        }
-    }
-
-    // Fetched exactly once (primary, then fallback if that fails) and cached locally as a blob: URL,
-    // so no matter how many icons/menus reference the custom sheet, only these two requests ever happen.
-    var SPRITE_SHEET_FETCH_TIMEOUT_MS = 8000;
-    function fetchWithTimeout(url, timeoutMs) {
-        var controller = new AbortController();
-        var timedOut = false;
-        var timer = setTimeout(function() {
-            timedOut = true;
-            controller.abort();
-        }, timeoutMs);
-        return fetch(url, { mode: 'cors', cache: 'force-cache', signal: controller.signal }).then(function(resp) {
-            clearTimeout(timer);
-            if (!resp.ok) throw new Error('HTTP ' + resp.status);
-            return resp.blob();
-        }).catch(function(err) {
-            clearTimeout(timer);
-            if (timedOut) throw new Error('Timed out after ' + timeoutMs + 'ms: ' + url);
-            throw err;
-        });
-    }
-    function loadCustomSpriteSheet() {
-        fetchWithTimeout(CUSTOM_SHEET_PRIMARY_URL, SPRITE_SHEET_FETCH_TIMEOUT_MS).catch(function(err) {
-            return fetchWithTimeout(CUSTOM_SHEET_FALLBACK_URL, SPRITE_SHEET_FETCH_TIMEOUT_MS);
-        }).then(function(blob) {
-            var oldUrl = spriteSheets.custom;
-            var blobUrl = URL.createObjectURL(blob);
-            spriteSheets.custom = blobUrl;
-            var fixIcon = function(obj) {
-                var icon = obj && obj.icon;
-                if (Array.isArray(icon) && icon[2] === oldUrl) icon[2] = blobUrl;
-            };
-            if (Game.Achievements) {
-                for (var achName in Game.Achievements) fixIcon(Game.Achievements[achName]);
-            }
-            if (Game.Upgrades) {
-                for (var upName in Game.Upgrades) fixIcon(Game.Upgrades[upName]);
-            }
-            if (Game.UpdateMenu) Game.UpdateMenu();
-            // Update registered achievement icons
-            for (var i = 0; i < spriteSheetAchievementRegistry.length; i++) {
-                var achName = spriteSheetAchievementRegistry[i];
-                var ach = Game.Achievements && Game.Achievements[achName];
-                if (ach && Array.isArray(ach.icon) && ach.icon.length === 3) {
-                    try {
-                        // Check if icon has a getter on index 2 (JNE.icon pattern for custom sheet)
-                        var descriptor = Object.getOwnPropertyDescriptor(ach.icon, '2');
-                        if (descriptor && descriptor.get) {
-                            // Replace entire icon array since we can't set getter property
-                            var x = ach.icon[0];
-                            var y = ach.icon[1];
-                            ach.icon = [x, y, blobUrl];
-                        } else {
-                            // Regular array, can set directly
-                            ach.icon[2] = blobUrl;
-                        }
-                    } catch (e) {
-                        // Fallback: try to set directly
-                        try {
-                            ach.icon[2] = blobUrl;
-                        } catch (e2) {
-                            // If that fails, replace the entire array
-                            var x = ach.icon[0];
-                            var y = ach.icon[1];
-                            ach.icon = [x, y, blobUrl];
-                        }
-                    }
-                }
-            }
-            // Notify registered callbacks
-            for (var i = 0; i < spriteSheetLoadCallbacks.length; i++) {
-                try {
-                    spriteSheetLoadCallbacks[i](blobUrl);
-                } catch (cbErr) {
-                }
-            }
-        }).catch(function(err) {
-            console.error('[JNE] Custom sprite sheet failed to load from both primary and fallback:', err);
-        });
-    }
-    try {
-        loadCustomSpriteSheet();
-    } catch (e) {
-        console.error('Error during sprite sheet preload:', e);
-    }
 
     // JNE Tier System
     Game.Tiers['jne1'] = { name: 'Sterlicious', color: '#DDEAF0', special: 1, unlock: -1 };
@@ -4435,27 +4313,23 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
 
         var finalIcon = icon;
 
-        // Ensure icon is never null - use default icon if needed
+        // Ensure icon is never null fallback to blue finger icon
         if (!finalIcon) {
             finalIcon = [0, 0, getSpriteSheet('main')];
         }
 
-        // Handle icon arrays - preserve JNE.icon dynamic getters for custom sheets, resolve others
-        var usesCustomSheet = false;
+        // Handle icon arrays - JNE.icon already resolves the sheet name to its final URL, so a custom-sheet icon is left as-is; other arrays get resolved here.
         if (Array.isArray(finalIcon) && finalIcon.length === 3) {
             var x = finalIcon[0];
             var y = finalIcon[1];
             var spriteSheet = finalIcon[2];
 
-            // Check if this is a JNE.icon with the _jneSheetName marker (dynamic sprite sheet)
+            // Check if this is a JNE.icon with the _jneSheetName marker (already-resolved custom sheet)
             var isJneIcon = finalIcon.hasOwnProperty('_jneSheetName');
             var sheetName = isJneIcon ? finalIcon._jneSheetName : null;
 
-            // If it's a JNE.icon and references a custom sheet, keep it as-is for dynamic resolution
-            // For vanilla sheets, resolve immediately to avoid issues
             if (isJneIcon && sheetName === 'custom') {
-                finalIcon = finalIcon; // Keep the JNE.icon with getter
-                usesCustomSheet = true;
+                // Already resolved by Game.JNE.icon - leave as-is
             } else {
                 // Resolve sprite sheet - handle both string names and URLs
                 if (typeof spriteSheet === 'string' && !spriteSheet.startsWith('http')) {
@@ -4464,7 +4338,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 finalIcon = [x, y, spriteSheet];
             }
         } else if (Array.isArray(finalIcon) && finalIcon.length === 2) {
-            // Convert [x, y] to [x, y, sheet]
             finalIcon = [finalIcon[0], finalIcon[1], getSpriteSheet('main')];
         } else {
             finalIcon = [0, 0, getSpriteSheet('main')];
@@ -4477,11 +4350,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         }
 
         var ach = new Game.Achievement(name, finalDesc, finalIcon);
-
-        // Auto-register for sprite sheet update if using custom icon
-        if (usesCustomSheet && typeof registerSpriteSheetAchievements === 'function') {
-            registerSpriteSheetAchievements([name]);
-        }
 
         // Ensure the achievement is properly initialized with vanilla properties
         ach.id = Game.AchievementsN;

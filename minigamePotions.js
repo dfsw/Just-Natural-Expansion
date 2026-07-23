@@ -3252,15 +3252,6 @@ PotionsM.init = function(div) {
     PotionsM._renderSelectedReagents();
     PotionsM._checkPrestigeButton();
 
-    if (!PotionsM._spriteSheetRefreshRegistered && typeof window.registerSpriteSheetLoadCallback === 'function') {
-        PotionsM._spriteSheetRefreshRegistered = true;
-        window.registerSpriteSheetLoadCallback(function() {
-            PotionsM._buildCatalog();
-            PotionsM._buildReagents();
-            PotionsM._refreshSlots();
-            PotionsM._renderSelectedReagents();
-        });
-    }
 
     PotionsM._potionsBrewedL = l('potionsPotionsBrewed');
     PotionsM.updatePotionsBrewedDisplay();
@@ -3340,12 +3331,6 @@ PotionsM._makeIcon = function(col, row, sheet, size) {
     if (size !== 48) {
         el.style.width = size + 'px';
         el.style.height = size + 'px';
-    }
-    // Register for sprite sheet update if using custom sheet
-    if (sheetName === 'custom' && typeof registerSpriteSheetLoadCallback === 'function') {
-        registerSpriteSheetLoadCallback(function() {
-            el.style.backgroundImage = 'url(' + ICON_SHEETS.custom + ')';
-        });
     }
     return el;
 };
