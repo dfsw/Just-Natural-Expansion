@@ -3627,7 +3627,7 @@ window.JNEData = {
                 names: ["Dante's unwaking dream", "The abyss gazes back", "Charon's final toll", "Cerberus's third head", "Minos's eternal judgment", "The river Styx flows backward", "Ixion's wheel spins faster", "Sisyphus's boulder crumbles", "Tantalus's eternal thirst", "The ninth circle's center", "Lucifer's frozen tears", "Beyond the void's edge", "The final descent's end"],
                 thresholds: [1e60, 1e63, 1e66, 1e69, 1e72, 1e75, 1e78, 1e81, 1e84, 1e87, 1e90, 1e93, 1e96],
                 descs: function(t) {
-                    return loc("Forfeit <b>%1</b> total across all ascensions.", loc("%1 cookie", LBeautify(t)));
+                    return "Forfeit <b>" + loc("%1 cookie", LBeautify(t)) + "</b> total across all ascensions.";
                 },
                 customIcons: [[0, 11], [1, 11], [2, 11], [3, 11], [4, 11], [5, 11], [6, 11], [7, 11], [8, 11], [9, 11], [10, 11], [11, 11], [12, 11]],
                 orders: [30050.606, 30050.616, 30050.626, 30050.636, 30050.646, 30050.656, 30050.666, 30050.676, 30050.686, 30050.696, 30050.706, 30050.716, 30050.726]
