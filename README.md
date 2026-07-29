@@ -55,6 +55,13 @@ The mobile version of Cookie Clicker does not support mods at this time.
 
 ## Changelog    
 
+### Version 0.6.4
+* Fixed a bug that could lose minigame save data in certain network failure events. 
+* Fix for the toggle for Cookie Calculations Heavenly Upgrade not showing on Steam. 
+* Reworked the logic for items that affect the mana regen rate in Grimoire to be more centralized and therefore hopefully more stable.
+* Potion discovery time has been reduced from 5 minutes to 3 minutes. 
+* Minor bug fixes, performance improvements, and other fixes. 
+
 ### Version 0.6.3
 * Compatibility adjustments for certain third party mods.  
 

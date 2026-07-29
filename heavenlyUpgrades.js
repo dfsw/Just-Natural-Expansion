@@ -4,7 +4,7 @@
         var _huT0 = Date.now();
         
         const SIMPLE_MOD_NAME = 'Just Natural Expansion';
-        const MOD_HU_VERSION = '1.0.24';
+        const MOD_HU_VERSION = '1.0.25';
         var isInitialized = false;
         const MOD_ICON = [15, 7];
         const GARDEN_SPRITE_SHEET_URL = 'https://orteil.dashnet.org/cookieclicker/img/gardenPlants.png';
@@ -79,7 +79,6 @@
                     { id: 'Cyclius swatch', owned: function() { return Game.Has('Cyclius swatch'); }, ready: function() { var temple = Game.Objects && Game.Objects['Temple']; var M = temple && temple.minigame; return !!(temple && temple.minigameLoaded && Game.registerHook && M && M.gods && M.gods['ages']); }, done: function() { return !!Game._cycliusSwatchHooked; }, setup: setupCycliusSwatch },
                     { id: 'Shiny wrinkler spell', owned: function() { return Game.Has('Skitter skatter skrum ahh') || Game.Has('Abra-Ka-Wiggle') || Game.Has('Alakazoodle evil noodle'); }, ready: function() { var tower = Game.Objects && Game.Objects['Wizard tower']; return !!(tower && tower.minigameLoaded && tower.minigame && tower.minigame.castSpell); }, done: function() { var M = Game.Objects && Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].minigame; return !!(M && M._shinyWrinklerHooked); }, setup: setupShinyWrinklerSpell },
                     { id: 'Gilded allure spell', owned: function() { return Game.Has('Gilded allure'); }, ready: function() { var tower = Game.Objects && Game.Objects['Wizard tower']; return !!(tower && tower.minigameLoaded && tower.minigame && tower.minigame.spells && tower.minigame.spellsById && typeof l === 'function' && l('grimoireSpells')); }, done: function() { var M = Game.Objects && Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].minigame; return !!(M && M._gildedAllureHooked); }, setup: setupGildedAllureSpell },
-                    { id: 'Wizardly accomplishments', owned: function() { return Game.Has('Wizardly accomplishments'); }, ready: function() { var tower = Game.Objects && Game.Objects['Wizard tower']; return !!(tower && tower.minigameLoaded && tower.minigame && tower.minigame.spells && typeof l === 'function'); }, done: function() { var M = Game.Objects && Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].minigame; return !!(M && M._wizardlyAccomplishmentsHooked); }, setup: setupWizardlyAccomplishments },
                     { id: 'Golden stopwatch', owned: function() { return Game.Has('Golden stopwatch'); }, ready: function() { return !!(Game.registerHook && Game.LeftBackground && typeof l === 'function' && l('backgroundLeftCanvas')); }, done: function() { return !!(Game.UpdateSpecial && Game.UpdateSpecial._goldenStopwatchHooked); }, setup: setupGoldenStopwatch }
                 ];
             }
@@ -3326,56 +3325,6 @@
             }
         }
 
-        function setupWizardlyAccomplishments() {
-            if (!Game.Has('Wizardly accomplishments')) return;
-            var tower = Game.Objects['Wizard tower'];
-            if (!tower || !tower.minigameLoaded || !tower.minigame) return;
-            var M = tower.minigame;
-            if (!M || M._wizardlyAccomplishmentsHooked) return;
-            if (typeof l !== 'function') return;
-
-
-            if (M.logic && !M.logic._jneWizardlyLogicHooked) {
-                var _jneOriginalWizardlyLogic = M.logic;
-                M.logic = function() {
-                    _jneOriginalWizardlyLogic.call(this);
-                    var M = Game.Objects['Wizard tower'].minigame;
-                    if (Game.T%5==0) {M.computeMagicM();}
-                    var towerLevel = Math.min(M.parent.level, 20);
-                    var bonus = (towerLevel * 0.001) / Game.fps; // level 4 6&% increase, level 10 16.7%, level 20 33%
-                    M.magicPS = Math.max(0.002, Math.pow(M.magic/Math.max(M.magicM,100),0.5))*0.002 + bonus;
-                    M.magic += M.magicPS;
-                    M.magic = Math.min(M.magic, M.magicM);
-                    if (Game.T%5==0) for (var i in M.spells) {
-                        var me = M.spells[i], cost = M.getSpellCost(me);
-                        var priceEl = l('grimoirePrice' + me.id);
-                        if (priceEl) priceEl.innerHTML = Beautify(cost);
-                        var spellEl = l('grimoireSpell' + me.id);
-                        if (spellEl) spellEl.className = M.magic < cost ? 'grimoireSpell titleFont' : 'grimoireSpell titleFont ready';
-                    }
-                };
-                M.logic._jneWizardlyLogicHooked = true;
-            }
-
-            if (M.draw && !M.draw._jneWizardlyDrawHooked) {
-                var _jneOriginalWizardlyDraw = M.draw;
-                M.draw = function() {
-                    _jneOriginalWizardlyDraw.call(this);
-                    var M = Game.Objects['Wizard tower'].minigame;
-                    if (Game.drawT%5==0) {
-                        if (M.magicBarTextL) M.magicBarTextL.innerHTML=Math.min(Math.floor(M.magicM),Beautify(M.magic))+'/'+Beautify(Math.floor(M.magicM))+(M.magic<M.magicM?(' ('+loc("+%1/s",Beautify((M.magicPS||0)*Game.fps,3))+')'):'');
-                        if (M.magicBarFullL) M.magicBarFullL.style.width=((M.magic/M.magicM)*100)+'%';
-                        if (M.magicBarL) M.magicBarL.style.width=(M.magicM*3)+'px';
-                        if (M.infoL) M.infoL.innerHTML=loc("Spells cast: %1 (total: %2)",[Beautify(M.spellsCast),Beautify(M.spellsCastTotal)]);
-                    }
-                    if (M.magicBarFullL) M.magicBarFullL.style.backgroundPosition=(-Game.T*0.5)+'px';
-                };
-                M.draw._jneWizardlyDrawHooked = true;
-            }
-
-            M._wizardlyAccomplishmentsHooked = true;
-        }
-        
         function setupBlackfridaySpecial() {
             if (Game.computeSeasonPrices && !Game.computeSeasonPrices._blackfridayHooked) {
                 var funcStr = Game.computeSeasonPrices.toString();
@@ -6455,7 +6404,6 @@
             if (M) {
                 M._gildedAllureHooked = false;
                 M._gildedAllureTooltipHooked = false;
-                M._wizardlyAccomplishmentsHooked = false;
                 M._shinyWrinklerHooked = false;
             }
             Game._gildedAllureBuffTypesCreated = false;

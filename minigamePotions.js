@@ -3,7 +3,7 @@
 (function() {
 'use strict';
 
-const POTIONS_VERSION = '1.1.3';
+const POTIONS_VERSION = '1.1.4';
 
 // =====================================================================
 // Potions 
@@ -3106,43 +3106,6 @@ PotionsM._hookGrimoire = function() {
     }
     GM.castSpell._potionsM = PotionsM;
     Game._potionsGrimoireHooked = true;
-
-    // Hook into grimoire logic to modify mana regen for Balm of Merlin
-    if (GM.logic && !GM.logic._potionsLogicHooked) {
-        // An existing wrapper from a previous load does not have _potionsLogicHooked; mark it instead of double-wrapping
-        if (GM.logic._original && typeof GM.logic._original === 'function' && GM.logic._original !== GM.logic) {
-            GM.logic._potionsLogicHooked = true;
-        } else {
-            var wrapper2 = function() {
-                var GM = Game.Objects['Wizard tower'].minigame;
-                var balmBuff = Game.hasBuff('Balm of Merlin');
-                var balmCurse = Game.hasBuff('Balm of Merlin (misbrewed)');
-                var multiplier = balmBuff ? 2 : (balmCurse ? 0.5 : 1);
-
-                // Call original logic first
-                if (wrapper2._original) wrapper2._original.apply(this, arguments);
-
-                // Check if heavenlyUpgrades has added a tower level bonus
-                var hasWizardlyBonus = Game.Has && Game.Has('Wizardly accomplishments');
-                var towerLevel = hasWizardlyBonus ? Math.min(GM.parent.level, 20) : 0;
-                var wizardlyBonus = hasWizardlyBonus ? (towerLevel * 0.001) / Game.fps : 0;
-
-                // Add heavenlyUpgrades bonus first
-                GM.magicPS += wizardlyBonus;
-
-                // Apply Balm of Merlin multiplier to mana regen
-                if (multiplier !== 1) {
-                    GM.magicPS *= multiplier;
-                }
-            };
-            wrapper2._original = GM.logic;
-            wrapper2._potionsLogicHooked = true;
-            GM.logic = wrapper2;
-        }
-        Game._potionsGrimoireLogicHooked = true;
-    }
-
-    Game._potionsGrimoireHooked = true;
     setTimeout(function() { Game._potionsGrimoireReady = true; }, 0);
 };
 
@@ -4145,7 +4108,7 @@ PotionsM._startBrew = function() {
             TriedRecipes.mark(G.triedRecipes, rIds[0], rIds[1], rIds[2]);
         }
         
-        var discoveryTime = 300;
+        var discoveryTime = 180;
         
         // Apply Syrup of Insight misbrew to discovery time 
         if (Game.hasBuff('Syrup of Insight (misbrewed)')) {

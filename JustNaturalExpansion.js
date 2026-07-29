@@ -60,7 +60,7 @@
     
     function initializeMod() {
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.6.3';
+    var modVersion = '0.6.4';
     var debugMode = false; 
     
     function debugLog() {
@@ -673,7 +673,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         currentRunData.maxCombinedTotal = 0;
         modTracking.templeSwapsTotal = 0;
         modTracking.soilChangesTotal = 0;
-        // Reset soil baseline so first soil read after ascension
         modTracking.previousSoilType = null;
         
         // Reset wrinkler tracking data to prevent achievements from triggering based on previous run's data
@@ -716,7 +715,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             if (typeof CM !== 'undefined' && CM.Sim && typeof CM.Sim.CopyData === 'function') {
                 try {
                     CM.Sim.CopyData();
-                    console.log('JNE: CookieMonster data refreshed after ascension');
                 } catch (e) {
                     // Silent fail - CookieMonster may not be loaded
                 }
@@ -759,8 +757,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             modUpgradeNames.forEach(name => {
                 if (Game.Upgrades[name]) {
                     Game.Upgrades[name].bought = 0;
-                    // Note: We don't reset unlocked here because our custom unlock logic handles it
-                    // The upgrade will be visible if its unlock condition is met
                 }
             });
             
@@ -775,7 +771,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 if (typeof CM !== 'undefined' && CM.Sim && typeof CM.Sim.CopyData === 'function') {
                     try {
                         CM.Sim.CopyData();
-                        console.log('JNE: CookieMonster data refreshed after full reset');
                     } catch (e) {
                         // Silent fail - CookieMonster may not be loaded
                     }
@@ -2057,13 +2052,20 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                         </div>
                     `;
                     
-                    let checkModDataButton = menuContainer.querySelector('a[onclick*="CheckModData"]');
-                    if (checkModDataButton) {
-                        let checkModDataListing = checkModDataButton.closest('.listing');
-                        if (checkModDataListing) {
-                            checkModDataListing.parentNode.insertBefore(settingsDiv, checkModDataListing.nextSibling);
+                    // Insert JNE settings section at the end of the Settings subsection
+                    let screenReaderButton = menuContainer.querySelector('#screenreaderButton');
+                    let settingsSubsection = screenReaderButton ? screenReaderButton.closest('.subsection') : null;
+                    if (!settingsSubsection) {
+                        let subsections = menuContainer.querySelectorAll('.subsection');
+                        settingsSubsection = subsections.length > 0 ? subsections[subsections.length - 1] : null;
+                    }
+                    if (settingsSubsection) {
+                        let listings = settingsSubsection.querySelectorAll('.listing');
+                        let targetListing = listings.length > 0 ? listings[listings.length - 1] : null;
+                        if (targetListing) {
+                            settingsSubsection.insertBefore(settingsDiv, targetListing.nextSibling);
                         } else {
-                            menuContainer.appendChild(settingsDiv);
+                            settingsSubsection.appendChild(settingsDiv);
                         }
                     } else {
                         menuContainer.appendChild(settingsDiv);
@@ -2138,11 +2140,15 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                         updateMenuButtons();
                     }, 10);
                     
-                    // Add CpS display unit toggle button after Check Mod Data button if upgrade is owned
+                    // Add CpS display unit toggle button after Screen reader mode button if upgrade is owned
                     if (Game.Has('Cookie calculations')) {
-                        let checkModDataButton = menuContainer.querySelector('a[onclick*="CheckModData"]');
-                        let checkModDataListing = checkModDataButton ? checkModDataButton.closest('.listing') : null;
-                        if (checkModDataListing && !menuContainer.querySelector('#toggle-cps-display-unit')) {
+                        let screenReaderButton = menuContainer.querySelector('#screenreaderButton');
+                        let targetListing = screenReaderButton ? screenReaderButton.closest('.listing') : null;
+                        if (!targetListing) {
+                            let listings = menuContainer.querySelectorAll('.listing');
+                            targetListing = listings.length > 0 ? listings[listings.length - 1] : null;
+                        }
+                        if (targetListing && !menuContainer.querySelector('#toggle-cps-display-unit')) {
                             let cpsDisplayListing = document.createElement('div');
                             cpsDisplayListing.className = 'listing';
                             var units = ['seconds', 'minutes', 'hours', 'days'];
@@ -2151,7 +2157,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                             var currentIndex = units.indexOf(currentUnit);
                             var nextUnit = units[(currentIndex + 1) % units.length];
                             cpsDisplayListing.innerHTML = '<a class="option smallFancyButton" id="toggle-cps-display-unit" ' + Game.clickStr + '="window.JNE.toggleCpsDisplayUnit(); PlaySound(\'snd/tick.mp3\');">CpS display: <b>' + unitLabels[currentUnit] + '</b></a><label>(Toggles between seconds, minutes, and hours)</label>';
-                            checkModDataListing.parentNode.insertBefore(cpsDisplayListing, checkModDataListing.nextSibling);
+                            targetListing.parentNode.insertBefore(cpsDisplayListing, targetListing.nextSibling);
                         }
                     }
                 }
@@ -2986,6 +2992,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     if (!Game.JNE) Game.JNE = {};
                     Game.JNE[cfg.jneDataKey] = s;
                     cfg.setPendingSave(s);
+                    if (s === '') return;
                     var b = Game.Objects && Game.Objects[cfg.buildingName];
                     if (b && b.minigameLoaded && b.minigame && typeof b.minigame.load === 'function') b.minigame.load(s);
                 } catch (e) { errorLog(cfg.windowApiKey + '.applySaveData failed:', e && e.message ? e.message : e); }
@@ -3441,7 +3448,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             return;
         }
         hooksRegistered = true;
-        
+
         registerHook('logic', function() {
             if (!Game || !Game.Objects) return;
             
@@ -3893,8 +3900,68 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 }
             }
         }, 'Apply Grimoire spell cast hook when minigame loads');
+
+        // Centralized grimoire mana regen hook
+        function hookCentralGrimoireRegen() {
+            var tower = Game.Objects['Wizard tower'];
+            var M = tower && tower.minigame;
+            if (!M) return;
+
+            var logicAlready = M.logic && M.logic._jneCentralGrimoireRegen;
+            var drawAlready = M.draw && M.draw._jneCentralGrimoireRegen;
+            if (logicAlready && drawAlready) return;
+
+            var originalLogic = M.logic;
+            M.logic = function() {
+                var M = Game.Objects['Wizard tower'].minigame;
+                if (!M) return;
+                var magicBefore = M.magic;
+                if (typeof originalLogic === 'function') originalLogic.apply(this, arguments);
+                else return;
+                if (!M.magicPS) return;
+
+                var vanillaRate = M.magicPS;
+                var wizardlyBonus = 0;
+                if (Game.Has && Game.Has('Wizardly accomplishments')) {
+                    wizardlyBonus = (Math.min(M.parent.level, 20) * 0.001) / Game.fps;
+                }
+
+                var balmMult = 1;
+                if (Game.hasBuff && Game.hasBuff('Balm of Merlin')) balmMult = 2;
+                else if (Game.hasBuff && Game.hasBuff('Balm of Merlin (misbrewed)')) balmMult = 0.5;
+
+                var finalRate = vanillaRate * balmMult + wizardlyBonus;
+                M.magicPS = finalRate;
+                M.magic = Math.min(magicBefore + finalRate, M.magicM);
+
+                if (Game.T % 5 === 0) {
+                    for (var i in M.spells) {
+                        var me = M.spells[i];
+                        var cost = M.getSpellCost(me);
+                        if (typeof l === 'function' && l('grimoirePrice' + me.id)) l('grimoirePrice' + me.id).innerHTML = Beautify(cost);
+                        if (typeof l === 'function' && l('grimoireSpell' + me.id)) l('grimoireSpell' + me.id).className = (M.magic < cost ? 'grimoireSpell titleFont' : 'grimoireSpell titleFont ready');
+                    }
+                }
+            };
+            M.logic._jneCentralGrimoireRegen = true;
+
+            var originalDraw = M.draw;
+            M.draw = function() {
+                var M = Game.Objects['Wizard tower'].minigame;
+                if (!M) return;
+                if (typeof originalDraw === 'function') originalDraw.apply(this, arguments);
+                else return;
+                if (Game.drawT % 5 === 0 && M.magicBarTextL) {
+                    var hasWizardly = Game.Has('Wizardly accomplishments');
+                    var decimals = hasWizardly ? 3 : 2;
+                    M.magicBarTextL.innerHTML = Math.min(Math.floor(M.magicM), Beautify(M.magic)) + '/' + Beautify(Math.floor(M.magicM)) + (M.magic < M.magicM ? (' (' + loc("+%1/s", Beautify((M.magicPS || 0) * Game.fps, decimals)) + ')') : '');
+                }
+            };
+            M.draw._jneCentralGrimoireRegen = true;
+        }
+        registerHook('logic', hookCentralGrimoireRegen, 'Central grimoire regen hook');
         
-        // Hook into cookie clicking to track Click of the Titans achievement
+
         if (Game.ClickCookie && !Game.ClickCookie._jneClickCookieHooked) {
             if (!Game._jneOriginalClickCookie) Game._jneOriginalClickCookie = Game.ClickCookie;
             Game.ClickCookie = function(e, amount) {
@@ -4551,7 +4618,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                         }, 100);
                     }
                 } catch (e) {
-                    console.error('❌ Error calling Game.Win:', e);
+                    console.error('Error calling Game.Win:', e);
                 }
             } else if (!modInitialized) {
                 // During initialization, just mark as won without notification
@@ -5532,7 +5599,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             var amount = thresholds[i];
             var name = names[i];
             var buildingLabel = building.plural || (building.single + 's');
-            var desc = "Own <b>" + amount + " "+ buildingLabel + "</b>.";
+            var desc = "Have <b>" + amount + " "+ buildingLabel + "</b>.";
             var requirement = (function(buildingType, amount) {
                 return function() { 
                     var buildingObj = Game.ObjectsById[buildingType];
@@ -8918,7 +8985,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
 
                 createAchievement(
                     ach.level15,
-                    "Reach Level <b>15</b> " + Game.Objects[ach.building].plural + ".",
+                    "Reach level <b>15</b> " + Game.Objects[ach.building].plural + ".",
                     JNE.icon(spriteIndex, 19, 'custom'),
                     ach.level15Order,
                     (function(buildingName) {
@@ -8931,7 +8998,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
 
                 createAchievement(
                     ach.level20,
-                    "Reach Level <b>20</b> " + Game.Objects[ach.building].plural + ".",
+                    "Reach level <b>20</b> " + Game.Objects[ach.building].plural + ".",
                     JNE.icon(spriteIndex, 20, 'custom'),
                     ach.level20Order,
                     (function(buildingName) {
