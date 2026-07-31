@@ -60,7 +60,7 @@
     
     function initializeMod() {
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.6.4';
+    var modVersion = '0.6.5';
     var debugMode = false; 
     
     function debugLog() {
@@ -5297,7 +5297,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             var savedSlots = [];
             var backup = window.jneModPermanentSlotBackup;
             var seasonDirty = false;
-            var savedSeason, savedBaseSeason;
+            var savedSeason, savedBaseSeason, savedSeasonT;
 
             // Permanent slot logic: blank mod upgrade IDs before vanilla serializes
             if (Game.permanentUpgrades && Game.UpgradesById) {
@@ -5319,12 +5319,20 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 }
             }
 
-            // Season logic: blank mod season key before vanilla serializes
-            if (modSettings.enableExtraSeasons && Game.season && Game.seasons && !Game.seasons[Game.season]) {
+            // blank mod season key before vanilla serializes
+            if (!Game.JNE) Game.JNE = {};
+            Game.JNE._jneSeasonStateSnapshot = {
+                season: Game.season,
+                seasonT: Game.seasonT,
+                baseSeason: Game.baseSeason
+            };
+            if (Game.season === 'lunarnewyear' || Game.baseSeason === 'lunarnewyear') {
                 savedSeason = Game.season;
                 savedBaseSeason = Game.baseSeason;
+                savedSeasonT = Game.seasonT;
                 Game.season = '';
                 Game.baseSeason = '';
+                Game.seasonT = 0;
                 seasonDirty = true;
             }
 
@@ -5341,7 +5349,9 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 if (seasonDirty) {
                     Game.season = savedSeason;
                     Game.baseSeason = savedBaseSeason;
+                    Game.seasonT = savedSeasonT;
                 }
+                Game.JNE._jneSeasonStateSnapshot = null;
             }
 
             return result;
@@ -6180,12 +6190,13 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         if (!Game.shimmerTypes || Game.shimmerTypes['lantern']) return;
         Game.shimmerTypes['lantern'] = {
             reset: function() {
-                if (Game.season !== 'lunarnewyear') return; // Skip reset outside season
+                // Always compute min/max so the spawn math never divides by 0
+                this.minTime = this.getMinTime(this);
+                this.maxTime = this.getMaxTime(this);
+                if (Game.season !== 'lunarnewyear') return; // Skip time reset outside season
                 this.n = 0;
                 this.time = -1;
                 this.spawned = 0;
-                this.minTime = this.getMinTime(this);
-                this.maxTime = this.getMaxTime(this);
             },
             initFunc: function(me) {
                 // Fail-fast if not in Lunar New Year season
@@ -7870,6 +7881,19 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         }
         initAchievements();
         debugLog('continueModInitialization: achievements created');
+
+        // Restore mod season state now that the season definition is registered
+        try {
+            var _ss = modSaveData && modSaveData.seasonState;
+            if (_ss && _ss.season && Game.seasons && Game.seasons[_ss.season]) {
+                Game.season = _ss.season;
+                Game.seasonT = _ss.seasonT || 0;
+                if (_ss.baseSeason && Game.seasons[_ss.baseSeason]) Game.baseSeason = _ss.baseSeason;
+                if (Game.shimmerTypes && Game.shimmerTypes['lantern']) {
+                    Game.shimmerTypes['lantern'].reset();
+                }
+            }
+        } catch (_) {}
         
         // Mark mod as initialized before applying save data
         modInitialized = true;
@@ -8092,6 +8116,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 dl: saveObj.downlineMinigame,
                 pm: saveObj.potionsMinigame,
                 pmo: Game.JNE && Game.JNE.potionsSavedDataIsOpen,
+                ss: saveObj.seasonState,
                 mt: saveObj.modTracking,
                 ca: saveObj.cookieAge
             };
@@ -8180,7 +8205,8 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 potionsMinigame: potionsData,
                 modTracking: data.mt,
                 cookieAge: data.ca,
-                heavenlyUpgrades: huData
+                heavenlyUpgrades: huData,
+                seasonState: data.ss
             };
         } catch (e) {
             errorLog('decompressSaveData: Error decompressing save data:', e);
@@ -8427,6 +8453,13 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     errorLog('mod.saveSystem.save: Error getting Heavenly Upgrades save string:', e);
                 }
                 
+                // Snapshot season state for the mod save before the vanilla write may blank it
+                var _jneSeasonStateForSave = (Game.JNE && Game.JNE._jneSeasonStateSnapshot) ? Game.JNE._jneSeasonStateSnapshot : {
+                    season: Game.season || '',
+                    seasonT: Game.seasonT || 0,
+                    baseSeason: Game.baseSeason || ''
+                };
+
                 // Merge the data
                 const combinedData = {
                     version: modVersion,
@@ -8458,11 +8491,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     // Persist Heavenly Upgrades data 
                     heavenlyUpgrades: heavenlyUpgradesSaveString,
                     // Persist mod season state so it can be restored after the mod registers, sanitized to ''
-                    seasonState: {
-                        season: Game.season || '',
-                        seasonT: Game.seasonT || 0,
-                        baseSeason: Game.baseSeason || ''
-                    }
+                    seasonState: _jneSeasonStateForSave
                 };
                                 
                 // Use compression to reduce save file size by ~50%
@@ -8645,6 +8674,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     // Store save data for initialization (or empty data if signature mismatch)
                     if (shouldRestoreSaveData) {
                         modSaveData = modData;
+
                         if (typeof modData.terminal !== 'undefined') {
                             setTerminalMinigameSave(modData.terminal);
                         } else {
