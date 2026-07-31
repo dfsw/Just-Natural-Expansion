@@ -55,6 +55,9 @@ The mobile version of Cookie Clicker does not support mods at this time.
 
 ## Changelog    
 
+### Version 0.6.5
+* Fixes a crash that could occur if Lunar New Year expired while the game wasn't running. 
+
 ### Version 0.6.4
 * Fixed a bug that could lose minigame save data in certain network failure events. 
 * Fix for the toggle for Cookie Calculations Heavenly Upgrade not showing on Steam. 
