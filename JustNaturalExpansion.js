@@ -60,7 +60,7 @@
     
     function initializeMod() {
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.6.5';
+    var modVersion = '0.6.6';
     var debugMode = false; 
     
     function debugLog() {
@@ -829,11 +829,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     
     function getLifetimeWrathCookies() {
         return lifetimeData.wrathCookiesClicked || 0;
-    }
-    
-    function getLifetimeGardenSacrifices() {
-        var M = Game.Objects['Farm'].minigame;
-        return (M && M.convertTimes) ? M.convertTimes : 0;
     }
     
     function getLifetimeCookieClicks() {
@@ -2404,7 +2399,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                                 ? `${currentSessionLanterns} (all time: ${totalLanterns})`
                                 : currentSessionLanterns.toString();
                             lifetimeStatsHTML += `<div class="listing"><b>Lanterns collected:</b> ${lanternDisplayValue}</div>`;
-                            if (zodiacCount > 0) {
+                            if (zodiacCount > 0 && !(Game.Achievements['Everything Everywhere All at Once'] && Game.Achievements['Everything Everywhere All at Once'].won)) {
                                 lifetimeStatsHTML += `<div class="listing"><b>Zodiac signs experienced:</b> ${zodiacCount}/12</div>`;
                             }
                         }
@@ -2449,22 +2444,26 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                             : currentSessionJackpots.toString();
                         lifetimeStatsHTML += `<div class="listing"><b>Bingo center slot jackpots:</b> ${jackpotDisplayValue}</div>`;
                     }
-                    lifetimeStatsHTML += formatLifetimeStat(
-                        modTracking.templeSwapsTotal || 0, 
-                        'Gods swapped (this ascension)',
-                        true
-                    );
-                    lifetimeStatsHTML += formatLifetimeStat(
-                        modTracking.soilChangesTotal || 0, 
-                        'Soil changes (this ascension)',
-                        true
-                    );
+                    if (!(Game.Achievements['Faithless Loyalty'] && Game.Achievements['Faithless Loyalty'].won)) {
+                        lifetimeStatsHTML += formatLifetimeStat(
+                            modTracking.templeSwapsTotal || 0, 
+                            'Gods swapped (this ascension)',
+                            true
+                        );
+                    }
+                    if (!(Game.Achievements['Fifty Shades of Clay'] && Game.Achievements['Fifty Shades of Clay'].won)) {
+                        lifetimeStatsHTML += formatLifetimeStat(
+                            modTracking.soilChangesTotal || 0, 
+                            'Soil changes (this ascension)',
+                            true
+                        );
+                    }
                     lifetimeStatsHTML += formatLifetimeStat(
                         getCurrentRunningTotal(lifetimeData.pledges, Game.pledges) + getCurrentRunningTotal(lifetimeData.elderCovenantToggles, 0), 
                         'Grandmatriarchs quashed'
                     );
                     
-                    if (lifetimeData.lastGardenSacrificeTime) {
+                    if (lifetimeData.lastGardenSacrificeTime && !(Game.Achievements['I feel the need for seed'] && Game.Achievements['I feel the need for seed'].won)) {
                         var currentTime = Date.now();
                         var timeElapsed = currentTime - lifetimeData.lastGardenSacrificeTime;
                         var timeLimit = 5 * 24 * 60 * 60 * 1000; // 5 days in milliseconds
@@ -2478,11 +2477,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                             lifetimeStatsHTML += `<div class="listing"><b>Garden sacrifice timer:</b> ${days}d ${hours}h ${minutes}m remaining</div>`;
                         }
                     }
-                    
-                    lifetimeStatsHTML += formatLifetimeStat(
-                        Game.JNE.getLifetimeGardenSacrifices(),
-                        'Garden sacrifices'
-                    );
                     
                     var annualizedReturnsText = getAnnualizedReturnsText();
                     if (annualizedReturnsText) {
@@ -3052,6 +3046,16 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
 
     function getHeavenlyUpgradesSaveString() {
         try {
+            // Race-condition guard
+            if (Game.JNE && Game.JNE._isRestoringData) {
+                return JSON.stringify(Game.JNE.heavenlyUpgradesSavedData || {});
+            }
+            if (Game.JNE && Game.JNE.HeavenlyUpgrades &&
+                typeof Game.JNE.HeavenlyUpgrades.initialized === 'function' &&
+                !Game.JNE.HeavenlyUpgrades.initialized()) {
+                return JSON.stringify(Game.JNE.heavenlyUpgradesSavedData || {});
+            }
+
                 // Use the new getSaveData function if available
                 if (Game.JNE && Game.JNE.HeavenlyUpgrades && typeof Game.JNE.HeavenlyUpgrades.getSaveData === 'function') {
                     // Call the save function to ensure data is properly stored
@@ -3628,39 +3632,27 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     console.error('JNE: Error injecting getTimeMod modifications:', error);
                 }
             }
-            
-            registerHook('logic', function() {
-                if (Game.gainBuff && !Game._gainBuffHooked) {
-                    if (!Game._jneOriginalGainBuff) Game._jneOriginalGainBuff = Game.gainBuff;
-                    Game.gainBuff = function(type, time, arg1, arg2, arg3) {
-                        if (type === 'click frenzy' || type === 'frenzy' || type === 'blood frenzy') {
-                            if (Game.Has('Order of the Enchanted Whisk')) {
-                                arg1 = Math.ceil(arg1 * 1.05);
-                            }
-                        }
-                        return Game._jneOriginalGainBuff.call(this, type, time, arg1, arg2, arg3);
-                    };
-                    Game.gainBuff._jneGainBuffHooked = true;
-                    Game._gainBuffHooked = true;
-                }
-            }, 'Hook into Game.gainBuff for frenzy buff modifications');
-            
-            registerHook('logic', function() {
-                if (Game.buffs && Game.Has('Order of the Enchanted Whisk')) {
-                    for (let buffName in Game.buffs) {
-                        let buff = Game.buffs[buffName];
-                        if (buff && !buff._enchantedWhiskModified) {
-                            if (buffName === 'Click frenzy' || buffName === 'Frenzy' || buffName === 'Elder frenzy') {
-                                buff._enchantedWhiskModified = true;
-                                if (buff.multClick) buff.multClick = Math.ceil(buff.multClick * 1.05);
-                                if (buff.multCpS) buff.multCpS = Math.ceil(buff.multCpS * 1.05);
-                            }
-                        }
-                    }
-                }
-            }, 'Modify existing frenzy buffs for Order of the Enchanted Whisk');
 
         }, 'Hook into golden cookie frequency system');
+
+
+        registerHook('logic', function() {
+            if (Game.gainBuff && !Game._gainBuffHooked) {
+                if (!Game._jneOriginalGainBuff) Game._jneOriginalGainBuff = Game.gainBuff;
+                Game.gainBuff = function(type, time, arg1, arg2, arg3) {
+                    if (type === 'click frenzy' || type === 'frenzy' || type === 'blood frenzy') {
+
+                        if (Game.Has('Order of the Enchanted Whisk') &&
+                            !(Game.JNE && Game.JNE._isRestoringData)) {
+                            arg1 = Math.ceil(arg1 * 1.05);
+                        }
+                    }
+                    return Game._jneOriginalGainBuff.call(this, type, time, arg1, arg2, arg3);
+                };
+                Game.gainBuff._jneGainBuffHooked = true;
+                Game._gainBuffHooked = true;
+            }
+        }, 'Hook into Game.gainBuff for frenzy buff modifications');
 
         // Set up save hook to exclude mod upgrades from permanent slots during save
         setupPermanentSlotSaveHook();
@@ -3675,13 +3667,11 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     
                     // Check if wrinkler was just popped (phase went from > 0 to 0)
                     if (prevState && prevState.phase > 0 && me.phase == 0) {
-                        // Count ALL wrinkler pops (regardless of type)
                         sessionDeltas.wrinklersPopped++;
                         
                         // Track shiny wrinkler pops specifically
                         if (me && me.type == 1) {
                             modTracking.shinyWrinklersPopped++;
-                            // Also immediately save to lifetime data since game doesn't track this
                             lifetimeData.shinyWrinklersPopped++;
                             
                         }
@@ -4306,7 +4296,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     Game.JNE.getLifetimeStockMarketAssets = getLifetimeStockMarketAssets;
     Game.JNE.getLifetimeShinyWrinklers = getLifetimeShinyWrinklers;
     Game.JNE.getLifetimeWrathCookies = getLifetimeWrathCookies;
-    Game.JNE.getLifetimeGardenSacrifices = getLifetimeGardenSacrifices;
     Game.JNE.getLifetimeCookieClicks = getLifetimeCookieClicks;
     Game.JNE.getLifetimeWrinklers = getLifetimeWrinklers;
     Game.JNE.getLifetimePledges = getLifetimePledges;
@@ -5736,7 +5725,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                         }
                         return minAmount >= threshold;
                   case 'seedlog':
-                        var lifetimeGardenSacrifices = Game.JNE.getLifetimeGardenSacrifices();
+                        var lifetimeGardenSacrifices = (Game.Objects['Farm'].minigame && Game.Objects['Farm'].minigame.convertTimes) || 0;
                         return lifetimeGardenSacrifices >= threshold;
                     case 'allKittensOwned':
                         var vanillaKittens = ['Kitten helpers', 'Kitten workers', 'Kitten engineers', 'Kitten overseers', 'Kitten managers', 'Kitten accountants', 'Kitten specialists', 'Kitten experts', 'Kitten consultants', 'Kitten assistants to the regional manager', 'Kitten marketeers', 'Kitten analysts', 'Kitten executives', 'Kitten admins', 'Kitten strategists', 'Kitten angels', 'Fortune #103'];
@@ -7510,6 +7499,13 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             enableBuildingUpgrades: !!modSettings.enableBuildingUpgrades,
             enableKittenUpgrades: !!modSettings.enableKittenUpgrades
         };
+
+        if (!achievementsCreated) {
+            if (modSaveData && modSaveData.achievements) {
+                modData.achievements = modSaveData.achievements;
+            }
+            return JSON.stringify(modData);
+        }
         
         // Save the won state of each of our custom achievements
         var savedCount = 0;
@@ -7530,6 +7526,9 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 if (wonState > 0) {
                     wonCount++;
                 }
+            } else if (modSaveData && modSaveData.achievements && modSaveData.achievements[name]) {
+                // back to the last known state rather than silently dropping it.
+                modData.achievements[name] = { won: modSaveData.achievements[name].won || 0 };
             }
         });
         
@@ -7840,7 +7839,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     lifetimeData.bingoJackpotWins = modSaveData.lifetime.bingoJackpotWins || 0;
                     lifetimeData.lanternsClicked = modSaveData.lifetime.lanternsClicked || 0;
                     lifetimeData.zodiacVisited = modSaveData.lifetime.zodiacVisited || '000000000000';
-                    lifetimeData.lastGardenSacrificeTime = 0; // Reset on load to prevent save scumming
+                    lifetimeData.lastGardenSacrificeTime = modSaveData.lifetime.lastGardenSacrificeTime || 0;
                     
                     // Restore god usage time
                     if (modSaveData.lifetime.godUsageTime) {
@@ -8020,7 +8019,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                         newsItems.push('News : Stock market profits are soaring. Economists confused. Some traders seem inclined to lose all their money for no apparent reason.');
                     }
                     
-                    if (Game.JNE.getLifetimeGardenSacrifices() >= 3) {
+                    if ((Game.Objects['Farm'].minigame && Game.Objects['Farm'].minigame.convertTimes || 0) >= 3) {
                         newsItems.push('News : Garden sacrifices are on the rise. Plants are nervous, sugar hornets seem pleased.');
                     }
                     
@@ -8261,7 +8260,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             Game.JNE.getLifetimeStockMarketAssets = getLifetimeStockMarketAssets;
             Game.JNE.getLifetimeShinyWrinklers = getLifetimeShinyWrinklers;
             Game.JNE.getLifetimeWrathCookies = getLifetimeWrathCookies;
-            Game.JNE.getLifetimeGardenSacrifices = getLifetimeGardenSacrifices;
             Game.JNE.getLifetimeCookieClicks = getLifetimeCookieClicks;
             Game.JNE.getLifetimeWrinklers = getLifetimeWrinklers;
             Game.JNE.getLifetimePledges = getLifetimePledges;
@@ -8367,7 +8365,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     achievementsData = JSON.parse(saveAchievementsData());
                 } catch (e) {
                     errorLog('mod.saveSystem.save: Error saving achievements data:', e);
-                    achievementsData = { achievements: {} };
+                    achievementsData = { achievements: (modSaveData && modSaveData.achievements) || {} };
                 }
                 
                 var wonAchievements = 0;
@@ -8385,27 +8383,31 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     upgradesData = JSON.parse(saveUpgradesData());
                 } catch (e) {
                     errorLog('mod.saveSystem.save: Error saving upgrades data:', e);
-                    upgradesData = { upgrades: {} };
+                    upgradesData = { upgrades: (modSaveData && modSaveData.upgrades) || {} };
                 }
                 
-                // Create a copy of lifetime data without the sacrifice time
-                // Debug log removed for clean console
-                var lifetimeDataToSave = {
-                    reindeerClicked: lifetimeData.reindeerClicked || 0,
-                    stockMarketAssets: lifetimeData.stockMarketAssets || 0,
-                    shinyWrinklersPopped: lifetimeData.shinyWrinklersPopped || 0,
-                    wrathCookiesClicked: lifetimeData.wrathCookiesClicked || 0,
-                    totalCookieClicks: lifetimeData.totalCookieClicks || 0,
-                    wrinklersPopped: lifetimeData.wrinklersPopped || 0,
-                    elderCovenantToggles: lifetimeData.elderCovenantToggles || 0,
-                    pledges: lifetimeData.pledges || 0,
-                    godUsageTime: lifetimeData.godUsageTime || {},
-                    cookieFishCaught: lifetimeData.cookieFishCaught || 0,
-                    bingoJackpotWins: lifetimeData.bingoJackpotWins || 0,
-                    lanternsClicked: lifetimeData.lanternsClicked || 0,
-                    zodiacVisited: lifetimeData.zodiacVisited || '000000000000',
-                    seasonalReindeerData: seasonalReindeerData || '00000'
-                };
+                var lifetimeDataToSave;
+                if (!modInitialized && modSaveData && modSaveData.lifetime) {
+                    lifetimeDataToSave = modSaveData.lifetime;
+                } else {
+                    lifetimeDataToSave = {
+                        reindeerClicked: lifetimeData.reindeerClicked || 0,
+                        stockMarketAssets: lifetimeData.stockMarketAssets || 0,
+                        shinyWrinklersPopped: lifetimeData.shinyWrinklersPopped || 0,
+                        wrathCookiesClicked: lifetimeData.wrathCookiesClicked || 0,
+                        totalCookieClicks: lifetimeData.totalCookieClicks || 0,
+                        wrinklersPopped: lifetimeData.wrinklersPopped || 0,
+                        elderCovenantToggles: lifetimeData.elderCovenantToggles || 0,
+                        pledges: lifetimeData.pledges || 0,
+                        godUsageTime: lifetimeData.godUsageTime || {},
+                        cookieFishCaught: lifetimeData.cookieFishCaught || 0,
+                        bingoJackpotWins: lifetimeData.bingoJackpotWins || 0,
+                        lanternsClicked: lifetimeData.lanternsClicked || 0,
+                        zodiacVisited: lifetimeData.zodiacVisited || '000000000000',
+                        lastGardenSacrificeTime: lifetimeData.lastGardenSacrificeTime || 0,
+                        seasonalReindeerData: seasonalReindeerData || '00000'
+                    };
+                }
                 
                 //get terminal minigame save string
                 var terminalSaveString = '';
@@ -8444,6 +8446,10 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 } catch (e) {
                     errorLog('mod.saveSystem.save: Error getting Cookie Age save data:', e);
                 }
+                // Race-condition guard
+                if (cookieAgeData === null && Game.JNE && Game.JNE.cookieAgeSavedData) {
+                    cookieAgeData = Game.JNE.cookieAgeSavedData;
+                }
                 
                 //get heavenly upgrades save string
                 var heavenlyUpgradesSaveString = '';
@@ -8473,11 +8479,11 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     upgrades: upgradesData.upgrades || {},
                     achievements: achievementsData.achievements || {},
                     lifetime: lifetimeDataToSave,
-                    settings: modSettings,
+                    settings: (!modInitialized && modSaveData && modSaveData.settings) ? modSaveData.settings : modSettings,
                     terminal: terminalSaveString,
                     downlineMinigame: downlineMinigameSaveString,
                     potionsMinigame: potionsMinigameSaveString,
-                    modTracking: {
+                    modTracking: (!modInitialized && modSaveData && modSaveData.modTracking) ? modSaveData.modTracking : {
                         shinyWrinklersPopped: modTracking.shinyWrinklersPopped || 0,
                         templeSwapsTotal: modTracking.templeSwapsTotal || 0,
                         soilChangesTotal: modTracking.soilChangesTotal || 0,
@@ -9180,7 +9186,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             }
         }
         
-     // Check garden seeds time achievement at some point we should change this to count via ticks instead of calendar time
+     // Check garden seeds time achievement 
     if (Game.startDate) {
         var plantCount = countGardenPlants();
         

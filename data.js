@@ -3690,7 +3690,7 @@ window.JNEData = {
             gardenSeedsTime: {
                 names: ["I feel the need for seed"],
                 thresholds: [5 * 24 * 60 * 60 * 1000], // 5 days in milliseconds
-                descs: ["Unlock all garden seeds within <b>5 days</b> of your last garden sacrifice. Look this one is tricky, if you reload or load a save the 5 day timer is invalidated, so you can\'t load in a completed garden."],
+                descs: ["Unlock all vanilla garden seeds within <b>5 days</b> of your last garden sacrifice."],
                 customIcons: [[25, 15]],
                 orders: [61515.430]
             },

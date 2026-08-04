@@ -3,7 +3,7 @@
 (function() {
 'use strict';
 
-const POTIONS_VERSION = '1.1.4';
+const POTIONS_VERSION = '1.1.6';
 
 // =====================================================================
 // Potions 
@@ -26,7 +26,7 @@ var POTIONS = [
         duration: 180,
         misbrew: "Clicking is 50% less powerful for 10 minutes.",
         reagents: { nectar_of_effort: 1, dragon_scales: 1, golden_flour: 1 },
-        unlocked: false
+        unlocked: true
     },
     {
         id: 'arcana_of_the_finger',
@@ -1893,12 +1893,13 @@ var G = {
     potionsBrewed: 0,             // potions brewed this ascension
     totalFailedDiscoveries: 0,    // total failed discoveries
     debugMode: false,             // debug mode flag
-    prestigeCount: 0,             // total prestiges performed (unbounded)
+    prestigeCount: 0,             // total prestiges performed
     unlockedPrestige: [],         // IDs of prestige potions that have been unlocked
     recipeMap: null,              // encoded recipe map string; null = use fixed base recipes
-    feverNightmareStart: 0,       // timestamp when fever nightmare started (for Fever without dawn achievement)
-    craftsmanGrants: {},          // buildingIndex -> count granted by Blood of the Craftsman this ascension (max 50 per building)
-    cadenceExtensions: {}         // buff.name -> seconds extended by Extract of Cadence (max 60 per buff type per ascension)
+    feverNightmareStart: 0,       // timestamp when fever nightmare started
+    craftsmanGrants: {},          // buildingIndex  count granted by Blood of the Craftsman this ascension 
+    cadenceExtensions: {},        // buff.name in seconds extended
+    catalystSurgeEnd: 0           // ms timestamp; > Date.now() means Catalyst Surge active
 };
 
 // =====================================================================
@@ -3178,6 +3179,8 @@ PotionsM.init = function(div) {
     '#potions-bg{background:url(' + resPath + 'img/shadedBorders.png),url(' + resPath + 'img/BGmarket.jpg);background-size:100% 100%,auto;position:absolute;inset:0;bottom:16px;pointer-events:none;}','#potions-wrap{box-sizing:border-box;max-width:1200px;width:100%;margin:0 auto;padding:8px;position:relative;background:transparent;overflow:visible;container-type:inline-size;container-name:potions-wrap;}','#potions-drag{position:absolute;inset:0;z-index:1000000000000;pointer-events:none;} #potions-drag .potions-brew-tile{position:absolute;inset:0;}','#potions-wrap .potions-main{display:flex;flex-direction:column;gap:10px;align-items:stretch;}',
     /* === sections === */
     '.potions-slots-section,.potions-reagents-section{flex:1;display:flex;flex-direction:column;}','.potions-brew-slots{display:flex;flex-wrap:nowrap;gap:6px;align-items:center;justify-content:center;min-width:198px;}','.potions-brew-content{display:flex;gap:0;align-items:stretch;min-height:104px;}','.potions-brew-half{flex:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-start;padding:4px;}','.potions-brew-selection{display:flex;flex-direction:column;align-items:center;justify-content:flex-start;gap:6px;width:100%;}','.potions-selected-reagents{display:flex;gap:6px;align-items:center;justify-content:center;}','.potions-selected-reagent{cursor:pointer;display:inline-block;width:40px;height:40px;position:relative;}','.potions-selected-reagent-icon,.potions-catalog-seed-icon,.potions-reagent-item-icon{pointer-events:none;display:inline-block;position:absolute;left:-4px;top:-4px;width:48px;height:48px;background-repeat:no-repeat;}','.potions-reagent-slot-outline{display:inline-block;width:40px;height:40px;border:2px dashed rgba(255,255,255,0.25);border-radius:4px;box-sizing:border-box;}','@container potions-wrap (max-width:400px){.potions-brew-content{flex-direction:column;}}',
+    /* === Sugar lump button === */
+    '.potions-brew-actions{position:relative;width:100%;text-align:center;}','.potions-lump-btn{position:absolute;left:50%;top:50%;transform:translateY(-50%);margin-left:-125px;width:48px;height:48px;cursor:pointer;}','.potions-lump-btn .potions-lump-icon{position:absolute;left:10px;top:0;width:48px;height:48px;background-repeat:no-repeat;filter:drop-shadow(0 3px 2px #000);transform:scale(0.5);transform-origin:center center;transition:transform 0.05s;}','.potions-lump-btn:hover .potions-lump-icon{transform:scale(1);}','.potions-lump-btn:active .potions-lump-icon{transform:scale(0.4);}',
     /*=== Brew tiles ===*/
     '.potions-brew-tile{box-shadow:4px 4px 4px #000;cursor:pointer;position:relative;color:#f33;opacity:0.8;text-shadow:0 0 4px #000,0 0 6px #000;font-weight:bold;font-size:12px;flex-shrink:0;width:60px;height:74px;background:url(' + spellBG + ');}','.potions-brew-tile.ready{color:rgba(255,255,255,0.8);opacity:1;} .potions-brew-tile.ready:hover{color:#fff;}','.potions-brew-tile:hover{box-shadow:6px 6px 6px 2px #000;z-index:1000000001;top:-1px;} .potions-brew-tile:active{top:1px;}','.potions-brew-tile0{background-position:0 0;} .potions-brew-tile0:hover,.potions-brew-tile0.hovered{background-position:0 -74px;} .potions-brew-tile0:active{background-position:0 74px;}','.potions-brew-tile1{background-position:-60px 0;} .potions-brew-tile1:hover,.potions-brew-tile1.hovered{background-position:-60px -74px;} .potions-brew-tile1:active{background-position:-60px 74px;}','.potions-brew-tile2{background-position:-120px 0;} .potions-brew-tile2:hover,.potions-brew-tile2.hovered{background-position:-120px -74px;} .potions-brew-tile2:active{background-position:-120px 74px;}','.potions-brew-tile.hovered{box-shadow:6px 6px 6px 2px #000;z-index:1000000001;top:-1px;}','.potions-brew-tile-content{width:60px;height:74px;position:relative;display:flex;flex-direction:column;align-items:center;justify-content:center;}','.potions-tile-icon{pointer-events:none;width:48px;height:48px;opacity:0.8;background-repeat:no-repeat;position:relative;z-index:1;}','.potions-brew-tile.ready .potions-tile-icon{opacity:1;} .potions-brew-tile.ready:hover .potions-tile-icon{animation:bounce 0.8s;}','.noFancy .potions-brew-tile.ready:hover .potions-tile-icon{animation:none;}','.potions-brewing-overlay{position:absolute;inset:0;width:60px;height:74px;pointer-events:none;background:url(' + Game.resPath + 'img/pieFill.png) no-repeat;background-size:1080px 592px;opacity:0.6;z-index:2;}','.potions-slots-hint{font-size:10px;color:rgba(255,255,255,0.35);text-align:center;margin-top:4px;font-style:italic;}','#potionsPotionsBrewed{margin:14px auto 0;text-align:center;font-size:11px;color:rgba(255,255,255,0.75);text-shadow:-1px 1px 0px #000;}',
     /* === catalog column === */
@@ -3986,7 +3989,79 @@ PotionsM._renderSelectedReagents = function() {
         brewBtn.style.pointerEvents = 'none';
     }
     
+    actionsContainer.appendChild(PotionsM._renderLumpButton());
     actionsContainer.appendChild(brewBtn);
+};
+
+PotionsM._catalystSurgeActive = function() {
+    return G.catalystSurgeEnd && Date.now() < G.catalystSurgeEnd;
+};
+
+PotionsM._catalystSurgeRemainingMs = function() {
+    return this._catalystSurgeActive() ? Math.max(0, G.catalystSurgeEnd - Date.now()) : 0;
+};
+
+PotionsM._formatMs = function(ms) {
+    var s = Math.ceil(ms / 1000);
+    var m = Math.floor(s / 60);
+    s = s % 60;
+    return m > 0 ? m + 'm ' + s + 's' : s + 's';
+};
+
+PotionsM._lumpTooltip = function() {
+    var lumpAmount = (typeof Beautify === 'function') ? Beautify(1) : '1';
+    var html = '<div style="padding:8px;width:300px;font-size:11px;text-align:center;" id="tooltipPotionsLump">';
+    if (this._catalystSurgeActive()) {
+        html += 'Discovery brewing is reduced to 30 seconds and potions started during this time brew 50% faster.<br><span class="green">' + this._formatMs(this._catalystSurgeRemainingMs()) + ' remaining.</span>';
+    } else {
+        var lumps = Game.lumps || 0;
+        var costClass = lumps >= 1 ? 'price lump green' : 'price lump disabled red';
+        html += 'Click to reduce discovery brewing to 30 seconds for 5 minutes and make potions started during that time brew 50% faster for <span class="' + costClass + '">' + lumpAmount + ' sugar lump</span>.';
+    }
+    var canRefill = (typeof Game.canRefillLump === 'function') ? Game.canRefillLump() : false;
+    if (canRefill && typeof Game.getLumpRefillMax === 'function' && typeof Game.sayTime === 'function') {
+        html += '<br><small>(Can be done once every ' + Game.sayTime(Game.getLumpRefillMax(), -1) + '.)</small>';
+    } else if (!canRefill && typeof Game.getLumpRefillRemaining === 'function' && typeof Game.fps === 'number') {
+        var remaining = Game.getLumpRefillRemaining() + Game.fps;
+        if (typeof Game.sayTime === 'function') {
+            html += '<br><small class="red">(Usable again in ' + Game.sayTime(remaining, -1) + '.)</small>';
+        } else {
+            var seconds = Math.max(1, Math.ceil(remaining / Game.fps));
+            var secondsValue = (typeof Beautify === 'function') ? Beautify(seconds) : '' + seconds;
+            html += '<br><small class="red">(Usable again in ' + secondsValue + ' seconds.)</small>';
+        }
+    }
+    html += '</div>';
+    return html;
+};
+
+PotionsM._renderLumpButton = function() {
+    var btn = document.createElement('div');
+    btn.className = 'potions-lump-btn';
+    btn.id = 'potions-lump-btn';
+
+    var icon = document.createElement('div');
+    icon.className = 'potions-lump-icon usesIcon shadowFilter lumpRefill';
+    icon.style.backgroundPosition = (-29 * 48) + 'px ' + (-14 * 48) + 'px';
+    btn.appendChild(icon);
+
+    if (typeof Game.attachTooltip === 'function') {
+        Game.attachTooltip(btn, function() { return PotionsM._lumpTooltip(); }, 'middle');
+    }
+
+    btn.addEventListener('click', function() {
+        if (PotionsM._catalystSurgeActive()) return;
+        if (typeof Game.canRefillLump === 'function' && !Game.canRefillLump()) return;
+        if ((Game.lumps || 0) < 1) return;
+        if (typeof Game.spendLump !== 'function') return;
+        Game.spendLump(1, 'reduce discovery brewing to 30 seconds and make potions started during that time brew 50% faster', function() {
+            if (!Game.sesame) Game.lumpRefill = Game.getLumpRefillMax();
+            G.catalystSurgeEnd = Date.now() + 5 * 60 * 1000;
+            if (typeof PlaySound === 'function') PlaySound('snd/pop' + Math.floor(Math.random() * 3 + 1) + '.mp3', 0.75);
+        })();
+    });
+
+    return btn;
 };
 
 // =====================================================================
@@ -4045,6 +4120,10 @@ PotionsM._startBrew = function() {
         // Apply Draught of Urgency curse
         if (Game.buffs['Draught of Urgency (misbrewed)']) {
             speedMultiplier *= 1.5;
+        }
+
+        if (G.catalystSurgeEnd && Date.now() < G.catalystSurgeEnd) {
+            speedMultiplier *= 0.5;
         }
         brewTime *= speedMultiplier;
         
@@ -4109,7 +4188,11 @@ PotionsM._startBrew = function() {
         }
         
         var discoveryTime = 180;
-        
+
+        if (G.catalystSurgeEnd && Date.now() < G.catalystSurgeEnd) {
+            discoveryTime = 30;
+        }
+
         // Apply Syrup of Insight misbrew to discovery time 
         if (Game.hasBuff('Syrup of Insight (misbrewed)')) {
             discoveryTime *= 2;
@@ -4588,9 +4671,21 @@ PotionsM._buildSaveDataImpl = function() {
 
     // 6. Achievement won state: array of won indices
     var aw = [];
-    for (var ai = 0; ai < potionsAchievementNames.length; ai++) {
-        var ach = Game.Achievements && Game.Achievements[potionsAchievementNames[ai]];
-        if (ach && ach.won) aw.push(ai);
+    if (!potionsAchievementState.achievementsCreated) {
+        if (Array.isArray(PotionsM._pendingAchWon)) {
+            aw = PotionsM._pendingAchWon;
+        } else {
+            // Achievements were removed (disabled minigame) — preserve won state from [DISABLED] entries
+            for (var ai = 0; ai < potionsAchievementNames.length; ai++) {
+                var hiddenAch = Game.Achievements && Game.Achievements[potionsAchievementNames[ai] + ' [DISABLED]'];
+                if (hiddenAch && hiddenAch._savedWonStatus) aw.push(ai);
+            }
+        }
+    } else {
+        for (var ai = 0; ai < potionsAchievementNames.length; ai++) {
+            var ach = Game.Achievements && Game.Achievements[potionsAchievementNames[ai]];
+            if (ach && ach.won) aw.push(ai);
+        }
     }
 
     // rn/pn: record how many reagents/potions exist at save time.
@@ -4607,7 +4702,8 @@ PotionsM._buildSaveDataImpl = function() {
              fns: G.feverNightmareStart || 0,
              sr: G.selectedReagents || [],
              cg: G.craftsmanGrants || {},
-             ce: G.cadenceExtensions || {} };
+             ce: G.cadenceExtensions || {},
+             cs: G.catalystSurgeEnd || 0 };
 };
 
 PotionsM._saveImpl = function() {
@@ -4671,6 +4767,7 @@ PotionsM._loadImpl = function(str) {
     // Load abuse prevention tracking
     G.craftsmanGrants = data.cg || {};
     G.cadenceExtensions = data.ce || {};
+    G.catalystSurgeEnd = data.cs || 0;
 
     // Reagents
     if (Array.isArray(data.r)) {
@@ -4693,6 +4790,11 @@ PotionsM._loadImpl = function(str) {
                 POTIONS[i].unlocked = true;
             }
         }
+    }
+
+    var _baselinePotion = getPotionById('oil_of_hephaestus');
+    if (_baselinePotion && !_baselinePotion.unlocked && G.prestigeCount === 0) {
+        _baselinePotion.unlocked = true;
     }
 
     // Staged reagents (selected but not yet committed to a brew)
@@ -4887,6 +4989,7 @@ PotionsM._resetImpl = function(hard, _calledFromLoad) {
         G.recipeMap = null;
         G.craftsmanGrants = {};
         G.cadenceExtensions = {};
+        G.catalystSurgeEnd = 0;
 
         // Set baseline unlocked items, fresh game state 
         var baselineReagents = ['nectar_of_effort', 'dragon_scales', 'golden_flour'];
@@ -4911,6 +5014,7 @@ PotionsM._resetImpl = function(hard, _calledFromLoad) {
         G.potionsBrewed = 0;
         G.craftsmanGrants = {};
         G.cadenceExtensions = {};
+        G.catalystSurgeEnd = 0;
         for (var i = 0; i < REAGENTS.length; i++) {
             G.reagents[REAGENTS[i].id] = 0;
         }

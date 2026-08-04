@@ -4,7 +4,7 @@
         var _huT0 = Date.now();
         
         const SIMPLE_MOD_NAME = 'Just Natural Expansion';
-        const MOD_HU_VERSION = '1.0.25';
+        const MOD_HU_VERSION = '1.0.26';
         var isInitialized = false;
         const MOD_ICON = [15, 7];
         const GARDEN_SPRITE_SHEET_URL = 'https://orteil.dashnet.org/cookieclicker/img/gardenPlants.png';
@@ -6728,11 +6728,14 @@
                                     var currentPlantId = tile[0];
                                     var isEmptyTile = currentPlantId === 0;
                                     var hasCustomPlant = false;
+                                    var isMeddleweed = false;
                                     if (currentPlantId > 0 && M.plantsById && M.plantsById[currentPlantId - 1]) {
                                         var currentPlant = M.plantsById[currentPlantId - 1];
                                         hasCustomPlant = customPlantKeys.indexOf(currentPlant.key) !== -1;
+                                
+                                        if (currentPlant.key === 'meddleweed') isMeddleweed = true;
                                     }
-                                    if (isEmptyTile || hasCustomPlant) {
+                                    if (isEmptyTile || hasCustomPlant || isMeddleweed) {
                                         tile[0] = plant.id + 1;
                                         if (p.age !== undefined) tile[1] = p.age;
                                         restoredCustomPlants++;

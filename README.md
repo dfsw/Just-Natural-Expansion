@@ -55,6 +55,18 @@ The mobile version of Cookie Clicker does not support mods at this time.
 
 ## Changelog    
 
+### Version 0.6.6
+* Improvements to the save/load systems to prevent data loses in edges cases where things go terribly wrong. 
+* There was a bug that didn't always unlock the freebie potion in Potions Class on a fresh install, that has been fixed. This only applies to unlocks before Fever Nightmares. 
+* Order of the Enchanted Whisk Upgrade could mistaken reapply its buff multiple times. This has been fixed. 
+* I feel the need for seed achievement is now more forgiving and sadly more cheesable. 
+* Stat menu items that exists for tracking specifically for one off achievements are now hidden when the achievement has been earned. 
+* Added a sugar lump spending action to the Potions Class minigame that lets you speed up brewing and discovery, tied to existing minigame cooldowns. 
+* Just Natural Expansion heavenly upgrade plant restore logic that overwrites empty garden spots with custom plants on load now also considers Meddleweed to be the same as an empty tile. In short you shouldn't lose custom plants to weeds on loads anymore. 
+* Fixes on certain puzzles that broke when user was save scumming. 
+* Minor bug fixes. 
+
+
 ### Version 0.6.5
 * Fixes a crash that could occur if Lunar New Year expired while the game wasn't running. 
 
