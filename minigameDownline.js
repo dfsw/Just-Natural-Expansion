@@ -1749,7 +1749,7 @@ DownlineM.init = function(div) {
         desc: 'Leverage sensitive information to silence critics and sway coverage.',
         flavor: 'Kompromat as far as the eye can see, don\'t worry about how we got it just worry about who we show it to.',
         unlock: { conditions: [{ stat: 'players', min: 300 }, { stat: 'reputation', max: 500 }] },
-        effects: { reputation: -3, hype: 3, commitment: 3 },
+        effects: { reputation: -2, hype: 3, commitment: 3 },
         headline: 'Cookie Clicker parent company accused of high pressure tactics and shady practices' },
 
       { name: 'Age gate verification', icon: [31, 15], durationSec: 2 * 60 * 60, costCps: 180 * 60,
