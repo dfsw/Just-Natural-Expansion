@@ -3,7 +3,7 @@
 (function() {
 'use strict';
 
-const POTIONS_VERSION = '1.1.6';
+const POTIONS_VERSION = '1.1.7';
 
 // =====================================================================
 // Potions 
@@ -2715,37 +2715,31 @@ PotionsM._registerHooks = function() {
     
     // Hook Grimoire castSpell for magical_infusion / magical_blight drops
     PotionsM._hookGrimoire();
-    if (!Game._potionsGrimoireHooked) {
-        Game.registerHook('check', function() {
+    Game.registerHook('check', function() {
+        var GM = Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].minigame;
+        if (GM && GM.castSpell && !GM.castSpell._potionsHooked) PotionsM._hookGrimoire();
+    });
 
-            var GM = Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].minigame;
-            if (GM && GM.castSpell && !GM.castSpell._potionsHooked) PotionsM._hookGrimoire();
-        });
-    }
-    
     // Hook Garden harvest for plant-based reagent drops/soil change tracking
     PotionsM._hookGarden();
-    if (!Game._potionsGardenHooked) {
-        Game.registerHook('check', function() {
-            if (!Game._potionsGardenHooked) PotionsM._hookGarden();
-        });
-    }
-    
+    Game.registerHook('check', function() {
+        var FM = Game.Objects['Farm'] && Game.Objects['Farm'].minigame;
+        if (FM && FM.harvest && !FM.harvest._potionsHooked) PotionsM._hookGarden();
+    });
+
     // Hook Stock Market buy/sell for distilled_greed drops
     PotionsM._hookMarket();
-    if (!Game._potionsMarketHooked) {
-        Game.registerHook('check', function() {
-            if (!Game._potionsMarketHooked) PotionsM._hookMarket();
-        });
-    }
-    
+    Game.registerHook('check', function() {
+        var MM = Game.Objects['Bank'] && Game.Objects['Bank'].minigame;
+        if (MM && MM.buyGood && !MM.buyGood._potionsHooked) PotionsM._hookMarket();
+    });
+
     // Hook Terminal programsRunTotal for technojuice drops
     PotionsM._hookTerminal();
-    if (!Game._potionsTerminalHooked) {
-        Game.registerHook('check', function() {
-            if (!Game._potionsTerminalHooked) PotionsM._hookTerminal();
-        });
-    }
+    Game.registerHook('check', function() {
+        var TM = Game.Objects['Javascript console'] && Game.Objects['Javascript console'].minigame;
+        if (TM && !(TM.onExecuteComplete && TM.onExecuteComplete._potionsHooked)) PotionsM._hookTerminal();
+    });
     
     // Hook Downline for extract_of_entrepreneurship drops
     Game.registerHook('check', function() {
@@ -2778,12 +2772,10 @@ PotionsM._registerHooks = function() {
 
     // Hook SpawnWrinkler for shiny wrinkler buff from Emulsion of Sinful Greed
     PotionsM._hookWrinklerSpawn();
-    if (!Game._potionsWrinklerSpawnHooked) {
-        Game.registerHook('check', function() {
-            var PM = window.PotionsM;
-            if (PM && !Game._potionsWrinklerSpawnHooked) PM._hookWrinklerSpawn();
-        });
-    }
+    Game.registerHook('check', function() {
+        var PM = window.PotionsM;
+        if (PM && Game.SpawnWrinkler && !Game.SpawnWrinkler._potionsHooked) PM._hookWrinklerSpawn();
+    });
 
     // Hook reset to prevent reagent awards during ascensions/resets Use window.PotionsM so this still works correctly after script reloads
     if (!Game._potionsResetHooked) {
@@ -5225,7 +5217,13 @@ var publicAPI = {
         Game.JNE.potionsSavedData = s;
         PotionsM._loadImpl(s);
         PotionsM._restorePendingBuffs();
+        // Proactively re-verify all minigame hooks right away instead of waiting
         PotionsM._hookGrimoire();
+        PotionsM._hookGarden();
+        PotionsM._hookMarket();
+        PotionsM._hookTerminal();
+        PotionsM._hookWrinklerSpawn();
+        PotionsM._hookDownline();
     },
     writeCache: function(s) {
         if (typeof s !== 'string') s = '';
