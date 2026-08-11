@@ -2,7 +2,7 @@
 (function() {
 'use strict';
 
-const TERMINAL_VERSION = '1.0.5';
+const TERMINAL_VERSION = '1.0.6';
 
 var M = {};
 M.parent = Game.Objects && Game.Objects['Javascript console'] ? Game.Objects['Javascript console'] : {
@@ -96,7 +96,7 @@ M.launch = function () {
         var width = icon && icon.length > 3 ? icon[3] : null;
         var height = icon && icon.length > 4 ? icon[4] : null;
         if (sheet) {
-            if (!element.dataset.defaultBgImage && typeof window !== 'undefined' && window.getComputedStyle) {
+            if (!element.dataset.defaultBgImage && window.getComputedStyle) {
                 var computed = window.getComputedStyle(element).backgroundImage;
                 element.dataset.defaultBgImage = computed && computed !== 'none' ? computed : '';
             }
@@ -1789,12 +1789,11 @@ M.launch = function () {
             sacrificeNote = ' Sacrificed one ' + buildingName + '.';
         }
 
-        if (typeof Game.ToggleSpecialMenu === 'function') {
+        if (typeof Game.ToggleSpecialMenu === 'function' && Game.specialTab === 'dragon') {
             Game.ToggleSpecialMenu(1);
         }
 
         Game.recalculateGains = 1;
-        Game.upgradesToRebuild = 1;
         return ok('Set ' + auraData.dname + ' on the ' + slotLabel + '.' + sacrificeNote);
     });
 
@@ -1834,12 +1833,10 @@ M.launch = function () {
         if (isNaN(slotIndex) || slotIndex < 0 || slotIndex > 2) return err('Invalid brew slot selection.');
         if (!potions._usePotionSlot || typeof potions._usePotionSlot !== 'function') return err('Potion consumption function unavailable.');
         
-        // Check if slot has a potion
         if (!potions.G || !potions.G.slots) return err('Alchemy Lab state unavailable.');
         var brew = potions.G.slots[slotIndex];
         if (!brew) return err('No potion available, the slot was empty.');
-        
-        // Check if potion is ready
+
         var remaining = brew.endTime - Date.now() / 1000;
         if (remaining > 0) return err('Potion not ready yet, potion was still brewing.');
         
@@ -1855,12 +1852,10 @@ M.launch = function () {
         if (isNaN(slotIndex) || slotIndex < 0 || slotIndex > 2) return { success: false, message: 'Invalid brew slot selection.' };
         if (!potions._usePotionSlot || typeof potions._usePotionSlot !== 'function') return { success: false, message: 'Potion consumption function unavailable.' };
         
-        // Check if slot has a potion
         if (!potions.G || !potions.G.slots) return { success: false, message: 'Alchemy Lab state unavailable.' };
         var brew = potions.G.slots[slotIndex];
         if (!brew) return { success: false, message: 'No potion available, the slot was empty.' };
-        
-        // Check if potion is ready
+
         var remaining = brew.endTime - Date.now() / 1000;
         if (remaining > 0) return { success: false, message: 'Potion not ready yet, potion was still brewing.' };
         
@@ -1978,7 +1973,7 @@ M.launch = function () {
                 var secondsValue = (typeof Beautify === 'function') ? Beautify(seconds) : '' + seconds;
                 readyText = secondsValue + ' second' + (seconds === 1 ? '' : 's');
             }
-            M.cooldownL.innerHTML = 'Program execution cooldown: Cooling down — <span style="color:#f66;">ready in ' + readyText + '</span>.';
+            M.cooldownL.innerHTML = 'Program execution cooldown: Cooling down - <span style="color:#f66;">ready in ' + readyText + '</span>.';
         } else {
             M.cooldownL.innerHTML = 'Program execution cooldown: <span style="color:#6f6;">Ready</span>.';
         }
@@ -3435,49 +3430,47 @@ M.removeAchievements = function() {
     removeTerminalAchievements();
 };
 
-if (typeof window !== 'undefined') {
-    window.removeTerminalAchievements = removeTerminalAchievements;
-    window.createTerminalAchievements = createTerminalAchievements;
-    
-    var existingAPI = window.TerminalMinigame || {};
-    window.TerminalMinigame = M;
-    window.TerminalMinigame.VERSION = TERMINAL_VERSION;
-    
-    if (typeof existingAPI.getSaveData === 'function') {
-        window.TerminalMinigame.getSaveData = existingAPI.getSaveData;
-    }
-    if (typeof existingAPI.applySaveData === 'function') {
-        window.TerminalMinigame.applySaveData = existingAPI.applySaveData;
-    }
-    if (typeof existingAPI.writeCache === 'function') {
-        window.TerminalMinigame.writeCache = existingAPI.writeCache;
-    }
-    if (typeof existingAPI.requestSave === 'function') {
-        window.TerminalMinigame.requestSave = existingAPI.requestSave;
-    }
-    
-    window.TerminalMinigame.testVisibilityRestore = function() {
-        var testSaveString = '10 -1/-1/-1/-1/-1/-1/-1/-1/-1/-1 ~~~~~~~~~ 10 10 0 1';
-        M.load(testSaveString);
-        return 'Test complete - minigame should open in 50ms';
-    };
-    
-    // DEBUG: Force open the minigame right now
-    window.TerminalMinigame.forceOpen = function() {
-        if (M.parent && typeof M.parent.switchMinigame === 'function') {
-            M.parent.switchMinigame(true);
-        } else if (M.parent) {
-            M.parent.onMinigame = 1;
-            if (M.parent.minigameDiv && M.parent.minigameDiv.parentNode) {
-                M.parent.minigameDiv.parentNode.classList.add('onMinigame');
-            }
-            if (typeof M.parent.refresh === 'function') {
-                M.parent.refresh();
-            }
-        }
-        return 'Force open complete';
-    };
+window.removeTerminalAchievements = removeTerminalAchievements;
+window.createTerminalAchievements = createTerminalAchievements;
+
+var existingAPI = window.TerminalMinigame || {};
+window.TerminalMinigame = M;
+window.TerminalMinigame.VERSION = TERMINAL_VERSION;
+
+if (typeof existingAPI.getSaveData === 'function') {
+    window.TerminalMinigame.getSaveData = existingAPI.getSaveData;
 }
+if (typeof existingAPI.applySaveData === 'function') {
+    window.TerminalMinigame.applySaveData = existingAPI.applySaveData;
+}
+if (typeof existingAPI.writeCache === 'function') {
+    window.TerminalMinigame.writeCache = existingAPI.writeCache;
+}
+if (typeof existingAPI.requestSave === 'function') {
+    window.TerminalMinigame.requestSave = existingAPI.requestSave;
+}
+
+window.TerminalMinigame.testVisibilityRestore = function() {
+    var testSaveString = '10 -1/-1/-1/-1/-1/-1/-1/-1/-1/-1 ~~~~~~~~~ 10 10 0 1';
+    M.load(testSaveString);
+    return 'Test complete - minigame should open in 50ms';
+};
+
+// DEBUG: Force open the minigame right now
+window.TerminalMinigame.forceOpen = function() {
+    if (M.parent && typeof M.parent.switchMinigame === 'function') {
+        M.parent.switchMinigame(true);
+    } else if (M.parent) {
+        M.parent.onMinigame = 1;
+        if (M.parent.minigameDiv && M.parent.minigameDiv.parentNode) {
+            M.parent.minigameDiv.parentNode.classList.add('onMinigame');
+        }
+        if (typeof M.parent.refresh === 'function') {
+            M.parent.refresh();
+        }
+    }
+    return 'Force open complete';
+};
 
 if (Game.Objects && Game.Objects['Javascript console']) {
     var jsConsole = Game.Objects['Javascript console'];

@@ -661,9 +661,6 @@ var POTIONS = [
         prestige: true,
         prestigeLocked: true
     },
-
-
-
     {
         id: 'dew_of_secrets',
         name: "Dew of Secrets",
@@ -676,9 +673,6 @@ var POTIONS = [
         prestigeLocked: true
     }
 ];
-// =====================================================================
-// Reagents
-// =====================================================================
 var REAGENTS = [
     {
         id: 'nectar_of_effort',
@@ -870,7 +864,7 @@ for (var i = 0; i < REAGENTS.length; i++) {
     if (REAGENTS[i].unlocked === undefined) REAGENTS[i].unlocked = false;
 }
 
-// Snapshot of original fixed recipes — used to restore on hard reset (new game)
+// Snapshot of original fixed recipes, used to restore on hard reset (new game)
 var ORIGINAL_RECIPES = (function() {
     var snap = {};
     for (var i = 0; i < POTIONS.length; i++) {
@@ -882,9 +876,6 @@ var ORIGINAL_RECIPES = (function() {
     return snap;
 }());
 
-// =====================================================================
-// Tried-Recipes Bitset
-// =====================================================================
 var TriedRecipes = (function() {
     var NUM_INGREDIENTS = 22;
     var NUM_COMBOS = 1540;        
@@ -975,9 +966,6 @@ var TriedRecipes = (function() {
     };
 }());
 
-// =====================================================================
-// Potion Effects
-// =====================================================================
 function getIconArray(p) {
     return [p.icon[0], p.icon[1], ICON_SHEETS[p.icon[2]] || ICON_SHEETS.main];
 }
@@ -1141,7 +1129,19 @@ function updatePotionEffects() {
     );
     def('decoction_of_winter',
         function(p) { Game.killBuff('Decoction of Winter (misbrewed)'); Game.gainBuff('Decoction of Winter', 3600, 1.25); Game.Notify(p.name + ' consumed', 'Reindeer and lanterns are 25% more common for the next hour.', getIconArray(p), 6); },
-        function(p) { Game.killBuff('Decoction of Winter'); Game.gainBuff('Decoction of Winter (misbrewed)', 3600, 0); Game.Notify(p.name + ' misbrewed', 'Reindeer and lanterns do not spawn for the next hour.', getIconArray(p), 6); }
+        function(p) {
+            Game.killBuff('Decoction of Winter');
+            Game.gainBuff('Decoction of Winter (misbrewed)', 3600, 0);
+            Game.Notify(p.name + ' misbrewed', 'Reindeer and lanterns do not spawn for the next hour.', getIconArray(p), 6);
+            if (PotionsM._updateEffs) PotionsM._updateEffs();
+            if (Game.CalculateGains) Game.CalculateGains();
+            if (Game.shimmerTypes) {
+                var rd = Game.shimmerTypes['reindeer'];
+                if (rd && rd.spawnsOnTimer && rd.getMinTime) { rd.minTime = rd.getMinTime(rd); rd.maxTime = rd.getMaxTime(rd); }
+                var ln = Game.shimmerTypes['lantern'];
+                if (ln && ln.spawnsOnTimer && ln.getMinTime) { ln.minTime = ln.getMinTime(ln); ln.maxTime = ln.getMaxTime(ln); }
+            }
+        }
     );
     def('blood_of_the_craftsman',
         function(p) {
@@ -1876,9 +1876,6 @@ function updatePotionEffects() {
     );
 })();
 
-// =====================================================================
-// State
-// =====================================================================
 var G = {
     slots: [null, null, null],   // brew slot contents: null or { potionId, startTime, endTime }
     reagents: {},                  // reagentId -> count
@@ -1902,9 +1899,6 @@ var G = {
     catalystSurgeEnd: 0           // ms timestamp; > Date.now() means Catalyst Surge active
 };
 
-// =====================================================================
-// Failed Mixture Types
-// =====================================================================
 var MIXTURE_TYPES = {
     useless: {
         id: 'useless',
@@ -1936,9 +1930,6 @@ var MIXTURE_TYPES = {
     }
 };
 
-// =====================================================================
-// Helper Functions and other misc stuff
-// =====================================================================
 var PotionsM = {};
 window.PotionsM = PotionsM; // expose so persistent check hook can find current instance after reloads
 PotionsM._loading = false;
@@ -1996,7 +1987,6 @@ if (Game.Objects && Game.Objects['Alchemy lab']) {
 // Temporary building name passed to customDesc during Suspension of Hallucinogenic gainBuff
 var _suspBuildingKey = null;
 
-// Get all seasonal drops from vanilla game arrays
 PotionsM._getAllSeasonalDrops = function() {
     var seasonalDrops = [];
     if (Game.halloweenDrops) seasonalDrops = seasonalDrops.concat(Game.halloweenDrops);
@@ -2013,7 +2003,6 @@ PotionsM._getFortunes = function() {
     return [];
 };
 
-// Build the  styled fortune ticker HTML 
 PotionsM._getFortuneTickerText = function(fortune) {
     var text = '';
     if (fortune === 'fortuneGC') {
@@ -2076,15 +2065,10 @@ function getPotionById(id) {
     return null;
 }
 
-// Returns true if the potion is active (not a locked prestige potion).
-// Locked prestige potions don't exist for any game mechanic purpose.
 function isActivePotion(p) {
     return !p.prestigeLocked;
 }
 
-// =====================================================================
-// Recipe map encode / decode (15 bits per recipe packed into 2 bytes)
-// =====================================================================
 function encodeRecipeMap(recipeMap, activePotions) {
     var bits = [];
     var count = 0;
@@ -2131,8 +2115,6 @@ function decodeRecipeMap(hexStr, activePotions) {
     return map;
 }
 
-// Generates a unique random recipe for every active potion.
-// Uses a distribution-based approach for balanced reagent usage.
 function generateRandomRecipes(activePotions) {
     var n = REAGENTS.length;
     var numPotions = activePotions.length;
@@ -2255,7 +2237,7 @@ function getUnlockedCount() {
     return n;
 }
 
-// Returns count of active (non-locked-prestige) potions in the pool
+// active (non-locked-prestige) potions in the pool
 function getActivePotionCount() {
     var n = 0;
     for (var i = 0; i < POTIONS.length; i++) { if (isActivePotion(POTIONS[i])) n++; }
@@ -2286,7 +2268,7 @@ function getPotionsUsingReagentHtml(reagentId) {
 }
 
 function getDiscoverablePotionsCount() {
-    // selectedReagents are already deducted from G.reagents but not yet committed to a brew, so add them back to get the true available supply
+    // selectedReagents are deducted but not committed to a brew yet, add them back for true available supply
     var inStaging = {};
     for (var i = 0; i < G.selectedReagents.length; i++) {
         var rid = G.selectedReagents[i];
@@ -2312,9 +2294,6 @@ function getDiscoverablePotionsCount() {
     }
     return count;
 }
-// =====================================================================
-// Custom buff types for potion effects
-// =====================================================================
 function createPotionBuffType(buffName, potionId, isMisbrewed, options) {
     options = options || {};
     var powerProp = options.powerProp || 'power';
@@ -2408,6 +2387,14 @@ createPotionBuffType('Decoction of Winter', 'decoction_of_winter', false);
 createPotionBuffType('Decoction of Winter (misbrewed)', 'decoction_of_winter', true, {
     onDie: function() {
         if (PotionsM._updateEffs) PotionsM._updateEffs();
+
+        if (Game.CalculateGains) Game.CalculateGains();
+        if (Game.shimmerTypes) {
+            var rd = Game.shimmerTypes['reindeer'];
+            if (rd && rd.spawnsOnTimer && rd.getMinTime) { rd.minTime = rd.getMinTime(rd); rd.maxTime = rd.getMaxTime(rd); }
+            var ln = Game.shimmerTypes['lantern'];
+            if (ln && ln.spawnsOnTimer && ln.getMinTime) { ln.minTime = ln.getMinTime(ln); ln.maxTime = ln.getMaxTime(ln); }
+        }
         // vanilla really doesnt like shimmer timers to be set to infinite so in order to break it we just force spawn a reindeer onDie.
         if (Game.shimmerTypes && Game.shimmerTypes['reindeer'] && Game.season === 'christmas') {
             var newShimmer = new Game.shimmer('reindeer');
@@ -2464,9 +2451,6 @@ createPotionBuffType('Cordial of Tyche (misbrewed)', 'cordial_of_tyche', true, {
 createPotionBuffType('Ointment of Plenty', 'ointment_of_plenty', false, { powerProp: 'mult' });
 createPotionBuffType('Ointment of Plenty (misbrewed)', 'ointment_of_plenty', true, { powerProp: 'mult' });
 createPotionBuffType('Syrup of Insight (misbrewed)', 'syrup_of_insight', true, { powerProp: 'mult' });
-// =====================================================================
-// Prestige potion buff types
-// =====================================================================
 createPotionBuffType('Oxymel of Insanity', 'oxymel_of_insanity', false, {
     powerProp: 'multCpS',
     customDesc: function(potion, mult, time) {
@@ -2504,9 +2488,6 @@ createPotionBuffType('Poultice of Overgrowth (misbrewed)', 'poultice_of_overgrow
     },
     onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); }
 });
-// =====================================================================
-// PotionsM.launch
-// =====================================================================
 PotionsM.launch = function() {
     var alchemyLab = Game.Objects['Alchemy lab'];
     PotionsM.name = (alchemyLab && alchemyLab.minigameName) || 'Potions Class';
@@ -2529,7 +2510,6 @@ PotionsM.launch = function() {
     if (Game.computeSeasonPrices && !Game.computeSeasonPrices._essenceOfCheerInjected) {
         var funcStr = Game.computeSeasonPrices.toString();
         
-        // Check if our code is already present to prevent double injection
         if (funcStr.indexOf("Game.hasBuff('Essence of Cheer')") !== -1) {
             Game.computeSeasonPrices._essenceOfCheerInjected = true;
         }
@@ -2571,9 +2551,6 @@ PotionsM.launch = function() {
     PotionsM._syncBaselines();
 };
 
-// =====================================================================
-// Assorted hooks
-// =====================================================================
 PotionsM._cleanupCadenceExtensions = function() {
     if (PotionsM._loading) return;
     for (var buffName in G.cadenceExtensions) {
@@ -2777,7 +2754,7 @@ PotionsM._registerHooks = function() {
         if (PM && Game.SpawnWrinkler && !Game.SpawnWrinkler._potionsHooked) PM._hookWrinklerSpawn();
     });
 
-    // Hook reset to prevent reagent awards during ascensions/resets Use window.PotionsM so this still works correctly after script reloads
+    // hook reset to prevent reagent awards during ascensions/resets, use window.PotionsM so it survives script reloads
     if (!Game._potionsResetHooked) {
         Game.registerHook('reset', function(hard) {
             var PM = window.PotionsM; if (!PM) return;
@@ -2791,6 +2768,16 @@ PotionsM._registerHooks = function() {
             }, 1500); //make sure we don't award reagents from loading for state shifts probably a better way but I hate CC loading and im tired of finding ways to get it to work right
         });
         Game._potionsResetHooked = true;
+    }
+
+    // Decoction of Winter reset on ascension 
+      if (!Game._potionsReincarnateHooked) {
+        Game.registerHook('reincarnate', function() {
+            setTimeout(function() {
+                if (Game.killShimmers) Game.killShimmers();
+            }, 100);
+        });
+        Game._potionsReincarnateHooked = true;
     }
 
     if (!Game._potionsTickerHooked) {
@@ -3037,7 +3024,7 @@ PotionsM._hookMarket = function() {
     wrapperSell._potionsM = PotionsM;
     MM.sellGood = wrapperSell;
 
-    // Track broker hires via logic hook delta — 1000 rolls per broker hired
+    // Track broker hires via logic hook delta, 1000 rolls per broker hired
     PotionsM._lastBrokers = MM.brokers || 0;
     Game.registerHook('logic', function() {
         if (PotionsM._loading) return;
@@ -3151,9 +3138,6 @@ PotionsM.dragonBoostTooltip = function() {
     return '<div style="width:280px;padding:8px;text-align:center;" id="tooltipDragonBoost"><b>Supreme Intellect</b><div class="line"></div>Reagent drop rates increased by ' + percent + '.</div>';
 };
 
-// =====================================================================
-// PotionsM.init — builds DOM
-// =====================================================================
 PotionsM.init = function(div) {
     if (!div) return;
     PotionsM.div = div;
@@ -3214,7 +3198,7 @@ PotionsM.init = function(div) {
     PotionsM._potionsBrewedL = l('potionsPotionsBrewed');
     PotionsM.updatePotionsBrewedDisplay();
 
-    // Wire prestige button — bare icon click → Game.Prompt (vanilla Ascend layout)
+    // Wire prestige button: bare icon click -> Game.Prompt (vanilla Ascend layout)
     var prestigeBtn = $('potions-prestige-btn');
     if (prestigeBtn) {
         prestigeBtn.addEventListener('click', function() {
@@ -3264,9 +3248,6 @@ PotionsM.init = function(div) {
     }, 0);
 };
 
-// =====================================================================
-// Icon builder 
-// =====================================================================
 var ICON_SHEETS = {};
 Object.defineProperty(ICON_SHEETS, 'main', {
     get: function() { return getSpriteSheet('main'); }
@@ -3293,9 +3274,6 @@ PotionsM._makeIcon = function(col, row, sheet, size) {
     return el;
 };
 
-// =====================================================================
-// Tooltip helpers
-// =====================================================================
 PotionsM._addTooltip = function(el, htmlFn, side) {
     side = side || 'bottom';
     if (Game.tooltip && Game.tooltip.draw) {
@@ -3315,7 +3293,6 @@ PotionsM.slotTooltip = function(slot) {
         var brew = G.slots[slot];
         var str = '<div style="padding:8px 4px;min-width:350px;" id="tooltipPotionsSlot">';
         
-        // Helper to generate ingredients HTML
         var getIngredientsHtml = function(reagents) {
             if (!reagents || reagents.length === 0) return '';
             var ingredientsHtml = [];
@@ -3419,9 +3396,6 @@ PotionsM.slotTooltip = function(slot) {
     };
 };
 
-// =====================================================================
-// Build potion catalog 
-// =====================================================================
 PotionsM._buildCatalog = function() {
     var grid = $('potions-catalog-grid');
     if (!grid) return;
@@ -3493,7 +3467,7 @@ PotionsM._buildCatalog = function() {
         }
     }
 
-    // Set min-height if no potions are unlocked (same height as 1 potion item)
+    // same height as 1 potion item when none unlocked
     if (grid.children.length === 0) {
         grid.style.minHeight = '48px';
     }
@@ -3504,9 +3478,6 @@ PotionsM._buildCatalog = function() {
     
 };
 
-// =====================================================================
-// Build reagents list 
-// =====================================================================
 PotionsM._buildReagents = function() {
     var list = $('potions-reagents-list');
     if (!list) return;
@@ -3583,9 +3554,6 @@ PotionsM._buildReagents = function() {
     PotionsM._buildCatalog();
 };
 
-// =====================================================================
-// Auto-populate reagents from potion catalog
-// =====================================================================
 PotionsM._autoPopulateReagents = function(potion) {
     for (var i = 0; i < G.selectedReagents.length; i++) {
         var rid = G.selectedReagents[i];
@@ -3618,9 +3586,6 @@ PotionsM._autoPopulateReagents = function(potion) {
     PotionsM._buildReagents();
 };
 
-// =====================================================================
-// Use potion from slot
-// =====================================================================
 PotionsM._usePotionSlot = function(slotIndex) {
     var brew = G.slots[slotIndex];
     if (!brew) return;
@@ -3675,9 +3640,6 @@ PotionsM._usePotionSlot = function(slotIndex) {
     }
 };
 
-// =====================================================================
-// Helper functions
-// =====================================================================
 // dont consume random slots from main game
 PotionsM._random = function() {
     return crypto.getRandomValues(new Uint32Array(1))[0] / 4294967295;
@@ -3824,18 +3786,12 @@ PotionsM._getRandomPotion = function() {
     return null;
 };
 
-// =====================================================================
-// Reagents
-// =====================================================================
-
 PotionsM._selectReagentForBrew = function(reagentId) {
-    // Check if reagent has stock
     var count = G.reagents[reagentId] || 0;
     if (count <= 0) return;
-    
+
     if (G.selectedReagents.length >= 3) return;
-    
-    // Check if reagent is already selected 
+
     if (G.selectedReagents.indexOf(reagentId) !== -1) return;
     
     // Add to selection and deduct from store
@@ -3848,7 +3804,6 @@ PotionsM._selectReagentForBrew = function(reagentId) {
 PotionsM._removeReagentFromBrew = function(index) {
     var reagentId = G.selectedReagents[index];
     G.selectedReagents.splice(index, 1);
-    // Return reagent to store
     G.reagents[reagentId] = (G.reagents[reagentId] || 0) + 1;
     PotionsM._renderSelectedReagents();
     PotionsM._buildReagents(); // Update reagents display to show returned reagent
@@ -3878,7 +3833,7 @@ PotionsM._findMatchingPotion = function(reagentArray) {
             }
         }
 
-        // Ensure we have exactly the right reagents 
+        // exactly the right reagents, no extras
         if (match) {
             for (var rk in selectedCounts) {
                 if (!p.reagents[rk]) {
@@ -3896,14 +3851,12 @@ PotionsM._findMatchingPotion = function(reagentArray) {
     return null;
 };
 
-// Helper to calculate misbrew chance for a potion
 PotionsM._getMisbrewChance = function(p) {
     var misbrewChance = p.misbrewChance !== undefined ? p.misbrewChance : 0.2;
     if (Game.hasBuff('Salve of Fortune')) misbrewChance *= 0.2;
     return misbrewChance;
 };
 
-// Helper to retry a function until a condition is met
 PotionsM._retryUntilReady = function(checkFn, callbackFn, delay) {
     if (!checkFn()) {
         setTimeout(function() { PotionsM._retryUntilReady(checkFn, callbackFn, delay); }, delay);
@@ -3912,16 +3865,10 @@ PotionsM._retryUntilReady = function(checkFn, callbackFn, delay) {
     callbackFn();
 };
 
-// =====================================================================
-// Render selected reagents in brew section
-// =====================================================================
 PotionsM._renderSelectedReagents = function() {
     var container = $('potions-selected-reagents');
     var actionsContainer = $('potions-brew-actions');
-    if (!container || !actionsContainer) {
-        console.log('[Potions Debug] _renderSelectedReagents: missing containers', !!container, !!actionsContainer);
-        return;
-    }
+    if (!container || !actionsContainer) return;
     container.innerHTML = '';
     actionsContainer.innerHTML = '';
     
@@ -4056,9 +4003,6 @@ PotionsM._renderLumpButton = function() {
     return btn;
 };
 
-// =====================================================================
-// Brew button handler
-// =====================================================================
 PotionsM._startBrew = function() {
     var matchingPotion = PotionsM._findMatchingPotion();
     
@@ -4301,9 +4245,6 @@ PotionsM._refreshSlots = function() {
     }
 };
 
-// =====================================================================
-// Calculate mixture tier for a set of reagents
-// =====================================================================
 PotionsM._calculateMixtureTier = function(reagents) {
     var matchingPairsCount = 0;
     
@@ -4358,9 +4299,6 @@ PotionsM._calculateMixtureTier = function(reagents) {
     return 'useless';
 };
 
-// =====================================================================
-// Complete discovery
-// =====================================================================
 PotionsM._completeDiscovery = function(slotIndex) {
     var brew = G.slots[slotIndex];
     if (!brew || brew.potionId !== 'discovering') return;
@@ -4428,9 +4366,6 @@ PotionsM._completeDiscovery = function(slotIndex) {
     PotionsM._refreshSlots();
 };
 
-// =====================================================================
-// PotionsM.logic — tick
-// =====================================================================
 PotionsM.logic = function() {
     PotionsM._refreshSlotTimers();
     PotionsM._checkDiscoveryTimers();
@@ -4479,11 +4414,10 @@ PotionsM._updateEffs = function() {
         if ((b = Game.hasBuff('Whisper of Boreas'))) { effs.reindeerGain = (effs.reindeerGain || 1) * b.power; changed = true; }
         if ((b = Game.hasBuff('Whisper of Boreas (misbrewed)'))) { effs.reindeerGain = (effs.reindeerGain || 1) * b.power; changed = true; }
         // Prestige potion effs
-        // Note: multCpS buffs (Oxymel of Insanity, Nepenthe of Undoing, Tincture of Purpose, Ether of Serendipity)
-        // are handled directly by vanilla's CpS calculation - no need to aggregate into PotionsM.effs
+        // multCpS buffs are handled by vanilla's CpS calculation, no need to aggregate into PotionsM.effs
         if ((b = Game.hasBuff('Hydrosol of Refraction (misbrewed)'))) { effs.goldenCookieFreq = (effs.goldenCookieFreq || 1) * b.power; changed = true; }
 
-        // Only update effs and trigger recalculation if values actually changed
+        // Only update effs and trigger recalculation if values actually changed otherwise cookie monster loses its shit 
         var actuallyChanged = false;
         var oldEffs = PotionsM.effs || {};
         for (var key in effs) {
@@ -4492,7 +4426,6 @@ PotionsM._updateEffs = function() {
                 break;
             }
         }
-        // Check if any keys were removed
         if (!actuallyChanged) {
             for (var key in oldEffs) {
                 if (!(key in effs)) {
@@ -4595,27 +4528,24 @@ PotionsM._refreshSlotTimers = function() {
         }
     }
 };
-// =====================================================================
-// Save / Load / Reset
-// =====================================================================
 PotionsM._buildSaveDataImpl = function() {
     var now = Date.now() / 1000;
 
-    // 1. Reagents: array of 22 integers. -1 = locked, 0-N = store count (unlocked).
+    // reagents: -1 = locked, 0-N = store count (unlocked)
     var r = [];
     for (var i = 0; i < REAGENTS.length; i++) {
         var rDef = REAGENTS[i];
         r.push(rDef.unlocked ? (G.reagents[rDef.id] || 0) : -1);
     }
 
-    // 2. Potions: array of 2-bit values per potion. 0=locked, 1=discovered-not-unlocked, 2=unlocked.
+    // potions: 0=locked, 1=discovered, 2=unlocked
     var p = [];
     for (var i = 0; i < POTIONS.length; i++) {
         var pt = POTIONS[i];
         p.push(pt.unlocked ? 2 : (pt.discovered ? 1 : 0));
     }
 
-    // 3. Brew slots: 3 entries, null or compact object.
+    // brew slots: null or compact object
     var reagentIdToIndex = {};
     for (var i = 0; i < REAGENTS.length; i++) reagentIdToIndex[REAGENTS[i].id] = i;
     var s = [];
@@ -4637,17 +4567,16 @@ PotionsM._buildSaveDataImpl = function() {
         s.push(slotEntry);
     }
 
-    // 4. Active potion buffs.
-    // bn = building name (key in Game.Objects), only set by Suspension of Hallucinogenic.
-    // m = max time (original duration) for piefill progress calculation.
+    // active buffs
+    // bn = building name (Suspension of Hallucinogenic only)
+    // m = max time for piefill progress
     var b = [];
     if (Game.buffs) {
         for (var bname in Game.buffs) {
             var buff = Game.buffs[bname];
             if (!buff) continue;
             var entry = { n: bname, t: Math.round(buff.time / (Game.fps || 30)), m: Math.round(buff.maxTime / (Game.fps || 30)) };
-            // Save whichever multiplier property this buff type uses (power/mult/multCpS),
-            // so its effect strength is preserved across saves for ALL potion buffs, not just special-cased ones.
+            // preserve buff effect strength across saves
             var savedPower = (buff.power !== undefined) ? buff.power : (buff.mult !== undefined ? buff.mult : (buff.multCpS !== undefined ? buff.multCpS : undefined));
             if (savedPower !== undefined) entry.pw = savedPower;
             // Save building name for Suspension of Hallucinogenic
@@ -4658,16 +4587,16 @@ PotionsM._buildSaveDataImpl = function() {
         }
     }
 
-    // 5. Tried-recipes bitset hex.
+    // tried-recipes bitset
     var x = G.triedRecipes ? TriedRecipes.encode(G.triedRecipes) : TriedRecipes.encode(TriedRecipes.create());
 
-    // 6. Achievement won state: array of won indices
+    // achievement won state
     var aw = [];
     if (!potionsAchievementState.achievementsCreated) {
         if (Array.isArray(PotionsM._pendingAchWon)) {
             aw = PotionsM._pendingAchWon;
         } else {
-            // Achievements were removed (disabled minigame) — preserve won state from [DISABLED] entries
+            // Achievements were removed (disabled minigame), preserve won state from [DISABLED] entries
             for (var ai = 0; ai < potionsAchievementNames.length; ai++) {
                 var hiddenAch = Game.Achievements && Game.Achievements[potionsAchievementNames[ai] + ' [DISABLED]'];
                 if (hiddenAch && hiddenAch._savedWonStatus) aw.push(ai);
@@ -4681,7 +4610,7 @@ PotionsM._buildSaveDataImpl = function() {
     }
 
     // rn/pn: record how many reagents/potions exist at save time.
-    // On load, if counts differ a new ingredient/potion was added — safe to ignore extras.
+    // On load, if counts differ a new ingredient/potion was added, safe to ignore extras.
     // Save onMinigame state (0 = closed, 1 = open)
     var alchemyLab = Game.Objects && Game.Objects['Alchemy lab'];
     var isOpen = alchemyLab && alchemyLab.onMinigame ? 1 : 0;
@@ -4713,7 +4642,7 @@ PotionsM._saveImpl = function() {
 PotionsM._loadImpl = function(str) {
     PotionsM._loading = true;
     PotionsM._syncBaselines();
-    // Always schedule the unlock timer (bail or success) — replaces any prior pending timer
+    // Always schedule the unlock timer (bail or success), replaces any prior pending timer
     function scheduleUnlock() {
         if (PotionsM._loadTimer) clearTimeout(PotionsM._loadTimer);
         PotionsM._loadTimer = setTimeout(function() {
@@ -4735,7 +4664,7 @@ PotionsM._loadImpl = function(str) {
 
     PotionsM._resetImpl(true, true);
 
-    // Prestige state — must be restored BEFORE potions so discovered/unlocked flags make sense
+    // Prestige state, must be restored BEFORE potions so discovered/unlocked flags make sense
     G.prestigeCount = data.pc || 0;
     G.unlockedPrestige = Array.isArray(data.up) ? data.up.slice() : [];
     for (var pi = 0; pi < G.unlockedPrestige.length; pi++) {
@@ -4802,7 +4731,7 @@ PotionsM._loadImpl = function(str) {
         }
     }
 
-    // Brew slots — reagents stored as numeric indices, convert back to string IDs
+    // Brew slots: reagents stored as numeric indices, convert back to string IDs
     if (Array.isArray(data.s)) {
         var loadTime = Date.now() / 1000;
         for (var i = 0; i < 3 && i < data.s.length; i++) {
@@ -4983,7 +4912,7 @@ PotionsM._resetImpl = function(hard, _calledFromLoad) {
         G.cadenceExtensions = {};
         G.catalystSurgeEnd = 0;
 
-        // Set baseline unlocked items, fresh game state 
+        // fresh game state
         var baselineReagents = ['nectar_of_effort', 'dragon_scales', 'golden_flour'];
         for (var i = 0; i < baselineReagents.length; i++) {
             var rId = baselineReagents[i];
@@ -5021,9 +4950,6 @@ PotionsM._resetImpl = function(hard, _calledFromLoad) {
     
 };
 
-// =====================================================================
-// Prestige
-// =====================================================================
 PotionsM._oxymeltMult = 1.0; // Oxymel of Insanity random CpS multiplier, updated each second
 
 PotionsM._performPrestige = function() {
@@ -5105,9 +5031,6 @@ PotionsM.reset = function(hard) { PotionsM._resetImpl(hard); };
 PotionsM.createAchievements = createPotionsAchievements;
 PotionsM.removeAchievements = removePotionsAchievements;
 
-// =====================================================================
-// Bootstrap
-// =====================================================================
 function initializePotionsMinigame() {
     var alchemyLab = Game.Objects['Alchemy lab'];
     if (!alchemyLab) return;
@@ -5198,9 +5121,6 @@ PotionsM._retryUntilReady(function() {
     initializePotionsMinigame();
 }, 1000);
 
-// =====================================================================
-// Public window API
-// =====================================================================
 var existingAPI = window.PotionsMinigame || {};
 var publicAPI = {
     save: function() { return PotionsM._saveImpl(); },
@@ -5250,9 +5170,6 @@ Object.defineProperty(window, 'createPotionsAchievements', {
     writable: false, enumerable: false, configurable: true
 });
 
-// =====================================================================
-// Garden buff types
-// =====================================================================
 createPotionBuffType('Precipitate of Chronos', 'precipitate_of_chronos', false, {
     customDesc: function(potion, mult, time, isMisbrewed) {
         return 'Garden ticks accelerated for ' + Game.sayTime(time * Game.fps, -1) + '!';
@@ -5278,9 +5195,6 @@ createPotionBuffType('Potion of Gaia (misbrewed)', 'potion_of_gaia', true, {
     onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); }
 });
 
-// =====================================================================
-// Garden function wrapping
-// =====================================================================
 PotionsM._setupGardenHooks = function() {
     PotionsM._retryUntilReady(function() {
         return Game.Objects['Farm'] && Game.Objects['Farm'].minigame;
@@ -5333,9 +5247,6 @@ if (Game.ready) {
     });
 }
 
-// =====================================================================
-// Achievements
-// =====================================================================
 var potionsAchievementNames = [
     'The whole pantry',
     'The complete works of questionable medicine',
@@ -5395,7 +5306,7 @@ function createPotionsAchievements() {
         return;
     }
 
-    var baseOrder = 61638;
+  var baseOrder = 61638;
   var potionsAchievements = [
     {
         name: 'The whole pantry',
@@ -5568,9 +5479,6 @@ function checkAndAwardPotionsAchievements() {
     }
 }
 
-// =====================================================================
-// Debug commands
-// =====================================================================
 window.potionsDebug = {
     unlockAll: function() {
         G.debugMode = true;
@@ -5592,7 +5500,7 @@ window.potionsDebug = {
         PotionsM._refreshSlots();
         PotionsM._renderSelectedReagents();
         
-        console.log('[Potions Debug] All reagents and potions unlocked, brew times sped up.');
+        console.log('All reagents and potions unlocked, brew times sped up.');
     },
   
     unlockReagentsOnly: function() {
@@ -5608,7 +5516,7 @@ window.potionsDebug = {
         PotionsM._refreshSlots();
         PotionsM._renderSelectedReagents();
 
-        console.log('[Potions Debug] All reagents unlocked and filled to ' + G.maxReagents + '! Potions remain locked.');
+        console.log('All reagents unlocked and filled to ' + G.maxReagents + '! Potions remain locked.');
     },
 
     unlockPotion: function(potionIdOrName) {
@@ -5616,9 +5524,9 @@ window.potionsDebug = {
         if (potion) {
             potion.unlocked = true;
             PotionsM._buildCatalog();
-            console.log('[Potions Debug] Unlocked potion: ' + potion.name);
+            console.log('Unlocked potion: ' + potion.name);
         } else {
-            console.log('[Potions Debug] Potion not found: ' + potionIdOrName);
+            console.log('Potion not found: ' + potionIdOrName);
         }
     },
     
@@ -5650,7 +5558,5 @@ window.potionsDebug = {
     getAchievementState: getAchievementState
 };
 
-
 PotionsM._restorePendingBuffs();
-
 })();

@@ -4,7 +4,7 @@
         var _huT0 = Date.now();
         
         const SIMPLE_MOD_NAME = 'Just Natural Expansion';
-        const MOD_HU_VERSION = '1.0.26';
+        const MOD_HU_VERSION = '1.0.27';
         var isInitialized = false;
         const MOD_ICON = [15, 7];
         const GARDEN_SPRITE_SHEET_URL = 'https://orteil.dashnet.org/cookieclicker/img/gardenPlants.png';
@@ -88,7 +88,7 @@
                 // Toggles only recreate when forceAll=true (during save loads)
                 var isToggle = (e.id === 'Toy box' || e.id === 'Pink stuff');
                 if (!e) continue;
-                // If ran but done() is now false, the setup was externally undone (e.g. donuts deleted by toggle) — allow re-run
+                // If ran but done() is now false, the setup was externally undone (e.g. donuts deleted by toggle), allow re-run
                 if (e.ran && (!e.done || e.done())) continue;
                 if (e.ran) e.ran = false;
                 try {
@@ -400,10 +400,9 @@
                 Game._jneUpgradeSetupsCheckHooked = true;
             }
             // Create ALL conditional upgrades NOW before any load can happen
-            // This ensures donuts, toggle upgrades, etc. exist when save data is loaded
+            // so donuts, toggle upgrades, etc. exist when save data is loaded
             runUpgradeSetups(true);  // forceAll=true to skip ownership checks
             
-            // Set up game hooks
             setupGameEffModifiers();
             setupCpsModifiers();
             setupBuildingPriceModifications();
@@ -432,7 +431,6 @@
                     
                     var needsRebuild = false;
         
-                    // Ensure aerated soil is set up if upgrade is bought
                     if (Game.Has('Aerated soil') && !M._aeratedSoilHooked && M.soils && typeof l === 'function') {
                         setupAeratedSoil();
                         needsRebuild = true;
@@ -449,7 +447,7 @@
                         M.init = function(div) {
                             var M = Game.Objects['Farm'].minigame;
                             var result = M._jneOriginalInitForRebuild.call(this, div);
-                            // Ensure aerated soil exists (AFTER origInit so l('gardenSoils') is defined)
+                            // after origInit so l('gardenSoils') is defined
                             if (Game.Has('Aerated soil') && M.soils) {
                                 setupAeratedSoil();
                             }
@@ -458,7 +456,6 @@
                     }
                     
                     checkCount++;
-                    // Run for first 10 checks (about 1 second) then stop
                     if (checkCount < 10) {
                         setTimeout(checkUnlocks, 100);
                     }
@@ -519,7 +516,7 @@
 
             Game.registerHook('reincarnate', function() {
                 setTimeout(function() {
-                    // do not call runUpgradeSetups() here - it recreates all conditional upgrades with bought=0
+                    // do not call runUpgradeSetups() here - it recreates conditional upgrades with bought=0,
                     // wiping save data before our load function can restore it. The check hook handles this.
                     invalidateSugarLumpPredictorCache();
                     resetSugarFrenzyIIState();
@@ -768,7 +765,7 @@
                 if (!Game.ready) return;
                 
                 try {
-                    // Call vanilla draw - this may throw if minigame not loaded yet
+                    // may throw if minigame not loaded yet
                     var result = Game._jneOriginalDrawCookieDisplay.apply(this, arguments);
                     
                     // Only apply our modifications if vanilla draw succeeded
@@ -900,7 +897,7 @@
                 if (!alreadyApplying) Game._jneApplyingBuffModifiers = true;
                 try {
                     var isLoanInterest = (type === 'loan 1 interest' || type === 'loan 2 interest' || type === 'loan 3 interest');
-                    // Only apply duration modifiers when buff is freshly created, not during save load Also skip if buff already exists (prevents re-applying when onDie recreates)
+                    // only on freshly created buffs, not during save load or when onDie recreates an existing buff
                     var buffExists = Game.buffs && Game.buffs[type];
                     if (!alreadyApplying && !Game.JNE._isRestoringData && !buffExists) {
                         // Frenziered elders - elder frenzy (blood frenzy) buffs last 25% longer
@@ -1121,7 +1118,6 @@
                 M._pantheonSpiritsCheckInterval = 0;
             }
             
-            // Set up save/load hooks early
             setupPantheonSaveLoadHooks();
 
             var spirits = {
@@ -2389,7 +2385,7 @@
                 if (!M._jneOriginalLoad) M._jneOriginalLoad = M.load;
                 M.load = function(str) {
                     var M = Game.Objects['Farm'].minigame;
-                    // Ensure custom plant definitions exist before decoding saved garden data.
+                    // plants must exist before decoding saved garden data
                     if (!M.plants || !M.plantsById || !M.plants['sparklingSugarCane']) {
                         M._gardenPlantsInjected = false;
                         setupNewPlants();
@@ -2415,20 +2411,20 @@
                     M._plantAllHooked = false;
                     setupPlantAll();
 
-                    // Ensure custom effects are active immediately after loading a save.
+                    // apply effects right after loading a save
                     if (M.computeEffs) M.computeEffs();
                     if (M.buildPlot) M.buildPlot();
                     if (M.buildPanel) M.buildPanel();
                 };
                 M.load._jneLoadWrapper = true;
             } else if (M.load && M._loadHooked) {
-                // Check if M.load was replaced by vanilla (our wrapper would have _jneLoadWrapper property)
+                // our wrapper would have _jneLoadWrapper
                 if (!M.load._jneLoadWrapper) {
                     M._loadHooked = false;
                     if (!M._jneOriginalLoad) M._jneOriginalLoad = M.load;
                     M.load = function(str) {
                         var M = Game.Objects['Farm'].minigame;
-                        // Ensure custom plant definitions exist before decoding saved garden data.
+                        // plants must exist before decoding saved garden data
                         if (!M.plants || !M.plantsById || !M.plants['sparklingSugarCane']) {
                             M._gardenPlantsInjected = false;
                             setupNewPlants();
@@ -2454,7 +2450,7 @@
                         M._plantAllHooked = false;
                         setupPlantAll();
 
-                        // Ensure custom effects are active immediately after loading a save.
+                        // apply effects right after loading a save
                         if (M.computeEffs) M.computeEffs();
                         if (M.buildPlot) M.buildPlot();
                         if (M.buildPanel) M.buildPanel();
@@ -3169,8 +3165,7 @@
             var M = tower.minigame;
             if (!M || !M.spells || !M.spellsById) return;
             
-            // Set up GFD/FortuneCookie patches even if player doesn't have the upgrade yet
-            // This ensures preditions work correctly once they buy it
+            // GFD/FortuneCookie patches, even if player doesn't have the upgrade yet so predictions work once they buy it
             var hasUpgrade = Game.Has('Gilded allure');
             
             if (!hasUpgrade && M._gildedAllureHooked) return; // Don't need spell if no upgrade
@@ -3235,7 +3230,7 @@
                 };
             }
             
-            // Various patches for other mods dealing with spell predictions, fortune cookie and Clairvoyance, planner is a stand alone so no issues there. 
+            // patches for other mods: spell predictions, fortune cookie, Clairvoyance (planner is standalone, no issues) 
             var vanillaSpellCount = 8; 
             
             var patchFortuneCookie = function() {
@@ -3329,7 +3324,6 @@
             if (Game.computeSeasonPrices && !Game.computeSeasonPrices._blackfridayHooked) {
                 var funcStr = Game.computeSeasonPrices.toString();
                 
-                // Check if our code is already present to prevent double injection
                 if (funcStr.indexOf("Game.Has('Blackfriday special')") !== -1) {
                     Game.computeSeasonPrices._blackfridayHooked = true;
                     return;
@@ -4053,7 +4047,7 @@
                         ? '<div style="position:absolute;bottom:-4px;right:-6px;width:15px;height:15px;border-radius:50%;background:#ffff00;display:flex;align-items:center;justify-content:center;z-index:10;"><span style="color:#000;font-size:11px;font-weight:bold;line-height:12px;">!</span></div>'
                         : '');
                 // Icon opacity: faded when solution wants Rigidel slotted but INACTIVE
-                var solRigidelActiveFlag = sol.rigidelSlot > 0 ? (sol.rigidelActive ? true : false) : undefined;
+                var solRigidelActiveFlag = sol.rigidelSlot > 0 ? !!sol.rigidelActive : undefined;
                 parts.push('<div style="position:relative;display:inline-block;vertical-align:middle;width:48px;height:48px;">' +
                     Game.makeRigidelIcon(sol.rigidelSlot > 0 ? sol.rigidelSlot : 0, solRigidelActiveFlag) +
                     rigidelBadge + '</div>');
@@ -4249,7 +4243,7 @@
                 return str;
             };
             
-            // Override choicesPick to handle both rows
+            // override choicesPick for both rows
             selector.choicesPick = function(id) {
                 if (id >= 100) {
                     var actualId = id - 100;
@@ -4369,7 +4363,7 @@
                     else if (tab === 'dragon') { pic = Pic('dragon.png?v=' + Game.version); sx = 96 * Game.dragonLevels[Game.dragonLevel].pic; sy = 0; }
                     else if (tab === 'stopwatch') {
                         var up = Game.Upgrades['Golden stopwatch'];
-                        if (up && up.icon) { pic = Pic(up.icon[2] || (typeof getSpriteSheet === 'function' ? getSpriteSheet('custom') : CUSTOM_SPRITE_SHEET_URL)); sx = up.icon[0] * 48; sy = up.icon[1] * 48; srcW = srcH = 48; }
+                        if (up && up.icon) { pic = Pic(up.icon[2] || getSpriteSheet('custom')); sx = up.icon[0] * 48; sy = up.icon[1] * 48; srcW = srcH = 48; }
                     }
                     if (pic) {
                         if (Game.prefs.fancy) {
@@ -4399,7 +4393,7 @@
                             ctx.drawImage(img, up.icon[0] * 48, up.icon[1] * 48, 48, 48, 0, 0, 96, 96);
                             if (l('specialPic')) l('specialPic').style.backgroundImage = 'url(' + c.toDataURL() + ')';
                         };
-                        img.src = up.icon[2] || (typeof getSpriteSheet === 'function' ? getSpriteSheet('custom') : CUSTOM_SPRITE_SHEET_URL);
+                        img.src = up.icon[2] || getSpriteSheet('custom');
                     }
                     l('specialPopup').innerHTML = '<div id="specialPic" style="position:absolute;left:-16px;top:-64px;width:96px;height:96px;background-repeat:no-repeat;filter:drop-shadow(0px 3px 2px #000);-webkit-filter:drop-shadow(0px 3px 2px #000);background-size:96px 96px;"></div><div class="close" onclick="PlaySound(\'snd/press.mp3\');Game.ToggleSpecialMenu(0);">x</div><h3>Golden Stopwatch</h3><div class="line"></div><div id="TimerBar" style="text-align:left;margin-bottom:4px;"></div>';
                     l('specialPopup').className = 'framed prompt onScreen';
@@ -4584,7 +4578,7 @@
         function setupBigCookieImageSelector() {
             if (Game.Upgrades['Cookie image selector']) return;
             
-            // Set default state - load() will restore from save data
+            // load() will restore from save data
             if (Game.cookieImageType === undefined) Game.cookieImageType = 0;
             if (!Game.CookiesByChoice) Game.CookiesByChoice = {0: {name: 'Perfect cookie', icon: [0, 3], pic: 'perfectCookie.png'}, 1: {name: 'Imperfect cookie', icon: [9, 3], pic: 'imperfectCookie.png'}, 2: {name: 'Snickerdoodle', icon: [29, 10], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/snickerdoodle.png'}, 3: {name: 'Chocolate Cookie', icon: [10, 3], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/chocolate.png'}, 4: {name: 'Oatmeal Raisin Cookie', icon: [6, 3], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/oatmeal.png'}, 5: {name: 'Thumbprint Cookie', icon: [25, 32], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/sugarjam.png'}, 6: {name: 'Oreo Cookie', icon: [16, 3], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/oreo.png'}, 7: {name: 'Heart Cookie', icon: [20, 3], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/heartcookie.png'}, 8: {name: 'Pixel Cookie', icon: [20, 33], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/pixel.png'}, 9: {name: 'Eaten Cookie', icon: [22, 16], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/eaten.png'}, 10: {name: 'Gingerbread Cookie', icon: [18, 4], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/gingerbread.png'}, 11: {name: 'Smiley Cookie', icon: [24, 18], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/smiley.png'}, 12: {name: 'Jam Cookie', icon: [26, 33], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/jamcookie.png'}, 13: {name: 'Red Velvet Cookie', icon: [15, 5], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/velvet.png'}, 14: {name: 'Sugar Cookie', icon: [2, 4], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/sugar.png'}, 15: {name: 'Macaron', icon: [22, 3], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/macaron.png'}, 16: {name: 'Sprinkle Cookie', icon: [21, 14], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/sprinkle.png'}, 17: {name: 'Winter Biscuit', icon: [13, 10], pic: 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/CookieImg/snow.png'}};
             new Game.Upgrade('Cookie image selector', 'Lets you pick which cookie image to display.', 0, [5, 3]);
@@ -4626,37 +4620,38 @@
                             '<div class="line"></div>';
             
             for (var i = 0; i < donuts.length; i++) {
-                if (Game.Upgrades[donuts[i].name]) continue;
-                
                 var price = basePrice * Math.pow(2.5, i);
-                var prodDesc = 'Cookie production multiplier <b>+3%</b>.<q>' + donuts[i].desc + '</q>';
-                var upgrade = new Game.Upgrade(donuts[i].name, prodDesc, price, donuts[i].icon);
-                
-                upgrade.power = 3;
-                upgrade.pool = 'cookie';
-                upgrade._heavenlyUpgrade = true; // Mark as our upgrade for save/load
-                upgrade.ddesc = prodDesc;
-                upgrade.bought = 0; // Default state - load() will set from save data
 
-                // Unlock immediately if box is in save data, otherwise use UnlockAt
-                var _huBoxOwned = (Game.JNE && Game.JNE.heavenlyUpgradesSavedData && Game.JNE.heavenlyUpgradesSavedData.boughtUpgrades && Game.JNE.heavenlyUpgradesSavedData.boughtUpgrades.indexOf('Box of overpriced donuts') !== -1) || Game.Has('Box of overpriced donuts');
-                if (_huBoxOwned) {
-                    Game.Unlock(donuts[i].name);
-                } else if (Game.UnlockAt) {
-                    var toPush = {cookies: price / 20, name: donuts[i].name, require: 'Box of overpriced donuts'};
-                    Game.UnlockAt.push(toPush);
+                if (!Game.Upgrades[donuts[i].name]) {
+                    var prodDesc = 'Cookie production multiplier <b>+3%</b>.<q>' + donuts[i].desc + '</q>';
+                    var upgrade = new Game.Upgrade(donuts[i].name, prodDesc, price, donuts[i].icon);
+
+                    upgrade.power = 3;
+                    upgrade.pool = 'cookie';
+                    upgrade._heavenlyUpgrade = true; // Mark as our upgrade for save/load
+                    upgrade.ddesc = prodDesc;
+                    upgrade.bought = 0; // Default state - load() will set from save data
+
+                    upgrade.ddesc = sourceText + upgrade.ddesc;
+                    upgrade.desc = sourceText + upgrade.desc;
+
+                    if (Game.cookieUpgrades && Game.cookieUpgrades.indexOf(upgrade) === -1) {
+                        Game.cookieUpgrades.push(upgrade);
+                    }
+                    if (Game.UpgradesByPool) {
+                        if (!Game.UpgradesByPool['cookie']) Game.UpgradesByPool['cookie'] = [];
+                        if (Game.UpgradesByPool['cookie'].indexOf(upgrade) === -1) {
+                            Game.UpgradesByPool['cookie'].push(upgrade);
+                        }
+                    }
                 }
-                
-                upgrade.ddesc = sourceText + upgrade.ddesc;
-                upgrade.desc = sourceText + upgrade.desc;
-                
-                if (Game.cookieUpgrades && Game.cookieUpgrades.indexOf(upgrade) === -1) {
-                    Game.cookieUpgrades.push(upgrade);
-                }
-                if (Game.UpgradesByPool) {
-                    if (!Game.UpgradesByPool['cookie']) Game.UpgradesByPool['cookie'] = [];
-                    if (Game.UpgradesByPool['cookie'].indexOf(upgrade) === -1) {
-                        Game.UpgradesByPool['cookie'].push(upgrade);
+                if (Game.UnlockAt) {
+                    var _exists = false;
+                    for (var _j = 0; _j < Game.UnlockAt.length; _j++) {
+                        if (Game.UnlockAt[_j] && Game.UnlockAt[_j].name === donuts[i].name) { _exists = true; break; }
+                    }
+                    if (!_exists) {
+                        Game.UnlockAt.push({cookies: price / 20, name: donuts[i].name, require: 'Box of overpriced donuts'});
                     }
                 }
             }
@@ -5420,7 +5415,6 @@
                 name: 'Hatchery effect',
                 desc: 'Fish have a <b>10%</b> chance to appear in pairs.',
                 ddesc: 'Fish have a <b>10%</b> chance to appear in pairs.<q>Double the fish, double the fun!</q>',
-                price: 30000e15,
                 icon: JNE.icon(2, 25, 'custom'),
                 posX: -2076,
                 posY: -1766,
@@ -5431,6 +5425,7 @@
                 name: 'Big cookie image selector',
                 desc: 'Change the image of the <b>Big Cookie</b>.',
                 icon: [5, 3],
+                price: 750e15,
                 posX: -1832,
                 posY: -1505,
                 require: ['Annualized returns', 'Seasonal retirement', 'Regifting']
@@ -6043,7 +6038,6 @@
             return upgradeNames;
         }
 
-        // Helper to restore upgrades
         function restoreUpgrades(upgrades) {
             if (!upgrades) return 0;
             var restoredCount = 0;
@@ -6092,7 +6086,6 @@
                 
                 var upgradeNames = getHeavenlyUpgradeNames();
                 
-                // Check if toggles are in the list
                 var togglesInList = upgradeNames.filter(function(n) { 
                     return n.indexOf('[on]') !== -1 || n.indexOf('[off]') !== -1; 
                 });
@@ -6316,20 +6309,18 @@
             if (!saveData || typeof saveData !== 'object') {
                 return;
             }
-            // Every save written includes at least a `version` field, so the absence of version + boughtUpgrades + upgrades reliably identifies an empty placeholder that should be ignored.
+            // no version + boughtUpgrades + upgrades = empty placeholder, ignore it
             if (!saveData.version && !saveData.boughtUpgrades && !saveData.upgrades) {
                 return;
             }
 
-            // Ensure all heavenly upgrades exist before restoring them
-            if (typeof createUpgrades === 'function') {
-                createUpgrades();
-            }
+            // upgrades must exist before we restore them
+            createUpgrades();
             
             //Check for duplicate loads before any state modifications
             if (!Game.JNE) Game.JNE = {};
             
-            //Set loading flag to prevent auto-saves during restoration
+            // prevent auto-saves during restoration
             Game.JNE._isRestoringData = true;
             if (Game.JNE._lastLoadData && Game.JNE._lastLoadTime &&
                 Game.JNE._lastLoadTime > Date.now() - 1000) { // Within 1 second
@@ -6347,8 +6338,7 @@
             Game.JNE._lastLoadData = JSON.stringify(saveData);
             Game.JNE._lastLoadTime = Date.now();
 
-            // Migration: If save file has incomplete heavenly upgrades due to the save bug,
-            // preserve any upgrades that are marked as bought in memory but not in the save
+            // migration for save bug: preserve upgrades bought in memory but missing from save
             var ownedUpgradeNames = (saveData.boughtUpgrades && Array.isArray(saveData.boughtUpgrades)) ? saveData.boughtUpgrades :
                 ((saveData.h && Array.isArray(saveData.h)) ? saveData.h : null);
             if (ownedUpgradeNames) {
@@ -6356,7 +6346,7 @@
                 for (var i = 0; i < ownedUpgradeNames.length; i++) {
                     saveBoughtSet[ownedUpgradeNames[i]] = true;
                 }
-                // Check if memory has more heavenly upgrades bought than the save
+                // memory may have more bought than the save
                 var memoryBoughtCount = 0;
                 var memoryNotInSave = [];
                 for (var name in Game.Upgrades) {
@@ -6421,7 +6411,7 @@
                 }
             }
 
-            // Restore all upgrades with their bought states (handle both new array format and legacy object format)
+            // restore bought states (new array format + legacy object format)
             var restoredCount = 0;
             var notFoundCount = 0;
             
@@ -6472,7 +6462,7 @@
                 }
             }
             
-            //Set Game.TOYS and Game.WINKLERS BEFORE runUpgradeSetups so toggles are created with correct bought states
+            // must be before runUpgradeSetups so toggles get correct bought states
             if (saveData.switches) {
                 if (saveData.switches.toys !== undefined) {
                     Game.TOYS = saveData.switches.toys || 0;
@@ -6482,7 +6472,7 @@
                 }
             }
             
-            // This must happen AFTER upgrade bought states AND Game.TOYS/WINKLERS are restored
+            // must happen AFTER upgrade bought states AND Game.TOYS/WINKLERS are restored
             runUpgradeSetups(true);  // forceAll=true to recreate everything
             
             // Add new pantheon spirits (doesn't recreate upgrades)
@@ -6504,18 +6494,6 @@
                     if (saveData.boughtUpgrades.indexOf(name) !== -1 && Game.Upgrades[name]) {
                         Game.Upgrades[name].bought = 1;
                     }
-                });
-            }
-
-            // setupBoxOfDonuts only unlocks NEWLY created donuts; existing donuts (never deleted on
-            // reload) must have their unlocked flag re-applied here so unbought donuts still render in
-            // the store. If the box is owned, every donut is unlocked (matches setupBoxOfDonuts).
-            var _donutBoxOwned = (saveData.boughtUpgrades && Array.isArray(saveData.boughtUpgrades) &&
-                                saveData.boughtUpgrades.indexOf('Box of overpriced donuts') !== -1) ||
-                                Game.Has('Box of overpriced donuts');
-            if (_donutBoxOwned) {
-                DONUT_NAMES.forEach(function(name) {
-                    if (Game.Upgrades[name]) Game.Upgrades[name].unlocked = 1;
                 });
             }
 
@@ -6559,11 +6537,10 @@
             Game.JNE._fortuneGCTimer = (saveData.timers && saveData.timers.fortuneGCLastResetTime) ? saveData.timers.fortuneGCLastResetTime : 0;
             Game.JNE._fortuneCPSTimer = (saveData.timers && saveData.timers.fortuneCPSLastResetTime) ? saveData.timers.fortuneCPSLastResetTime : 0;
             
-            // Trigger immediate visual refresh so all restored upgrades (donuts, etc.) appear
+            // visual refresh so restored upgrades (donuts, etc.) appear
             Game.storeToRefresh = 1;
             Game.upgradesToRebuild = 1;
 
-            // Update toggle states
             updateAllToggleStates();
             
             // Apply stats BEFORE caching so the cached save data reflects restored values
@@ -6580,10 +6557,8 @@
                 Game.JNE.heavenlyUpgradesSavedData = restoredData;
             }
             
-            // Ensure farm drops are created before restoring them
-            if (typeof setupMagicMushroomDrops === 'function') {
-                setupMagicMushroomDrops();
-            }
+            // farm drops must exist before we restore them
+            setupMagicMushroomDrops();
             
             // Apply farm drops
             if (saveData.farmDropCookies && Object.keys(saveData.farmDropCookies).length > 0) {
@@ -6618,7 +6593,7 @@
 
             // Restore  buffs
             if (saveData.buffs && Array.isArray(saveData.buffs) && Game.gainBuff) {
-                if (typeof setupCustomBuffTypes === 'function') setupCustomBuffTypes();
+                setupCustomBuffTypes();
                 for (var i = 0; i < saveData.buffs.length; i++) {
                     var savedBuff = saveData.buffs[i];
                     if (savedBuff && savedBuff.type && savedBuff.time !== undefined) {
@@ -6694,7 +6669,7 @@
                 var M = Game.Objects['Farm'] && Game.Objects['Farm'].minigame;
                 if (M) {
                     if (saveData.garden.soil !== undefined) {
-                        // CRITICAL: Validate soil ID exists before restoring (Aerated soil created later)
+                        // validate soil ID (Aerated soil is created later)
                         var savedSoil = saveData.garden.soil;
                         if (M.soilsById && M.soilsById[savedSoil]) {
                             M.soil = savedSoil;
@@ -6798,13 +6773,10 @@
             var ownedSet = {};
             for (var bi = 0; bi < boughtSet.length; bi++) ownedSet[boughtSet[bi]] = true;
 
-            var boxOwned = ownedSet['Box of overpriced donuts'] || Game.Has('Box of overpriced donuts');
             DONUT_NAMES.forEach(function(name) {
                 var up = Game.Upgrades[name];
                 if (!up) return;
                 up.bought = ownedSet[name] ? 1 : 0;
-                // If the box is owned, every donut is unlocked (matches setupBoxOfDonuts behavior).
-                if (boxOwned) up.unlocked = 1;
             });
 
             // Restore the purchased state of every other heavenly upgrade synchronously so it can
@@ -6827,47 +6799,74 @@
             if (Game.storeToRefresh !== undefined) Game.storeToRefresh = 1;
         }
 
-        // Expose API
-        if (typeof Game !== 'undefined') {
-            if (!Game.JNE) Game.JNE = {};
-            if (!Game.JNE.HeavenlyUpgrades) {
-                Game.JNE.HeavenlyUpgrades = {
-                    create: createHeavenlyUpgrade,
-                    version: MOD_HU_VERSION,
-                    initialized: function() { return isInitialized; },
-                    getSaveData: getSaveData,
-                    load: load,
-                    restoreDonutsNow: restoreDonutsNow,
-                    setupBuffModifiers: setupBuffModifiers
-                };
-            } else {
-                Game.JNE.HeavenlyUpgrades.getSaveData = getSaveData;
-                Game.JNE.HeavenlyUpgrades.load = load;
-                Game.JNE.HeavenlyUpgrades.restoreDonutsNow = restoreDonutsNow;
-                Game.JNE.HeavenlyUpgrades.setupBuffModifiers = setupBuffModifiers;
+        function unlockDonutsAfterReincarnate() {
+            var boxOwned = (Game.JNE && Game.JNE.heavenlyUpgradesSavedData &&
+                            Array.isArray(Game.JNE.heavenlyUpgradesSavedData.boughtUpgrades) &&
+                            Game.JNE.heavenlyUpgradesSavedData.boughtUpgrades.indexOf('Box of overpriced donuts') !== -1) ||
+                          Game.Has('Box of overpriced donuts');
+            if (!boxOwned) return;
+            if (!Game.UnlockAt) return;
+
+            var existing = {};
+            for (var i = 0; i < Game.UnlockAt.length; i++) {
+                if (Game.UnlockAt[i] && Game.UnlockAt[i].name) existing[Game.UnlockAt[i].name] = Game.UnlockAt[i];
             }
 
-            // Expose maybeDoubleTimerSpawn globally for CCSE compatibility
-            Game.JNE.maybeDoubleTimerSpawn = function(i) {
-                var hasVanillaLuck = Game.Has('Distilled essence of redoubled luck');
-                var hasRetripledLuck = Game.Has('Distilled essence of retripled luck');
-                // cookie chain and break chain behavior — skip all doubling for timer goldens while chain depth > 0.
-                if (i === 'golden' && Game.shimmerTypes && Game.shimmerTypes['golden']) {
-                    var gChain = Game.shimmerTypes['golden'].chain;
-                    if (typeof gChain === 'number' && gChain > 0) return;
+            DONUT_NAMES.forEach(function(name) {
+                var up = Game.Upgrades[name];
+                if (!up) return;
+                if (existing[name]) {
+                    // Entry already exists — just ensure the upgrade references it.
+                    if (!up.unlockAt) up.unlockAt = existing[name];
+                    return;
                 }
-                // Fish: never double here.
-                if (i === 'fish') return;
-                if (hasRetripledLuck) {
-                    var chance =  0.02;
-                    if (jneIndependentRandom() < chance) {
-                        var rExtra = new Game.shimmer(i, {_retripledLuckExtra: true});
-                        if (rExtra) rExtra.spawnLead = 1;
-                    }
-                } else if (hasVanillaLuck && Math.random() < 0.01) {
-                    var vExtra = new Game.shimmer(i);
-                    if (vExtra) vExtra.spawnLead = 1;
-                }
-            };
+                var entry = {cookies: up.basePrice / 20, name: name, require: 'Box of overpriced donuts'};
+                Game.UnlockAt.push(entry);
+                up.unlockAt = entry;
+            });
         }
+
+        // Expose API
+        if (!Game.JNE) Game.JNE = {};
+        if (!Game.JNE.HeavenlyUpgrades) {
+            Game.JNE.HeavenlyUpgrades = {
+                create: createHeavenlyUpgrade,
+                version: MOD_HU_VERSION,
+                initialized: function() { return isInitialized; },
+                getSaveData: getSaveData,
+                load: load,
+                restoreDonutsNow: restoreDonutsNow,
+                unlockDonutsAfterReincarnate: unlockDonutsAfterReincarnate,
+                setupBuffModifiers: setupBuffModifiers
+            };
+        } else {
+            Game.JNE.HeavenlyUpgrades.getSaveData = getSaveData;
+            Game.JNE.HeavenlyUpgrades.load = load;
+            Game.JNE.HeavenlyUpgrades.restoreDonutsNow = restoreDonutsNow;
+            Game.JNE.HeavenlyUpgrades.unlockDonutsAfterReincarnate = unlockDonutsAfterReincarnate;
+            Game.JNE.HeavenlyUpgrades.setupBuffModifiers = setupBuffModifiers;
+        }
+
+        // Expose maybeDoubleTimerSpawn globally for CCSE compatibility
+        Game.JNE.maybeDoubleTimerSpawn = function(i) {
+            var hasVanillaLuck = Game.Has('Distilled essence of redoubled luck');
+            var hasRetripledLuck = Game.Has('Distilled essence of retripled luck');
+            // cookie chain and break chain behavior: skip all doubling for timer goldens while chain depth > 0.
+            if (i === 'golden' && Game.shimmerTypes && Game.shimmerTypes['golden']) {
+                var gChain = Game.shimmerTypes['golden'].chain;
+                if (typeof gChain === 'number' && gChain > 0) return;
+            }
+            // Fish: never double here.
+            if (i === 'fish') return;
+            if (hasRetripledLuck) {
+                var chance =  0.02;
+                if (jneIndependentRandom() < chance) {
+                    var rExtra = new Game.shimmer(i, {_retripledLuckExtra: true});
+                    if (rExtra) rExtra.spawnLead = 1;
+                }
+            } else if (hasVanillaLuck && Math.random() < 0.01) {
+                var vExtra = new Game.shimmer(i);
+                if (vExtra) vExtra.spawnLead = 1;
+            }
+        };
     })();

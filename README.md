@@ -52,8 +52,18 @@ The mobile version of Cookie Clicker does not support mods at this time.
 - **Cookie Monster Compatible**: In order to get Cookie Monster cost calculations to reflect correctly please load it first. 
 - **Spell Planners**: Just Natural Expansion should work with all spell planners, if you find any exceptions please report them.
 - **Load Order**: For best compatibility, load other mods first
+- **Heavenly Upgrade Expansions**: There are several mods that add additional heavenly upgrades, while JNE strives to be a good neighbor in this ecosystem you may experience unexpected behavior or functionality running several of these at once. 
+
 
 ## Changelog    
+
+### Version 0.6.7
+* Fixed a handful of puzzles that would not detect a proper solve after save scumming. 
+* Added a toggle button in options to turn on extra stats for those who missed that data after the last patch. These are mostly tracking for progress on items for expansion achievements when those achievements have been won already. This setting is off by default. 
+* Fixed a bug that would prevent reindeer from spawning if the user ascended while Decoction of Winter misbrew effect was active. Also tweaked a handful of other edge case issues with this potion. 
+* After an ascension donut upgrades were not made available until a refresh or save load, this has been fixed. 
+* Fixed a mod conflict that could result in dragon aura swaps in Terminal from causing the dragon aura window to misrender. 
+* Minor bug fixes, improvements, and continued code cleanup. 
 
 ### Version 0.6.6
 * Improvements to the save/load systems to prevent data loses in edges cases where things go terribly wrong. 

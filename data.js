@@ -37,7 +37,7 @@ window.JNEData = {
             {
                 name: 'Order of the Impossible Batch',
                 desc: 'Golden cookies appear <b>5%</b> more often.<br>Unlocked by owning The Final Challenger achievement.<br>Cost scales with CpS',
-                ddesc: 'Golden cookies appear <b>5%</b> more often.<br>Unlocked by owning The Final Challenger achievement.<br>Cost scales with CpS<q>The dough will rise… whether reality likes it or not. Bakers of the improbable, challengers of the possible — this Order has baked cookies in ovens that do not exist, from ingredients that never were. Their scrolls describe recipes written in paradox and whisked with defiance. Most of their meetings end with someone on fire.</q>',
+                ddesc: 'Golden cookies appear <b>5%</b> more often.<br>Unlocked by owning The Final Challenger achievement.<br>Cost scales with CpS<q>The dough will rise… whether reality likes it or not. Bakers of the improbable, challengers of the possible, this Order has baked cookies in ovens that do not exist, from ingredients that never were. Their scrolls describe recipes written in paradox and whisked with defiance. Most of their meetings end with someone on fire.</q>',
                 price: 999, // Placeholder price, will be overridden by priceFunc
                 icon: [1, 15, 'custom'],
                 pool: '',
