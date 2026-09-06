@@ -5415,6 +5415,7 @@
                 name: 'Hatchery effect',
                 desc: 'Fish have a <b>10%</b> chance to appear in pairs.',
                 ddesc: 'Fish have a <b>10%</b> chance to appear in pairs.<q>Double the fish, double the fun!</q>',
+                price: 2500e16
                 icon: JNE.icon(2, 25, 'custom'),
                 posX: -2076,
                 posY: -1766,
