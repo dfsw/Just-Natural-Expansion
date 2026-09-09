@@ -2,7 +2,7 @@
 (function() {
 'use strict';
 
-const TERMINAL_VERSION = '1.0.6';
+const TERMINAL_VERSION = '1.0.7';
 
 var M = {};
 M.parent = Game.Objects && Game.Objects['Javascript console'] ? Game.Objects['Javascript console'] : {
@@ -1664,6 +1664,7 @@ M.launch = function () {
         // Bypass the in-game confirmation prompt by applying the effect directly.
         spendSugarLumps(1);
         upgrade.buy(1);
+        upgrade.bought = 1;
         if (typeof Game.shimmer === 'function') {
             new Game.shimmer('golden');
         } else if (typeof Game.shimmerTypes !== 'undefined' && Game.shimmerTypes && Game.shimmerTypes.golden) {
@@ -3274,9 +3275,11 @@ function createTerminalAchievements() {
     }
 
     if (!needsCreation) {
+        var currentProgramCount = Math.floor(M.programsRunTotal || 0);
         for (var i = 0; i < terminalAchievementNames.length; i++) {
             var originalName = terminalAchievementNames[i];
             var hiddenName = originalName + ' [DISABLED]';
+            var threshold = terminalAchievementThresholds[i];
             if (Game.Achievements[hiddenName]) {
                 var ach = Game.Achievements[hiddenName];
                 ach.pool = 'normal';
@@ -3292,6 +3295,18 @@ function createTerminalAchievements() {
             } else if (Game.Achievements[originalName]) {
                 var ach = Game.Achievements[originalName];
                 ach.pool = 'normal';
+            }
+            if (Game.Achievements[originalName] && currentProgramCount >= threshold) {
+                var ach = Game.Achievements[originalName];
+                if (!ach.won) {
+                    ach.won = 1;
+                    ach._restoredFromSave = true;
+                    if (!Game.AchievementsOwned) Game.AchievementsOwned = 0;
+                    Game.AchievementsOwned++;
+                    if (Game.stats && Game.stats['Achievements unlocked']) {
+                        Game.stats['Achievements unlocked']++;
+                    }
+                }
             }
         }
         terminalAchievementState.achievementsCreated = true;
@@ -3329,7 +3344,7 @@ function createTerminalAchievements() {
         );
         if (achievement) {
             achievement.pool = 'normal';
-            if (shouldBeWon) {
+            if (shouldBeWon && !achievement.won) {
                 achievement.won = 1;
                 achievement._restoredFromSave = true;
                 if (!Game.AchievementsOwned) Game.AchievementsOwned = 0;

@@ -60,8 +60,8 @@
     
     function initializeMod() {
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.6.7';
-    var debugMode = false; 
+    var modVersion = '0.6.8';
+    var debugMode = false;
     
     function debugLog() {
         if (!debugMode) return;
@@ -150,7 +150,7 @@
     
     // Granular control toggles - defaults will be overridden by save data if available
     var shadowAchievementMode = true;
-    var cookieAgeProgress = 0;  // Track puzzle quest progress (0-50)
+    var cookieAgeProgress = 0;  // Track puzzle quest progress
     
     var modIcon = [15, 7]; // Static mod icon
     var boxIcon = [34, 4]; // Static Box of improved cookies icon
@@ -174,7 +174,7 @@
     // Sprite sheet is already loaded (see top of file) by the time initializeMod() runs.
     if (!Game.JNE) Game.JNE = {};
     Game.JNE.icon = function(x, y, sheetName) {
-        // Handle both calling conventions: (x, y, sheetName) and ({x, y, sheetName})
+        // Handle both calling conventions
         if (typeof x === 'object' && x !== null) {
             sheetName = x.sheetName;
             y = x.y;
@@ -187,7 +187,6 @@
     };
     window.JNE = Game.JNE;
 
-    // JNE Tier System
     Game.Tiers['jne1'] = { name: 'Sterlicious', color: '#DDEAF0', special: 1, unlock: -1 };
     Game.Tiers['jne2'] = { name: 'Championchip', color: '#FFF05A', special: 1, unlock: -1 };
     Game.Tiers['jne3'] = { name: 'Gumshoechew', color: '#D8A868', special: 1, unlock: -1 };
@@ -647,6 +646,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     }
     
     function handleCheck() {
+        if (Game.JNE && Game.JNE.isLoadingFromSave) return;
         if (Game.OnAscend === 0 && !isReincarnating) {
             trackedWrinklersPopped = Game.wrinklersPopped || 0;
             trackedStockMarketAssets = (Game.Objects['Bank'] && Game.Objects['Bank'].minigame ? Game.Objects['Bank'].minigame.profit || 0 : 0);
@@ -740,7 +740,12 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 wrinklersPopped: 0,
                 elderCovenantToggles: 0,
                 pledges: 0,
-                godUsageTime: {}
+                cookieFishCaught: 0,
+                bingoJackpotWins: 0,
+                lastGardenSacrificeTime: 0,
+                godUsageTime: {},
+                lanternsClicked: 0,
+                zodiacVisited: '000000000000'
             };
             window.JNE_lifetimeData = lifetimeData;
             
@@ -4655,7 +4660,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     Game.Upgrades['Box of improved cookies'].isUnlocked = function() { return this.unlockCondition ? this.unlockCondition() : true; };
                     Game.Upgrades['Box of improved cookies'].isBought = function() { return this.bought > 0; };
                     Game.Upgrades['Box of improved cookies'].canBuy = function() {
-                        var hasEnoughMoney = Game.cookies >= this.price;
+                        var hasEnoughMoney = Game.cookies >= this.getPrice();
                         var isUnlocked = this.unlockCondition ? this.unlockCondition() : true;
                         return isUnlocked && hasEnoughMoney && !this.bought;
                     };
@@ -6672,16 +6677,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             
             // Add required functions that Cookie Clicker expects
             upgrade.canBuy = function() {
-                // For CPS-scaling upgrades, let vanilla game handle everything completely
-                if (this.name === 'Order of the Golden Crumb' || this.name === 'Order of the Impossible Batch' ||
-                    this.name === 'Order of the Shining Spoon' || this.name === 'Order of the Cookie Eclipse' ||
-                    this.name === 'Order of the Enchanted Whisk' || this.name === 'Order of the Eternal Cookie') {
-                    // let vanilla handle canBuy
-                    return Game.cookies >= this.getPrice() && this.isUnlocked() && !this.bought;
-                }
-                
-                // For regular upgrades, use our custom logic
-                var hasEnoughMoney = Game.cookies >= this.price;
+                var hasEnoughMoney = Game.cookies >= this.getPrice();
                 var isUnlocked = this.unlockCondition ? this.unlockCondition() : true;
                 return isUnlocked && hasEnoughMoney && !this.bought;
             };
@@ -6689,7 +6685,6 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             upgrade.isVaulted = function() { return false; };
             upgrade.isUnlocked = function() { return this.unlockCondition ? this.unlockCondition() : true; };
             upgrade.isBought = function() { return this.bought > 0; };
-            // let vanilla handle getPrice (calls priceFunc if set)
 
             // Apply  tier label 
             if (upgradeInfo.building && upgradeInfo.unlockCondition) {
@@ -8534,7 +8529,12 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                         wrinklersPopped: 0,
                         elderCovenantToggles: 0,
                         pledges: 0,
-                        godUsageTime: {}
+                        cookieFishCaught: 0,
+                        bingoJackpotWins: 0,
+                        lastGardenSacrificeTime: 0,
+                        godUsageTime: {},
+                        lanternsClicked: 0,
+                        zodiacVisited: '000000000000'
                     };
                     window.JNE_lifetimeData = lifetimeData;
                     
@@ -8837,20 +8837,22 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     // Initialize achievements and other mod features
     function initAchievements() {
         if (achievementsCreated) {return;}
-        
+
         // Create building achievements
         for (var buildingName in Game.ObjectsById) {
             var building = Game.ObjectsById[buildingName];
             if (!building || !building.single) continue;
-            
-            // Try to find the building data by different possible names
-            var buildingData = achievementData.buildings[building.single] || 
+
+            var lookupName = building.bsingle || building.single;
+            var buildingData = achievementData.buildings[lookupName] ||
+                             achievementData.buildings[lookupName.toLowerCase()] ||
+                             achievementData.buildings[building.single] ||
                              achievementData.buildings[building.single.toLowerCase()] ||
                              achievementData.buildings[buildingName] ||
                              achievementData.buildings[buildingName.toLowerCase()];
-            
+
             if (!buildingData) continue;
-            
+
             if (!buildingData.orders) continue;
             createBuildingAchievements(buildingName, buildingData.names, buildingData.thresholds, 0, null, buildingData.customIcons, buildingData.orders);
         }

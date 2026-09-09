@@ -4,7 +4,7 @@
         var _huT0 = Date.now();
         
         const SIMPLE_MOD_NAME = 'Just Natural Expansion';
-        const MOD_HU_VERSION = '1.0.27';
+        const MOD_HU_VERSION = '1.0.28';
         var isInitialized = false;
         const MOD_ICON = [15, 7];
         const GARDEN_SPRITE_SHEET_URL = 'https://orteil.dashnet.org/cookieclicker/img/gardenPlants.png';
@@ -3636,9 +3636,10 @@
             };
             button.clickFunction = function() {
                 if (this.bought === 1) return;
+                if (Game.lumps < 1) return;
                 Game.Prompt('<id SugarTradePrompt><h3>Activate the sugar trade?</h3><div class="block">' +
                     'Spend 1 sugar lump to summon a golden cookie.</div>', [
-                    ['Activate', 'Game.ClosePrompt();Game.lumps-=1;Game.Upgrades["Sugar trade"].buy(1);new Game.shimmer("golden");Game.Notify("Sugar trade","Summoned a golden cookie.",[21,17]);Game.storeToRefresh=1;Game.upgradesToRebuild=1;if(Game.RefreshStore)Game.RefreshStore();if(Game.RebuildUpgrades)Game.RebuildUpgrades();'],
+                    ['Activate', 'Game.ClosePrompt();if(Game.lumps>=1){Game.lumps-=1;Game.Upgrades["Sugar trade"].buy(1);Game.Upgrades["Sugar trade"].bought=1;new Game.shimmer("golden");Game.Notify("Sugar trade","Summoned a golden cookie.",[21,17]);Game.storeToRefresh=1;Game.upgradesToRebuild=1;if(Game.RefreshStore)Game.RefreshStore();if(Game.RebuildUpgrades)Game.RebuildUpgrades();}'],
                     'Cancel'
                 ]);
             };
@@ -4307,6 +4308,21 @@
             Game.updateShimmers._jneWrappedVanillaUpdateShimmers = vanillaUpdateShimmers;
         }
         
+        function formatStopwatchTime(seconds) {
+            if (seconds < 0) seconds = 0;
+            seconds = Math.floor(seconds);
+            var d = Math.floor(seconds / 86400);
+            var h = Math.floor((seconds % 86400) / 3600);
+            var m = Math.floor((seconds % 3600) / 60);
+            var s = seconds % 60;
+            var parts = [];
+            if (d > 0) parts.push(d + 'd');
+            if (d > 0 || h > 0) parts.push(h + 'h');
+            if (d > 0 || h > 0 || m > 0) parts.push(m + 'm');
+            parts.push(s + 's');
+            return parts.join(' ');
+        }
+
         function setupGoldenStopwatch() {
             if (!Game.registerHook || Game._goldenStopwatchHooked) return;
             if (!Game.Has('Golden stopwatch')) return;
@@ -4314,6 +4330,7 @@
             if (Game.UpdateSpecial && Game.UpdateSpecial._goldenStopwatchHooked) { Game._goldenStopwatchHooked = true; return; }
             Game._goldenStopwatchHooked = true;
             var colors = {golden: '#FFD700', reindeer: '#8f0101', fish: '#0096C7', Frenzy: '#00e35b', 'Dragon Harvest': '#d1690f', 'Elder frenzy': '#ffae00', Clot: '#ff0000', 'Click frenzy': '#4bf0d5', Dragonflight: '#005eff', 'Cursed finger': '#b81634', 'Sugar blessing': '#fbff00', default: '#e600ff'};
+            var swState = { shimmerRows: {}, buffRows: {}, shimmerSig: '', buffSig: '' };
 
             Game.UpdateSpecial = function() {
                 Game.specialTabs = [];
@@ -4395,7 +4412,8 @@
                         };
                         img.src = up.icon[2] || getSpriteSheet('custom');
                     }
-                    l('specialPopup').innerHTML = '<div id="specialPic" style="position:absolute;left:-16px;top:-64px;width:96px;height:96px;background-repeat:no-repeat;filter:drop-shadow(0px 3px 2px #000);-webkit-filter:drop-shadow(0px 3px 2px #000);background-size:96px 96px;"></div><div class="close" onclick="PlaySound(\'snd/press.mp3\');Game.ToggleSpecialMenu(0);">x</div><h3>Golden Stopwatch</h3><div class="line"></div><div id="TimerBar" style="text-align:left;margin-bottom:4px;"></div>';
+                    swState.shimmerSig = ''; swState.buffSig = '';
+                    l('specialPopup').innerHTML = '<div id="specialPic" style="position:absolute;left:-16px;top:-64px;width:96px;height:96px;background-repeat:no-repeat;filter:drop-shadow(0px 3px 2px #000);-webkit-filter:drop-shadow(0px 3px 2px #000);background-size:96px 96px;"></div><div class="close" onclick="PlaySound(\'snd/press.mp3\');Game.ToggleSpecialMenu(0);">x</div><h3>Golden Stopwatch</h3><div class="line"></div><div id="TimerBar" style="text-align:left;margin-bottom:4px;"><div id="TimerBarShimmers"></div><div id="TimerBarBuffs"></div></div>';
                     l('specialPopup').className = 'framed prompt onScreen';
                     return;
                 }
@@ -4404,69 +4422,107 @@
             Game.ToggleSpecialMenu._goldenStopwatchHooked = true;
             
             Game.registerHook('draw', function() {
-                // Skip effect in Born Again mode
                 if (Game.ascensionMode == 1) return;
-                if (Game.specialTab !== 'stopwatch' || !l('TimerBar')) return;
-                var tb = l('TimerBar'), w = tb.getBoundingClientRect().width - 185;
-                tb.innerHTML = '';
+                if (Game.specialTab !== 'stopwatch') return;
+                var tb = l('TimerBar');
+                if (!tb) return;
+                var tbw = tb.getBoundingClientRect().width;
+                var w = tbw - 185, bw = Math.max(0, tbw - 230);
+                var sig = '', visible = [];
                 for (var k in Game.shimmerTypes) {
                     var st = Game.shimmerTypes[k];
                     if (!st || !st.spawnConditions || !st.spawnConditions() || st.spawned === 1 || !st.spawnsOnTimer) continue;
-                    var d = document.createElement('div');
-                    d.style.cssText = 'height:12px;margin:0 10px;position:relative;';
-                    d.innerHTML = '<span style="display:inline-block;text-align:right;width:117px;margin-right:5px;">Next ' + k + '</span><span id="' + k + 'MinBar" style="display:inline-block;height:10px;background:#292828;"></span><span id="' + k + 'Bar" style="display:inline-block;height:10px;background:' + (colors[k] || colors.default) + ';border-top-right-radius:10px;border-bottom-right-radius:10px;"></span><span id="' + k + 'Time" style="margin-left:5px;"></span>';
-                    tb.appendChild(d);
-                    var mb = l(k + 'MinBar'), vb = l(k + 'Bar');
-                    mb.style.width = Math.round(Math.max(0, st.minTime - st.time) * w / st.maxTime) + 'px';
-                    if (st.minTime === st.maxTime) mb.style.borderTopRightRadius = mb.style.borderBottomRightRadius = '10px';
-                    vb.style.width = Math.round(Math.min(st.maxTime - st.minTime, st.maxTime - st.time) * w / st.maxTime) + 'px';
-                    var timeUntilMin = Math.max(0, st.minTime - st.time);
-                    var timeInSpawnWindow = Math.max(0, st.time - st.minTime);
-                    var spawnWindowDuration = st.maxTime - st.minTime;
-                    
-                    var spawnProbability = 0;
-                    if (timeInSpawnWindow > 0 && spawnWindowDuration > 0) {
-                        var ticksPerSecond = Game.fps || 30;
-                        var survival = 1;
-                        for (var j = 1; j <= ticksPerSecond; j++) {
-                            var t = st.time + j;
-                            var progress = (t - st.minTime) / (st.maxTime - st.minTime);
-                            var perTickProbability = Math.pow(Math.max(0, progress), 5);
-                            perTickProbability = Math.min(1, perTickProbability);
-                            survival *= (1 - perTickProbability);
+                    sig += k + ';';
+                    visible.push(k);
+                }
+                if (sig !== swState.shimmerSig) {
+                    var sc = l('TimerBarShimmers');
+                    if (sc) {
+                        sc.innerHTML = '';
+                        swState.shimmerRows = {};
+                        swState.shimmerSig = sig;
+                        for (var i = 0; i < visible.length; i++) {
+                            var k = visible[i], st = Game.shimmerTypes[k];
+                            var row = document.createElement('div');
+                            row.style.cssText = 'height:12px;margin:0 10px;position:relative;';
+                            var label = document.createElement('span');
+                            label.style.cssText = 'display:inline-block;text-align:right;width:117px;margin-right:5px;';
+                            label.textContent = 'Next ' + k;
+                            var minBar = document.createElement('span');
+                            minBar.style.cssText = 'display:inline-block;height:10px;background:#292828;';
+                            if (st.minTime === st.maxTime) minBar.style.borderTopRightRadius = minBar.style.borderBottomRightRadius = '10px';
+                            var bar = document.createElement('span');
+                            bar.style.cssText = 'display:inline-block;height:10px;background:' + (colors[k] || colors.default) + ';border-top-right-radius:10px;border-bottom-right-radius:10px;';
+                            var time = document.createElement('span');
+                            time.style.cssText = 'margin-left:5px;';
+                            row.appendChild(label); row.appendChild(minBar); row.appendChild(bar); row.appendChild(time);
+                            sc.appendChild(row);
+                            swState.shimmerRows[k] = { minBar: minBar, bar: bar, time: time };
                         }
-                        spawnProbability = 1 - survival;
                     }
-                    
-                    var displayText;
+                }
+                for (var i = 0; i < visible.length; i++) {
+                    var k = visible[i], st = Game.shimmerTypes[k], refs = swState.shimmerRows[k];
+                    if (!refs) continue;
+                    refs.minBar.style.width = Math.round(Math.max(0, st.minTime - st.time) * w / st.maxTime) + 'px';
+                    refs.bar.style.width = Math.round(Math.min(st.maxTime - st.minTime, st.maxTime - st.time) * w / st.maxTime) + 'px';
+                    var timeUntilMin = Math.max(0, st.minTime - st.time);
                     if (timeUntilMin > 0) {
-                        displayText = Math.ceil(timeUntilMin / Game.fps);
+                        refs.time.textContent = Math.ceil(timeUntilMin / Game.fps);
                     } else {
-                        displayText = (Math.ceil(spawnProbability * 1000) / 10).toFixed(1) + '%/sec';
+                        var spawnProbability = 0, spawnWindowDuration = st.maxTime - st.minTime;
+                        if (spawnWindowDuration > 0) {
+                            var ticksPerSecond = Game.fps || 30, survival = 1;
+                            for (var j = 1; j <= ticksPerSecond; j++) {
+                                var progress = (st.time + j - st.minTime) / spawnWindowDuration;
+                                survival *= (1 - Math.min(1, Math.pow(Math.max(0, progress), 5)));
+                            }
+                            spawnProbability = 1 - survival;
+                        }
+                        refs.time.textContent = (Math.ceil(spawnProbability * 1000) / 10).toFixed(1) + '%/sec';
                     }
-                    
-                    l(k + 'Time').textContent = displayText;
                 }
                 if (Game.Has('Countdown complications')) {
-                    var hasBuffs = false;
-                    for (var i in Game.buffs) {
-                        hasBuffs = true;
-                        break;
+                    var bsig = '', buffKeys = [];
+                    for (var i in Game.buffs) { bsig += i + ';'; buffKeys.push(i); }
+                    if (bsig !== swState.buffSig) {
+                        var bc = l('TimerBarBuffs');
+                        if (bc) {
+                            bc.innerHTML = '';
+                            swState.buffRows = {};
+                            swState.buffSig = bsig;
+                            if (buffKeys.length > 0) {
+                                var divider = document.createElement('div');
+                                divider.style.cssText = 'height:1px;margin:8px 10px;background:#444;';
+                                bc.appendChild(divider);
+                            }
+                            for (var i = 0; i < buffKeys.length; i++) {
+                                var key = buffKeys[i], bf = Game.buffs[key];
+                                var row = document.createElement('div');
+                                row.style.cssText = 'height:14px;margin:0 10px;position:relative;white-space:nowrap;';
+                                var label = document.createElement('span');
+                                label.style.cssText = 'display:inline-block;text-align:right;width:117px;margin-right:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;vertical-align:top;line-height:14px;';
+                                label.textContent = bf.name;
+                                var bar = document.createElement('span');
+                                bar.style.cssText = 'display:inline-block;height:10px;background:' + (colors[bf.name] || colors.default) + ';border-top-right-radius:10px;border-bottom-right-radius:10px;';
+                                var time = document.createElement('span');
+                                time.style.cssText = 'margin-left:5px;white-space:nowrap;';
+                                row.appendChild(label); row.appendChild(bar); row.appendChild(time);
+                                bc.appendChild(row);
+                                swState.buffRows[key] = { bar: bar, time: time };
+                            }
+                        }
                     }
-                    if (hasBuffs) {
-                        var divider = document.createElement('div');
-                        divider.style.cssText = 'height:1px;margin:8px 10px;background:#444;';
-                        tb.appendChild(divider);
+                    for (var i = 0; i < buffKeys.length; i++) {
+                        var key = buffKeys[i], bf = Game.buffs[key], refs = swState.buffRows[key];
+                        if (!refs) continue;
+                        refs.bar.style.width = Math.round(bf.time * bw / bf.maxTime) + 'px';
+                        refs.time.textContent = formatStopwatchTime(bf.time / Game.fps);
                     }
-                    for (var i in Game.buffs) {
-                        var bf = Game.buffs[i];
-                        var d = document.createElement('div');
-                        d.style.cssText = 'height:14px;margin:0 10px;position:relative;';
-                        d.innerHTML = '<span style="display:inline-block;text-align:right;width:117px;margin-right:5px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;vertical-align:top;line-height:14px;">' + bf.name + '</span><span id="Buff' + i + 'Bar" style="display:inline-block;height:10px;background:' + (colors[bf.name] || colors.default) + ';border-top-right-radius:10px;border-bottom-right-radius:10px;"></span><span id="Buff' + i + 'Time" style="margin-left:5px;"></span>';
-                        tb.appendChild(d);
-                        l('Buff' + i + 'Bar').style.width = Math.round(bf.time * w / bf.maxTime) + 'px';
-                        l('Buff' + i + 'Time').textContent = Math.ceil(bf.time / Game.fps);
-                    }
+                } else if (swState.buffSig !== '') {
+                    var bc = l('TimerBarBuffs');
+                    if (bc) bc.innerHTML = '';
+                    swState.buffRows = {}; swState.buffSig = '';
                 }
             });
         }

@@ -3,7 +3,7 @@
 (function() {
 'use strict';
 
-const POTIONS_VERSION = '1.1.7';
+const POTIONS_VERSION = '1.1.8';
 
 // =====================================================================
 // Potions 
@@ -3917,6 +3917,7 @@ PotionsM._renderSelectedReagents = function() {
             brewBtn.textContent = 'Experiment with this combination';
         } else {
             brewBtn.textContent = 'Brew ' + matchingPotion.name;
+            brewBtn.style.color = '#6f6';
         }
         brewBtn.addEventListener('click', function() {
             PlaySound('snd/press.mp3');

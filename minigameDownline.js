@@ -31,8 +31,7 @@ DownlineM.parent = Game.Objects && Game.Objects['Fractal engine'] ? Game.Objects
 if (Game.Objects && Game.Objects['Fractal engine']) {
     DownlineM.parent.minigame = DownlineM;
     
-    // Ensure highest is never NaN (can happen if old saves have unencoded JSON with commas)
-    // This is a defensive fix for saves created before the encoding was added
+    // defensive: old saves may have unencoded JSON with commas, producing NaN
     if (typeof DownlineM.parent.highest !== 'number' || isNaN(DownlineM.parent.highest)) {
         DownlineM.parent.highest = DownlineM.parent.amount || 0;
     }
@@ -1138,7 +1137,7 @@ DownlineM.init = function(div) {
       var womMax = getRefWomMax();
       var countExp = getRefPlayerCountExp();
       
-      // 1. Base rate from player tiers
+      // base rate from player tiers
       var p = G.players, totalPlayers = 0, weightedRate = 0;
       for (var i = 0; i < 5; i++) {
         totalPlayers += p[TYPES[i]];
@@ -1146,11 +1145,11 @@ DownlineM.init = function(div) {
       }
       if (totalPlayers > 0) weightedRate = weightedRate * Math.pow(totalPlayers, countExp - 1);
       var basePerSec = weightedRate / 3600;
-      
-      // 2. Hype multiplier
+
+      // hype multiplier
       var hypeMult = Math.min(hypeCap, G.hype / hypeMid);
-      
-      // 3. Word of Mouth bar
+
+      // word of mouth bar
       var womPct = Math.min(1, Math.max(0, G.referrals / BAR_MAX));
       var womMult = womMin + (womMax - womMin) * womPct;
       
@@ -1427,7 +1426,7 @@ DownlineM.init = function(div) {
         flavor: "We have mastered the art of reaching the 6 people currently subscribed to this newspaper.",
         unlock: { conditions: [{ stat: 'players', min: 15 }] },
         effects: { players: 2},
-        headline: 'Natural Expansion Gazette runs full-page Cookie Clicker ad — a game where players just click a cookie?' },
+        headline: 'Natural Expansion Gazette runs full-page Cookie Clicker ad: a game where players just click a cookie?' },
 
       { name: 'Door to door grandmas', icon: [10,9], durationSec: 60 * 60, costCps: 18 * 60,
       desc: 'Send your grandmas door to door to recruit players directly. It isn\'t going to help your coolness factor but it\'s more effective than you think.',
@@ -1476,7 +1475,7 @@ DownlineM.init = function(div) {
         flavor: "Studies have shown that 93% of people don\'t even open the letter.",
         unlock: { conditions: [{ stat: 'players', min: 600 }], tempConditions: [{ stat: 'hype', min: 125 }] },
         effects: { players: 14, reputation: -2, hype: -2, referrals: -1 },
-        headline: 'Cookie Clicker mailers hit mailboxes across the country — in unrelated news paper recycling quotas are up' },
+        headline: 'Cookie Clicker mailers hit mailboxes across the country; in unrelated news paper recycling quotas are up' },
 
       { name: 'Space billboard', icon: [11,5], durationSec: 24 * 60 * 60, costCps: 12 * 60 * 60,
         desc: 'Orbital advertising platform visible from the ground everywhere whether you want to see it or not. The future is now.',
@@ -1504,7 +1503,7 @@ DownlineM.init = function(div) {
         flavor: "If an easter egg drops in the game and no one ever finds it, does it really even exist?",
         unlock: { conditions: [{ stat: 'commitment', min: 75 }] },
         effects: { hype: 2.5, players: -1 },
-        headline: 'Rumors of new hidden items in Cookie Clicker — Players excited at least the ones who don\'t quit in frustration are' },
+        headline: 'Rumors of new hidden items in Cookie Clicker - Players excited, at least the ones who don\'t quit in frustration are' },
 
       { name: 'Add minigame', icon: [18,33], durationSec: 4 * 60 * 60, costCps: 150 * 60,
         desc: 'People love minigames! though we have found some people get confused by them and wander off to play Minecraft instead.',
@@ -1512,7 +1511,7 @@ DownlineM.init = function(div) {
         flavor: 'A You minigame sounds like an easy project, or at least it did... Betcha its done before dungeons though.',
         unlock: { conditions: [{ stat: 'hype', min: 100 }, { stat: 'commitment', min: 100 }], tempConditions: [{ stat: 'players', min: 100 }] },
         effects: { hype: 1, commitment: 1, players: -3, reputation: 1},
-        headline: 'New minigame inside cookie game — Players clamor for game within a game concept' },
+        headline: 'New minigame inside cookie game: Players clamor for game within a game concept' },
 
       { name: 'Improve modding support', icon: [16,5], durationSec: 2 * 60 * 60, costCps: 35 * 60,
         desc: 'Let the community build for you. Free labor disguised as empowerment. Huh… naw i\'m not going to read into that too much.',
@@ -1526,14 +1525,14 @@ DownlineM.init = function(div) {
         flavor: 'If it runs on a 2004 Dell, it runs anywhere.',
         unlock: { conditions: [{ stat: 'players', min: 50 }] },
         effects: { players: 1, commitment: 1, referrals: -1 },
-        headline: 'Cookie Clicker now runs on actual potatoes — "silky smooth, but why?"' },
+        headline: 'Cookie Clicker now runs on actual potatoes: "silky smooth, but why?"' },
 
       { name: 'Improve graphics', icon: [13,0], durationSec: 1.5 * 60 * 60, costCps: 35 * 60,
         desc: 'Shiny new pixels, not a lot of them granted but the couple that were added are really nice looking.',
         flavor: 'Still 2D. Still beautiful.',
         unlock: { conditions: [{ stat: 'players', min: 100 }, { stat: 'commitment', min: 100 }] },
         effects: { hype: 2, commitment: 1, players: -1.5},
-        headline: 'Visual overhaul hits the market — still pixelated, still just perfect' },
+        headline: 'Visual overhaul hits the market - still pixelated, still just perfect' },
       
 
       { name: 'Publish roadmap', icon: [12,17], sheet: 'custom', durationSec: 2 * 60 * 60, costCps: 10 * 60,
@@ -1541,7 +1540,7 @@ DownlineM.init = function(div) {
         flavor: 'Coming this year. Maybe next year, or in 11 years. We believe in transparency.',
         unlock: { conditions: [{ stat: 'commitment', min: 125 }] },
         effects: { hype: 4, commitment: -1.5, players: -1 },
-        headline: 'Roadmap excites community — "but where the hell are dungeons?"' },
+        headline: 'Roadmap excites community: "but where the hell are dungeons?"' },
 
         { name: 'Document bugs', icon: [22, 12], durationSec: 4 * 60 * 60, costCps: 75 * 60,
         desc: 'Building a list of bugs is a good thing until people read the list of bugs and get discouraged by them.',
@@ -1569,7 +1568,7 @@ DownlineM.init = function(div) {
         flavor: 'Everyone should be able to click cookies. It\'s in the Constitution. Somewhere, after the part about not quartering soldiers I think.',
         unlock: { conditions: [{ stat: 'players', min: 50 }, { stat: 'reputation', min: 250 }], tempConditions: [{ stat: 'hype', min: 150 }] },
         effects: { reputation: 3, hype: -2, commitment: -1 },
-        headline: 'Cookie Clicker accessibility update universally praised — "they really do care about the differently abled"' },
+        headline: 'Cookie Clicker accessibility update universally praised: "they really do care about the differently abled"' },
      
        { name: 'Port to new platform', icon: [5,0], durationSec: 8 * 60 * 60, costCps: 4 * 60 * 60,
         desc: 'Launch on a new system. Big player influx; existing community commitment dips due to fragmentation of gameplay.',
@@ -1598,21 +1597,21 @@ DownlineM.init = function(div) {
         flavor: 'Soon\u2122. No, the other Soon. I wonder how much longer this joke can last.',
         unlock: { conditions: [{ stat: 'players', min: 50 }], tempConditions: [{ stat: 'reputation', min: 700 }] },
         effects: { hype: 3, commitment: -1, reputation: -1 },
-        headline: 'Dungeons teaser divides community — hype and expected skepticism' },
+        headline: 'Dungeons teaser divides community: hype and expected skepticism' },
 
       { name: 'Sponsor leaderboard contest', icon: [29,21], durationSec: 4 * 60 * 60, costCps: 80 * 60,
         desc: 'Competitive events that push players toward the good kind of fighting.',
         flavor: 'I hope you banned cheaters first or this is going to be a huge mess.',
         unlock: { conditions: [{ stat: 'players', min: 150 }, { stat: 'hype', min: 125 }] },
         effects: { players: -1.5, hype: -1, commitment: 3 },
-        headline: 'Leaderboard contest sparks fierce competition — "I will be number one" says several dozen different players' },
+        headline: 'Leaderboard contest sparks fierce competition: "I will be number one" says several dozen different players' },
 
         { name: 'Mascot mall appearance', icon: [26, 7], durationSec: 3 * 60 * 60, costCps: 35 * 60,
         desc: 'Send in the slightly creepy guy in the giant kitten outfit.',
         flavor: "He has a little dance he does and everything",
         unlock: { conditions: [{ stat: 'players', min: 100 }, { stat: 'hype', min: 100 }] },
         effects: { players: 4, reputation: 1.5, hype: -2, commitment: -1, referrals: 1 },
-        headline: 'Kitten mascot waves at shoppers — wholesome but forgettable' },
+        headline: 'Kitten mascot waves at shoppers, wholesome but forgettable' },
     
         { name: 'Ban cheaters', icon: [1,7], durationSec: 1 * 60 * 60, costCps: 35 * 60,
         desc: 'Cheated cookies taste awful but some players like weird tasting things.',
@@ -1626,7 +1625,7 @@ DownlineM.init = function(div) {
         flavor: "Playing cookie clicker can add 5 years onto your life.",
         unlock: { conditions: [{ stat: 'players', min: 100 }, { stat: 'hype', min: 100 }] },
         effects: { players: 5, hype: 2, commitment: -2, boost: -3 },
-        headline: 'Viral campaign floods feeds — everywhere we look it\'s the same cookie based spam' },
+        headline: 'Viral campaign floods feeds: everywhere we look it\'s the same cookie based spam' },
 
         { name: 'Start rumors about competitors', icon: [17,5], durationSec: 4 * 60 * 60, costCps: 40 * 60,
         desc: "Whisper campaigns against rival games.",
@@ -1640,28 +1639,28 @@ DownlineM.init = function(div) {
         flavor: 'Like and subscribe for part 4.',
         unlock: { conditions: [{ stat: 'players', min: 100 }, { stat: 'hype', min: 150 }] },
         effects: { players: 8, hype: 3, reputation: -2, commitment: -2 },
-        headline: 'Clickbait videos are becoming a real problem — Top 10 ways to avoid them, you won\'t believe #7' },
+        headline: 'Clickbait videos are becoming a real problem. Top 10 ways to avoid them, you won\'t believe #7' },
 
         { name: 'After school cookie clubs', icon: [3,5], durationSec: 6 * 60 * 60, costCps: 40 * 60,
         desc: 'Target the youth demographic. Questionable ethics, undeniable results.',
         flavor: 'Parental consent sold separately.',
         unlock: { conditions: [{ stat: 'players', min: 75 }] },
         effects: { referrals: 2, hype: 3, reputation: -2.5 },
-        headline: 'Cookie clubs spread inside of schools — parents ask questions but get few answers' },
+        headline: 'Cookie clubs spread inside of schools, parents ask questions but get few answers' },
 
         { name: 'Buy fake reviews', icon: [31,8], durationSec: 4 * 60 * 60, costCps: 28 * 60,
         desc: 'Five stars across the board. Suspiciously uniform praise.',
-        flavor: "Best game ever — Let me know if you would like the review to sound more human.",
+        flavor: "Best game ever. Let me know if you would like the review to sound more human.",
         unlock: { conditions: [{ stat: 'players', min: 250 }], tempConditions: [{ stat: 'reputation', max: 700 }] },
         effects: { players: 8, reputation: -2, hype: 5, commitment: -1 },
-        headline: 'How to spot fake online reviews — Expose tonight at 9pm' },
+        headline: 'How to spot fake online reviews: Expose tonight at 9pm' },
 
         { name: 'Aggressively moderate negative reviews', icon: [21,30], durationSec: 2 * 60 * 60, costCps: 25 * 60,
         desc: "Silence the critics with prejudice",
         flavor: '1 star, deleted. 1 star, deleted. 1 star, deleted. Feeling better yet?',
         unlock: { conditions: [{ stat: 'players', min: 100 }], tempConditions: [{ stat: 'reputation', min: 300 }] },
         effects: { hype: 4, reputation: -2 },
-        headline: 'Critical reviews vanish overnight — "suspiciously positive" 5 star rating appears' },
+        headline: 'Critical reviews vanish overnight, "suspiciously positive" 5 star rating appears' },
 
       { name: 'Energy drink sponsorship', icon: [20,14], sheet: 'custom', durationSec: 8 * 60 * 60, costCps: 60 * 60,
         desc: 'Brand deal with a caffeine giant.',
@@ -1675,7 +1674,7 @@ DownlineM.init = function(div) {
         flavor: 'What\'s the worst thing that could happen?',
         unlock: { conditions: [{ stat: 'players', min: 150 }, { stat: 'reputation', min: 300 }], tempConditions: [{ stat: 'reputation', min: 750 }] },
         effects: { referrals: 8, reputation: -2, commitment: -1, hype: -1},
-        headline: 'Refer-a-friend rewards launch — "is it growth or bribery?" we tell you what to think tonight at 11' },
+        headline: 'Refer-a-friend rewards launch: "is it growth or bribery?" we tell you what to think tonight at 11' },
 
         { name: 'Player hypnosis', icon: [19,24], sheet: 'custom', durationSec: 3 * 60 * 60, costCps: 120 * 60,
         desc: 'Hypnosis really only works if you think it does, I wonder what percent of people believe in it.',
@@ -1696,14 +1695,14 @@ DownlineM.init = function(div) {
         flavor: "Cash for cookies program is a hit.",
         unlock: { conditions: [{ stat: 'players', min: 500 }], tempConditions: [{ stat: 'referrals', min: 250 }] },
         effects: { commitment: 5, referrals: -3, reputation: -1 },
-        headline: 'Reports of paid Cookie Clicker actors — How involved is George Soros?' },
+        headline: 'Reports of paid Cookie Clicker actors. How involved is George Soros?' },
 
         { name: 'Pyramid Scam', icon: [13,13], sheet: 'custom', durationSec: 8 * 60 * 60, costCps: 180 * 60,
         desc: 'Each player just needs to recruit three more. Then each of those players will recruit 3 more.',
         flavor: "It's not a pyramid. It's a reverse funnel.",
         unlock: { conditions: [{ stat: 'players', min: 500 }, { stat: 'hype', min: 150 }], tempConditions: [{ stat: 'reputation', min: 800 }] },
         effects: { players: 20, referrals: 5, reputation: -6, commitment: 6, hype: -3},
-        headline: 'Massive backlash on some sort of Cookie Pyramid Scam — Somehow didn\'t even involve edible cookies' },
+        headline: 'Massive backlash on some sort of Cookie Pyramid Scam. Somehow didn\'t even involve edible cookies' },
 
         { name: 'Launch swag store', icon: [14,9], durationSec: 1.5 *  60 * 60, costCps: 90 * 60,
         desc: 'Sell cookie merch. Committed fans love it; critics call it commercialization and selling out.',
@@ -1735,7 +1734,7 @@ DownlineM.init = function(div) {
         unique: true,
         unlock: { conditions: [{ stat: 'players', min: 1000 }] },
         effects: { reputation: -4, players: -3, hype: 6, boost: 3},
-        headline: 'Cookie Clicker tax strategy under scrutiny — IRS announces audit' },
+        headline: 'Cookie Clicker tax strategy under scrutiny, IRS announces audit' },
     
         { name: 'Make game pay to play', icon: [13,14], sheet: 'custom', durationSec: 12 * 60 * 60, costCps: 8 * 60 * 60,
         desc: 'Paywall everything. Instant revenue, instant exodus.',
@@ -1743,7 +1742,7 @@ DownlineM.init = function(div) {
         unique: true,
         unlock: { conditions: [{ stat: 'players', min: 500 }, { stat: 'commitment', min: 200 }] },
         effects: { players: -12, reputation: -7, commitment: 11, boost: 10 },
-        headline: 'Cookie Paywall drops like an iron curtain — player count plummets overnight' },
+        headline: 'Cookie Paywall drops like an iron curtain, player count plummets overnight' },
 
         { name: 'Corporate blackmail', icon: [10,13], sheet: 'custom', durationSec: 4 * 60 * 60, costCps: 90 * 60,
         desc: 'Leverage sensitive information to silence critics and sway coverage.',
@@ -1758,7 +1757,7 @@ DownlineM.init = function(div) {
         unlock: { conditions: [{ stat: 'players', min: 400 }, { stat: 'commitment', min: 150 }], tempConditions: [{ stat: 'commitment', min: 300 }] },
         unique: true,
         effects: { players: -14, reputation: -4, commitment: 7, referrals: 3 },
-        headline: 'Cookie Clicker adds age verification, Government ID required from now on — JNews instant polling shows 3% favorability with 4% margin of error' },
+        headline: 'Cookie Clicker adds age verification, Government ID required from now on. JNews instant polling shows 3% favorability with 4% margin of error' },
 
         { name: 'Donating profits to charity', icon: [7,15], sheet: 'custom', durationSec: 5 * 60 * 60, costCps: 3 * 60 * 60,
         desc: 'Giving away the profits to charity, even if it is just lip service its effective.',
@@ -1773,7 +1772,7 @@ DownlineM.init = function(div) {
         unique: true,
         unlock: { conditions: [], tempConditions: [{ stat: 'reputation', max: 700 }] },
         effects: { reputation: 5, players: 6, commitment: -2, hype: -2, referrals: -2 },
-        headline: 'Cookie CEO posts heartfelt letter to the public — Not everyone is buying it' },
+        headline: 'Cookie CEO posts heartfelt letter to the public. Not everyone is buying it' },
 
       { name: 'Public apology video', icon: [27,2], durationSec: 4 * 60 * 60, costCps: 2 * 60 * 60,
         desc: 'Tearful admission of wrongdoing. Sincerity optional but recommended.',
@@ -1781,7 +1780,7 @@ DownlineM.init = function(div) {
         unique: true,
         unlock: { conditions: [], tempConditions: [{ stat: 'reputation', max: 650 }] },
         effects: { reputation: 7, hype: -3, players: -3 },
-        headline: "Tearful Cookie CEO apology video trends — \"we're sorry you felt that way\"" },
+        headline: "Tearful Cookie CEO apology video trends: \"we're sorry you felt that way\"" },
 
       { name: 'CEO resignation', icon: [12,12], sheet: 'custom', durationSec: 10 * 60 * 60, costCps: 2 * 60 * 60,
         desc: 'Resign your role but take the chairman of the board position.',
@@ -1789,7 +1788,7 @@ DownlineM.init = function(div) {
         unlock: { conditions: [], tempConditions: [{ stat: 'reputation', max: 500 }] },
         effects: { reputation: 9, players: -8, commitment: -4, hype: 3 },
         unique: true,
-        headline: 'CEO steps down amid controversy — "time to focus on family", oddly enough they have no family' },
+        headline: 'CEO steps down amid controversy: "time to focus on family", oddly enough they have no family' },
 
       { name: 'Lobby government', icon: [11,17], sheet: 'custom', durationSec: 6 * 60 * 60, costCps: 3 * 60 * 60,
         desc: 'Influence policy to favor your business, the fancy approved by government sticker really helps. Polarizing but effective.',
@@ -1811,7 +1810,7 @@ DownlineM.init = function(div) {
         flavor: "A player is a player, can't get picky now... we're too deep.",
         unlock: { conditions: [{ stat: 'players', min: 300 }], tempConditions: [{ stat: 'reputation', min: 800 }] },
         effects: { players: 50, commitment: -3, reputation: -8, hype: 3, referrals: -2 },
-        headline: 'Fake players inflate numbers — CEO claims "they are just highly efficient users"' },
+        headline: 'Fake players inflate numbers, CEO claims "they are just highly efficient users"' },
 
       { name: 'Spike drinking water with game enhancing drugs', icon: [9,0], durationSec: 2 * 60 * 60, costCps: 220 * 60,
         desc: 'Controversial business decisions to say the least, some extra chemicals that are all natural to help out the players.',
@@ -1826,7 +1825,7 @@ DownlineM.init = function(div) {
         unique: true,
         unlock: { conditions: [{ stat: 'players', min: 1000 }, { stat: 'fanatic', min: 10 }], tempConditions: [{ stat: 'hype', min: 300 }] },
         effects: { players: 115, referrals: 10, reputation: -22, hype: 8, commitment: 9 },
-        headline: 'Ancient Cookie Cult resurfaces — "these guys are suddenly everywhere maybe if we did some puzzles they would chill out"' },
+        headline: 'Ancient Cookie Cult resurfaces: "these guys are suddenly everywhere maybe if we did some puzzles they would chill out"' },
  
       { name: 'Cookie Clicker the Motion Picture', icon: [2,7], durationSec: 6 * 60 * 60, costCps: 5 * 60 * 60,
         desc: 'A cinematic masterpiece about clicking cookies. Fans rejoice everyone else cringes.',
@@ -1834,7 +1833,7 @@ DownlineM.init = function(div) {
         unique: true,
         unlock: { conditions: [{ stat: 'devotee', min: 15 }], tempConditions: [{ stat: 'hype', min: 250 }, { stat: 'commitment', min: 250 }] },
         effects: { players: 60, commitment: -3, reputation: -5, hype: 5, referrals: 4, boost: -6 },
-        headline: 'Cookie Clicker the Motion Picture premieres to packed theaters — finishes to half empty theaters' },
+        headline: 'Cookie Clicker the Motion Picture premieres to packed theaters, finishes to half empty theaters' },
 
       { name: 'Pivot!', icon: [12,14], sheet: 'custom', durationSec: 0, costCps: 24 * 60 * 60,
         desc: 'Immediately stop all actions, may be used once every hour.',
@@ -1901,7 +1900,7 @@ DownlineM.init = function(div) {
   { stat: 'reputation', min: 700, max: 899, headline: 'Public opinion on Cookie Clicker wavers, critics no longer afraid to speak out over fear of blacklisting' },
   { stat: 'reputation', min: 500, max: 699, headline: '"Take it or leave it" says former Cookie Clicker addict, "it\'s not what it used to be."' },
   { stat: 'reputation', min: 300, max: 499, headline: 'Recent polls show more people dislike clicking cookies than like it, unfavorable numbers at all time highs' },
-  { stat: 'reputation', min: 150, max: 299, headline: '"I didn\'t want my friends to find out I was clicking cookies after school" — more and more hide their cookie shame' },
+  { stat: 'reputation', min: 150, max: 299, headline: '"I didn\'t want my friends to find out I was clicking cookies after school" - more and more hide their cookie shame' },
   { stat: 'reputation', min: 0, max: 149, headline: 'Cookie Clicker name is Mud; considers rebranding to Cockroach Clicker as it polls more favorably' }
 ];
 
@@ -2066,7 +2065,7 @@ DownlineM.init = function(div) {
       }
       
       if (strip.children.length > 0 && !tickerAnimationRunning) {
-        // Claim generation — kills any stale loops from old closures
+        // Claim generation, kills any stale loops from old closures
         tickerGeneration = strip ? ((strip._tickerGen || 0) + 1) : 1;
         if (strip) strip._tickerGen = tickerGeneration;
         tickerAnimationRunning = true;
@@ -3261,7 +3260,7 @@ DownlineM.init = function(div) {
       }
       var data = null;
       try {
-        // Decode if the save was URL-encoded (to handle commas in vanilla save format)
+        // vanilla save format URL-encodes commas
         var decoded = str;
         try {
           decoded = decodeURIComponent(str);
@@ -3366,7 +3365,7 @@ DownlineM.init = function(div) {
       syncDebugLabels();
       DownlineM.updateLumpBoostState();
 
-      // Reset ticker cleanly after load — animation loop will populate items
+      // Reset ticker cleanly after load, animation loop will populate items
       clearTickerStripAndPool();
       resetTickerPosition();
       setTimeout(startTickerAnimationIfNeeded, 150);
@@ -3562,13 +3561,13 @@ function createDownlineAchievements() {
       {
         name: 'Popularity factor',
         desc: 'Have <b>Hype</b>, <b>Commitment</b>, <b>Reputation</b>, and <b>Word of Mouth</b> over 950 at once in the Downline minigame.<q>You haven\'t been this popular since you got 13 votes for class treasurer in 10th grade, but this time you did better than 7th place.</q>',
-        icon: Game.JNE.icon(18, 6, 'custom'),
+        icon: Game.JNE.icon(18, 5, 'custom'),
         order: baseOrder + 0.1
     },
     {
         name: 'Factorial factor',
         desc: 'Release the <b>Fractal Engine minigame</b> 5 times in the Downline minigame in one ascension.<q>Buckle your seatbelts we are going full recursive on this one.</q>',
-        icon: Game.JNE.icon(18, 7, 'custom'),
+        icon: Game.JNE.icon(18, 10, 'custom'),
         order: baseOrder + 0.3
     },
     {
@@ -3724,7 +3723,7 @@ function initializeDownlineMinigame() {
             fractalEngine.minigame = DownlineM;
         }
         
-        // Ensure highest is never NaN (can happen if save data is missing the field)
+        // highest can be NaN if save data is missing the field
         if (typeof fractalEngine.highest !== 'number' || isNaN(fractalEngine.highest)) {
             fractalEngine.highest = fractalEngine.amount || 0;
         }

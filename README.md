@@ -57,6 +57,15 @@ The mobile version of Cookie Clicker does not support mods at this time.
 
 ## Changelog    
 
+### Version 0.6.8
+* Fixed a bug that could prevent some achievements from showing when running the game in non-English. 
+* When adding reagents to the potions brew queue if the reagents will brew an already known potion the text of the button will now be updated to green. 
+* Fixed a bug that would not let you buy some upgrades even if you had enough for them (buy price was calculated before discounts).
+* Fixed a bug that could reaward terminal minigame achievements. 
+* Golden stopwatch time remaining countdown has smarter formatting. 
+* Version number is now less punny however the next version number becomes risky. 
+* Minor bug fixes, improvements, and continued code cleanup. 
+
 ### Version 0.6.7
 * Fixed a handful of puzzles that would not detect a proper solve after save scumming. 
 * Added a toggle button in options to turn on extra stats for those who missed that data after the last patch. These are mostly tracking for progress on items for expansion achievements when those achievements have been won already. This setting is off by default. 
