@@ -5474,6 +5474,7 @@
                 icon: JNE.icon(2, 25, 'custom'),
                 posX: -2076,
                 posY: -1766,
+                price: 30000e15,
                 require: ['Aquaculturist']
             });
             
