@@ -277,6 +277,30 @@ window.JNEData = {
                 unlockCondition: function() {
                     return Game.AchievementsOwned >= 1000;
                 }
+            },
+            {
+                name: 'Kitten Equity Partners',
+                desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
+                ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>Buying up purrsuits left and right, boss.</q>',
+                price: 9e86, // 900 septenvigintillion
+                icon: [18, 13, 'custom'],
+                pool: 'kitten',
+                kitten: 111,
+                unlockCondition: function() {
+                    return Game.AchievementsOwned >= 1050;
+                }
+            },
+            {
+                name: 'Kitten Senators',
+                desc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.',
+                ddesc: 'You gain a tiny bit <b>more CpS</b> the more milk you have.<q>Representing the interests of all feline constituents.</q>',
+                price: 9e89, // 900 octovigintillion
+                icon: [18, 14, 'custom'],
+                pool: 'kitten',
+                kitten: 112,
+                unlockCondition: function() {
+                    return Game.AchievementsOwned >= 1100;
+                }
             }
         ],
         building: [
@@ -3578,6 +3602,13 @@ window.JNEData = {
                 customIcons: [[21, 13, 'custom'], [21, 14, 'custom'], [21, 15, 'custom']],
                 orders: [35000.272, 35000.282, 35000.292]
             },
+            cookieFish: {
+                names: ["Reel fortunate", "Fast and the flounderous"],
+                thresholds: [777, "fastFish"],
+                descs: ["Catch <b>777</b> fish.<q>There are plenty of fish in the sea. Well, fewer now.</q>", "Catch <b>3</b> fish within <b>3 seconds</b>.<q>I live my life one Filet-O-Fish at a time. For those three seconds or less, I'm free.</q>"],
+                customIcons: [[0, 25, 'custom'], [1, 25, 'custom']],
+                orders: [35000.293, 35000.294]
+            },
             reindeer: {
                 names: ["Reindeer destroyer", "Reindeer obliterator", "Reindeer extinction event", "Reindeer apocalypse"],
                 thresholds: [500, 1000, 2000, 5000],
@@ -3914,7 +3945,7 @@ window.JNEData = {
         },
         prestigeUpgrades: {
             names: ["Beyond Prestige"],
-            thresholds: [129], // All 129 prestige upgrades
+            thresholds: [129],
             descs: ["Own all <b>129</b> original heavenly upgrades.<q>Prestige is just a stepping stone to whatever the hell this is.</q>"],
             customIcons: [[20, 7]],
             orders: [6001.598]
@@ -3925,6 +3956,13 @@ window.JNEData = {
             descs: ["Fully initiate into the Great Orders of the Cookie Age. Owning this achievement causes research to go <b>25%</b> faster, and random drops to appear <b>10%</b> more often.<q>A golden cookie sigil is forever affixed to your lapel, you refuse to elaborate further, if someone says the words strawberry milk and peanut butter cookies you immediately leave the room.</q>"],
             customIcons: [[19, 13, 'custom']],
             orders: [400000.3]
+        },
+        accomplishmint: {
+            names: ["Ready set go"],
+            thresholds: [321],
+            descs: ["Earn <b>321 achievements</b> in the <b>Accomplishmint challenge</b> mode.<q>On your marks, get ready, click click click!</q>"],
+            customIcons: [[9, 17, 'custom']],
+            orders: [400000.144]
         }
         }
     },

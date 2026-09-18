@@ -2,7 +2,7 @@
 (function() {
 'use strict';
 
-const TERMINAL_VERSION = '1.0.7';
+const TERMINAL_VERSION = '1.0.8';
 
 var M = {};
 M.parent = Game.Objects && Game.Objects['Javascript console'] ? Game.Objects['Javascript console'] : {
@@ -908,7 +908,6 @@ M.launch = function () {
                 config = config || {};
                 var targetValue = config.target || firstOptionValue(getSwitchTargetOptions(), 'golden');
                 if (targetValue.indexOf('season:') === 0) {
-                    var seasonKey = targetValue.split(':')[1] || 'valentines';
                     var seasonName = findOptionLabel(getSwitchTargetOptions(), targetValue, "Valentine's Day season");
                     return 'Switch to ' + seasonName;
                 }
@@ -1710,11 +1709,6 @@ M.launch = function () {
             return err('Sugar lump is not ready to harvest. Remaining time: ' + Game.sayTime(Math.ceil(remaining / 1000) * Game.fps, -1) + '.');
         }
         var before = Game.lumps;
-        var warningMsg = '';
-        if (age < Game.lumpRipeAge) {
-            var remaining = Math.max(0, Game.lumpRipeAge - age);
-            warningMsg = ' (Warning: still needs ' + Game.sayTime(Math.ceil(remaining / 1000) * Game.fps, -1) + ', 50% failure to harvest chance)';
-        }
         Game.clickLump();
         var diff = (Game.lumps || 0) - before;
         if (diff > 0) return ok('Harvested ' + Beautify(diff) + ' sugar lump' + (diff === 1 ? '' : 's') + '.');
@@ -2501,10 +2495,7 @@ M.launch = function () {
     M.slotTooltip = function (slot) {
         return function () {
             var unlocked = M.getUnlockedSlotCount();
-            var level = (M.parent && typeof M.parent.level === 'number') ? M.parent.level : 0;
-            var baseUnlocked = Math.min(M.maxSlots, Math.max(0, Math.floor(level)));
             var auraBonus = M.getSupremeIntellectBonus();
-            var unlockedByAura = (auraBonus > 0 && slot < unlocked && slot >= baseUnlocked);
             var str = '<div style="padding:8px 4px;min-width:260px;" id="tooltipTerminalSlot">';
             if (slot >= unlocked) {
                 str += '<div class="name">Execution queue ' + (slot + 1) + ' (locked)</div><div class="line"></div>' +

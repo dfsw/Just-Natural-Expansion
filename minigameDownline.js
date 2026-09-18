@@ -3,7 +3,7 @@
 (function() {
 'use strict';
 
-const DOWNLINE_VERSION = '1.0.6';
+const DOWNLINE_VERSION = '1.0.7';
 
 var downlineAchievementNames = [
     'Popularity factor',
@@ -101,8 +101,6 @@ DownlineM.dragonBoostTooltip = function() {
     return '<div style="width:280px;padding:8px;text-align:center;" id="tooltipDragonBoost"><b>Supreme Intellect</b><div class="line"></div>Downline actions last ' + bonusText[0] + ' longer.</div>';
 };
 
-function $(id) { return document.getElementById(id); }
-
 var SHEETS = {};
 Object.defineProperty(SHEETS, 'main', {
     get: function() { return window.getSpriteSheet('main'); }
@@ -122,35 +120,6 @@ function createIcon(col, row, sheet, cellSize) {
     el.style.backgroundImage = 'url(' + (SHEETS[sheetName] || SHEETS.main) + ')';
     el.style.backgroundPosition = (-col * cellSize) + 'px ' + (-row * cellSize) + 'px';
     return el;
-}
-
-function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
-
-function formatNum(n) { return Math.floor(n).toLocaleString(); }
-
-function probRound(x, cap) {
-    if (cap <= 0) return 0;
-    var n = Math.floor(x) + (Math.random() < (x % 1) ? 1 : 0);
-    return Math.min(cap, Math.max(0, n));
-}
-
-function formatDuration(sec) {
-    if (sec <= 0) return 'Instant';
-    if (sec < 60) return sec + ' sec';
-    if (sec < 3600) return Math.round(sec / 60) + ' min';
-    if (sec < 86400) { var h = sec / 3600; return (h % 1 ? h.toFixed(1) : h) + ' hour' + (h > 1 ? 's' : ''); }
-    var d = Math.round(sec / 86400); return d + ' day' + (d > 1 ? 's' : '');
-}
-
-function formatRemaining(sec) {
-    sec = Math.max(0, Math.floor(sec));
-    if (sec === 0) return '0s';
-    var h = Math.floor(sec / 3600), m = Math.floor((sec % 3600) / 60), s = sec % 60;
-    var parts = [];
-    if (h > 0) parts.push(h + 'h');
-    if (m > 0) parts.push(m + 'm');
-    if (s > 0 || parts.length === 0) parts.push(s + 's');
-    return parts.join(' ');
 }
 
 DownlineM.init = function(div) {
@@ -2314,12 +2283,10 @@ DownlineM.init = function(div) {
       var level = fe ? fe.level : 1;
       var baseMax = getMaxSlots(level);
       var isHalved = hasBoredomEffect('slots_half');
-      var blockedCount = 0;
       activeList.querySelectorAll('.downline-active-slot').forEach(function (s, i) {
         var isAvailable = i < max;
         var isBlocked = !isAvailable && i < baseMax && isHalved;
         var hasChip = s.querySelector('.downline-active-chip') !== null;
-        if (isBlocked) blockedCount++;
         // Only mark as available if slot is empty and within max
         s.classList.toggle('available', isAvailable && !hasChip);
         s.classList.toggle('blocked', isBlocked);
@@ -2558,23 +2525,13 @@ DownlineM.init = function(div) {
 
     function checkUnlocks() {
       var noUnique = hasBoredomEffect('no_unique');
-      var lockedByUnlock = 0, lockedByNoUnique = 0;
       actionsListEl.querySelectorAll('.downline-action-item[data-name]').forEach(function (el) {
         var def = ACTIONS[el.getAttribute('data-name')];
         if (!def) return;
         if (def.unlock.conditions && def.unlock.conditions.length > 0 && conditionsMet(def.unlock.conditions)) G.unlocked[def.name] = true;
-        var unlockOk = def.isUnlocked();
         var usableOk = def.isUsable && def.isUsable();
         var blockedByNoUnique = def.unique && noUnique;
-        var canAfford = true;
-        if (usableOk && def.costCps && def.costCps > 0) {
-          var costMult = hasBoredomEffect('cost_double') ? 2 : 1;
-          var costCookies = G.unfrozenRawCpS * def.costCps * costMult;
-          if (costCookies > 0 && Game.cookies < costCookies) canAfford = false;
-        }
         var isLocked = !usableOk || blockedByNoUnique;
-        if (isLocked && blockedByNoUnique) lockedByNoUnique++;
-        else if (isLocked) lockedByUnlock++;
         el.classList.toggle('locked', isLocked);
       });
     }
