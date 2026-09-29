@@ -3562,7 +3562,7 @@ window.JNEData = {
         other: {
 			cps: {
                 names: ["Beyond the speed of dough", "Speed of sound", "Speed of light", "Faster than light", "Speed of thought", "Faster than speed of thought", "Plaid", "Somehow faster than plaid", "Transcending the very concept of speed itself"],
-    thresholds: [1e57, 1e58, 1e59, 1e60, 1e61, 1e62, 1e63, 1e64, 1e65],
+                thresholds: [1e57, 1e58, 1e59, 1e60, 1e61, 1e62, 1e63, 1e64, 1e65],
                 descs: function(t, i) {
                     var q = [null, null, null, null, null, null, "They've gone to plaid!", "Ah, buckle this! LUDICROUS SPEED! GO!", "Everything else is frozen, we\u2019re breaking physics, so, uh... should we actually do something with that?"][i];
                     return loc("Bake <b>%1</b> per second.", loc("%1 cookie", LBeautify(t))) + (q ? '<q>' + q + '</q>' : '');

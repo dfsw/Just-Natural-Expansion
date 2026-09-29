@@ -57,12 +57,23 @@ The mobile version of Cookie Clicker does not support mods at this time.
 
 ## Changelog  
 
+### Version 0.7.2
+* Fixed a crash that could happen on steam when entering Accomplishmint mode. 
+* Fixed a bug that would grant building CPS increase to building discount upgrades. 
+* Changed how Morroween effects CPS so its behaves like Cyclius in terms of Raw CPS. 
+* Better prevention of banned achievements in Accomplishmint mode. 
+* Minor bug fixes, improvements, and code cleanup. 
+
+### Version 0.7.1
+* Fixed a bug that could result in lost achievement progress if you attempted to reload a save on the ascension screen while in Accomplishmint mode and reloaded into a game without the mod being loaded. 
+* Major refactor and reworking of Mysteries of the Puzzle Age to make things more stable and maintainable. 
+
 ### Version 0.7.0 - Major Version - A New Challenge
-* New challenge mode, Puzzle Mode. Allows you to play without earning prestige but with everything unlocked to complete the puzzle pack. Puzzles are no longer restricted to end game players, anyone who can ascend can complete them now. 
+* New challenge mode, Puzzle Mode. Allows you to play without earning prestige but with everything unlocked to complete the puzzle pack. Puzzles are no longer restricted to end game players, anyone who can ascend can complete them now. Challenge modes are started by selecting the cookie icon during ascension. 
 * New challenge mode, Accomplishmint. Temporarily reset all your achievements and play against a sped up version of Cookie Clicker to see how many achievements you can earn in 60 minute limited version of Cookie Clicker. 
 * Two new kittens have found their way into the mix for those who are really pushing those achievement counts up. 
 * New fish icons and achievements.  
-* General art updates.
+* General art updates, as always thank you to our volunteer artist who have made donations. 
 * Puzzles that require seasonal orders are now more accepting of the order that April Fools day and Easter may appear in certain calendar years.
 * Fixed a couple of end-level puzzles with various issues, thanks Leah! 
 * Minor bug fixes, improvements, and continued code cleanup. 
