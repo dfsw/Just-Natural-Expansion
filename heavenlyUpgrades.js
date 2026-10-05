@@ -274,7 +274,8 @@
                         '<span>' + typeNames[currentLumpType] + '</span></div>';
                 }
 
-                if (!Game.Has('Sugar predictor')) return str;
+                // Hide predictor UI when Choose Your Own Lump is active so its interface can take over
+                if (!Game.Has('Sugar predictor') || (window.CYOL && window.CYOL.isLoaded) || (Game.mods && Game.mods['Choose Your Own Lump'])) return str;
 
                 var pred = Game.getLumpPredictions();
                 var lookupTableValid = Game._lumpGameStates && Game._lumpGameStates.length > 0 &&
@@ -5439,8 +5440,8 @@
             
             createHeavenlyUpgrade({
                 name: 'Annualized returns',
-                desc: 'Display cookie bank in <b>years of CpS</b> in stats.',
-                ddesc: 'Display cookie bank in <b>years of CpS</b> in stats.<q>Crunching the big numbers now.</q>',
+                desc: 'Display cookie bank in <b>years of CpS</b> and your cookies per click in stats.',
+                ddesc: 'Display cookie bank in <b>years of CpS</b> and your cookies per click in stats.<q>Crunching the big numbers now.</q>',
                 price: 35e15,
                 icon: [31, 8],
                 posX: -1921,

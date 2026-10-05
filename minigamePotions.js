@@ -3,7 +3,7 @@
 (function() {
 'use strict';
 
-const POTIONS_VERSION = '1.1.10';
+const POTIONS_VERSION = '1.1.11';
 
 // =====================================================================
 // Potions 
@@ -4995,8 +4995,8 @@ PotionsM._performPrestige = function() {
     G.slots = [null, null, null];
     G.selectedReagents = [];
     G.triedRecipes = TriedRecipes.create();
-    G.highlightedReagents = [];
-    G.highlightEndTime = 0;
+    G.totalFailedDiscoveries = 0;
+    PotionsM._clearReagentHighlights();
 
     PotionsM._refreshSlots();
     PotionsM._renderSelectedReagents();

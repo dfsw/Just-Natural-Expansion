@@ -60,7 +60,7 @@
     
     function initializeMod() {
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.7.2';
+    var modVersion = '0.7.3';
     var debugMode = false;
     
     function debugLog() {
@@ -1853,7 +1853,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                         <div class="subsection" style="padding:0px;">
                             <div class="title">${Game.JNE.modName} v${Game.JNE.modVersion}</div>
                               <div style="margin:10px 0px;color:#ccc;font-size:11px;line-height:1.3;">
-							    <br><br><a href=" https://discord.gg/vTyR5vWhQR" target="_blank" rel="noopener noreferrer" style="color:#03adfc;font-weight:bold;">Join the Just Natural Expansion Discord</a> to connect with fellow players, swap strategies, get puzzle hints, catch sneak peeks of upcoming releases, and beta test new features before anyone else.<br> 
+							    <a href=" https://discord.gg/vTyR5vWhQR" target="_blank" rel="noopener noreferrer" style="color:#03adfc;font-weight:bold;">Join the Just Natural Expansion Discord</a> to connect with fellow players, swap strategies, get puzzle hints, catch sneak peeks of upcoming releases, and beta test new features before anyone else.<br> 
 							</div>
                             <div class="listing">
                                 <a class="option" id="toggle-shadow-achievements" style="text-decoration:none;color:${modSettings.shadowAchievements ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
@@ -2196,25 +2196,30 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             if (Game.onMenu === 'stats') {
                 let menuContainer = document.getElementById('menu');
                 
-                function getAnnualizedReturnsText() {
-                    if (!Game.Has('Annualized returns') || !Game.cookiesPs || Game.cookiesPs <= 0) {
-                        return '';
-                    }
-                    var secondsOfProduction = Game.cookies / Game.cookiesPs;
+                function formatCpsTime(value) {
+                    if (!Game.cookiesPs || Game.cookiesPs <= 0) return '';
+                    var secondsOfProduction = value / Game.cookiesPs;
                     var yearsOfProduction = secondsOfProduction / (365.25 * 24 * 60 * 60);
-                    
-                    if (yearsOfProduction >= 1) {
-                        return `<b>Cookie Bank:</b> ${Beautify(yearsOfProduction, 2)} years of CpS`;
-                    } else if (yearsOfProduction >= 0.01) {
-                        return `<b>Cookie Bank:</b> ${Beautify(yearsOfProduction, 4)} years of CpS`;
-                    }
-                    
+                    if (yearsOfProduction >= 1) return `${Beautify(yearsOfProduction, 2)} years of CpS`;
+                    if (yearsOfProduction >= 0.01) return `${Beautify(yearsOfProduction, 4)} years of CpS`;
                     var daysOfProduction = secondsOfProduction / (24 * 60 * 60);
-                    if (daysOfProduction >= 1) {
-                        return `<b>Cookie Bank:</b> ${Beautify(daysOfProduction, 2)} days of CpS`;
-                    }
-                    
-                    return `<b>Cookie Bank:</b> ${Beautify(secondsOfProduction / (60 * 60), 2)} hours of CpS`;
+                    if (daysOfProduction >= 1) return `${Beautify(daysOfProduction, 2)} days of CpS`;
+                    var hoursOfProduction = secondsOfProduction / (60 * 60);
+                    if (hoursOfProduction >= 1) return `${Beautify(hoursOfProduction, 2)} hours of CpS`;
+                    var minutesOfProduction = secondsOfProduction / 60;
+                    if (minutesOfProduction >= 1) return `${Beautify(minutesOfProduction, 2)} minutes of CpS`;
+                    return `${Beautify(secondsOfProduction, 2)} seconds of CpS`;
+                }
+
+                function getAnnualizedReturnsText() {
+                    if (!Game.Has('Annualized returns')) return '';
+                    var t = formatCpsTime(Game.cookies);
+                    return t ? `<b>Cookie Bank:</b> ${t}` : '';
+                }
+
+                function getCookiesPerClickText() {
+                    if (!Game.Has('Annualized returns')) return '';
+                    return `<b>Cookies per click:</b> ${Beautify(Game.computedMouseCps || 0)}`;
                 }
                 
                 if (menuContainer && !document.getElementById('mod-stats-section')) {
@@ -2343,6 +2348,10 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     var annualizedReturnsText = getAnnualizedReturnsText();
                     if (annualizedReturnsText) {
                         lifetimeStatsHTML += `<div class="listing" id="annualized-returns-stat">${annualizedReturnsText}</div>`;
+                    }
+                    var cookiesPerClickText = getCookiesPerClickText();
+                    if (cookiesPerClickText) {
+                        lifetimeStatsHTML += `<div class="listing" id="cookies-per-click-stat">${cookiesPerClickText}</div>`;
                     }
                     
                     var modAchievementsUnlocked = 0;
@@ -2580,6 +2589,13 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                         var annualizedReturnsText = getAnnualizedReturnsText();
                         if (annualizedReturnsText) {
                             annualizedReturnsElement.innerHTML = annualizedReturnsText;
+                        }
+                    }
+                    var cookiesPerClickElement = document.getElementById('cookies-per-click-stat');
+                    if (cookiesPerClickElement) {
+                        var cookiesPerClickText = getCookiesPerClickText();
+                        if (cookiesPerClickText) {
+                            cookiesPerClickElement.innerHTML = cookiesPerClickText;
                         }
                     }
 
@@ -3978,12 +3994,15 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             Game.SetResearch._modded = true;
         }
 
-        // Random drop rate boost for Bearer of the Cookie Sigil achievement
+        // Random drop rate boost 
         if (Game.dropRateMult && !Game.dropRateMult._modded) {
             if (!Game._jneOriginalDropRateMult) Game._jneOriginalDropRateMult = Game.dropRateMult;
             Game.dropRateMult = function() {
                 var mult = Game._jneOriginalDropRateMult.call(this);
                 if (Game.Achievements['Bearer of the Cookie Sigil'] && Game.Achievements['Bearer of the Cookie Sigil'].won) {
+                    mult *= 1.1;
+                }
+                if (Game.Achievements['Order of the eternal cookie'] && Game.Achievements['Order of the eternal cookie'].won) {
                     mult *= 1.1;
                 }
                 return mult;
