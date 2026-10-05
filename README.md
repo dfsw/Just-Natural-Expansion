@@ -57,6 +57,14 @@ The mobile version of Cookie Clicker does not support mods at this time.
 
 ## Changelog  
 
+### Version 0.7.3
+* Fever nightmares now properly reset failed potion counts which is used for various things. 
+* If you are running CYOL the Just Natural Expansion Sugar Predictor user interface will be hidden to prevent conflicts.
+* Annualized returns upgrade now also shows Cookies Per Click in the stats menu when owned. 
+* Finishing the Mysteries of the Cookie Age puzzle pack will now award you a 10% increase to random drop chances. 
+* Fixed some rendering issues with a couple of puzzles for Firefox users. 
+* Minor bug fixes, improvements, and code cleanup. 
+
 ### Version 0.7.2
 * Fixed a crash that could happen on steam when entering Accomplishmint mode. 
 * Fixed a bug that would grant building CPS increase to building discount upgrades. 
