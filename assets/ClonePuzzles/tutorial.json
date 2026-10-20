@@ -1,0 +1,644 @@
+{
+ "v": 2,
+ "name": "tutorial",
+ "difficulty": "Easy",
+ "seedCode": "TUTOR",
+ "generatedAt": "2026-10-16T06:49:35.562Z",
+ "grid": [
+  1,
+  1,
+  0,
+  0,
+  0,
+  0,
+  1,
+  0,
+  1,
+  0,
+  0,
+  1,
+  0,
+  0,
+  0,
+  1,
+  1,
+  1,
+  0,
+  1
+ ],
+ "traits": {
+  "bluehair": [
+   "B3",
+   "C1",
+   "D2"
+  ]
+ },
+ "start": {
+  "cell": "B2",
+  "text": "Welcome to Clone Recovery & Sorting®. Today we will be providing you with several minutes of valuable on the job training. The provided intel is ALWAYS truthful. Your job is to successfully mark all 20 suspects with their true identities. B2 is an Authentic. Select B2 and choose Authentic.",
+  "cells": [
+   "B2"
+  ]
+ },
+ "cards": [
+  2,
+  1,
+  3,
+  4,
+  null,
+  0,
+  8,
+  null,
+  5,
+  null,
+  9,
+  13,
+  12,
+  null,
+  7,
+  null,
+  null,
+  6,
+  10,
+  11
+ ],
+ "clues": [
+  {
+   "cell": "B2",
+   "code": "[D]B1c",
+   "text": "The person directly above B2 is a Clone. \"Directly\" means the very next card in that direction, one step away. Directions can be above, below, left, or right. Mark the Clone now.",
+   "step": 0,
+   "scope": 2
+  },
+  {
+   "cell": "B1",
+   "code": "A1@[R1][C]2",
+   "text": "Suspects group naturally into units that can be referenced, such as columns A through D, rows 1 through 5, and others we will learn later. A1 is one of exactly 2 Clones in row 1. Row 1 is A1 through D1. What can this clue tell us about C1 and D1? Logical deductions are what this job is all about.",
+   "step": 1,
+   "scope": 15
+  },
+  {
+   "cell": "A1",
+   "code": "A1[N]1",
+   "text": "Each person also has neighbors. Every person touching another person is a neighbor, which includes directly or diagonally. People in the center like C3 have 8 neighbors, while those on the edges have 5 and those in corners have only 3. Exactly 1 of A1's 3 neighbors is a Clone. Determine the remaining neighbor's identity and mark them.",
+   "step": 2,
+   "scope": 50
+  },
+  {
+   "cell": "C1",
+   "code": "A2[N]3",
+   "text": "A2 has 5 neighbors: A1, B1, B2, A3 and B3. Exactly 3 of A2's neighbors are Clones. When intel narrows suspects without revealing them, click a card's corner to leave a colored tag as a note to yourself.",
+   "step": 3,
+   "scope": 803
+  },
+  {
+   "cell": "D1",
+   "code": "B1<>B5[C]0",
+   "text": "\"There are no Clones between B1 and B5.\" \"Between\" means strictly inside the range, not including the named suspects. Click any intel item to dim it for readability.",
+   "step": 4,
+   "scope": 8736
+  },
+  {
+   "cell": "A3",
+   "code": "B1<>B[C]1",
+   "text": "Direction words can also refer to a straight line in that direction, but never the source itself. \"There is exactly 1 Clone below B1.\"",
+   "step": 5,
+   "scope": 139808
+  },
+  {
+   "cell": "B5",
+   "code": "C2<>B[I]CONN",
+   "text": "Suspects are \"connected\" when each member is in an unbroken straight line with all other members. A connected group always needs at least two people. \"All Authentics below C2 are connected.\" If you ever need a hint, the Supervisor! button can show which clues can be used to resolve a suspect, who will be highlighted in gold. However, your final score is penalized each time you use it.",
+   "step": 6,
+   "scope": 279552
+  },
+  {
+   "cell": "C4",
+   "code": "B1[N]^[C3][C]O",
+   "text": "\"An odd number of Clones in column C neighbor B1.\" Counts can also be odd or even instead of exact, and units can overlap each other: only the people who neighbor B1 and are inside column C apply.",
+   "step": 7,
+   "scope": 68
+  },
+  {
+   "cell": "C2",
+   "code": "[C3]MAX[I]",
+   "text": "\"Column C has the most Authentics.\" Weigh column C against what you know about the rest of the board. What can be determined?",
+   "step": 8,
+   "scope": 1048575
+  },
+  {
+   "cell": "C3",
+   "code": "[E]8",
+   "text": "\"The edge ring holds exactly 8 Clones.\" Not every clue is useful right away. Too much of the board is still unknown for this one to reveal anything, so hold it for later. Once more is revealed, it may become useful. Constraints are where corner tags earn their keep.",
+   "step": 9,
+   "scope": 1022367
+  },
+  {
+   "cell": "C5",
+   "code": "[R5]MAX",
+   "text": "Units can be compared against each other. \"Row 5 has the fewest Authentics.\" This means that row 5 has uniquely fewer Authentics than any other row.",
+   "step": 10,
+   "scope": 1048575
+  },
+  {
+   "cell": "D5",
+   "code": "B1[N][C]>[A5]",
+   "text": "\"B1 has more Clone neighbors than A5.\" Neighbor counts can be compared between two suspects.",
+   "step": 11,
+   "scope": 143477
+  },
+  {
+   "cell": "A4",
+   "code": "[T:bluehair][B][C]2",
+   "text": "\"Exactly 2 suspects with blue hair have a Clone directly below them.\" Traits group suspects the same way units do. Hovering over this intel will highlight all the people who match the trait.",
+   "step": 12,
+   "scope": 10304
+  },
+  {
+   "cell": "D3",
+   "code": "[C4]C[C]",
+   "text": "\"All Clones in column D are connected.\" What can be determined on the board with this information? Hint: A previous clue about edge counts will help you finish the tutorial.",
+   "step": 13,
+   "scope": 559240
+  }
+ ],
+ "deduce": {
+  "0": 32,
+  "1": 34,
+  "3": 47,
+  "7": 63,
+  "11": 47,
+  "15": 63,
+  "19": 8751,
+  "23": 8767,
+  "27": 9007,
+  "31": 9023,
+  "59": 140079,
+  "63": 140095,
+  "123": 156463,
+  "127": 156479,
+  "251": 156527,
+  "255": 156543,
+  "507": 419695,
+  "511": 419711,
+  "1019": 419695,
+  "1023": 419711,
+  "1531": 1009519,
+  "1535": 1009535,
+  "2043": 1009519,
+  "2047": 1009535,
+  "3579": 1009519,
+  "3583": 1013631,
+  "4091": 1013615,
+  "4095": 1013631,
+  "7679": 1015679,
+  "8187": 1015663,
+  "8191": 1015679,
+  "15871": 1048447,
+  "16379": 1048575,
+  "16383": 1048575
+ },
+ "proofs": {
+  "B2": [
+   0
+  ],
+  "B1": [
+   1,
+   24,
+   416,
+   400,
+   1320,
+   4368,
+   5160,
+   5920,
+   13600
+  ],
+  "A1": [
+   2,
+   24,
+   1448,
+   3492,
+   3876,
+   5160,
+   7460,
+   8068,
+   16136,
+   16008,
+   14216,
+   12072,
+   16132
+  ],
+  "C1": [
+   3,
+   26,
+   290,
+   274,
+   1320,
+   1304,
+   3364,
+   5408,
+   4368,
+   4240
+  ],
+  "D1": [
+   3,
+   26,
+   418,
+   402,
+   1448,
+   1432,
+   1322,
+   3492,
+   3372,
+   3864,
+   5416,
+   7460,
+   5400,
+   5162,
+   5672,
+   5410,
+   5656,
+   15648,
+   15632,
+   9258,
+   11680,
+   15880,
+   14112,
+   12064
+  ],
+  "A2": [
+   5,
+   28,
+   420,
+   404,
+   1324,
+   4372,
+   5164,
+   5924,
+   13604,
+   14120,
+   13848
+  ],
+  "B3": [
+   16,
+   1440,
+   5408
+  ],
+  "B4": [
+   16,
+   1440
+  ],
+  "A3": [
+   24,
+   1448,
+   5416
+  ],
+  "B5": [
+   48,
+   400,
+   1440,
+   1808,
+   4368,
+   13696
+  ],
+  "C4": [
+   64,
+   416,
+   5408
+  ],
+  "C2": [
+   154,
+   131,
+   418,
+   402,
+   1448,
+   1432,
+   3492,
+   3356,
+   5536,
+   4112
+  ],
+  "C3": [
+   416,
+   400,
+   3364,
+   5408,
+   4368,
+   5224,
+   7936,
+   15616,
+   13760,
+   14208
+  ],
+  "C5": [
+   416,
+   400,
+   2324,
+   4368,
+   13184
+  ],
+  "A5": [
+   1440,
+   1424,
+   3372,
+   3876,
+   5408,
+   5392,
+   16128,
+   10112
+  ],
+  "D5": [
+   1440,
+   1424,
+   3372,
+   3880,
+   5408,
+   5392,
+   7936,
+   14208,
+   12160
+  ],
+  "A4": [
+   3492,
+   2324,
+   2236,
+   4008,
+   3864,
+   3876,
+   3644,
+   7460,
+   7976,
+   7736,
+   11556,
+   16160,
+   16144,
+   13848,
+   14120
+  ],
+  "D3": [
+   5408,
+   4112,
+   12068
+  ],
+  "D4": [
+   15616,
+   13600,
+   11648,
+   14208,
+   15142
+  ],
+  "D2": [
+   14120,
+   14104,
+   10152
+  ]
+ },
+ "hints": [
+  {
+   "flipped": [
+    5
+   ],
+   "clues": [
+    5
+   ],
+   "reveals": [
+    5
+   ]
+  },
+  {
+   "flipped": [
+    5,
+    5
+   ],
+   "clues": [
+    1
+   ],
+   "reveals": [
+    1
+   ]
+  },
+  {
+   "flipped": [
+    5,
+    5,
+    1
+   ],
+   "clues": [
+    0
+   ],
+   "reveals": [
+    0
+   ]
+  },
+  {
+   "flipped": [
+    5,
+    5,
+    1,
+    0
+   ],
+   "clues": [
+    2
+   ],
+   "reveals": [
+    2
+   ]
+  },
+  {
+   "flipped": [
+    5,
+    5,
+    1,
+    0,
+    2
+   ],
+   "clues": [
+    3
+   ],
+   "reveals": [
+    3
+   ]
+  },
+  {
+   "flipped": [
+    5,
+    5,
+    1,
+    0,
+    2,
+    3
+   ],
+   "clues": [
+    8
+   ],
+   "reveals": [
+    8
+   ]
+  },
+  {
+   "flipped": [
+    5,
+    5,
+    1,
+    0,
+    2,
+    3,
+    8
+   ],
+   "clues": [
+    17
+   ],
+   "reveals": [
+    17
+   ]
+  },
+  {
+   "flipped": [
+    5,
+    5,
+    1,
+    0,
+    2,
+    3,
+    8,
+    17
+   ],
+   "clues": [
+    14
+   ],
+   "reveals": [
+    14
+   ]
+  },
+  {
+   "flipped": [
+    5,
+    5,
+    1,
+    0,
+    2,
+    3,
+    8,
+    17,
+    14
+   ],
+   "clues": [
+    6
+   ],
+   "reveals": [
+    6
+   ]
+  },
+  {
+   "flipped": [
+    5,
+    5,
+    1,
+    0,
+    2,
+    3,
+    8,
+    17,
+    14,
+    6
+   ],
+   "clues": [
+    10
+   ],
+   "reveals": [
+    10
+   ]
+  },
+  {
+   "flipped": [
+    5,
+    5,
+    1,
+    0,
+    2,
+    3,
+    8,
+    17,
+    14,
+    6,
+    10
+   ],
+   "clues": [
+    18
+   ],
+   "reveals": [
+    18
+   ]
+  },
+  {
+   "flipped": [
+    5,
+    5,
+    1,
+    0,
+    2,
+    3,
+    8,
+    17,
+    14,
+    6,
+    10,
+    18
+   ],
+   "clues": [
+    19
+   ],
+   "reveals": [
+    19
+   ]
+  },
+  {
+   "flipped": [
+    5,
+    5,
+    1,
+    0,
+    2,
+    3,
+    8,
+    17,
+    14,
+    6,
+    10,
+    18,
+    19
+   ],
+   "clues": [
+    12
+   ],
+   "reveals": [
+    12
+   ]
+  },
+  {
+   "flipped": [
+    5,
+    5,
+    1,
+    0,
+    2,
+    3,
+    8,
+    17,
+    14,
+    6,
+    10,
+    18,
+    19,
+    12
+   ],
+   "clues": [
+    11
+   ],
+   "reveals": [
+    11
+   ]
+  }
+ ],
+ "tutorial": true
+}
