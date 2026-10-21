@@ -4,7 +4,7 @@
 {
     'use strict';
     
-    var BETA_MODE = true; 
+    var BETA_MODE = false; 
 
     // Load the custom sprite sheet  (github then jsdelivr)
     var CUSTOM_SHEET_PRIMARY_URL = BETA_MODE
