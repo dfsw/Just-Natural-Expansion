@@ -2,7 +2,7 @@
 (function() {
 'use strict';
 
-const CLONES_VERSION = '1.0.0';
+const CLONES_VERSION = '1.0.1';
 var PUZZLE_BASE_BETA = 'https://raw.githubusercontent.com/dfsw/Cookies/beta/puzzles/';
 var PUZZLE_BASE_RELEASE = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/main/assets/ClonePuzzles/';
 var PUZZLE_BASE_FALLBACK = 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/ClonePuzzles/';
@@ -253,7 +253,12 @@ function loadSnd(url) {
     if (SND.bufs[url] !== undefined) return;
     var AC = window.AudioContext || window.webkitAudioContext;
     if (!AC) { SND.noAC = true; SND.bufs[url] = false; return; }
-    if (!SND.ctx) SND.ctx = new AC();
+    if (!SND.ctx) {
+        // steam's music init replaces window.AudioContext with a live instance; reuse it
+        try { SND.ctx = (typeof AC === 'function') ? new AC() : (AC.decodeAudioData ? AC : null); }
+        catch (e) { SND.ctx = null; }
+        if (!SND.ctx) { SND.noAC = true; SND.bufs[url] = false; return; }
+    }
     var ctx = SND.ctx;
     SND.bufs[url] = null;
     fetch(url.indexOf('snd/') === 0 ? (Game.resPath || '') + url : url)
@@ -291,12 +296,12 @@ function playSnd(url, vol) {
 
 // state
 var G = {
-    tier: 'E', puzzleFile: null, puzzle: null, starterSentence: null,
+    tier: 'E', puzzleTier: null, puzzleFile: null, puzzle: null, starterSentence: null,
     yous: null, yousSeed: null, solved: {}, readMask: 0,
     earned: [], clueRowForClue: {}, clueRowEls: [],
     hintedCells: [], mistakeCells: [], hintCell: null, cornerTags: {}, dimmed: {}, tellRow: -1,
     won: 0, claimed: 0, earlyCells: [], tFirst: 0, tDone: 0, nextPuzzleAt: 0,
-    failed: 0, reward: null, redeemed: 0, redeemedRw: null, spinPending: 0, tutBonus: 0,
+    failed: 0, reward: null, redeemed: 0, redeemedRw: null, spinPending: 0, tutBonus: 0, restored: 0,
     loading: false, picking: undefined, index: null, restore: null,
     populated: null, popGen: 0, populating: false,
     ready: false, reqId: 0, stacked: false, debugSalt: 0,
@@ -311,11 +316,11 @@ function clearRun() {
     G.hintCell = null; G.tellRow = -1; G.populated = null; G.populating = false;
     G.claimed = 0; G.earlyCells = []; G.tFirst = 0; G.tDone = 0; G.popOrder = null;
     G.failed = 0; G.reward = null; G.redeemed = 0; G.redeemedRw = null;
-    G.spinPending = 0; G.yousSeed = null; G.tutBonus = 0;
+    G.spinPending = 0; G.yousSeed = null; G.tutBonus = 0; G.restored = 0;
     closePrizeSlots();
 }
 var RUN_FIELDS = ['ys', 'solved', 'earned', 'hintedCells', 'mistakeCells', 'cornerTags', 'dimmed', 'claimed',
-    'earlyCells', 'tFirst', 'tDone', 'failed', 'reward', 'redeemed', 'redeemedRw', 'tutBonus'];
+    'earlyCells', 'tFirst', 'tDone', 'failed', 'reward', 'redeemed', 'redeemedRw', 'tutBonus', 'restored'];
 
 function checkLayout() {
     var main = l('clonesMain');
@@ -500,8 +505,11 @@ function applyPuzzle(data, saved) {
     });
     G.starterSentence = (data.start && data.start.text) || null;
 
-    var t = (G.puzzleFile || 'E')[0];
+    // the JSON's declared difficulty wins over the filename letter, so a
+    var dk = TIER_KEYS.filter(function(k) { return TIERS[k] === data.difficulty; })[0];
+    var t = dk || (G.puzzleFile || 'E')[0];
     if (TIERS[t]) G.tier = t;
+    G.puzzleTier = G.tier; // the dealt puzzle's tier; promotion/selection mutate G.tier later
     syncTierIcons();
 
     clearRun();
@@ -557,6 +565,8 @@ function applyPuzzle(data, saved) {
         G.spinPending = (G.reward && !G.redeemed) ? 1 : 0;
         svSolved.forEach(function(i) { G.solved[i] = grid[i]; });
         svEarned.forEach(function(c) { G.earned.push(c); G.readMask |= 1 << c; });
+        // resumed mid-run: the flawless V clear has to happen in a single session
+        if (saved.restored || svSolved.length || G.tFirst || G.mistakeCells.length || G.earlyCells.length || G.hintedCells.length) G.restored = 1;
     } else {
         // fresh board
         G.populating = true;
@@ -955,7 +965,7 @@ function showStats(list) {
     var t = G.tFirst && G.tDone ? fmtDur(G.tDone - G.tFirst) : '—';
     list.innerHTML = '<div style="text-align:center;padding:14px 6px;font-size:12px;color:#ccc;line-height:1.9;">' +
         '<b style="color:#e2dd48;">Job Satisfaction Report</b><br>' +
-        'Difficulty: ' + (G.puzzle && G.puzzle.tutorial ? 'Tutorial' : tierIconHtml((G.puzzleFile || G.tier || 'E')[0].toUpperCase())) + '<br>' +
+        'Difficulty: ' + (G.puzzle && G.puzzle.tutorial ? 'Tutorial' : tierIconHtml(G.puzzleTier || 'E')) + '<br>' +
         'Time: <b>' + t + '</b><br>' +
         'Hints used: <b>' + G.hintedCells.length + '</b><br>' +
         'Undeducible picks: <b>' + G.earlyCells.length + '</b><br>' +
@@ -1073,7 +1083,7 @@ function rollReward(salt) {
     }
     if (mistakeCount() >= 8) return null;
 
-    var t = (G.puzzleFile || G.tier || 'E')[0].toUpperCase();
+    var t = G.puzzleTier || 'E';
     var score = Math.min(10, (DIFF_SCORES[t] || 2) - scorePenalty() + supremeIntellectBonus());
     var w = score >= 10 ? TIER_WEIGHTS[10] : score <= 1 ? TIER_WEIGHTS.low : TIER_WEIGHTS[score];
     // salt varies the seed so debug rerolls aren't pinned to the saved result
@@ -1090,7 +1100,7 @@ function tierUnlocked(t) {
 
 function recordTierProgress() {
     var u = G.tierProg.u || 'E', idx = TIER_KEYS.indexOf(u);
-    if (G.tier !== u || idx >= TIER_KEYS.length - 1) return;
+    if (G.puzzleTier !== u || idx >= TIER_KEYS.length - 1) return;
     var mist = mistakeCount();
     if (mist >= 8) return; // failed runs teach nothing
     var p = G.tierProg.p || (G.tierProg.p = { c: 0, g: 0, o: 0 });
@@ -1399,7 +1409,7 @@ function completePuzzle() {
             ['An Allegedly Perfect Record', G.cleanWins >= 10],
             ['Doppelganger gang', G.won >= 123],
             ['The Devil You Clone', tierUnlocked('V')],
-            ['The Devil Is in the Duplicates', G.tier === 'V' && !mist]
+            ['The Devil Is in the Duplicates', G.puzzleTier === 'V' && !mist && !G.restored]
         ].forEach(function(a) { awardClonesAchievement(a[0], a[1]); });
     }
     addEndIcons();
@@ -1724,7 +1734,7 @@ ClonesM.launch = function() {
             cornerTags: tags, dimmed: Object.keys(G.dimmed).map(Number),
             won: G.won, claimed: G.claimed, earlyCells: G.earlyCells,
             tFirst: G.tFirst, tDone: G.tDone, nextPuzzleAt: G.nextPuzzleAt,
-            failed: G.failed, reward: G.reward, redeemed: G.redeemed, redeemedRw: G.redeemedRw,
+            failed: G.failed, reward: G.reward, redeemed: G.redeemed, redeemedRw: G.redeemedRw, restored: G.restored,
             tierProg: tp, cleanWins: G.cleanWins,
             tutorialDone: G.tutorialDone, tutBonus: G.tutBonus,
             rot: rotSave(), // completion bitsets survive ascension 

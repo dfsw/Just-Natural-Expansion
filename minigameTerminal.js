@@ -32,6 +32,24 @@ var terminalAchievementState = {
     achievementsCreated: false
 };
 
+// wins recorded in the save string; restores won silently and keeps a stash for
+// achievements that don't exist yet — loading is never an award moment
+function applySavedAchievementWins(names) {
+    M._pendingAchWon = names.slice();
+    flushPendingAchievementWins();
+}
+function flushPendingAchievementWins() {
+    if (!Array.isArray(M._pendingAchWon)) return;
+    M._pendingAchWon.forEach(function(n) {
+        var a = Game.Achievements && Game.Achievements[n];
+        if (a && !a.won && !(Game.JNE && Game.JNE.isAccomplishmintSuppressed && Game.JNE.isAccomplishmintSuppressed(n))) {
+            a.won = 1;
+            a._restoredFromSave = true;
+        }
+    });
+    M._pendingAchWon = null;
+}
+
 M.launch = function () {
     var M = this;
     M.name = M.parent.minigameName;
@@ -3087,6 +3105,11 @@ M.launch = function () {
         if (M.parent && typeof M.parent.onMinigame !== 'undefined') {
             isVisible = M.parent.onMinigame ? 1 : 0;
         }
+        var aw = '';
+        terminalAchievementNames.forEach(function(n, i) {
+            var a = Game.Achievements && (Game.Achievements[n] || Game.Achievements[n + ' [DISABLED]']);
+            if (a && (a.won || a._savedWonStatus)) aw += (aw ? ',' : '') + i;
+        });
         var saveParts = [
             Math.max(0, slotsToSave),
             slotPart,
@@ -3094,7 +3117,8 @@ M.launch = function () {
             runCount,
             runTotal,
             cooldownStamp,
-            isVisible
+            isVisible,
+            aw === '' ? '-' : aw
         ];
         return saveParts.join(' ');
     };
@@ -3124,6 +3148,7 @@ M.launch = function () {
             M.slotSettings.length = 0;
             M.programsRun = 0;
             M.programsRunTotal = 0;
+            M._pendingAchWon = null;
             M.executionCooldownStart = 0;
             M.isExecutingSequence = false;
             M.setExecutingSlot(-1);
@@ -3223,7 +3248,15 @@ M.launch = function () {
                 }, 50);
             }
 
-            checkAndAwardTerminalAchievements();
+            var awPart = (legacyFormat ? legacyParts[7] : parts[7]) || '-';
+            var wonNames = [];
+            if (awPart !== '-') {
+                awPart.split(',').forEach(function(p) {
+                    var wn = terminalAchievementNames[parseInt(p, 10)];
+                    if (wn) wonNames.push(wn);
+                });
+            }
+            applySavedAchievementWins(wonNames);
 
             if (window.TerminalMinigame && typeof window.TerminalMinigame.writeCache === 'function') {
                 var cacheString = legacyFormat ? M.buildSaveString() : str;
@@ -3234,6 +3267,7 @@ M.launch = function () {
             M.slotSettings.length = 0;
             M.programsRun = 0;
             M.programsRunTotal = 0;
+            M._pendingAchWon = null;
             M.executionCooldownStart = 0;
             M.setExecutingSlot(-1);
             M.ensureUnlockedSlots();
@@ -3248,6 +3282,7 @@ M.launch = function () {
         M.dragging = null;
         M.slotHovered = -1;
         M.programsRun = 0;
+        M._pendingAchWon = null;
         M.executionCooldownStart = 0;
         M.setExecutingSlot(-1);
         M.ensureUnlockedSlots();
@@ -3310,6 +3345,7 @@ function createTerminalAchievements() {
                 }
             }
         }
+        flushPendingAchievementWins();
         terminalAchievementState.achievementsCreated = true;
         return;
     }
@@ -3357,6 +3393,7 @@ function createTerminalAchievements() {
         }
     }
 
+    flushPendingAchievementWins();
     terminalAchievementState.achievementsCreated = true;
 }
 
