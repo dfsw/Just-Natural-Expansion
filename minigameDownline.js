@@ -3,7 +3,7 @@
 (function() {
 'use strict';
 
-const DOWNLINE_VERSION = '1.0.7';
+const DOWNLINE_VERSION = '1.0.8';
 
 var downlineAchievementNames = [
     'Popularity factor',
@@ -815,7 +815,7 @@ DownlineM.init = function(div) {
       </div>
     </div>
     <div class="downline-ticker-row">
-      <div id="downline-freeze-btn" class="gardenSeed" role="button" tabindex="0" data-name="Freeze" title="Freeze" data-desc-html="Freeze the Downline, everything runs slower! Action effects, decay, and CpS bonus are all reduced by 1/6th, plenty of time to take your eyes off the prize and get some Zzz's or maybe a pizza."><div class="gardenSeedIcon shadowFilter" style="background-position: -48px -1680px;"></div></div>
+      <div id="downline-freeze-btn" class="gardenSeed" role="button" tabindex="0" data-name="Freeze" title="Freeze" data-desc-html="Freeze the Downline, everything runs slower! Action effects, decay, and CpS bonus are all reduced by 1/6th (Fractal Prestige bonus unaffected), plenty of time to take your eyes off the prize and get some Zzz's or maybe a pizza."><div class="gardenSeedIcon shadowFilter" style="background-position: -48px -1680px;"></div></div>
       <div class="downline-ticker-wrap">
         <div class="downline-ticker-banner">BREAKING</div>
         <div class="downline-ticker-bar">
@@ -906,8 +906,7 @@ DownlineM.init = function(div) {
       var mult = 1 + (bonus * 0.1);
       if (G.actionDurationMult) mult *= G.actionDurationMult;
      
-      // Check for Breath of Growth buff (potions class)
-      if (Game.hasBuff('Breath of Growth')) {
+      if (Game.hasBuff('Breath of Growth') || Game.hasBuff('Cloneconomics')) {
         mult *= 2;
       }
       return mult;
@@ -2714,7 +2713,7 @@ DownlineM.init = function(div) {
 
       var currentBoostVal = G.frozen ? getCurrentBoost() * FROZEN_SPEED_FRAC : getCurrentBoost();
       var boostText = currentBoostVal.toFixed(2) + '%';
-      var prestigeVal = G.prestigeBoost > 0 ? (G.frozen ? G.prestigeBoost * FROZEN_SPEED_FRAC : G.prestigeBoost) : 0;
+      var prestigeVal = G.prestigeBoost > 0 ? G.prestigeBoost : 0;
       if (prestigeVal > 0) boostText += '<br>(+' + prestigeVal.toFixed(2) + '%  Fractal Prestige)';
       var boostEl = $('downline-status-boost');
       boostEl.innerHTML = boostText;
@@ -2842,8 +2841,7 @@ DownlineM.init = function(div) {
       if (G.frozen) speedLabel = '(frozen)';
       $('debug-stats').textContent = 'tick ' + G.tickCount + ' | ' + Math.floor(G.elapsedSec) + 's game | ' + formatNum(totalPlayers()) + ' players | ' + speedLabel;
 
-      var totBoost = getCurrentBoost() + (G.prestigeBoost || 0);
-      if (G.frozen) totBoost *= FROZEN_SPEED_FRAC;
+      var totBoost = getCurrentBoost() * (G.frozen ? FROZEN_SPEED_FRAC : 1) + (G.prestigeBoost || 0);
       var newEffs = 1 + totBoost / 100;
       var cpsChanged = !DownlineM.effs || Math.abs(DownlineM.effs.cps - newEffs) > 0.0001;
       
@@ -2960,8 +2958,7 @@ DownlineM.init = function(div) {
         var tickerWrap = document.querySelector('.downline-ticker-wrap');
         if (tickerWrap) tickerWrap.classList.toggle('frozen', G.frozen);
         if (G.frozen) playFreezeSound();
-        var totBoost = getCurrentBoost() + (G.prestigeBoost || 0);
-        if (G.frozen) totBoost *= FROZEN_SPEED_FRAC;
+        var totBoost = getCurrentBoost() * (G.frozen ? FROZEN_SPEED_FRAC : 1) + (G.prestigeBoost || 0);
         DownlineM.effs = { cps: 1 + totBoost / 100 };
         Game.recalculateGains = 1;
       });
@@ -3149,8 +3146,7 @@ DownlineM.init = function(div) {
 
     // Only set initial effects if not already set (prevent re-execution on script reload during toggle)
     if (!DownlineM.effs || !DownlineM._initialEffsSet) {
-        var totBoost = getCurrentBoost() + (G.prestigeBoost || 0);
-        if (G.frozen) totBoost *= FROZEN_SPEED_FRAC;
+        var totBoost = getCurrentBoost() * (G.frozen ? FROZEN_SPEED_FRAC : 1) + (G.prestigeBoost || 0);
         DownlineM.effs = { cps: 1 + totBoost / 100 };
         DownlineM._initialEffsSet = true;
         Game.recalculateGains = 1;

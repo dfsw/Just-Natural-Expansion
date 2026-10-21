@@ -57,13 +57,20 @@ The mobile version of Cookie Clicker does not support mods at this time.
 
 ## Changelog  
 
+### Version 0.8.0 - Major Version - Clones!
+* Introducing Clone Escape, an entirely new minigame for the Yous building. You have been hired as a temporary worker for the highly respected Clone Recovery & Sorting® company. Your task is sorting out who is a clone and who is an authenic. Use logic, reason, and deduction to accomplish your task and earn powerful combo building rewards. 
+* Discord link works on Steam again, come join us!
+* Downline now provides full prestige CpS even when frozen but current round CpS is still reduced. 
+* Hardened the save/restore system further for a potential edge case that might cause mod achievements being lost on a failed load. 
+* Terminal Minigame achievements are more…achievable
+* Minor bug fixes, improvements, and code cleanup. 
+
 ### Version 0.7.3
 * Fever nightmares now properly reset failed potion counts which is used for various things. 
 * If you are running CYOL the Just Natural Expansion Sugar Predictor user interface will be hidden to prevent conflicts.
 * Annualized returns upgrade now also shows Cookies Per Click in the stats menu when owned. 
 * Finishing the Mysteries of the Cookie Age puzzle pack will now award you a 10% increase to random drop chances. 
 * Fixed some rendering issues with a couple of puzzles for Firefox users. 
-* Minor bug fixes, improvements, and code cleanup. 
 
 ### Version 0.7.2
 * Fixed a crash that could happen on steam when entering Accomplishmint mode. 

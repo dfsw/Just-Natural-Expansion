@@ -4,7 +4,7 @@
 {
     'use strict';
     
-    var BETA_MODE = false; 
+    var BETA_MODE = true; 
 
     // Load the custom sprite sheet  (github then jsdelivr)
     var CUSTOM_SHEET_PRIMARY_URL = BETA_MODE
@@ -60,7 +60,7 @@
     
     function initializeMod() {
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.7.3';
+    var modVersion = '0.8.0';
     var debugMode = false;
     
     function debugLog() {
@@ -161,6 +161,9 @@
     var potionsMinigameScriptUrl = BETA_MODE 
         ? 'https://cdn.jsdelivr.net/gh/dfsw/Cookies@beta/Beta/minigamePotions.js'
         : 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/minigamePotions.js';
+    var clonesMinigameScriptUrl = BETA_MODE 
+        ? 'https://cdn.jsdelivr.net/gh/dfsw/Cookies@beta/Beta/minigameClones.js'
+        : 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/minigameClones.js';
     var cookieAgeScriptUrl = BETA_MODE 
         ? 'https://cdn.jsdelivr.net/gh/dfsw/Cookies@beta/Beta/cookieAge.js'
         : 'https://cdn.jsdelivr.net/gh/dfsw/Cookies@main/cookieAge.js';
@@ -170,6 +173,7 @@
 
     // Sprite sheet is already loaded (see top of file) by the time initializeMod() runs.
     if (!Game.JNE) Game.JNE = {};
+    Game.JNE.beta = BETA_MODE; 
     Game.JNE.icon = function(x, y, sheetName) {
         // Handle both calling conventions
         if (typeof x === 'object' && x !== null) {
@@ -235,12 +239,14 @@
 var pendingTerminalMinigameSave = '';
 var pendingDownlineMinigameSave = '';
 var pendingPotionsMinigameSave = '';
+var pendingClonesMinigameSave = '';
 
 var cookieAgeScriptLoaded = false;
 var heavenlyUpgradesScriptLoaded = false;
 var modInitialized = false; // Track if mod has finished initializing
 var achievementsCreated = false; // Track if achievements have been created to prevent recreation
 var modSaveData = null; // Store save data for initialization
+var loadFailedSave = null; // the mod save string a load choked on save() hands it back untouched until a clean load
 var modLoadInvoked = false; // Track whether load() has run this session
 var pendingAchievementAwards = []; // Queue for achievements to award once initialization completes
 var modUnlockStateCache = Object.create(null);
@@ -589,6 +595,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         if (!Game.OnAscend || Game.OnAscend === 0) {
             // full reset - clear mod save data to prevent cross-contamination
             modSaveData = null;
+            loadFailedSave = null; // a deliberate wipe has to reach the save, even after a failed load
             if (Game.JNE) Game.JNE.cookieAgeSavedData = null;
             if (window.CookieAge && window.CookieAge.resetData) window.CookieAge.resetData();
             debugLog('handleReset: cleared modSaveData to prevent cross-contamination');
@@ -1030,6 +1037,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             Game.JNE.enableJSMiniGame = enabled;
             Game.JNE.enableDownlineMinigame = enabled;
             Game.JNE.enablePotionsMinigame = enabled;
+            Game.JNE.enableClonesMinigame = enabled;
             
             minigameConfigs.forEach(function(cfg) {
                 if (enabled) {
@@ -1759,6 +1767,11 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
 
     // Toggle CpS display unit function (cycles through seconds, minutes, hours, days)
     if (!window.JNE) window.JNE = {};
+    window.JNE.openLink = function(url) {
+        if (typeof App !== 'undefined' && App && App.openLink) { App.openLink(url); return false; }
+        window.open(url, '_blank', 'noopener');
+        return false;
+    };
     window.JNE.toggleCpsDisplayUnit = function() {
         var units = ['seconds', 'minutes', 'hours', 'days'];
         var unitLabels = { 'seconds': 'Seconds', 'minutes': 'Minutes', 'hours': 'Hours', 'days': 'Days' };
@@ -1853,7 +1866,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                         <div class="subsection" style="padding:0px;">
                             <div class="title">${Game.JNE.modName} v${Game.JNE.modVersion}</div>
                               <div style="margin:10px 0px;color:#ccc;font-size:11px;line-height:1.3;">
-							    <a href=" https://discord.gg/vTyR5vWhQR" target="_blank" rel="noopener noreferrer" style="color:#03adfc;font-weight:bold;">Join the Just Natural Expansion Discord</a> to connect with fellow players, swap strategies, get puzzle hints, catch sneak peeks of upcoming releases, and beta test new features before anyone else.<br> 
+							    <a href="https://discord.gg/vTyR5vWhQR" target="_blank" rel="noopener noreferrer" ${Game.clickStr}="return window.JNE.openLink(this.href);" style="color:#03adfc;font-weight:bold;">Join the Just Natural Expansion Discord</a> to connect with fellow players, swap strategies, get puzzle hints, catch sneak peeks of upcoming releases, and beta test new features before anyone else.<br>
 							</div>
                             <div class="listing">
                                 <a class="option" id="toggle-shadow-achievements" style="text-decoration:none;color:${modSettings.shadowAchievements ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
@@ -1889,7 +1902,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                                 <a class="option" id="toggle-minigames" style="text-decoration:none;color:${modSettings.enableMinigames ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
                                     Minigames<br><b style="font-size:12px;">${modSettings.enableMinigames ? 'ON' : 'OFF'}</b>
                                 </a>
-                                <label>${modSettings.enableMinigames ? '(Enables minigames for JS Consoles (v' + (window.TerminalMinigame ? window.TerminalMinigame.VERSION : '?') + '), Fractal Engines (v' + (window.DownlineMinigame ? window.DownlineMinigame.VERSION : '?') + '), and Alchemy Labs (v' + (window.PotionsMinigame ? window.PotionsMinigame.VERSION : '?') + ').)' : '(Enables minigames for JS Consoles, Fractal Engines, and Alchemy Labs.)'}</label>
+                                <label>${modSettings.enableMinigames ? '(Enables minigames for JS Consoles (v' + (window.TerminalMinigame ? window.TerminalMinigame.VERSION : '?') + '), Fractal Engines (v' + (window.DownlineMinigame ? window.DownlineMinigame.VERSION : '?') + '), Alchemy Labs (v' + (window.PotionsMinigame ? window.PotionsMinigame.VERSION : '?') + '), and Yous (v' + (window.ClonesMinigame ? window.ClonesMinigame.VERSION : '?') + ').)' : '(Enables minigames for JS Consoles, Fractal Engines, Alchemy Labs, and Yous.)'}</label>
                             </div>
                             <div class="listing">
                                 <a class="option" id="toggle-extra-seasons" style="text-decoration:none;color:${modSettings.enableExtraSeasons ? 'lime' : 'red'};width:130px;display:inline-block;margin-left:-5px;text-align:right;font-size:12px;cursor:pointer;">
@@ -2668,6 +2681,16 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             getPendingSave: function() { return pendingPotionsMinigameSave; },
             setPendingSave: function(v) { pendingPotionsMinigameSave = v; },
             scriptLoaded: false, isOpen: false, syncPending: false
+        },
+        {
+            buildingName: 'You', minigameName: 'Clone Escape',
+            scriptUrl: clonesMinigameScriptUrl, scriptPattern: 'minigameClones.js',
+            globalMiniKey: 'ClonesM', globalInitKey: 'initializeClonesMinigame',
+            removeAchievementsKey: 'removeClonesAchievements',
+            jneDataKey: 'clonesSavedData', windowApiKey: 'ClonesMinigame',
+            getPendingSave: function() { return pendingClonesMinigameSave; },
+            setPendingSave: function(v) { pendingClonesMinigameSave = v; },
+            scriptLoaded: false, isOpen: false, syncPending: false
         }
     ];
 
@@ -2845,6 +2868,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     function syncTerminalMinigameButtonWithSetting() { _syncMinigame(_getMinigameCfg('Javascript console')); }
     function syncDownlineMinigameButtonWithSetting() { _syncMinigame(_getMinigameCfg('Fractal engine')); }
     function syncPotionsMinigameButtonWithSetting()  { _syncMinigame(_getMinigameCfg('Alchemy lab')); }
+    function syncClonesMinigameButtonWithSetting()   { _syncMinigame(_getMinigameCfg('You')); }
 
     // Generate public save/load APIs for each minigame from the config
     minigameConfigs.forEach(function(cfg) {
@@ -2857,8 +2881,15 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     if (!Game.JNE) Game.JNE = {};
                     Game.JNE[cfg.jneDataKey] = s;
                     cfg.setPendingSave(s);
-                    if (s === '') return;
                     var b = Game.Objects && Game.Objects[cfg.buildingName];
+                    if (s === '') {
+                        // no saved run for this minigame a live session must reset rather than keep stale state,
+                        if (b && b.minigameLoaded && b.minigame && typeof b.minigame.reset === 'function') {
+                            b.minigame.reset(true);
+                            if (typeof b.minigame.load === 'function') b.minigame.load('');
+                        }
+                        return;
+                    }
                     if (b && b.minigameLoaded && b.minigame && typeof b.minigame.load === 'function') b.minigame.load(s);
                 } catch (e) { errorLog(cfg.windowApiKey + '.applySaveData failed:', e && e.message ? e.message : e); }
             },
@@ -2911,9 +2942,19 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
     function getTerminalMinigameSaveString()     { return _getMinigameSaveString(_getMinigameCfg('Javascript console')); }
     function getDownlineMinigameSaveString()     { return _getMinigameSaveString(_getMinigameCfg('Fractal engine')); }
     function getPotionsMinigameSaveString()      { return _getMinigameSaveString(_getMinigameCfg('Alchemy lab')); }
+    function getClonesMinigameSaveString()       { return _getMinigameSaveString(_getMinigameCfg('You')); }
     function setTerminalMinigameSave(s)          { _setMinigameSave(_getMinigameCfg('Javascript console'), s); }
     function setDownlineMinigameSave(s)          { _setMinigameSave(_getMinigameCfg('Fractal engine'), s); }
     function setPotionsMinigameSave(s)           { _setMinigameSave(_getMinigameCfg('Alchemy lab'), s); }
+    function setClonesMinigameSave(s)            { _setMinigameSave(_getMinigameCfg('You'), s); }
+    // hand every minigame its saved string; '' (no data) resets it
+    function applyMinigameSaves(data) {
+        var str = function(v) { return typeof v === 'string' ? v : ''; };
+        setTerminalMinigameSave(str(data.terminal));
+        setDownlineMinigameSave(str(data.downlineMinigame));
+        setPotionsMinigameSave(str(data.potionsMinigame));
+        setClonesMinigameSave(str(data.clonesMinigame));
+    }
 
     function getHeavenlyUpgradesSaveString() {
         try {
@@ -3355,6 +3396,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     if (cfg.buildingName === 'Javascript console') syncTerminalMinigameButtonWithSetting();
                     else if (cfg.buildingName === 'Fractal engine') syncDownlineMinigameButtonWithSetting();
                     else if (cfg.buildingName === 'Alchemy lab') syncPotionsMinigameButtonWithSetting();
+                    else if (cfg.buildingName === 'You') syncClonesMinigameButtonWithSetting();
                 }
             }
         }, 'Monitor all minigame states');
@@ -7270,6 +7312,50 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     }
     }
 
+    // mark every achievement the save recorded as won, plus renamed ones; tolerates malformed entries
+    function restoreSavedAchievements(saved) {
+        var won = function(n) { return !!(saved[n] && saved[n].won > 0); };
+        var restored = 0, aliased = 0;
+        (modAchievementNames || []).forEach(function(n) { if (won(n)) { markAchievementWonFromSave(n); restored++; } });
+        // Check for aliased achievements (renamed achievements)
+        Object.keys(saved).forEach(function(n) {
+            var alias = achievementAliases[n];
+            if (alias && won(n) && Game.Achievements[alias]) { markAchievementWonFromSave(alias); aliased++; }
+        });
+        debugLog('restoreSavedAchievements: restored', restored, 'achievements and', aliased, 'aliased achievements');
+    }
+
+    // load() threw part-way through. Falling back to empty defaults would let the next save write them over the
+    // player's data, so keep the parsed save as the source of truth, put back what it holds, and freeze the mod
+    // save until a clean load or a hard reset. continueModInitialization restores lifetime + tracking from it.
+    function recoverFromFailedLoad(str, data, minigamesApplied) {
+        loadFailedSave = String(str);
+        modSaveData = data || { upgrades: {} };
+        [
+            function() { if (data && !minigamesApplied) applyMinigameSaves(data); },
+            function() { // load zeroes upgrade purchases before restoring them
+                var ups = (data && data.upgrades) || {};
+                for (var name in ups) if (Game.Upgrades[name]) Game.Upgrades[name].bought = (ups[name] && ups[name].bought) || 0;
+                recalculateUpgradesOwned();
+            },
+            function() { // load zeroes achievements first, and initAchievements skips ones that already exist
+                restoreSavedAchievements((data && data.achievements) || {});
+            },
+            function() {
+                var rd = data && data.lifetime && data.lifetime.seasonalReindeerData;
+                if (typeof rd === 'string') seasonalReindeerData = rd;
+            },
+            function() {
+                new Game.Note(modName + ' load error',
+                    'Your JNE data is safe and won\'t be overwritten, but JNE progress made this session won\'t be saved. Reload the game to try again, and please report this if it keeps happening (details are in the browser console).',
+                    modIcon, 64800); 
+            }
+        ].forEach(function(step) {
+            try { step(); } catch (e) { errorLog('recoverFromFailedLoad: step failed:', e); }
+        });
+        Game.recalculateGains = 1; // the load may have thrown while CpS recalculation was paused
+    }
+
     // for save loading only
     function continueModInitialization() {
         // only called during save loading; mod init is handled by initializeModWithSaveData() in init()
@@ -7294,10 +7380,12 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         Game.JNE.enableJSMiniGame = !!modSettings.enableMinigames;
         Game.JNE.enableDownlineMinigame = !!modSettings.enableMinigames;
         Game.JNE.enablePotionsMinigame = !!modSettings.enableMinigames;
+        Game.JNE.enableClonesMinigame = !!modSettings.enableMinigames;
         Game.JNE.enableExtraSeasons = !!modSettings.enableExtraSeasons;
         syncTerminalMinigameButtonWithSetting();
         syncDownlineMinigameButtonWithSetting();
         syncPotionsMinigameButtonWithSetting();
+        syncClonesMinigameButtonWithSetting();
 
         // match saved setting, skip manual side effects
         if (typeof window.applyCookieAgeChange === 'function') {
@@ -7678,6 +7766,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 dl: saveObj.downlineMinigame,
                 pm: saveObj.potionsMinigame,
                 pmo: Game.JNE && Game.JNE.potionsSavedDataIsOpen,
+                ce: saveObj.clonesMinigame,
                 ss: saveObj.seasonState,
                 mt: saveObj.modTracking,
                 ca: saveObj.cookieAge,
@@ -7771,6 +7860,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 terminal: terminalData,
                 downlineMinigame: data.dl,
                 potionsMinigame: potionsData,
+                clonesMinigame: data.ce,
                 modTracking: data.mt,
                 cookieAge: data.ca,
                 heavenlyUpgrades: huData,
@@ -8199,6 +8289,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         init: function() {
             modSaveData = { upgrades: {} };
             setTerminalMinigameSave('');
+            setClonesMinigameSave('');
             
             this.initializeMod();
             Game.Win('Third-party');
@@ -8227,6 +8318,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             Game.JNE.enableJSMiniGame = !!modSettings.enableMinigames;
             Game.JNE.enableDownlineMinigame = !!modSettings.enableMinigames;
             Game.JNE.enablePotionsMinigame = !!modSettings.enableMinigames;
+            Game.JNE.enableClonesMinigame = !!modSettings.enableMinigames;
             Game.JNE.getLifetimeReindeer = getLifetimeReindeer;
             Game.JNE.getLifetimeLanterns = getLifetimeLanterns;
             Game.JNE.getZodiacVisitCount = getZodiacVisitCount;
@@ -8281,11 +8373,12 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             registerAccomplishmintMode();
             registerAccomplishmintHooks();
 
-            // Initialize terminal, downline, and potions minigames if enabled
+            // Initialize terminal, downline, potions, and clones minigames if enabled
             if (modSettings.enableMinigames) {
                 syncTerminalMinigameButtonWithSetting();
                 syncDownlineMinigameButtonWithSetting();
                 syncPotionsMinigameButtonWithSetting();
+                syncClonesMinigameButtonWithSetting();
             }
                         
             // Initial check for all upgrades after achievements are loaded
@@ -8330,6 +8423,8 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
   
         // game calls this on save
         save: function() {
+            // after a failed load the live state can't be trusted: write back exactly what was loaded
+            if (loadFailedSave !== null) return loadFailedSave;
             try {
                 var currentTime = Date.now();
                 
@@ -8398,6 +8493,14 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     errorLog('mod.saveSystem.save: Error getting Potions minigame save string:', e);
                 }
                 
+                //get Clone Escape minigame save string
+                var clonesMinigameSaveString = '';
+                try {
+                    clonesMinigameSaveString = getClonesMinigameSaveString();
+                } catch (e) {
+                    errorLog('mod.saveSystem.save: Error getting Clone Escape minigame save string:', e);
+                }
+                
                 //get Cookie Age save data
                 var cookieAgeData = null;
                 try {
@@ -8443,6 +8546,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     terminal: terminalSaveString,
                     downlineMinigame: downlineMinigameSaveString,
                     potionsMinigame: potionsMinigameSaveString,
+                    clonesMinigame: clonesMinigameSaveString,
                     modTracking: (!modInitialized && modSaveData && modSaveData.modTracking) ? modSaveData.modTracking : {
                         shinyWrinklersPopped: modTracking.shinyWrinklersPopped || 0,
                         templeSwapsTotal: modTracking.templeSwapsTotal || 0,
@@ -8510,6 +8614,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         // game calls this on load
         load: function(str) {
             modLoadInvoked = true;
+            loadFailedSave = null; // every load attempt starts unfrozen, the catch below re-freezes on failure
 
             //  Savescum safety: cancel any in-flight continueModInitialization 
             if (pendingInitTimerId !== null) {
@@ -8528,12 +8633,14 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 Game.emit('load', { modName: modName, modVersion: modVersion });
             }
             
+            var minigameSavesApplied = false, loadedModData = null;
             // Skip loading saved data in reset mode to maintain clean state
             try {
                 if (!str || str.trim() === '' || str === '{}') {
                     modSaveData = { upgrades: {} };
                     setTerminalMinigameSave('');
                     setPotionsMinigameSave('');
+                    setClonesMinigameSave('');
                     setHeavenlyUpgradesSave('');
                     checkAndShowInitialChoice();
                     return;
@@ -8541,6 +8648,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 
                 // decompress (handles old + new formats)
                 const modData = decompressSaveData(str);
+                loadedModData = modData;
                 
                 // Validate save data BEFORE resetting anything
                 if (!modData) {
@@ -8548,6 +8656,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     modSaveData = { upgrades: {} };
                     setTerminalMinigameSave('');
                     setPotionsMinigameSave('');
+                    setClonesMinigameSave('');
                     setHeavenlyUpgradesSave('');
                     checkAndShowInitialChoice();
                     return;
@@ -8567,13 +8676,15 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     (modData.settings && Object.keys(modData.settings).length > 0) ||
                     (typeof modData.terminal === 'string' && modData.terminal.length > 0) ||
                     (typeof modData.downlineMinigame === 'string' && modData.downlineMinigame.length > 0) ||
-                    (typeof modData.potionsMinigame === 'string' && modData.potionsMinigame.length > 0)
+                    (typeof modData.potionsMinigame === 'string' && modData.potionsMinigame.length > 0) ||
+                    (typeof modData.clonesMinigame === 'string' && modData.clonesMinigame.length > 0)
                 );
                 
                 if (!hasData) {
                     debugLog('mod.saveSystem.load: no meaningful data');
                     // Keep existing Downline minigame cache as-is; there is nothing new to restore.
                     setTerminalMinigameSave('');
+                    setClonesMinigameSave('');
                     setHeavenlyUpgradesSave('');
                     // Delay clearing isLoadingFromSave to match the main path
                     setTimeout(function() {
@@ -8639,21 +8750,8 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     // Store save data for initialization
                     modSaveData = modData;
 
-                    if (typeof modData.terminal !== 'undefined') {
-                        setTerminalMinigameSave(modData.terminal);
-                    } else {
-                        setTerminalMinigameSave('');
-                    }
-                    if (typeof modData.downlineMinigame === 'string') {
-                        setDownlineMinigameSave(modData.downlineMinigame);
-                    } else {
-                        setDownlineMinigameSave('');
-                    }
-                    if (typeof modData.potionsMinigame === 'string') {
-                        setPotionsMinigameSave(modData.potionsMinigame);
-                    } else {
-                        setPotionsMinigameSave('');
-                    }
+                    applyMinigameSaves(modData);
+                    minigameSavesApplied = true;
                     if (typeof modData.heavenlyUpgrades !== 'undefined') {
                         setHeavenlyUpgradesSave(modData.heavenlyUpgrades);
                     } else {
@@ -8676,6 +8774,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                             Game.JNE.enableJSMiniGame = modSettings.enableMinigames;
                             Game.JNE.enableDownlineMinigame = modSettings.enableMinigames;
                             Game.JNE.enablePotionsMinigame = modSettings.enableMinigames;
+                            Game.JNE.enableClonesMinigame = modSettings.enableMinigames;
                         }
                         if (modSettings.enableCookieAge !== undefined) {
                             Game.JNE.enableCookieAge = modSettings.enableCookieAge;
@@ -8714,36 +8813,8 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     }, 100);
                     
                     debugLog('mod.saveSystem.load: modSaveData.achievements exists:', !!modSaveData.achievements);
-                    if (modSaveData.achievements) {
-                        debugLog('mod.saveSystem.load: modSaveData.achievements count:', Object.keys(modSaveData.achievements).length);
-                        
-                        // RESTORE: Save data is the sole source of truth (reset already done above)
-                        if (modAchievementNames) {
-                            var restoredCount = 0;
-                            modAchievementNames.forEach(achievementName => {
-                                if (modSaveData.achievements[achievementName] && modSaveData.achievements[achievementName].won > 0) {
-                                    markAchievementWonFromSave(achievementName);
-                                    restoredCount++;
-                                }
-                            });
-                            debugLog('mod.saveSystem.load: restored', restoredCount, 'achievements from save data');
-                        }
-                        
-                        // Check for aliased achievements (renamed achievements)
-                        var aliasedCount = 0;
-                        Object.keys(modSaveData.achievements).forEach(savedName => {
-                            if (modSaveData.achievements[savedName].won > 0) {
-                                if (achievementAliases[savedName]) {
-                                    var newName = achievementAliases[savedName];
-                                    if (Game.Achievements[newName]) {
-                                        markAchievementWonFromSave(newName);
-                                        aliasedCount++;
-                                    }
-                                }
-                            }
-                        });
-                        debugLog('mod.saveSystem.load: restored', aliasedCount, 'aliased achievements');
-                    }
+                    // RESTORE: Save data is the sole source of truth (reset already done above)
+                    if (modSaveData.achievements) restoreSavedAchievements(modSaveData.achievements);
 
                     // Clear _restoredFromSave flag for all achievements so they can be earned normally during gameplay
                     if (modAchievementNames) {
@@ -8800,9 +8871,9 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 } catch (error) {
                     console.error('[JNE Error] Error loading mod save data:', error);
                     debugLog('mod.saveSystem.load: error loading save data:', error);
-                    // Fall back to defaults on error
-                    modSaveData = { upgrades: {} };
-                    setTerminalMinigameSave('');
+                    // never fall back to empty defaults: restore from the parsed save and freeze the mod save
+                    recoverFromFailedLoad(str, loadedModData, minigameSavesApplied);
+                    if (pendingInitTimerId !== null) clearTimeout(pendingInitTimerId); // the normal path may have queued one already
                     pendingInitTimerId = setTimeout(function() {
                         pendingInitTimerId = null;
                         continueModInitialization();
