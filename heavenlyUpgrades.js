@@ -3,7 +3,7 @@
         'use strict';
         
         const SIMPLE_MOD_NAME = 'Just Natural Expansion';
-        const MOD_HU_VERSION = '1.0.30';
+        const MOD_HU_VERSION = '1.0.31';
         var isInitialized = false;
         const MOD_ICON = [15, 7];
         const GARDEN_SPRITE_SHEET_URL = 'https://orteil.dashnet.org/cookieclicker/img/gardenPlants.png';
@@ -1895,6 +1895,15 @@
                 }
                 if (!any) { p = 0.002 * weedMult * repel; if (p > 0) probs.meddleweed = (probs.meddleweed || 0) + p; }
                 var total = 0; for (k in probs) total += probs[k]; if (total > 1) { var s = 1 / total; for (k in probs) probs[k] *= s; total = 1; }
+                // soils like wood chips reroll mutations several times per tick; last success wins
+                if (any && total > 0) {
+                    var loops = (M.soilsById[M.soil].key == 'woodchips' ? 3 : 1) * (M.loopsMult || 1) * (1 + 0.05 * Game.auraMult('Supreme Intellect'));
+                    if (loops != 1) {
+                        var sc = (1 - Math.pow(1 - total, loops)) / total;
+                        for (k in probs) probs[k] *= sc;
+                        total *= sc;
+                    }
+                }
                 var pNothing = 1 - total; if (pNothing > 0.0001) r.push({ id: '__nothing__', name: 'Nothing', chance: pNothing * 100 });
                 for (k in probs) { var def2 = M.plants[k]; if (!def2) continue; p = probs[k] * 100; if (p > 0.01) r.push({ id: k, name: def2.name, chance: p }); }
                 r.sort(function(a, b) { return b.chance - a.chance; });

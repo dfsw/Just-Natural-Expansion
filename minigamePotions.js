@@ -3,7 +3,7 @@
 (function() {
 'use strict';
 
-const POTIONS_VERSION = '1.1.11';
+const POTIONS_VERSION = '1.1.12';
 
 // =====================================================================
 // Potions 
@@ -1644,19 +1644,25 @@ function updatePotionEffects() {
     def('nepenthe_of_undoing',
         function(p) {
             var pos = [];
-            for (var bn in Game.buffs) { if (Game.buffs[bn] && Game.buffs[bn].aura === 1) pos.push(bn); }
+            for (var bn in Game.buffs) {
+                if (bn === 'Nepenthe of Undoing') continue;
+                if (Game.buffs[bn] && Game.buffs[bn].aura === 1) pos.push(bn);
+            }
             var n = Math.min(pos.length, 6);
             if (n === 0) { Game.Notify(p.name + ' consumed', 'No positive buffs to remove. Nothing happened.', getIconArray(p), 6); return; }
-            for (var i = 0; i < n; i++) Game.killBuff(pos[i]);
             var existing = Game.hasBuff('Nepenthe of Undoing');
-            var prevPower = existing ? (existing.multCpS || 1) : 1;
             var prevTime = existing ? (existing.time / (Game.fps || 30)) : 0;
-            Game.killBuff('Nepenthe of Undoing');
-            delete Game.buffs['Nepenthe of Undoing'];
-            var newPower = prevPower + n;
+            for (var i = 0; i < n; i++) Game.killBuff(pos[i]);
+            if (existing) {
+                // killBuff only zeroes time; delete entry + node so gainBuff creates a fresh buff
+                Game.killBuff('Nepenthe of Undoing');
+                var oldEl = l('buff' + existing.id);
+                if (oldEl && oldEl.parentNode) oldEl.parentNode.removeChild(oldEl);
+                delete Game.buffs['Nepenthe of Undoing'];
+            }
             var newTime = prevTime + n * 600;
-            Game.gainBuff('Nepenthe of Undoing', newTime, newPower);
-            Game.Notify(p.name + ' consumed', 'Removed ' + n + ' positive buff' + (n !== 1 ? 's' : '') + '. CpS ×' + newPower + ' for ' + Math.round(newTime / 60) + ' minutes.', getIconArray(p), 6);
+            Game.gainBuff('Nepenthe of Undoing', newTime, 1 + n);
+            Game.Notify(p.name + ' consumed', 'Removed ' + n + ' positive buff' + (n !== 1 ? 's' : '') + '. CpS ×' + (1 + n) + ' for ' + Math.round(newTime / 60) + ' minutes.', getIconArray(p), 6);
         },
         function(p) {
             var pos = [];
@@ -1682,13 +1688,13 @@ function updatePotionEffects() {
     def('attar_of_the_gambler',
         function(p) {
             var s = new Game.shimmer('golden', {noWrath: true});
-            s.force = PotionsM._attarPendingForced || 'frenzy';
+            s.force = PotionsM._attarPendingForced || PotionsM._attarSeededRoll(false);
             PotionsM._attarPendingForced = null;
             Game.Notify(p.name + ' consumed', 'A golden cookie appears, it is mysterious.', getIconArray(p), 6);
         },
         function(p) {
             var s = new Game.shimmer('golden', {noWrath: true});
-            s.force = PotionsM._attarPendingForced || 'frenzy';
+            s.force = PotionsM._attarPendingForced || PotionsM._attarSeededRoll(true);
             PotionsM._attarPendingForced = null;
             Game.Notify(p.name + ' consumed', 'A golden cookie appears, it is mysterious.', getIconArray(p), 6);
         }
@@ -1888,6 +1894,7 @@ var G = {
     totalReagentsCollected: 0,    // total reagents collected
     totalPotionsBrewed: 0,        // total successful potions brewed across all ascensions
     potionsBrewed: 0,             // potions brewed this ascension
+    seededAttarRolls: 0,          // non-slotted Attar outcomes rolled; seeds each roll
     totalFailedDiscoveries: 0,    // total failed discoveries
     debugMode: false,             // debug mode flag
     prestigeCount: 0,             // total prestiges performed
@@ -3588,6 +3595,30 @@ PotionsM._autoPopulateReagents = function(potion) {
     PotionsM._buildReagents();
 };
 
+// Attar outcome table shared by brew-start rolls and the seeded fallback
+PotionsM._attarOutcome = function(r, misbrew) {
+    if (r < 25) return 'frenzy';
+    if (r < 50) return 'multiply cookies';
+    if (misbrew) {
+        if (r < 80) return 'clot';
+    } else {
+        if (r < 65) return 'dragonflight';
+        if (r < 80) return 'dragon harvest';
+    }
+    if (r < 90) return 'building special';
+    if (r < 95) return 'cookie storm';
+    return 'chain cookie';
+};
+
+// Attar fired outside its slot (Elixir of Chaos etc): seeded roll so reloads can't reroll it
+PotionsM._attarSeededRoll = function(misbrew) {
+    Math.seedrandom(Game.seed + '/attar/' + (G.seededAttarRolls || 0));
+    var r = Math.random() * 100;
+    Math.seedrandom();
+    G.seededAttarRolls = (G.seededAttarRolls || 0) + 1;
+    return PotionsM._attarOutcome(r, misbrew);
+};
+
 PotionsM._usePotionSlot = function(slotIndex) {
     var brew = G.slots[slotIndex];
     if (!brew) return;
@@ -3770,14 +3801,24 @@ PotionsM._clearReagentHighlights = function() {
     PotionsM._buildReagents();
 };
 
+// true if a prestige potion is in a brew slot (brewing or ready) or its buff is live
+PotionsM._prestigePotionInUse = function(p) {
+    for (var i = 0; i < G.slots.length; i++) {
+        if (G.slots[i] && G.slots[i].potionId === p.id) return true;
+    }
+    return !!(Game.hasBuff(p.name) || Game.hasBuff(p.name + ' (misbrewed)'));
+};
+
 PotionsM._getRandomPotion = function() {
     var allPotions = [];
     for (var i = 0; i < POTIONS.length; i++) {
         if (!isActivePotion(POTIONS[i])) continue;
         // Prestige potions must be unlocked to be selectable by Elixir of Chaos
         if (POTIONS[i].prestige && !POTIONS[i].unlocked) continue;
-        // Exclude Elixir of Chaos, Unguent of Hades, and Tears of Landis from random selection also known as fun killers
-        if (POTIONS[i].id !== 'elixir_of_chaos' && POTIONS[i].id !== 'unguent_of_hades' && POTIONS[i].id !== 'tears_of_landis') {
+        // Prestige potions already brewed, brewing, or with their buff active can't be re-granted
+        if (POTIONS[i].prestige && PotionsM._prestigePotionInUse(POTIONS[i])) continue;
+        // Exclude Elixir of Chaos, Unguent of Hades, Tears of Landis, and Dew of Secrets from random selection also known as fun killers
+        if (POTIONS[i].id !== 'elixir_of_chaos' && POTIONS[i].id !== 'unguent_of_hades' && POTIONS[i].id !== 'tears_of_landis' && POTIONS[i].id !== 'dew_of_secrets') {
             allPotions.push(POTIONS[i]);
         }
     }
@@ -4079,27 +4120,8 @@ PotionsM._startBrew = function() {
         };
         // Attar of the Gambler: roll forced outcomes at brew-start
         if (matchingPotion.id === 'attar_of_the_gambler') {
-            var rollForced = function() {
-                var r = PotionsM._random() * 100;
-                if (r < 25) return 'frenzy';
-                if (r < 50) return 'multiply cookies';
-                if (r < 65) return 'dragonflight';
-                if (r < 80) return 'dragon harvest';
-                if (r < 90) return 'building special';
-                if (r < 95) return 'cookie storm';
-                return 'chain cookie';
-            };
-            var rollMisbrew = function() {
-                var r = PotionsM._random() * 100;
-                if (r < 25) return 'frenzy';
-                if (r < 50) return 'multiply cookies';
-                if (r < 80) return 'clot';
-                if (r < 90) return 'building special';
-                if (r < 95) return 'cookie storm';
-                return 'chain cookie';
-            };
-            newSlot.fo  = rollForced();
-            newSlot.fom = rollMisbrew();
+            newSlot.fo  = PotionsM._attarOutcome(PotionsM._random() * 100, false);
+            newSlot.fom = PotionsM._attarOutcome(PotionsM._random() * 100, true);
         }
         G.slots[emptySlot] = newSlot;
     } else {
@@ -4620,7 +4642,7 @@ PotionsM._buildSaveDataImpl = function() {
     var isOpen = alchemyLab && alchemyLab.onMinigame ? 1 : 0;
     return { v: 2, rn: REAGENTS.length, pn: POTIONS.length, r: r, p: p, s: s, b: b, x: x,
              tb: G.totalPotionsBrewed || 0, pb: G.potionsBrewed || 0, tr: G.totalReagentsCollected || 0,
-             fd: G.totalFailedDiscoveries || 0, aw: aw, o: isOpen,
+             fd: G.totalFailedDiscoveries || 0, aw: aw, o: isOpen, ar: G.seededAttarRolls || 0,
              pc: G.prestigeCount || 0,
              up: G.unlockedPrestige || [],
              rm: G.recipeMap || null,
@@ -4789,6 +4811,7 @@ PotionsM._loadImpl = function(str) {
     // Totals
     G.totalPotionsBrewed     = data.tb || 0;
     G.potionsBrewed         = data.pb || 0;
+    G.seededAttarRolls      = data.ar || 0;
     G.totalReagentsCollected = data.tr || 0;
     G.totalFailedDiscoveries     = data.fd || 0;
 
@@ -4849,7 +4872,13 @@ PotionsM._restorePendingBuffs = function() {
         if (remainSeconds <= 0) continue;
         try {
             var power = (bd.pw !== undefined) ? bd.pw : 1;
-            if (bd.n === 'Nepenthe of Undoing') delete Game.buffs['Nepenthe of Undoing'];
+            if (bd.n === 'Nepenthe of Undoing' && Game.buffs['Nepenthe of Undoing']) {
+                var _oldNephId = Game.buffs['Nepenthe of Undoing'].id;
+                Game.killBuff('Nepenthe of Undoing');
+                var _oldNephEl = l('buff' + _oldNephId);
+                if (_oldNephEl && _oldNephEl.parentNode) _oldNephEl.parentNode.removeChild(_oldNephEl);
+                delete Game.buffs['Nepenthe of Undoing'];
+            }
             if (bd.bn && (bd.n === 'Suspension of Hallucinogenic' || bd.n === 'Suspension of Hallucinogenic (misbrewed)')) _suspBuildingKey = bd.bn;
             Game.gainBuff(bd.n, remainSeconds, power, 0);
             _suspBuildingKey = null;
@@ -4904,6 +4933,7 @@ PotionsM._resetImpl = function(hard, _calledFromLoad) {
         }
         G.triedRecipes = TriedRecipes.create();
         G.totalPotionsBrewed = 0;
+        G.seededAttarRolls = 0;
         G.totalReagentsCollected = 0;
         G.totalFailedDiscoveries = 0;
         G.selectedReagents = [];
@@ -5524,7 +5554,10 @@ window.potionsDebug = {
     },
 
     unlockPotion: function(potionIdOrName) {
-        var potion = POTIONS.find(function(p) { return p.id === potionIdOrName || p.name === potionIdOrName; });
+        var potion = null;
+        for (var i = 0; i < POTIONS.length; i++) {
+            if (POTIONS[i].id === potionIdOrName || POTIONS[i].name === potionIdOrName) { potion = POTIONS[i]; break; }
+        }
         if (potion) {
             potion.unlocked = true;
             PotionsM._buildCatalog();

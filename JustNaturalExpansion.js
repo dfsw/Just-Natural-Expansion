@@ -4,6 +4,9 @@
 {
     'use strict';
     
+    var modName = 'Just Natural Expansion';
+    var modVersion = '0.8.2';
+    var debugMode = false;
     var BETA_MODE = false; 
 
     // Load the custom sprite sheet  (github then jsdelivr)
@@ -59,9 +62,6 @@
     }
     
     function initializeMod() {
-    var modName = 'Just Natural Expansion';
-    var modVersion = '0.8.0';
-    var debugMode = false;
     
     function debugLog() {
         if (!debugMode) return;
@@ -2333,7 +2333,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     }
                     lifetimeStatsHTML += formatLifetimeStat(
                         getCurrentRunningTotal(lifetimeData.pledges, Game.pledges) + getCurrentRunningTotal(lifetimeData.elderCovenantToggles, 0), 
-                        'Grandmatriarchs quashed'
+                        'Grandmatriarchies quashed'
                     );
                     
                     if (lifetimeData.lastGardenSacrificeTime && (modSettings.enableExtraStatItems || !(Game.Achievements['I feel the need for seed'] && Game.Achievements['I feel the need for seed'].won))) {

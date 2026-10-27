@@ -2,7 +2,7 @@
 (function() {
 'use strict';
 
-const CLONES_VERSION = '1.0.1';
+const CLONES_VERSION = '1.0.2';
 var PUZZLE_BASE_BETA = 'https://raw.githubusercontent.com/dfsw/Cookies/beta/puzzles/';
 var PUZZLE_BASE_RELEASE = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/main/assets/ClonePuzzles/';
 var PUZZLE_BASE_FALLBACK = 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/ClonePuzzles/';
@@ -496,7 +496,7 @@ function applyPuzzle(data, saved) {
     G.puzzle = {
         grid: grid, cards: Array.isArray(data.cards) ? data.cards : [],
         clues: Array.isArray(data.clues) ? data.clues : [],
-        deduce: data.deduce || {}, proofs: data.proofs || {},
+        deduce: data.deduce || {}, proofs: data.proofs || {}, hintProofs: data.hintProofs || null,
         traits: data.traits || {}, cellTraits: {}, tutorial: !!data.tutorial
     };
     for (var t in G.puzzle.traits) (G.puzzle.traits[t] || []).forEach(function(id) {
@@ -631,7 +631,7 @@ function syncStartUI() {
     if (top) top.style.display = active ? '' : 'none';
     var pid = l('clonesPuzzleId');
     if (pid) pid.textContent = active ? (G.puzzleFile || '') : '';
-    syncTutQuit();
+    syncBottomBtns();
 }
 function renderBoard() {
     var grid = l('clonesGrid'), list = l('clonesClues');
@@ -683,37 +683,55 @@ function substituteNames(sentence) {
         return y ? y.name : m;
     });
 }
+// trait phrases get a hoverable span: connector + article + core word
+var TRAIT_WORDS = {
+    glasses: 'glasses', beard: 'beards?|bearded', halo: 'halos?', mask: 'masks?|masked',
+    bald: 'bald', redhair: 'red[- ]hair(?:ed)?|redheads?', bluehair: 'blue[- ]hair(?:ed)?',
+    blueskin: 'blue[- ]skin(?:ned)?', greenskin: 'green[- ]skin(?:ned)?'
+};
+var TRAIT_KEYS = Object.keys(TRAIT_WORDS);
+var TRAIT_PHRASE_RE = new RegExp(TRAIT_KEYS.map(function(t) {
+    return '\\b((?:(?:with|without|wearing|has|have|who\\s+(?:is|are|wear|wears|has|have))\\s+)?(?:(?:a|an)\\s+)?(?:' + TRAIT_WORDS[t] + '))\\b';
+}).join('|'), 'gi');
+
 // rawSentence keeps its coordinates for highlight
 function addClue(rawSentence, clueIdx) {
     var item = document.createElement('div');
     item.className = 'clones-clue-item';
-    item.innerHTML = '<span class="clones-clue-num">' + (G.clueRowEls.length + 1) + ')</span><span class="clones-clue-text">' + substituteNames(rawSentence) + '</span>';
+    var named = rawSentence.match(/\b[A-D][1-5]\b/g) || [];
+    var html = substituteNames(rawSentence).replace(TRAIT_PHRASE_RE, function(m) {
+        var g = arguments;
+        for (var t = 0; t < TRAIT_KEYS.length; t++)
+            if (g[1 + t] !== undefined)
+                return '<span class="clones-clue-trait" data-t="' + TRAIT_KEYS[t] + '">' + m + '</span>';
+        return m;
+    });
+    item.innerHTML = '<span class="clones-clue-num">' + (G.clueRowEls.length + 1) + ')</span><span class="clones-clue-text">' + html + '</span>';
     if (clueIdx !== undefined && G.dimmed[clueIdx]) item.style.opacity = '0.2';
     AddEvent(item, 'click', function() {
         var dim = item.style.opacity === '0.2';
         item.style.opacity = dim ? '1' : '0.2';
         if (clueIdx !== undefined) { if (dim) delete G.dimmed[clueIdx]; else G.dimmed[clueIdx] = 1; }
     });
-    AddEvent(item, 'mouseenter', function() { highlightNamed(rawSentence, true); });
-    AddEvent(item, 'mouseleave', function() { highlightNamed(rawSentence, false); });
+    // row hover lights named cells; hovering a trait span swaps to that trait's cells
+    var namedOn = false, traitOn = null;
+    var apply = function() {
+        var ids = traitOn ? (G.puzzle.traits[traitOn] || []) : (namedOn ? named : []), lit = {};
+        ids.forEach(function(id) { lit[id] = 1; });
+        for (var i = 0; i < 20; i++) {
+            var el = l('clonesCell' + cellId(i));
+            if (el) el.classList.toggle('clones-clue-ref', !!lit[cellId(i)]);
+        }
+    };
+    AddEvent(item, 'mouseenter', function() { namedOn = true; apply(); });
+    AddEvent(item, 'mouseleave', function() { namedOn = false; traitOn = null; apply(); });
+    [].forEach.call(item.querySelectorAll('.clones-clue-trait'), function(sp) {
+        AddEvent(sp, 'mouseenter', function() { traitOn = sp.getAttribute('data-t'); apply(); });
+        AddEvent(sp, 'mouseleave', function() { traitOn = null; apply(); });
+    });
     if (clueIdx !== undefined) G.clueRowForClue[clueIdx] = G.clueRowEls.length;
     G.clueRowEls.push(item);
     l('clonesClues').appendChild(item);
-}
-// trait formatting
-var TRAIT_PATTERNS = {
-    glasses: /glass/i, beard: /beard/i, halo: /halo/i, mask: /mask/i, bald: /bald/i,
-    redhair: /red[- ]hair|redhead/i, bluehair: /blue[- ]hair/i,
-    blueskin: /blue[- ]skin/i, greenskin: /green[- ]skin/i
-};
-function highlightNamed(rawSentence, on) {
-    var ids = rawSentence.match(/\b[A-D][1-5]\b/g) || [];
-    if (G.puzzle) for (var t in TRAIT_PATTERNS)
-        if (TRAIT_PATTERNS[t].test(rawSentence)) ids = ids.concat(G.puzzle.traits[t] || []);
-    ids.forEach(function(id) {
-        var el = l('clonesCell' + id);
-        if (el) el.classList.toggle('clones-clue-ref', on);
-    });
 }
 function cardClue(i) {
     var cid = G.puzzle.cards[i];
@@ -809,7 +827,7 @@ function showClaim() {
         rd.style.display = G.reward ? '' : 'none';
         rd.style.visibility = (G.reward && !G.spinPending) ? 'visible' : 'hidden';
     }
-    syncTutQuit();
+    syncBottomBtns();
 }
 function renderStats() {
     var grid = l('clonesGrid'), list = l('clonesClues');
@@ -948,7 +966,7 @@ function spinPrize() {
     if (!r) { G.spinPending = 0; return; }
     showPrizeSlots({
         winner: r.reward,
-        eligibleRewards: REWARDS.filter(function(x) { return r.weights[x.tier - 1] > 0; }),
+        eligibleRewards: REWARDS.filter(function(x) { return r.weights[x.tier - 1] > 0 && rewardUnlocked(x); }),
         duration: 5000
     }).then(function() {
         G.spinPending = 0;
@@ -1021,14 +1039,14 @@ var REWARDS = [
     { id: 'random_gc', name: 'Spawn a Golden Cookie', tier: 4, icon: [23, 6] },
     { id: 'reset_minigames', name: 'Reset minigame cooldowns', tier: 4, icon: [8, 0] },
     { id: 'gc_faster', name: 'Golden Cookies spawn 25% faster for an hour', tier: 4, icon: [3, 5] },
-    { id: 'free_yous', name: 'Gain 5 free Yous', tier: 4, icon: [35, 36] },
     { id: 'double_cps', name: 'Double CpS for 7 minutes', tier: 4, icon: [20, 14], sheet: 'custom' },
-    { id: 'potion_effect', name: 'Gain a random positive potion effect', tier: 3, icon: [6, 26], sheet: 'custom' },
+    { id: 'grimoire_mana', name: 'Restore 50% mana', tier: 4, icon: [14, 16], sheet: 'custom' },
+    { id: 'free_yous', name: 'Gain 5 free Yous', tier: 3, icon: [35, 36] },
     { id: 'fill_reagents', name: 'Fill your potion reagents', tier: 3, icon: [11, 25], sheet: 'custom' },
-    { id: 'grimoire_mana', name: 'Restore 50% mana', tier: 3, icon: [14, 16], sheet: 'custom' },
     { id: 'rare_lump', name: 'Current sugar lump becomes rare', tier: 3, icon: [27, 17] },
     { id: 'cps_day', name: 'Gain 24 hours of CpS (50% cap)', tier: 3, icon: [8, 25], sheet: 'custom' },
-    { id: 'click_frenzy', name: 'Gain a click frenzy', tier: 2, icon: [11, 17] },
+    { id: 'click_frenzy', name: 'Gain a click frenzy', tier: 3, icon: [11, 17] },
+    { id: 'potion_effect', name: 'Gain a random positive potion effect', tier: 2, icon: [6, 26], sheet: 'custom' },
     { id: 'remove_seasons', name: 'Forget 5 season changes', tier: 2, icon: [16, 6] },
     { id: 'garden_ticks', name: 'Garden ticks 10 times', tier: 2, icon: [15, 24], sheet: 'custom' },
     { id: 'lump_faster', name: 'Current sugar matures 2 hours faster', tier: 2, icon: [20, 15], sheet: 'custom' },
@@ -1041,6 +1059,17 @@ var REWARDS = [
     { id: 'free_play', name: 'Free play', tier: 1, icon: [16, 1], sheet: 'custom' },
     { id: 'free_play', name: 'Free play', tier: 1, icon: [16, 1], sheet: 'custom' } // doubled entry for higher chance
 ];
+// rewards that need another building's minigame (unlocked at level 1) to do anything
+var REWARD_BUILDING = {
+    garden_ticks: 'Farm', grimoire_mana: 'Wizard tower',
+    potion_effect: 'Alchemy lab', fill_reagents: 'Alchemy lab',
+    downline_double: 'Fractal engine'
+};
+function rewardUnlocked(r) {
+    var b = REWARD_BUILDING[r.id];
+    var o = b && Game.Objects && Game.Objects[b];
+    return !b || !!(o && o.level >= 1);
+}
 
 function mistakeCount() {
     var seen = {}, n = 0;
@@ -1078,7 +1107,7 @@ function rollReward(salt) {
     if (G.puzzle && G.puzzle.tutorial) {
         if (!G.tutBonus) return null;
         G.tutBonus = 0;
-        var t2 = REWARDS.filter(function(r) { return r.tier === 2; });
+        var t2 = REWARDS.filter(function(r) { return r.tier === 2 && rewardUnlocked(r); });
         return { score: 0, tier: 2, weights: [0, 100, 0, 0, 0], reward: t2[Math.floor(rng() * t2.length)] };
     }
     if (mistakeCount() >= 8) return null;
@@ -1089,7 +1118,7 @@ function rollReward(salt) {
     // salt varies the seed so debug rerolls aren't pinned to the saved result
     var roll = rng() * 100, cum = 0, tier = 5;
     for (var i = 0; i < 5; i++) { cum += w[i]; if (roll < cum) { tier = i + 1; break; } }
-    var cands = REWARDS.filter(function(r) { return r.tier === tier; });
+    var cands = REWARDS.filter(function(r) { return r.tier === tier && rewardUnlocked(r); });
     if (!cands.length) throw new Error('No rewards configured for tier ' + tier);
     return { score: score, tier: tier, weights: w, reward: cands[Math.floor(rng() * cands.length)] };
 }
@@ -1156,6 +1185,31 @@ function registerCloneBuffTypes() {
     });
 }
 registerCloneBuffTypes();
+
+// WriteSave only serializes vanilla-flagged buff types, so ours are re-granted on load
+function cloneBuffSave() {
+    var out = [];
+    CLONE_BUFFS.forEach(function(bt) {
+        var bf = Game.buffs && Game.buffs[bt[1]];
+        if (bf && bf.time > 0) out.push({ n: bt[0], t: Math.round(bf.time / (Game.fps || 30)), m: Math.round(bf.maxTime / (Game.fps || 30)), pw: bf.multClick || bf.multCpS || bf.power });
+    });
+    return out;
+}
+function restoreCloneBuffs(saved) {
+    if (!Array.isArray(saved) || !Game.buffTypesByName) return;
+    CLONE_BUFFS.forEach(function(bt) { if (Game.buffs && Game.buffs[bt[1]] && Game.killBuff) Game.killBuff(bt[1]); });
+    saved.forEach(function(bd) {
+        if (!bd || typeof bd.n !== 'string') return;
+        var bt = CLONE_BUFFS.filter(function(b) { return b[0] === bd.n; })[0];
+        var secs = saveNum(bd.t), pow = bd.pw === undefined ? 1 : bd.pw;
+        if (!bt || !secs || !Game.buffTypesByName[bd.n]) return;
+        try {
+            var restored = Game.gainBuff(bd.n, secs, pow);
+            if (restored) { restored.maxTime = (saveNum(bd.m) || secs) * (Game.fps || 30); restored[bt[4]] = pow; }
+        } catch (e) {}
+    });
+    ClonesM._updateEffs();
+}
 
 if (window.Game && Game.registerHook && !Game._clonesReincarnateHooked) {
     Game.registerHook('reincarnate', function() { ClonesM.onAscend(); });
@@ -1328,6 +1382,13 @@ ClonesM.claimReward = function() {
     G.spinPending = G.reward ? 1 : 0; 
     renderBoard();
 };
+function grantReward(rw) {
+    try { applyCloneReward(rw); playSnd('snd/chime.mp3'); }
+    catch (e) {
+        console.error('Clone Escape reward "' + rw.id + '" failed:', e);
+        if (typeof Game.Notify === 'function') Game.Notify('Redeemed: ' + rw.name, 'Something went wrong while applying the reward.');
+    }
+}
 ClonesM.redeemReward = function() {
     var r = G.reward;
     if (!r) return;
@@ -1336,13 +1397,7 @@ ClonesM.redeemReward = function() {
     showRedeemedLabel();
     var rd = l('clonesRedeem'); if (rd) rd.style.display = 'none';
     if (l('clonesRewardLine')) l('clonesRewardLine').innerHTML = rewardLineHtml();
-    try {
-        applyCloneReward(r.reward);
-        playSnd('snd/chime.mp3');
-    } catch (e) {
-        console.error('Clone Escape reward "' + r.reward.id + '" failed:', e);
-        if (typeof Game.Notify === 'function') Game.Notify('Redeemed: ' + r.reward.name, 'Something went wrong while applying the reward.');
-    }
+    grantReward(r.reward);
 };
 ClonesM.rerollReward = function() {
     if (!ClonesM.debug || !G.reward) return;
@@ -1353,14 +1408,26 @@ ClonesM.rerollReward = function() {
     spinPrize();
 };
 
-// Terminal hook
+// Terminal hook — instant cash-out; skips the slot reveal
 ClonesM.cashInReward = function() {
+    // a save still waiting on its puzzle file parks its run in G.restore — that prize is cashable too
+    if (!G.reward && G.restore && !G.restore.redeemed && G.restore.reward) {
+        var pr = G.restore.reward, prw = pr && pr.reward;
+        if (!prw || typeof prw.id !== 'string' || typeof prw.name !== 'string' || !Array.isArray(prw.icon)) {
+            G.restore.reward = null; // malformed — populate's svRw would drop it anyway
+        } else {
+            G.restore.reward = null; G.restore.redeemed = 1; G.restore.redeemedRw = pr; // lands pre-redeemed, no spin replay
+            grantReward(prw);
+            return { success: true, message: 'Cashed in ' + prw.name + '!' };
+        }
+    }
     if (G.redeemed) return { success: false, message: 'Clone Escape reward was already cashed in.' };
     if (!G.puzzle || Object.keys(G.solved).length < 20) return { success: false, message: 'Clone Escape is not solved yet.' };
     if (!G.claimed) ClonesM.claimReward();
-    if (!G.reward) return { success: false, message: 'No Clone Escape reward is waiting.' };
-    var name = G.reward.reward.name;
-    ClonesM.redeemReward();
+    var live = G.reward && G.reward.reward;
+    if (!live) return { success: false, message: 'No Clone Escape reward is waiting.' };
+    var name = live.name;
+    ClonesM.redeemReward(); // clears spinPending, kills the reels, shows the redeemed label
     return { success: true, message: 'Cashed in ' + name + '!' };
 };
 
@@ -1392,17 +1459,17 @@ function completePuzzle() {
         G.tutorialDone = 1;
         syncTutButton();
     } else {
-        markPuzzleDone(G.puzzleFile); // every finished board 
-        G.failed = mistakeCount() >= 8 ? 1 : 0; // finished, but too poor to compensate
+        markPuzzleDone(G.puzzleFile); // every finished board
+        var mist = mistakeCount();
+        G.failed = mist >= 8 ? 1 : 0; // finished, but too poor to compensate
         // the cooldown runs from a rewarded completion, a failed run is free
         if (!G.failed) {
             G.won++;
-            G.nextPuzzleAt = Date.now() + puzzleCooldown();
+            G.nextPuzzleAt = Date.now() + puzzleCooldown() * (mist ? 1 : 0.5); // flawless clears halve it
             syncCompleted();
             updateCooldown();
         }
         recordTierProgress();
-        var mist = mistakeCount();
         if (!mist) G.cleanWins++;
         if (Game.Achievements) [
             ['The Quick and the Duplicate', !mist && G.tDone - G.tFirst <= 120000],
@@ -1438,8 +1505,48 @@ ClonesM.hint = function() {
     if (G.hintCell !== null) { clearHint(); return; }
     var fm = frontierMask();
     if (!fm) return;
-    var known = G.puzzle.deduce['0'] || 0;
+    var starterMask = G.puzzle.deduce['0'] || 0;
+    var known = starterMask;
     for (var s in G.solved) known |= 1 << (+s);
+    var bits = function(m, want) {
+        var n = 0;
+        for (var b = 0; b < 20; b++) if ((m & (1 << b)) && (want === undefined || !!G.dimmed[b] === want)) n++;
+        return n;
+    };
+    // light the cell + cited clue rows; a clue-free proof of the starter
+    var cite = function(i, m) {
+        G.hintCell = i;
+        if (G.hintedCells.indexOf(i) === -1) G.hintedCells.push(i);
+        var el = l('clonesCell' + cellId(i));
+        if (el) el.classList.add('clones-hint');
+        for (var b = 0; m > 0 && b < 20; b++) {
+            if (!(m & (1 << b))) continue;
+            var row = G.clueRowForClue[b];
+            if (row !== undefined && G.clueRowEls[row]) G.clueRowEls[row].classList.add('clones-hint-clue');
+        }
+        if (m === 0 && (starterMask & (1 << i)) && G.tellRow >= 0 && G.clueRowEls[G.tellRow])
+            G.clueRowEls[G.tellRow].classList.add('clones-hint-clue');
+    };
+    var hp = G.puzzle.hintProofs;
+    if (hp) {
+        // an entry applies iff its clues are read and its pins known; cite the
+        // fewest-clue entry across the frontier, dimmed clues break ties
+        var cand = [], bestN = 99, bestDim = 99;
+        for (var c = 0; c < 20; c++) {
+            if (!(fm & (1 << c))) continue;
+            (hp[cellId(c)] || []).forEach(function(e) {
+                if ((e[0] & ~G.readMask) !== 0 || (e[1] & ~known) !== 0) return;
+                var n = bits(e[0]), d = bits(e[0], true);
+                if (n < bestN || (n === bestN && d < bestDim)) { cand = []; bestN = n; bestDim = d; }
+                if (n === bestN && d === bestDim) cand.push([c, e[0]]);
+            });
+        }
+        if (cand.length) {
+            var pk = cand[Math.floor(Math.random() * cand.length)];
+            cite(pk[0], pk[1]);
+            return;
+        }
+    }
     var dead = 0;
     G.puzzle.clues.forEach(function(cl, c) {
         if (cl && !(cl.scope & ~known)) dead |= 1 << c;
@@ -1455,35 +1562,20 @@ ClonesM.hint = function() {
         });
         return out.filter(function(m) { return !out.some(function(o) { return o !== m && (o & ~m) === 0; }); });
     };
-    var bits = function(m, want) {
-        var n = 0;
-        for (var b = 0; b < 20; b++) if ((m & (1 << b)) && (want === undefined || !!G.dimmed[b] === want)) n++;
-        return n;
-    };
     var pool = [];
     for (var c = 0; c < 20; c++) if ((fm & (1 << c)) && G.hintedCells.indexOf(c) === -1) pool.push(c);
     if (!pool.length) for (c = 0; c < 20; c++) if (fm & (1 << c)) pool.push(c);
     // prefer a cell provable without dimmed clues 
     var active = pool.filter(function(c) { return residFor(c).some(function(m) { return !bits(m, true); }); });
     if (active.length) pool = active;
-    var i = pool[Math.floor(Math.random() * pool.length)];
-    G.hintCell = i;
-    if (G.hintedCells.indexOf(i) === -1) G.hintedCells.push(i);
-    var el = l('clonesCell' + cellId(i));
-    if (el) el.classList.add('clones-hint');
     // cite the leanest conditional proof 
     var best = -1, bestDim = 99, bestBits = 99;
+    var i = pool[Math.floor(Math.random() * pool.length)];
     residFor(i).forEach(function(m) {
         var dim = bits(m, true), n = bits(m);
         if (dim < bestDim || (dim === bestDim && n < bestBits)) { best = m; bestDim = dim; bestBits = n; }
     });
-    for (var b = 0; best > 0 && b < 20; b++) {
-        if (!(best & (1 << b))) continue;
-        var row = G.clueRowForClue[b];
-        if (row !== undefined && G.clueRowEls[row]) G.clueRowEls[row].classList.add('clones-hint-clue');
-    }
-    // proof mask 0 = starter cell 
-    if (best === 0 && G.tellRow >= 0 && G.clueRowEls[G.tellRow]) G.clueRowEls[G.tellRow].classList.add('clones-hint-clue');
+    cite(i, Math.max(best, 0));
 };
 function clearHint() {
     if (G.hintCell !== null) {
@@ -1498,9 +1590,11 @@ function syncTutButton() {
     var b = l('clonesTut');
     if (b) b.classList.toggle('clones-attention', !G.tutorialDone);
 }
-function syncTutQuit() {
+function syncBottomBtns() {
     var q = l('clonesQuitTut');
     if (q) q.style.display = (G.puzzle && G.puzzle.tutorial && !G.claimed) ? '' : 'none';
+    var g = l('clonesGlossary');
+    if (g) g.style.display = (G.puzzle && !G.puzzle.tutorial && !G.claimed) ? '' : 'none';
 }
 function syncCompleted() {
     var el = l('clonesCompleted');
@@ -1525,7 +1619,34 @@ ClonesM.quitTutorial = function() {
     G.puzzle = null; G.puzzleFile = null;
     clearRun();
     clearBoardUI();
-    syncStartUI(); syncTutQuit(); showClaim(); setStatus('');
+    syncStartUI(); syncBottomBtns(); showClaim(); setStatus('');
+};
+
+var GLOSSARY = [
+    ['At least', 'At least, but possibly more.'],
+    ['Between', 'The cells strictly between two named suspects in the same row or column; the named suspects themselves are never included.'],
+    ['Both', 'Exactly two.'],
+    ['Column', 'Each of the 4 columns is a vertical line of 5 suspects, lettered A through D.'],
+    ['Connected', 'The named suspects form one unbroken chain directly connected (no diagonals); requires at least 2 suspects.'],
+    ['Corner', 'The 4 corner positions: A1, D1, A5, and D5.'],
+    ['Directly', 'The single neighboring cell in a direction.'],
+    ['Edge', 'The outer ring: rows 1 and 5 and columns A and D.'],
+    ['Even', 'An even number: 2, 4, 6, etc.'],
+    ['Exactly', 'Precisely the number.'],
+    ['Fewest', 'Strictly less than.'],
+    ['Most', 'Strictly more than.'],
+    ['Neighbors', 'Everyone touching a suspect, including diagonally. Suspects in the middle have 8 neighbors, suspects on the edges have 5, and corners have 3.'],
+    ['Odd', 'An odd number: 1, 3, 5, etc.'],
+    ['Only', 'Exactly one.'],
+    ['Row', 'Each of the 5 rows is a horizontal line of 4 suspects, numbered 1 through 5.'],
+    ['Shared', 'Suspects who neighbor both of the named suspects - the overlapping group of neighbors. Also phrased as "in common" in some clues.'],
+    ['Total', 'The total count combining all named units.']
+];
+
+ClonesM.glossary = function() {
+    Game.Prompt('<h3>Glossary</h3><div class="block" style="font-size:11px;text-align:left;max-height:50vh;overflow-y:auto;">' +
+        GLOSSARY.map(function(e) { return '<div style="margin-bottom:6px;"><b>' + e[0] + '</b>: ' + e[1] + '</div>'; }).join('') +
+        '</div>', ['Close']);
 };
 
 function syncTierIcons() {
@@ -1627,10 +1748,11 @@ var CSS = '.clones-wrap{padding:8px 12px 18px;font-size:12px;color:#ccc;position
 '.clones-tag.bottom-left:not(.none){border-color:transparent transparent transparent var(--cc)}' +
 '.clones-endicon{position:absolute;left:50%;top:50%;width:48px;height:48px;margin:-24px 0 0 -24px;pointer-events:none;z-index:12;filter:drop-shadow(0 0 3px #000)}' +
 '.clones-side{flex:1;display:flex;flex-direction:column;gap:6px;min-width:0;padding:8px;background:#141414;box-sizing:border-box;position:relative}' +
-'#clonesQuitTut{position:absolute;top:100%;left:0;right:0;margin-top:4px;text-align:center}' +
+'#clonesQuitTut,#clonesGlossary{position:absolute;top:100%;left:0;right:0;margin-top:4px;text-align:center}' +
 '.clones-head{display:flex;justify-content:space-between;align-items:center}.clones-head b{color:#e2dd48;font-size:13px}' +
 '.clones-clues{display:flex;flex-direction:column;gap:4px;font-size:11px;color:#ccc;overflow-y:auto;flex:1;min-height:0}' +
 '.clones-clue-item{display:flex;gap:4px;padding:2px 0;cursor:pointer}.clones-clue-item.clones-hint-clue{opacity:1 !important}' +
+'.clones-clue-trait{color:#87ceeb}' +
 '.clones-clue-item.clones-hint-clue .clones-clue-text{background:#FFE60024;border-bottom:4px solid #FFE600;padding:2px 3px;box-decoration-break:clone;-webkit-box-decoration-break:clone}' +
 '.clones-clue-num{font-weight:bold;min-width:14px;flex-shrink:0;text-align:right}';
 
@@ -1643,12 +1765,13 @@ ClonesM.launch = function() {
     ['snd/tick.mp3', 'snd/smallTick.mp3', 'snd/toneTick.mp3', 'snd/chime.mp3',
      'snd/cymbalRev.mp3', 'snd/pop1.mp3', 'snd/pop2.mp3', 'snd/pop3.mp3'].forEach(loadSnd);
 
-    if (!l('clonesCSS')) {
-        var st = document.createElement('style');
+    var st = l('clonesCSS');
+    if (!st) {
+        st = document.createElement('style');
         st.id = 'clonesCSS';
-        st.textContent = CSS;
         document.head.appendChild(st);
     }
+    st.textContent = CSS;
 
     ClonesM.init = function(div) {
         div.innerHTML =
@@ -1667,7 +1790,8 @@ ClonesM.launch = function() {
             '<div id="prizeSlots" class="slots" hidden><div class="prize-title"></div><div class="reels"></div><div class="prize"></div></div>' +
             '<div id="clonesRedeemedLabel" style="display:none;"></div>' +
             '<div id="clonesRedeem" style="display:none;min-height:34px;text-align:center;padding-top:4px;"><a class="option" id="clonesRedeemBtn" style="margin:4px;padding:4px 14px;">Redeem Reward</a><a class="option" id="clonesRerollBtn" style="display:none;margin:4px;padding:4px 14px;">Reroll</a></div>' +
-            '<div id="clonesQuitTut" style="display:none;"><a class="option" style="font-size:11px;padding:2px 8px;">Quit Training</a></div></div>' +
+            '<div id="clonesQuitTut" style="display:none;"><a class="option" style="font-size:11px;padding:2px 8px;">Quit Training</a></div>' +
+            '<div id="clonesGlossary" style="display:none;"><a class="option" style="font-size:11px;padding:2px 8px;">Glossary</a></div></div>' +
             '</div><div id="clonesPuzzleId"></div></div>';
         var tierRow = l('clonesTierRow');
         if (tierRow) TIER_KEYS.forEach(function(k, idx) {
@@ -1690,6 +1814,7 @@ ClonesM.launch = function() {
         syncCompleted();
         [['clonesNew', 'newPuzzle'], ['clonesTut', 'tutorial'], ['clonesSolve', 'debugSolve'],
          ['clonesHint', 'hint'], ['clonesClaimBtn', 'claimReward'], ['clonesQuitTut', 'quitTutorial'],
+         ['clonesGlossary', 'glossary'],
          ['clonesRedeemBtn', 'redeemReward'], ['clonesRerollBtn', 'rerollReward']].forEach(function(w) {
             AddEvent(l(w[0]), 'click', function() { playSnd('snd/tick.mp3'); ClonesM[w[1]](); });
         });
@@ -1737,7 +1862,8 @@ ClonesM.launch = function() {
             failed: G.failed, reward: G.reward, redeemed: G.redeemed, redeemedRw: G.redeemedRw, restored: G.restored,
             tierProg: tp, cleanWins: G.cleanWins,
             tutorialDone: G.tutorialDone, tutBonus: G.tutBonus,
-            rot: rotSave(), // completion bitsets survive ascension 
+            rot: rotSave(), // completion bitsets survive ascension
+            b: cloneBuffSave(), // vanilla skips non-vanilla buff types
             aw: clonesAchievementNames.filter(function(n) {
                 var a = Game.Achievements && Game.Achievements[n];
                 return a && a.won;
@@ -1786,6 +1912,7 @@ ClonesM.launch = function() {
         G.cleanWins = saveNum(data.cleanWins);
         G.tutorialDone = data.tutorialDone ? 1 : 0;
         rotLoad(data.rot);
+        restoreCloneBuffs(data.b);
         G.restore = file ? data : null; // RUN_FIELDS apply once the puzzle file arrives
         // wins restore immediately if the achievements already exist; otherwise
         // createClonesAchievements picks this stash up when it runs
