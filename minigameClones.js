@@ -2,16 +2,16 @@
 (function() {
 'use strict';
 
-const CLONES_VERSION = '1.0.2';
+const CLONES_VERSION = '1.0.3';
 var PUZZLE_BASE_BETA = 'https://raw.githubusercontent.com/dfsw/Cookies/beta/puzzles/';
 var PUZZLE_BASE_RELEASE = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/main/assets/ClonePuzzles/';
 var PUZZLE_BASE_FALLBACK = 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/ClonePuzzles/';
 function puzzleBase() { return (Game.JNE && Game.JNE.beta === false) ? PUZZLE_BASE_RELEASE : PUZZLE_BASE_BETA; }
 // release files retry on the jsDelivr mirror when raw.githubusercontent.com won't load
-function puzzleFetch(path) {
+function puzzleFetch(path, bust) {
     var base = puzzleBase();
     var get = function(b) {
-        return fetch(b + path + '?t=' + Date.now()).then(function(r) {
+        return fetch(b + path + (bust ? '?t=' + Date.now() : '')).then(function(r) {
             if (!r.ok) throw r;
             return r.json();
         });
@@ -372,7 +372,7 @@ function loadIndex(cb) {
         if (Object.keys(idx).length) { G.index = idx; cb(idx); } else setStatus('Puzzle list is empty.');
     };
     var fail = function() { setStatus('Couldn\'t load puzzle list.'); };
-    puzzleFetch('index.json').then(got).catch(fail);
+    puzzleFetch('index.json', true).then(got).catch(fail);
 }
 function ensurePuzzle() {
     if (!G.ready || G.puzzle || G.loading) return;
@@ -475,15 +475,26 @@ function startPuzzle(file, saved, retried) {
     if (!saved) G.yous = null;
     G.loading = true;
     var req = ++G.reqId;
-    puzzleFetch(file + '.json').then(function(data) {
+    puzzleFetch(file + '.json').catch(function(e) {
+        // a claimed run never redraws its board, so a removed puzzle file can't strand its prize
+        if (saved && saved.claimed && e && e.status === 404) return { grid: new Array(20).fill(0) };
+        throw e;
+    }).then(function(data) {
         if (req !== G.reqId) return;
         G.loading = false;
         G.puzzleFile = data.name || file;
         applyPuzzle(data, saved);
         renderBoard();
-    }).catch(function() {
+    }).catch(function(e) {
         if (req !== G.reqId) return;
         G.loading = false;
+        // an unfinished run on a removed puzzle can never load, so drop it and say so
+        if (saved && e && e.status === 404) {
+            G.restore = null; G.puzzleFile = null;
+            var list = l('clonesClues');
+            if (list) list.textContent = 'That scenario no longer exists, maybe you got updated ones?';
+            return;
+        }
         // a saved run is never swapped for a fresh board; G.restore keeps it in saves until it loads
         if (!retried) startPuzzle(wanted, saved, true);
         else setStatus('Couldn\'t load ' + file + '.');
