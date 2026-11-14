@@ -1,9 +1,9 @@
-// Downline Minigame 
+// Downline Minigame
 
 (function() {
 'use strict';
 
-const DOWNLINE_VERSION = '1.0.9';
+const DOWNLINE_VERSION = '1.0.10';
 
 var downlineAchievementNames = [
     'Popularity factor',
@@ -30,7 +30,7 @@ DownlineM.parent = Game.Objects && Game.Objects['Fractal engine'] ? Game.Objects
 // Only assign minigame if we have the real building object
 if (Game.Objects && Game.Objects['Fractal engine']) {
     DownlineM.parent.minigame = DownlineM;
-    
+
     // defensive: old saves may have unencoded JSON with commas, producing NaN
     if (typeof DownlineM.parent.highest !== 'number' || isNaN(DownlineM.parent.highest)) {
         DownlineM.parent.highest = DownlineM.parent.amount || 0;
@@ -316,7 +316,7 @@ DownlineM.init = function(div) {
       width: 48px;
       height: 48px;
       background-repeat: no-repeat;
-      background-image: url(https://orteil.dashnet.org/cookieclicker/img/icons.png);
+      background-image: url('${resPath}img/icons.png');
       background-position: -1392px -672px;
       filter: drop-shadow(0 3px 2px #000);
       cursor: pointer;
@@ -524,8 +524,8 @@ DownlineM.init = function(div) {
       height: 36px;
       pointer-events: none;
       box-sizing: border-box;
-      background: url(https://orteil.dashnet.org/cookieclicker/img/pieFill.png) no-repeat;
-      background-size: 648px 288px; 
+      background: url('${resPath}img/pieFill.png') no-repeat;
+      background-size: 648px 288px;
       opacity: 0.5;
       z-index: 2;
     }
@@ -540,8 +540,8 @@ DownlineM.init = function(div) {
     }
     #downline-freeze-btn { flex-shrink: 0; }
     #downline-wrap #downline-freeze-btn.gardenSeed { cursor: pointer; display: inline-block; width: 40px; height: 40px; position: relative; margin: 0; }
-    #downline-wrap #downline-freeze-btn .gardenSeedIcon { pointer-events: none; display: inline-block; position: absolute; left: -4px; top: -4px; width: 48px; height: 48px; background: url(https://orteil.dashnet.org/cookieclicker/img/gardenPlants.png); }
-    #downline-wrap #downline-freeze-btn.gardenSeed.on::before { pointer-events: none; content: ''; display: block; position: absolute; left: -10px; top: -10px; width: 60px; height: 60px; background: url(https://orteil.dashnet.org/cookieclicker/img/selectTarget.png) no-repeat center; background-size: 100% 100%; animation: wobble 0.2s ease-out; z-index: 10; }
+    #downline-wrap #downline-freeze-btn .gardenSeedIcon { pointer-events: none; display: inline-block; position: absolute; left: -4px; top: -4px; width: 48px; height: 48px; background: url('${resPath}img/gardenPlants.png'); }
+    #downline-wrap #downline-freeze-btn.gardenSeed.on::before { pointer-events: none; content: ''; display: block; position: absolute; left: -10px; top: -10px; width: 60px; height: 60px; background: url('${resPath}img/selectTarget.png') no-repeat center; background-size: 100% 100%; animation: wobble 0.2s ease-out; z-index: 10; }
     .downline-ticker-wrap {
       flex: 1;
       min-width: 0;
@@ -713,7 +713,7 @@ DownlineM.init = function(div) {
       }
     }
     `;
-    
+
     var styleEl = document.createElement('style');
     styleEl.textContent = cssContent;
     document.head.appendChild(styleEl);
@@ -891,7 +891,7 @@ DownlineM.init = function(div) {
   </div>
 </div>
     `;
-    
+
     div.style.position = 'relative';
     if (div.parentNode) div.parentNode.classList.add('downline-row-visible');
     div.innerHTML = htmlContent;
@@ -899,17 +899,17 @@ DownlineM.init = function(div) {
     if (debugElInit) debugElInit.style.display = Game.downlineDebug ? 'block' : 'none';
     function clamp(v, lo, hi) { return v < lo ? lo : v > hi ? hi : v; }
 
-    function getSupremeIntellectDurationMult() {
+    // Doublers and positive bonuses add to the base; negative ones (boredom) apply to the total.
+    function getActionDuration(def) {
+      var doublers = (Game.hasBuff('Breath of Growth') ? 1 : 0) + (Game.hasBuff('Cloneconomics') ? 1 : 0);
       var bonus = 0;
-      if (Game.hasAura('Supreme Intellect')) bonus += 1;
-      if (Game.hasAura('Reality Bending')) bonus += 0.1;
-      var mult = 1 + (bonus * 0.1);
-      if (G.actionDurationMult) mult *= G.actionDurationMult;
-     
-      if (Game.hasBuff('Breath of Growth') || Game.hasBuff('Cloneconomics')) {
-        mult *= 2;
-      }
-      return mult;
+      if (Game.hasAura('Supreme Intellect')) bonus += 0.1;
+      if (Game.hasAura('Reality Bending')) bonus += 0.01;
+      if (Game.Has('Refer a Friend')) bonus += 0.1;
+      var total = def.durationSec * (1 + doublers + bonus);
+      if (hasBoredomEffect('actions_25_less')) total *= 0.75;
+      if (G.actionDurationMult) total *= G.actionDurationMult;
+      return total;
     }
 
     function formatNum(n) { return Math.floor(n).toLocaleString(); }
@@ -922,8 +922,9 @@ DownlineM.init = function(div) {
       if (sec <= 0) return 'Instant';
       if (sec < 60) return sec + ' sec';
       if (sec < 3600) return Math.round(sec / 60) + ' min';
-      if (sec < 86400) { var h = sec / 3600; return (h % 1 ? h.toFixed(1) : h) + ' hour' + (h > 1 ? 's' : ''); }
-      var d = Math.round(sec / 86400); return d + ' day' + (d > 1 ? 's' : '');
+      // hours up to 3 days, then days to one decimal (36h shows as 36 hours, not 2 days)
+      if (sec < 3 * 86400) { var h = Math.round(sec / 360) / 10; return (h % 1 ? h.toFixed(1) : h) + ' hour' + (h !== 1 ? 's' : ''); }
+      var d = Math.round(sec / 8640) / 10; return (d % 1 ? d.toFixed(1) : d) + ' day' + (d !== 1 ? 's' : '');
     }
     function formatRemaining(sec) {
       sec = Math.max(0, Math.floor(sec));
@@ -956,7 +957,7 @@ DownlineM.init = function(div) {
     var REP_REGEN_MULT_LOW = 6;
     var QUIT_CASCADE_DAB = [0, 0, 2, 15, 65];
     var QUIT_CASCADE_CAS = [0, 0, 0, 2, 8];
-    var QUIT_CASCADE_HAB = [0, 0, 0, 0, 1];  
+    var QUIT_CASCADE_HAB = [0, 0, 0, 0, 1];
     var QUIT_TICKER_NAMES = ['LeetGriffion', 'NyanDog', 'Lock8164', 'LuckyGlod', 'Ragoon', 'Lo the Cleric', 'Le Flower', 'HeavenDude_TX', 'Phylexx', 'Dorky', 'CandidShadow', 'Infamous555'];
     var QUIT_TICKER_HEADLINES = [
       function (name) { return name + ' says no more clicking for me it just isn\'t as fun as it used to be.'; },
@@ -982,7 +983,7 @@ DownlineM.init = function(div) {
 
     var TYPES = ['dabbler', 'casual', 'habitual', 'devotee', 'fanatic'];
     var BOREDOM_MAX = 100;
-    var LAST_ACTIONS_CAP = 25; 
+    var LAST_ACTIONS_CAP = 25;
     var BOREDOM_ICONS_MAIN = [ [12,8], [11,6], [11,7], [11,8], [29,6] ];
     var BOREDOM_EFFECT_IDS = [
       'quit_2x', 'hype_commit_drain_3x', 'referrals_negative', 'cost_double', 'slots_half',
@@ -1041,7 +1042,7 @@ DownlineM.init = function(div) {
     function updateBoredomEffects() {
       var b = Math.min(BOREDOM_MAX, Math.max(0, G.boredom));
       var desiredCount = Math.min(5, Math.floor(b / 20));
-      
+
       if (b < 20) {
         G.activeBoredomEffects = [];
         return;
@@ -1061,7 +1062,7 @@ DownlineM.init = function(div) {
         if (G.activeBoredomEffects.indexOf('unlocks_reset') >= 0) G.unlocked = {};
         return;
       }
-      
+
       var list = G.activeBoredomEffects.slice();
       var hadUnlocksReset = list.indexOf('unlocks_reset') >= 0;
       while (list.length > desiredCount) {
@@ -1103,7 +1104,7 @@ DownlineM.init = function(div) {
       var womMin = getRefWomMin();
       var womMax = getRefWomMax();
       var countExp = getRefPlayerCountExp();
-      
+
       // base rate from player tiers
       var p = G.players, totalPlayers = 0, weightedRate = 0;
       for (var i = 0; i < 5; i++) {
@@ -1119,7 +1120,7 @@ DownlineM.init = function(div) {
       // word of mouth bar
       var womPct = Math.min(1, Math.max(0, G.referrals / BAR_MAX));
       var womMult = womMin + (womMax - womMin) * womPct;
-      
+
       var rate = basePerSec * hypeMult * womMult;
       return hasBoredomEffect('referrals_negative') ? -Math.abs(rate) : rate;
     }
@@ -1135,7 +1136,7 @@ DownlineM.init = function(div) {
       var commitCap = hasBoredomEffect('commitment_cap_half') ? BAR_MAX / 2 : BAR_MAX;
       var hypePct = Math.min(1, Math.max(0, (G.hype || 0) / hypeCap));
       var commitPct = Math.min(1, Math.max(0, (G.commitment || 0) / commitCap));
-      var scale = Math.pow(hypePct, 0.5) * Math.pow(commitPct, 1.0); 
+      var scale = Math.pow(hypePct, 0.5) * Math.pow(commitPct, 1.0);
       var p = G.players;
       if (hasBoredomEffect('promotion_reverse')) {
         if (scale <= 0) return;
@@ -1428,7 +1429,7 @@ DownlineM.init = function(div) {
         unlock: { conditions: [{ stat: 'players', min: 125 }] },
         effects: { players: 5, commitment: -2, hype: 1 },
         headline: 'Delicious looking billboards draw people to drive-thrus across the country looking for cookies in all the wrong places' },
-      
+
         { name: 'Sponsor influencers', icon: [10,14], sheet: 'custom', durationSec: 5 * 60 * 60, costCps: 90 * 60,
         desc: 'Pay content creators to pretend they discovered your game organically.',
         flavor: 'This is truly a product I use every day and I\'m not just saying that because they are paying me to. #NotSponsored).',
@@ -1442,14 +1443,14 @@ DownlineM.init = function(div) {
         unlock: { conditions: [{ stat: 'players', min: 350 }], tempConditions: [{ stat: 'reputation', min: 750 }] },
         effects: { players: 10, commitment: -2, reputation: -1 },
         headline: 'New cookie themed TV commercial airs - not as viral as hoped' },
-      
+
       { name: 'Popup ads', icon: [0,0], durationSec: 2 * 60 * 60, costCps: 30 * 60,
         desc: 'Aggressive browser popups. Effective but universally despised.',
         flavor: "Hate-downloading new games since 2013.",
         unlock: { conditions: [{ stat: 'players', min: 450 }] },
         effects: { players: 12, reputation: -3, referrals: -1},
         headline: 'Aggressive popup campaign sparks backlash, local player states "One more ad and I\'m going postal"' },
-      
+
         { name: 'Direct mailing', icon: [7,16], sheet: 'custom', durationSec: 3 * 60 * 60, costCps: 36 * 60,
         desc: 'Cost effective spam the old fashioned way right into the tin mailbox.',
         flavor: "Studies have shown that 93% of people don\'t even open the letter.",
@@ -1463,7 +1464,7 @@ DownlineM.init = function(div) {
         unlock: { conditions: [{ stat: 'players', min: 1500 }], tempConditions: [{ stat: 'reputation', min: 950 }] },
         effects: { players: 18, hype: 3, reputation: -5},
         headline: 'Orbital ad platform blocks moon, astronomers baffled at who would have approved this' },
-     
+
       { name: 'Bug fixes', icon: [18,8], durationSec: 30 * 60, costCps: 10 * 60,
         desc: 'Squashing those bugs while not admitting they existed in the first place.',
         flavor: "Assorted bug fixes and improvements... players are slightly less frustrated now.",
@@ -1490,7 +1491,7 @@ DownlineM.init = function(div) {
         unique: true,
         flavor: 'A You minigame sounds like an easy project, or at least it did... Betcha its done before dungeons though.',
         unlock: { conditions: [{ stat: 'hype', min: 100 }, { stat: 'commitment', min: 100 }], tempConditions: [{ stat: 'players', min: 100 }] },
-        effects: { hype: 1, commitment: 1, players: -3, reputation: 1},
+        effects: { hype: 1, commitment: 1, players: -2, reputation: 1},
         headline: 'New minigame inside cookie game: Players clamor for game within a game concept' },
 
       { name: 'Improve modding support', icon: [16,5], durationSec: 2 * 60 * 60, costCps: 35 * 60,
@@ -1513,7 +1514,7 @@ DownlineM.init = function(div) {
         unlock: { conditions: [{ stat: 'players', min: 100 }, { stat: 'commitment', min: 100 }] },
         effects: { hype: 2, commitment: 1, players: -1.5},
         headline: 'Visual overhaul hits the market - still pixelated, still just perfect' },
-      
+
 
       { name: 'Publish roadmap', icon: [12,17], sheet: 'custom', durationSec: 2 * 60 * 60, costCps: 10 * 60,
         desc: 'Share the vision. Better hope you can keep these deadlines though or players might come after you.',
@@ -1528,7 +1529,7 @@ DownlineM.init = function(div) {
         unlock: { conditions: [{ stat: 'commitment', min: 200 }], tempConditions: [{ stat: 'hype', min: 200 }] },
         effects: { hype: -3.5, commitment: 3, reputation: 2, players: -3, referrals: -1},
         headline: 'Players discover massive bug list hidden in plain sight within Discord Bugs and Glitches Channel' },
-    
+
       { name: 'Leave in fun exploits', icon: [23, 7], durationSec: 6 * 60 * 60, costCps: 90 * 60,
         desc: 'Patch all the bugs, well not that one, or that one either.',
         flavor: 'Some bugs make the game more fun, not everyone agrees though.',
@@ -1540,7 +1541,7 @@ DownlineM.init = function(div) {
         desc: 'Translate the game into new languages.',
         flavor: 'Cookies now in Elvish, Klingon, Dothraki, Na\'vi, and Parseltongue',
         unlock: { conditions: [{ stat: 'players', min: 200 }, { stat: 'reputation', min: 400 }], tempConditions: [{ stat: 'hype', min: 150 }] },
-        effects: { players: 2, reputation: 1, commitment: 1, hype: -2 },
+        effects: { players: 2, reputation: 1, commitment: 1.5, hype: -2 },
         headline: 'Cookie Clicker now runs in Elvish and Parseltongue, more critical langauges being added soon says developer' },
 
       { name: 'Add accessibility', icon: [35, 31], durationSec: 1.5 * 60 * 60, costCps: 90 * 60,
@@ -1549,12 +1550,12 @@ DownlineM.init = function(div) {
         unlock: { conditions: [{ stat: 'players', min: 50 }, { stat: 'reputation', min: 250 }], tempConditions: [{ stat: 'hype', min: 150 }] },
         effects: { reputation: 3, hype: -2, commitment: -1 },
         headline: 'Cookie Clicker accessibility update universally praised: "they really do care about the differently abled"' },
-     
+
        { name: 'Port to new platform', icon: [5,0], durationSec: 8 * 60 * 60, costCps: 4 * 60 * 60,
         desc: 'Launch on a new system. Big player influx; existing community commitment dips due to fragmentation of gameplay.',
         flavor: 'Now on iOS? Nope we are releasing it on Samsung Branded Toasters, iOS soon though.',
         unlock: { conditions: [{ stat: 'players', min: 300 }], tempConditions: [{ stat: 'hype', min: 500 }, { stat: 'commitment', min: 500 }] },
-        effects: { players: 25, commitment: -5 },
+        effects: { players: 20, commitment: -6 },
         headline: 'Cookie Clicker now available on iOS nope strike that it\'s available on Smart Mattresses' },
 
         { name: 'Post Memes', icon: [27,21], durationSec: 1 * 60 * 60, costCps: 12 * 60,
@@ -1563,7 +1564,7 @@ DownlineM.init = function(div) {
         unlock: { conditions: [{ stat: 'players', min: 20 }], tempConditions: [{ stat: 'hype', min: 75 }] },
         effects: { players: 3, hype: 2, referrals: 1,  reputation: -2},
         headline: "Cookie memes flood social media some call it spam others call it high art" },
-     
+
       { name: 'Reddit AMA', icon: [8,10], durationSec: 2 * 60 * 60, costCps: 45 * 60,
         desc: 'Answer questions from the community. Transparency builds trust. Things can go a bit sideways with these things though.',
         flavor: "But why cookies?",
@@ -1590,9 +1591,9 @@ DownlineM.init = function(div) {
         desc: 'Send in the slightly creepy guy in the giant kitten outfit.',
         flavor: "He has a little dance he does and everything",
         unlock: { conditions: [{ stat: 'players', min: 100 }, { stat: 'hype', min: 100 }] },
-        effects: { players: 4, reputation: 1.5, hype: -2, commitment: -1, referrals: 1 },
+        effects: { players: 3, reputation: 1.5, hype: -2, commitment: -1.5, referrals: 1 },
         headline: 'Kitten mascot waves at shoppers, wholesome but forgettable' },
-    
+
         { name: 'Ban cheaters', icon: [1,7], durationSec: 1 * 60 * 60, costCps: 35 * 60,
         desc: 'Cheated cookies taste awful but some players like weird tasting things.',
         flavor: 'No one believes your level 42 bank, buddy.',
@@ -1611,7 +1612,7 @@ DownlineM.init = function(div) {
         desc: "Whisper campaigns against rival games.",
         flavor: 'All\'s fair in love and cookies.',
         unlock: { conditions: [{ stat: 'players', min: 150 }], tempConditions: [{ stat: 'hype', min: 150 }, { stat: 'referrals', min: 200 }] },
-        effects: { hype: 7, commitment: 2, reputation: -3, referrals: -3},
+        effects: { hype: 6, commitment: 2, reputation: -3, referrals: -3},
         headline: 'Rumors spread that Burger Tapper uses child labor and counterfeit pixels' },
 
         { name: 'Clickbait videos', icon: [1,33], durationSec: 3 * 60 * 60, costCps: 30 * 60,
@@ -1632,7 +1633,7 @@ DownlineM.init = function(div) {
         desc: 'Five stars across the board. Suspiciously uniform praise.',
         flavor: "Best game ever. Let me know if you would like the review to sound more human.",
         unlock: { conditions: [{ stat: 'players', min: 250 }], tempConditions: [{ stat: 'reputation', max: 700 }] },
-        effects: { players: 8, reputation: -2, hype: 5, commitment: -1 },
+        effects: { players: 8, reputation: -2, hype: 4, commitment: -1 },
         headline: 'How to spot fake online reviews: Expose tonight at 9pm' },
 
         { name: 'Aggressively moderate negative reviews', icon: [21,30], durationSec: 2 * 60 * 60, costCps: 25 * 60,
@@ -1653,7 +1654,7 @@ DownlineM.init = function(div) {
         desc: 'Paying players to find more players. No way this one can go wrong.',
         flavor: 'What\'s the worst thing that could happen?',
         unlock: { conditions: [{ stat: 'players', min: 150 }, { stat: 'reputation', min: 300 }], tempConditions: [{ stat: 'reputation', min: 750 }] },
-        effects: { referrals: 8, reputation: -2, commitment: -1, hype: -1},
+        effects: { referrals: 7, reputation: -2, commitment: -1.5, hype: -1.5},
         headline: 'Refer-a-friend rewards launch: "is it growth or bribery?" we tell you what to think tonight at 11' },
 
         { name: 'Player hypnosis', icon: [19,24], sheet: 'custom', durationSec: 3 * 60 * 60, costCps: 120 * 60,
@@ -1681,13 +1682,13 @@ DownlineM.init = function(div) {
         desc: 'Each player just needs to recruit three more. Then each of those players will recruit 3 more.',
         flavor: "It's not a pyramid. It's a reverse funnel.",
         unlock: { conditions: [{ stat: 'players', min: 500 }, { stat: 'hype', min: 150 }], tempConditions: [{ stat: 'reputation', min: 800 }] },
-        effects: { players: 20, referrals: 5, reputation: -6, commitment: 6, hype: -3},
+        effects: { players: 20, referrals: 4, reputation: -6, commitment: 5, hype: -3.5},
         headline: 'Massive backlash on some sort of Cookie Pyramid Scam. Somehow didn\'t even involve edible cookies' },
 
         { name: 'Launch swag store', icon: [14,9], durationSec: 1.5 *  60 * 60, costCps: 90 * 60,
         desc: 'Sell cookie merch. Committed fans love it; critics call it commercialization and selling out.',
         flavor: 'People are actually buying shirts with pictures of grandmas on them, this is a real cash cow.',
-        unique: true, 
+        unique: true,
         unlock: { conditions: [{ stat: 'players', min: 250 }, { stat: 'commitment', min: 150 }], tempConditions: [{ stat: 'commitment', min: 250 }] },
         effects: { commitment: 5, players: -2, reputation: -3, boost: 4},
         headline: 'Cookie Clicker swag store opens top seller a cookie keychain, wait that can\'t be right can it?' },
@@ -1715,7 +1716,7 @@ DownlineM.init = function(div) {
         unlock: { conditions: [{ stat: 'players', min: 1000 }] },
         effects: { reputation: -4, players: -3, hype: 6, boost: 3},
         headline: 'Cookie Clicker tax strategy under scrutiny, IRS announces audit' },
-    
+
         { name: 'Make game pay to play', icon: [13,14], sheet: 'custom', durationSec: 12 * 60 * 60, costCps: 8 * 60 * 60,
         desc: 'Paywall everything. Instant revenue, instant exodus.',
         flavor: 'Wow that really didn\'t go over well, who could have predicted that?',
@@ -1777,7 +1778,7 @@ DownlineM.init = function(div) {
         unlock: { conditions: [{ stat: 'players', min: 750 }], tempConditions: [{ stat: 'reputation', max: 800 }] },
         effects: { reputation: 5, players: -6, boost: -4},
         headline: 'SAVE Cookie Clicker Act passes house of representatives next stop the senate' },
-      
+
         { name: 'Subliminal marketing', icon: [20,13], sheet: 'custom', durationSec: 4 * 60 * 60, costCps: 180 * 60,
         desc: "Hidden messages everywhere. They won't know why they're clicking.",
         flavor: 'eikooc eht kcilc',
@@ -1785,10 +1786,10 @@ DownlineM.init = function(div) {
         effects: { players: 15, commitment: 4, hype: -4, reputation: -4 },
         headline: 'Nightly news viewers report urge to click after watching' },
 
-      { name: 'Make a fake botnet', icon: [4,9], durationSec: 3 * 60 * 60, costCps: 200 * 60,
+      { name: 'Make a fake botnet', icon: [4,9], durationSec: 3 * 60 * 60, costCps: 300 * 60,
         desc: "Inflate your numbers with AI bots. Nobody will notice, right… RIGHT?",
         flavor: "A player is a player, can't get picky now... we're too deep.",
-        unlock: { conditions: [{ stat: 'players', min: 300 }], tempConditions: [{ stat: 'reputation', min: 800 }] },
+        unlock: { conditions: [{ stat: 'players', min: 1000 }], tempConditions: [{ stat: 'reputation', min: 800 }] },
         effects: { players: 50, commitment: -3, reputation: -8, hype: 3, referrals: -2 },
         headline: 'Fake players inflate numbers, CEO claims "they are just highly efficient users"' },
 
@@ -1806,7 +1807,7 @@ DownlineM.init = function(div) {
         unlock: { conditions: [{ stat: 'players', min: 1000 }, { stat: 'fanatic', min: 10 }], tempConditions: [{ stat: 'hype', min: 300 }] },
         effects: { players: 115, referrals: 10, reputation: -22, hype: 8, commitment: 9 },
         headline: 'Ancient Cookie Cult resurfaces: "these guys are suddenly everywhere maybe if we did some puzzles they would chill out"' },
- 
+
       { name: 'Cookie Clicker the Motion Picture', icon: [2,7], durationSec: 6 * 60 * 60, costCps: 5 * 60 * 60,
         desc: 'A cinematic masterpiece about clicking cookies. Fans rejoice everyone else cringes.',
         flavor: 'Maybe we should have cut it down a little from 3 hours and 45 minutes, we probably didn\'t need that 3rd dream sequence.',
@@ -1868,7 +1869,7 @@ DownlineM.init = function(div) {
   { stat: 'commitment', min: 0, max: 100, headline: 'Players don\'t feel very committed to clicking the cookies, "I can quit anytime" says virtually everyone' },
   { stat: 'commitment', min: 150, max: 300, headline: 'Cookie Clickers report feeling the slight tinge of addiction, "it\'s just hard to put down" says player' },
   { stat: 'commitment', min: 900, max: 1000, headline: 'Players report being addicted to the clicking, they just can\'t stop' },
-  
+
   { stat: 'boredom', min: 5, max: 11, headline: 'Community sentiment suggests growing boredom with recent tactics, demand more diversity in actions' },
   { stat: 'boredom', min: 12, max: 17, headline: 'Player base becoming bored by lack of diverse actions, "Unless variety is added things are going to get weird in here" warns user' },
   { stat: 'boredom', min: 18, max: 19, headline: 'Researchers warn of dangerously bored players, "Just one more time and i\'m burning it all down" warns player' },
@@ -1921,36 +1922,36 @@ DownlineM.init = function(div) {
       var seen = new Set();
       var items = [];
       var v, headline;
-      
+
       for (var i = 0; i < STATE_NEWS.length; i++) {
         var s = STATE_NEWS[i];
         try { v = statValue(s.stat); } catch (e) { continue; }
         if (typeof v !== 'number' || isNaN(v)) continue;
         if (v >= s.min && v <= s.max) {
           headline = s.headline;
-          if (headline && !seen.has(headline)) { 
-            seen.add(headline); 
+          if (headline && !seen.has(headline)) {
+            seen.add(headline);
             items.push(headline);
           }
         }
       }
-      
+
       var seenAction = {};
       for (var j = 0; j < G.activeActions.length; j++) {
         var name_ = G.activeActions[j].name;
         if (seenAction[name_]) continue;
         seenAction[name_] = true;
         var d = ACTIONS[name_];
-        if (d && d.headline && !seen.has(d.headline)) { 
-          seen.add(d.headline); 
+        if (d && d.headline && !seen.has(d.headline)) {
+          seen.add(d.headline);
           items.push(d.headline);
         }
       }
-      
+
       if (items.length === 0) {
         items.push('Slow news day, eh?');
       }
-      
+
       G.tickerPool = items;
     }
 
@@ -1969,21 +1970,21 @@ DownlineM.init = function(div) {
           if (t) inStrip.add(t);
         }
       }
-      
+
       if (!G.tickerPool || G.tickerPool.length === 0) {
         refillTickerPool();
       }
-      
+
       var available = G.tickerPool.filter(function (h) { return !inStrip.has(h); });
-      
+
       if (available.length === 0) {
         available = G.tickerPool.slice();
       }
-      
+
       var picked = available[Math.floor(Math.random() * available.length)];
       var idx = G.tickerPool.indexOf(picked);
       if (idx >= 0) G.tickerPool.splice(idx, 1);
-      
+
       return picked;
     }
 
@@ -2022,7 +2023,7 @@ DownlineM.init = function(div) {
       if (!strip) return;
       var parent = strip.parentElement;
       var visibleWidth = parent ? parent.clientWidth : 0;
-      
+
       if (visibleWidth === 0) {
         if (tickerRetryCount < TICKER_MAX_RETRIES) {
           tickerRetryCount++;
@@ -2035,15 +2036,15 @@ DownlineM.init = function(div) {
         }
         return;
       }
-      
+
       tickerRetryCount = 0;
-      
+
       while (getStripTotalWidth(strip) < visibleWidth) {
         var text = getNextTickerItem(strip);
         if (!text) break;
         appendTickerSegment(strip, text);
       }
-      
+
       if (strip.children.length > 0 && !tickerAnimationRunning) {
         // Claim generation, kills any stale loops from old closures
         tickerGeneration = strip ? ((strip._tickerGen || 0) + 1) : 1;
@@ -2240,10 +2241,7 @@ DownlineM.init = function(div) {
       var descContent = descHtml || (def && def.desc) || descPlain || '';
       if (descContent) parts.push('<div class="description">' + (descHtml ? descContent : escapeTooltipHtml(descContent)) + '</div>');
       if (def && def.durationSec != null) {
-        var baseDur = def.durationSec;
-        var durationMult = hasBoredomEffect('actions_25_less') ? 0.75 : 1;
-        var auraMult = getSupremeIntellectDurationMult();
-        var actualDur = baseDur * durationMult * auraMult;
+        var actualDur = getActionDuration(def);
         var durationText = 'Duration: <b>' + escapeTooltipHtml(formatDuration(actualDur)) + '</b>';
         if (hasBoredomEffect('actions_25_less')) {
           durationText += ' <span class="red">(25% less from boredom)</span>';
@@ -2258,7 +2256,7 @@ DownlineM.init = function(div) {
       }
       if (def && def.special === 'pivot') {
         var now = Date.now();
-        var cooldownMs = 60 * 60 * 1000; 
+        var cooldownMs = 60 * 60 * 1000;
         var cooldownRemaining = 0;
         if (G.lastPivotTime && now - G.lastPivotTime < cooldownMs) {
           cooldownRemaining = cooldownMs - (now - G.lastPivotTime);
@@ -2485,9 +2483,13 @@ DownlineM.init = function(div) {
       if (link.classList.contains('locked')) return;
       var name = link.getAttribute('data-name'), def = ACTIONS[name];
       if (!def || !def.isUsable()) return;
+      if (G.frozen) {
+        Game.Popup('<div style="font-size:80%;">Unfreeze the Downline to add new actions.</div>', Game.mouseX, Game.mouseY);
+        return;
+      }
       if (def.special === 'pivot') {
         var now = Date.now();
-        var cooldownMs = 60 * 60 * 1000; 
+        var cooldownMs = 60 * 60 * 1000;
         if (G.lastPivotTime && now - G.lastPivotTime < cooldownMs) {
           return; // Cooldown active
         }
@@ -2515,9 +2517,7 @@ DownlineM.init = function(div) {
       chip.className = 'downline-active-chip'; chip.setAttribute('data-name', name); chip.title = name;
       chip.appendChild(createIcon(def.icon[0], def.icon[1], def.sheet));
       var overlay = document.createElement('span'); overlay.className = 'downline-active-overlay'; chip.appendChild(overlay);
-      var durationMult = hasBoredomEffect('actions_25_less') ? 0.75 : 1;
-      var auraMult = getSupremeIntellectDurationMult();
-      var total = Math.max(def.durationSec * durationMult * auraMult, 0.001);
+      var total = Math.max(getActionDuration(def), 0.001);
       var state = { name: name, totalSec: total, remainSec: total };
       var stateIndex = G.activeActions.length;
       chip.setAttribute('data-state-index', stateIndex);
@@ -2678,11 +2678,11 @@ DownlineM.init = function(div) {
 
       var hypeCap = hasBoredomEffect('hype_cap_half') ? BAR_MAX / 2 : BAR_MAX;
       var commitCap = hasBoredomEffect('commitment_cap_half') ? BAR_MAX / 2 : BAR_MAX;
-      
+
       $('downline-bar-hype-fill').style.width = (G.hype / BAR_MAX * 100) + '%';
       $('downline-bar-commitment-fill').style.width = (G.commitment / BAR_MAX * 100) + '%';
       $('downline-bar-reputation-fill').style.width = (G.reputation / BAR_MAX * 100) + '%';
-      
+
       var hypeCapped = hypeCap < BAR_MAX;
       var commitCapped = commitCap < BAR_MAX;
       var hypeCapEl = $('downline-bar-hype-cap');
@@ -2695,7 +2695,7 @@ DownlineM.init = function(div) {
         commitCapEl.classList.toggle('active', commitCapped);
         if (commitCapped) commitCapEl.style.width = ((BAR_MAX - commitCap) / BAR_MAX * 100) + '%';
       }
-      
+
       $('downline-bar-hype-label').textContent = 'Hype' + (hypeCapped ? ' (capped)' : '');
       $('downline-bar-commitment-label').textContent = 'Commitment' + (commitCapped ? ' (capped)' : '');
 
@@ -2791,7 +2791,7 @@ DownlineM.init = function(div) {
       if (G.lastTickTime === 0) G.lastTickTime = now;
       var realDt = Math.min((now - G.lastTickTime) / 1000, 1);
       G.lastTickTime = now;
-      
+
       G.rawCpS = Game.cookiesPsRaw || G.rawCpS;
       if (!G.frozen) {
         G.unfrozenRawCpS = G.rawCpS;
@@ -2811,7 +2811,7 @@ DownlineM.init = function(div) {
       if (Game.hasAura('Supreme Intellect')) auraBonusNow += 1;
       if (Game.hasAura('Reality Bending')) auraBonusNow += 0.1;
       var multNow = 1 + (auraBonusNow * 0.1);
-      
+
       var auraBonusBefore = G._auraBonusWasActive || 0;
       var multBefore = 1 + (auraBonusBefore * 0.1);
 
@@ -2877,7 +2877,7 @@ DownlineM.init = function(div) {
       var totBoost = getCurrentBoost() * (G.frozen ? FROZEN_SPEED_FRAC : 1) + (G.prestigeBoost || 0);
       var newEffs = 1 + totBoost / 100;
       var cpsChanged = !DownlineM.effs || Math.abs(DownlineM.effs.cps - newEffs) > 0.0001;
-      
+
       if (cpsChanged) {
         DownlineM.effs = { cps: newEffs };
         if (!DownlineM._lastRecalcMs || now - DownlineM._lastRecalcMs >= 500) {
@@ -2926,34 +2926,34 @@ DownlineM.init = function(div) {
 
     function recomputeBaseHeights() {
       if (!barsEl) return;
-      
+
       var wrapEl = document.getElementById('downline-wrap');
       if (wrapEl) {
         var currentWidth = wrapEl.offsetWidth;
         if (lastWrapWidth !== 0 && currentWidth === lastWrapWidth) return;
         lastWrapWidth = currentWidth;
       }
-      
+
       barsEl.style.height = 'auto';
       var barsRect = barsEl.getBoundingClientRect();
       if (barsRect.height > 0) {
         barsEl.style.height = barsRect.height + 'px';
       }
-      
+
       if (actionsLibraryEl && actionsListEl && actionsListWrapEl) {
         var items = actionsListEl.querySelectorAll('.downline-action-item');
         items.forEach(function (el) { el.style.display = ''; });
-        
+
         actionsListWrapEl.style.minHeight = '';
         actionsLibraryEl.style.width = '';
         actionsLibraryEl.style.height = '';
-        
+
         void actionsListWrapEl.offsetHeight;
         var listWrapHeight = actionsListWrapEl.offsetHeight;
         if (listWrapHeight > 0) {
           actionsListWrapEl.style.minHeight = listWrapHeight + 'px';
         }
-        
+
         applyFilterVisibility();
       }
     }
@@ -2977,7 +2977,7 @@ DownlineM.init = function(div) {
 
     function playFreezeSound() {
       try {
-        var a = new Audio('https://orteil.dashnet.org/cookieclicker/snd/freezeGarden.mp3');
+        var a = new Audio((Game.resPath || 'https://orteil.dashnet.org/cookieclicker/') + 'snd/freezeGarden.mp3');
         a.play().catch(function () {});
         a.volume = 0.5;
       } catch (e) {}
@@ -3000,6 +3000,7 @@ DownlineM.init = function(div) {
     }
 
     function downlineDoRelease() {
+      if (G.frozen) return;
       G.prestigeBoost += getCurrentBoost() * 0.1;
       G.players = { dabbler: 0, casual: 0, habitual: 0, devotee: 0, fanatic: 0 };
       G.hype = 50; G.commitment = 50; G.referrals = 0; G.reputation = BAR_MAX;
@@ -3047,6 +3048,10 @@ DownlineM.init = function(div) {
       releaseBtn.addEventListener('click', function (e) {
         e.preventDefault();
         if (!G.releaseMetPlayers || !G.releaseMetHype || !G.releaseMetCommitment || G.reputation <= 750 || !G.releaseMetReferrals || totalPlayers() < 1500) return;
+        if (G.frozen) {
+          Game.Popup('<div style="font-size:80%;">Unfreeze the Downline before releasing the Fractal Engine Minigame.</div>', Game.mouseX, Game.mouseY);
+          return;
+        }
         downlineShowReleasePrompt();
       });
     }
@@ -3442,6 +3447,7 @@ DownlineM.init = function(div) {
     DownlineM.doRebrand = doRebrand;
     DownlineM.downlineDoRelease = downlineDoRelease;
     DownlineM.activateSugarRushImpl = function() {
+      if ((Game.lumps || 0) < 1) return;
       Game.lumps -= 1;
       Game.recalculateGains = 1;
       G.lumpSpeedBoostEnd = Date.now() + 30 * 60 * 1000;
@@ -3690,7 +3696,7 @@ function initializeDownlineMinigame() {
 
     function bootMinigame() {
         if (!fractalEngine) return;
-        
+
         if (!fractalEngine.minigameLoaded) {
             fractalEngine.minigameLoaded = true;
             fractalEngine.minigameName = fractalEngine.minigameName || 'Downline';
@@ -3708,7 +3714,7 @@ function initializeDownlineMinigame() {
         if (!fractalEngine.minigame) {
             fractalEngine.minigame = DownlineM;
         }
-        
+
         // highest can be NaN if save data is missing the field
         if (typeof fractalEngine.highest !== 'number' || isNaN(fractalEngine.highest)) {
             fractalEngine.highest = fractalEngine.amount || 0;
@@ -3737,7 +3743,7 @@ function initializeDownlineMinigame() {
                 DownlineM.launch();
                 ensureMinigameDiv();
                 DownlineM.init(fractalEngine.minigameDiv);
-                
+
                 if (Game.JNE && Game.JNE.downlineSavedData) {
                     DownlineM.load(Game.JNE.downlineSavedData);
                 }

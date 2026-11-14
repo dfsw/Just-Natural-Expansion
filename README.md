@@ -57,6 +57,25 @@ The mobile version of Cookie Clicker does not support mods at this time.
 
 ## Changelog  
 
+### Version 0.8.3 - Gobble Gobble
+* Just in time for the holidays, come celebrate overeating and mindless consumerism like only an American can, with Just Natural Expansion’s new Thanksgiving season. Collect erratic turkeys and find Black Friday coupons for valuable upgrades to all 8 minigames!
+* Breath of Growth and Cloneconomics can now both be used together.
+* Some Potion Reagents can be awarded through additional actions.
+* Effects that target buffs and debuffs now consider lasting spell effects from Grimoire to be buffs or debuffs, added due to extreme community demand.  
+* Slightly reduced the power of the “Golden Cookies spawn faster” Clone Escape reward.
+* Terminal minigame slot queue icons are now more descriptive.
+* Terminal now has the option of activating all 3 loans at once.
+* High levels of the JS Console could accidentally award an extra execution slot in Terminal. This has been fixed, sorry if you see one fewer slot.
+* Mega Click popups notifications have had their default cooldown increased and can now also be completely disabled in Options. Neither effects the ability to get a Mega Click. 
+* You must now exit Frozen state in Downline to add new actions or release the Fractal Engine Minigame. 
+* Some tweaking to Downline action stats to try and make things a bit more balanced. 
+* Heavenly upgrade seeds are now reflected in the seeds unlocked totals in the Garden seed catalog. 
+* Fixed a couple of calculation errors with some Heavenly Upgrades, most are now more favorable to the player.
+* Fixed a bug that could cause naturally starting vanilla base seasons from properly ending. 
+* Clone Escape Scenarios have been updated to generation 3 they are now 18.27% more fun and 48.333% more aligned to difficulties. Easy are easier, harder are harder, top tier is now just evil. Any in progress puzzles will be lost on save load, finish your active puzzle before loading the new patch if you want to keep it. (Yes I just made up percentages)
+* If your save is older than August 2026 or v0.6.7 you may see minor loss of save data, this only applies to your last save, so if you have saved since August there is no concern. 
+* Minor bug fixes, improvements, and code cleanup.
+
 ### Version 0.8.2
 * Clone Escape has a new hint/supervisor system that should be much more reliable in showing the minimal set of clues needed for the shown hint. 
 * Puzzles have been regenerated using an updated engine, they include more clue types, more diversity of clues, better phsyical trait clue systems, and will hopefully better align to difficulty tiers. They also should be even more fun to play. Any puzzle mid-solve will be lost on game reload with the updated set. 

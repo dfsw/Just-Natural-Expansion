@@ -3,14 +3,14 @@
 (function() {
 'use strict';
 
-const POTIONS_VERSION = '1.1.12';
+const POTIONS_VERSION = '1.1.13';
 
 // =====================================================================
-// Potions 
+// Potions
 //
-// Look I get you want to look up how to make potions and it can be frusterating, but 
+// Look I get you want to look up how to make potions and it can be frusterating, but
 // potion discovery is a big part of the game and once they are unlocked they do stay
-// unlocked forever, but I get it, let me throw you a bone. There is a potion that can 
+// unlocked forever, but I get it, let me throw you a bone. There is a potion that can
 // help you discover a potion before you dive into the spoilers below. Try mixing together
 // Divine Extraction, Cat Whiskers, and Captured Auroras. If you then still want to deprive
 // yourself of a "fun" game mechanic I can't stop you
@@ -54,7 +54,7 @@ var POTIONS = [
         id: 'infusion_of_chance',
         name: "Infusion of Chance",
         icon: [9, 31, 'main'],
-        desc: "After drinking this, my yard was overgrown with four-leaf clovers made entirely out of lucky pennies.",        
+        desc: "After drinking this, my yard was overgrown with four-leaf clovers made entirely out of lucky pennies.",
         effect: "Random drops (including reagents) are 30% more common for 30 minutes.",
         brewTime: 60*45,
         duration: 1800,
@@ -64,7 +64,7 @@ var POTIONS = [
     {
         id: 'ointment_of_plenty',
         name: "Ointment of Plenty",
-        icon: [23, 25, 'custom'], 
+        icon: [23, 25, 'custom'],
         desc: "Rub directly into the hands for best results, also known to help with arthritis.",
         effect: "Reagents drop 100% more often for the next 10 minutes.",
         brewTime: 60*60*1,
@@ -196,7 +196,7 @@ var POTIONS = [
         id: 'emulsion_of_sinful_greed',
         name: "Emulsion of Sinful Greed",
         icon: [13, 26, 'custom'],
-        desc: "That\'s specious reasoning, Dad.<br>Thank you, dear.<br>By your logic I could claim that this rock keeps tigers away.<br>How does it work?<br>It doesn\'t work. It\'s just a stupid rock. But I don\'t see any tigers around, do you?<br>Lisa, I would like to to buy your rock.",        
+        desc: "That\'s specious reasoning, Dad.<br>Thank you, dear.<br>By your logic I could claim that this rock keeps tigers away.<br>How does it work?<br>It doesn\'t work. It\'s just a stupid rock. But I don\'t see any tigers around, do you?<br>Lisa, I would like to to buy your rock.",
         effect: "Your chances of summoning a shiny wrinkler are tripled for the next 30 minutes.",
         brewTime: 60*60*4,
         duration: 1800,
@@ -362,7 +362,7 @@ var POTIONS = [
         brewTime: 60*45,
         misbrew: "Unknown potions take twice as long to discover for the next hour.",
         reagents: { cats_whiskers: 1, captured_auroras: 1, divine_extraction: 1 },
-    },  
+    },
     {
         id: 'spirit_of_protection',
         name: "Spirit of Protection",
@@ -443,7 +443,7 @@ var POTIONS = [
         id: 'concentrate_of_saturn',
         name: "Concentrate of Saturn",
         icon: [0, 26, 'custom'],
-        desc: "A potion infused with the power of Saturn himself, more Roman with just as much lightning.", 
+        desc: "A potion infused with the power of Saturn himself, more Roman with just as much lightning.",
         effect: "Gain 1 hour of CpS, capped at 8% of your bank.",
         brewTime: 60*60*2.5,
         misbrew: "Lose 2 hours of CpS.",
@@ -465,10 +465,10 @@ var POTIONS = [
         name: "Decoction of Winter",
         icon: [21, 26, 'custom'],
         desc: "Winter is coming. What a waste that whole thing ended up being. Is this a good platform to rant about an old TV show on? I don\'t really care if it is or not, I am still bitter and pissed off about the whole thing.",
-        effect: "Reindeer and lanterns are 25% more common for the next hour.",
+        effect: "Seasonal spawns are 25% more common for the next hour.",
         brewTime: 60*15,
         duration: 3600,
-        misbrew: "Reindeer and lanterns do not spawn for the next hour.",
+        misbrew: "Seasonal spawns stop for the next hour.",
         reagents: { reindeer_fur: 1, culture_of_time: 1, captured_auroras: 1 },
     },
     {
@@ -486,10 +486,10 @@ var POTIONS = [
         name: "Whisper of Boreas",
         icon: [19, 26, 'custom'],
         desc: "The North remembers. Okay, thats my seconds Game of Thrones reference in this minigame, I\'m done I promise.",
-        effect: "Reindeer and lantern gains are increased by 20% for 30 minutes.",
+        effect: "Seasonal rewards are increased by 20% for 30 minutes.",
         brewTime: 60*45,
         duration: 1800,
-        misbrew: "Reindeer and lantern gains are reduced by 50% for an hour.",
+        misbrew: "Seasonal rewards are reduced by 50% for an hour.",
         reagents: { reindeer_fur: 1, flower_petals: 1, roots: 1 },
     },
     {
@@ -526,7 +526,7 @@ var POTIONS = [
     {
         id: 'solvent_of_substitution',
         name: "Solvent of Substitution",
-        icon: [7, 7, 'main'], 
+        icon: [7, 7, 'main'],
         desc: "Turns things you had into things you might need, but probably don\'t.",
         effect: "Gain 5 random reagents you have unlocked.",
         brewTime: 60*60,
@@ -739,7 +739,7 @@ var REAGENTS = [
         icon: [16, 6, 'main'],
         flavor: "Aged for several seconds over many years, or for several years in a few seconds. It's getting really hard to keep track.",
         gather: "Culture of time is found by advancing through seasons, naturally or artificially. It may also randomly appear as time passes.",
-        dropChance: 0.25, //also randomly 1 in 60000 seconds or so. 
+        dropChance: 0.25, //also randomly 1 in 60000 seconds or so.
     },
     {
         id: 'pure_cane_sugar',
@@ -810,7 +810,7 @@ var REAGENTS = [
         name: "Flower Petals",
         icon: [4, 13, 'garden'],
         flavor: "Pressed petals from the garden's most benevolent blooms.",
-        gather: "Found by harvesting mature Shimmerlily, Nursetulip, Chimrose, Everdaisy, or any clover variant in the Garden.",
+        gather: "Found by harvesting mature Shimmerlily, Nursetulip, Chimrose, Everdaisy, or any clover variant in the Garden, or by finding lanterns in Lunar New Year.",
         dropChance: 0.07,
     },
     {
@@ -834,7 +834,7 @@ var REAGENTS = [
         name: "Immortal Essence",
         icon: [19, 7, 'main'],
         flavor: "Distilled from a plant that refused to die. Does harvesting it kill it? The question remains eternal.",
-        gather: "Found by harvesting any mature immortal plant in the Garden.",
+        gather: "Found by harvesting any mature immortal plant in the Garden, or from completeing a Clone Escape scenario.",
         dropChance: 0.25,
     },
     {
@@ -842,7 +842,7 @@ var REAGENTS = [
         name: "Extract of Entrepreneurship",
         icon: [17, 6, 'main'],
         flavor: "Has also been called concentrate of hustle.",
-        gather: "Performing any actions in the Downline has a chance to reward you with extract of entrepreneurship.",
+        gather: "Performing any actions in the Downline or clipping Black Friday coupons has a chance to reward you with extract of entrepreneurship.",
         dropChance: 0.10,
     },
     {
@@ -878,9 +878,9 @@ var ORIGINAL_RECIPES = (function() {
 
 var TriedRecipes = (function() {
     var NUM_INGREDIENTS = 22;
-    var NUM_COMBOS = 1540;        
-    var NUM_BYTES = 193;           
-    var UNUSED_BITS = 4;         
+    var NUM_COMBOS = 1540;
+    var NUM_BYTES = 193;
+    var UNUSED_BITS = 4;
 
     // Precompute C(n,2) and C(n,1) for the index formula.
     // recipe_index requires 0 <= a < b < c < 22.
@@ -965,6 +965,16 @@ var TriedRecipes = (function() {
         NUM_COMBOS:  NUM_COMBOS
     };
 }());
+
+// grimoire spell buffs carry no aura tag, so they are listed by name (1 positive, 2 negative)
+var SPELL_BUFF_KIND = {
+    "Haggler's luck": 1, 'Crafty pixies': 1, 'Magic adept': 1,
+    "Haggler's misery": 2, 'Nasty goblins': 2, 'Magic inept': 2
+};
+function buffAuraKind(b) {
+    if (!b) return 0;
+    return b.aura || SPELL_BUFF_KIND[b.name] || 0;
+}
 
 function getIconArray(p) {
     return [p.icon[0], p.icon[1], ICON_SHEETS[p.icon[2]] || ICON_SHEETS.main];
@@ -1128,11 +1138,11 @@ function updatePotionEffects() {
         }
     );
     def('decoction_of_winter',
-        function(p) { Game.killBuff('Decoction of Winter (misbrewed)'); Game.gainBuff('Decoction of Winter', 3600, 1.25); Game.Notify(p.name + ' consumed', 'Reindeer and lanterns are 25% more common for the next hour.', getIconArray(p), 6); },
+        function(p) { Game.killBuff('Decoction of Winter (misbrewed)'); Game.gainBuff('Decoction of Winter', 3600, 1.25); Game.Notify(p.name + ' consumed', 'Seasonal spawns are 25% more common for the next hour.', getIconArray(p), 6); },
         function(p) {
             Game.killBuff('Decoction of Winter');
             Game.gainBuff('Decoction of Winter (misbrewed)', 3600, 0);
-            Game.Notify(p.name + ' misbrewed', 'Reindeer and lanterns do not spawn for the next hour.', getIconArray(p), 6);
+            Game.Notify(p.name + ' misbrewed', 'Seasonal spawns stop for the next hour.', getIconArray(p), 6);
             if (PotionsM._updateEffs) PotionsM._updateEffs();
             if (Game.CalculateGains) Game.CalculateGains();
             if (Game.shimmerTypes) {
@@ -1140,6 +1150,8 @@ function updatePotionEffects() {
                 if (rd && rd.spawnsOnTimer && rd.getMinTime) { rd.minTime = rd.getMinTime(rd); rd.maxTime = rd.getMaxTime(rd); }
                 var ln = Game.shimmerTypes['lantern'];
                 if (ln && ln.spawnsOnTimer && ln.getMinTime) { ln.minTime = ln.getMinTime(ln); ln.maxTime = ln.getMaxTime(ln); }
+                var tk = Game.shimmerTypes['turkey'];
+                if (tk && tk.spawnsOnTimer && tk.getMinTime) { tk.minTime = tk.getMinTime(tk); tk.maxTime = tk.getMaxTime(tk); }
             }
         }
     );
@@ -1352,7 +1364,7 @@ function updatePotionEffects() {
             else { Game.Notify(p.name + ' consumed', 'Could not summon golden cookie.', getIconArray(p), 6); }
         },
         function(p) {
-            var pbs = []; for (var i in Game.buffs) { if (Game.buffs[i] && Game.buffs[i].aura === 1) pbs.push(Game.buffs[i].name); }
+            var pbs = []; for (var i in Game.buffs) { if (buffAuraKind(Game.buffs[i]) === 1) pbs.push(Game.buffs[i].name); }
             if (pbs.length > 0) { var rb = pbs[Math.floor(Math.random() * pbs.length)]; Game.killBuff(rb); Game.Notify(p.name + ' misbrewed', 'Ended the ' + rb + ' buff.', getIconArray(p), 6); }
             else { Game.Notify(p.name + ' misbrewed', 'No positive buffs to remove.', getIconArray(p), 6); }
         }
@@ -1367,7 +1379,7 @@ function updatePotionEffects() {
     );
     def('shadow_of_remorse',
         function(p) {
-            var nbs = []; for (var i in Game.buffs) { if (Game.buffs[i] && Game.buffs[i].aura === 2) nbs.push(Game.buffs[i].name); }
+            var nbs = []; for (var i in Game.buffs) { if (buffAuraKind(Game.buffs[i]) === 2) nbs.push(Game.buffs[i].name); }
             if (nbs.length > 0) { var rb = nbs[Math.floor(Math.random() * nbs.length)]; Game.killBuff(rb); Game.Notify(p.name + ' consumed', 'Removed ' + rb + '.', getIconArray(p), 6); }
             else { Game.Notify(p.name + ' consumed', 'No negative buffs to remove.', getIconArray(p), 6); }
         },
@@ -1393,8 +1405,8 @@ function updatePotionEffects() {
         function(p) { Game.killBuff('Vapor of Luck'); Game.gainBuff('Vapor of Luck (misbrewed)', 3600); Game.Notify(p.name + ' misbrewed', 'Rare golden cookie chances are decreased for an hour.', getIconArray(p), 6); }
     );
     def('venom_of_the_basilisk',
-        function(p) { 
-            Game.killBuff('Venom of the Basilisk'); 
+        function(p) {
+            Game.killBuff('Venom of the Basilisk');
             // Multiply all attached wrinkler.sucked by 1.1
             if (Game.wrinklers) {
                 for (var i = 0; i < Game.wrinklers.length; i++) {
@@ -1403,9 +1415,9 @@ function updatePotionEffects() {
                     }
                 }
             }
-            Game.gainBuff('Venom of the Basilisk', 30, 1.1); 
-            updatePotionEffects(); 
-            Game.Notify(p.name + ' consumed', 'Wrinklers explode 10% more for 30 seconds.', getIconArray(p), 6); 
+            Game.gainBuff('Venom of the Basilisk', 30, 1.1);
+            updatePotionEffects();
+            Game.Notify(p.name + ' consumed', 'Wrinklers explode 10% more for 30 seconds.', getIconArray(p), 6);
         },
         function(p) {
             for (var i = 0; i < Game.wrinklers.length; i++) { if (Game.wrinklers[i].phase == 2) { Game.wrinklers[i].sucked *= 0.9; Game.wrinklers[i].hp = 0; } }
@@ -1417,8 +1429,8 @@ function updatePotionEffects() {
         function(p) { Game.killBuff('Ember of Dragon Fire'); Game.gainBuff('Ember of Dragon Fire (misbrewed)', 3600, 0.7); updatePotionEffects(); Game.Notify(p.name + ' misbrewed', 'Golden cookie gains reduced by 30% for 30 minutes.', getIconArray(p), 6); }
     );
     def('whisper_of_boreas',
-        function(p) { Game.killBuff('Whisper of Boreas (misbrewed)'); Game.gainBuff('Whisper of Boreas', 1800, 1.2); updatePotionEffects(); Game.Notify(p.name + ' consumed', 'Reindeer and lantern gains increased by 20% for 30 minutes.', getIconArray(p), 6); },
-        function(p) { Game.killBuff('Whisper of Boreas'); Game.gainBuff('Whisper of Boreas (misbrewed)', 3600, 0.5); updatePotionEffects(); Game.Notify(p.name + ' misbrewed', 'Reindeer and lantern gains reduced by 50% for an hour.', getIconArray(p), 6); }
+        function(p) { Game.killBuff('Whisper of Boreas (misbrewed)'); Game.gainBuff('Whisper of Boreas', 1800, 1.2); updatePotionEffects(); Game.Notify(p.name + ' consumed', 'Seasonal rewards are increased by 20% for 30 minutes.', getIconArray(p), 6); },
+        function(p) { Game.killBuff('Whisper of Boreas'); Game.gainBuff('Whisper of Boreas (misbrewed)', 3600, 0.5); updatePotionEffects(); Game.Notify(p.name + ' misbrewed', 'Seasonal rewards are reduced by 50% for an hour.', getIconArray(p), 6); }
     );
     def('breath_of_growth',
         function(p) {
@@ -1439,7 +1451,7 @@ function updatePotionEffects() {
                 } else {
                     Game.Notify(p.name + ' misbrewed', p.misbrew, getIconArray(p), 6);
                 }
-            } 
+            }
         }
     );
     def('precipitate_of_chronos',
@@ -1473,10 +1485,10 @@ function updatePotionEffects() {
                 }
                 Game.lumpCurrentType=choose(types);
                 Game.Notify(p.name + ' consumed', p.effect, getIconArray(p), 6);
-            } 
+            }
         },
         function(p) {
-            // Reset the lump timer directly this is just easier to do then harvest and botch 
+            // Reset the lump timer directly this is just easier to do then harvest and botch
             Game.lumpT = Date.now();
             Game.computeLumpType();
             Game.Notify(p.name + ' misbrewed', 'Botched harvest! Your sugar lump disappears.', getIconArray(p), 6);
@@ -1485,7 +1497,7 @@ function updatePotionEffects() {
     def('resin_of_the_cane',
         function(p) {
             if (typeof Game.lumpT !== 'undefined') {
-                Game.lumpT -= 3600000; 
+                Game.lumpT -= 3600000;
                 Game.Notify(p.name + ' consumed', p.effect, getIconArray(p), 6);
             }
         },
@@ -1646,7 +1658,7 @@ function updatePotionEffects() {
             var pos = [];
             for (var bn in Game.buffs) {
                 if (bn === 'Nepenthe of Undoing') continue;
-                if (Game.buffs[bn] && Game.buffs[bn].aura === 1) pos.push(bn);
+                if (buffAuraKind(Game.buffs[bn]) === 1) pos.push(bn);
             }
             var n = Math.min(pos.length, 6);
             if (n === 0) { Game.Notify(p.name + ' consumed', 'No positive buffs to remove. Nothing happened.', getIconArray(p), 6); return; }
@@ -1666,7 +1678,7 @@ function updatePotionEffects() {
         },
         function(p) {
             var pos = [];
-            for (var bn in Game.buffs) { if (Game.buffs[bn] && Game.buffs[bn].aura === 1) pos.push(bn); }
+            for (var bn in Game.buffs) { if (buffAuraKind(Game.buffs[bn]) === 1) pos.push(bn); }
             var n = Math.min(pos.length, 6);
             if (n === 0) { Game.Notify(p.name + ' misbrewed', 'No positive buffs to remove.', getIconArray(p), 6); return; }
             for (var i = 0; i < n; i++) Game.killBuff(pos[i]);
@@ -1823,22 +1835,22 @@ function updatePotionEffects() {
     def('syrup_of_insight',
         function(p) {
             PotionsM._clearReagentHighlights();
-            
+
             var unknownPotions = POTIONS.filter(function(pot) { return isActivePotion(pot) && !pot.unlocked; });
             var candidates = [];
-            
+
             for (var i = 0; i < unknownPotions.length; i++) {
                 var pot = unknownPotions[i];
                 var reagentIds = Object.keys(pot.reagents);
                 if (reagentIds.length !== 3) continue;
-                
+
                 var allUnlocked = true;
                 for (var j = 0; j < reagentIds.length; j++) {
                     var rDef = PotionsM._getReagentDef(reagentIds[j]);
                     if (!rDef || !rDef.unlocked) { allUnlocked = false; break; }
                 }
                 if (!allUnlocked) continue;
-                
+
                 var storedCount = 0;
                 var storedReagents = [];
                 var missingReagents = [];
@@ -1847,19 +1859,19 @@ function updatePotionEffects() {
                     if (count > 0) { storedCount++; storedReagents.push(reagentIds[j]); }
                     else missingReagents.push(reagentIds[j]);
                 }
-                
+
                 candidates.push({ storedCount: storedCount, stored: storedReagents, missing: missingReagents, all: reagentIds });
             }
-            
+
             if (candidates.length === 0) {
                 Game.Notify(p.name + ' consumed', 'No unknown potion can be made from unlocked ingredients.', getIconArray(p), 6);
                 return;
             }
-            
+
             candidates.sort(function(a, b) { return b.storedCount - a.storedCount; });
             var pick = candidates[0];
             var highlighted = [];
-            
+
             if (pick.storedCount === 3) {
                 highlighted = pick.stored.slice().sort(function() { return Math.random() - 0.5; }).slice(0, 2);
             } else if (pick.storedCount === 2) {
@@ -1871,7 +1883,7 @@ function updatePotionEffects() {
             } else {
                 highlighted = pick.all.slice().sort(function() { return Math.random() - 0.5; }).slice(0, 2);
             }
-            
+
             PotionsM._highlightReagents(highlighted, 60);
             Game.Notify(p.name + ' consumed', 'Reagents highlighted for 60 seconds.', getIconArray(p), 6);
         },
@@ -1901,7 +1913,7 @@ var G = {
     unlockedPrestige: [],         // IDs of prestige potions that have been unlocked
     recipeMap: null,              // encoded recipe map string; null = use fixed base recipes
     feverNightmareStart: 0,       // timestamp when fever nightmare started
-    craftsmanGrants: {},          // buildingIndex  count granted by Blood of the Craftsman this ascension 
+    craftsmanGrants: {},          // buildingIndex  count granted by Blood of the Craftsman this ascension
     cadenceExtensions: {},        // buff.name in seconds extended
     catalystSurgeEnd: 0           // ms timestamp; > Date.now() means Catalyst Surge active
 };
@@ -2401,6 +2413,8 @@ createPotionBuffType('Decoction of Winter (misbrewed)', 'decoction_of_winter', t
             if (rd && rd.spawnsOnTimer && rd.getMinTime) { rd.minTime = rd.getMinTime(rd); rd.maxTime = rd.getMaxTime(rd); }
             var ln = Game.shimmerTypes['lantern'];
             if (ln && ln.spawnsOnTimer && ln.getMinTime) { ln.minTime = ln.getMinTime(ln); ln.maxTime = ln.getMaxTime(ln); }
+            var tk = Game.shimmerTypes['turkey'];
+            if (tk && tk.spawnsOnTimer && tk.getMinTime) { tk.minTime = tk.getMinTime(tk); tk.maxTime = tk.getMaxTime(tk); }
         }
         // vanilla really doesnt like shimmer timers to be set to infinite so in order to break it we just force spawn a reindeer onDie.
         if (Game.shimmerTypes && Game.shimmerTypes['reindeer'] && Game.season === 'christmas') {
@@ -2428,8 +2442,8 @@ createPotionBuffType('Corruption of Sin', 'corruption_of_sin', false, { onDie: f
 createPotionBuffType('Corruption of Sin (misbrewed)', 'corruption_of_sin', true, { onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
 createPotionBuffType('Vapor of Luck', 'vapor_of_luck', false, { noPower: true, onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
 createPotionBuffType('Vapor of Luck (misbrewed)', 'vapor_of_luck', true, { noPower: true });
-createPotionBuffType('Venom of the Basilisk', 'venom_of_the_basilisk', false, { 
-    onDie: function() { 
+createPotionBuffType('Venom of the Basilisk', 'venom_of_the_basilisk', false, {
+    onDie: function() {
         // Restore wrinkler.sucked values by dividing by 1.1
         if (Game.wrinklers) {
             for (var i = 0; i < Game.wrinklers.length; i++) {
@@ -2438,8 +2452,8 @@ createPotionBuffType('Venom of the Basilisk', 'venom_of_the_basilisk', false, {
                 }
             }
         }
-        if (PotionsM._updateEffs) PotionsM._updateEffs(); 
-    } 
+        if (PotionsM._updateEffs) PotionsM._updateEffs();
+    }
 });
 createPotionBuffType('Ember of Dragon Fire', 'ember_of_dragon_fire', false, { onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
 createPotionBuffType('Ember of Dragon Fire (misbrewed)', 'ember_of_dragon_fire', true, { onDie: function() { if (PotionsM._updateEffs) PotionsM._updateEffs(); } });
@@ -2498,7 +2512,7 @@ createPotionBuffType('Poultice of Overgrowth (misbrewed)', 'poultice_of_overgrow
 PotionsM.launch = function() {
     var alchemyLab = Game.Objects['Alchemy lab'];
     PotionsM.name = (alchemyLab && alchemyLab.minigameName) || 'Potions Class';
-    
+
     if (!G.reagents || Object.keys(G.reagents).length === 0) {
         G.reagents = {};
         for (var i = 0; i < REAGENTS.length; i++) {
@@ -2511,49 +2525,46 @@ PotionsM.launch = function() {
     for (var i = 0; i < REAGENTS.length; i++) {
         if (REAGENTS[i].unlocked) G.unlockedReagents[REAGENTS[i].id] = true;
     }
-    
+
     // Inject Essence of Cheer buff detection into computeSeasonPrices using eval
     // This works alongside Blackfriday's eval injection - both add code to the same function
     if (Game.computeSeasonPrices && !Game.computeSeasonPrices._essenceOfCheerInjected) {
         var funcStr = Game.computeSeasonPrices.toString();
-        
-        if (funcStr.indexOf("Game.hasBuff('Essence of Cheer')") !== -1) {
-            Game.computeSeasonPrices._essenceOfCheerInjected = true;
-        }
-        
+
         // Inject Essence of Cheer check before the return statement
         var injection = "if(Game.hasBuff('Essence of Cheer'))m*=0.2;if(Game.hasBuff('Essence of Cheer (misbrewed)'))m*=4.0;";
         var returnPattern = "return Game.seasonTriggerBasePrice+Game.unbuffedCps*60*Math.pow(1.5,Game.seasonUses)*m;";
-        
-        if (funcStr.indexOf(returnPattern) !== -1) {
-            funcStr = funcStr.replace(returnPattern, injection + returnPattern);
-            Game.computeSeasonPrices = eval('(' + funcStr + ')');
+
+        if (funcStr.indexOf("Game.hasBuff('Essence of Cheer')") !== -1) {
+            // already patched (flag lost when Blackfriday re-evals the function); don't inject twice
             Game.computeSeasonPrices._essenceOfCheerInjected = true;
-            
+        } else if (funcStr.indexOf(returnPattern) !== -1) {
+            funcStr = funcStr.replace(returnPattern, injection + returnPattern);
+            Game.computeSeasonPrices = (0, eval)('(' + funcStr + ')');
+            Game.computeSeasonPrices._essenceOfCheerInjected = true;
+
             try {
                 Game.computeSeasonPrices();
             } catch (e) {}
         }
     }
-    
+
     // Inject into Game.getVeilDefense to update tooltip with Spirit of Protection buff
     if (Game.getVeilDefense && !Game.getVeilDefense._spiritOfProtectionInjected) {
         var funcStr = Game.getVeilDefense.toString();
-        
-        if (funcStr.indexOf("Game.hasBuff('Spirit of Protection')") !== -1) {
-            Game.getVeilDefense._spiritOfProtectionInjected = true;
-        }
-        
+
         var injection = "if(Game.hasBuff('Spirit of Protection'))return 0.9;";
         var returnPattern = "return n;";
-        
-        if (funcStr.indexOf(returnPattern) !== -1) {
+
+        if (funcStr.indexOf("Game.hasBuff('Spirit of Protection')") !== -1) {
+            Game.getVeilDefense._spiritOfProtectionInjected = true;
+        } else if (funcStr.indexOf(returnPattern) !== -1) {
             funcStr = funcStr.replace(returnPattern, injection + returnPattern);
-            Game.getVeilDefense = eval('(' + funcStr + ')');
+            Game.getVeilDefense = (0, eval)('(' + funcStr + ')');
             Game.getVeilDefense._spiritOfProtectionInjected = true;
         }
     }
-    
+
     PotionsM._registerHooks();
     PotionsM._syncBaselines();
 };
@@ -2578,7 +2589,7 @@ PotionsM._registerHooks = function() {
         Game.registerHook('click', PotionsM._onCookieClick);
         Game._potionsClickHookRegistered = true;
     }
-    
+
     // Hook into Game.magicCpS
     if (!Game._potionsMagicCpSHooked) {
         if (!Game._jneOriginalMagicCpSPotions) Game._jneOriginalMagicCpSPotions = Game.magicCpS;
@@ -2608,7 +2619,7 @@ PotionsM._registerHooks = function() {
     }
 
     // Golden cookie pop modifications are now handled centrally in JustNaturalExpansion
-    
+
     // Consolidated logic hooks
     if (!Game._potionsLogicHookRegistered) {
         Game.registerHook('logic', function() {
@@ -2617,7 +2628,7 @@ PotionsM._registerHooks = function() {
                 PotionsM._syncBaselines();
                 return;
             }
-            
+
             // Wrinkler pops sample_of_goo
             var wrinklers = Game.wrinklersPopped || 0;
             var wrinklerDelta = wrinklers - PotionsM._lastWrinklersPopped;
@@ -2627,7 +2638,7 @@ PotionsM._registerHooks = function() {
                 }
                 PotionsM._lastWrinklersPopped = wrinklers;
             }
-            
+
             // Reindeer clicks reindeer_fur
             var reindeer = Game.reindeerClicked || 0;
             var reindeerDelta = reindeer - PotionsM._lastReindeerClicked;
@@ -2637,7 +2648,7 @@ PotionsM._registerHooks = function() {
                 }
                 PotionsM._lastReindeerClicked = reindeer;
             }
-            
+
             // Sugar lumps harvested pure_cane_sugar
             var lumpsTotal = Game.lumpsTotal || 0;
             var lumpsTotalDelta = lumpsTotal - PotionsM._lastLumpsTotal;
@@ -2647,7 +2658,7 @@ PotionsM._registerHooks = function() {
                 }
                 PotionsM._lastLumpsTotal = lumpsTotal;
             }
-            
+
             // Sugar lumps spent pure_cane_sugar
             var lumps = Game.lumps || 0;
             var lumpsDelta = lumps - PotionsM._lastLumps;
@@ -2659,21 +2670,21 @@ PotionsM._registerHooks = function() {
             } else {
                 PotionsM._lastLumps = lumps;
             }
-            
+
             // Season change  culture_of_time
             var season = Game.season || '';
             if (season !== PotionsM._lastSeason) {
                 if (PotionsM.reagentRoll('culture_of_time')) PotionsM._addReagent('culture_of_time', 1, 'season');
                 PotionsM._lastSeason = season;
             }
-            
+
             // Dragon pet dragon_scales
             var petTime = Game.lastClickedSpecialPic || 0;
             if (petTime !== PotionsM._lastDragonPet) {
                 if (PotionsM.reagentRoll('dragon_scales')) PotionsM._addReagent('dragon_scales', 1, 'dragon_pet');
                 PotionsM._lastDragonPet = petTime;
             }
-            
+
             // Dragon aura swap captured_auroras
             var aura1 = Game.dragonAura  || 0;
             var aura2 = Game.dragonAura2 || 0;
@@ -2682,7 +2693,7 @@ PotionsM._registerHooks = function() {
                 PotionsM._lastDragonAura  = aura1;
                 PotionsM._lastDragonAura2 = aura2;
             }
-            
+
             // Pantheon spirit swap divine_extraction
             var PM = Game.Objects['Temple'] && Game.Objects['Temple'].minigame;
             if (PM && PM.slot && Array.isArray(PM.slot) && PM.slot.length >= 3) {
@@ -2696,7 +2707,7 @@ PotionsM._registerHooks = function() {
         });
         Game._potionsLogicHookRegistered = true;
     }
-    
+
     // Hook Grimoire castSpell for magical_infusion / magical_blight drops
     PotionsM._hookGrimoire();
     Game.registerHook('check', function() {
@@ -2724,7 +2735,7 @@ PotionsM._registerHooks = function() {
         var TM = Game.Objects['Javascript console'] && Game.Objects['Javascript console'].minigame;
         if (TM && !(TM.onExecuteComplete && TM.onExecuteComplete._potionsHooked)) PotionsM._hookTerminal();
     });
-    
+
     // Hook Downline for extract_of_entrepreneurship drops
     Game.registerHook('check', function() {
         PotionsM._hookDownline();
@@ -2777,7 +2788,7 @@ PotionsM._registerHooks = function() {
         Game._potionsResetHooked = true;
     }
 
-    // Decoction of Winter reset on ascension 
+    // Decoction of Winter reset on ascension
       if (!Game._potionsReincarnateHooked) {
         Game.registerHook('reincarnate', function() {
             setTimeout(function() {
@@ -2837,7 +2848,7 @@ PotionsM._registerHooks = function() {
                         } else {
                             recipeText = quips.slice(0, -1).join(', ') + ', and ' + quips[quips.length - 1];
                         }
-                        
+
                         var newsTemplates = [
                             'News : Latest alchemy craze sweeps blogosphere deemed "mostly edible"; recipe calls for ' + recipeText + '.',
                             'News : Miracle recipe hits trendy bakeries; officials question the use of ' + recipeText + '.',
@@ -2928,7 +2939,7 @@ PotionsM._hookGarden = function() {
     var FLOWERS  = {shimmerlily:1,nursetulip:1,chimerose:1,everdaisy:1,clover:1,goldenClover:1};
     var ROOTS    = {chocoroot:1,whiteChocoroot:1,queenbeet:1,queenbeetLump:1,duketater:1};
     var IMMORTAL = {elderwort:1,everdaisy:1};
-    
+
     // If already hooked update reference
     if (FM.harvest && FM.harvest._potionsHooked) {
         FM.harvest._potionsM = PotionsM;
@@ -2974,7 +2985,7 @@ PotionsM._hookGarden = function() {
             PotionsM._lastGardenSoil = soil;
         }
     });
-    
+
     FM.harvest._potionsHooked = true;
     FM.harvest._potionsM = PotionsM;
     Game._potionsGardenHooked = true;
@@ -3169,7 +3180,7 @@ PotionsM.init = function(div) {
     /* === catalog column === */
     '.potions-mid-col{flex:1;min-width:180px;display:flex;flex-direction:column;}','.potions-catalog-seed,.potions-reagent-item{cursor:pointer;display:inline-block;width:40px;height:40px;position:relative;margin:1px 8px 8px 1px;}','.potions-catalog-seed.undiscovered{opacity:0;pointer-events:none;cursor:default;}','.potions-catalog-seed:hover .potions-catalog-seed-icon{animation:bounce 0.8s;z-index:1000000001;} .potions-catalog-seed:active .potions-catalog-seed-icon{animation:pucker 0.2s;}','.noFancy .potions-catalog-seed:hover .potions-catalog-seed-icon,.noFancy .potions-catalog-seed:active .potions-catalog-seed-icon,.noFancy .potions-reagent-item:hover .potions-reagent-item-icon,.noFancy .potions-reagent-item:active .potions-reagent-item-icon{animation:none;}','.potions-catalog-seed.on:before{pointer-events:none;content:\'\';display:block;position:absolute;left:-10px;top:-10px;width:60px;height:60px;background:url(' + resPath + 'img/selectTarget.png);animation:wobble 0.2s ease-out;z-index:10;}',
     /* === reagents column === */
-    '#potions-reagents-list{display:flex;flex-wrap:wrap;gap:0;padding:2px 20px 20px 2px;}','.potions-reagent-item.empty .potions-reagent-item-icon{opacity:0.2;} .potions-reagent-item:hover .potions-reagent-item-icon{animation:bounce 0.8s;} .potions-reagent-item:active .potions-reagent-item-icon{animation:pucker 0.2s;}','.potions-reagent-item .potions-reagent-shine{pointer-events:none;display:none;position:absolute;left:-12px;top:-12px;width:64px;height:64px;background:url(https://orteil.dashnet.org/cookieclicker/img/shine.png);background-size:64px 64px;z-index:0;opacity:0.4}','.potions-reagent-item.highlighted .potions-reagent-shine{display:block;animation:spin 4s linear infinite;} .potions-reagent-item.highlighted .potions-reagent-item-icon{z-index:1;position:relative;}',
+    '#potions-reagents-list{display:flex;flex-wrap:wrap;gap:0;padding:2px 20px 20px 2px;}','.potions-reagent-item.empty .potions-reagent-item-icon{opacity:0.2;} .potions-reagent-item:hover .potions-reagent-item-icon{animation:bounce 0.8s;} .potions-reagent-item:active .potions-reagent-item-icon{animation:pucker 0.2s;}','.potions-reagent-item .potions-reagent-shine{pointer-events:none;display:none;position:absolute;left:-12px;top:-12px;width:64px;height:64px;background:url(' + resPath + 'img/shine.png);background-size:64px 64px;z-index:0;opacity:0.4}','.potions-reagent-item.highlighted .potions-reagent-shine{display:block;animation:spin 4s linear infinite;} .potions-reagent-item.highlighted .potions-reagent-item-icon{z-index:1;position:relative;}',
     /* === icon base === */
     '.potions-icon{display:inline-block;width:48px;height:48px;background-repeat:no-repeat;pointer-events:none;}',
     /* === section labels === */
@@ -3185,7 +3196,7 @@ PotionsM.init = function(div) {
     }
 
     var prestigeBtnHtml = '<div id="potions-prestige-btn" style="display:none;position:absolute;bottom:14px;right:14px;z-index:10;cursor:pointer;width:24px;height:24px;overflow:hidden;">'
-        + '<div style="width:48px;height:48px;background-image:url(https://orteil.dashnet.org/cookieclicker/img/icons.png);background-position:-480px -528px;transform:scale(0.5);transform-origin:top left;opacity:0.6;"></div>'
+        + '<div style="width:48px;height:48px;background-image:url(' + resPath + 'img/icons.png);background-position:-480px -528px;transform:scale(0.5);transform-origin:top left;opacity:0.6;"></div>'
         + '</div>';
     div.innerHTML = '<div id="potions-bg"></div><div id="potions-wrap" style="position:relative;">'
         + '<div class="potions-main"><div class="potions-slots-section"><div class="potions-brew-content"><div class="potions-brew-half"><div class="potions-brew-slots" id="potions-brew-slots">' + slotsHtml + '</div><div id="potionsPotionsBrewed"></div></div><div class="potions-brew-half"><div class="potions-brew-selection"><div class="potions-selected-reagents" id="potions-selected-reagents"></div><div class="potions-brew-actions" id="potions-brew-actions"></div></div></div></div></div>'
@@ -3248,8 +3259,8 @@ PotionsM.init = function(div) {
     }
 
     PotionsM.launched = true;
-    
-    // Defer achievement creation 
+
+    // Defer achievement creation
     setTimeout(function() {
         if (createPotionsAchievements) createPotionsAchievements();
     }, 0);
@@ -3299,7 +3310,7 @@ PotionsM.slotTooltip = function(slot) {
     return function() {
         var brew = G.slots[slot];
         var str = '<div style="padding:8px 4px;min-width:350px;" id="tooltipPotionsSlot">';
-        
+
         var getIngredientsHtml = function(reagents) {
             if (!reagents || reagents.length === 0) return '';
             var ingredientsHtml = [];
@@ -3313,7 +3324,7 @@ PotionsM.slotTooltip = function(slot) {
             }
             return '<div class="line"></div><div style="padding-top:8px;"><small><b>Ingredients used:</b> ' + ingredientsHtml.join('') + '</small></div>';
         };
-        
+
         if (!brew) {
             str += '<div class="name">Brew slot ' + (slot + 1) + '</div><div class="line"></div><div class="description">Select three reagents to begin brewing a potion. You may use the potions book to find a potion you already know, or mix reagents together to try and discover new potions.</div>';
         } else if (MIXTURE_TYPES[brew.potionId]) {
@@ -3380,21 +3391,21 @@ PotionsM.slotTooltip = function(slot) {
                 var misbrewChance = PotionsM._getMisbrewChance(p);
                 var misbrewChanceStr = Math.round(misbrewChance * 100) + '%';
                 str += '<div><small>Chance to misbrew: <b style="color:#f66">' + misbrewChanceStr + '</b></small></div>';
-                
+
                 var readyLine = remaining > 0
                     ? '<b>Brewing</b> &mdash; <span class="green">' + formatRemaining(remaining) + ' remaining</span><br><br>'
                     : '<span class="green">Ready to use. Click to consume your potion.</span><br><br>';
-                
+
                 str += '<div class="line"></div><div class="description">' + readyLine + '<b>Effect:</b> <span class="green">' + p.effect + '</span>' + (p.misbrew ? '<div style="height:8px;"></div><b>Misbrew:</b> <span class="red">' + p.misbrew + '</span>' : '') + '</div>';
                 str += '<div class="line"></div>';
-                
+
                 // Only show brew time and ingredients while brewing
                 if (remaining > 0) {
                     str += '<div><small><b>Brew time:</b> ' + formatDuration(p.brewTime) + '</small></div>';
                     str += getIngredientsHtml(brew.reagents);
                     str += '<div class="line"></div>';
                 }
-                
+
                 str += '<q>' + p.desc + '</q>';
             }
         }
@@ -3412,7 +3423,7 @@ PotionsM._buildCatalog = function() {
     for (var i = 0; i < POTIONS.length; i++) {
         var p = POTIONS[i];
         if (!p.unlocked) continue; // Skip locked potions
-        
+
         var seed = document.createElement('div');
         seed.className = 'potions-catalog-seed';
         seed.dataset.potionId = p.id;
@@ -3484,7 +3495,7 @@ PotionsM._buildCatalog = function() {
     var labelEl = $('potions-catalog-label');
     if (labelEl) labelEl.innerHTML = 'Potions Book <small>(' + getUnlockedCount() + '/' + getActivePotionCount() + ')</small>';
     if (PotionsM._checkPrestigeButton) PotionsM._checkPrestigeButton();
-    
+
 };
 
 PotionsM._buildReagents = function() {
@@ -3495,7 +3506,7 @@ PotionsM._buildReagents = function() {
     for (var i = 0; i < REAGENTS.length; i++) {
         var r = REAGENTS[i];
         if (!r.unlocked) continue; // Only show unlocked reagents
-        
+
         var item = document.createElement('div');
         item.className = 'potions-reagent-item';
         if (!G.reagents[r.id] || G.reagents[r.id] <= 0) {
@@ -3504,12 +3515,12 @@ PotionsM._buildReagents = function() {
         item.id = 'potions-reagent-item-' + r.id;
 
         var sheetUrl = ICON_SHEETS[r.icon[2] || 'main'] || ICON_SHEETS.main;
-        
+
         // Add shine element then hide it
         var shineEl = document.createElement('div');
         shineEl.className = 'potions-reagent-shine';
         item.appendChild(shineEl);
-        
+
         var iconEl = document.createElement('div');
         iconEl.className = 'potions-reagent-item-icon shadowFilter';
         iconEl.style.backgroundImage = 'url(' + sheetUrl + ')';
@@ -3517,12 +3528,12 @@ PotionsM._buildReagents = function() {
         iconEl.style.zIndex = '1';
 
         item.appendChild(iconEl);
-        
+
         // Apply highlight if active
         if (G.highlightedReagents.indexOf(r.id) !== -1 && Date.now() < G.highlightEndTime) {
             item.className += ' highlighted';
         }
-        
+
         list.appendChild(item);
 
         (function(el, rDef) {
@@ -3536,7 +3547,7 @@ PotionsM._buildReagents = function() {
                 var potionsHtml = getPotionsUsingReagentHtml(rDef.id);
                 return '<div style="padding:8px 4px;min-width:300px;" id="tooltipPotionsReagent"><div class="icon" style="' + iconStyle + '"></div><div class="name">' + rDef.name + '</div><div><small><b>Stocked:</b> ' + count + '/' + G.maxReagents + '</small></div><div class="line"></div><div style="vertical-align:middle;"><small><b>Used in:</b> ' + potionsHtml + '</small></div><div class="line"></div><div class="description">' + rDef.gather + '</div><q>' + rDef.flavor + '</q></div>';
             }, 'this');
-            
+
             // Click to select reagent for brewing
             el.addEventListener('click', function(e) {
                 if (G.reagents[rDef.id] > 0) PlaySound('snd/press.mp3');
@@ -3553,13 +3564,13 @@ PotionsM._buildReagents = function() {
             });
         })(item, r);
     }
-    
+
     var labelEl = $('potions-reagents-label');
     if (labelEl) labelEl.innerHTML = 'Reagents Discovered <small>(' + getReagentUnlockedCount() + '/' + REAGENTS.length + ')</small>';
-    
+
     var discoverableEl = $('potions-discoverable-label');
     if (discoverableEl) discoverableEl.innerHTML = 'Your current reagent supply can discover ' + getDiscoverablePotionsCount() + ' unknown potions';
-    
+
     PotionsM._buildCatalog();
 };
 
@@ -3569,7 +3580,7 @@ PotionsM._autoPopulateReagents = function(potion) {
         G.reagents[rid] = (G.reagents[rid] || 0) + 1;
     }
     G.selectedReagents = [];
-    
+
     for (var rk in potion.reagents) {
         var needed = potion.reagents[rk];
         var have = G.reagents[rk] || 0;
@@ -3581,7 +3592,7 @@ PotionsM._autoPopulateReagents = function(potion) {
             return;
         }
     }
-    
+
     for (var rk in potion.reagents) {
         var count = potion.reagents[rk];
         for (var i = 0; i < count; i++) {
@@ -3589,7 +3600,7 @@ PotionsM._autoPopulateReagents = function(potion) {
             G.selectedReagents.push(rk);
         }
     }
-    
+
     PlaySound('snd/tick.mp3');
     PotionsM._renderSelectedReagents();
     PotionsM._buildReagents();
@@ -3645,12 +3656,12 @@ PotionsM._usePotionSlot = function(slotIndex) {
     PotionsM._refreshSlots();
     PotionsM._renderSelectedReagents();
     if (p.discovered && !p.unlocked) { p.unlocked = true; PotionsM._buildCatalog(); }
-    
+
     // Track potions brewed (both successful and misbrewed)
     G.totalPotionsBrewed = (G.totalPotionsBrewed || 0) + 1;
     G.potionsBrewed = (G.potionsBrewed || 0) + 1;
     PotionsM.updatePotionsBrewedDisplay();
-    
+
     var misbrewChance = PotionsM._getMisbrewChance(p);
     var didMisbrew = (p.id === 'attar_of_the_gambler' && PotionsM._attarWillMisbrew !== undefined)
         ? PotionsM._attarWillMisbrew
@@ -3685,12 +3696,12 @@ PotionsM._getReagentDef = function(reagentId) {
     return null;
 };
 
-PotionsM.reagentRoll = function(reagentId) {
+PotionsM.reagentRoll = function(reagentId, baseChance) {
     // Don't award reagents if minigame isn't loaded or building level < 1
     if (!PotionsM.parent || PotionsM.parent.level < 1 || !Game._potionsGrimoireReady || Game.ascensionMode == 1) return false;
     var rDef = PotionsM._getReagentDef(reagentId);
     if (!rDef) return false;
-    var dropChance = rDef.dropChance || 0;
+    var dropChance = baseChance != null ? baseChance : (rDef.dropChance || 0);
     if (typeof Game.dropRateMult === 'function') {
         dropChance *= Game.dropRateMult();
     }
@@ -3784,7 +3795,7 @@ PotionsM._highlightReagents = function(reagentIds, durationSeconds) {
     G.highlightedReagents = reagentIds.slice();
     G.highlightEndTime = Date.now() + (durationSeconds * 1000);
     PotionsM._buildReagents();
-    
+
     // clear after duration
     G.highlightTimeout = setTimeout(function() {
         PotionsM._clearReagentHighlights();
@@ -3836,7 +3847,7 @@ PotionsM._selectReagentForBrew = function(reagentId) {
     if (G.selectedReagents.length >= 3) return;
 
     if (G.selectedReagents.indexOf(reagentId) !== -1) return;
-    
+
     // Add to selection and deduct from store
     G.selectedReagents.push(reagentId);
     G.reagents[reagentId]--;
@@ -3914,7 +3925,7 @@ PotionsM._renderSelectedReagents = function() {
     if (!container || !actionsContainer) return;
     container.innerHTML = '';
     actionsContainer.innerHTML = '';
-    
+
     // Always render 3 slots: filled if a reagent is selected, empty outline otherwise
     for (var i = 0; i < 3; i++) {
         var rid = G.selectedReagents[i] || null;
@@ -3924,9 +3935,9 @@ PotionsM._renderSelectedReagents = function() {
                 if (REAGENTS[ri].id === rid) { rDef = REAGENTS[ri]; break; }
             }
         }
-        
+
         var slot = document.createElement('div');
-        
+
         if (rDef) {
             slot.className = 'potions-selected-reagent';
             var sheetUrl = ICON_SHEETS[rDef.icon[2] || 'main'] || ICON_SHEETS.main;
@@ -3944,17 +3955,17 @@ PotionsM._renderSelectedReagents = function() {
         } else {
             slot.className = 'potions-reagent-slot-outline';
         }
-        
+
         container.appendChild(slot);
     }
-    
+
     // show brew button
     var hasEmptySlot = G.slots.some(function(slot) { return !slot; });
     var matchingPotion = PotionsM._findMatchingPotion();
     var brewBtn = document.createElement('a');
     brewBtn.className = 'option smallFancyButton';
     brewBtn.id = 'potions-brew-button';
-    
+
     if (G.selectedReagents.length === 3 && hasEmptySlot) {
         if (!matchingPotion || !matchingPotion.unlocked) {
             brewBtn.textContent = 'Experiment with this combination';
@@ -3971,7 +3982,7 @@ PotionsM._renderSelectedReagents = function() {
         brewBtn.style.opacity = '0.5';
         brewBtn.style.pointerEvents = 'none';
     }
-    
+
     actionsContainer.appendChild(PotionsM._renderLumpButton());
     actionsContainer.appendChild(brewBtn);
 };
@@ -4049,7 +4060,7 @@ PotionsM._renderLumpButton = function() {
 
 PotionsM._startBrew = function() {
     var matchingPotion = PotionsM._findMatchingPotion();
-    
+
     for (var i = 0; i < 3; i++) {
         var slot = G.slots[i];
         if (slot && slot.potionId === 'discovering') {
@@ -4057,14 +4068,14 @@ PotionsM._startBrew = function() {
             var slotReagents = slot.reagents.slice().sort();
             var isSame = currentReagents.length === slotReagents.length &&
                         currentReagents.every(function(val, index) { return val === slotReagents[index]; });
-            
+
             if (isSame) {
                 Game.Popup('<div style="font-size:80%;">This experiment is already being conducted</div>', Game.mouseX, Game.mouseY);
                 return;
             }
         }
     }
-    
+
     // Prevent duplicate prestige potions in brew slots
     if (matchingPotion && matchingPotion.prestige) {
         for (var i = 0; i < 3; i++) {
@@ -4107,11 +4118,12 @@ PotionsM._startBrew = function() {
         }
         // Accomplishmint
         if (Game.ascensionMode == 104) speedMultiplier *= 0.25;
+        if (Game.Has('A Steep Discount')) speedMultiplier *= 0.9;
         brewTime *= speedMultiplier;
-        
+
         // Override brew time to 5 seconds in debug mode
         if (G.debugMode) brewTime = 5;
-        
+
         var newSlot = {
             potionId: matchingPotion.id,
             startTime: Date.now() / 1000,
@@ -4149,21 +4161,21 @@ PotionsM._startBrew = function() {
             }
             TriedRecipes.mark(G.triedRecipes, rIds[0], rIds[1], rIds[2]);
         }
-        
+
         var discoveryTime = 180;
 
         if (G.catalystSurgeEnd && Date.now() < G.catalystSurgeEnd) {
             discoveryTime = 30;
         }
 
-        // Apply Syrup of Insight misbrew to discovery time 
+        // Apply Syrup of Insight misbrew to discovery time
         if (Game.hasBuff('Syrup of Insight (misbrewed)')) {
             discoveryTime *= 2;
         }
-        
+
         // Override discovery time to 5 seconds in debug mode
         if (G.debugMode) discoveryTime = 5;
-        
+
         G.slots[emptySlot] = {
             potionId: 'discovering',
             startTime: Date.now() / 1000,
@@ -4171,12 +4183,12 @@ PotionsM._startBrew = function() {
             reagents: G.selectedReagents.slice()
         };
     }
-    
+
     G.selectedReagents = [];
     PotionsM._renderSelectedReagents();
     PotionsM._refreshSlots();
-    PotionsM._buildReagents(); 
-    PotionsM._buildCatalog();  
+    PotionsM._buildReagents();
+    PotionsM._buildCatalog();
 };
 
 PotionsM._refreshSlots = function() {
@@ -4204,7 +4216,7 @@ PotionsM._refreshSlots = function() {
                 PotionsM._completeDewDiscovery(i);
                 continue;
             }
-            
+
             if (brew.potionId === 'dew_discovering') {
                 if (tile) tile.classList.remove('ready');
                 var iconDiv = document.createElement('div');
@@ -4274,7 +4286,7 @@ PotionsM._refreshSlots = function() {
 
 PotionsM._calculateMixtureTier = function(reagents) {
     var matchingPairsCount = 0;
-    
+
     // Generate all possible pairs from the reagents
     var pairs = [];
     for (var i = 0; i < reagents.length; i++) {
@@ -4282,20 +4294,20 @@ PotionsM._calculateMixtureTier = function(reagents) {
             pairs.push([reagents[i], reagents[j]]);
         }
     }
-    
+
     // For each pair, check if it matches 2/3 reagents of any unknown potion
     for (var pi = 0; pi < pairs.length; pi++) {
         var pair = pairs[pi];
         var pairMatches = false;
-        
+
         for (var i = 0; i < POTIONS.length; i++) {
             var p = POTIONS[i];
             if (!isActivePotion(p)) continue;
             if (p.unlocked) continue; // Skip known potions
-            
+
             var requiredReagents = Object.keys(p.reagents);
             if (requiredReagents.length !== 3) continue;
-            
+
             // Count how many reagents from this potion are in our pair
             var matchingCount = 0;
             for (var rk in p.reagents) {
@@ -4303,18 +4315,18 @@ PotionsM._calculateMixtureTier = function(reagents) {
                     matchingCount++;
                 }
             }
-            
+
             if (matchingCount === 2) {
                 pairMatches = true;
                 break;
             }
         }
-        
+
         if (pairMatches) {
             matchingPairsCount++;
         }
     }
-    
+
     // Determine the tier based on matching pairs
     if (matchingPairsCount >= 3) {
         return 'extraordinary_promising';
@@ -4346,7 +4358,7 @@ PotionsM._completeDiscovery = function(slotIndex) {
             }
             PotionsM._buildReagents();
         }
-        
+
         // immediately ready (discovery phase counted as brew time)
         G.slots[slotIndex] = {
             potionId: matchingPotion.id,
@@ -4358,7 +4370,7 @@ PotionsM._completeDiscovery = function(slotIndex) {
         var mixtureTier = PotionsM._calculateMixtureTier(brew.reagents);
         var mixture = MIXTURE_TYPES[mixtureTier];
         G.totalFailedDiscoveries = (G.totalFailedDiscoveries || 0) + 1;
-        
+
         // Randomly return reagents duirng failed muxtures
         var recoveredCount = 0;
         if (!silent) {
@@ -4370,7 +4382,7 @@ PotionsM._completeDiscovery = function(slotIndex) {
                 }
             }
         }
-        
+
         G.slots[slotIndex] = {
             potionId: mixtureTier,
             reagents: brew.reagents, // Store the reagents for display
@@ -4379,7 +4391,7 @@ PotionsM._completeDiscovery = function(slotIndex) {
         };
 
         PotionsM._buildReagents();
-        
+
         if (!silent) {
             var notificationIcon = [mixture.icon[0], mixture.icon[1], ICON_SHEETS[mixture.icon[2]] || ICON_SHEETS.main];
             var notificationDesc = mixture.desc + (recoveredCount > 0 ? '<br><br>Some reagents have been recovered from this experiment and can be reused.</span>' : '');
@@ -4389,7 +4401,7 @@ PotionsM._completeDiscovery = function(slotIndex) {
             }
         }
     }
-    
+
     PotionsM._refreshSlots();
 };
 
@@ -4443,7 +4455,7 @@ PotionsM._updateEffs = function() {
         // multCpS buffs are handled by vanilla's CpS calculation, no need to aggregate into PotionsM.effs
         if ((b = Game.hasBuff('Hydrosol of Refraction (misbrewed)'))) { effs.goldenCookieFreq = (effs.goldenCookieFreq || 1) * b.power; }
 
-        // Only update effs and trigger recalculation if values actually changed otherwise cookie monster loses its shit 
+        // Only update effs and trigger recalculation if values actually changed otherwise cookie monster loses its shit
         var actuallyChanged = false;
         var oldEffs = PotionsM.effs || {};
         for (var key in effs) {
@@ -4528,10 +4540,10 @@ PotionsM._refreshSlotTimers = function() {
     for (var i = 0; i < 3; i++) {
         var brew = G.slots[i];
         if (!brew) continue;
-        
+
         var remaining = brew.endTime - now;
         var done = remaining <= 0;
-        
+
         var overlay = $('potionsOverlay' + i);
         if (overlay) {
             if (done) {
@@ -4546,7 +4558,7 @@ PotionsM._refreshSlotTimers = function() {
                 overlay.style.backgroundPosition = (-(frame % 18) * cw) + 'px ' + (-Math.floor(frame / 18) * ch) + 'px';
             }
         }
-        
+
         // Apply ready class when potion finishes brewing
         var tile = $('potionsSlot' + i);
         if (tile) {
@@ -4815,7 +4827,7 @@ PotionsM._loadImpl = function(str) {
     G.totalReagentsCollected = data.tr || 0;
     G.totalFailedDiscoveries     = data.fd || 0;
 
-    // Achievement won state 
+    // Achievement won state
     if (Array.isArray(data.aw) && typeof potionsAchievementNames !== 'undefined') {
         var anyPending = false;
         for (var ai = 0; ai < data.aw.length; ai++) {
@@ -4933,6 +4945,7 @@ PotionsM._resetImpl = function(hard, _calledFromLoad) {
         }
         G.triedRecipes = TriedRecipes.create();
         G.totalPotionsBrewed = 0;
+        G.potionsBrewed = 0;
         G.seededAttarRolls = 0;
         G.totalReagentsCollected = 0;
         G.totalFailedDiscoveries = 0;
@@ -4981,7 +4994,7 @@ PotionsM._resetImpl = function(hard, _calledFromLoad) {
     PotionsM._buildCatalog();
     if (PotionsM._updateEffs) PotionsM._updateEffs();
     PotionsM.updatePotionsBrewedDisplay();
-    
+
 };
 
 PotionsM._oxymeltMult = 1.0; // Oxymel of Insanity random CpS multiplier, updated each second
@@ -5231,9 +5244,9 @@ createPotionBuffType('Potion of Gaia (misbrewed)', 'potion_of_gaia', true, {
 PotionsM._setupGardenHooks = function() {
     PotionsM._retryUntilReady(function() {
         return Game.Objects['Farm'] && Game.Objects['Farm'].minigame;
-    }, function() {    
+    }, function() {
         var M = Game.Objects['Farm'].minigame;
-        
+
         // Precipitate of Chronos misbrew (reduces plant effects by 50%)
         if (!PotionsM._originalComputeEffs && M.computeEffs) {
             PotionsM._originalComputeEffs = M.computeEffs;
@@ -5251,20 +5264,20 @@ PotionsM._setupGardenHooks = function() {
                 }
             };
         }
-        
+
         // Wrap M.getMuts for Potion of Gaia
         if (!PotionsM._originalGetMuts && M.getMuts) {
             PotionsM._originalGetMuts = M.getMuts;
             M.getMuts = function(neighs, neighsM) {
                 var muts = PotionsM._originalGetMuts.call(this, neighs, neighsM);
                 var gaiaBuff = Game.hasBuff('Potion of Gaia');
-                
+
                 if (gaiaBuff && muts) {
                     for (var i = 0; i < muts.length; i++) {
                         muts[i][1] *= 5; // 5x mutation rate
                     }
                 }
-                
+
                 return muts;
             };
         }
@@ -5533,10 +5546,10 @@ window.potionsDebug = {
         PotionsM._buildCatalog();
         PotionsM._refreshSlots();
         PotionsM._renderSelectedReagents();
-        
+
         console.log('All reagents and potions unlocked, brew times sped up.');
     },
-  
+
     unlockReagentsOnly: function() {
         G.debugMode = true;
         for (var i = 0; i < REAGENTS.length; i++) {
@@ -5566,7 +5579,7 @@ window.potionsDebug = {
             console.log('Potion not found: ' + potionIdOrName);
         }
     },
-    
+
     unlockPrestige: function() {
         G.unlockedPrestige = G.unlockedPrestige || [];
         for (var i = 0; i < POTIONS.length; i++) {

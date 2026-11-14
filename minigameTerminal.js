@@ -2,7 +2,7 @@
 (function() {
 'use strict';
 
-const TERMINAL_VERSION = '1.0.9';
+const TERMINAL_VERSION = '1.0.10';
 
 var M = {};
 M.parent = Game.Objects && Game.Objects['Javascript console'] ? Game.Objects['Javascript console'] : {
@@ -59,7 +59,8 @@ function flushPendingAchievementWins() {
 M.launch = function () {
     var M = this;
     M.name = M.parent.minigameName;
-    M.maxSlots = 12; 
+    // 10 level + Supreme Intellect + Overclocked GPUs + Coupon Code
+    M.maxSlots = 13;
 
     const TERMINAL_BACKGROUND_URL = 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/TerminalBG.png';
     const TERMINAL_DIRECTIONAL_URL = 'https://cdn.jsdelivr.net/gh/dfsw/Cookies@refs/heads/main/directional.png';
@@ -511,6 +512,7 @@ M.launch = function () {
                 { value: 2, label: getLoanDisplayName(2), icon: [2, 10] }
             ];
         }
+        list.push({ value: 'all', label: 'All loans (in order)', icon: [1, 33] });
         return list;
     }
 
@@ -528,6 +530,7 @@ M.launch = function () {
         ];
         if (Game.JNE && Game.JNE.enableExtraSeasons) {
             options.push({ value: 'season:lunarnewyear', label: 'Lunar New Year season', icon: [9, 12, getCustomSpriteSheet()] });
+            options.push({ value: 'season:thanksgiving', label: 'Thanksgiving season', icon: [18, 15, getCustomSpriteSheet()] });
         }
         return options;
     }
@@ -1107,6 +1110,7 @@ M.launch = function () {
             }
             config[field.id] = value;
         }
+        // pre-0.6.7 switch/season config, safe to remove after June 2027
         if (program.key === 'switchSeason') {
             var legacySwitch = existingConfig && existingConfig.switch;
             var legacySeason = existingConfig && existingConfig.season;
@@ -1826,13 +1830,36 @@ M.launch = function () {
         return ok('Set ' + auraData.dname + ' on the ' + slotLabel + '.' + sacrificeNote);
     });
 
+    function activateLoan(market, loanId, maxLoans) {
+        if (isNaN(loanId) || loanId < 1 || loanId > maxLoans) return err('Invalid loan selection.');
+        var officeLevel = market.officeLevel || 0;
+        var requiredLevel = loanId === 1 ? 2 : (loanId === 2 ? 4 : 5);
+        var loanDisplay = getLoanDisplayName(loanId - 1, market);
+        if (officeLevel < requiredLevel) return err(loanDisplay + ' is not unlocked yet.');
+        if (Game.hasBuff('Loan ' + loanId) || Game.hasBuff('Loan ' + loanId + ' (interest)')) return err(loanDisplay + ' is already active.');
+        if (typeof Game.takeLoan !== 'function') return err('Loan system unavailable.');
+        if (!Game.takeLoan(loanId)) return err('Unable to take ' + loanDisplay + '.');
+        market.toRedraw = Math.max(market.toRedraw || 0, 2);
+        return ok('Activated ' + loanDisplay + '.');
+    }
+
     M.registerProgramHandler('activateLoans', function (config) {
         config = config || {};
         var market = getMinigame('Bank');
         if (!market) return err('Stock market unavailable.');
         var selectedValue = config.loan;
-        var loanId = parseInt(selectedValue, 10);
         var maxLoans = (market.loanTypes && market.loanTypes.length) ? market.loanTypes.length : 3;
+        if (selectedValue === 'all') {
+            // every loan in order; one that can't be taken doesn't stop the rest
+            var parts = [], activated = 0;
+            for (var n = 1; n <= maxLoans; n++) {
+                var r = activateLoan(market, n, maxLoans);
+                if (r.success) activated++;
+                parts.push(r.message);
+            }
+            return activated ? ok(parts.join(' ')) : err(parts.join(' '));
+        }
+        var loanId = parseInt(selectedValue, 10);
         if (!isNaN(loanId) && loanId >= 0 && loanId < maxLoans) {
             loanId = loanId + 1;
         } else if (typeof selectedValue === 'string') {
@@ -1841,17 +1868,7 @@ M.launch = function () {
             else if (normalized.indexOf('2nd') !== -1 || normalized.indexOf('second') !== -1) loanId = 2;
             else if (normalized.indexOf('3rd') !== -1 || normalized.indexOf('third') !== -1) loanId = 3;
         }
-        if (isNaN(loanId) || loanId < 1 || loanId > maxLoans) return err('Invalid loan selection.');
-
-        var officeLevel = market.officeLevel || 0;
-        var requiredLevel = loanId === 1 ? 2 : (loanId === 2 ? 4 : 5);
-        if (officeLevel < requiredLevel) return err(getLoanDisplayName(loanId - 1, market) + ' is not unlocked yet.');
-        if (Game.hasBuff('Loan ' + loanId) || Game.hasBuff('Loan ' + loanId + ' (interest)')) return err(getLoanDisplayName(loanId - 1, market) + ' is already active.');
-        if (typeof Game.takeLoan !== 'function') return err('Loan system unavailable.');
-        var loanDisplay = getLoanDisplayName(loanId - 1, market);
-        if (!Game.takeLoan(loanId)) return err('Unable to take ' + loanDisplay + '.');
-        market.toRedraw = Math.max(market.toRedraw || 0, 2);
-        return ok('Activated ' + loanDisplay + '.');
+        return activateLoan(market, loanId, maxLoans);
     });
 
     M.registerProgramHandler('brewSlot', function (config) {
@@ -1861,14 +1878,14 @@ M.launch = function () {
         var slotIndex = parseInt(config.slot, 10);
         if (isNaN(slotIndex) || slotIndex < 0 || slotIndex > 2) return err('Invalid brew slot selection.');
         if (!potions._usePotionSlot || typeof potions._usePotionSlot !== 'function') return err('Potion consumption function unavailable.');
-        
+
         if (!potions.G || !potions.G.slots) return err('Alchemy Lab state unavailable.');
         var brew = potions.G.slots[slotIndex];
         if (!brew) return err('No potion available, the slot was empty.');
 
         var remaining = brew.endTime - Date.now() / 1000;
         if (remaining > 0) return err('Potion not ready yet, potion was still brewing.');
-        
+
         var slotLabel = findOptionLabel(getPotionSlotOptions(), slotIndex, 'Brew slot 1');
         potions._usePotionSlot(slotIndex);
         return ok('Consumed potion from ' + slotLabel + '.');
@@ -1880,14 +1897,14 @@ M.launch = function () {
         var slotIndex = parseInt(slot, 10);
         if (isNaN(slotIndex) || slotIndex < 0 || slotIndex > 2) return { success: false, message: 'Invalid brew slot selection.' };
         if (!potions._usePotionSlot || typeof potions._usePotionSlot !== 'function') return { success: false, message: 'Potion consumption function unavailable.' };
-        
+
         if (!potions.G || !potions.G.slots) return { success: false, message: 'Alchemy Lab state unavailable.' };
         var brew = potions.G.slots[slotIndex];
         if (!brew) return { success: false, message: 'No potion available, the slot was empty.' };
 
         var remaining = brew.endTime - Date.now() / 1000;
         if (remaining > 0) return { success: false, message: 'Potion not ready yet, potion was still brewing.' };
-        
+
         potions._usePotionSlot(slotIndex);
         var slotLabel = findOptionLabel(getPotionSlotOptions(), slotIndex, 'Brew slot 1');
         return { success: true, message: 'Consumed potion from ' + slotLabel + '.' };
@@ -2086,10 +2103,14 @@ M.launch = function () {
     };
 
     M.getUnlockedSlotCount = function () {
+        // Re-bind if the file loaded before the building registered (fallback parent is dead state)
+        if (Game.Objects && Game.Objects['Javascript console'] && M.parent !== Game.Objects['Javascript console']) {
+            M.parent = Game.Objects['Javascript console'];
+        }
         var level = (M.parent && typeof M.parent.level === 'number') ? M.parent.level : 0;
-        var baseUnlocked = Math.max(0, Math.floor(level));
+        var baseUnlocked = Math.max(0, Math.min(10, Math.floor(level)));
         var auraBonus = M.getSupremeIntellectBonus();
-        var upgradeBonus = Game.Has('Overclocked GPUs') ? 1 : 0;
+        var upgradeBonus = (Game.Has('Overclocked GPUs') ? 1 : 0) + (Game.Has('Coupon Code') ? 1 : 0);
         var result = Math.min(M.maxSlots, baseUnlocked + auraBonus + upgradeBonus);
         return result;
     };
@@ -2100,9 +2121,29 @@ M.launch = function () {
         return '<div style="width:280px;padding:8px;text-align:center;" id="tooltipDragonBoost"><b>' + loc("Supreme Intellect") + '</b><div class="line"></div>' + loc("Grants an extra execution queue.", [Beautify(bonus), (bonus === 1 ? '' : 's')]) + '</div>';
     };
 
-    M.buildProgramIcon = function (commandId) {
+    // small icon of the selected option (e.g. the chosen loan), shown at 1/3 size in the slot corner
+    M.renderSubIcon = function (program, config) {
+        if (!program || !config || !program.config) return '';
+        for (var i = 0; i < program.config.length; i++) {
+            var field = program.config[i];
+            if (!field || field.type !== 'choice') continue;
+            var value = config[field.id];
+            if (value === undefined || value === null) continue;
+            var options = M.resolveFieldOptions(field, program, config);
+            for (var j = 0; j < options.length; j++) {
+                if (options[j].icon && ('' + options[j].value) === ('' + value)) {
+                    return M.renderProgramIcon({ icon: options[j].icon }, 'terminalSubIcon');
+                }
+            }
+        }
+        return '';
+    };
+
+    M.buildProgramIcon = function (commandId, slotIndex) {
         var template = M.programsById[commandId];
-        return M.renderProgramIcon(template, 'terminalIcon');
+        var html = M.renderProgramIcon(template, 'terminalIcon');
+        if (slotIndex !== undefined) html += M.renderSubIcon(template, M.slotSettings[slotIndex]);
+        return html;
     };
 
     M.updateSlots = function () {
@@ -2113,7 +2154,7 @@ M.launch = function () {
             if (!slotDiv || !contentDiv) continue;
             slotDiv.style.display = (i < unlocked) ? '' : 'none';
             if (i < M.slot.length && M.slot[i] !== -1 && M.slot[i] !== undefined) {
-                contentDiv.innerHTML = M.buildProgramIcon(M.slot[i]);
+                contentDiv.innerHTML = M.buildProgramIcon(M.slot[i], i);
             } else {
                 contentDiv.innerHTML = '';
             }
@@ -2719,6 +2760,7 @@ M.launch = function () {
         if (!M.dragging) return;
 
         var target = M.slotHovered;
+        if (target !== -1 && target >= M.getUnlockedSlotCount()) target = -1;
         var commandId = M.dragging.commandId;
         var program = M.programsById[commandId];
         var configToAssign = M.cloneConfig(M.dragging.config || M.ensureProgramConfig(program));
@@ -2851,7 +2893,9 @@ M.launch = function () {
             Game.textParticlesY = 0;
         }
 
+        var seq = (M.execSeq = (M.execSeq || 0) + 1);
         var runNext = function (index) {
+            if (seq !== M.execSeq) return; // reset/load invalidated this sequence
             if (index >= queue.length) {
                 finalize();
                 return;
@@ -2945,6 +2989,7 @@ M.launch = function () {
             '#terminalProgramNext{background-position:0px -84px;}' +
             '.terminalIcon{pointer-events:none;margin:12px 6px 0 6px;width:48px;height:48px;opacity:0.8;position:relative;}' +
             '.terminalSlot .terminalIcon{margin:10px 6px 0 6px;}' +
+            '.terminalSubIcon{position:absolute;right:6px;bottom:16px;margin:0;width:48px;height:48px;transform:scale(0.333);transform-origin:right bottom;pointer-events:none;}' +
             '.terminalProgram{box-shadow:4px 4px 4px #000;cursor:pointer;position:relative;color:#f33;opacity:0.8;text-shadow:0 0 4px #000,0 0 6px #000;font-weight:bold;font-size:12px;display:inline-block;width:60px;height:74px;background:url(' + Game.resPath + 'img/spellBG.png);}' +
             '.terminalProgram.ready{color:rgba(255,255,255,0.8);opacity:1;}' +
             '.terminalProgram.ready:hover{color:#fff;}' +
@@ -2990,7 +3035,7 @@ M.launch = function () {
         str += '<div id="terminalProgramDisplay">';
         for (var p = 0; p < M.programsById.length; p++) {
             var prog = M.programsById[p];
-            str += '<div class="ready terminalProgram terminalProgram' + (prog.id % 4) + ' titleFont" id="terminalProgram' + prog.id + '" ' + Game.getDynamicTooltip('Game.ObjectsById[' + M.parent.id + '].minigame.programTooltip(' + prog.id + ')', 'this') + ' style="display:none;">' +
+            str += '<div class="ready terminalProgram terminalProgram' + (prog.id % 4) + ' titleFont" id="terminalProgram' + prog.id + '" ' + Game.getDynamicTooltip('Game.ObjectsById[' + M.parent.id + '].minigame?Game.ObjectsById[' + M.parent.id + '].minigame.programTooltip(' + prog.id + '):\'\'', 'this') + ' style="display:none;">' +
                 M.renderProgramIcon(prog, 'terminalIcon') +
                 '<div class="terminalSlotDrag" id="terminalProgramDrag' + prog.id + '"></div>' +
                 '</div>';
@@ -3114,7 +3159,7 @@ M.launch = function () {
         var aw = '';
         terminalAchievementNames.forEach(function(n, i) {
             var a = Game.Achievements && (Game.Achievements[n] || Game.Achievements[n + ' [DISABLED]']);
-            if (a && (a.won || a._savedWonStatus)) aw += (aw ? ',' : '') + i;
+            if (a && (a.won || a._savedWonStatus)) aw += (aw ? '.' : '') + i; // no commas: vanilla splits building saves on them
         });
         var saveParts = [
             Math.max(0, slotsToSave),
@@ -3148,7 +3193,7 @@ M.launch = function () {
                 // Use original string if decoding fails
             }
         }
-        
+
         if (!str || str === '') {
             M.slot.length = 0;
             M.slotSettings.length = 0;
@@ -3165,6 +3210,7 @@ M.launch = function () {
         }
 
         try {
+            // pre-0.6.7 save format, safe to remove after June 2027
             var legacyFormat = str.indexOf(';') !== -1;
             var unlocked;
             var assignments = [];
@@ -3233,6 +3279,8 @@ M.launch = function () {
             M.executionCooldownStart = cooldownStamp;
             M.updateSlots();
             M.setExecutingSlot(-1);
+            M.isExecutingSequence = false;
+            M.execSeq = (M.execSeq || 0) + 1;
             M.updateProgramsRunDisplay();
             M.updateCooldownDisplay();
             if (M.parent && typeof M.parent.onMinigame !== 'undefined' && isVisible) {
@@ -3257,7 +3305,7 @@ M.launch = function () {
             var awPart = (legacyFormat ? legacyParts[7] : parts[7]) || '-';
             var wonNames = [];
             if (awPart !== '-') {
-                awPart.split(',').forEach(function(p) {
+                awPart.split('.').forEach(function(p) {
                     var wn = terminalAchievementNames[parseInt(p, 10)];
                     if (wn) wonNames.push(wn);
                 });
@@ -3275,6 +3323,8 @@ M.launch = function () {
             M.programsRunTotal = 0;
             M._pendingAchWon = null;
             M.executionCooldownStart = 0;
+            M.isExecutingSequence = false;
+            M.execSeq = (M.execSeq || 0) + 1;
             M.setExecutingSlot(-1);
             M.ensureUnlockedSlots();
             M.updateProgramsRunDisplay();
@@ -3287,6 +3337,8 @@ M.launch = function () {
         M.slotSettings.length = 0;
         M.dragging = null;
         M.slotHovered = -1;
+        M.isExecutingSequence = false;
+        M.execSeq = (M.execSeq || 0) + 1;
         M.programsRun = 0;
         M._pendingAchWon = null;
         M.executionCooldownStart = 0;
@@ -3593,11 +3645,11 @@ if (Game.Objects && Game.Objects['Javascript console']) {
             } else if (jsConsole.minigameLoaded && !M.launched) {
                 M.launch();
                 M.launched = true;
-                
+
                 if (Game.JNE && Game.JNE.terminalSavedData) {
                     M.load(Game.JNE.terminalSavedData);
                 }
-                
+
                 if (typeof M.createAchievements === 'function') {
                     M.createAchievements();
                 }
@@ -3617,4 +3669,3 @@ if (Game.Objects && Game.Objects['Javascript console']) {
     }
 }
 })();
-
