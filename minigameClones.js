@@ -888,6 +888,10 @@ function oddsLineHtml(r) {
         r.weights.map(function(w, i) { return 'T' + (i + 1) + ' ' + w + '%'; }).join(' · ') + '</span>';
 }
 function rewardLineHtml() {
+    var t = rewardLineText();
+    return t ? t + '<br>' : '';
+}
+function rewardLineText() {
     if (G.puzzle && G.puzzle.tutorial)
         return (G.reward || G.redeemedRw)
             ? '<b>Congratulations for finishing your training!</b><br>You are now prepared to undertake your first scenario, have a little reward for your efforts.'
