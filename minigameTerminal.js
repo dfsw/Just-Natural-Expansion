@@ -3035,7 +3035,7 @@ M.launch = function () {
         str += '<div id="terminalProgramDisplay">';
         for (var p = 0; p < M.programsById.length; p++) {
             var prog = M.programsById[p];
-            str += '<div class="ready terminalProgram terminalProgram' + (prog.id % 4) + ' titleFont" id="terminalProgram' + prog.id + '" ' + Game.getDynamicTooltip('Game.ObjectsById[' + M.parent.id + '].minigame?Game.ObjectsById[' + M.parent.id + '].minigame.programTooltip(' + prog.id + '):\'\'', 'this') + ' style="display:none;">' +
+            str += '<div class="ready terminalProgram terminalProgram' + (prog.id % 4) + ' titleFont" id="terminalProgram' + prog.id + '" ' + Game.getDynamicTooltip('(Game.ObjectsById[' + M.parent.id + '].minigame?Game.ObjectsById[' + M.parent.id + '].minigame.programTooltip(' + prog.id + '):function(){return \'\';})', 'this') + ' style="display:none;">' +
                 M.renderProgramIcon(prog, 'terminalIcon') +
                 '<div class="terminalSlotDrag" id="terminalProgramDrag' + prog.id + '"></div>' +
                 '</div>';

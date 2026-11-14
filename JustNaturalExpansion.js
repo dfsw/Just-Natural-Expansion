@@ -5,7 +5,7 @@
     'use strict';
 
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.8.3';
+    var modVersion = '0.8.4';
     var debugMode = false;
     var BETA_MODE = false;
 
@@ -1077,7 +1077,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             var upgradeName = modUpgradeNames[i];
             if (Game.Upgrades[upgradeName]) {
                 var currentBought = Game.Upgrades[upgradeName].bought || 0;
-                modSaveData.upgrades[upgradeName] = { bought: currentBought };
+                modSaveData.upgrades[upgradeName] = { bought: currentBought, unlocked: Game.Upgrades[upgradeName].unlocked ? 1 : 0 };
             }
         }
 
@@ -1093,8 +1093,14 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         }
 
         // unlock states for all enabled upgrade categories, for immediate store visibility
-        var allModNames = getModUpgradeNames();
+        // coupons have no unlockCondition, so they keep their found state from the save instead
+        var couponNames = COUPONS.map(function(c) { return c[0]; });
+        var allModNames = getModUpgradeNames().filter(function(n) { return couponNames.indexOf(n) < 0; });
         updateUnlockStatesForUpgrades(allModNames, true);
+        couponNames.forEach(function(n) {
+            var cu = Game.Upgrades[n], sv = modSaveData.upgrades[n];
+            if (cu) cu.unlocked = (cu.bought || (sv && sv.unlocked)) ? 1 : 0;
+        });
 
         // Force immediate recalculation
         if (Game.CalculateGains) { Game.CalculateGains(); }

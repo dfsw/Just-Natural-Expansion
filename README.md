@@ -57,6 +57,9 @@ The mobile version of Cookie Clicker does not support mods at this time.
 
 ## Changelog  
 
+### Version 0.8.4
+* Toggling on and off minigames could unlock the Black Friday Coupons, ive closed this little exploit. 
+
 ### Version 0.8.3 - Gobble Gobble
 * Just in time for the holidays, come celebrate overeating and mindless consumerism like only an American can, with Just Natural Expansion’s new Thanksgiving season. Collect erratic turkeys and find Black Friday coupons for valuable upgrades to all 8 minigames!
 * Breath of Growth and Cloneconomics can now both be used together.
