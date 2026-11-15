@@ -5,7 +5,7 @@
     'use strict';
 
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.8.4';
+    var modVersion = '0.8.5';
     var debugMode = false;
     var BETA_MODE = false;
 
@@ -3143,6 +3143,8 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                     Game.upgradesToRebuild = 1;
                 }
                 Game._jneWasLNY = Game.season === 'lunarnewyear';
+                if (Game.season !== 'lunarnewyear') Game.JNE.lunarZodiacLocked = null;
+                else getCurrentLunarZodiac();
             }, 'JNE season end price refresh');
             Game._jneSeasonEndHooked = true;
         }
@@ -3798,30 +3800,23 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             }
         }, 'Check buff achievements in real-time');
 
-        var grimoireHookApplied = false;
-
-        // Hook into Grimoire spell casting to track Spell Slinger
+        // Hook into Grimoire spell casting to track Spell Slinger and rechecks on logic hook
         registerHook('logic', function() {
-            if (!grimoireHookApplied && Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].minigame) {
-                var originalCastSpell = Game.Objects['Wizard tower'].minigame.castSpell;
-                if (originalCastSpell) {
-                    if (!Game.Objects['Wizard tower'].minigame._jneOriginalCastSpellSpellSlinger) Game.Objects['Wizard tower'].minigame._jneOriginalCastSpellSpellSlinger = originalCastSpell;
-                    Game.Objects['Wizard tower'].minigame.castSpell = function(spell, obj) {
-                        // call original first to get the result
-                        var GM = Game.Objects['Wizard tower'].minigame;
-                        var result = GM._jneOriginalCastSpellSpellSlinger.call(this, spell, obj);
+            var GM = Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].minigame;
+            if (!GM || !GM.castSpell || GM._jneSpellSlinger) return;
+            GM._jneSpellSlinger = true;
+            var original = GM.castSpell; // closure, not a shared property, so other wrappers can't loop back
+            GM.castSpell = function(spell, obj) {
+                var result = original.call(this, spell, obj);
 
-                        // Only track successful spell casts (when result is true)
-                        if (result === true) {
-                            modTracking.spellCastTimes.push(Game.T);
-                        }
-
-                        return result;
-                    };
-                    grimoireHookApplied = true;
+                // Only track successful spell casts
+                if (result === true) {
+                    modTracking.spellCastTimes.push(Game.T);
                 }
-            }
-        }, 'Apply Grimoire spell cast hook when minigame loads');
+
+                return result;
+            };
+        }, 'Wrap Grimoire castSpell for Spell Slinger');
 
         // Centralized grimoire mana regen hook
         function hookCentralGrimoireRegen() {
@@ -4191,14 +4186,11 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         return lunarZodiac[index];
     }
 
+    // Locked when the season starts and saved
     function getCurrentLunarZodiac() {
         if (Game.season !== 'lunarnewyear') return null;
-        if (Game._jneCachedZodiacSeasonUses === Game.seasonUses) {
-            return Game._jneCachedZodiac;
-        }
-        Game._jneCachedZodiacSeasonUses = Game.seasonUses;
-        Game._jneCachedZodiac = getLunarZodiacYear();
-        return Game._jneCachedZodiac;
+        if (!Game.JNE.lunarZodiacLocked) Game.JNE.lunarZodiacLocked = getLunarZodiacYear();
+        return Game.JNE.lunarZodiacLocked;
     }
 
     function getZodiacEffectMultiplier() {
@@ -5958,6 +5950,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 COUPONS.forEach(function(c) {
                     new Game.Upgrade(c[0], c[2] + '<q>' + c[3] + '</q>', 1, JNE.icon(c[4], 11, 'custom'));
                     Game.last.priceFunc = couponCost; Game.last.order = COUPON_ORDER[c[1]] || 24001.99; Game.last.ddesc = Game.last.desc; Game.last._coupon = true;
+                    if (c[0] === 'The Gods Must Be Clearance') Game.last.buyFunction = syncPantheonClearanceTooltip;
                     if (Game.seasonDrops && Game.seasonDrops.indexOf(c[0]) < 0) Game.seasonDrops.push(c[0]); // Keepsakes / Regifting
                 });
             },
@@ -5996,6 +5989,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         var up = Game.Upgrades[s.trigger];
         up.buyFunction = function() {
             Game.seasonUses += 1;
+            if (Game.JNE) Game.JNE.lunarZodiacLocked = null; // a new season start picks its year again
             Game.computeSeasonPrices();
             for (var i in Game.seasons) {
                 var me = Game.Upgrades[Game.seasons[i].trigger];
@@ -6206,6 +6200,11 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         m.swapT -= t * 0.1;
     }
 
+    function syncPantheonClearanceTooltip() {
+        var el = document.getElementById('templeSwaps'), t = el && el.getAttribute('onmouseover');
+        if (t && Game.Has('The Gods Must Be Clearance')) el.setAttribute('onmouseover', [1, 4, 16].reduce(function(a, h) { var s = 3600 * h * Game.fps; return a.split(escape('after ' + Game.sayTime(s) + '.')).join(escape('after ' + Game.sayTime(s * 0.9, -1) + '.')); }, t));
+    }
+
     // mod minigames check Game.Has inline
     function hookCouponMinigames() {
         var farm = Game.Objects['Farm'].minigame, temple = Game.Objects['Temple'].minigame;
@@ -6228,6 +6227,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
             temple.useSwap = function() { var r = origUse.apply(this, arguments); shortenPantheonCooldown(temple); return r; };
             temple.useSwap._jne = 1;
         }
+        if (temple && !temple._jneTip) { temple._jneTip = 1; syncPantheonClearanceTooltip(); } // tooltip was built at launch
         if (Game.useSwap && temple && Game.useSwap !== temple.useSwap) Game.useSwap = temple.useSwap; // Game.useSwap is the same function
         if (!Game.gainBuff._jneOverstock) {
             var origGain = Game.gainBuff;
@@ -7554,6 +7554,7 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 Game.season = _ss.season;
                 Game.seasonT = _ss.seasonT || 0;
             }
+            if (Game.JNE) Game.JNE.lunarZodiacLocked = (_ss && _ss.lunarZodiac) || null;
             if (Game.season && Game.seasons && Game.seasons[Game.season] && Game.seasonT > 0) {
                 var _trigUp = Game.seasons[Game.season].triggerUpgrade;
                 if (_trigUp && !_trigUp.bought) {
@@ -8690,11 +8691,11 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
                 }
 
                 // Snapshot season state for the mod save before the vanilla write may blank it
-                var _jneSeasonStateForSave = (Game.JNE && Game.JNE._jneSeasonStateSnapshot) ? Game.JNE._jneSeasonStateSnapshot : {
+                var _jneSeasonStateForSave = Object.assign({ lunarZodiac: (Game.JNE && Game.JNE.lunarZodiacLocked) || null }, (Game.JNE && Game.JNE._jneSeasonStateSnapshot) ? Game.JNE._jneSeasonStateSnapshot : {
                     season: Game.season || '',
                     seasonT: Game.seasonT || 0,
                     baseSeason: Game.baseSeason || ''
-                };
+                });
 
                 // Merge the data
                 const combinedData = {

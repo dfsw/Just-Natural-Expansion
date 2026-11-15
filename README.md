@@ -57,8 +57,16 @@ The mobile version of Cookie Clicker does not support mods at this time.
 
 ## Changelog  
 
+### Version 0.8.5
+* Clone Escape minigame 5 Free Yous now awards 5 Yous as if you had bought them. 
+* More tweaking to Downline actions, this time mostly bumps in power for under-used actions.
+* The Lunar New Year year will no longer change when one of the effects to remove previous season changes is used. 
+* Expanded Clone Escape Glossary
+* Fixed some CSS layout issues in Clone Escape
+* Minor bug fixes, improvements, and code cleanup. 
+
 ### Version 0.8.4
-* Toggling on and off minigames could unlock the Black Friday Coupons, ive closed this little exploit. 
+* Toggling on and off minigames could unlock the Black Friday Coupons, ive closed this exploit. 
 
 ### Version 0.8.3 - Gobble Gobble
 * Just in time for the holidays, come celebrate overeating and mindless consumerism like only an American can, with Just Natural Expansion’s new Thanksgiving season. Collect erratic turkeys and find Black Friday coupons for valuable upgrades to all 8 minigames!

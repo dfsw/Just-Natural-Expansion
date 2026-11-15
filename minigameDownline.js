@@ -1458,7 +1458,7 @@ DownlineM.init = function(div) {
         effects: { players: 14, reputation: -2, hype: -2, referrals: -1 },
         headline: 'Cookie Clicker mailers hit mailboxes across the country; in unrelated news paper recycling quotas are up' },
 
-      { name: 'Space billboard', icon: [11,5], durationSec: 24 * 60 * 60, costCps: 12 * 60 * 60,
+      { name: 'Space billboard', icon: [11,5], durationSec: 18 * 60 * 60, costCps: 10 * 60 * 60,
         desc: 'Orbital advertising platform visible from the ground everywhere whether you want to see it or not. The future is now.',
         flavor: 'Great advertising but people seem to miss seeing the moon and stars.',
         unlock: { conditions: [{ stat: 'players', min: 1500 }], tempConditions: [{ stat: 'reputation', min: 950 }] },
@@ -1633,7 +1633,7 @@ DownlineM.init = function(div) {
         desc: 'Five stars across the board. Suspiciously uniform praise.',
         flavor: "Best game ever. Let me know if you would like the review to sound more human.",
         unlock: { conditions: [{ stat: 'players', min: 250 }], tempConditions: [{ stat: 'reputation', max: 700 }] },
-        effects: { players: 8, reputation: -2, hype: 4, commitment: -1 },
+        effects: { players: 9, reputation: -2, hype: 4, commitment: -1 },
         headline: 'How to spot fake online reviews: Expose tonight at 9pm' },
 
         { name: 'Aggressively moderate negative reviews', icon: [21,30], durationSec: 2 * 60 * 60, costCps: 25 * 60,
@@ -1675,7 +1675,7 @@ DownlineM.init = function(div) {
         desc: 'Bribe players with real cookies. Wait, not those cookies.',
         flavor: "Cash for cookies program is a hit.",
         unlock: { conditions: [{ stat: 'players', min: 500 }], tempConditions: [{ stat: 'referrals', min: 250 }] },
-        effects: { commitment: 5, referrals: -3, reputation: -1 },
+        effects: { commitment: 5, referrals: -2, reputation: -1 },
         headline: 'Reports of paid Cookie Clicker actors. How involved is George Soros?' },
 
         { name: 'Pyramid Scam', icon: [13,13], sheet: 'custom', durationSec: 8 * 60 * 60, costCps: 180 * 60,
@@ -1737,7 +1737,7 @@ DownlineM.init = function(div) {
         flavor: 'Enter birthday and it better not start with January 1.',
         unlock: { conditions: [{ stat: 'players', min: 400 }, { stat: 'commitment', min: 150 }], tempConditions: [{ stat: 'commitment', min: 300 }] },
         unique: true,
-        effects: { players: -14, reputation: -4, commitment: 7, referrals: 3 },
+        effects: { players: -12, reputation: -3, commitment: 7, referrals: 3 },
         headline: 'Cookie Clicker adds age verification, Government ID required from now on. JNews instant polling shows 3% favorability with 4% margin of error' },
 
         { name: 'Donating profits to charity', icon: [7,15], sheet: 'custom', durationSec: 5 * 60 * 60, costCps: 3 * 60 * 60,
@@ -1783,7 +1783,7 @@ DownlineM.init = function(div) {
         desc: "Hidden messages everywhere. They won't know why they're clicking.",
         flavor: 'eikooc eht kcilc',
         unlock: { conditions: [{ stat: 'players', min: 500 }], tempConditions: [{ stat: 'reputation', min: 700 }] },
-        effects: { players: 15, commitment: 4, hype: -4, reputation: -4 },
+        effects: { players: 15, commitment: 4, hype: -2, reputation: -4 },
         headline: 'Nightly news viewers report urge to click after watching' },
 
       { name: 'Make a fake botnet', icon: [4,9], durationSec: 3 * 60 * 60, costCps: 300 * 60,
@@ -2543,8 +2543,10 @@ DownlineM.init = function(div) {
       addTooltipListeners(chip);
     }
 
-    function checkUnlocks() {
+    // force (release/reset/load) drops the cached item list and last-known states so every icon is rewritten
+    function checkUnlocks(force) {
       var noUnique = hasBoredomEffect('no_unique');
+      if (force) actionsListEl._itemEls = null;
       var items = actionsListEl._itemEls;
       if (!items) items = actionsListEl._itemEls = actionsListEl.querySelectorAll('.downline-action-item[data-name]');
       items.forEach(function (el) {
@@ -2554,7 +2556,7 @@ DownlineM.init = function(div) {
         var usableOk = def.isUsable && def.isUsable();
         var blockedByNoUnique = def.unique && noUnique;
         var isLocked = !usableOk || blockedByNoUnique;
-        if (el._locked !== isLocked) {
+        if (force || el._locked !== isLocked) {
           el._locked = isLocked;
           el.classList.toggle('locked', isLocked);
         }
@@ -3013,7 +3015,7 @@ DownlineM.init = function(div) {
       if (typeof DownlineM.onRelease === 'function') DownlineM.onRelease();
       renderActiveSlots();
       activeCountEl.textContent = 0;
-      checkUnlocks();
+      checkUnlocks(true);
       updateUI();
     }
     function doRebrand(headline) {
@@ -3026,7 +3028,7 @@ DownlineM.init = function(div) {
       renderActiveSlots();
       activeCountEl.textContent = 0;
       G.tickerPool = headline ? [headline] : [];
-      checkUnlocks();
+      checkUnlocks(true);
       updateUI();
     }
     function showRebrandActionPrompt(headline) {
@@ -3351,7 +3353,7 @@ DownlineM.init = function(div) {
 
       renderActiveSlots();
       if (activeCountEl) activeCountEl.textContent = G.activeActions.length;
-      checkUnlocks();
+      checkUnlocks(true);
       updateUI();
       syncDebugLabels();
       DownlineM.updateLumpBoostState();
@@ -3427,7 +3429,7 @@ DownlineM.init = function(div) {
       resetTickerPosition();
       renderActiveSlots();
       if (activeCountEl) activeCountEl.textContent = 0;
-      checkUnlocks();
+      checkUnlocks(true);
       updateUI();
       syncDebugLabels();
       setTimeout(startTickerAnimationIfNeeded, 150);

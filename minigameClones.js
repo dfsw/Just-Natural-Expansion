@@ -2,7 +2,7 @@
 (function() {
 'use strict';
 
-const CLONES_VERSION = '1.0.4';
+const CLONES_VERSION = '1.0.5';
 var PUZZLE_BASE_BETA = 'https://raw.githubusercontent.com/dfsw/Cookies/beta/puzzles/';
 var PUZZLE_BASE_RELEASE = 'https://raw.githubusercontent.com/dfsw/Just-Natural-Expansion/main/assets/ClonePuzzles/';
 var PUZZLE_BASE_FALLBACK = 'https://cdn.jsdelivr.net/gh/dfsw/Just-Natural-Expansion@main/assets/ClonePuzzles/';
@@ -43,6 +43,18 @@ Object.defineProperty(ClonesM, 'debug', {
 });
 
 function getYou() { return Game.Objects && Game.Objects['You']; }
+// Same count changes as a purchase in vanilla Game.Object.buy, minus the cookie spend
+function grantYous(n) {
+    var y = getYou();
+    if (!y) return;
+    if (y.amount === 0 && y.id != 0) l('row' + y.id).classList.add('enabled');
+    y.amount += n;
+    y.bought += n;
+    y.highest = Math.max(y.highest, y.amount);
+    Game.BuildingsOwned += n;
+    Game.recalculateGains = 1;
+    y.refresh();
+}
 ClonesM.parent = getYou() || {
     id: 0, level: 10, minigameName: 'Clone Escape', minigameLoaded: false,
     minigameLoading: false, minigameDiv: null, l: null, refresh: function() {}
@@ -330,8 +342,7 @@ function checkLayout() {
     if (grid && side && grid.offsetHeight) { // 0 while the panel is hidden
         var h = stack ? '' : grid.offsetHeight + 'px';
         if (side.style.height !== h) side.style.height = h;
-        var w = stack ? grid.offsetWidth + 'px' : '';
-        if (side.style.minWidth !== w) side.style.minWidth = w;
+        if (side.style.minWidth) side.style.minWidth = '';
     }
 }
 
@@ -917,7 +928,10 @@ function showPrizeSlots(opts) {
     var title = slot.querySelector('.prize-title');
     if (title) title.textContent = opts.winner.name;
     slot.style.setProperty('--pitch', '80px'); // 70px window + 10px gap
-    if (reduced || opts.instant) { slot.classList.add('done'); return Promise.resolve(); }
+    if (reduced || opts.instant) { // empty reels keep the box its natural width
+        for (var k = 0; k < 3; k++) reels.appendChild(document.createElement('div')).className = 'reel';
+        slot.classList.add('done'); return Promise.resolve();
+    }
     var promises = [0.62, 0.81, 1].map(function(fraction, index) {
         var reel = document.createElement('div'); reel.className = 'reel';
         var track = document.createElement('div'); track.className = 'track';
@@ -1050,28 +1064,28 @@ var REWARDS = [
     { id: 'free_lump', name: 'Free sugar lump', tier: 5, icon: [29, 14] },
     { id: 'click_x7', name: 'Clicking ×7 for 77 seconds', tier: 5, icon: [0, 14] },
     { id: 'random_bs', name: 'Gain a random Building Special', tier: 5, icon: [11, 33] },
-    { id: 'extend_buffs', name: 'Extend active buffs by 30 seconds', tier: 5, icon: [23, 11] },
+    { id: 'extend_buffs', name: 'Extend buffs by 30 seconds', tier: 5, icon: [23, 11] },
     { id: 'dragon_harvest', name: 'Gain a dragon harvest buff', tier: 5, icon: [6, 17], sheet: 'custom' },
     { id: 'random_gc', name: 'Spawn a Golden Cookie', tier: 4, icon: [23, 6] },
     { id: 'reset_minigames', name: 'Reset minigame cooldowns', tier: 4, icon: [8, 0] },
-    { id: 'gc_faster', name: 'Golden Cookies spawn 15% faster for an hour', tier: 4, icon: [3, 5] },
+    { id: 'gc_faster', name: 'Golden Cookies spawn 15% faster', tier: 4, icon: [3, 5] },
     { id: 'double_cps', name: 'Double CpS for 7 minutes', tier: 4, icon: [20, 14], sheet: 'custom' },
     { id: 'grimoire_mana', name: 'Restore 50% mana', tier: 4, icon: [14, 16], sheet: 'custom' },
     { id: 'free_yous', name: 'Gain 5 free Yous', tier: 3, icon: [35, 36] },
     { id: 'fill_reagents', name: 'Fill your potion reagents', tier: 3, icon: [11, 25], sheet: 'custom' },
     { id: 'rare_lump', name: 'Current sugar lump becomes rare', tier: 3, icon: [27, 17] },
-    { id: 'cps_day', name: 'Gain 24 hours of CpS (50% cap)', tier: 3, icon: [8, 25], sheet: 'custom' },
+    { id: 'cps_day', name: 'Gain 24h of CpS (50% cap)', tier: 3, icon: [8, 25], sheet: 'custom' },
     { id: 'click_frenzy', name: 'Gain a click frenzy', tier: 3, icon: [11, 17] },
     { id: 'potion_effect', name: 'Gain a random positive potion effect', tier: 2, icon: [6, 26], sheet: 'custom' },
     { id: 'remove_seasons', name: 'Forget 5 season changes', tier: 2, icon: [16, 6] },
     { id: 'garden_ticks', name: 'Garden ticks 10 times', tier: 2, icon: [15, 24], sheet: 'custom' },
-    { id: 'lump_faster', name: 'Current sugar matures 2 hours faster', tier: 2, icon: [20, 15], sheet: 'custom' },
+    { id: 'lump_faster', name: 'Current sugar matures 2h faster', tier: 2, icon: [20, 15], sheet: 'custom' },
     { id: 'reindeer_lanterns', name: 'Spawn 10 reindeer and lanterns', tier: 2, icon: [23, 24], sheet: 'custom' },
     { id: 'wrath_cookie', name: 'Summon a Wrath Cookie', tier: 1, icon: [20, 17], sheet: 'custom' },
-    { id: 'cps_hour', name: 'Gain 1 hour worth of CpS (8% cap)', tier: 1, icon: [1, 0] },
+    { id: 'cps_hour', name: 'Gain 1h of CpS (8% cap)', tier: 1, icon: [1, 0] },
     { id: 'frenzy', name: 'Gain a frenzy buff', tier: 1, icon: [10, 0] },
-    { id: 'cheap', name: 'Buildings & upgrades are 10% cheaper for 3 min', tier: 1, icon: [3, 0] },
-    { id: 'downline_double', name: 'New Downline actions last twice as long for 15min', tier: 1, icon: [17, 6] },
+    { id: 'cheap', name: 'Buildings & upgrades 10% cheaper for 3m', tier: 1, icon: [3, 0] },
+    { id: 'downline_double', name: 'Downline actions last longer for 15m', tier: 1, icon: [17, 6] },
     { id: 'free_play', name: 'Free play', tier: 1, icon: [16, 1], sheet: 'custom' },
     { id: 'free_play', name: 'Free play', tier: 1, icon: [16, 1], sheet: 'custom' } // doubled entry for higher chance
 ];
@@ -1257,7 +1271,7 @@ var SIMPLE_REWARDS = {
     random_gc:      { shimmer: 'golden', force: { noWrath: true },           msg: 'A golden cookie appears!' },
     reset_minigames:{ run: function() { Game.lumpRefill = 0; },              msg: 'Cooldowns cleared!' },
     gc_faster:      { buff: 'clone greed',         secs: 3600, mult: 1.15, msg: 'Golden cookies now spawn faster!', effs: 1 },
-    free_yous:      { run: function() { Game.Objects['You'].getFree(5); Game.recalculateGains = 1; }, msg: 'Additional Yous appear!' },
+    free_yous:      { run: function() { grantYous(5); }, msg: 'Additional Yous appear!' },
     double_cps:     { buff: 'clone twinning',        secs: 420,  mult: 2,    msg: 'Cookie production doubled!' },
     grimoire_mana:  { run: function() {
         var gm = cloneMg('Wizard tower');
@@ -1641,7 +1655,9 @@ ClonesM.quitTutorial = function() {
 };
 
 var GLOSSARY = [
+    ['Above', 'Every cell in the same column, higher up than the named suspect.'],
     ['At least', 'At least, but possibly more.'],
+    ['Below', 'Every cell in the same column, lower down than the named suspect.'],
     ['Between', 'The cells strictly between two named suspects in the same row or column; the named suspects themselves are never included.'],
     ['Both', 'Exactly two.'],
     ['Column', 'Each of the 4 columns is a vertical line of 5 suspects, lettered A through D.'],
@@ -1649,16 +1665,20 @@ var GLOSSARY = [
     ['Corner', 'The 4 corner positions: A1, D1, A5, and D5.'],
     ['Directly', 'The single neighboring cell in a direction.'],
     ['Edge', 'The outer ring: rows 1 and 5 and columns A and D.'],
+    ['Equal', 'Strictly the same number.'],
     ['Even', 'An even number: 2, 4, 6, etc.'],
     ['Exactly', 'Precisely the number.'],
-    ['Fewest', 'Strictly less than.'],
-    ['Most', 'Strictly more than.'],
+    ['Fewest(Least)', 'Strictly less than.'],
+    ['Left', 'Every cell in the same row, to the left of the named suspect.'],
+    ['Most(More)', 'Strictly more than.'],
     ['Neighbors', 'Everyone touching a suspect, including diagonally. Suspects in the middle have 8 neighbors, suspects on the edges have 5, and corners have 3.'],
+    ['None', 'Strictly zero.'],
     ['Odd', 'An odd number: 1, 3, 5, etc.'],
     ['Only', 'Exactly one.'],
+    ['Right', 'Every cell in the same row, to the right of the named suspect.'],
     ['Row', 'Each of the 5 rows is a horizontal line of 4 suspects, numbered 1 through 5.'],
     ['Shared', 'Suspects who neighbor both of the named suspects - the overlapping group of neighbors. Also phrased as "in common" in some clues.'],
-    ['Total', 'The total count combining all named units.']
+    ['Total', 'The total count combining all specified units (including overlapping).']
 ];
 
 ClonesM.glossary = function() {
@@ -1711,7 +1731,7 @@ var CSS = '.clones-wrap{padding:8px 12px 18px;font-size:12px;color:#ccc;position
 '.clones-tier-icon{width:48px;height:48px;cursor:pointer;opacity:0.15;transition:none}' +
 '.clones-tier-icon.clones-tier-locked{cursor:not-allowed;filter:grayscale(0.9)}' +
 '#clonesTut.clones-attention{animation:rainbowCycle 5s infinite ease-in-out,pucker 0.2s ease-out;box-shadow:0px 0px 1px 2px currentcolor}' +
-'#prizeSlots{position:relative;width:max-content;padding:12px;background:#111219;border:2px solid #4c4b54;margin:8px auto}' +
+'#prizeSlots{position:relative;width:max-content;max-width:100%;box-sizing:border-box;padding:12px;background:#111219;border:2px solid #4c4b54;margin:8px auto}' +
 '#prizeSlots .reels{display:flex;gap:10px}' +
 '#prizeSlots .reel{position:relative;width:70px;height:70px;overflow:hidden;background:#2b2c37;border:2px solid #6b6874;box-sizing:border-box}' +
 '#prizeSlots .reel::after{content:"";position:absolute;inset:0;pointer-events:none;background:linear-gradient(#15151c,transparent 30%,transparent 70%,#15151c)}' +
