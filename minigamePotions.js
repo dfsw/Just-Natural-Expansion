@@ -3,7 +3,7 @@
 (function() {
 'use strict';
 
-const POTIONS_VERSION = '1.1.13';
+const POTIONS_VERSION = '1.1.14';
 
 // =====================================================================
 // Potions
@@ -5471,13 +5471,19 @@ function getAchievementState() {
     for (var i = 0; i < REAGENTS.length; i++) {
         if (REAGENTS[i].unlocked) unlockedReagentsCount++;
     }
-    var unlockedPotionsCount = 0;
+    var unlockedPotionsCount = 0, activePotionsCount = 0, unlockedActivePotionsCount = 0;
     for (var i = 0; i < POTIONS.length; i++) {
         if (POTIONS[i].unlocked) unlockedPotionsCount++;
+        if (isActivePotion(POTIONS[i])) {
+            activePotionsCount++;
+            if (POTIONS[i].unlocked) unlockedActivePotionsCount++;
+        }
     }
     return {
         unlockedReagentsCount: unlockedReagentsCount,
         unlockedPotionsCount: unlockedPotionsCount,
+        unlockedActivePotionsCount: unlockedActivePotionsCount,
+        activePotionsCount: activePotionsCount,
         totalPotionsBrewed: G.totalPotionsBrewed || 0,
         totalReagentsCollected: G.totalReagentsCollected || 0
     };
@@ -5491,7 +5497,8 @@ function checkAndAwardPotionsAchievements() {
     try {
         var state = getAchievementState();
         var truffleHunter = state.unlockedReagentsCount >= REAGENTS.length;
-        var potionMaster = state.unlockedPotionsCount >= POTIONS.length;
+        // all potions knowable right now
+        var potionMaster = state.unlockedActivePotionsCount >= state.activePotionsCount;
         var transfiguration = state.totalPotionsBrewed >= 250;
         var alchemistCollector = state.totalReagentsCollected >= 1500;
 
