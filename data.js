@@ -154,9 +154,7 @@ window.JNEData = {
                 icon: [16, 0, 'custom'],
                 pool: 'kitten',
                 kitten: 100,
-                unlockCondition: function() {
-                    return Game.AchievementsOwned >= 500;
-                }
+                threshold: 500,
             },
             {
                 name: 'Kitten overpaid "temporary" contractors',
@@ -166,9 +164,7 @@ window.JNEData = {
                 icon: [16, 1, 'custom'],
                 pool: 'kitten',
                 kitten: 101,
-                unlockCondition: function() {
-                    return Game.AchievementsOwned >= 550;
-                }
+                threshold: 550,
             },
             {
                 name: 'Kitten remote workers',
@@ -178,9 +174,7 @@ window.JNEData = {
                 icon: [16, 2, 'custom'],
                 pool: 'kitten',
                 kitten: 102,
-                unlockCondition: function() {
-                    return Game.AchievementsOwned >= 600;
-                }
+                threshold: 600,
             },
             {
                 name: 'Kitten scrum masters',
@@ -190,9 +184,7 @@ window.JNEData = {
                 icon: [16, 3, 'custom'],
                 pool: 'kitten',
                 kitten: 103,
-                unlockCondition: function() {
-                    return Game.AchievementsOwned >= 650;
-                }
+                threshold: 650,
             },
             {
                 name: 'Kitten UX designers',
@@ -202,9 +194,7 @@ window.JNEData = {
                 icon: [16, 4, 'custom'],
                 pool: 'kitten',
                 kitten: 104,
-                unlockCondition: function() {
-                    return Game.AchievementsOwned >= 700;
-                }
+                threshold: 700,
             },
             {
                 name: 'Kitten janitors',
@@ -214,9 +204,7 @@ window.JNEData = {
                 icon: [16, 5, 'custom'],
                 pool: 'kitten',
                 kitten: 105,
-                unlockCondition: function() {
-                    return Game.AchievementsOwned >= 750;
-                }
+                threshold: 750,
             },
             {
                 name: 'Kitten coffee fetchers',
@@ -226,9 +214,7 @@ window.JNEData = {
                 icon: [16, 6, 'custom'],
                 pool: 'kitten',
                 kitten: 106,
-                unlockCondition: function() {
-                    return Game.AchievementsOwned >= 800;
-                }
+                threshold: 800,
             },
             {
                 name: 'Kitten personal assistants',
@@ -238,9 +224,7 @@ window.JNEData = {
                 icon: [16, 7, 'custom'],
                 pool: 'kitten',
                 kitten: 107,
-                unlockCondition: function() {
-                    return Game.AchievementsOwned >= 850;
-                }
+                threshold: 850,
             },
             {
                 name: 'Kitten vice presidents',
@@ -250,9 +234,7 @@ window.JNEData = {
                 icon: [16, 8, 'custom'],
                 pool: 'kitten',
                 kitten: 108,
-                unlockCondition: function() {
-                    return Game.AchievementsOwned >= 900;
-                }
+                threshold: 900,
             },
             {
                 name: 'Kitten board members',
@@ -262,9 +244,7 @@ window.JNEData = {
                 icon: [16, 9, 'custom'],
                 pool: 'kitten',
                 kitten: 109,
-                unlockCondition: function() {
-                    return Game.AchievementsOwned >= 950;
-                }
+                threshold: 950,
             },
             {
                 name: 'Kitten founders',
@@ -274,9 +254,7 @@ window.JNEData = {
                 icon: [16, 10, 'custom'],
                 pool: 'kitten',
                 kitten: 110,
-                unlockCondition: function() {
-                    return Game.AchievementsOwned >= 1000;
-                }
+                threshold: 1000,
             },
             {
                 name: 'Kitten Equity Partners',
@@ -286,9 +264,7 @@ window.JNEData = {
                 icon: [18, 13, 'custom'],
                 pool: 'kitten',
                 kitten: 111,
-                unlockCondition: function() {
-                    return Game.AchievementsOwned >= 1050;
-                }
+                threshold: 1050,
             },
             {
                 name: 'Kitten Senators',
@@ -298,9 +274,7 @@ window.JNEData = {
                 icon: [18, 14, 'custom'],
                 pool: 'kitten',
                 kitten: 112,
-                unlockCondition: function() {
-                    return Game.AchievementsOwned >= 1100;
-                }
+                threshold: 1100,
             }
         ],
         building: [
@@ -312,9 +286,7 @@ window.JNEData = {
                 ddesc: 'Grandmas cost <b>15%</b> less.<q>With better retirement benefits, your grandmas can afford to work for less. They\'re just happy to be baking cookies and staying active.</q>',
                 price: 5e45, // 5 quattuordecillion
                 icon: [1, 0, 'custom'], // Matches 750 threshold (index 0)
-                unlockCondition: function() {
-                    return Game.Objects['Grandma'] && Game.Objects['Grandma'].amount >= 750;
-                }
+                threshold: 750,
             },
             {
                 name: 'Advanced knitting techniques',
@@ -324,9 +296,7 @@ window.JNEData = {
                 icon: [1, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Grandma',
-                unlockCondition: function() {
-                    return Game.Objects['Grandma'] && Game.Objects['Grandma'].amount >= 800;
-                },
+                threshold: 800,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -339,9 +309,7 @@ window.JNEData = {
                 price: 5e49, // 50 quindecillion
                 icon: [1, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Grandma',
-                unlockCondition: function() {
-                    return Game.Objects['Grandma'] && Game.Objects['Grandma'].amount >= 850;
-                }
+                threshold: 850,
             },
             {
                 name: 'Bingo night optimization',
@@ -351,9 +319,7 @@ window.JNEData = {
                 icon: [1, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Grandma',
-                unlockCondition: function() {
-                    return Game.Objects['Grandma'] && Game.Objects['Grandma'].amount >= 900;
-                },
+                threshold: 900,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -366,9 +332,7 @@ window.JNEData = {
                 price: 5e53, // 500 sexdecillion
                 icon: [1, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Grandma',
-                unlockCondition: function() {
-                    return Game.Objects['Grandma'] && Game.Objects['Grandma'].amount >= 950;
-                }
+                threshold: 950,
             },
             {
                 name: 'Tea time efficiency',
@@ -378,9 +342,7 @@ window.JNEData = {
                 icon: [1, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Grandma',
-                unlockCondition: function() {
-                    return Game.Objects['Grandma'] && Game.Objects['Grandma'].amount >= 1000;
-                },
+                threshold: 1000,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -393,9 +355,7 @@ window.JNEData = {
                 price: 5e57, // 5 octodecillion
                 icon: [1, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Grandma',
-                unlockCondition: function() {
-                    return Game.Objects['Grandma'] && Game.Objects['Grandma'].amount >= 1050;
-                }
+                threshold: 1050,
             },
             {
                 name: 'Gossip-powered baking',
@@ -405,9 +365,7 @@ window.JNEData = {
                 icon: [1, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Grandma',
-                unlockCondition: function() {
-                    return Game.Objects['Grandma'] && Game.Objects['Grandma'].amount >= 1100;
-                },
+                threshold: 1100,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -420,9 +378,7 @@ window.JNEData = {
                 price: 5e61, // 50 novemdecillion
                 icon: [1, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Grandma',
-                unlockCondition: function() {
-                    return Game.Objects['Grandma'] && Game.Objects['Grandma'].amount >= 1150;
-                }
+                threshold: 1150,
             },
             {
                 name: 'Senior discount mastery',
@@ -432,9 +388,7 @@ window.JNEData = {
                 icon: [1, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Grandma',
-                unlockCondition: function() {
-                    return Game.Objects['Grandma'] && Game.Objects['Grandma'].amount >= 1200;
-                },
+                threshold: 1200,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -447,9 +401,7 @@ window.JNEData = {
                 price: 5e65, // 500 vigintillion
                 icon: [1, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Grandma',
-                unlockCondition: function() {
-                    return Game.Objects['Grandma'] && Game.Objects['Grandma'].amount >= 1250;
-                }
+                threshold: 1250,
             },
             {
                 name: 'Biodiesel fueled tractors',
@@ -459,9 +411,7 @@ window.JNEData = {
                 price: 5e46, // 50 quattuordecillion
                 icon: [2, 0, 'custom'], // Matches 750 threshold (index 0)
                 building: 'Farm',
-                unlockCondition: function() {
-                    return Game.Objects['Farm'] && Game.Objects['Farm'].amount >= 750;
-                }
+                threshold: 750,
             },
             {
                 name: 'Hydroponic cookie cultivation',
@@ -471,9 +421,7 @@ window.JNEData = {
                 icon: [2, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Farm',
-                unlockCondition: function() {
-                    return Game.Objects['Farm'] && Game.Objects['Farm'].amount >= 800;
-                },
+                threshold: 800,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -486,9 +434,7 @@ window.JNEData = {
                 price: 5e50, // 500 quindecillion
                 icon: [2, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Farm',
-                unlockCondition: function() {
-                    return Game.Objects['Farm'] && Game.Objects['Farm'].amount >= 850;
-                }
+                threshold: 850,
             },
             {
                 name: 'Vertical farming revolution',
@@ -498,9 +444,7 @@ window.JNEData = {
                 icon: [2, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Farm',
-                unlockCondition: function() {
-                    return Game.Objects['Farm'] && Game.Objects['Farm'].amount >= 900;
-                },
+                threshold: 900,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -513,9 +457,7 @@ window.JNEData = {
                 price: 5e54, // 5 septendecillion
                 icon: [2, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Farm',
-                unlockCondition: function() {
-                    return Game.Objects['Farm'] && Game.Objects['Farm'].amount >= 950;
-                }
+                threshold: 950,
             },
             {
                 name: 'Quantum crop rotation',
@@ -525,9 +467,7 @@ window.JNEData = {
                 icon: [2, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Farm',
-                unlockCondition: function() {
-                    return Game.Objects['Farm'] && Game.Objects['Farm'].amount >= 1000;
-                },
+                threshold: 1000,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -540,9 +480,7 @@ window.JNEData = {
                 price: 5e58, // 50 octodecillion
                 icon: [2, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Farm',
-                unlockCondition: function() {
-                    return Game.Objects['Farm'] && Game.Objects['Farm'].amount >= 1050;
-                }
+                threshold: 1050,
             },
             {
                 name: 'Sentient soil enhancement',
@@ -552,9 +490,7 @@ window.JNEData = {
                 icon: [2, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Farm',
-                unlockCondition: function() {
-                    return Game.Objects['Farm'] && Game.Objects['Farm'].amount >= 1100;
-                },
+                threshold: 1100,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -567,9 +503,7 @@ window.JNEData = {
                 price: 5e62, // 500 novemdecillion
                 icon: [2, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Farm',
-                unlockCondition: function() {
-                    return Game.Objects['Farm'] && Game.Objects['Farm'].amount >= 1150;
-                }
+                threshold: 1150,
             },
             {
                 name: 'Temporal harvest acceleration',
@@ -579,9 +513,7 @@ window.JNEData = {
                 icon: [2, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Farm',
-                unlockCondition: function() {
-                    return Game.Objects['Farm'] && Game.Objects['Farm'].amount >= 1200;
-                },
+                threshold: 1200,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -594,9 +526,7 @@ window.JNEData = {
                 price: 5e66, // 5 unvigintillion
                 icon: [2, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Farm',
-                unlockCondition: function() {
-                    return Game.Objects['Farm'] && Game.Objects['Farm'].amount >= 1250;
-                }
+                threshold: 1250,
             },
             {
                 name: 'Clearance shaft kits',
@@ -606,9 +536,7 @@ window.JNEData = {
                 price: 5e47, // 500 quattuordecillion
                 icon: [3, 0, 'custom'], // Matches 750 threshold (index 0)
                 building: 'Mine',
-                unlockCondition: function() {
-                    return Game.Objects['Mine'] && Game.Objects['Mine'].amount >= 750;
-                }
+                threshold: 750,
             },
             {
                 name: 'Quantum tunneling excavation',
@@ -618,9 +546,7 @@ window.JNEData = {
                 icon: [3, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Mine',
-                unlockCondition: function() {
-                    return Game.Objects['Mine'] && Game.Objects['Mine'].amount >= 800;
-                },
+                threshold: 800,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -633,9 +559,7 @@ window.JNEData = {
                 price: 5e51, // 5 sexdecillion
                 icon: [3, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Mine',
-                unlockCondition: function() {
-                    return Game.Objects['Mine'] && Game.Objects['Mine'].amount >= 850;
-                }
+                threshold: 850,
             },
             {
                 name: 'Neutron star compression',
@@ -645,9 +569,7 @@ window.JNEData = {
                 icon: [3, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Mine',
-                unlockCondition: function() {
-                    return Game.Objects['Mine'] && Game.Objects['Mine'].amount >= 900;
-                },
+                threshold: 900,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -660,9 +582,7 @@ window.JNEData = {
                 price: 5e55, // 50 septendecillion
                 icon: [3, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Mine',
-                unlockCondition: function() {
-                    return Game.Objects['Mine'] && Game.Objects['Mine'].amount >= 950;
-                }
+                threshold: 950,
             },
             {
                 name: 'Dimensional rift mining',
@@ -672,9 +592,7 @@ window.JNEData = {
                 icon: [3, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Mine',
-                unlockCondition: function() {
-                    return Game.Objects['Mine'] && Game.Objects['Mine'].amount >= 1000;
-                },
+                threshold: 1000,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -687,9 +605,7 @@ window.JNEData = {
                 price: 5e59, // 500 octodecillion
                 icon: [3, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Mine',
-                unlockCondition: function() {
-                    return Game.Objects['Mine'] && Game.Objects['Mine'].amount >= 1050;
-                }
+                threshold: 1050,
             },
             {
                 name: 'Singularity core extraction',
@@ -699,9 +615,7 @@ window.JNEData = {
                 icon: [3, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Mine',
-                unlockCondition: function() {
-                    return Game.Objects['Mine'] && Game.Objects['Mine'].amount >= 1100;
-                },
+                threshold: 1100,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -714,9 +628,7 @@ window.JNEData = {
                 price: 5e63, // 5 vigintillion
                 icon: [3, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Mine',
-                unlockCondition: function() {
-                    return Game.Objects['Mine'] && Game.Objects['Mine'].amount >= 1150;
-                }
+                threshold: 1150,
             },
             {
                 name: 'Temporal paradox drilling',
@@ -726,9 +638,7 @@ window.JNEData = {
                 icon: [3, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Mine',
-                unlockCondition: function() {
-                    return Game.Objects['Mine'] && Game.Objects['Mine'].amount >= 1200;
-                },
+                threshold: 1200,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -741,9 +651,7 @@ window.JNEData = {
                 price: 5e67, // 50 unvigintillion
                 icon: [3, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Mine',
-                unlockCondition: function() {
-                    return Game.Objects['Mine'] && Game.Objects['Mine'].amount >= 1250;
-                }
+                threshold: 1250,
             },
             {
                 name: 'Flat-pack factory frames',
@@ -753,9 +661,7 @@ window.JNEData = {
                 price: 5e48, // 5 quindecillion
                 icon: [4, 0, 'custom'], // Matches 750 threshold (index 0)
                 building: 'Factory',
-                unlockCondition: function() {
-                    return Game.Objects['Factory'] && Game.Objects['Factory'].amount >= 750;
-                }
+                threshold: 750,
             },
             {
                 name: 'Quantum assembly optimization',
@@ -765,9 +671,7 @@ window.JNEData = {
                 icon: [4, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Factory',
-                unlockCondition: function() {
-                    return Game.Objects['Factory'] && Game.Objects['Factory'].amount >= 800;
-                },
+                threshold: 800,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -780,9 +684,7 @@ window.JNEData = {
                 price: 5e52, // 50 sexdecillion
                 icon: [4, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Factory',
-                unlockCondition: function() {
-                    return Game.Objects['Factory'] && Game.Objects['Factory'].amount >= 850;
-                }
+                threshold: 850,
             },
             {
                 name: 'Temporal manufacturing loops',
@@ -792,9 +694,7 @@ window.JNEData = {
                 icon: [4, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Factory',
-                unlockCondition: function() {
-                    return Game.Objects['Factory'] && Game.Objects['Factory'].amount >= 900;
-                },
+                threshold: 900,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -807,9 +707,7 @@ window.JNEData = {
                 price: 5e56, // 500 septendecillion
                 icon: [4, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Factory',
-                unlockCondition: function() {
-                    return Game.Objects['Factory'] && Game.Objects['Factory'].amount >= 950;
-                }
+                threshold: 950,
             },
             {
                 name: 'Dimensional cookie synthesis',
@@ -819,9 +717,7 @@ window.JNEData = {
                 icon: [4, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Factory',
-                unlockCondition: function() {
-                    return Game.Objects['Factory'] && Game.Objects['Factory'].amount >= 1000;
-                },
+                threshold: 1000,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -834,9 +730,7 @@ window.JNEData = {
                 price: 5e60, // 5 novemdecillion
                 icon: [4, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Factory',
-                unlockCondition: function() {
-                    return Game.Objects['Factory'] && Game.Objects['Factory'].amount >= 1050;
-                }
+                threshold: 1050,
             },
             {
                 name: 'Singularity production cores',
@@ -846,9 +740,7 @@ window.JNEData = {
                 icon: [4, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Factory',
-                unlockCondition: function() {
-                    return Game.Objects['Factory'] && Game.Objects['Factory'].amount >= 1100;
-                },
+                threshold: 1100,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -861,9 +753,7 @@ window.JNEData = {
                 price: 5e64, // 50 vigintillion
                 icon: [4, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Factory',
-                unlockCondition: function() {
-                    return Game.Objects['Factory'] && Game.Objects['Factory'].amount >= 1150;
-                }
+                threshold: 1150,
             },
             {
                 name: 'Reality-warping assembly',
@@ -873,9 +763,7 @@ window.JNEData = {
                 icon: [4, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Factory',
-                unlockCondition: function() {
-                    return Game.Objects['Factory'] && Game.Objects['Factory'].amount >= 1200;
-                },
+                threshold: 1200,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -888,9 +776,7 @@ window.JNEData = {
                 price: 5e68, // 500 unvigintillion
                 icon: [4, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Factory',
-                unlockCondition: function() {
-                    return Game.Objects['Factory'] && Game.Objects['Factory'].amount >= 1250;
-                }
+                threshold: 1250,
             },
             {
                 name: 'Piggy buyback bonanza',
@@ -900,9 +786,7 @@ window.JNEData = {
                 price: 5e49, // 50 quindecillion
                 icon: [13, 0, 'custom'], // Matches 750 threshold (index 0)
                 building: 'Bank',
-                unlockCondition: function() {
-                    return Game.Objects['Bank'] && Game.Objects['Bank'].amount >= 750;
-                }
+                threshold: 750,
             },
             {
                 name: 'Quantum banking protocols',
@@ -912,9 +796,7 @@ window.JNEData = {
                 icon: [13, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Bank',
-                unlockCondition: function() {
-                    return Game.Objects['Bank'] && Game.Objects['Bank'].amount >= 800;
-                },
+                threshold: 800,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -927,9 +809,7 @@ window.JNEData = {
                 price: 5e53, // 500 sexdecillion
                 icon: [13, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Bank',
-                unlockCondition: function() {
-                    return Game.Objects['Bank'] && Game.Objects['Bank'].amount >= 850;
-                }
+                threshold: 850,
             },
             {
                 name: 'Temporal interest compounding',
@@ -939,9 +819,7 @@ window.JNEData = {
                 icon: [13, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Bank',
-                unlockCondition: function() {
-                    return Game.Objects['Bank'] && Game.Objects['Bank'].amount >= 900;
-                },
+                threshold: 900,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -954,9 +832,7 @@ window.JNEData = {
                 price: 5e57, // 5 octodecillion
                 icon: [13, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Bank',
-                unlockCondition: function() {
-                    return Game.Objects['Bank'] && Game.Objects['Bank'].amount >= 950;
-                }
+                threshold: 950,
             },
             {
                 name: 'Dimensional currency exchange',
@@ -966,9 +842,7 @@ window.JNEData = {
                 icon: [13, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Bank',
-                unlockCondition: function() {
-                    return Game.Objects['Bank'] && Game.Objects['Bank'].amount >= 1000;
-                },
+                threshold: 1000,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -981,9 +855,7 @@ window.JNEData = {
                 price: 5e61, // 50 novemdecillion
                 icon: [13, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Bank',
-                unlockCondition: function() {
-                    return Game.Objects['Bank'] && Game.Objects['Bank'].amount >= 1050;
-                }
+                threshold: 1050,
             },
             {
                 name: 'Singularity financial algorithms',
@@ -993,9 +865,7 @@ window.JNEData = {
                 icon: [13, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Bank',
-                unlockCondition: function() {
-                    return Game.Objects['Bank'] && Game.Objects['Bank'].amount >= 1100;
-                },
+                threshold: 1100,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1008,9 +878,7 @@ window.JNEData = {
                 price: 5e65, // 500 vigintillion
                 icon: [13, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Bank',
-                unlockCondition: function() {
-                    return Game.Objects['Bank'] && Game.Objects['Bank'].amount >= 1150;
-                }
+                threshold: 1150,
             },
             {
                 name: 'Reality-warping economics',
@@ -1020,9 +888,7 @@ window.JNEData = {
                 icon: [13, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Bank',
-                unlockCondition: function() {
-                    return Game.Objects['Bank'] && Game.Objects['Bank'].amount >= 1200;
-                },
+                threshold: 1200,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1035,9 +901,7 @@ window.JNEData = {
                 price: 5e69, // 5 duovigintillion
                 icon: [13, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Bank',
-                unlockCondition: function() {
-                    return Game.Objects['Bank'] && Game.Objects['Bank'].amount >= 1250;
-                }
+                threshold: 1250,
             },
             {
                 name: 'Tithe punch cards',
@@ -1047,9 +911,7 @@ window.JNEData = {
                 price: 5e50, // 500 quindecillion
                 icon: [14, 0, 'custom'], // Matches 750 threshold (index 0)
                 building: 'Temple',
-                unlockCondition: function() {
-                    return Game.Objects['Temple'] && Game.Objects['Temple'].amount >= 750;
-                }
+                threshold: 750,
             },
             {
                 name: 'Quantum divine intervention',
@@ -1059,9 +921,7 @@ window.JNEData = {
                 icon: [14, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Temple',
-                unlockCondition: function() {
-                    return Game.Objects['Temple'] && Game.Objects['Temple'].amount >= 800;
-                },
+                threshold: 800,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1074,9 +934,7 @@ window.JNEData = {
                 price: 5e54, // 5 septendecillion
                 icon: [14, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Temple',
-                unlockCondition: function() {
-                    return Game.Objects['Temple'] && Game.Objects['Temple'].amount >= 850;
-                }
+                threshold: 850,
             },
             {
                 name: 'Temporal prayer loops',
@@ -1086,9 +944,7 @@ window.JNEData = {
                 icon: [14, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Temple',
-                unlockCondition: function() {
-                    return Game.Objects['Temple'] && Game.Objects['Temple'].amount >= 900;
-                },
+                threshold: 900,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1101,9 +957,7 @@ window.JNEData = {
                 price: 5e58, // 50 octodecillion
                 icon: [14, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Temple',
-                unlockCondition: function() {
-                    return Game.Objects['Temple'] && Game.Objects['Temple'].amount >= 950;
-                }
+                threshold: 950,
             },
             {
                 name: 'Dimensional deity summoning',
@@ -1113,9 +967,7 @@ window.JNEData = {
                 icon: [14, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Temple',
-                unlockCondition: function() {
-                    return Game.Objects['Temple'] && Game.Objects['Temple'].amount >= 1000;
-                },
+                threshold: 1000,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1128,9 +980,7 @@ window.JNEData = {
                 price: 5e62, // 500 novemdecillion
                 icon: [14, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Temple',
-                unlockCondition: function() {
-                    return Game.Objects['Temple'] && Game.Objects['Temple'].amount >= 1050;
-                }
+                threshold: 1050,
             },
             {
                 name: 'Singularity divine consciousness',
@@ -1140,9 +990,7 @@ window.JNEData = {
                 icon: [14, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Temple',
-                unlockCondition: function() {
-                    return Game.Objects['Temple'] && Game.Objects['Temple'].amount >= 1100;
-                },
+                threshold: 1100,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1155,9 +1003,7 @@ window.JNEData = {
                 price: 5e66, // 5 unvigintillion
                 icon: [14, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Temple',
-                unlockCondition: function() {
-                    return Game.Objects['Temple'] && Game.Objects['Temple'].amount >= 1150;
-                }
+                threshold: 1150,
             },
             {
                 name: 'Reality-warping divinity',
@@ -1167,9 +1013,7 @@ window.JNEData = {
                 icon: [14, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Temple',
-                unlockCondition: function() {
-                    return Game.Objects['Temple'] && Game.Objects['Temple'].amount >= 1200;
-                },
+                threshold: 1200,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1182,9 +1026,7 @@ window.JNEData = {
                 price: 5e70, // 50 duovigintillion
                 icon: [14, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Temple',
-                unlockCondition: function() {
-                    return Game.Objects['Temple'] && Game.Objects['Temple'].amount >= 1250;
-                }
+                threshold: 1250,
             },
             {
                 name: 'Wand warranty returns',
@@ -1194,9 +1036,7 @@ window.JNEData = {
                 price: 5e51, // 5 sexdecillion
                 icon: [15, 0, 'custom'], // Matches 750 threshold (index 0)
                 building: 'Wizard tower',
-                unlockCondition: function() {
-                    return Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].amount >= 750;
-                }
+                threshold: 750,
             },
             {
                 name: 'Arcane resonance',
@@ -1206,9 +1046,7 @@ window.JNEData = {
                 icon: [15, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Wizard tower',
-                unlockCondition: function() {
-                    return Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].amount >= 800;
-                },
+                threshold: 800,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1221,9 +1059,7 @@ window.JNEData = {
                 price: 5e55, // 50 septendecillion
                 icon: [15, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Wizard tower',
-                unlockCondition: function() {
-                    return Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].amount >= 850;
-                }
+                threshold: 850,
             },
             {
                 name: 'Spell weaving',
@@ -1233,9 +1069,7 @@ window.JNEData = {
                 icon: [15, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Wizard tower',
-                unlockCondition: function() {
-                    return Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].amount >= 900;
-                },
+                threshold: 900,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1248,9 +1082,7 @@ window.JNEData = {
                 price: 5e59, // 500 octodecillion
                 icon: [15, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Wizard tower',
-                unlockCondition: function() {
-                    return Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].amount >= 950;
-                }
+                threshold: 950,
             },
             {
                 name: 'Mystical attunement',
@@ -1260,9 +1092,7 @@ window.JNEData = {
                 icon: [15, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Wizard tower',
-                unlockCondition: function() {
-                    return Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].amount >= 1000;
-                },
+                threshold: 1000,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1275,9 +1105,7 @@ window.JNEData = {
                 price: 5e63, // 5 vigintillion
                 icon: [15, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Wizard tower',
-                unlockCondition: function() {
-                    return Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].amount >= 1050;
-                }
+                threshold: 1050,
             },
             {
                 name: 'Ethereal manifestation',
@@ -1287,9 +1115,7 @@ window.JNEData = {
                 icon: [15, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Wizard tower',
-                unlockCondition: function() {
-                    return Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].amount >= 1100;
-                },
+                threshold: 1100,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1302,9 +1128,7 @@ window.JNEData = {
                 price: 5e67, // 50 unvigintillion
                 icon: [15, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Wizard tower',
-                unlockCondition: function() {
-                    return Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].amount >= 1150;
-                }
+                threshold: 1150,
             },
             {
                 name: 'Transcendent thaumaturgy',
@@ -1314,9 +1138,7 @@ window.JNEData = {
                 icon: [15, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Wizard tower',
-                unlockCondition: function() {
-                    return Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].amount >= 1200;
-                },
+                threshold: 1200,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1329,9 +1151,7 @@ window.JNEData = {
                 price: 5e71, // 500 duovigintillion
                 icon: [15, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Wizard tower',
-                unlockCondition: function() {
-                    return Game.Objects['Wizard tower'] && Game.Objects['Wizard tower'].amount >= 1250;
-                }
+                threshold: 1250,
             },
             {
                 name: 'Retired cargo pods',
@@ -1341,9 +1161,7 @@ window.JNEData = {
                 price: 5e52, // 50 sexdecillion
                 icon: [5, 0, 'custom'], // Matches 750 threshold (index 0)
                 building: 'Shipment',
-                unlockCondition: function() {
-                    return Game.Objects['Shipment'] && Game.Objects['Shipment'].amount >= 750;
-                }
+                threshold: 750,
             },
             {
                 name: 'Hypervelocity transport',
@@ -1353,9 +1171,7 @@ window.JNEData = {
                 icon: [5, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Shipment',
-                unlockCondition: function() {
-                    return Game.Objects['Shipment'] && Game.Objects['Shipment'].amount >= 800;
-                },
+                threshold: 800,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1368,9 +1184,7 @@ window.JNEData = {
                 price: 5e56, // 500 septendecillion
                 icon: [5, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Shipment',
-                unlockCondition: function() {
-                    return Game.Objects['Shipment'] && Game.Objects['Shipment'].amount >= 850;
-                }
+                threshold: 850,
             },
             {
                 name: 'Spatial compression',
@@ -1380,9 +1194,7 @@ window.JNEData = {
                 icon: [5, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Shipment',
-                unlockCondition: function() {
-                    return Game.Objects['Shipment'] && Game.Objects['Shipment'].amount >= 900;
-                },
+                threshold: 900,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1395,9 +1207,7 @@ window.JNEData = {
                 price: 5e60, // 5 novemdecillion
                 icon: [5, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Shipment',
-                unlockCondition: function() {
-                    return Game.Objects['Shipment'] && Game.Objects['Shipment'].amount >= 950;
-                }
+                threshold: 950,
             },
             {
                 name: 'Dimensional routing',
@@ -1407,9 +1217,7 @@ window.JNEData = {
                 icon: [5, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Shipment',
-                unlockCondition: function() {
-                    return Game.Objects['Shipment'] && Game.Objects['Shipment'].amount >= 1000;
-                },
+                threshold: 1000,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1422,9 +1230,7 @@ window.JNEData = {
                 price: 5e64, // 50 vigintillion
                 icon: [5, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Shipment',
-                unlockCondition: function() {
-                    return Game.Objects['Shipment'] && Game.Objects['Shipment'].amount >= 1050;
-                }
+                threshold: 1050,
             },
             {
                 name: 'Quantum teleportation',
@@ -1434,9 +1240,7 @@ window.JNEData = {
                 icon: [5, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Shipment',
-                unlockCondition: function() {
-                    return Game.Objects['Shipment'] && Game.Objects['Shipment'].amount >= 1100;
-                },
+                threshold: 1100,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1449,9 +1253,7 @@ window.JNEData = {
                 price: 5e68, // 500 unvigintillion
                 icon: [5, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Shipment',
-                unlockCondition: function() {
-                    return Game.Objects['Shipment'] && Game.Objects['Shipment'].amount >= 1150;
-                }
+                threshold: 1150,
             },
             {
                 name: 'Causality manipulation',
@@ -1461,9 +1263,7 @@ window.JNEData = {
                 icon: [5, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Shipment',
-                unlockCondition: function() {
-                    return Game.Objects['Shipment'] && Game.Objects['Shipment'].amount >= 1200;
-                },
+                threshold: 1200,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1476,9 +1276,7 @@ window.JNEData = {
                 price: 5e72, // 5 trevigintillion
                 icon: [5, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Shipment',
-                unlockCondition: function() {
-                    return Game.Objects['Shipment'] && Game.Objects['Shipment'].amount >= 1250;
-                }
+                threshold: 1250,
             },
             {
                 name: 'Beaker buybacks',
@@ -1488,9 +1286,7 @@ window.JNEData = {
                 price: 5e53, // 500 sexdecillion
                 icon: [6, 0, 'custom'], // Matches 750 threshold (index 0)
                 building: 'Alchemy lab',
-                unlockCondition: function() {
-                    return Game.Objects['Alchemy lab'] && Game.Objects['Alchemy lab'].amount >= 750;
-                }
+                threshold: 750,
             },
             {
                 name: 'Essence distillation',
@@ -1500,9 +1296,7 @@ window.JNEData = {
                 icon: [6, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Alchemy lab',
-                unlockCondition: function() {
-                    return Game.Objects['Alchemy lab'] && Game.Objects['Alchemy lab'].amount >= 800;
-                },
+                threshold: 800,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1515,9 +1309,7 @@ window.JNEData = {
                 price: 5e57, // 5 octodecillion
                 icon: [6, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Alchemy lab',
-                unlockCondition: function() {
-                    return Game.Objects['Alchemy lab'] && Game.Objects['Alchemy lab'].amount >= 850;
-                }
+                threshold: 850,
             },
             {
                 name: 'Molecular gastronomy',
@@ -1527,9 +1319,7 @@ window.JNEData = {
                 icon: [6, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Alchemy lab',
-                unlockCondition: function() {
-                    return Game.Objects['Alchemy lab'] && Game.Objects['Alchemy lab'].amount >= 900;
-                },
+                threshold: 900,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1542,9 +1332,7 @@ window.JNEData = {
                 price: 5e61, // 50 novemdecillion
                 icon: [6, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Alchemy lab',
-                unlockCondition: function() {
-                    return Game.Objects['Alchemy lab'] && Game.Objects['Alchemy lab'].amount >= 950;
-                }
+                threshold: 950,
             },
             {
                 name: 'Flavor alchemy',
@@ -1554,9 +1342,7 @@ window.JNEData = {
                 icon: [6, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Alchemy lab',
-                unlockCondition: function() {
-                    return Game.Objects['Alchemy lab'] && Game.Objects['Alchemy lab'].amount >= 1000;
-                },
+                threshold: 1000,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1569,9 +1355,7 @@ window.JNEData = {
                 price: 5e65, // 500 vigintillion
                 icon: [6, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Alchemy lab',
-                unlockCondition: function() {
-                    return Game.Objects['Alchemy lab'] && Game.Objects['Alchemy lab'].amount >= 1050;
-                }
+                threshold: 1050,
             },
             {
                 name: 'Culinary transmutation',
@@ -1581,9 +1365,7 @@ window.JNEData = {
                 icon: [6, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Alchemy lab',
-                unlockCondition: function() {
-                    return Game.Objects['Alchemy lab'] && Game.Objects['Alchemy lab'].amount >= 1100;
-                },
+                threshold: 1100,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1596,9 +1378,7 @@ window.JNEData = {
                 price: 5e69, // 5 duovigintillion
                 icon: [6, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Alchemy lab',
-                unlockCondition: function() {
-                    return Game.Objects['Alchemy lab'] && Game.Objects['Alchemy lab'].amount >= 1150;
-                }
+                threshold: 1150,
             },
             {
                 name: 'Gastronomic enlightenment',
@@ -1608,9 +1388,7 @@ window.JNEData = {
                 icon: [6, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Alchemy lab',
-                unlockCondition: function() {
-                    return Game.Objects['Alchemy lab'] && Game.Objects['Alchemy lab'].amount >= 1200;
-                },
+                threshold: 1200,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1623,9 +1401,7 @@ window.JNEData = {
                 price: 5e73, // 50 trevigintillion
                 icon: [6, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Alchemy lab',
-                unlockCondition: function() {
-                    return Game.Objects['Alchemy lab'] && Game.Objects['Alchemy lab'].amount >= 1250;
-                }
+                threshold: 1250,
             },
             {
                 name: 'Pre-owned ring frames',
@@ -1635,9 +1411,7 @@ window.JNEData = {
                 price: 5e54, // 5 septendecillion
                 icon: [7, 0, 'custom'], // Matches 750 threshold (index 0)
                 building: 'Portal',
-                unlockCondition: function() {
-                    return Game.Objects['Portal'] && Game.Objects['Portal'].amount >= 750;
-                }
+                threshold: 750,
             },
             {
                 name: 'Dimensional gateways',
@@ -1647,9 +1421,7 @@ window.JNEData = {
                 icon: [7, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Portal',
-                unlockCondition: function() {
-                    return Game.Objects['Portal'] && Game.Objects['Portal'].amount >= 800;
-                },
+                threshold: 800,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1662,9 +1434,7 @@ window.JNEData = {
                 price: 5e58, // 50 octodecillion
                 icon: [7, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Portal',
-                unlockCondition: function() {
-                    return Game.Objects['Portal'] && Game.Objects['Portal'].amount >= 850;
-                }
+                threshold: 850,
             },
             {
                 name: 'Reality bridges',
@@ -1674,9 +1444,7 @@ window.JNEData = {
                 icon: [7, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Portal',
-                unlockCondition: function() {
-                    return Game.Objects['Portal'] && Game.Objects['Portal'].amount >= 900;
-                },
+                threshold: 900,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1689,9 +1457,7 @@ window.JNEData = {
                 price: 5e62, // 500 novemdecillion
                 icon: [7, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Portal',
-                unlockCondition: function() {
-                    return Game.Objects['Portal'] && Game.Objects['Portal'].amount >= 950;
-                }
+                threshold: 950,
             },
             {
                 name: 'Spatial conduits',
@@ -1701,9 +1467,7 @@ window.JNEData = {
                 icon: [7, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Portal',
-                unlockCondition: function() {
-                    return Game.Objects['Portal'] && Game.Objects['Portal'].amount >= 1000;
-                },
+                threshold: 1000,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1716,9 +1480,7 @@ window.JNEData = {
                 price: 5e66, // 5 unvigintillion
                 icon: [7, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Portal',
-                unlockCondition: function() {
-                    return Game.Objects['Portal'] && Game.Objects['Portal'].amount >= 1050;
-                }
+                threshold: 1050,
             },
             {
                 name: 'Interdimensional highways',
@@ -1728,9 +1490,7 @@ window.JNEData = {
                 icon: [7, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Portal',
-                unlockCondition: function() {
-                    return Game.Objects['Portal'] && Game.Objects['Portal'].amount >= 1100;
-                },
+                threshold: 1100,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1743,9 +1503,7 @@ window.JNEData = {
                 price: 5e70, // 50 duovigintillion
                 icon: [7, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Portal',
-                unlockCondition: function() {
-                    return Game.Objects['Portal'] && Game.Objects['Portal'].amount >= 1150;
-                }
+                threshold: 1150,
             },
             {
                 name: 'Cosmic gateways',
@@ -1755,9 +1513,7 @@ window.JNEData = {
                 icon: [7, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Portal',
-                unlockCondition: function() {
-                    return Game.Objects['Portal'] && Game.Objects['Portal'].amount >= 1200;
-                },
+                threshold: 1200,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1770,9 +1526,7 @@ window.JNEData = {
                 price: 5e74, // 500 trevigintillion
                 icon: [7, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Portal',
-                unlockCondition: function() {
-                    return Game.Objects['Portal'] && Game.Objects['Portal'].amount >= 1250;
-                }
+                threshold: 1250,
             },
             {
                 name: 'Pre-loved hourglasses',
@@ -1782,9 +1536,7 @@ window.JNEData = {
                 price: 5e55, // 50 septendecillion
                 icon: [8, 0, 'custom'], // Matches 750 threshold (index 0)
                 building: 'Time machine',
-                unlockCondition: function() {
-                    return Game.Objects['Time machine'] && Game.Objects['Time machine'].amount >= 750;
-                }
+                threshold: 750,
             },
             {
                 name: 'Temporal engineering',
@@ -1794,9 +1546,7 @@ window.JNEData = {
                 icon: [8, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Time machine',
-                unlockCondition: function() {
-                    return Game.Objects['Time machine'] && Game.Objects['Time machine'].amount >= 800;
-                },
+                threshold: 800,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1809,9 +1559,7 @@ window.JNEData = {
                 price: 5e59, // 500 octodecillion
                 icon: [8, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Time machine',
-                unlockCondition: function() {
-                    return Game.Objects['Time machine'] && Game.Objects['Time machine'].amount >= 850;
-                }
+                threshold: 850,
             },
             {
                 name: 'Chronological optimization',
@@ -1821,9 +1569,7 @@ window.JNEData = {
                 icon: [8, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Time machine',
-                unlockCondition: function() {
-                    return Game.Objects['Time machine'] && Game.Objects['Time machine'].amount >= 900;
-                },
+                threshold: 900,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1836,9 +1582,7 @@ window.JNEData = {
                 price: 5e63, // 5 vigintillion
                 icon: [8, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Time machine',
-                unlockCondition: function() {
-                    return Game.Objects['Time machine'] && Game.Objects['Time machine'].amount >= 950;
-                }
+                threshold: 950,
             },
             {
                 name: 'Historical preservation',
@@ -1848,9 +1592,7 @@ window.JNEData = {
                 icon: [8, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Time machine',
-                unlockCondition: function() {
-                    return Game.Objects['Time machine'] && Game.Objects['Time machine'].amount >= 1000;
-                },
+                threshold: 1000,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1863,9 +1605,7 @@ window.JNEData = {
                 price: 5e67, // 50 unvigintillion
                 icon: [8, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Time machine',
-                unlockCondition: function() {
-                    return Game.Objects['Time machine'] && Game.Objects['Time machine'].amount >= 1050;
-                }
+                threshold: 1050,
             },
             {
                 name: 'Temporal synchronization',
@@ -1875,9 +1615,7 @@ window.JNEData = {
                 icon: [8, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Time machine',
-                unlockCondition: function() {
-                    return Game.Objects['Time machine'] && Game.Objects['Time machine'].amount >= 1100;
-                },
+                threshold: 1100,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1890,9 +1628,7 @@ window.JNEData = {
                 price: 5e71, // 500 duovigintillion
                 icon: [8, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Time machine',
-                unlockCondition: function() {
-                    return Game.Objects['Time machine'] && Game.Objects['Time machine'].amount >= 1150;
-                }
+                threshold: 1150,
             },
             {
                 name: 'Chronological mastery',
@@ -1902,9 +1638,7 @@ window.JNEData = {
                 icon: [8, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Time machine',
-                unlockCondition: function() {
-                    return Game.Objects['Time machine'] && Game.Objects['Time machine'].amount >= 1200;
-                },
+                threshold: 1200,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1917,9 +1651,7 @@ window.JNEData = {
                 price: 5e75, // 5 quattuorvigintillion
                 icon: [8, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Time machine',
-                unlockCondition: function() {
-                    return Game.Objects['Time machine'] && Game.Objects['Time machine'].amount >= 1250;
-                }
+                threshold: 1250,
             },
             {
                 name: 'Certified negamatter cans',
@@ -1929,9 +1661,7 @@ window.JNEData = {
                 price: 5e56, // 500 septendecillion
                 icon: [11, 0, 'custom'], // Matches 750 threshold (index 0)
                 building: 'Antimatter condenser',
-                unlockCondition: function() {
-                    return Game.Objects['Antimatter condenser'] && Game.Objects['Antimatter condenser'].amount >= 750;
-                }
+                threshold: 750,
             },
             {
                 name: 'Particle synthesis',
@@ -1941,9 +1671,7 @@ window.JNEData = {
                 icon: [11, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Antimatter condenser',
-                unlockCondition: function() {
-                    return Game.Objects['Antimatter condenser'] && Game.Objects['Antimatter condenser'].amount >= 800;
-                },
+                threshold: 800,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1956,9 +1684,7 @@ window.JNEData = {
                 price: 5e60, // 5 novemdecillion
                 icon: [11, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Antimatter condenser',
-                unlockCondition: function() {
-                    return Game.Objects['Antimatter condenser'] && Game.Objects['Antimatter condenser'].amount >= 850;
-                }
+                threshold: 850,
             },
             {
                 name: 'Matter transmutation',
@@ -1968,9 +1694,7 @@ window.JNEData = {
                 icon: [11, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Antimatter condenser',
-                unlockCondition: function() {
-                    return Game.Objects['Antimatter condenser'] && Game.Objects['Antimatter condenser'].amount >= 900;
-                },
+                threshold: 900,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -1983,9 +1707,7 @@ window.JNEData = {
                 price: 5e64, // 50 vigintillion
                 icon: [11, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Antimatter condenser',
-                unlockCondition: function() {
-                    return Game.Objects['Antimatter condenser'] && Game.Objects['Antimatter condenser'].amount >= 950;
-                }
+                threshold: 950,
             },
             {
                 name: 'Quantum baking',
@@ -1995,9 +1717,7 @@ window.JNEData = {
                 icon: [11, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Antimatter condenser',
-                unlockCondition: function() {
-                    return Game.Objects['Antimatter condenser'] && Game.Objects['Antimatter condenser'].amount >= 1000;
-                },
+                threshold: 1000,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2010,9 +1730,7 @@ window.JNEData = {
                 price: 5e68, // 500 unvigintillion
                 icon: [11, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Antimatter condenser',
-                unlockCondition: function() {
-                    return Game.Objects['Antimatter condenser'] && Game.Objects['Antimatter condenser'].amount >= 1050;
-                }
+                threshold: 1050,
             },
             {
                 name: 'Particle optimization',
@@ -2022,9 +1740,7 @@ window.JNEData = {
                 icon: [11, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Antimatter condenser',
-                unlockCondition: function() {
-                    return Game.Objects['Antimatter condenser'] && Game.Objects['Antimatter condenser'].amount >= 1100;
-                },
+                threshold: 1100,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2037,9 +1753,7 @@ window.JNEData = {
                 price: 5e72, // 5 trevigintillion
                 icon: [11, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Antimatter condenser',
-                unlockCondition: function() {
-                    return Game.Objects['Antimatter condenser'] && Game.Objects['Antimatter condenser'].amount >= 1150;
-                }
+                threshold: 1150,
             },
             {
                 name: 'Matter manipulation',
@@ -2049,9 +1763,7 @@ window.JNEData = {
                 icon: [11, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Antimatter condenser',
-                unlockCondition: function() {
-                    return Game.Objects['Antimatter condenser'] && Game.Objects['Antimatter condenser'].amount >= 1200;
-                },
+                threshold: 1200,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2064,9 +1776,7 @@ window.JNEData = {
                 price: 5e76, // 50 quattuorvigintillion
                 icon: [11, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Antimatter condenser',
-                unlockCondition: function() {
-                    return Game.Objects['Antimatter condenser'] && Game.Objects['Antimatter condenser'].amount >= 1250;
-                }
+                threshold: 1250,
             },
             {
                 name: 'Lens co-op exchange',
@@ -2076,9 +1786,7 @@ window.JNEData = {
                 price: 5e58, // 50 octodecillion
                 icon: [12, 0, 'custom'], // Matches 750 threshold (index 0)
                 building: 'Prism',
-                unlockCondition: function() {
-                    return Game.Objects['Prism'] && Game.Objects['Prism'].amount >= 750;
-                }
+                threshold: 750,
             },
             {
                 name: 'Light crystallization',
@@ -2088,9 +1796,7 @@ window.JNEData = {
                 icon: [12, 1, 'custom'], // Matches 800 threshold (index 1)
                 pool: '',
                 building: 'Prism',
-                unlockCondition: function() {
-                    return Game.Objects['Prism'] && Game.Objects['Prism'].amount >= 800;
-                },
+                threshold: 800,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2103,9 +1809,7 @@ window.JNEData = {
                 price: 5e62, // 500 novemdecillion
                 icon: [12, 2, 'custom'], // Matches 850 threshold (index 2)
                 building: 'Prism',
-                unlockCondition: function() {
-                    return Game.Objects['Prism'] && Game.Objects['Prism'].amount >= 850;
-                }
+                threshold: 850,
             },
             {
                 name: 'Spectral baking',
@@ -2115,9 +1819,7 @@ window.JNEData = {
                 icon: [12, 3, 'custom'], // Matches 900 threshold (index 3)
                 pool: '',
                 building: 'Prism',
-                unlockCondition: function() {
-                    return Game.Objects['Prism'] && Game.Objects['Prism'].amount >= 900;
-                },
+                threshold: 900,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2130,9 +1832,7 @@ window.JNEData = {
                 price: 5e66, // 5 unvigintillion
                 icon: [12, 4, 'custom'], // Matches 950 threshold (index 4)
                 building: 'Prism',
-                unlockCondition: function() {
-                    return Game.Objects['Prism'] && Game.Objects['Prism'].amount >= 950;
-                }
+                threshold: 950,
             },
             {
                 name: 'Optical alchemy',
@@ -2142,9 +1842,7 @@ window.JNEData = {
                 icon: [12, 5, 'custom'], // Matches 1000 threshold (index 5)
                 pool: '',
                 building: 'Prism',
-                unlockCondition: function() {
-                    return Game.Objects['Prism'] && Game.Objects['Prism'].amount >= 1000;
-                },
+                threshold: 1000,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2157,9 +1855,7 @@ window.JNEData = {
                 price: 5e70, // 50 duovigintillion
                 icon: [12, 6, 'custom'], // Matches 1050 threshold (index 6)
                 building: 'Prism',
-                unlockCondition: function() {
-                    return Game.Objects['Prism'] && Game.Objects['Prism'].amount >= 1050;
-                }
+                threshold: 1050,
             },
             {
                 name: 'Luminous confectionery',
@@ -2169,9 +1865,7 @@ window.JNEData = {
                 icon: [12, 7, 'custom'], // Matches 1100 threshold (index 7)
                 pool: '',
                 building: 'Prism',
-                unlockCondition: function() {
-                    return Game.Objects['Prism'] && Game.Objects['Prism'].amount >= 1100;
-                },
+                threshold: 1100,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2184,9 +1878,7 @@ window.JNEData = {
                 price: 5e74, // 500 trevigintillion
                 icon: [12, 8, 'custom'], // Matches 1150 threshold (index 8)
                 building: 'Prism',
-                unlockCondition: function() {
-                    return Game.Objects['Prism'] && Game.Objects['Prism'].amount >= 1150;
-                }
+                threshold: 1150,
             },
             {
                 name: 'Radiant gastronomy',
@@ -2196,9 +1888,7 @@ window.JNEData = {
                 icon: [12, 9, 'custom'], // Matches 1200 threshold (index 9)
                 pool: '',
                 building: 'Prism',
-                unlockCondition: function() {
-                    return Game.Objects['Prism'] && Game.Objects['Prism'].amount >= 1200;
-                },
+                threshold: 1200,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2211,9 +1901,7 @@ window.JNEData = {
                 price: 5e78, // 5 quinvigintillion
                 icon: [12, 10, 'custom'], // Matches 1250 threshold (index 10)
                 building: 'Prism',
-                unlockCondition: function() {
-                    return Game.Objects['Prism'] && Game.Objects['Prism'].amount >= 1250;
-                }
+                threshold: 1250,
             },
             {
                 name: 'Misprinted fortunes',
@@ -2223,9 +1911,7 @@ window.JNEData = {
                 price: 5e60, // 5 novemdecillion
                 icon: [17, 0, 'custom'], // Matches 750 threshold
                 building: 'Chancemaker',
-                unlockCondition: function() {
-                    return Game.Objects['Chancemaker'] && Game.Objects['Chancemaker'].amount >= 750;
-                }
+                threshold: 750,
             },
             {
                 name: 'Probability manipulation',
@@ -2235,9 +1921,7 @@ window.JNEData = {
                 icon: [17, 1, 'custom'], // Matches 800 threshold
                 pool: '',
                 building: 'Chancemaker',
-                unlockCondition: function() {
-                    return Game.Objects['Chancemaker'] && Game.Objects['Chancemaker'].amount >= 800;
-                },
+                threshold: 800,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2250,9 +1934,7 @@ window.JNEData = {
                 price: 5e64, // 50 vigintillion
                 icon: [17, 2, 'custom'], // Matches 850 threshold
                 building: 'Chancemaker',
-                unlockCondition: function() {
-                    return Game.Objects['Chancemaker'] && Game.Objects['Chancemaker'].amount >= 850;
-                }
+                threshold: 850,
             },
             {
                 name: 'Fortune optimization',
@@ -2262,9 +1944,7 @@ window.JNEData = {
                 icon: [17, 3, 'custom'], // Matches 900 threshold
                 pool: '',
                 building: 'Chancemaker',
-                unlockCondition: function() {
-                    return Game.Objects['Chancemaker'] && Game.Objects['Chancemaker'].amount >= 900;
-                },
+                threshold: 900,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2277,9 +1957,7 @@ window.JNEData = {
                 price: 5e68, // 500 unvigintillion
                 icon: [17, 4, 'custom'], // Matches 950 threshold
                 building: 'Chancemaker',
-                unlockCondition: function() {
-                    return Game.Objects['Chancemaker'] && Game.Objects['Chancemaker'].amount >= 950;
-                }
+                threshold: 950,
             },
             {
                 name: 'Serendipity engineering',
@@ -2289,9 +1967,7 @@ window.JNEData = {
                 icon: [17, 5, 'custom'], // Matches 1000 threshold
                 pool: '',
                 building: 'Chancemaker',
-                unlockCondition: function() {
-                    return Game.Objects['Chancemaker'] && Game.Objects['Chancemaker'].amount >= 1000;
-                },
+                threshold: 1000,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2304,9 +1980,7 @@ window.JNEData = {
                 price: 5e72, // 5 trevigintillion
                 icon: [17, 6, 'custom'], // Matches 1050 threshold
                 building: 'Chancemaker',
-                unlockCondition: function() {
-                    return Game.Objects['Chancemaker'] && Game.Objects['Chancemaker'].amount >= 1050;
-                }
+                threshold: 1050,
             },
             {
                 name: 'Random enhancement',
@@ -2316,9 +1990,7 @@ window.JNEData = {
                 icon: [17, 7, 'custom'], // Matches 1100 threshold
                 pool: '',
                 building: 'Chancemaker',
-                unlockCondition: function() {
-                    return Game.Objects['Chancemaker'] && Game.Objects['Chancemaker'].amount >= 1100;
-                },
+                threshold: 1100,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2331,9 +2003,7 @@ window.JNEData = {
                 price: 5e76, // 50 quattuorvigintillion
                 icon: [17, 8, 'custom'], // Matches 1150 threshold
                 building: 'Chancemaker',
-                unlockCondition: function() {
-                    return Game.Objects['Chancemaker'] && Game.Objects['Chancemaker'].amount >= 1150;
-                }
+                threshold: 1150,
             },
             {
                 name: 'Luck amplification',
@@ -2343,9 +2013,7 @@ window.JNEData = {
                 icon: [17, 9, 'custom'], // Matches 1200 threshold
                 pool: '',
                 building: 'Chancemaker',
-                unlockCondition: function() {
-                    return Game.Objects['Chancemaker'] && Game.Objects['Chancemaker'].amount >= 1200;
-                },
+                threshold: 1200,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2358,9 +2026,7 @@ window.JNEData = {
                 price: 5e80, // 500 quinvigintillion
                 icon: [17, 10, 'custom'], // Matches 1250 threshold
                 building: 'Chancemaker',
-                unlockCondition: function() {
-                    return Game.Objects['Chancemaker'] && Game.Objects['Chancemaker'].amount >= 1250;
-                }
+                threshold: 1250,
             },
             {
                 name: 'Iteration liquidation',
@@ -2370,9 +2036,7 @@ window.JNEData = {
                 price: 5e62, // 500 novemdecillion
                 icon: [18, 0, 'custom'], // Matches 750 threshold
                 building: 'Fractal engine',
-                unlockCondition: function() {
-                    return Game.Objects['Fractal engine'] && Game.Objects['Fractal engine'].amount >= 750;
-                }
+                threshold: 750,
             },
             {
                 name: 'Infinite recursion',
@@ -2382,9 +2046,7 @@ window.JNEData = {
                 icon: [18, 1, 'custom'], // Matches 800 threshold
                 pool: '',
                 building: 'Fractal engine',
-                unlockCondition: function() {
-                    return Game.Objects['Fractal engine'] && Game.Objects['Fractal engine'].amount >= 800;
-                },
+                threshold: 800,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2397,9 +2059,7 @@ window.JNEData = {
                 price: 5e66, // 5 unvigintillion
                 icon: [18, 2, 'custom'], // Matches 850 threshold
                 building: 'Fractal engine',
-                unlockCondition: function() {
-                    return Game.Objects['Fractal engine'] && Game.Objects['Fractal engine'].amount >= 850;
-                }
+                threshold: 850,
             },
             {
                 name: 'Self-similar baking',
@@ -2409,9 +2069,7 @@ window.JNEData = {
                 icon: [18, 3, 'custom'], // Matches 900 threshold
                 pool: '',
                 building: 'Fractal engine',
-                unlockCondition: function() {
-                    return Game.Objects['Fractal engine'] && Game.Objects['Fractal engine'].amount >= 900;
-                },
+                threshold: 900,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2424,9 +2082,7 @@ window.JNEData = {
                 price: 5e70, // 50 duovigintillion
                 icon: [18, 4, 'custom'], // Matches 950 threshold
                 building: 'Fractal engine',
-                unlockCondition: function() {
-                    return Game.Objects['Fractal engine'] && Game.Objects['Fractal engine'].amount >= 950;
-                }
+                threshold: 950,
             },
             {
                 name: 'Fractal optimization',
@@ -2436,9 +2092,7 @@ window.JNEData = {
                 icon: [18, 5, 'custom'], // Matches 1000 threshold
                 pool: '',
                 building: 'Fractal engine',
-                unlockCondition: function() {
-                    return Game.Objects['Fractal engine'] && Game.Objects['Fractal engine'].amount >= 1000;
-                },
+                threshold: 1000,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2451,9 +2105,7 @@ window.JNEData = {
                 price: 5e74, // 500 trevigintillion
                 icon: [18, 6, 'custom'], // Matches 1050 threshold
                 building: 'Fractal engine',
-                unlockCondition: function() {
-                    return Game.Objects['Fractal engine'] && Game.Objects['Fractal engine'].amount >= 1050;
-                }
+                threshold: 1050,
             },
             {
                 name: 'Recursive enhancement',
@@ -2463,9 +2115,7 @@ window.JNEData = {
                 icon: [18, 7, 'custom'], // Matches 1100 threshold
                 pool: '',
                 building: 'Fractal engine',
-                unlockCondition: function() {
-                    return Game.Objects['Fractal engine'] && Game.Objects['Fractal engine'].amount >= 1100;
-                },
+                threshold: 1100,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2478,9 +2128,7 @@ window.JNEData = {
                 price: 5e78, // 5 quinvigintillion
                 icon: [18, 8, 'custom'], // Matches 1150 threshold
                 building: 'Fractal engine',
-                unlockCondition: function() {
-                    return Game.Objects['Fractal engine'] && Game.Objects['Fractal engine'].amount >= 1150;
-                }
+                threshold: 1150,
             },
             {
                 name: 'Fractal gastronomy',
@@ -2490,9 +2138,7 @@ window.JNEData = {
                 icon: [18, 9, 'custom'], // Matches 1200 threshold
                 pool: '',
                 building: 'Fractal engine',
-                unlockCondition: function() {
-                    return Game.Objects['Fractal engine'] && Game.Objects['Fractal engine'].amount >= 1200;
-                },
+                threshold: 1200,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2505,9 +2151,7 @@ window.JNEData = {
                 price: 5e82, // 50 sexvigintillion
                 icon: [18, 10, 'custom'], // Matches 1250 threshold
                 building: 'Fractal engine',
-                unlockCondition: function() {
-                    return Game.Objects['Fractal engine'] && Game.Objects['Fractal engine'].amount >= 1250;
-                }
+                threshold: 1250,
             },
             {
                 name: 'Refurb dev boards',
@@ -2517,9 +2161,7 @@ window.JNEData = {
                 price: 5e64, // 50 vigintillion
                 icon: [19, 0, 'custom'], // Matches 750 threshold
                 building: 'Javascript console',
-                unlockCondition: function() {
-                    return Game.Objects['Javascript console'] && Game.Objects['Javascript console'].amount >= 750;
-                }
+                threshold: 750,
             },
             {
                 name: 'Code optimization',
@@ -2529,9 +2171,7 @@ window.JNEData = {
                 icon: [19, 1, 'custom'], // Matches 800 threshold
                 pool: '',
                 building: 'Javascript console',
-                unlockCondition: function() {
-                    return Game.Objects['Javascript console'] && Game.Objects['Javascript console'].amount >= 800;
-                },
+                threshold: 800,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2544,9 +2184,7 @@ window.JNEData = {
                 price: 5e68, // 500 unvigintillion
                 icon: [19, 2, 'custom'], // Matches 850 threshold
                 building: 'Javascript console',
-                unlockCondition: function() {
-                    return Game.Objects['Javascript console'] && Game.Objects['Javascript console'].amount >= 850;
-                }
+                threshold: 850,
             },
             {
                 name: 'Programmatic baking',
@@ -2556,9 +2194,7 @@ window.JNEData = {
                 icon: [19, 3, 'custom'], // Matches 900 threshold
                 pool: '',
                 building: 'Javascript console',
-                unlockCondition: function() {
-                    return Game.Objects['Javascript console'] && Game.Objects['Javascript console'].amount >= 900;
-                },
+                threshold: 900,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2571,9 +2207,7 @@ window.JNEData = {
                 price: 5e72, // 5 trevigintillion
                 icon: [19, 4, 'custom'], // Matches 950 threshold
                 building: 'Javascript console',
-                unlockCondition: function() {
-                    return Game.Objects['Javascript console'] && Game.Objects['Javascript console'].amount >= 950;
-                }
+                threshold: 950,
             },
             {
                 name: 'Algorithmic enhancement',
@@ -2583,9 +2217,7 @@ window.JNEData = {
                 icon: [19, 5, 'custom'], // Matches 1000 threshold
                 pool: '',
                 building: 'Javascript console',
-                unlockCondition: function() {
-                    return Game.Objects['Javascript console'] && Game.Objects['Javascript console'].amount >= 1000;
-                },
+                threshold: 1000,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2598,9 +2230,7 @@ window.JNEData = {
                 price: 5e76, // 50 quattuorvigintillion
                 icon: [19, 6, 'custom'], // Matches 1050 threshold
                 building: 'Javascript console',
-                unlockCondition: function() {
-                    return Game.Objects['Javascript console'] && Game.Objects['Javascript console'].amount >= 1050;
-                }
+                threshold: 1050,
             },
             {
                 name: 'Computational gastronomy',
@@ -2610,9 +2240,7 @@ window.JNEData = {
                 icon: [19, 7, 'custom'], // Matches 1100 threshold
                 pool: '',
                 building: 'Javascript console',
-                unlockCondition: function() {
-                    return Game.Objects['Javascript console'] && Game.Objects['Javascript console'].amount >= 1100;
-                },
+                threshold: 1100,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2625,9 +2253,7 @@ window.JNEData = {
                 price: 5e80, // 500 quinvigintillion
                 icon: [19, 8, 'custom'], // Matches 1150 threshold
                 building: 'Javascript console',
-                unlockCondition: function() {
-                    return Game.Objects['Javascript console'] && Game.Objects['Javascript console'].amount >= 1150;
-                }
+                threshold: 1150,
             },
             {
                 name: 'Digital confectionery',
@@ -2637,9 +2263,7 @@ window.JNEData = {
                 icon: [19, 9, 'custom'], // Matches 1200 threshold
                 pool: '',
                 building: 'Javascript console',
-                unlockCondition: function() {
-                    return Game.Objects['Javascript console'] && Game.Objects['Javascript console'].amount >= 1200;
-                },
+                threshold: 1200,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2652,9 +2276,7 @@ window.JNEData = {
                 price: 5e84, // 5 septenvigintillion
                 icon: [19, 10, 'custom'], // Matches 1250 threshold
                 building: 'Javascript console',
-                unlockCondition: function() {
-                    return Game.Objects['Javascript console'] && Game.Objects['Javascript console'].amount >= 1250;
-                }
+                threshold: 1250,
             },
             {
                 name: 'Interdimensional tax breaks',
@@ -2664,9 +2286,7 @@ window.JNEData = {
                 price: 6e66, // 6 unvigintillion
                 icon: [20, 0, 'custom'], // Matches 750 threshold
                 building: 'Idleverse',
-                unlockCondition: function() {
-                    return Game.Objects['Idleverse'] && Game.Objects['Idleverse'].amount >= 750;
-                }
+                threshold: 750,
             },
             {
                 name: 'Reality real estate',
@@ -2676,9 +2296,7 @@ window.JNEData = {
                 icon: [20, 1, 'custom'], // Matches 800 threshold
                 pool: '',
                 building: 'Idleverse',
-                unlockCondition: function() {
-                    return Game.Objects['Idleverse'] && Game.Objects['Idleverse'].amount >= 800;
-                },
+                threshold: 800,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2691,9 +2309,7 @@ window.JNEData = {
                 price: 6e70, // 60 duovigintillion
                 icon: [20, 2, 'custom'], // Matches 850 threshold
                 building: 'Idleverse',
-                unlockCondition: function() {
-                    return Game.Objects['Idleverse'] && Game.Objects['Idleverse'].amount >= 850;
-                }
+                threshold: 850,
             },
             {
                 name: 'Dimensional franchising',
@@ -2703,9 +2319,7 @@ window.JNEData = {
                 icon: [20, 3, 'custom'], // Matches 900 threshold
                 pool: '',
                 building: 'Idleverse',
-                unlockCondition: function() {
-                    return Game.Objects['Idleverse'] && Game.Objects['Idleverse'].amount >= 900;
-                },
+                threshold: 900,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2718,9 +2332,7 @@ window.JNEData = {
                 price: 6e74, // 600 trevigintillion
                 icon: [20, 4, 'custom'], // Matches 950 threshold
                 building: 'Idleverse',
-                unlockCondition: function() {
-                    return Game.Objects['Idleverse'] && Game.Objects['Idleverse'].amount >= 950;
-                }
+                threshold: 950,
             },
             {
                 name: 'Cosmic supply chains',
@@ -2730,9 +2342,7 @@ window.JNEData = {
                 icon: [20, 5, 'custom'], // Matches 1000 threshold
                 pool: '',
                 building: 'Idleverse',
-                unlockCondition: function() {
-                    return Game.Objects['Idleverse'] && Game.Objects['Idleverse'].amount >= 1000;
-                },
+                threshold: 1000,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2745,9 +2355,7 @@ window.JNEData = {
                 price: 6e78, // 6 quinvigintillion
                 icon: [20, 6, 'custom'], // Matches 1050 threshold
                 building: 'Idleverse',
-                unlockCondition: function() {
-                    return Game.Objects['Idleverse'] && Game.Objects['Idleverse'].amount >= 1050;
-                }
+                threshold: 1050,
             },
             {
                 name: 'Reality marketplaces',
@@ -2757,9 +2365,7 @@ window.JNEData = {
                 icon: [20, 7, 'custom'], // Matches 1100 threshold
                 pool: '',
                 building: 'Idleverse',
-                unlockCondition: function() {
-                    return Game.Objects['Idleverse'] && Game.Objects['Idleverse'].amount >= 1100;
-                },
+                threshold: 1100,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2772,9 +2378,7 @@ window.JNEData = {
                 price: 6e82, // 60 sexvigintillion
                 icon: [20, 8, 'custom'], // Matches 1150 threshold
                 building: 'Idleverse',
-                unlockCondition: function() {
-                    return Game.Objects['Idleverse'] && Game.Objects['Idleverse'].amount >= 1150;
-                }
+                threshold: 1150,
             },
             {
                 name: 'Multiverse headquarters',
@@ -2784,9 +2388,7 @@ window.JNEData = {
                 icon: [20, 9, 'custom'], // Matches 1200 threshold
                 pool: '',
                 building: 'Idleverse',
-                unlockCondition: function() {
-                    return Game.Objects['Idleverse'] && Game.Objects['Idleverse'].amount >= 1200;
-                },
+                threshold: 1200,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2799,9 +2401,7 @@ window.JNEData = {
                 price: 6e86, // 600 septenvigintillion
                 icon: [20, 10, 'custom'], // Matches 1250 threshold
                 building: 'Idleverse',
-                unlockCondition: function() {
-                    return Game.Objects['Idleverse'] && Game.Objects['Idleverse'].amount >= 1250;
-                }
+                threshold: 1250,
             },
             {
                 name: 'Neural bulk purchasing',
@@ -2811,9 +2411,7 @@ window.JNEData = {
                 price: 9.5e68, // 950 unvigintillion
                 icon: [21, 0, 'custom'], // Matches 750 threshold
                 building: 'Cortex baker',
-                unlockCondition: function() {
-                    return Game.Objects['Cortex baker'] && Game.Objects['Cortex baker'].amount >= 750;
-                }
+                threshold: 750,
             },
             {
                 name: 'Neural plasticity',
@@ -2823,9 +2421,7 @@ window.JNEData = {
                 icon: [21, 1, 'custom'], // Matches 800 threshold
                 pool: '',
                 building: 'Cortex baker',
-                unlockCondition: function() {
-                    return Game.Objects['Cortex baker'] && Game.Objects['Cortex baker'].amount >= 800;
-                },
+                threshold: 800,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2838,9 +2434,7 @@ window.JNEData = {
                 price: 9.5e72, // 9.5 trevigintillion
                 icon: [21, 2, 'custom'], // Matches 850 threshold
                 building: 'Cortex baker',
-                unlockCondition: function() {
-                    return Game.Objects['Cortex baker'] && Game.Objects['Cortex baker'].amount >= 850;
-                }
+                threshold: 850,
             },
             {
                 name: 'Synaptic pruning',
@@ -2850,9 +2444,7 @@ window.JNEData = {
                 icon: [21, 3, 'custom'], // Matches 900 threshold
                 pool: '',
                 building: 'Cortex baker',
-                unlockCondition: function() {
-                    return Game.Objects['Cortex baker'] && Game.Objects['Cortex baker'].amount >= 900;
-                },
+                threshold: 900,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2865,9 +2457,7 @@ window.JNEData = {
                 price: 9.5e76, // 95 quattuorvigintillion
                 icon: [21, 4, 'custom'], // Matches 950 threshold
                 building: 'Cortex baker',
-                unlockCondition: function() {
-                    return Game.Objects['Cortex baker'] && Game.Objects['Cortex baker'].amount >= 950;
-                }
+                threshold: 950,
             },
             {
                 name: 'Cognitive load balancing',
@@ -2877,9 +2467,7 @@ window.JNEData = {
                 icon: [21, 5, 'custom'], // Matches 1000 threshold
                 pool: '',
                 building: 'Cortex baker',
-                unlockCondition: function() {
-                    return Game.Objects['Cortex baker'] && Game.Objects['Cortex baker'].amount >= 1000;
-                },
+                threshold: 1000,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2892,9 +2480,7 @@ window.JNEData = {
                 price: 9.5e80, // 950 quinvigintillion
                 icon: [21, 6, 'custom'], // Matches 1050 threshold
                 building: 'Cortex baker',
-                unlockCondition: function() {
-                    return Game.Objects['Cortex baker'] && Game.Objects['Cortex baker'].amount >= 1050;
-                }
+                threshold: 1050,
             },
             {
                 name: 'Metacognitive awareness',
@@ -2904,9 +2490,7 @@ window.JNEData = {
                 icon: [21, 7, 'custom'], // Matches 1100 threshold
                 pool: '',
                 building: 'Cortex baker',
-                unlockCondition: function() {
-                    return Game.Objects['Cortex baker'] && Game.Objects['Cortex baker'].amount >= 1100;
-                },
+                threshold: 1100,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2919,9 +2503,7 @@ window.JNEData = {
                 price: 9.5e84, // 9.5 septenvigintillion
                 icon: [21, 8, 'custom'], // Matches 1150 threshold
                 building: 'Cortex baker',
-                unlockCondition: function() {
-                    return Game.Objects['Cortex baker'] && Game.Objects['Cortex baker'].amount >= 1150;
-                }
+                threshold: 1150,
             },
             {
                 name: 'Neural synchronization',
@@ -2931,9 +2513,7 @@ window.JNEData = {
                 icon: [21, 9, 'custom'], // Matches 1200 threshold
                 pool: '',
                 building: 'Cortex baker',
-                unlockCondition: function() {
-                    return Game.Objects['Cortex baker'] && Game.Objects['Cortex baker'].amount >= 1200;
-                },
+                threshold: 1200,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2946,9 +2526,7 @@ window.JNEData = {
                 price: 9.5e88, // 95 octovigintillion
                 icon: [21, 10, 'custom'], // Matches 1250 threshold
                 building: 'Cortex baker',
-                unlockCondition: function() {
-                    return Game.Objects['Cortex baker'] && Game.Objects['Cortex baker'].amount >= 1250;
-                }
+                threshold: 1250,
             },
             {
                 name: 'Clone factory economies',
@@ -2958,9 +2536,7 @@ window.JNEData = {
                 price: 2.7e70, // 27 duovigintillion
                 icon: [22, 0, 'custom'], // Matches 750 threshold
                 building: 'You',
-                unlockCondition: function() {
-                    return Game.Objects['You'] && Game.Objects['You'].amount >= 750;
-                }
+                threshold: 750,
             },
             {
                 name: 'Mitotic mastery',
@@ -2970,9 +2546,7 @@ window.JNEData = {
                 icon: [22, 1, 'custom'], // Matches 800 threshold
                 pool: '',
                 building: 'You',
-                unlockCondition: function() {
-                    return Game.Objects['You'] && Game.Objects['You'].amount >= 800;
-                },
+                threshold: 800,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -2985,9 +2559,7 @@ window.JNEData = {
                 price: 2.7e74, // 270 trevigintillion
                 icon: [22, 2, 'custom'], // Matches 850 threshold
                 building: 'You',
-                unlockCondition: function() {
-                    return Game.Objects['You'] && Game.Objects['You'].amount >= 850;
-                }
+                threshold: 850,
             },
             {
                 name: 'Epigenetic programming',
@@ -2997,9 +2569,7 @@ window.JNEData = {
                 icon: [22, 3, 'custom'], // Matches 900 threshold
                 pool: '',
                 building: 'You',
-                unlockCondition: function() {
-                    return Game.Objects['You'] && Game.Objects['You'].amount >= 900;
-                },
+                threshold: 900,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -3012,9 +2582,7 @@ window.JNEData = {
                 price: 2.7e78, // 2.7 quinvigintillion
                 icon: [22, 4, 'custom'], // Matches 950 threshold
                 building: 'You',
-                unlockCondition: function() {
-                    return Game.Objects['You'] && Game.Objects['You'].amount >= 950;
-                }
+                threshold: 950,
             },
             {
                 name: 'Cellular differentiation',
@@ -3024,9 +2592,7 @@ window.JNEData = {
                 icon: [22, 5, 'custom'], // Matches 1000 threshold
                 pool: '',
                 building: 'You',
-                unlockCondition: function() {
-                    return Game.Objects['You'] && Game.Objects['You'].amount >= 1000;
-                },
+                threshold: 1000,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -3039,9 +2605,7 @@ window.JNEData = {
                 price: 2.7e82, // 27 sexvigintillion
                 icon: [22, 6, 'custom'], // Matches 1050 threshold
                 building: 'You',
-                unlockCondition: function() {
-                    return Game.Objects['You'] && Game.Objects['You'].amount >= 1050;
-                }
+                threshold: 1050,
             },
             {
                 name: 'Telomere regeneration',
@@ -3051,9 +2615,7 @@ window.JNEData = {
                 icon: [22, 7, 'custom'], // Matches 1100 threshold
                 pool: '',
                 building: 'You',
-                unlockCondition: function() {
-                    return Game.Objects['You'] && Game.Objects['You'].amount >= 1100;
-                },
+                threshold: 1100,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -3066,9 +2628,7 @@ window.JNEData = {
                 price: 2.7e86, // 270 septenvigintillion
                 icon: [22, 8, 'custom'], // Matches 1150 threshold
                 building: 'You',
-                unlockCondition: function() {
-                    return Game.Objects['You'] && Game.Objects['You'].amount >= 1150;
-                }
+                threshold: 1150,
             },
             {
                 name: 'Quantum entanglement',
@@ -3078,9 +2638,7 @@ window.JNEData = {
                 icon: [22, 9, 'custom'], // Matches 1200 threshold
                 pool: '',
                 building: 'You',
-                unlockCondition: function() {
-                    return Game.Objects['You'] && Game.Objects['You'].amount >= 1200;
-                },
+                threshold: 1200,
                 effect: function() {
                     return 1.25; // 25% increase
                 }
@@ -3093,9 +2651,7 @@ window.JNEData = {
                 price: 2.7e90, // 2.7 novemvigintillion
                 icon: [22, 10, 'custom'], // Matches 1250 threshold
                 building: 'You',
-                unlockCondition: function() {
-                    return Game.Objects['You'] && Game.Objects['You'].amount >= 1250;
-                }
+                threshold: 1250,
             }
         ],
         cookie: [
@@ -3770,7 +3326,7 @@ window.JNEData = {
         vanillaAchievements: {
             names: ["Vanilla Star"],
             thresholds: [622], 
-            descs: ["Own all <b>622 original achievements.</b><q>Wow congratulations 100% achievements! Now just 459 more to go.</q>"],
+            descs: ["Own all <b>622 original achievements.</b><q>Wow congratulations 100% achievements! {remaining}</q>"],
             customIcons: [[22, 7]],
             orders: [400000.143]
         },
@@ -3972,6 +3528,12 @@ window.JNEData = {
     ],
     buildingUpgradeNames: [
         'Advanced knitting techniques', 'Bingo night optimization', 'Tea time efficiency', 'Gossip-powered baking', 'Senior discount mastery', 'Hydroponic cookie cultivation', 'Vertical farming revolution', 'Quantum crop rotation', 'Sentient soil enhancement', 'Temporal harvest acceleration', 'Quantum tunneling excavation', 'Neutron star compression', 'Dimensional rift mining', 'Singularity core extraction', 'Temporal paradox drilling', 'Quantum assembly optimization', 'Temporal manufacturing loops', 'Dimensional cookie synthesis', 'Singularity production cores', 'Reality-warping assembly', 'Quantum banking protocols', 'Temporal interest compounding', 'Dimensional currency exchange', 'Singularity financial algorithms', 'Reality-warping economics', 'Quantum divine intervention', 'Temporal prayer loops', 'Dimensional deity summoning', 'Singularity divine consciousness', 'Reality-warping divinity', 'Arcane resonance', 'Spell weaving', 'Mystical attunement', 'Ethereal manifestation', 'Transcendent thaumaturgy', 'Hypervelocity transport', 'Spatial compression', 'Dimensional routing', 'Quantum teleportation', 'Causality manipulation', 'Essence distillation', 'Molecular gastronomy', 'Flavor alchemy', 'Culinary transmutation', 'Gastronomic enlightenment', 'Dimensional gateways', 'Reality bridges', 'Spatial conduits', 'Interdimensional highways', 'Cosmic gateways', 'Temporal engineering', 'Chronological optimization', 'Historical preservation', 'Temporal synchronization', 'Chronological mastery', 'Particle synthesis', 'Matter transmutation', 'Quantum baking', 'Particle optimization', 'Matter manipulation', 'Light crystallization', 'Spectral baking', 'Optical alchemy', 'Luminous confectionery', 'Radiant gastronomy', 'Probability manipulation', 'Fortune optimization', 'Serendipity engineering', 'Random enhancement', 'Luck amplification', 'Infinite recursion', 'Self-similar baking', 'Fractal optimization', 'Recursive enhancement', 'Fractal gastronomy', 'Code optimization', 'Programmatic baking', 'Algorithmic enhancement', 'Computational gastronomy', 'Digital confectionery', 'Reality real estate', 'Dimensional franchising', 'Cosmic supply chains', 'Reality marketplaces', 'Multiverse headquarters', 'Neural plasticity', 'Synaptic pruning', 'Cognitive load balancing', 'Metacognitive awareness', 'Neural synchronization', 'Mitotic mastery', 'Epigenetic programming', 'Cellular differentiation', 'Telomere regeneration', 'Quantum entanglement', 'Increased Social Security Checks', 'Off-Brand Eyeglasses', 'Plastic Walkers', 'Bulk Discount Hearing Aids', 'Generic Arthritis Medication', 'Wholesale Denture Adhesive', 'Biodiesel fueled tractors', 'Free manure from clone factories', 'Solar-powered irrigation systems', 'Bulk seed purchases', 'Robot farm hands', 'Vertical farming subsidies', 'Clearance shaft kits', 'Punch-card TNT club', 'Hand-me-down hardhats', 'Lease-back drill rigs', 'Ore cartel coupons', 'Cave-in insurance kickbacks', 'Flat-pack factory frames', 'BOGO rivet bins', 'Off-brand gear grease', 'Misprint warning labels', 'Pallet-jack rebates', 'Prefab cookie modules', 'Piggy buyback bonanza', 'Vault door floor-models', 'Pen-on-a-chain procurement', 'Complimentary complimentary mints', 'Fee waiver wavers', 'Dough Jones clearance', 'Tithe punch cards', 'Relic replica racks', 'Incense refill program', 'Chant-o-matic hymn reels', 'Pew-per-view sponsorships', 'Sacred site tax amnesty', 'Wand warranty returns', 'Grimoire remainder sale', 'Robes with "character"', 'Familiar foster program', 'Council scroll stipends', 'Broom-sharing scheme', 'Retired cargo pods', 'Container co-op cards', 'Reusable launch crates', 'Autodocker apprentices', 'Route rebate vouchers', 'Free-trade cookie ports', 'Beaker buybacks', 'Philosopher\'s pebbles', 'Cool-running crucibles', 'Batch homunculi permits', 'Guild reagent rates', '"Mostly lead" gold grants', 'Pre-owned ring frames', 'Anchor warehouse club', 'Passive rift baffles', 'Volunteer gatekeepers', 'Interrealm stipend scrolls', 'Multiversal enterprise zone', 'Pre-loved hourglasses', 'Depreciated timeline scraps', 'Off-season flux valves', 'Weekend paradox passes', 'Department of When grants', 'Antique warranty loopholes', 'Certified negamatter cans', 'Matter swap rebates', 'Low-idle annihilators', 'Grad-lab particle labor', 'Institute endowment match', 'Void-zone incentives', 'Lens co-op exchange', 'Spectral seconds', 'Sleep-mode rainbows', 'Apprentice refractioneers', 'Arts-of-Optics grants', 'Rainbow renewal credits', 'Misprinted fortunes', 'Reroll refund policy', 'Economy-grade omens', 'Volunteer augury nights', 'Lottery board matching', 'Lucky district waivers', 'Iteration liquidation', 'Self-similar spare parts', 'Recursion rebates', 'Autogenerator residencies', 'Grant-funded proofs', 'Infinite-lot variances', 'Refurb dev boards', 'Compiler credit program', 'Idle-friendly runtimes', 'Peer-review co-ops', 'Open-source grants', 'Cloud credit vouchers', 'Interdimensional tax breaks', 'Reality consolidation discounts', 'Cosmic bulk purchasing', 'Multiverse supplier networks', 'Dimensional economies of scale', 'Reality monopoly pricing', 'Neural bulk purchasing', 'Synaptic wholesale networks', 'Cerebral mass production', 'Mind monopoly pricing', 'Neural economies of scale', 'Synaptic supply dominance', 'Clone factory economies', 'Replica production lines', 'Mirror manufacturing mastery', 'Twin tycoon pricing', 'Doppelganger discount networks', 'Clone supply dominance'
+    ],
+    kittenUpgradeNames: [
+        'Kitten unpaid interns', 'Kitten overpaid "temporary" contractors', 'Kitten remote workers', 'Kitten scrum masters', 'Kitten UX designers', 'Kitten janitors', 'Kitten coffee fetchers', 'Kitten personal assistants', 'Kitten vice presidents', 'Kitten board members', 'Kitten founders', 'Kitten Equity Partners', 'Kitten Senators'
+    ],
+    donutUpgradeNames: [
+        'Maple frosted donut', 'Boston creme donut', 'Strawberry jelly donut', 'Chocolate frosted donut', 'Donut holes', 'Chocolate filled donut', 'Powdered sugar jelly donut', 'Plain glazed donut', 'Blueberry jelly filled donut', 'Pink frosted donut', 'Chocolate sprinkle donut', 'Bear claw', 'Chocolate eclair'
     ],
     achievementFlavorText: {
         "Council of Me": "All in favor? Aye, aye, aye. Motion passes unanimously...again.",

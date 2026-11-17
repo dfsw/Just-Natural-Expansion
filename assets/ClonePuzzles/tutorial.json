@@ -150,7 +150,7 @@
   {
    "cell": "A4",
    "code": "[T:bluehair][B][C]2",
-   "text": "\"Exactly 2 suspects with blue hair have a Clone directly below them.\" Traits group suspects the same way units do. Hovering over this intel will highlight all the people who match the trait.",
+   "text": "\"Exactly 2 suspects with blue hair have a Clone directly below them.\" Traits group suspects the same way units do. Hovering over the blue trait intel will highlight all the people who match the trait.",
    "step": 12,
    "scope": 10304
   },
