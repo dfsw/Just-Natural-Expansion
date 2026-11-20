@@ -5,7 +5,7 @@
     'use strict';
 
     var modName = 'Just Natural Expansion';
-    var modVersion = '0.8.5';
+    var modVersion = '0.8.6';
     var debugMode = false;
     var BETA_MODE = false;
 
@@ -3150,15 +3150,19 @@ function updateUnlockStatesForUpgrades(upgradeNames, enable) {
         }
     }
 
-    // Thanksgiving golden cookie art: 4 cookies (row 0 golden, row 1 wrath) of 128px, same as the vanilla fools/easter hook
+    // Thanksgiving golden cookie art: the 4x2 coupon sheet is scaled to each build's own cookie size (128px on web, 96px on Steam), so frames are never clipped.
     function injectGoldenInitFunc() {
         var g = Game.shimmerTypes && Game.shimmerTypes['golden'];
         if (!g || g._jneInitInjected || !g.initFunc) return;
         var marker = 'me.x=Math.floor(Math.random()*Math.max(0,(Game.bounds.right-300)';
+        var setImage = "me.l.style.backgroundImage='url('+bgPic+')';";
+        var setShow = "me.l.style.opacity='0';";
         var str = g.initFunc.toString();
-        if (str.indexOf(marker) < 0) return;
-        var snip = "if(Game.season==='thanksgiving'){bgPic=window.jneArt('coupons');picX=Math.floor(Math.random()*4);picY=me.wrath?1:0;picW=128;picH=128;}\n";
-        try { g.initFunc = (0, eval)('(' + str.replace(marker, snip + marker) + ')'); g._jneInitInjected = true; }
+        if (str.indexOf(marker) < 0 || str.indexOf(setImage) < 0 || str.indexOf(setShow) < 0) return;
+        var pick = "if(Game.season==='thanksgiving'){bgPic=window.jneArt('coupons');picX=Math.floor(Math.random()*4);picY=me.wrath?1:0;if(typeof picW!=='undefined'){picW=128;picH=128;}}\n";
+        var size = "if(Game.season==='thanksgiving'){var cw=parseInt(me.l.style.width,10);me.l.style.backgroundSize=(4*cw)+'px '+(2*cw)+'px';me.l.style.backgroundPosition=(-picX*cw)+'px '+(-picY*cw)+'px';}\n";
+        str = str.replace(setShow, size + setShow).replace(marker, pick + marker);
+        try { g.initFunc = (0, eval)('(' + str + ')'); g._jneInitInjected = true; }
         catch (e) { console.error('JNE: golden initFunc injection failed', e); }
     }
 

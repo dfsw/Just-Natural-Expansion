@@ -57,6 +57,9 @@ The mobile version of Cookie Clicker does not support mods at this time.
 
 ## Changelog  
 
+### Version 0.8.6
+* Fix for Thanksgiving cookie display on Steam version, one of these days Orteil will update Steam and these headaches will go away. 
+
 ### Version 0.8.5
 * Clone Escape minigame 5 Free Yous now awards 5 Yous as if you had bought them. 
 * More tweaking to Downline actions, this time mostly bumps in power for under-used actions.
